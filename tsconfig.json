@@ -22,6 +22,12 @@
       ],
       "@docg/template/*": [
         "packages/template/src/*"
+      ],
+      "a-lib": [
+        "packages/a-lib/public-api.ts"
+      ],
+      "a-lib/*": [
+        "packages/a-lib/*"
       ]
     }
   },

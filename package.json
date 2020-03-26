@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 8888 --hmr",
+    "build:a-lib": "ng build a-lib",
     "build": "ng build",
     "build:template": "ng build template",
     "build:preset": "ng build preset",
