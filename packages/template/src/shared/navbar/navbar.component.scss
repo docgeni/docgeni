@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+
+.spacer {
+    flex: 1;
+}
+
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $navbar-height;
+    display: flex;
+    align-items: center;
+    background-color: $navbar-background;
+    color: $navbar-color;
+    box-shadow: $navbar-box-shadow;
+    justify-content: space-between;
+}
+
+.title {
+  font-weight: 600;
+  color: $white;
+}
+
+.nav {
+    margin-left: 20px;
+    a {
+        color: $white;
+        padding: 0px 20px;
+    }
+}
+
+:host img {
+    margin: 0 16px;
+}
+
+:host #twitter-logo {
+    height: 40px;
+    margin: 0 16px;
+}
+
+:host #twitter-logo:hover {
+    opacity: 0.8;
+}

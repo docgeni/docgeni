@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+
+ul {
+    list-style: none;
+    margin: 0;
+    // padding: 0;
+    li {
+        // list-style: none;
+        padding: 5px 0px;
+        display: block;
+        &:hover {
+        }
+    }
+}

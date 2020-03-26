@@ -1,0 +1,9 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    .sidebar {
+        width: 300px;
+        border-right: 1px solid $gray-300;
+    }
+}

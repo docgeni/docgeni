@@ -1,0 +1,26 @@
+{
+  "name": "@docg/core",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "why520crazy <why520crazy@163.com>",
+  "homepage": "https://github.com/tethys-org/docgen#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tethys-org/docgen.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tethys-org/docgen/issues"
+  }
+}
