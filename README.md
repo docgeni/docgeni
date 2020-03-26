@@ -1,4 +1,4 @@
-# Docg (on the way)
+# Docg (WIP)
 
 a documentation site generator for markdown docs, Angular components.
 
@@ -14,7 +14,7 @@ Add scripts to package.json as followings:
 {
   scripts: {
     ...
-    "docs:dev": "docg dev",
+    "docs:start": "docg serve",
     "docs:build": "docg build"
     ...
   }
