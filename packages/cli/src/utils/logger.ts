@@ -8,10 +8,6 @@ enum Levels {
     error
 }
 
-log.info('info', 'en');
-log.dir({ name: 'hello' });
-log.warn('warn', 'en');
-log.error('error', 'en');
 export class Logger {
     public logger: any;
     public silent: boolean;

@@ -4,5 +4,12 @@
   "shortName": "Docg",
   "description": "A modern documentation generator for doc and Angular Lib",
   "output": "docs-site",
-  "docsFolder": "docs"
+  "docsPath": "docs",
+  "sitePath": "packages/site",
+  "libs": [
+    {
+      "name": "alib",
+      "rootPath": "./packages/a-lib"
+    }
+  ]
 }

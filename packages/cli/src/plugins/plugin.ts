@@ -1,3 +1,5 @@
+import { BuilderFacade } from '../builder.facade';
+
 export interface Plugin {
-    apply(): void;
+    apply(builder: BuilderFacade): void;
 }

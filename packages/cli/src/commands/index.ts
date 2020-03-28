@@ -7,9 +7,13 @@ import { DEFAULT_CONFIG } from '../interfaces';
 const argv = yargs
     .scriptName('docg')
     .usage('Usage: $0 <build|dev> [options]')
-    .option('docs-folder', {
+    .option('docs-path', {
         desc: `Docs folder path`,
-        default: DEFAULT_CONFIG.docsFolder
+        default: DEFAULT_CONFIG.docsPath
+    })
+    .option('site-path', {
+        desc: `Site path`,
+        default: DEFAULT_CONFIG.sitePath
     })
     .command(buildCommand)
     .command(serveCommand)

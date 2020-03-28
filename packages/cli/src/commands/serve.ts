@@ -1,10 +1,10 @@
 import { CommandModule } from 'yargs';
-import { DocgConfig, DEFAULT_CONFIG } from '../interfaces';
+import { DocgConfig, DEFAULT_CONFIG, Library } from '../interfaces';
 import * as chokidar from 'chokidar';
 import * as fs from 'fs-extra';
 import watch from 'gulp-watch';
 import path from 'path';
-import { execSync, exec } from 'child_process';
+import { Builder } from '../builder';
 
 export const serveCommand: CommandModule = {
     command: ['serve'],
@@ -12,7 +12,7 @@ export const serveCommand: CommandModule = {
     builder: yargs => {
         yargs.option('docs-folder', {
             desc: `Docs folder path`,
-            default: DEFAULT_CONFIG.docsFolder
+            default: DEFAULT_CONFIG.docsPath
         });
 
         return yargs;
@@ -20,29 +20,46 @@ export const serveCommand: CommandModule = {
     handler: async (argv: any) => {
         const config = argv as DocgConfig;
 
-        if (!fs.existsSync(config.docsFolder)) {
-            throw new Error(`docs folder(${config.docsFolder}) has not exists`);
-        }
+        const builder = new Builder({});
 
-        const docsFolderAbsolutePath = path.resolve(process.cwd(), config.docsFolder);
-        const docsContentAbsolutePath = path.resolve(process.cwd(), 'packages/site/src/app/docs-content');
-        const docsAbsolutePath = path.resolve(docsContentAbsolutePath, 'docs');
+        builder.run(config);
 
-        fs.copySync(config.docsFolder, docsAbsolutePath);
+        // if (!fs.existsSync(config.docsPath)) {
+        //     throw new Error(`docs folder(${config.docsPath}) has not exists`);
+        // }
 
-        watch(config.docsFolder, file => {
-            const destPath = file.path.replace(docsFolderAbsolutePath, docsAbsolutePath);
-            if (file.event === 'change' || file.event === 'add') {
-                fs.copyFileSync(file.path, destPath);
-            } else {
-                throw new Error(`watch folder event: ${file.event} is not support`);
-            }
-        });
+        // const docsFolderAbsolutePath = path.resolve(process.cwd(), config.docsPath);
+        // const docsContentAbsolutePath = path.resolve(process.cwd(), 'packages/site/src/app/docs-content');
+        // const docsAbsolutePath = path.resolve(docsContentAbsolutePath, 'docs');
 
-        execSync('npm run start', { stdio: 'inherit' });
+        // // fs.ensureDirSync(docsAbsolutePath);
+        // fs.copySync(config.docsPath, docsAbsolutePath);
+
+        // watch(config.docsPath, file => {
+        //     const destPath = file.path.replace(docsFolderAbsolutePath, docsAbsolutePath);
+        //     if (file.event === 'change' || file.event === 'add') {
+        //         fs.copyFileSync(file.path, destPath);
+        //     } else {
+        //         throw new Error(`watch folder event: ${file.event} is not support`);
+        //     }
+        // });
+
+        // if (config.libs) {
+        //     config.libs.forEach(lib => {});
+        // }
+
+        // execSync('npm run start', { stdio: 'inherit' });
         // const watcher = chokidar.watch(config.docsFolder, {});
         // watcher.on('change', (path, stats) => {
         //     console.log(stats);
         // });
     }
 };
+
+// async function syncLib(lib: Library) {
+//     const libAbsolutePath = path.resolve(process.cwd(), lib.root);
+//     const components = await fs.readdir(libAbsolutePath);
+//     console.log(components);
+//     const libDestAbsolutePath = path.resolve(docsContentAbsolutePath, `${lib.name}`);
+//     fs.copySync(libAbsolutePath, libDestAbsolutePath);
+// }

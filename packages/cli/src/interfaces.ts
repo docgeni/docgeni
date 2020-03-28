@@ -16,15 +16,23 @@ export interface Locale {
     name: string;
 }
 
+export interface Library {
+    name: string;
+    rootPath: string;
+}
+
 export interface DocgConfig {
     /* Title of documentation */
     title: string;
     /* Description of documentation */
     description: string;
     /* Docs folder */
-    docsFolder: string;
+    docsPath: string;
+    /* Angular docs site app path */
+    sitePath: string;
     /* Components folder */
-    componentsFolder: string[];
+    // componentsFolder: string[];
+    libs: Library[];
     /* Output folder */
     output?: string;
     /* Navigations for menu and nav */
@@ -40,6 +48,8 @@ export interface DocgConfig {
 export const DEFAULT_CONFIG: Partial<DocgConfig> = {
     title: 'Doc Generator',
     silent: false,
+    docsPath: 'docs',
+    sitePath: 'site',
     output: 'docs-built',
     locales: [
         {
