@@ -1,6 +1,6 @@
 # Docgeni (WIP)
 
-a documentation site generator for markdown docs, Angular components.
+A modern and simply documentation generator for markdown docs and Angular components lib
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm i @docgeni/cli --save-dev
 
 Add scripts to package.json as followings:
 
-```
+```json
 {
   scripts: {
     ...

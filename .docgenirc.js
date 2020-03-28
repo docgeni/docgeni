@@ -1,8 +1,11 @@
-import { DocgeniConfig } from '@docgeni/template';
-
-export const config: DocgeniConfig = {
-    title: 'Docgeni',
-    description: 'Documentation Generator for Angular Components and markdown docs',
+module.exports = {
+    $schema: './packages/cli/cli.schema.json',
+    title: 'Doc Generator',
+    shortName: 'Docgeni',
+    description: 'A modern documentation generator for doc and Angular Lib',
+    output: 'docs-site',
+    docsPath: 'docs',
+    sitePath: 'packages/site',
     navs: [
         {
             title: '指南',
@@ -10,7 +13,6 @@ export const config: DocgeniConfig = {
             children: [
                 {
                     title: '介绍',
-                    path: '',
                     children: [
                         {
                             title: '介绍',
@@ -26,7 +28,6 @@ export const config: DocgeniConfig = {
                 },
                 {
                     title: '组件示例',
-                    path: '',
                     children: [
                         {
                             title: '如何写组件示例',
@@ -49,40 +50,7 @@ export const config: DocgeniConfig = {
         {
             title: '组件',
             path: 'components',
-            children: [
-                {
-                    title: '基本',
-                    path: '',
-                    children: [
-                        {
-                            title: '按钮',
-                            path: 'button',
-                            content: '按钮组件'
-                        },
-                        {
-                            title: 'Icon',
-                            path: 'button',
-                            content: 'Icon组件'
-                        }
-                    ]
-                },
-                {
-                    title: '布局',
-                    path: '',
-                    children: [
-                        {
-                            title: '布局',
-                            path: 'layout',
-                            content: '布局组件'
-                        },
-                        {
-                            title: 'Grid',
-                            path: 'grid',
-                            content: 'Grid组件'
-                        }
-                    ]
-                }
-            ]
+            lib: 'alib'
         },
         {
             title: 'GitHub',
@@ -93,6 +61,12 @@ export const config: DocgeniConfig = {
             title: '更新日志',
             path: 'https://github.com/docgeni/docgeni',
             isExternal: true
+        }
+    ],
+    libs: [
+        {
+            name: 'alib',
+            rootPath: './packages/a-lib'
         }
     ]
 };

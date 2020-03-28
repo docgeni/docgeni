@@ -1,5 +1,5 @@
 import { DocgeniConfig } from './interfaces';
-import { SyncHook } from 'tapable';
+import { SyncHook, AsyncSeriesHook } from 'tapable';
 
 export interface BuilderPaths {
     cwd: string;
@@ -19,12 +19,15 @@ export interface DocSourceFile {
     basename: string;
 }
 
+export interface BuilderHooks {
+    run: SyncHook;
+    docCompile: SyncHook<DocSourceFile>;
+    docsCompile: SyncHook<DocSourceFile[]>;
+    emit: SyncHook<unknown>;
+}
 export interface BuilderFacade {
     watch: boolean;
     readonly config: DocgeniConfig;
     readonly paths: BuilderPaths;
-    hooks: {
-        docCompile: SyncHook<DocSourceFile>;
-        // docsCompile: SyncHook<DocSourceFile[]>;
-    };
+    hooks: BuilderHooks;
 }

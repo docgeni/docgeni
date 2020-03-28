@@ -1,12 +1,11 @@
-import { BuilderFacade, BuilderPaths, DocSourceFile } from './builder.facade';
-import { SyncHook } from 'tapable';
+import { BuilderFacade, BuilderPaths, DocSourceFile, BuilderHooks } from './builder.facade';
+import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, Library } from './interfaces';
-import * as fs from 'fs-extra';
+import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniOutputConfig } from './interfaces';
 import path from 'path';
 import glob from 'glob';
 import { DocgeniContext } from './context';
-
+import { fs } from '@docgeni/kits';
 export interface BuilderOptions {
     cwd?: string;
     watch?: boolean;
@@ -18,14 +17,16 @@ export class Builder implements BuilderFacade {
     watch: boolean;
     paths: BuilderPaths;
     config: DocgeniConfig;
-
+    outputConfig: Partial<DocgeniOutputConfig> = {};
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
 
-    hooks = {
+    hooks: BuilderHooks = {
+        run: new SyncHook([]),
         docCompile: new SyncHook<DocSourceFile>(['docSourceFiles']),
-        docsCompile: new SyncHook<DocSourceFile[]>(['docSourceFile'])
+        docsCompile: new SyncHook<DocSourceFile[]>(['docSourceFile']),
+        emit: new AsyncSeriesHook<void>([])
     };
 
     constructor(options: BuilderOptions) {
@@ -34,7 +35,11 @@ export class Builder implements BuilderFacade {
         };
         this.watch = options.watch || false;
         this.presets = options.presets || [];
-        this.plugins = options.plugins || [require.resolve('./plugins/markdown')];
+        this.plugins = options.plugins || [
+            require.resolve('./plugins/markdown'),
+            require.resolve('./plugins/config'),
+            require.resolve('./plugins/angular')
+        ];
         this.initialize();
     }
 
@@ -47,7 +52,13 @@ export class Builder implements BuilderFacade {
     }
 
     async run(config: DocgeniConfig) {
-        this.config = config;
+        this.config = Object.assign(DEFAULT_CONFIG, config);
+        this.outputConfig.title = this.config.title;
+        this.outputConfig.description = this.config.description;
+        this.outputConfig.locales = this.config.locales;
+        this.outputConfig.navs = this.config.navs;
+
+        this.hooks.run.call();
         if (!fs.existsSync(config.docsPath)) {
             throw new Error(`docs folder(${config.docsPath}) has not exists`);
         }
@@ -59,6 +70,7 @@ export class Builder implements BuilderFacade {
         await fs.remove(this.paths.absSiteContentPath);
         await this.generateContentDocs();
         await this.generateContentLibs();
+        await this.generateOutputConfig();
     }
 
     private async generateContentDocs() {
@@ -121,6 +133,13 @@ export class Builder implements BuilderFacade {
                 await fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
             }
         }
+    }
+
+    private async generateOutputConfig() {
+        console.log(this.paths.absSiteContentPath);
+        console.log(this.outputConfig);
+        const d = fs.existsSync(this.paths.absSiteContentPath);
+        console.log(d);
     }
 
     private dirIsDirectory(dir: string) {

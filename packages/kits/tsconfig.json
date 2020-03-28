@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig-base.json",
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
@@ -9,7 +8,6 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -18,6 +16,5 @@
       "es2018",
       "dom"
     ]
-  },
-  "references": [{ "path": "../kits" }]
+  }
 }

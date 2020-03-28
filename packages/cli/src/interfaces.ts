@@ -1,4 +1,4 @@
-export interface NavItem {
+export interface NavItemBase {
     /* Title of Nav */
     title: string;
     /** 别名 */
@@ -7,9 +7,19 @@ export interface NavItem {
     path: string;
     /** 图标 */
     icon?: string;
+}
+
+export interface ComponentsNavItem extends NavItemBase {
+    lib?: string;
+}
+
+export interface DocNavItem extends NavItemBase {
     /** 子文档 */
     children?: NavItem[];
+    isExternal: boolean;
+    content?: string;
 }
+export type NavItem = DocNavItem & ComponentsNavItem;
 
 export interface Locale {
     key: string;
@@ -41,6 +51,18 @@ export interface DocgeniConfig {
     navsCover: boolean;
     /* In silent mode, log messages aren't logged in the console */
     silent: boolean;
+    /** Locales */
+    locales: Locale[];
+}
+
+// For Angular Template
+export interface DocgeniOutputConfig {
+    /* Title of documentation */
+    title: string;
+    /* Description of documentation */
+    description: string;
+    /* Navigations for menu and nav */
+    navs?: NavItem[];
     /** Locales */
     locales: Locale[];
 }

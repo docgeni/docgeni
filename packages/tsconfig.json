@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [],
+  "references": [
+    {
+      "path": "cli"
+    },
+    {
+      "path": "kits"
+    }
+  ]
+}
