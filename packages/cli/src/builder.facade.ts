@@ -1,4 +1,4 @@
-import { DocgConfig } from './interfaces';
+import { DocgeniConfig } from './interfaces';
 import { SyncHook } from 'tapable';
 
 export interface BuilderPaths {
@@ -21,7 +21,7 @@ export interface DocSourceFile {
 
 export interface BuilderFacade {
     watch: boolean;
-    readonly config: DocgConfig;
+    readonly config: DocgeniConfig;
     readonly paths: BuilderPaths;
     hooks: {
         docCompile: SyncHook<DocSourceFile>;

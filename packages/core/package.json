@@ -1,9 +1,9 @@
 {
-  "name": "@docg/core",
+  "name": "@docgeni/core",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "why520crazy <why520crazy@163.com>",
-  "homepage": "https://github.com/tethys-org/docgen#readme",
+  "homepage": "https://github.com/tethys-org/docgeni#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -15,12 +15,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tethys-org/docgen.git"
+    "url": "git+https://github.com/tethys-org/docgeni.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/tethys-org/docgen/issues"
+    "url": "https://github.com/tethys-org/docgeni/issues"
   }
 }

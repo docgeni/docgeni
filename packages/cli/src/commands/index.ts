@@ -5,7 +5,7 @@ import { getConfiguration } from '../configuration';
 import { DEFAULT_CONFIG } from '../interfaces';
 
 const argv = yargs
-    .scriptName('docg')
+    .scriptName('docgeni')
     .usage('Usage: $0 <build|dev> [options]')
     .option('docs-path', {
         desc: `Docs folder path`,

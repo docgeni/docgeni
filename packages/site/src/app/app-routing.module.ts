@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DocHomeComponent, DocChannelComponent, DocViewerComponent } from '@docg/template';
+import { DocHomeComponent, DocChannelComponent, DocViewerComponent } from '@docgeni/template';
 
 const routes: Routes = [
     {

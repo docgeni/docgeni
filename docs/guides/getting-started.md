@@ -3,9 +3,9 @@
 ## 安装
 
 ```
-npm i @docg/cli --save-dev
+npm i @docgeni/cli --save-dev
 // or
-yarn add @docg/cli -D
+yarn add @docgeni/cli -D
 ```
 
 安装后通过

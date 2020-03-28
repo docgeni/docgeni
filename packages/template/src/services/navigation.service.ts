@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { NavigationItem, DocItem } from './interfaces';
-import { CONFIG_TOKEN, DocgConfig } from './config';
+import { CONFIG_TOKEN, DocgeniConfig } from './config';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class NavigationService {
         return this.channel$.value;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgConfig) {}
+    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniConfig) {}
 
     getPrimaryNavs(): NavigationItem[] {
         return this.config.navs;

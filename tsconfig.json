@@ -17,10 +17,10 @@
       "dom"
     ],
     "paths": {
-      "@docg/template": [
+      "@docgeni/template": [
         "packages/template/src/public-api.ts"
       ],
-      "@docg/template/*": [
+      "@docgeni/template/*": [
         "packages/template/src/*"
       ],
       "a-lib": [

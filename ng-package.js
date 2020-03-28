@@ -9,7 +9,7 @@ module.exports = {
 			"lodash": "_",
 
 			// local
-			"docg": "docg",
+			"docgeni": "docgeni",
 			"preset": "preset",
 		}
 	},

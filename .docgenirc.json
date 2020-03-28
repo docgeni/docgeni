@@ -1,7 +1,7 @@
 {
   "$schema": "./packages/cli/cli.schema.json",
   "title": "Doc Generator",
-  "shortName": "Docg",
+  "shortName": "Docgeni",
   "description": "A modern documentation generator for doc and Angular Lib",
   "output": "docs-site",
   "docsPath": "docs",

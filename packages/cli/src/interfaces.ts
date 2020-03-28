@@ -21,7 +21,7 @@ export interface Library {
     rootPath: string;
 }
 
-export interface DocgConfig {
+export interface DocgeniConfig {
     /* Title of documentation */
     title: string;
     /* Description of documentation */
@@ -45,7 +45,7 @@ export interface DocgConfig {
     locales: Locale[];
 }
 
-export const DEFAULT_CONFIG: Partial<DocgConfig> = {
+export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     title: 'Doc Generator',
     silent: false,
     docsPath: 'docs',

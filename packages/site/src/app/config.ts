@@ -1,7 +1,7 @@
-import { DocgConfig } from '@docg/template';
+import { DocgeniConfig } from '@docgeni/template';
 
-export const config: DocgConfig = {
-    title: 'Docg',
+export const config: DocgeniConfig = {
+    title: 'Docgeni',
     description: 'Documentation Generator for Angular Components and markdown docs',
     navs: [
         {
@@ -86,12 +86,12 @@ export const config: DocgConfig = {
         },
         {
             title: 'GitHub',
-            path: 'https://github.com/tethys-org/docgen',
+            path: 'https://github.com/tethys-org/docgeni',
             isExternal: true
         },
         {
             title: '更新日志',
-            path: 'https://github.com/tethys-org/docgen',
+            path: 'https://github.com/tethys-org/docgeni',
             isExternal: true
         }
     ]

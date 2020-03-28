@@ -51,7 +51,7 @@ export class DocsMarkdownRenderer extends Renderer {
      *  `<!-- example(name) -->` turns into `<div material-docs-example="name"></div>`
      */
     html(html: string) {
-        html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgen-docs-example="${name}"></div>`);
+        html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgeni-docs-example="${name}"></div>`);
 
         return super.html(html);
     }

@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "https://github.com/docg/docg/blob/master/packages/cli/ng-package.schema.json",
-  "title": "DocgConfig",
-  "description": "JSON Schema for `docg` config",
+  "id": "https://github.com/docgeni/docgeni/blob/master/packages/cli/ng-package.schema.json",
+  "title": "DocgeniConfig",
+  "description": "JSON Schema for `docgeni` config",
   "type": "object",
   "properties": {
     "$schema": {

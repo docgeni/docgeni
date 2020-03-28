@@ -1,5 +1,5 @@
 import { CommandModule } from 'yargs';
-import { DocgConfig, DEFAULT_CONFIG, Library } from '../interfaces';
+import { DocgeniConfig, DEFAULT_CONFIG, Library } from '../interfaces';
 import * as chokidar from 'chokidar';
 import * as fs from 'fs-extra';
 import watch from 'gulp-watch';
@@ -18,7 +18,7 @@ export const serveCommand: CommandModule = {
         return yargs;
     },
     handler: async (argv: any) => {
-        const config = argv as DocgConfig;
+        const config = argv as DocgeniConfig;
 
         const builder = new Builder({});
 

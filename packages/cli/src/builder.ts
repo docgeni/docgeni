@@ -1,11 +1,11 @@
 import { BuilderFacade, BuilderPaths, DocSourceFile } from './builder.facade';
 import { SyncHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgConfig, Library } from './interfaces';
+import { DocgeniConfig, Library } from './interfaces';
 import * as fs from 'fs-extra';
 import path from 'path';
 import glob from 'glob';
-import { DocgContext } from './context';
+import { DocgeniContext } from './context';
 
 export interface BuilderOptions {
     cwd?: string;
@@ -17,7 +17,7 @@ export interface BuilderOptions {
 export class Builder implements BuilderFacade {
     watch: boolean;
     paths: BuilderPaths;
-    config: DocgConfig;
+    config: DocgeniConfig;
 
     private presets: string[];
     private plugins: string[];
@@ -46,7 +46,7 @@ export class Builder implements BuilderFacade {
         });
     }
 
-    async run(config: DocgConfig) {
+    async run(config: DocgeniConfig) {
         this.config = config;
         if (!fs.existsSync(config.docsPath)) {
             throw new Error(`docs folder(${config.docsPath}) has not exists`);

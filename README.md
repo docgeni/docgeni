@@ -1,11 +1,11 @@
-# Docg (WIP)
+# Docgeni (WIP)
 
 a documentation site generator for markdown docs, Angular components.
 
 ## Installation
 
 ```
-npm i @docg/cli --save-dev
+npm i @docgeni/cli --save-dev
 ```
 
 Add scripts to package.json as followings:
@@ -14,8 +14,8 @@ Add scripts to package.json as followings:
 {
   scripts: {
     ...
-    "docs:start": "docg serve",
-    "docs:build": "docg build"
+    "docs:start": "docgeni serve",
+    "docs:build": "docgeni build"
     ...
   }
 }

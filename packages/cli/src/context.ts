@@ -1,12 +1,12 @@
-import { DocgConfig } from './interfaces';
+import { DocgeniConfig } from './interfaces';
 
 export interface Output {
     filename: string;
     content: string;
 }
 
-export interface DocgContext {
-    config: DocgConfig;
+export interface DocgeniContext {
+    config: DocgeniConfig;
     cwd: string;
     docs: {};
     sources: string[];
