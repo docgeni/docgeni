@@ -7,7 +7,7 @@ import { logger } from './utils/logger';
 
 async function main() {
     const config = getConfiguration();
-    const docsFolder = resolve(process.cwd(), config.docsFolder);
+    const docsFolder = resolve(process.cwd(), config.docsPath);
     const subFolders = readdirSync(docsFolder);
 
     const watcher = chokidar.watch(docsFolder, {});

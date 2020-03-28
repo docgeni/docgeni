@@ -5,7 +5,7 @@ import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniOutputConfig } from './i
 import path from 'path';
 import glob from 'glob';
 import { DocgeniContext } from './context';
-import { fs } from '@docgeni/kits';
+import { kits } from '@docgeni/kits';
 export interface BuilderOptions {
     cwd?: string;
     watch?: boolean;
@@ -49,6 +49,9 @@ export class Builder implements BuilderFacade {
         this.initialPlugins.forEach(plugin => {
             plugin.apply(this);
         });
+        kits.initialize({
+            baseDir: __dirname
+        });
     }
 
     async run(config: DocgeniConfig) {
@@ -59,7 +62,7 @@ export class Builder implements BuilderFacade {
         this.outputConfig.navs = this.config.navs;
 
         this.hooks.run.call();
-        if (!fs.existsSync(config.docsPath)) {
+        if (!kits.fs.existsSync(config.docsPath)) {
             throw new Error(`docs folder(${config.docsPath}) has not exists`);
         }
         this.paths.absDocsPath = this.getAbsPath(config.docsPath);
@@ -67,7 +70,7 @@ export class Builder implements BuilderFacade {
         this.paths.absSitePath = this.getAbsPath(config.sitePath);
         this.paths.absSiteContentPath = path.resolve(this.paths.absSitePath, './src/app/content');
         // clear docs content dest dir
-        await fs.remove(this.paths.absSiteContentPath);
+        await kits.fs.remove(this.paths.absSiteContentPath);
         await this.generateContentDocs();
         await this.generateContentLibs();
         await this.generateOutputConfig();
@@ -78,7 +81,7 @@ export class Builder implements BuilderFacade {
         const docSourceFiles: DocSourceFile[] = [];
         const absSiteContentDocsPath = path.resolve(this.paths.absSiteContentPath, 'docs');
         for (const docPath of docPaths) {
-            const stats = await fs.stat(docPath);
+            const stats = await kits.fs.stat(docPath);
             if (stats.isDirectory()) {
                 console.log(`This is dir ${docPath}`);
             } else {
@@ -95,7 +98,7 @@ export class Builder implements BuilderFacade {
     }
 
     private async generateContentDoc(absDocPath: string, absDestDirPath: string) {
-        const content = await fs.readFile(absDocPath, 'UTF-8');
+        const content = await kits.fs.readFile(absDocPath, 'UTF-8');
         const docSourceFile: DocSourceFile = {
             absPath: absDocPath,
             content,
@@ -105,8 +108,8 @@ export class Builder implements BuilderFacade {
         };
         this.hooks.docCompile.call(docSourceFile);
         const docDestPath = path.resolve(absDestDirPath, docSourceFile.basename);
-        await fs.ensureDir(absDestDirPath);
-        await fs.outputFile(docDestPath, docSourceFile.content, { encoding: 'UTF-8' });
+        await kits.fs.ensureDir(absDestDirPath);
+        await kits.fs.outputFile(docDestPath, docSourceFile.content, { encoding: 'UTF-8' });
         return docSourceFile;
     }
 
@@ -118,7 +121,7 @@ export class Builder implements BuilderFacade {
 
     private async generateContentLib(lib: Library) {
         const absLibPath = this.getAbsPath(lib.rootPath);
-        const dirs = await fs.readdir(absLibPath);
+        const dirs = await kits.fs.readdir(absLibPath);
         const absSiteContentComponentsPath = path.resolve(this.paths.absSiteContentPath, 'components');
         for (const dir of dirs) {
             const absComponentPath = path.resolve(absLibPath, dir);
@@ -130,20 +133,20 @@ export class Builder implements BuilderFacade {
                 // const absComponentDocENPath = path.resolve(absComponentDocPath, 'en-us.md');
                 await this.generateContentDoc(absComponentDocZHPath, path.resolve(absSiteContentComponentsPath, `${dir}/doc`));
                 // await this.generateContentDoc(absComponentDocENPath, path.resolve(absSiteContentComponentsPath, `${dir}/doc`));
-                await fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
+                await kits.fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
             }
         }
     }
 
     private async generateOutputConfig() {
-        console.log(this.paths.absSiteContentPath);
-        console.log(this.outputConfig);
-        const d = fs.existsSync(this.paths.absSiteContentPath);
-        console.log(d);
+        const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
+        kits.template.generate('config.hbs', outputConfigPath, {
+            outputConfig: JSON.stringify(this.outputConfig, null, 4)
+        });
     }
 
     private dirIsDirectory(dir: string) {
-        return fs.statSync(dir).isDirectory();
+        return kits.fs.statSync(dir).isDirectory();
     }
 
     private getAbsPath(absOrRelativePath: string) {

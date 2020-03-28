@@ -1,23 +1,24 @@
 {
   "extends": "../tsconfig-base.json",
-  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "rootDir": "src",
     "outDir": "./lib",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2018",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "alwaysStrict": true,
+    "rootDir": "src",
+    "baseUrl": "."
   },
-  "references": [{ "path": "../kits" }]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "lib",
+    "**/*/*.spec.ts",
+    "src/test"
+  ],
+  "references": [
+    {
+      "path": "../kits"
+    }
+  ]
 }

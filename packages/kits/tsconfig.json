@@ -16,5 +16,10 @@
       "es2018",
       "dom"
     ]
-  }
+  },
+  "exclude": [
+    "src/test.ts",
+    "test/**",
+    "**/*.spec.ts"
+  ]
 }

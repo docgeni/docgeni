@@ -8,7 +8,7 @@ import {
 } from '@docgeni/template';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { config } from './config';
+import { config } from './content/config';
 
 @NgModule({
     declarations: [],

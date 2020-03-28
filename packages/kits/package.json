@@ -23,5 +23,9 @@
   },
   "bugs": {
     "url": "https://github.com/docgeni/docgeni/issues"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "handlebars": "^4.7.3"
   }
 }
