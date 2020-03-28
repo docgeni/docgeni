@@ -56,7 +56,7 @@ export interface DocgeniConfig {
 }
 
 // For Angular Template
-export interface DocgeniOutputConfig {
+export interface DocgeniSiteConfig {
     /* Title of documentation */
     title: string;
     /* Description of documentation */

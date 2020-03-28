@@ -1,7 +1,7 @@
 import { BuilderFacade, BuilderPaths, DocSourceFile, BuilderHooks } from './builder.facade';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniOutputConfig } from './interfaces';
+import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniSiteConfig } from './interfaces';
 import path from 'path';
 import glob from 'glob';
 import { DocgeniContext } from './context';
@@ -17,7 +17,7 @@ export class Builder implements BuilderFacade {
     watch: boolean;
     paths: BuilderPaths;
     config: DocgeniConfig;
-    outputConfig: Partial<DocgeniOutputConfig> = {};
+    siteConfig: Partial<DocgeniSiteConfig> = {};
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
@@ -56,10 +56,10 @@ export class Builder implements BuilderFacade {
 
     async run(config: DocgeniConfig) {
         this.config = Object.assign(DEFAULT_CONFIG, config);
-        this.outputConfig.title = this.config.title;
-        this.outputConfig.description = this.config.description;
-        this.outputConfig.locales = this.config.locales;
-        this.outputConfig.navs = this.config.navs;
+        this.siteConfig.title = this.config.title;
+        this.siteConfig.description = this.config.description;
+        this.siteConfig.locales = this.config.locales;
+        this.siteConfig.navs = this.config.navs;
 
         this.hooks.run.call();
         if (!kits.fs.existsSync(config.docsPath)) {
@@ -73,7 +73,7 @@ export class Builder implements BuilderFacade {
         await kits.fs.remove(this.paths.absSiteContentPath);
         await this.generateContentDocs();
         await this.generateContentLibs();
-        await this.generateOutputConfig();
+        await this.generateSiteConfig();
     }
 
     private async generateContentDocs() {
@@ -138,10 +138,10 @@ export class Builder implements BuilderFacade {
         }
     }
 
-    private async generateOutputConfig() {
+    private async generateSiteConfig() {
         const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
         kits.template.generate('config.hbs', outputConfigPath, {
-            outputConfig: JSON.stringify(this.outputConfig, null, 4)
+            siteConfig: JSON.stringify(this.siteConfig, null, 4)
         });
     }
 
