@@ -1,5 +1,7 @@
 import * as fs from './filesystem';
-import { CliKits } from './cli-kits';
+import { Kits } from './kits';
 import { Template } from './template';
+import * as strings from './strings';
+import { Print } from './print';
 
-export { fs, CliKits as kits, Template };
+export { fs, Kits as kits, Template, strings, Print };

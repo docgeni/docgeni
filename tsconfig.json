@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "importHelpers": true,
     "target": "es2015",
     "lib": [

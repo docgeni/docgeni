@@ -1,14 +1,17 @@
 import { Template } from './template';
 import * as fs from './filesystem';
 import * as path from 'path';
+import * as strings from './strings';
+import { Print } from './print';
 
-export interface CliKitsConfig {
+export interface KitsConfig {
     baseDir: string;
 }
 
-export class CliKits {
-    private static _config: CliKitsConfig;
+export class Kits {
+    private static _config: KitsConfig;
     private static _template: Template;
+    private static _print: Print;
 
     static get config() {
         if (!this._config) {
@@ -17,7 +20,7 @@ export class CliKits {
         return this._config;
     }
 
-    static initialize(config: CliKitsConfig) {
+    static initialize(config: KitsConfig) {
         this._config = config;
     }
 
@@ -32,5 +35,18 @@ export class CliKits {
 
     static get fs() {
         return fs;
+    }
+
+    static get strings() {
+        return strings;
+    }
+
+    static get print() {
+        if (!this._print) {
+            this._print = new Print({
+                timePrefix: true
+            });
+        }
+        return this._print;
     }
 }
