@@ -4,12 +4,12 @@ import * as path from 'path';
 import * as strings from './strings';
 import { Print } from './print';
 
-export interface KitsConfig {
+export interface ToolkitConfig {
     baseDir: string;
 }
 
-export class Kits {
-    private static _config: KitsConfig;
+export class Toolkit {
+    private static _config: ToolkitConfig;
     private static _template: Template;
     private static _print: Print;
 
@@ -20,7 +20,7 @@ export class Kits {
         return this._config;
     }
 
-    static initialize(config: KitsConfig) {
+    static initialize(config: ToolkitConfig) {
         this._config = config;
     }
 

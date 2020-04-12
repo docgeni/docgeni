@@ -2,8 +2,8 @@ import { CommandModule } from 'yargs';
 import { DocgeniConfig, DEFAULT_CONFIG, Library } from '../interfaces';
 import * as chokidar from 'chokidar';
 import * as fs from 'fs-extra';
-import watch from 'gulp-watch';
-import path from 'path';
+import * as watch from 'gulp-watch';
+import * as path from 'path';
 import { Builder } from '../builder';
 
 export const serveCommand: CommandModule = {

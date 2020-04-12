@@ -1,7 +1,7 @@
 import * as fs from './filesystem';
-import { Kits } from './kits';
+import { Toolkit } from './toolkit';
 import { Template } from './template';
 import * as strings from './strings';
 import { Print } from './print';
 
-export { fs, Kits as kits, Template, strings, Print };
+export { fs, Toolkit as toolkit, Template, strings, Print };

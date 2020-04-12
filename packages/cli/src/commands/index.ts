@@ -1,4 +1,4 @@
-import yargs from 'yargs';
+import * as yargs from 'yargs';
 import { buildCommand } from './build';
 import { serveCommand } from './serve';
 import { getConfiguration } from '../configuration';
