@@ -12,7 +12,7 @@ Add scripts to package.json as followings:
 
 ```json
 {
-  scripts: {
+  "scripts": {
     ...
     "docs:start": "docgeni serve",
     "docs:build": "docgeni build"
