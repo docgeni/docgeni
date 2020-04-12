@@ -20,9 +20,9 @@ export enum Levels {
 export class Print {
     constructor(private options: PrintOptions = {}) {}
 
-    get colors() {
-        return chalk;
-    }
+    // get colors() {
+    //     return chalk;
+    // }
 
     debug(message: string) {
         const msg = this.format(Levels.debug, message);

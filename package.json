@@ -8,12 +8,12 @@
     "build": "ng build",
     "build:template": "ng build template",
     "build:preset": "ng build preset",
-    "build:kits": "yarn workspace @docgeni/kits run build",
+    "build:toolkit": "yarn workspace @docgeni/toolkit run build",
     "test": "NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docs:build": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build",
-    "docs:start": "npm run build:kits && NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
+    "docs:start": "yarn build:toolkit && NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
     "tsc": "tsc -p ./packages/docgeni",
     "preinstall": "node scripts/check-yarn.js"
   },
@@ -21,7 +21,7 @@
   "workspaces": [
     "./packages/core",
     "./packages/cli",
-    "./packages/kits"
+    "./packages/toolkit"
   ],
   "dependencies": {
     "@angular/animations": "~9.0.6",
@@ -72,6 +72,6 @@
     "ts-node": "^8.7.0",
     "tslint": "~5.18.0",
     "typemoq": "^2.1.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.8.3"
   }
 }

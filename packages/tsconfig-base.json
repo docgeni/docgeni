@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig.config",
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
@@ -7,7 +6,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "composite": true,
-    "moduleResolution": "node",
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@docgeni/*": ["./packages/*/src"]
     }
