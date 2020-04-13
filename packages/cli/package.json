@@ -32,7 +32,8 @@
     "gulp-watch": "^5.0.1",
     "marked": "^0.8.1",
     "tapable": "^1.1.3",
-    "@docgeni/toolkit": "0.0.1"
+    "@docgeni/toolkit": "0.0.1",
+    "@docgeni/core": "0.0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",

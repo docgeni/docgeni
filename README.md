@@ -22,4 +22,15 @@ Add scripts to package.json as followings:
 ```
 Add `docs` folder and add `index.md` file to docs.
 
-run `npm run docs:dev` and open `http://127.0.0.1:8888`
+run `npm run docs:start` and open `http://127.0.0.1:8888`
+
+## Development
+
+```
+yarn   // install dependencies for all packages
+```
+
+```
+yarn docs:build   // build docs for test
+yarn docs:start   // build docs for test and watch
+```
