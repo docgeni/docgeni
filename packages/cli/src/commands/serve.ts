@@ -20,7 +20,9 @@ export const serveCommand: CommandModule = {
     handler: async (argv: any) => {
         const config = argv as DocgeniConfig;
 
-        const builder = new Builder({});
+        const builder = new Builder({
+            watch: true
+        });
 
         builder.run(config);
 
