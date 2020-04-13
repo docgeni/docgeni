@@ -1,4 +1,5 @@
 import * as chalk from 'chalk';
+import { colors, Colors } from './colors';
 import { timestamp, isFunction } from './utils';
 import { format } from 'util';
 
@@ -9,7 +10,7 @@ export interface PrintOptions {
 }
 
 export enum Levels {
-    nativeInfo,
+    fancy,
     info,
     debug,
     warn,
@@ -20,19 +21,31 @@ export enum Levels {
 export class Print {
     constructor(private options: PrintOptions = {}) {}
 
-    // get colors() {
-    //     return chalk;
-    // }
+    get chalk(): chalk.Chalk {
+        return chalk;
+    }
 
-    debug(message: string) {
-        const msg = this.format(Levels.debug, message);
+    get colors(): Colors {
+        return colors;
+    }
+
+    /**
+     * Prints text without theme.
+     *
+     * Use this when you're writing stuff outside the toolkit of our
+     * printing scheme.  hint: rarely.
+     *
+     * @param message The message to write.
+     */
+    fancy(message: string, ...optionalParams: any[]) {
+        const msg = this.format(Levels.fancy, message, ...optionalParams);
         if (!this.options.silent) {
             console.log(msg);
         }
     }
 
-    nativeInfo(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.nativeInfo, message, ...optionalParams);
+    debug(message: string) {
+        const msg = this.format(Levels.debug, message);
         if (!this.options.silent) {
             console.log(msg);
         }
