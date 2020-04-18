@@ -1,5 +1,5 @@
-import { IDocgeni } from '../docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 
 export interface Plugin {
-    apply(docgeni: IDocgeni): void;
+    apply(docgeni: DocgeniContext): void;
 }

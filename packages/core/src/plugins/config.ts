@@ -1,10 +1,10 @@
 import { Plugin } from './plugin';
-import { IDocgeni } from '../docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniSiteConfig } from 'src/interfaces';
 
 const PLUGIN_NAME = 'ConfigPlugin';
 export class ConfigPlugin implements Plugin {
-    apply(docgeni: IDocgeni): void {
+    apply(docgeni: DocgeniContext): void {
         const siteConfig: Partial<DocgeniSiteConfig> = {};
         docgeni.hooks.run.tap(PLUGIN_NAME, () => {
             siteConfig.title = docgeni.config.title;

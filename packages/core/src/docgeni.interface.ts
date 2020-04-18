@@ -1,5 +1,6 @@
 import { DocgeniConfig } from './interfaces';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
+import { DocType } from './enums';
 
 export interface DocgeniPaths {
     cwd: string;
@@ -11,12 +12,24 @@ export interface DocgeniPaths {
     absSiteContentPath?: string;
 }
 
+export interface DocComponentMeta {
+    category: string;
+    title: string;
+    subtitle: string;
+    description?: string;
+}
+
 export interface DocSourceFile {
     absPath: string;
     content: string;
     dirname: string;
     ext: string;
     basename: string;
+    docType: DocType;
+    result: {
+        html: string;
+        meta?: DocComponentMeta;
+    };
 }
 
 export interface DocgeniHooks {
@@ -26,11 +39,11 @@ export interface DocgeniHooks {
     emit: SyncHook<unknown>;
 }
 
-export interface IDocgeni {
-    watch: boolean;
+export interface DocgeniContext {
+    readonly watch: boolean;
     readonly config: DocgeniConfig;
     readonly paths: DocgeniPaths;
-    hooks: DocgeniHooks;
+    readonly hooks: DocgeniHooks;
 }
 
 export interface DocgeniOptions {

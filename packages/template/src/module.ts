@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { docgeniTemplateSharedModule } from './shared/shared.module';
-import { docgeniTemplatePagesModule } from './pages/pages.module';
+import { DocgeniTemplateSharedModule } from './shared/shared.module';
+import { DocgeniTemplatePagesModule } from './pages/pages.module';
 import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services';
 
 @NgModule({
     declarations: [],
-    imports: [docgeniTemplateSharedModule, docgeniTemplatePagesModule],
-    exports: [docgeniTemplateSharedModule, docgeniTemplatePagesModule],
+    imports: [DocgeniTemplateSharedModule, DocgeniTemplatePagesModule],
+    exports: [DocgeniTemplateSharedModule, DocgeniTemplatePagesModule],
     providers: [
         {
             provide: CONFIG_TOKEN,
@@ -14,4 +14,4 @@ import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services';
         }
     ]
 })
-export class docgeniTemplateModule {}
+export class DocgeniTemplateModule {}

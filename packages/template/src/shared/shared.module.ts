@@ -13,6 +13,6 @@ import { FooterComponent } from './footer/footer.component';
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
     exports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule, NavbarComponent, SidebarComponent, FooterComponent]
 })
-export class docgeniTemplateSharedModule {}
+export class DocgeniTemplateSharedModule {}
 
 export { NavbarComponent, FooterComponent, SidebarComponent };

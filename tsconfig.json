@@ -7,7 +7,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": false,
     "importHelpers": true,
@@ -22,6 +22,9 @@
       ],
       "@docgeni/template/*": [
         "packages/template/src/*"
+      ],
+      "@docgeni/toolkit/*": [
+        "packages/toolkit/src/*"
       ],
       "a-lib": [
         "packages/a-lib/public-api.ts"

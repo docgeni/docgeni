@@ -3,7 +3,6 @@ import { resolve } from 'path';
 import * as chokidar from 'chokidar';
 import { getConfiguration } from './configuration';
 import { Markdown } from './markdown';
-import { logger } from './utils/logger';
 
 async function main() {
     const config = getConfiguration();
@@ -12,7 +11,6 @@ async function main() {
 
     const watcher = chokidar.watch(docsFolder, {});
     watcher.on('change', (path, stats) => {
-        logger.info(path);
         console.log(stats);
     });
     // const source = readFileSync(resolve(docsFolder, './guides/getting-started.md'), 'UTF-8');

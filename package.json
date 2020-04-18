@@ -5,19 +5,22 @@
     "ng": "ng",
     "start": "ng serve --port 8888 --hmr",
     "build:a-lib": "ng build a-lib",
-    "build": "ng build",
+    "build": "yarn build-deps && yarn build:cli && yarn build:template",
     "build:template": "ng build template",
     "build:preset": "ng build preset",
     "build:toolkit": "yarn workspace @docgeni/toolkit run build",
     "build:core": "yarn workspace @docgeni/core run build",
+    "build-deps": "yarn build:toolkit && yarn build:core",
+    "build:cli": "yarn workspace @docgeni/cli run build",
     "test": "NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-deps": "yarn build:toolkit && yarn build:core",
     "docs:build": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build",
     "docs:start": "yarn build:toolkit && NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
     "tsc": "tsc -p ./packages/docgeni",
-    "preinstall": "node scripts/check-yarn.js"
+    "preinstall": "node scripts/check-yarn.js",
+    "release-only": "ts-node --project ./scripts/tsconfig.json ./scripts/release.ts",
+    "release": "yarn build && yarn release-only"
   },
   "private": true,
   "workspaces": [
@@ -74,6 +77,6 @@
     "ts-node": "^8.7.0",
     "tslint": "~5.18.0",
     "typemoq": "^2.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "3.7.5"
   }
 }

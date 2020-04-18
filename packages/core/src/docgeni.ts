@@ -4,9 +4,10 @@ import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniSiteConfig } from './int
 import * as path from 'path';
 import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
-import { IDocgeni, DocgeniPaths, DocgeniHooks, DocSourceFile, DocgeniOptions } from './docgeni.interface';
+import { DocgeniContext, DocgeniPaths, DocgeniHooks, DocSourceFile, DocgeniOptions } from './docgeni.interface';
+import { DocType } from './enums';
 
-export class Docgeni implements IDocgeni {
+export class Docgeni implements DocgeniContext {
     watch: boolean;
     paths: DocgeniPaths;
     config: DocgeniConfig;
@@ -90,14 +91,16 @@ export class Docgeni implements IDocgeni {
         // this.hooks.docsCompile.call(docSourceFiles);
     }
 
-    private async generateContentDoc(absDocPath: string, absDestDirPath: string) {
+    private async generateContentDoc(absDocPath: string, absDestDirPath: string, docType: DocType = DocType.general) {
         const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
         const docSourceFile: DocSourceFile = {
             absPath: absDocPath,
             content,
             dirname: path.dirname(absDocPath),
             ext: path.extname(absDocPath),
-            basename: path.basename(absDocPath)
+            basename: path.basename(absDocPath),
+            docType,
+            result: null
         };
         this.hooks.docCompile.call(docSourceFile);
         const docDestPath = path.resolve(absDestDirPath, docSourceFile.basename);
@@ -124,8 +127,11 @@ export class Docgeni implements IDocgeni {
                 const absComponentDocZHPath = path.resolve(absComponentDocPath, 'zh-cn.md');
                 const absComponentExamplesDestPath = path.resolve(absSiteContentComponentsPath, dir);
                 // const absComponentDocENPath = path.resolve(absComponentDocPath, 'en-us.md');
-                await this.generateContentDoc(absComponentDocZHPath, path.resolve(absSiteContentComponentsPath, `${dir}/doc`));
-                // await this.generateContentDoc(absComponentDocENPath, path.resolve(absSiteContentComponentsPath, `${dir}/doc`));
+                const docSource = await this.generateContentDoc(
+                    absComponentDocZHPath,
+                    path.resolve(absSiteContentComponentsPath, `${dir}/doc`),
+                    DocType.component
+                );
                 await toolkit.fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
             }
         }
