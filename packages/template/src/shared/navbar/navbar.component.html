@@ -6,12 +6,12 @@
 <a [routerLink]="['/']" class="title">{{ config.value.title }}</a>
 
 <div class="nav">
-  <ng-container *ngFor="let nav of navs">
-    <a *ngIf="nav.isExternal; else navLink" href="{{ nav.path }}" target="_blank"
-      >{{ nav.title }} <ng-container *ngTemplateOutlet="svg"></ng-container>
+  <ng-container *ngFor="let channel of channels">
+    <a *ngIf="channel.isExternal; else navLink" href="{{ channel.path }}" target="_blank"
+      >{{ channel.title }} <ng-container *ngTemplateOutlet="svg"></ng-container>
     </a>
     <ng-template #navLink>
-      <a [routerLink]="nav.path" routerLinkActive="active">{{ nav.title }}</a>
+      <a [routerLink]="channel.path" routerLinkActive="active">{{ channel.title }}</a>
     </ng-template>
   </ng-container>
 </div>

@@ -1,6 +1,6 @@
 import { Plugin } from './plugin';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniSiteConfig } from 'src/interfaces';
+import { DocgeniSiteConfig } from '../interfaces';
 
 const PLUGIN_NAME = 'ConfigPlugin';
 export class ConfigPlugin implements Plugin {

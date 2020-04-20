@@ -1,4 +1,6 @@
-<doc-sidebar [navs]="navigationService.channel.children"></doc-sidebar>
-<div class="content">
-  <router-outlet></router-outlet>
-</div>
+<ng-container *ngIf="navigationService.channel">
+  <doc-sidebar [navs]="navigationService.channel.children"></doc-sidebar>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>

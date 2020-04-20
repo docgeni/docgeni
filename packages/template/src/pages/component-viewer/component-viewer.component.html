@@ -1,2 +1,7 @@
-<p>component-viewer works!</p>
-<input [(ngModel)]="name" name="name">
+<div *ngIf="docItem">
+  <h1>{{ docItem.title }}</h1>
+  <a [routerLink]="['./overview']" routerLinkActive="active">概览</a>
+  <a [routerLink]="['./api']" routerLinkActive="active">API</a>
+  <a [routerLink]="['./examples']" routerLinkActive="active">Examples</a>
+</div>
+<router-outlet></router-outlet>

@@ -26,6 +26,9 @@
       "@docgeni/toolkit/*": [
         "packages/toolkit/src/*"
       ],
+      "@docgeni/core/*": [
+        "packages/core/src/*"
+      ],
       "a-lib": [
         "packages/a-lib/public-api.ts"
       ],

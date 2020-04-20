@@ -1,6 +1,6 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniSiteConfig } from './interfaces';
+import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniSiteConfig, NavItem } from './interfaces';
 import * as path from 'path';
 import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
@@ -77,7 +77,7 @@ export class Docgeni implements DocgeniContext {
         for (const docPath of docPaths) {
             const stats = await toolkit.fs.stat(docPath);
             if (stats.isDirectory()) {
-                console.log(`This is dir ${docPath}`);
+                toolkit.print.info(`${docPath.replace(this.paths.absDocsPath, '')} is folder`);
             } else {
                 const docDestDirname = path.dirname(docPath).replace(this.paths.absDocsPath, absSiteContentDocsPath);
                 const docSourceFile = await this.generateContentDoc(docPath, docDestDirname);
@@ -119,6 +119,13 @@ export class Docgeni implements DocgeniContext {
         const absLibPath = this.getAbsPath(lib.rootPath);
         const dirs = await toolkit.fs.readdir(absLibPath);
         const absSiteContentComponentsPath = path.resolve(this.paths.absSiteContentPath, 'components');
+        const libNav = this.siteConfig.navs.find(nav => {
+            return nav.lib === lib.name;
+        });
+        libNav.children = libNav.children || [];
+        const categories: NavItem[] = [];
+        const categoriesNameMap: { [key: string]: NavItem } = {};
+
         for (const dir of dirs) {
             const absComponentPath = path.resolve(absLibPath, dir);
             if (this.dirIsDirectory(absComponentPath)) {
@@ -132,6 +139,31 @@ export class Docgeni implements DocgeniContext {
                     path.resolve(absSiteContentComponentsPath, `${dir}/doc`),
                     DocType.component
                 );
+
+                const component = {
+                    name: dir,
+                    meta: docSource.result.meta,
+                    camelCaseName: toolkit.strings.camelCase(dir, { pascalCase: true })
+                };
+                let categoryNav = categoriesNameMap[component.meta.category];
+                if (!categoryNav) {
+                    categoryNav = {
+                        title: component.meta.category,
+                        path: '',
+                        children: []
+                    };
+                    categoriesNameMap[component.meta.category] = categoryNav;
+                    libNav.children.push(categoryNav);
+                }
+                categoryNav.children.push({
+                    title: component.meta.title,
+                    alias: component.meta.subtitle,
+                    path: `${dir}`,
+                    icon: '',
+                    isExternal: false,
+                    content: docSource.content
+                });
+                toolkit.print.info('component:', component);
                 await toolkit.fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
             }
         }

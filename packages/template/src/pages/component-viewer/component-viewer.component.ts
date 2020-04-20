@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService, DocItem, NavigationItem } from '../../services';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-component-viewer',
-    templateUrl: './component-viewer.component.html',
-    styleUrls: ['./component-viewer.component.scss']
+    selector: 'doc-component-viewer',
+    templateUrl: './component-viewer.component.html'
 })
-export class ComponentViewerComponent implements OnInit {
-    name = '';
+export class DocComponentViewerComponent implements OnInit {
+    @Input() docItem: DocItem;
 
     constructor() {}
 

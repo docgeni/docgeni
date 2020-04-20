@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NavigationService } from './navigation.service';
-import { Channel } from './interfaces';
+import { ChannelItem } from './interfaces';
 
 @Injectable({ providedIn: 'root' })
-export class ChannelResolver implements Resolve<Channel> {
+export class ChannelResolver implements Resolve<ChannelItem> {
     constructor(private navigationService: NavigationService) {}
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Channel> | Promise<Channel> | Channel {
+    resolve(route: ActivatedRouteSnapshot): Observable<ChannelItem> | Promise<ChannelItem> | ChannelItem {
         const path = route.paramMap.get('channel');
-        const channel = this.navigationService.getPrimaryNav(path);
+        const channel = this.navigationService.getChannel(path);
         return channel;
     }
 }

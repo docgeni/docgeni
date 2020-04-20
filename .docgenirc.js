@@ -17,7 +17,7 @@ module.exports = {
                         {
                             title: '介绍',
                             path: '',
-                            content: '开始使用'
+                            content: 'Docgeni 是一个现代化，简单好用的文档生成工具'
                         },
                         {
                             title: '开始使用',
@@ -66,7 +66,13 @@ module.exports = {
     libs: [
         {
             name: 'alib',
-            rootPath: './packages/a-lib'
+            rootPath: './packages/a-lib',
+            categories: [
+                {
+                    key: 'general',
+                    name: '通用'
+                }
+            ]
         }
     ]
 };

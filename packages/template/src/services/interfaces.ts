@@ -1,7 +1,7 @@
 export interface DocItem {
     title: string;
     path: string;
-    content: string;
+    content?: string;
 }
 
 export interface NavigationItem {
@@ -10,6 +10,7 @@ export interface NavigationItem {
     // 外部链接
     isExternal?: boolean;
     children?: Array<NavigationItem | DocItem>;
+    lib?: string;
 }
 
-export type Channel = NavigationItem;
+export type ChannelItem = NavigationItem;

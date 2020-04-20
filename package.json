@@ -24,8 +24,8 @@
   },
   "private": true,
   "workspaces": [
-    "./packages/core",
     "./packages/cli",
+    "./packages/core",
     "./packages/toolkit"
   ],
   "dependencies": {

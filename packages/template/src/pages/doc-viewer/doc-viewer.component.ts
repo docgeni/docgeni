@@ -7,12 +7,15 @@ import {
     Type,
     ɵrenderComponent,
     ElementRef,
-    Injector
+    Injector,
+    OnDestroy
 } from '@angular/core';
 import * as core from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { NavigationService, DocItem } from '../../services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService, DocItem, NavigationItem } from '../../services';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'doc-viewer',
@@ -27,21 +30,33 @@ export class DocViewerComponent implements OnInit {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    docItem: DocItem;
+    docItem$: Observable<DocItem | Document> = this.navigationService.docItem$.asObservable();
+
+    get channel() {
+        return this.navigationService.channel;
+    }
+
+    get isComponentDoc() {
+        return this.navigationService.channel && this.navigationService.channel.lib;
+    }
 
     constructor(
         private http: HttpClient,
         private elementRef: ElementRef<HTMLElement>,
         private injector: Injector,
         private route: ActivatedRoute,
+        private router: Router,
         private navigationService: NavigationService
     ) {}
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
-            const doc = params.get('doc');
-            const docItem = this.navigationService.getDocItem(doc);
-            this.docItem = docItem;
+            const id = params.get('id');
+            this.navigationService.selectDocItem(id);
+            if (this.isComponentDoc && !this.navigationService.docItem) {
+                const firstDoc = this.navigationService.getChannelFirstDocItem();
+                this.router.navigate([`./${firstDoc.path}`], { relativeTo: this.route });
+            }
         });
         // const script = document.createElement('script');
         // script.type = 'text/javascript';
@@ -67,5 +82,26 @@ export class DocViewerComponent implements OnInit {
         //     this.exampleModuleFactory = new ɵNgModuleFactory(module.FirstLibModule);
         //     this.exampleComponentType = module.FirstLibComponent;
         // });
+    }
+}
+
+@Component({
+    selector: 'doc-viewer-home',
+    template: ''
+})
+export class DocViewerHomeComponent implements OnDestroy {
+    destroy$ = new Subject();
+
+    constructor(private navigationService: NavigationService, route: ActivatedRoute, router: Router) {
+        navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
+            if (docItem) {
+                router.navigate(['../overview'], { relativeTo: route });
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

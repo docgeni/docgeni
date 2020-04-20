@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService, NavigationItem, ConfigService } from '../../services';
+import { NavigationService, ChannelItem, ConfigService } from '../../services';
 
 @Component({
     selector: 'doc-navbar',
@@ -7,11 +7,11 @@ import { NavigationService, NavigationItem, ConfigService } from '../../services
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-    navs: NavigationItem[];
+    channels: ChannelItem[];
 
     constructor(public config: ConfigService, public navigationService: NavigationService) {}
 
     ngOnInit(): void {
-        this.navs = this.navigationService.getPrimaryNavs();
+        this.channels = this.navigationService.getChannels();
     }
 }

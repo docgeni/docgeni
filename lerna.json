@@ -1,6 +1,8 @@
 {
   "packages": [
-    "packages/*"
+    "packages/toolkit",
+    "packages/core",
+    "packages/cli"
   ],
   "command": {
     "version": {

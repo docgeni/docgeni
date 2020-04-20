@@ -6,6 +6,9 @@
   "homepage": "https://github.com/docgeni/docgeni#readme",
   "license": "ISC",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"
