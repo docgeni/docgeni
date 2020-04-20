@@ -4,9 +4,9 @@
   </li>
 
   <ng-template let-nav #navTemplate>
-    <ng-container *ngIf="nav.children; else item">
+    <ng-container *ngIf="nav.items; else item">
       <span class="title">{{ nav.title }}</span>
-      <ul *ngFor="let nav of nav.children" class="menus">
+      <ul *ngFor="let nav of nav.items" class="menus">
         <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: nav }"></ng-container>
       </ul>
     </ng-container>

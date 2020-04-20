@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { NavigationItem } from './interfaces';
+import { NavigationItem } from '../interfaces';
 
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 

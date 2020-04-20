@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService, ChannelItem, ConfigService } from '../../services';
+import { NavigationService, ConfigService } from '../../services';
+import { ChannelItem } from '../../interfaces';
 
 @Component({
     selector: 'doc-navbar',

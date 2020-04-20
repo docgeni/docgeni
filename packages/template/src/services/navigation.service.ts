@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { NavigationItem, DocItem, ChannelItem } from './interfaces';
+import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces';
 import { CONFIG_TOKEN, DocgeniConfig } from './config';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class NavigationService {
-    channel$ = new BehaviorSubject<NavigationItem>(null);
+    channel$ = new BehaviorSubject<ChannelItem>(null);
 
     docItem$ = new BehaviorSubject<DocItem>(null);
 
@@ -25,10 +25,10 @@ export class NavigationService {
         return this.config.navs;
     }
 
-    getChannel(path: string) {
+    getChannel(path: string): ChannelItem {
         return this.config.navs.find(nav => {
             return nav.path === path;
-        });
+        }) as ChannelItem;
     }
 
     selectChannelByPath(path: string) {
@@ -39,18 +39,18 @@ export class NavigationService {
     }
 
     getDocItem(path: string): DocItem {
-        if (!this.channel || !this.channel.children) {
+        if (!this.channel || !this.channel.items) {
             return null;
         }
-        let result: NavigationItem = null;
-        for (const nav of this.channel.children) {
+        let result: DocItem = null;
+        for (const nav of this.channel.items) {
             if (this.isDocItem(nav)) {
                 if (this.isPathEqual(nav.path, path)) {
                     result = nav;
                     break;
                 }
             } else {
-                const item = nav.children.find(subNav => {
+                const item = nav.items.find(subNav => {
                     return this.isPathEqual(subNav.path, path);
                 });
                 if (item) {
@@ -59,7 +59,7 @@ export class NavigationService {
                 }
             }
         }
-        return result as DocItem;
+        return result;
     }
 
     selectDocItem(path: string) {
@@ -69,10 +69,10 @@ export class NavigationService {
 
     getChannelFirstDocItem() {
         let docItem: DocItem;
-        if (this.channel && this.channel.children) {
-            docItem = this.channel.children[0];
-            if (docItem['children']) {
-                docItem = docItem['children'][0];
+        if (this.channel && this.channel.items) {
+            const category = this.channel.items[0];
+            if (category && this.isCategoryItem(category)) {
+                docItem = category.items[0];
             }
         }
         return docItem;
@@ -86,7 +86,11 @@ export class NavigationService {
         }
     }
 
+    private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {
+        return category['items'];
+    }
+
     private isDocItem(item: any): item is DocItem {
-        return !item.children;
+        return !item.items;
     }
 }
