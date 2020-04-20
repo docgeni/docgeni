@@ -1,5 +1,5 @@
 import * as pluralize from 'pluralize';
-
+import camelcase from 'camelcase';
 /**
  * Whether plural, 是否是复数
  * @param word word
@@ -14,4 +14,8 @@ export function isPlural(word: string) {
  */
 export function isSingular(word: string) {
     return pluralize.isSingular(word);
+}
+
+export function camelCase(input: string | readonly string[], options?: camelcase.Options): string {
+    return camelcase(input, options);
 }

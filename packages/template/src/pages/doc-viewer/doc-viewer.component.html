@@ -1,5 +1,10 @@
-<div *ngIf="docItem">
-  <h1>{{ docItem.title }}</h1>
+<ng-container *ngIf="docItem$ | async as docItem">
+  <ng-container *ngIf="isComponentDoc; else general">
+    <doc-component-viewer [docItem]="docItem"></doc-component-viewer>
+  </ng-container>
 
-  <div>{{ docItem.content }}</div>
-</div>
+  <ng-template #general>
+    <h1>{{ docItem.title }}</h1>
+    <div>{{ docItem.content }}</div>
+  </ng-template>
+</ng-container>

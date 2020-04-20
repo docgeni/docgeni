@@ -1,25 +1,38 @@
-export interface NavItemBase {
+// export interface NavItemBase<T> {
+//     /* Title of Nav */
+//     title: string;
+//     /** 别名 */
+//     alias: string;
+//     /** 路径 url */
+//     path: string;
+//     /** 图标 */
+//     icon?: string;
+//     children?: T[];
+// }
+
+// export interface ComponentsNavItem extends NavItemBase<ComponentsNavItem> {
+//     lib?: string;
+// }
+
+// export interface DocNavItem extends NavItemBase<DocNavItem> {
+//     isExternal?: boolean;
+//     content?: string;
+// }
+
+export interface NavItem {
     /* Title of Nav */
     title: string;
     /** 别名 */
-    alias: string;
+    alias?: string;
     /** 路径 url */
-    path: string;
+    path?: string;
     /** 图标 */
     icon?: string;
-}
-
-export interface ComponentsNavItem extends NavItemBase {
-    lib?: string;
-}
-
-export interface DocNavItem extends NavItemBase {
-    /** 子文档 */
     children?: NavItem[];
-    isExternal: boolean;
+    lib?: string;
+    isExternal?: boolean;
     content?: string;
 }
-export type NavItem = DocNavItem & ComponentsNavItem;
 
 export interface Locale {
     key: string;
@@ -68,7 +81,7 @@ export interface DocgeniSiteConfig {
 }
 
 export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
-    title: 'Doc Generator',
+    title: 'Docgeni',
     silent: false,
     docsPath: 'docs',
     sitePath: 'site',

@@ -2,7 +2,7 @@ export interface NavItemBase {
     /* Title of Nav */
     title: string;
     /** 别名 */
-    alias: string;
+    alias?: string;
     /** 路径 url */
     path: string;
     /** 图标 */
@@ -16,7 +16,7 @@ export interface ComponentsNavItem extends NavItemBase {
 export interface DocNavItem extends NavItemBase {
     /** 子文档 */
     children?: NavItem[];
-    isExternal: boolean;
+    isExternal?: boolean;
     content?: string;
 }
 export type NavItem = DocNavItem & ComponentsNavItem;
@@ -68,7 +68,7 @@ export interface DocgeniSiteConfig {
 }
 
 export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
-    title: 'Doc Generator',
+    title: 'Docgeni',
     silent: false,
     docsPath: 'docs',
     sitePath: 'site',

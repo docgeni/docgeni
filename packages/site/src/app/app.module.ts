@@ -1,18 +1,19 @@
 import {
-    docgeniTemplateModule,
+    DocgeniTemplateModule,
     DocViewerComponent,
     CONFIG_TOKEN,
     DEFAULT_CONFIG,
     DocgeniConfig,
-    DocRootComponent
+    DocRootComponent,
+    routes
 } from '@docgeni/template';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { config } from './content/config';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [],
-    imports: [AppRoutingModule, docgeniTemplateModule],
+    imports: [DocgeniTemplateModule, RouterModule.forRoot(routes)],
     providers: [
         {
             provide: CONFIG_TOKEN,

@@ -19,7 +19,7 @@ import { NavigationItem, NavigationService } from '../../services';
     styleUrls: ['./channel.component.scss']
 })
 export class DocChannelComponent implements OnInit {
-    @HostBinding(`class.layout`) isLayout = true;
+    @HostBinding(`class.docgeni-layout`) isLayout = true;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
