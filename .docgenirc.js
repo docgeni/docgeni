@@ -10,10 +10,10 @@ module.exports = {
         {
             title: '指南',
             path: 'guides',
-            children: [
+            items: [
                 {
                     title: '介绍',
-                    children: [
+                    items: [
                         {
                             title: '介绍',
                             path: '',
@@ -28,7 +28,7 @@ module.exports = {
                 },
                 {
                     title: '组件示例',
-                    children: [
+                    items: [
                         {
                             title: '如何写组件示例',
                             path: 'how-write-component-demo',
@@ -69,8 +69,18 @@ module.exports = {
             rootPath: './packages/a-lib',
             categories: [
                 {
-                    key: 'general',
-                    name: '通用'
+                    id: 'general',
+                    title: '通用',
+                    locals: {
+                        "en-us":"General"
+                    }
+                },
+                {
+                    id: 'layout',
+                    title: '布局',
+                    locals: {
+                        "en-us":"Layout"
+                    }
                 }
             ]
         }

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationItem, NavigationService } from '../../services';
+import { NavigationService } from '../../services';
 
 @Component({
     selector: 'doc-channel',

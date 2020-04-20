@@ -1,8 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationService, DocItem, NavigationItem } from '../../services';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { DocItem } from '../../interfaces';
 
 @Component({
     selector: 'doc-component-viewer',

@@ -1,11 +1,12 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, Library, DEFAULT_CONFIG, DocgeniSiteConfig, NavItem } from './interfaces';
+import { DocgeniConfig, Library, DocgeniSiteConfig, NavigationItem, CategoryItem, ChannelItem } from './interfaces';
 import * as path from 'path';
 import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext, DocgeniPaths, DocgeniHooks, DocSourceFile, DocgeniOptions } from './docgeni.interface';
 import { DocType } from './enums';
+import { DEFAULT_CONFIG } from './defaults';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -119,12 +120,12 @@ export class Docgeni implements DocgeniContext {
         const absLibPath = this.getAbsPath(lib.rootPath);
         const dirs = await toolkit.fs.readdir(absLibPath);
         const absSiteContentComponentsPath = path.resolve(this.paths.absSiteContentPath, 'components');
-        const libNav = this.siteConfig.navs.find(nav => {
+        const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
             return nav.lib === lib.name;
         });
-        libNav.children = libNav.children || [];
-        const categories: NavItem[] = [];
-        const categoriesNameMap: { [key: string]: NavItem } = {};
+        const categories: CategoryItem[] = lib.categories;
+        const categoriesNameMap: { [key: string]: CategoryItem } = toolkit.utils.keyBy(categories, 'id');
+        libNav.items = categories;
 
         for (const dir of dirs) {
             const absComponentPath = path.resolve(absLibPath, dir);
@@ -148,22 +149,25 @@ export class Docgeni implements DocgeniContext {
                 let categoryNav = categoriesNameMap[component.meta.category];
                 if (!categoryNav) {
                     categoryNav = {
+                        id: component.meta.category,
                         title: component.meta.category,
-                        path: '',
-                        children: []
+                        items: []
                     };
                     categoriesNameMap[component.meta.category] = categoryNav;
-                    libNav.children.push(categoryNav);
+                    categories.push(categoryNav);
                 }
-                categoryNav.children.push({
+                if (!categoryNav.items) {
+                    categoryNav.items = [];
+                }
+                categoryNav.items.push({
+                    id: dir,
                     title: component.meta.title,
-                    alias: component.meta.subtitle,
+                    subtitle: component.meta.subtitle,
                     path: `${dir}`,
-                    icon: '',
-                    isExternal: false,
                     content: docSource.content
                 });
-                toolkit.print.info('component:', component);
+
+                // toolkit.print.info('component:', component);
                 await toolkit.fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
             }
         }

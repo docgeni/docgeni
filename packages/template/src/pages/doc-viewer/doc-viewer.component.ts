@@ -13,9 +13,10 @@ import {
 import * as core from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationService, DocItem, NavigationItem } from '../../services';
+import { NavigationService } from '../../services';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DocItem, NavigationItem } from '../../interfaces';
 
 @Component({
     selector: 'doc-viewer',
@@ -30,7 +31,7 @@ export class DocViewerComponent implements OnInit {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    docItem$: Observable<DocItem | Document> = this.navigationService.docItem$.asObservable();
+    docItem$: Observable<DocItem | NavigationItem> = this.navigationService.docItem$.asObservable();
 
     get channel() {
         return this.navigationService.channel;
@@ -55,7 +56,9 @@ export class DocViewerComponent implements OnInit {
             this.navigationService.selectDocItem(id);
             if (this.isComponentDoc && !this.navigationService.docItem) {
                 const firstDoc = this.navigationService.getChannelFirstDocItem();
-                this.router.navigate([`./${firstDoc.path}`], { relativeTo: this.route });
+                if (!id) {
+                    this.router.navigate([`./${firstDoc.path}`], { relativeTo: this.route });
+                }
             }
         });
         // const script = document.createElement('script');

@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, Input } from '@angular/core';
-import { NavigationItem } from '../../services';
+import { NavigationItem } from '../../interfaces';
 
 @Component({
     selector: 'doc-sidebar',

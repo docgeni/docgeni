@@ -2,6 +2,7 @@ import { Template } from './template';
 import * as fs from './filesystem';
 import * as path from 'path';
 import * as strings from './strings';
+import * as utils from './utils';
 import { Print } from './print';
 
 export interface ToolkitConfig {
@@ -39,6 +40,10 @@ export class Toolkit {
 
     static get strings() {
         return strings;
+    }
+
+    static get utils() {
+        return utils;
     }
 
     static get print() {
