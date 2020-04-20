@@ -4,7 +4,6 @@ import {
     DocgeniTemplatePagesModule,
     DocChannelComponent,
     DocComponentViewerComponent,
-    DocComponentHomeComponent,
     DocComponentOverviewComponent,
     DocComponentApiComponent,
     DocComponentExamplesComponent

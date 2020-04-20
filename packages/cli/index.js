@@ -1,6 +1,6 @@
 const env = process.env.NODE_ENV;
 if (env === 'development') {
-    require('./src/commands/index');
+    require('./src/index');
 } else {
-    require('./lib/commands/index');
+    require('./lib/index');
 }
