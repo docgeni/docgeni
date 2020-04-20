@@ -16,7 +16,6 @@ export const buildCommand: CommandModule = {
     },
     handler: async (argv: any) => {
         const config = argv as DocgeniConfig;
-
         const docgeni = new Docgeni({});
         docgeni.run(config);
     }

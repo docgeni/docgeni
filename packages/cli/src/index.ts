@@ -1,23 +1,33 @@
-import { readdirSync, readFileSync } from 'fs';
-import { resolve } from 'path';
-import * as chokidar from 'chokidar';
+import * as yargs from 'yargs';
+import { buildCommand } from './build';
+import { serveCommand } from './serve';
 import { getConfiguration } from './configuration';
-import { Markdown } from './markdown';
+import { DEFAULT_CONFIG } from '@docgeni/core';
 
-async function main() {
-    const config = getConfiguration();
-    const docsFolder = resolve(process.cwd(), config.docsPath);
-    const subFolders = readdirSync(docsFolder);
+const argv = yargs
+    .scriptName('docgeni')
+    .usage('Usage: $0 <build|dev> [options]')
+    .option('docs-path', {
+        desc: `Docs folder path`,
+        default: DEFAULT_CONFIG.docsPath
+    })
+    .option('site-path', {
+        desc: `Site path`,
+        default: DEFAULT_CONFIG.sitePath
+    })
+    .command(buildCommand)
+    .command(serveCommand)
+    .demandCommand(1, 'must provide a valid command')
+    .detectLocale(false)
+    .wrap(120)
+    .version()
+    .showHelpOnFail(false)
+    .pkgConf('wpm')
+    .config(getConfiguration())
+    .help().argv;
 
-    const watcher = chokidar.watch(docsFolder, {});
-    watcher.on('change', (path, stats) => {
-        console.log(stats);
-    });
-    // const source = readFileSync(resolve(docsFolder, './guides/getting-started.md'), 'UTF-8');
-    // const result = Markdown.toHTML(source);
-    // logger.info(docsFolder, 'hello', 'word');
-    // logger.info(subFolders);
-    // logger.info(result);
+const command = argv._[0];
+
+if (!['build', 'dev', 'serve'].includes(command)) {
+    yargs.showHelp();
 }
-
-main();
