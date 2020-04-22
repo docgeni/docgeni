@@ -15,7 +15,7 @@ import {
 } from './docgeni.interface';
 import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
-import { LibraryCompiler } from './library-compiler';
+import { LibraryCompiler, ExamplesEmitter } from './library-compiler';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -126,18 +126,16 @@ export class Docgeni implements DocgeniContext {
     }
 
     private async generateContentLibs() {
+        const examplesEmitter = new ExamplesEmitter(this);
         for (const lib of this.config.libs) {
-            await this.generateContentLib(lib);
+            const libraryCompiler = new LibraryCompiler(this, lib, examplesEmitter);
+            const groups = await libraryCompiler.compile();
+            const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
+                return nav.lib === lib.name;
+            });
+            libNav.items = groups;
         }
-    }
-
-    private async generateContentLib(lib: Library) {
-        const libraryCompiler = new LibraryCompiler(this, lib);
-        const groups = await libraryCompiler.compile();
-        const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
-            return nav.lib === lib.name;
-        });
-        libNav.items = groups;
+        examplesEmitter.emit();
     }
 
     private async generateSiteConfig() {
