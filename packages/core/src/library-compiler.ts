@@ -17,14 +17,47 @@ export interface LibComponent {
     };
 }
 
+export class ExamplesEmitter {
+    private absDestSiteContentPath: string;
+    private absDestExamplesSourceAssetsPath: string;
+    private componentLiveExamples: Map<string, LiveExample[]> = new Map();
+    private liveExampleComponents: { [key: string]: LiveExample } = {};
+
+    constructor(private docgeni: DocgeniContext) {
+        this.absDestSiteContentPath = docgeni.paths.absSiteContentPath;
+    }
+
+    addExamples(key: string, examples: LiveExample[]) {
+        this.componentLiveExamples.set(key, examples);
+        examples.forEach(example => {
+            this.liveExampleComponents[example.key] = example;
+        });
+    }
+
+    emit() {
+        toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
+            data: JSON.stringify(this.liveExampleComponents, null, 4)
+        });
+        const moduleKeys = [];
+        this.componentLiveExamples.forEach((value, key) => {
+            moduleKeys.push(key);
+        });
+        toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
+            moduleKeys
+        });
+    }
+}
+
 export class LibraryCompiler {
     private absLibPath: string;
     private absDestSiteContentComponentsPath: string;
     private absDestExamplesSourceAssetsPath: string;
-    constructor(private docgeni: DocgeniContext, private lib: Library) {
+    private examplesEmitter: ExamplesEmitter;
+    constructor(private docgeni: DocgeniContext, private lib: Library, examplesEmitter: ExamplesEmitter) {
         this.absLibPath = this.docgeni.getAbsPath(this.lib.rootPath);
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
         this.absDestExamplesSourceAssetsPath = path.resolve(this.docgeni.paths.absSitePath, `src/assets/examples-source/${this.lib.name}`);
+        this.examplesEmitter = examplesEmitter;
     }
 
     private async getComponents(): Promise<LibComponent[]> {
@@ -68,15 +101,14 @@ export class LibraryCompiler {
         const groups: CategoryItem[] = this.lib.categories;
         const groupsMap: { [key: string]: CategoryItem } = toolkit.utils.keyBy(groups, 'id');
 
-        toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'));
-
+        // const examplesEmitter = new ExamplesEmitter(this.docgeni);
         for (const component of components) {
             // Component Doc
             const docSource = await this.compileComponentDoc(component);
 
             // Examples
             const examples = await this.generateComponentExamples(component);
-
+            this.examplesEmitter.addExamples(`${this.lib.name}/${component.name}`, examples);
             component.meta = docSource.result.meta;
             let group = groupsMap[component.meta.category];
             // Group 不存在，根据文档中配置的 Title 动态添加
@@ -96,10 +128,9 @@ export class LibraryCompiler {
                 subtitle: component.meta.subtitle,
                 path: component.name,
                 content: docSource.content,
-                examples
+                examples: examples.map(example => example.key)
             });
         }
-
         return groups;
     }
 

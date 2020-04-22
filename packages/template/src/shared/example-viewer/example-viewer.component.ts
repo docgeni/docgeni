@@ -11,6 +11,8 @@ export class DocExampleViewerComponent implements OnInit {
 
     @Input() example: LiveExample;
 
+    @Input() exampleName: string;
+
     @Input() libName: string;
 
     @Input() componentId: string;
@@ -23,7 +25,7 @@ export class DocExampleViewerComponent implements OnInit {
     constructor(private exampleLoader: ExampleLoader) {}
 
     ngOnInit(): void {
-        this.exampleLoader.load(this.example.module.importSpecifier, this.example.key).then(result => {
+        this.exampleLoader.load(this.exampleName).then(result => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
         });

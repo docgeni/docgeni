@@ -7,5 +7,5 @@ export interface ExampleLoadResult {
 }
 @Injectable()
 export abstract class ExampleLoader {
-    abstract load(importSpecifier: string, exampleComponentName: string): Promise<ExampleLoadResult>;
+    abstract load(exampleName: string): Promise<ExampleLoadResult>;
 }

@@ -18,7 +18,7 @@ export interface DocItem {
 }
 
 export interface ComponentDocItem extends DocItem {
-    examples?: LiveExample[];
+    examples?: string[];
 }
 
 export interface CategoryItem {
