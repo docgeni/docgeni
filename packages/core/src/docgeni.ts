@@ -129,11 +129,11 @@ export class Docgeni implements DocgeniContext {
         const examplesEmitter = new ExamplesEmitter(this);
         for (const lib of this.config.libs) {
             const libraryCompiler = new LibraryCompiler(this, lib, examplesEmitter);
-            const groups = await libraryCompiler.compile();
+            const items = await libraryCompiler.compile();
             const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
                 return nav.lib === lib.name;
             });
-            libNav.items = groups;
+            libNav.items = items;
         }
         examplesEmitter.emit();
     }

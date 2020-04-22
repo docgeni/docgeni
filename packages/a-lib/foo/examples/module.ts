@@ -11,5 +11,3 @@ import { AlibFooModule } from 'a-lib/foo';
     providers: []
 })
 export class AlibFooExamplesModule {}
-
-export const EXAMPLE_COMPONENTS = [AlibFooBasicExampleComponent, AlibFooAdvanceExampleComponent];
