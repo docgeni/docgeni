@@ -1,0 +1,7 @@
+<div class="docs-example-viewer-body">
+  <ng-template
+    *ngIf="exampleComponentType && exampleModuleFactory"
+    [ngComponentOutlet]="exampleComponentType"
+    [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
+  ></ng-template>
+</div>

@@ -1,6 +1,8 @@
 import { NgModuleInfo } from './module';
 
 export interface LiveExample {
+    key: string;
+    name: string;
     /** Title of the example. */
     title: string;
     /** Name of the example component. */

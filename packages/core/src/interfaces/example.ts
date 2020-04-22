@@ -1,6 +1,10 @@
 import { NgModuleInfo } from './module';
 
 export interface LiveExample {
+     /** Key of the example. alib-button-basic-example */
+    key: string;
+    /** Name of the example. basic or advance */
+    name: string;
     /** Title of the example. */
     title: string;
     /** Name of the example component. */

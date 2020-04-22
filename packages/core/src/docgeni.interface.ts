@@ -1,6 +1,7 @@
-import { DocgeniConfig } from './interfaces';
+import { DocgeniConfig, Library } from './interfaces';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocType } from './enums';
+import { Print } from '@docgeni/toolkit';
 
 export interface DocgeniPaths {
     cwd: string;
@@ -32,10 +33,20 @@ export interface DocSourceFile {
     };
 }
 
+export interface LibraryContext {
+    lib: Library;
+}
+
+export interface LibraryComponentContext {
+    name: string;
+}
+
 export interface DocgeniHooks {
     run: SyncHook;
     docCompile: SyncHook<DocSourceFile>;
     docsCompile: SyncHook<DocSourceFile[]>;
+    libCompile: SyncHook<LibraryContext>;
+    libComponentCompile: SyncHook<LibraryContext, LibraryComponentContext>;
     emit: SyncHook<unknown>;
 }
 
@@ -44,6 +55,8 @@ export interface DocgeniContext {
     readonly config: DocgeniConfig;
     readonly paths: DocgeniPaths;
     readonly hooks: DocgeniHooks;
+    readonly logger: Print;
+    getAbsPath(absOrRelativePath: string): string;
 }
 
 export interface DocgeniOptions {

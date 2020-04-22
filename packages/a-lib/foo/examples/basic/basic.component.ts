@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'alib-foo-basic-example',
-    templateUrl: './name.component.html',
-    styleUrls: ['./name.component.scss']
+    templateUrl: './basic.component.html',
+    styleUrls: ['./basic.component.scss']
 })
 export class AlibFooBasicExampleComponent implements OnInit {
     constructor() {}

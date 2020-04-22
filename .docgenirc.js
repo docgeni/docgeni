@@ -45,7 +45,14 @@ module.exports = {
         },
         {
             title: '设计',
-            path: 'design'
+            path: 'design',
+            items: [
+                {
+                    title: '设计原则',
+                    path: '',
+                    content: '设计原则'
+                },
+            ]
         },
         {
             title: '组件',

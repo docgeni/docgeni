@@ -19,3 +19,7 @@ export function isSingular(word: string) {
 export function camelCase(input: string | readonly string[], options?: camelcase.Options): string {
     return camelcase(input, options);
 }
+
+export function pascalCase(input: string | readonly string[]): string {
+    return camelcase(input, { pascalCase: true });
+}

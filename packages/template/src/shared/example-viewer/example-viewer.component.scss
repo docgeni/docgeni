@@ -1,0 +1,12 @@
+.doc-example-viewer {
+    display: block;
+    border: 1px solid $border-color;
+    padding: 10px;
+}
+
+.doc-examples {
+    .doc-example-viewer {
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+}
