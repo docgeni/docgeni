@@ -98,8 +98,8 @@ export class LibraryCompiler {
     async compile(): Promise<CategoryItem[]> {
         const components = await this.getComponents();
 
-        const groups: CategoryItem[] = this.lib.categories;
-        const groupsMap: { [key: string]: CategoryItem } = toolkit.utils.keyBy(groups, 'id');
+        const categories: CategoryItem[] = this.lib.categories;
+        const categoriesMap: { [key: string]: CategoryItem } = toolkit.utils.keyBy(categories, 'id');
 
         // const examplesEmitter = new ExamplesEmitter(this.docgeni);
         for (const component of components) {
@@ -110,19 +110,19 @@ export class LibraryCompiler {
             const examples = await this.generateComponentExamples(component);
             this.examplesEmitter.addExamples(`${this.lib.name}/${component.name}`, examples);
             component.meta = docSource.result.meta;
-            let group = groupsMap[component.meta.category];
-            // Group 不存在，根据文档中配置的 Title 动态添加
-            if (!group) {
-                group = {
+            let category = categoriesMap[component.meta.category];
+            // category 不存在，根据文档中配置的 Title 动态添加
+            if (!category) {
+                category = {
                     id: component.meta.category,
                     title: component.meta.category,
                     items: []
                 };
-                groupsMap[component.meta.category] = group;
-                groups.push(group);
+                categoriesMap[component.meta.category] = category;
+                categories.push(category);
             }
-            group.items = group.items || [];
-            group.items.push({
+            category.items = category.items || [];
+            category.items.push({
                 id: component.name,
                 title: component.meta.title,
                 subtitle: component.meta.subtitle,
@@ -131,7 +131,7 @@ export class LibraryCompiler {
                 examples: examples.map(example => example.key)
             });
         }
-        return groups;
+        return categories;
     }
 
     private async generateComponentExamples(component: LibComponent) {
