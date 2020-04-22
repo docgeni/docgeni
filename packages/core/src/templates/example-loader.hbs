@@ -1,0 +1,22 @@
+import { Injectable } from '@angular/core';
+import { ExampleLoader, ExampleLoadResult } from '@docgeni/template';
+
+@Injectable()
+export class LibExampleLoader extends ExampleLoader {
+    load(importSpecifier: string, componentKey: string): Promise<ExampleLoadResult> {
+        return new Promise(resolve => {
+            /* webpackExclude: /\.map$/ */
+            import(`./components/${importSpecifier}/index`).then(result => {
+                resolve({
+                    moduleType: result.EXAMPLES_MODULE,
+                    componentType: result.EXAMPLE_COMPONENTS[componentKey]
+                });
+            });
+        });
+    }
+}
+
+export const LIB_EXAMPLE_LOADER_PROVIDER = {
+    provide: ExampleLoader,
+    useClass: LibExampleLoader
+};

@@ -4,9 +4,18 @@ import { DocgeniConfig, Library, DocgeniSiteConfig, NavigationItem, CategoryItem
 import * as path from 'path';
 import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
-import { DocgeniContext, DocgeniPaths, DocgeniHooks, DocSourceFile, DocgeniOptions } from './docgeni.interface';
+import {
+    DocgeniContext,
+    DocgeniPaths,
+    DocgeniHooks,
+    DocSourceFile,
+    DocgeniOptions,
+    LibraryContext,
+    LibraryComponentContext
+} from './docgeni.interface';
 import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
+import { LibraryCompiler } from './library-compiler';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -19,10 +28,16 @@ export class Docgeni implements DocgeniContext {
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
-        docCompile: new SyncHook<DocSourceFile>(['docSourceFiles']),
-        docsCompile: new SyncHook<DocSourceFile[]>(['docSourceFile']),
+        docCompile: new SyncHook<DocSourceFile>(['docSourceFile']),
+        docsCompile: new SyncHook<DocSourceFile[]>(['docSourceFiles']),
+        libCompile: new SyncHook<LibraryContext>(['lib']),
+        libComponentCompile: new SyncHook<LibraryContext, LibraryComponentContext>(['lib', 'component']),
         emit: new AsyncSeriesHook<void>([])
     };
+
+    get logger() {
+        return toolkit.print;
+    }
 
     constructor(options: DocgeniOptions) {
         this.paths = {
@@ -117,60 +132,12 @@ export class Docgeni implements DocgeniContext {
     }
 
     private async generateContentLib(lib: Library) {
-        const absLibPath = this.getAbsPath(lib.rootPath);
-        const dirs = await toolkit.fs.readdir(absLibPath);
-        const absSiteContentComponentsPath = path.resolve(this.paths.absSiteContentPath, 'components');
+        const libraryCompiler = new LibraryCompiler(this, lib);
+        const groups = await libraryCompiler.compile();
         const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
             return nav.lib === lib.name;
         });
-        const categories: CategoryItem[] = lib.categories;
-        const categoriesNameMap: { [key: string]: CategoryItem } = toolkit.utils.keyBy(categories, 'id');
-        libNav.items = categories;
-
-        for (const dir of dirs) {
-            const absComponentPath = path.resolve(absLibPath, dir);
-            if (this.dirIsDirectory(absComponentPath)) {
-                const absComponentDocPath = path.resolve(absComponentPath, 'doc');
-                const absComponentExamplesPath = path.resolve(absComponentPath, 'examples');
-                const absComponentDocZHPath = path.resolve(absComponentDocPath, 'zh-cn.md');
-                const absComponentExamplesDestPath = path.resolve(absSiteContentComponentsPath, dir);
-                // const absComponentDocENPath = path.resolve(absComponentDocPath, 'en-us.md');
-                const docSource = await this.generateContentDoc(
-                    absComponentDocZHPath,
-                    path.resolve(absSiteContentComponentsPath, `${dir}/doc`),
-                    DocType.component
-                );
-
-                const component = {
-                    name: dir,
-                    meta: docSource.result.meta,
-                    camelCaseName: toolkit.strings.camelCase(dir, { pascalCase: true })
-                };
-                let categoryNav = categoriesNameMap[component.meta.category];
-                if (!categoryNav) {
-                    categoryNav = {
-                        id: component.meta.category,
-                        title: component.meta.category,
-                        items: []
-                    };
-                    categoriesNameMap[component.meta.category] = categoryNav;
-                    categories.push(categoryNav);
-                }
-                if (!categoryNav.items) {
-                    categoryNav.items = [];
-                }
-                categoryNav.items.push({
-                    id: dir,
-                    title: component.meta.title,
-                    subtitle: component.meta.subtitle,
-                    path: `${dir}`,
-                    content: docSource.content
-                });
-
-                // toolkit.print.info('component:', component);
-                await toolkit.fs.copy(absComponentExamplesPath, absComponentExamplesDestPath);
-            }
-        }
+        libNav.items = groups;
     }
 
     private async generateSiteConfig() {
@@ -180,11 +147,7 @@ export class Docgeni implements DocgeniContext {
         });
     }
 
-    private dirIsDirectory(dir: string) {
-        return toolkit.fs.statSync(dir).isDirectory();
-    }
-
-    private getAbsPath(absOrRelativePath: string) {
+    public getAbsPath(absOrRelativePath: string) {
         return path.resolve(this.paths.cwd, absOrRelativePath);
     }
 

@@ -74,7 +74,7 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "protractor": "~5.4.3",
-    "ts-node": "^8.7.0",
+    "ts-node": "8.7.0",
     "tslint": "~5.18.0",
     "typemoq": "^2.1.0",
     "typescript": "3.7.5"

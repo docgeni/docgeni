@@ -1,0 +1,13 @@
+
+{{#each examples}}
+import { {{componentName}} } from './{{name}}/{{name}}.component';
+{{/each}}
+import { {{examplesModule}} } from './module';
+
+export const EXAMPLE_COMPONENTS = {
+{{#each examples}}
+ '{{key}}': {{componentName}},
+{{/each}}
+};
+
+export const EXAMPLES_MODULE = {{examplesModule}};

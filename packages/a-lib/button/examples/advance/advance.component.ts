@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'alib-button-advance-example',
     template: `
-        <alib-foo></alib-foo>
+        <alib-button>Advance Button</alib-button>
     `
 })
 export class AlibButtonAdvanceExampleComponent implements OnInit {

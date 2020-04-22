@@ -1,3 +1,5 @@
 @import './variables.scss';
-@import '~bootstrap/scss/bootstrap.scss';
+// @import '~bootstrap/scss/bootstrap.scss';
+@import './global.scss';
 @import './layout.scss';
+@import '../shared/example-viewer/example-viewer.component.scss';

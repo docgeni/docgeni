@@ -14,6 +14,10 @@ export interface DocItem {
     };
 }
 
+export interface ComponentDocItem extends DocItem {
+    examples: string[];
+}
+
 export interface CategoryItem {
     id?: string;
     title: string;
