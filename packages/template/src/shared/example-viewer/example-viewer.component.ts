@@ -9,13 +9,9 @@ import { ExampleLoader } from '../../services/example-loader';
 export class ExampleViewerComponent implements OnInit {
     @HostBinding('class.dg-example-viewer') isExampleViewer = true;
 
-    @Input() example: LiveExample;
+    example: LiveExample;
 
     @Input() exampleName: string;
-
-    @Input() libName: string;
-
-    @Input() componentId: string;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -28,6 +24,7 @@ export class ExampleViewerComponent implements OnInit {
         this.exampleLoader.load(this.exampleName).then(result => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
+            this.example = result.example;
         });
     }
 }

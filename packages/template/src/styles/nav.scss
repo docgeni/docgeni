@@ -1,0 +1,22 @@
+.dg-tab-links {
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    .dg-tab-link {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 8px 20px;
+        transform: translateY(1px);
+        color: $gray-700;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        // font-family: Roboto,"Helvetica Neue",sans-serif;
+        &:hover,
+        &.active {
+            color: $primary;
+            border-bottom: 2px solid $primary;
+        }
+    }
+}

@@ -1,12 +1,45 @@
 .dg-example-viewer {
     display: block;
     border: 1px solid $border-color;
-    padding: 10px;
+
+    .dg-example-viewer-header {
+        border-bottom: 1px solid $border-color;
+        padding: 5px 20px;;
+    }
+
+    .dg-example-viewer-body {
+        padding: 20px;
+    }
+    .dg-example-viewer-intro {
+        border-top: 1px solid $border-color;
+        padding: 20px;
+        position: relative;
+        margin-top: 6px;
+        &::before {
+            content: attr(title);
+            position: absolute;
+            top: 0;
+            left: 1em;
+            margin-left: -4px;
+            padding: 0 4px;
+            color: #454d64;
+            font-weight: 500;
+            background-color: #fff;
+            transform: translateY(-50%);
+        }
+    }
 }
 
 .dg-examples {
+    >:first-child {
+        margin-top: 30px;
+    }
+
+    >:not(:first-child) {
+        margin-top: 20px;
+    }
+
     .dg-example-viewer {
         margin-bottom: 20px;
-        margin-top: 10px;
     }
 }

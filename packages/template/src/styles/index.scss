@@ -2,7 +2,10 @@
 // @import '~bootstrap/scss/bootstrap.scss';
 @import './global.scss';
 @import './layout.scss';
-@import '../shared/example-viewer/example-viewer.component.scss';
-@import '../shared/sidebar/sidebar.component.scss';
+@import './nav.scss';
+@import './doc.scss';
+@import '../shared/navbar/navbar.component.scss';
 @import '../shared/footer/footer.component.scss';
+@import '../shared/sidebar/sidebar.component.scss';
+@import '../shared/example-viewer/example-viewer.component.scss';
 @import '../pages/home/home.component.scss';
