@@ -1,19 +1,12 @@
 import { NgModule } from '@angular/core';
-import { DocgeniTemplateSharedModule } from './shared/shared.module';
-import {
-    DocgeniTemplatePagesModule,
-    DocChannelComponent,
-    DocComponentViewerComponent,
-    DocComponentOverviewComponent,
-    DocComponentApiComponent,
-    DocComponentExamplesComponent
-} from './pages/pages.module';
+import { DocgeniSharedModule } from './shared/shared.module';
+import { DocgeniPagesModule } from './pages/pages.module';
 import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services';
 
 @NgModule({
     declarations: [],
-    imports: [DocgeniTemplateSharedModule, DocgeniTemplatePagesModule],
-    exports: [DocgeniTemplateSharedModule, DocgeniTemplatePagesModule],
+    imports: [DocgeniSharedModule, DocgeniPagesModule],
+    exports: [DocgeniSharedModule, DocgeniPagesModule],
     providers: [
         {
             provide: CONFIG_TOKEN,

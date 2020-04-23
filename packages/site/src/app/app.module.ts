@@ -1,12 +1,8 @@
 import {
     DocgeniTemplateModule,
-    DocViewerComponent,
     CONFIG_TOKEN,
-    DEFAULT_CONFIG,
-    DocgeniConfig,
-    DocRootComponent,
     routes,
-    ExampleLoader
+    RootComponent
 } from '@docgeni/template';
 import { NgModule } from '@angular/core';
 import { config } from './content/config';
@@ -23,7 +19,7 @@ import { LIB_EXAMPLE_LOADER_PROVIDER } from './content/example-loader';
             useValue: config
         }
     ],
-    bootstrap: [DocRootComponent]
+    bootstrap: [RootComponent]
 })
 export class AppModule {
     constructor() {}

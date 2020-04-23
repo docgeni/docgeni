@@ -1,3 +1,6 @@
+export * from './config';
 export * from './example';
+export * from './library';
+export * from './locale';
 export * from './module';
-export * from './doc-item';
+export * from './navigation-item';

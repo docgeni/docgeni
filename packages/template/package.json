@@ -5,6 +5,7 @@
     "@angular/common": "^9.0.7",
     "@angular/core": "^9.0.7",
     "@angular/router": "^9.0.7",
+    "@docgeni/core": "*",
     "tslib": "^1.10.0"
   }
 }

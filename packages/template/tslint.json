@@ -5,12 +5,14 @@
       true,
       "attribute",
       "doc",
+      "dg",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
       "doc",
+      "dg",
       "kebab-case"
     ]
   }

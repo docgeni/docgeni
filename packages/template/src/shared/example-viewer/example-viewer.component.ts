@@ -3,11 +3,11 @@ import { LiveExample } from '../../interfaces';
 import { ExampleLoader } from '../../services/example-loader';
 
 @Component({
-    selector: 'doc-example-viewer',
+    selector: 'dg-example-viewer',
     templateUrl: './example-viewer.component.html'
 })
-export class DocExampleViewerComponent implements OnInit {
-    @HostBinding('class.doc-example-viewer') isExampleViewer = true;
+export class ExampleViewerComponent implements OnInit {
+    @HostBinding('class.dg-example-viewer') isExampleViewer = true;
 
     @Input() example: LiveExample;
 

@@ -7,10 +7,10 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { DocExampleViewerComponent } from './example-viewer/example-viewer.component';
+import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, SidebarComponent, DocExampleViewerComponent],
+    declarations: [NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent],
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
     exports: [
         CommonModule,
@@ -21,9 +21,9 @@ import { DocExampleViewerComponent } from './example-viewer/example-viewer.compo
         NavbarComponent,
         SidebarComponent,
         FooterComponent,
-        DocExampleViewerComponent
+        ExampleViewerComponent
     ]
 })
-export class DocgeniTemplateSharedModule {}
+export class DocgeniSharedModule {}
 
-export { NavbarComponent, FooterComponent, SidebarComponent, DocExampleViewerComponent };
+export { NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent };

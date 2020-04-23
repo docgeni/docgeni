@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DocItem, ComponentDocItem } from '../../interfaces';
 
 @Component({
-    selector: 'doc-component-viewer',
+    selector: 'dg-component-viewer',
     templateUrl: './component-viewer.component.html'
 })
-export class DocComponentViewerComponent implements OnInit {
+export class ComponentViewerComponent implements OnInit {
     @Input() docItem: ComponentDocItem;
 
     constructor() {}

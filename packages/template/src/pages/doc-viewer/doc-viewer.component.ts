@@ -19,9 +19,8 @@ import { takeUntil } from 'rxjs/operators';
 import { DocItem, NavigationItem } from '../../interfaces';
 
 @Component({
-    selector: 'doc-viewer',
-    templateUrl: './doc-viewer.component.html',
-    styleUrls: ['./doc-viewer.component.scss']
+    selector: 'dg-doc-viewer',
+    templateUrl: './doc-viewer.component.html'
 })
 export class DocViewerComponent implements OnInit {
     // @HostBinding(`class.layout`) isLayout = true;

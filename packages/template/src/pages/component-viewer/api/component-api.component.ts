@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'doc-component-api',
+    selector: 'dg-component-api',
     templateUrl: './component-api.component.html'
 })
-export class DocComponentApiComponent implements OnInit {
+export class ComponentApiComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {}

@@ -1,17 +1,11 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { NavigationItem } from '../interfaces';
-
+import { DocgeniSiteConfig } from '../interfaces';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
-export interface DocgeniConfig {
-    title: string;
-    description: string;
-    repoUrl?: string;
-    navs: NavigationItem[];
-}
+export { DocgeniSiteConfig };
 
-export const DEFAULT_CONFIG: DocgeniConfig = {
-    title: 'Doc Gen',
+export const DEFAULT_CONFIG: DocgeniSiteConfig = {
+    title: 'Docgeni',
     description: '为 Angular 组件开发场景而生的文档工具',
     navs: []
 };
@@ -20,5 +14,5 @@ export const DEFAULT_CONFIG: DocgeniConfig = {
     providedIn: 'root'
 })
 export class ConfigService {
-    constructor(@Inject(CONFIG_TOKEN) public value: DocgeniConfig) {}
+    constructor(@Inject(CONFIG_TOKEN) public value: DocgeniSiteConfig) {}
 }

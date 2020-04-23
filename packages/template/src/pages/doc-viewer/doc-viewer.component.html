@@ -1,6 +1,6 @@
 <ng-container *ngIf="docItem$ | async as docItem">
   <ng-container *ngIf="isComponentDoc; else general">
-    <doc-component-viewer [docItem]="docItem"></doc-component-viewer>
+    <dg-component-viewer [docItem]="docItem"></dg-component-viewer>
   </ng-container>
 
   <ng-template #general>

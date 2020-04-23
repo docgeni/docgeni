@@ -1,21 +1,21 @@
 import { Routes } from '@angular/router';
-import { DocHomeComponent } from './pages/home/home.component';
-import { DocChannelComponent } from './pages/channel/channel.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ChannelComponent } from './pages/channel/channel.component';
 import { DocViewerComponent, DocViewerHomeComponent } from './pages/doc-viewer/doc-viewer.component';
 import {
-    DocComponentOverviewComponent,
-    DocComponentApiComponent,
-    DocComponentExamplesComponent
+    ComponentOverviewComponent,
+    ComponentApiComponent,
+    ComponentExamplesComponent
 } from './pages/pages.module';
 
 export const routes: Routes = [
     {
         path: '',
-        component: DocHomeComponent
+        component: HomeComponent
     },
     {
         path: ':channel',
-        component: DocChannelComponent,
+        component: ChannelComponent,
         children: [
             {
                 path: '',
@@ -31,15 +31,15 @@ export const routes: Routes = [
                     },
                     {
                         path: 'overview',
-                        component: DocComponentOverviewComponent
+                        component: ComponentOverviewComponent
                     },
                     {
                         path: 'api',
-                        component: DocComponentApiComponent
+                        component: ComponentApiComponent
                     },
                     {
                         path: 'examples',
-                        component: DocComponentExamplesComponent
+                        component: ComponentExamplesComponent
                     }
                 ]
             }
