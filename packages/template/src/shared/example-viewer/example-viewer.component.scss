@@ -1,42 +1,84 @@
+@mixin top-show-title-variant() {
+    position: relative;
+    margin-top: 6px;
+    &::before {
+        position: absolute;
+        content: attr(title);
+        top: 0;
+        left: 1em;
+        margin-left: -4px;
+        padding: 0 4px;
+        // color: $gray-700;
+        font-weight: 500;
+        background-color: $white;
+        transform: translateY(-50%);
+    }
+}
+
 .dg-example-viewer {
     display: block;
     border: 1px solid $border-color;
+    box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.1);
 
     .dg-example-viewer-header {
         border-bottom: 1px solid $border-color;
-        padding: 5px 20px;;
+        padding: 5px 20px;
     }
 
     .dg-example-viewer-body {
         padding: 20px;
     }
+
     .dg-example-viewer-intro {
         border-top: 1px solid $border-color;
         padding: 20px;
-        position: relative;
-        margin-top: 6px;
-        &::before {
-            content: attr(title);
-            position: absolute;
-            top: 0;
-            left: 1em;
-            margin-left: -4px;
-            padding: 0 4px;
-            color: #454d64;
-            font-weight: 500;
-            background-color: #fff;
-            transform: translateY(-50%);
+        @include top-show-title-variant();
+    }
+
+    .dg-example-viewer-actions {
+        border-top: 1px dashed $border-color;
+        padding: 10px;
+        text-align: center;
+        @include top-show-title-variant();
+        clear: both;
+        .action-item {
+            color: $gray-500;
+            padding: 5px;
+            margin-right: 10px;
+
+            &:hover {
+                color: $primary;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .dg-example-viewer-sources {
+        border-top: 1px solid $border-color;
+        display: block;
+        flex-direction: column;
+
+        .dg-tab-links {
+            padding: 0px 10px;
+        }
+
+        .dg-example-viewer-sources-content {
+            padding: 20px;
+            background: $gray-100;
+            pre {
+                margin: 0px;
+            }
         }
     }
 }
 
 .dg-examples {
-    >:first-child {
+    > :first-child {
         margin-top: 30px;
     }
 
-    >:not(:first-child) {
-        margin-top: 20px;
+    > :not(:first-child) {
+        margin-top: 30px;
     }
 
     .dg-example-viewer {

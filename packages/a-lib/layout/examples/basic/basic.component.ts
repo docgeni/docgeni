@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-/** @title Layout Basic Usage */
+/**
+ * @title Basic
+ * @order 1
+ * @description 简单的使用场景
+ */
 
 @Component({
     selector: 'alib-layout-basic-example',

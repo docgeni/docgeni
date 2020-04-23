@@ -1,7 +1,7 @@
 <ng-container *ngIf="example">
-  <div class="dg-example-viewer-header">
-    <h2>{{example.title}}</h2>
-  </div>
+  <!-- <div class="dg-example-viewer-header">
+    <h2>{{ example.title }}</h2>
+  </div> -->
   <div class="dg-example-viewer-body">
     <ng-template
       *ngIf="exampleComponentType && exampleModuleFactory"
@@ -11,9 +11,18 @@
   </div>
   <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">
   </div> -->
-  <!-- <div class="dg-example-viewer-actions">
-    <button>复制</button>
-    <button>代码</button>
-  </div> -->
-
+  <div class="dg-example-viewer-actions" title="{{ example.title }}">
+    <a class="action-item" href="javascript:;"><dg-icon iconName="copy"></dg-icon></a>
+    <a class="action-item" href="javascript:;"><dg-icon iconName="code"></dg-icon></a>
+    <a class="action-item" href="javascript:;"><dg-icon iconName="external"></dg-icon></a>
+  </div>
+  <div class="dg-example-viewer-sources">
+    <div class="dg-tab-links">
+      <a class="dg-tab-link active" href="javascript:;">TS</a>
+      <a class="dg-tab-link" href="javascript:;">HTML</a>
+    </div>
+    <div class="dg-example-viewer-sources-content">
+      <pre><code>const i = 100;</code></pre>
+    </div>
+  </div>
 </ng-container>

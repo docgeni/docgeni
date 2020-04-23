@@ -8,9 +8,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
+import { IconComponent } from './icon/icon.component';
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent],
+    declarations: [NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent, IconComponent],
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
     exports: [
         CommonModule,
@@ -21,9 +22,10 @@ import { ExampleViewerComponent } from './example-viewer/example-viewer.componen
         NavbarComponent,
         SidebarComponent,
         FooterComponent,
-        ExampleViewerComponent
+        ExampleViewerComponent,
+        IconComponent
     ]
 })
 export class DocgeniSharedModule {}
 
-export { NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent };
+export { NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent, IconComponent };
