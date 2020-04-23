@@ -1,11 +1,12 @@
-# `core`
+# @docgeni/core
 
-> TODO: description
+> Core of Docgeni
 
 ## Usage
 
 ```
-const core = require('core');
+const { Docgeni } = require('@docgeni/core');
 
-// TODO: DEMONSTRATE API
+const docgeni = new Docgeni(options);
+docgeni.run(config);
 ```

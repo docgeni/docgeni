@@ -23,3 +23,8 @@ export function camelCase(input: string | readonly string[], options?: camelcase
 export function pascalCase(input: string | readonly string[]): string {
     return camelcase(input, { pascalCase: true });
 }
+
+export function isString(value: any): value is string {
+    return typeof value === 'string';
+}
+
