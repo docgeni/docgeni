@@ -7,7 +7,7 @@ import { NavigationService } from '../../../services';
     templateUrl: './component-examples.component.html'
 })
 export class ComponentExamplesComponent implements OnInit {
-    @HostBinding('class.doc-examples') isComponentExamples = true;
+    @HostBinding('class.dg-examples') isComponentExamples = true;
 
     get examples() {
         return this.componentViewer.docItem.examples || [];

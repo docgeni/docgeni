@@ -16,7 +16,8 @@ export class LibExampleLoader extends ExampleLoader {
             this[example.module.importSpecifier]().then(result => {
                 resolve({
                     moduleType: result.EXAMPLES_MODULE,
-                    componentType: result.EXAMPLE_COMPONENTS[exampleKey]
+                    componentType: result.EXAMPLE_COMPONENTS[exampleKey],
+                    example
                 });
             });
         });

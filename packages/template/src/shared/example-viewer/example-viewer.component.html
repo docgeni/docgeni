@@ -1,7 +1,19 @@
-<div class="docs-example-viewer-body">
-  <ng-template
-    *ngIf="exampleComponentType && exampleModuleFactory"
-    [ngComponentOutlet]="exampleComponentType"
-    [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
-  ></ng-template>
-</div>
+<ng-container *ngIf="example">
+  <div class="dg-example-viewer-header">
+    <h2>{{example.title}}</h2>
+  </div>
+  <div class="dg-example-viewer-body">
+    <ng-template
+      *ngIf="exampleComponentType && exampleModuleFactory"
+      [ngComponentOutlet]="exampleComponentType"
+      [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
+    ></ng-template>
+  </div>
+  <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">
+  </div> -->
+  <!-- <div class="dg-example-viewer-actions">
+    <button>复制</button>
+    <button>代码</button>
+  </div> -->
+
+</ng-container>

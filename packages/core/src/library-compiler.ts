@@ -151,7 +151,7 @@ export class LibraryCompiler {
             examples.push({
                 key,
                 name: dir,
-                title: dir,
+                title: toolkit.strings.pascalCase(dir),
                 componentName,
                 module: {
                     name: moduleName,

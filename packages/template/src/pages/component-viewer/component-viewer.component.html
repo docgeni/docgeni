@@ -1,7 +1,9 @@
 <div *ngIf="docItem">
   <h1>{{ docItem.title }}</h1>
-  <a [routerLink]="['./overview']" routerLinkActive="active">概览</a>
-  <a [routerLink]="['./api']" routerLinkActive="active">API</a>
-  <a [routerLink]="['./examples']" routerLinkActive="active">Examples</a>
+  <div class="dg-tab-links">
+    <a class="dg-tab-link" [routerLink]="['./overview']" routerLinkActive="active">概览</a>
+    <!-- <a [routerLink]="['./api']" routerLinkActive="active">API</a> -->
+    <a class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">示例</a>
+  </div>
 </div>
 <router-outlet></router-outlet>

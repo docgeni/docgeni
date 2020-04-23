@@ -1,13 +1,38 @@
 $primary: #348fe4;
 
+
+
+$gray-100: #f3f3f3 !default;
+$gray-200: #eee !default;
+$gray-210: #e9e9e9 !default;
+$gray-300: #ddd !default;
+$gray-400: #cacaca !default;
+$gray-500: #aaa !default;
+$gray-600: #888 !default;
+$gray-700: #666 !default;
+$gray-800: #333 !default;
 $color-body: #333;
 $white: #fff;
 $black: #000;
-
 $border-color: #eee;
 
+// link
 $link-hover-decoration: none;
 
+// font
+// $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+//         'Segoe UI Symbol';
+$font-family: -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+$font-size-base: 0.875rem !default; // 14px
+$font-size-md: 1rem !default; // 16px
+$font-size-lg: 1.25rem !default; // 20px
+$font-size-sm: 0.75rem !default; // 12px
+$font-size-max-lg: 3.25rem !default; // 补充字体大小 52px
+$font-size-xs: 0.625rem !default; // 10px
+$font-size-xlg: 1.5rem !default; // 24px
+
+// navbar
 $navbar-height: 60px;
 $navbar-background: $primary;
 $navbar-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
@@ -20,5 +45,5 @@ $launch-background: $white;
 // $navbar-color: $black;
 
 // $launch-background: #f5f6f8;
-@import "~bootstrap/scss/functions.scss";
-@import "~bootstrap/scss/variables.scss";
+@import '~bootstrap/scss/functions.scss';
+@import '~bootstrap/scss/variables.scss';
