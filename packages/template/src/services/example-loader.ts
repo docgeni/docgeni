@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LiveExample } from '../../../../dist/template/interfaces';
+import { LiveExample } from '../interfaces';
 
 export interface ExampleLoadResult {
     moduleType: Type<any>;
