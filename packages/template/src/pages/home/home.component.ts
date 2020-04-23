@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { ConfigService } from '../../services';
 
 @Component({
-    selector: 'doc-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    selector: 'dg-home',
+    templateUrl: './home.component.html'
 })
-export class DocHomeComponent implements OnInit {
+export class HomeComponent implements OnInit {
+    @HostBinding(`class.dg-home`) isHome = true;
+
     constructor(public config: ConfigService) {}
 
     ngOnInit(): void {}

@@ -1,6 +1,9 @@
+import { LiveExample } from './example';
+
 export interface DocItem {
     id: string;
     title: string;
+    subtitle: string;
     summary?: string;
     path: string;
     content?: string;
@@ -15,13 +18,13 @@ export interface DocItem {
 }
 
 export interface ComponentDocItem extends DocItem {
-    examples: string[];
+    examples?: string[];
 }
 
 export interface CategoryItem {
     id?: string;
     title: string;
-    items?: Array<DocItem>;
+    items?: Array<DocItem | ComponentDocItem>;
 }
 
 export interface ChannelItem {
@@ -35,7 +38,22 @@ export interface ChannelItem {
             title: string;
         };
     };
-    items: Array<CategoryItem | DocItem>;
+    items?: Array<CategoryItem | DocItem>;
 }
 
 export type NavigationItem = ChannelItem & CategoryItem & DocItem;
+
+// export interface NavItem {
+//     /* Title of Nav */
+//     title: string;
+//     /** 别名 */
+//     subtitle?: string;
+//     /** 路径 url */
+//     path?: string;
+//     /** 图标 */
+//     icon?: string;
+//     items?: NavItem[];
+//     lib?: string;
+//     isExternal?: boolean;
+//     content?: string;
+// }

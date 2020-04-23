@@ -1,32 +1,32 @@
 @import '../../styles/variables.scss';
 
-:host {
+.dg-home {
     display: block;
-}
 
-.docs-launch {
-    background: $launch-background;
-    text-align: center;
-    padding-top: 100px;
-    h1 {
-        color: $black;
+    .dg-launch {
+        background: $launch-background;
+        text-align: center;
+        padding-top: 100px;
+        h1 {
+            color: $black;
+        }
+        .launch-description {
+            margin-bottom: 20px;
+        }
     }
-    .launch-description {
-        margin-bottom: 20px;
-    }
-}
 
-.docs-home-features {
-    padding: 10px 60px;
-    display: flex;
-    .feature {
-      flex: 1 1 0;
-      text-align: center;
+    .dg-features {
+        padding: 10px 60px;
+        display: flex;
+        .feature {
+            flex: 1 1 0;
+            text-align: center;
+        }
     }
-}
 
-@media (min-width: 768px) {
-    .docs-launch {
-        padding: 100px 0px;
+    @media (min-width: 768px) {
+        .dg-launch {
+            padding: 100px 0px;
+        }
     }
 }

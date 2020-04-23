@@ -3,7 +3,7 @@ import { NavigationService, ConfigService } from '../../services';
 import { ChannelItem } from '../../interfaces';
 
 @Component({
-    selector: 'doc-navbar',
+    selector: 'dg-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })

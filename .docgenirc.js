@@ -1,11 +1,14 @@
 module.exports = {
     $schema: './packages/cli/cli.schema.json',
-    title: 'Doc Generator',
-    shortName: 'Docgeni',
+    baseHref: '/',
+    heads: [],
+    mode: 'site',
+    title: 'Docgeni',
+    heading: 'Doc Generator',
     description: 'A modern documentation generator for doc and Angular Lib',
-    output: 'docs-site',
     docsPath: 'docs',
     sitePath: 'packages/site',
+    output: 'docgeni-site',
     navs: [
         {
             title: '指南',
@@ -51,7 +54,7 @@ module.exports = {
                     title: '设计原则',
                     path: '',
                     content: '设计原则'
-                },
+                }
             ]
         },
         {
@@ -79,14 +82,18 @@ module.exports = {
                     id: 'general',
                     title: '通用',
                     locals: {
-                        "en-us":"General"
+                        'en-us': {
+                            title: 'General'
+                        }
                     }
                 },
                 {
                     id: 'layout',
                     title: '布局',
                     locals: {
-                        "en-us":"Layout"
+                        'en-us': {
+                            title: 'Layout'
+                        }
                     }
                 }
             ]

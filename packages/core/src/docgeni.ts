@@ -66,10 +66,10 @@ export class Docgeni implements DocgeniContext {
 
     async run(config: DocgeniConfig) {
         this.config = Object.assign(DEFAULT_CONFIG, config);
-        this.siteConfig.title = this.config.title;
-        this.siteConfig.description = this.config.description;
-        this.siteConfig.locales = this.config.locales;
-        this.siteConfig.navs = this.config.navs;
+        // this.siteConfig.title = this.config.title;
+        // this.siteConfig.description = this.config.description;
+        // this.siteConfig.locales = this.config.locales;
+        // this.siteConfig.navs = this.config.navs;
 
         this.hooks.run.call();
         if (!toolkit.fs.existsSync(config.docsPath)) {
@@ -130,7 +130,7 @@ export class Docgeni implements DocgeniContext {
         for (const lib of this.config.libs) {
             const libraryCompiler = new LibraryCompiler(this, lib, examplesEmitter);
             const items = await libraryCompiler.compile();
-            const libNav: ChannelItem = this.siteConfig.navs.find(nav => {
+            const libNav: ChannelItem = this.config.navs.find(nav => {
                 return nav.lib === lib.name;
             });
             libNav.items = items;
@@ -139,6 +139,16 @@ export class Docgeni implements DocgeniContext {
     }
 
     private async generateSiteConfig() {
+        Object.assign(this.siteConfig, {
+            title: this.config.title,
+            heading: this.config.heading,
+            description: this.config.description,
+            mode: this.config.mode,
+            baseHref: this.config.baseHref,
+            heads: this.config.heads,
+            locales: this.config.locales,
+            navs: this.config.navs
+        });
         const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
         toolkit.template.generate('config.hbs', outputConfigPath, {
             siteConfig: JSON.stringify(this.siteConfig, null, 4)

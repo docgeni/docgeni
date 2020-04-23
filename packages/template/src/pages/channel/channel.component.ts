@@ -14,12 +14,11 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '../../services';
 
 @Component({
-    selector: 'doc-channel',
-    templateUrl: './channel.component.html',
-    styleUrls: ['./channel.component.scss']
+    selector: 'dg-channel',
+    templateUrl: './channel.component.html'
 })
-export class DocChannelComponent implements OnInit {
-    @HostBinding(`class.docgeni-layout`) isLayout = true;
+export class ChannelComponent implements OnInit {
+    @HostBinding(`class.dg-layout`) isLayout = true;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;

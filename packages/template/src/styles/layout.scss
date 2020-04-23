@@ -1,4 +1,22 @@
-.docgeni-layout {
+dg-root {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: $navbar-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+dg-footer {
+    display: block;
+    margin: 72px 0 -32px;
+    padding-top: 24px;
+    border-top: 1px solid #ebedf1;
+    text-align: center;
+}
+
+.dg-layout {
     display: flex;
     flex-direction: row;
     flex: auto;
