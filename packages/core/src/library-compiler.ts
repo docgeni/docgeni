@@ -5,6 +5,7 @@ import * as path from 'path';
 import { DocType } from './enums';
 import * as ts from 'typescript';
 import { Project } from 'ts-morph';
+import { EXAMPLES_SOURCE_RELATIVE_PATH } from './constants';
 
 export interface LibComponent {
     name: string;
@@ -56,7 +57,10 @@ export class LibraryCompiler {
     constructor(private docgeni: DocgeniContext, private lib: Library, examplesEmitter: ExamplesEmitter) {
         this.absLibPath = this.docgeni.getAbsPath(this.lib.rootPath);
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
-        this.absDestExamplesSourceAssetsPath = path.resolve(this.docgeni.paths.absSitePath, `src/assets/examples-source/${this.lib.name}`);
+        this.absDestExamplesSourceAssetsPath = path.resolve(
+            this.docgeni.paths.absSitePath,
+            `${EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
+        );
         this.examplesEmitter = examplesEmitter;
     }
 

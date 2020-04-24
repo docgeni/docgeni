@@ -33,7 +33,7 @@ export class ExampleViewerComponent implements OnInit {
     loadExampleSource() {
         this.http
             .get(
-                `/assets/examples-source/${this.example.module.importSpecifier}/${this.example.name}/${this.example.name}.component.html`,
+                `/assets/content/examples-source/${this.example.module.importSpecifier}/${this.example.name}/${this.example.name}.component.html`,
                 {
                     responseType: 'text'
                 }
