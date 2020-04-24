@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, HostBinding } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
     template: 'Loading...'
 })
 export class ContentViewerComponent implements OnInit {
+    @HostBinding('class.dg-doc-content') isDocContent = true;
+
     @Input() set url(value: string) {
         if (value) {
             this.fetchDocument(value);
