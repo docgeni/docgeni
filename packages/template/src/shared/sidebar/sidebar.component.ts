@@ -6,9 +6,9 @@ import { NavigationItem } from '../../interfaces';
     templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-    @HostBinding(`class.sidebar`) isSidebar = true;
+    @HostBinding(`class.dg-sidebar`) isSidebar = true;
 
-    @Input() navs: NavigationItem[];
+    @Input() menus: NavigationItem[];
 
     constructor() {}
 

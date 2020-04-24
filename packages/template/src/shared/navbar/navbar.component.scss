@@ -25,7 +25,17 @@
         margin-left: 20px;
         a {
             color: $white;
-            padding: 0px 20px;
+            padding: 6px 18px;
+            margin-right: 8px;
+
+            &:hover {
+                color: rgba($color: $white, $alpha: 0.8) // $gray-200;
+            }
+
+            &.active {
+                background: hsla(0, 0%, 100%, 0.15);
+                border-radius: 4px;
+            }
         }
     }
 
