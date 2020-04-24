@@ -3,6 +3,7 @@ import { LiveExample } from '../../interfaces';
 import { ExampleLoader } from '../../services/example-loader';
 import { HttpClient } from '@angular/common/http';
 
+const EXAMPLES_SOURCE_PATH = `/assets/content/examples-source`;
 @Component({
     selector: 'dg-example-viewer',
     templateUrl: './example-viewer.component.html'
@@ -21,25 +22,14 @@ export class ExampleViewerComponent implements OnInit {
 
     constructor(private exampleLoader: ExampleLoader, private http: HttpClient) {}
 
+    contentUrl: string;
+
     ngOnInit(): void {
         this.exampleLoader.load(this.exampleName).then(result => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
             this.example = result.example;
-            this.loadExampleSource();
+            this.contentUrl = `${EXAMPLES_SOURCE_PATH}/${this.example.module.importSpecifier}/${this.example.name}/${this.example.name}.component.ts`;
         });
-    }
-
-    loadExampleSource() {
-        this.http
-            .get(
-                `/assets/content/examples-source/${this.example.module.importSpecifier}/${this.example.name}/${this.example.name}.component.html`,
-                {
-                    responseType: 'text'
-                }
-            )
-            .subscribe(result => {
-                console.log(result);
-            });
     }
 }

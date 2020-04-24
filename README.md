@@ -33,8 +33,12 @@ yarn   // install dependencies for all packages
 ```
 
 ```
-yarn docs:build   // build docs for test
-yarn docs:start   // build docs for test and watch
+yarn build-deps   // build all packages
+yarn docs:build   // build docs & lib demo
+yarn docs:start   // build docs for test and watch (WIP)
+yarn start        // Temporary start demo
+
+yarn test         // run test cases
 ```
 
 ## Packages
