@@ -1,18 +1,20 @@
-<ul class="menus">
-  <li *ngFor="let nav of navs">
-    <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: nav }"></ng-container>
-  </li>
+<ul class="dg-menus">
+  <ng-container *ngFor="let menu of menus" class="menu-item">
+    <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
+  </ng-container>
 
-  <ng-template let-nav #navTemplate>
-    <ng-container *ngIf="nav.items; else item">
-      <span class="title">{{ nav.title }}</span>
-      <ul *ngFor="let nav of nav.items" class="menus">
-        <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: nav }"></ng-container>
-      </ul>
+  <ng-template let-menu #navTemplate>
+    <ng-container *ngIf="menu.items; else item">
+      <li class="menu-group">
+        <div class="title">{{ menu.title }}</div>
+        <ul *ngFor="let menu of menu.items" class="dg-menus">
+          <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
+        </ul>
+      </li>
     </ng-container>
     <ng-template #item>
-      <li>
-        <a class="menu-item" [routerLink]="['./' + nav.path]" routerLinkActive="active">{{ nav.title }}</a>
+      <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !menu.examples}">
+        <a [routerLink]="['./' + menu.path]">{{ menu.title }}</a>
       </li>
     </ng-template>
   </ng-template>

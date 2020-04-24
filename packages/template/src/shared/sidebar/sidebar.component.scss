@@ -1,14 +1,44 @@
-@import '../../styles/variables.scss';
-
-ul {
+.dg-menus {
     list-style: none;
     margin: 0;
-    // padding: 0;
-    li {
-        // list-style: none;
-        padding: 5px 0px;
+    padding: 0;
+
+    .menu-group {
+        .title {
+            padding: 10px 30px;
+            color: $gray-600;
+        }
+
+        .menu-item {
+            padding: {
+                left: 50px;
+                right: 50px;
+            };
+        }
+    }
+
+    .menu-item {
+        list-style: none;
+        padding: 10px 30px;
         display: block;
+        a {
+            display: block;
+            color: $gray-800;
+
+        }
+
+        &.active {
+            background: rgba($primary, 0.1);
+            border-right: 2px solid $primary;
+            a {
+                color: $primary;
+            }
+        }
+
         &:hover {
+            a {
+                color: $primary;
+            }
         }
     }
 }
