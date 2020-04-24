@@ -6,21 +6,24 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     templateUrl: './icon.component.html'
 })
 export class IconComponent implements OnInit, AfterViewInit {
-    @Input() iconName: string;
-
     @HostBinding('class.dg-icon') isIcon = true;
 
-    svg: string;
-
-    svgHTML: SafeHtml;
-    constructor(private elementRef: ElementRef<HTMLElement>, private domSanitizer: DomSanitizer) {}
-
-    ngOnInit(): void {
-        this.svg = BUILTIN_SVGS[this.iconName];
-        if (this.svg) {
-            this.elementRef.nativeElement.innerHTML = this.svg;
-        }
+    @Input() set iconName(name: string) {
+        this.setSvg(name);
     }
 
+    constructor(private elementRef: ElementRef<HTMLElement>, private domSanitizer: DomSanitizer) {}
+
+    ngOnInit(): void {}
+
     ngAfterViewInit() {}
+
+    setSvg(name: string) {
+        const svg = BUILTIN_SVGS[name];
+        if (svg) {
+            this.elementRef.nativeElement.innerHTML = svg;
+        } else {
+            this.elementRef.nativeElement.innerHTML = '';
+        }
+    }
 }

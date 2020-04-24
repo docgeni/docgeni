@@ -1,7 +1,9 @@
-import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory, ViewChild } from '@angular/core';
 import { LiveExample } from '../../interfaces';
 import { ExampleLoader } from '../../services/example-loader';
 import { HttpClient } from '@angular/common/http';
+import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
+import { CopierService } from '../copier/copier.service';
 
 const EXAMPLES_SOURCE_PATH = `/assets/content/examples-source`;
 @Component({
@@ -20,9 +22,15 @@ export class ExampleViewerComponent implements OnInit {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    constructor(private exampleLoader: ExampleLoader, private http: HttpClient) {}
+    @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
+
+    constructor(private exampleLoader: ExampleLoader, private copier: CopierService) {}
+
+    showSource = false;
 
     contentUrl: string;
+
+    copyIcon = 'copy';
 
     ngOnInit(): void {
         this.exampleLoader.load(this.exampleName).then(result => {
@@ -31,5 +39,19 @@ export class ExampleViewerComponent implements OnInit {
             this.example = result.example;
             this.contentUrl = `${EXAMPLES_SOURCE_PATH}/${this.example.module.importSpecifier}/${this.example.name}/${this.example.name}.component.ts`;
         });
+    }
+
+    copy() {
+        const text = this.contentViewer['elementRef'].nativeElement.innerHTML;
+        this.copier.copyText(text);
+        this.copyIcon = 'check';
+
+        setTimeout(() => {
+            this.copyIcon = 'copy';
+        }, 2000);
+    }
+
+    toggleSource() {
+        this.showSource = !this.showSource;
     }
 }

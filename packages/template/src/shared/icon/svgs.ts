@@ -49,9 +49,23 @@ focusable="false"
 ></path>
 </svg>`;
 
+const check = `
+<svg
+  viewBox="0 0 16 16"
+  xmlns="http://www.w3.org/2000/svg"
+  fit=""
+  height="1em"
+  width="1em"
+  preserveAspectRatio="xMidYMid meet"
+  focusable="false"
+>
+  <path d="M6.012 11.201L1.313 6.832l-.817.879 5.54 5.15 9.304-9.163-.842-.855z"></path>
+</svg>`;
+
 export const BUILTIN_SVGS = {
     github,
     code,
     external,
-    copy
+    copy,
+    check
 };

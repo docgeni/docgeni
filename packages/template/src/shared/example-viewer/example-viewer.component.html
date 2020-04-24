@@ -12,17 +12,17 @@
   <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">
   </div> -->
   <div class="dg-example-viewer-actions" title="{{ example.title }}">
-    <a class="action-item" href="javascript:;"><dg-icon iconName="copy"></dg-icon></a>
-    <a class="action-item" href="javascript:;"><dg-icon iconName="code"></dg-icon></a>
+    <a class="action-item" href="javascript:;" (click)="copy()"><dg-icon class="color-primary" [iconName]="copyIcon"></dg-icon></a>
+    <a class="action-item" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
     <a class="action-item" href="javascript:;"><dg-icon iconName="external"></dg-icon></a>
   </div>
-  <div class="dg-example-viewer-sources">
+  <div class="dg-example-viewer-sources" [ngClass]="{'dg-d-none': !showSource}">
     <div class="dg-tab-links">
       <a class="dg-tab-link active" href="javascript:;">TS</a>
       <a class="dg-tab-link" href="javascript:;">HTML</a>
     </div>
     <div class="dg-example-viewer-sources-content">
-      <dg-content-viewer [url]="contentUrl"></dg-content-viewer>
+      <dg-content-viewer #contentViewer [url]="contentUrl"></dg-content-viewer>
     </div>
   </div>
 </ng-container>
