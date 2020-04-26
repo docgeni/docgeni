@@ -1,5 +1,3 @@
-import { LiveExample } from './example';
-
 export interface DocItem {
     id: string;
     title: string;
@@ -19,6 +17,7 @@ export interface DocItem {
 
 export interface ComponentDocItem extends DocItem {
     examples?: string[];
+    importSpecifier?: string;
 }
 
 export interface CategoryItem {
