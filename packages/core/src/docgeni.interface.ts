@@ -22,11 +22,12 @@ export interface DocComponentMeta {
 
 export interface DocSourceFile {
     absPath: string;
-    content: string;
+    content?: string;
     dirname: string;
     ext: string;
     basename: string;
     docType: DocType;
+    importSpecifier?: string;
     result: {
         html: string;
         meta?: DocComponentMeta;

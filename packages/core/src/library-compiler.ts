@@ -1,11 +1,10 @@
 import { DocgeniContext, DocSourceFile } from './docgeni.interface';
 import { Library, CategoryItem, LiveExample } from './interfaces';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
-import * as ts from 'typescript';
-import { Project } from 'ts-morph';
-import { EXAMPLES_SOURCE_RELATIVE_PATH } from './constants';
+import { EXAMPLES_SOURCE_RELATIVE_PATH, EXAMPLES_OVERVIEWS_RELATIVE_PATH } from './constants';
+import { Markdown } from './markdown';
 
 export interface LibComponent {
     name: string;
@@ -53,6 +52,7 @@ export class LibraryCompiler {
     private absLibPath: string;
     private absDestSiteContentComponentsPath: string;
     private absDestExamplesSourceAssetsPath: string;
+    private absDestExamplesOverviewAssetsPath: string;
     private examplesEmitter: ExamplesEmitter;
     constructor(private docgeni: DocgeniContext, private lib: Library, examplesEmitter: ExamplesEmitter) {
         this.absLibPath = this.docgeni.getAbsPath(this.lib.rootPath);
@@ -60,6 +60,10 @@ export class LibraryCompiler {
         this.absDestExamplesSourceAssetsPath = path.resolve(
             this.docgeni.paths.absSitePath,
             `${EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
+        );
+        this.absDestExamplesOverviewAssetsPath = path.resolve(
+            this.docgeni.paths.absSitePath,
+            `${EXAMPLES_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`
         );
         this.examplesEmitter = examplesEmitter;
     }
@@ -83,16 +87,15 @@ export class LibraryCompiler {
         const absComponentDocPath = path.resolve(component.absPath, 'doc');
         const absComponentDocZHPath = path.resolve(absComponentDocPath, 'zh-cn.md');
         const absComponentDocENPath = path.resolve(absComponentDocPath, 'en-us.md');
-        const content = await toolkit.fs.readFile(absComponentDocZHPath, 'UTF-8');
         const absDocPath = absComponentDocZHPath;
         // TODO:: locales support
         const docSourceFile: DocSourceFile = {
             absPath: absDocPath,
-            content,
             dirname: path.dirname(absDocPath),
             ext: path.extname(absDocPath),
             basename: path.basename(absDocPath),
             docType: DocType.component,
+            importSpecifier: `${this.lib.name}/${component.name}`,
             result: null
         };
         this.docgeni.hooks.docCompile.call(docSourceFile);
@@ -131,7 +134,7 @@ export class LibraryCompiler {
                 title: component.meta.title,
                 subtitle: component.meta.subtitle,
                 path: component.name,
-                content: docSource.content,
+                importSpecifier: docSource.importSpecifier,
                 examples: examples.map(example => example.key)
             });
         }
@@ -140,10 +143,20 @@ export class LibraryCompiler {
 
     private async generateComponentExamples(component: LibComponent) {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
+        const absComponentDocPath = path.resolve(component.absPath, 'doc');
         const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
         const destAbsExamplesSourceAssetsPath = path.resolve(this.absDestExamplesSourceAssetsPath, `${component.name}`);
         await toolkit.fs.copy(absComponentExamplesPath, destAbsComponentExamplesPath);
         await toolkit.fs.copy(absComponentExamplesPath, destAbsExamplesSourceAssetsPath);
+
+        const destAbsExamplesOverviewPath = path.resolve(this.absDestExamplesOverviewAssetsPath, `${component.name}`);
+        const files = await toolkit.fs.getFiles(absComponentDocPath);
+        files.forEach(async file => {
+            const content = await toolkit.fs.readFile(path.resolve(absComponentDocPath, file), 'UTF-8');
+            const filePath = path.resolve(destAbsExamplesOverviewPath, file.replace('.md', '.html'));
+            await toolkit.fs.ensureFile(filePath);
+            await toolkit.fs.writeFile(filePath, Markdown.toHTML(content));
+        });
 
         const dirs = await toolkit.fs.getDirs(absComponentExamplesPath);
         const examples: LiveExample[] = [];
