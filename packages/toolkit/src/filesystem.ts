@@ -18,11 +18,4 @@ export async function getDirs(path: string) {
     });
 }
 
-export async function getFiles(path: string) {
-    const files = await fsExtra.readdir(path);
-    return files.filter(file => {
-        return !isDirectory(nodePath.resolve(path, file));
-    });
-}
-
 export * from 'fs-extra';

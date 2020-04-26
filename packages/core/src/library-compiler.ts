@@ -4,7 +4,8 @@ import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
 import { EXAMPLES_SOURCE_RELATIVE_PATH, EXAMPLES_OVERVIEWS_RELATIVE_PATH } from './constants';
-import { Markdown } from './markdown';
+
+const locals = ['zh-cn'];
 
 export interface LibComponent {
     name: string;
@@ -85,21 +86,30 @@ export class LibraryCompiler {
 
     async compileComponentDoc(component: LibComponent) {
         const absComponentDocPath = path.resolve(component.absPath, 'doc');
-        const absComponentDocZHPath = path.resolve(absComponentDocPath, 'zh-cn.md');
-        const absComponentDocENPath = path.resolve(absComponentDocPath, 'en-us.md');
-        const absDocPath = absComponentDocZHPath;
-        // TODO:: locales support
-        const docSourceFile: DocSourceFile = {
-            absPath: absDocPath,
-            dirname: path.dirname(absDocPath),
-            ext: path.extname(absDocPath),
-            basename: path.basename(absDocPath),
-            docType: DocType.component,
-            importSpecifier: `${this.lib.name}/${component.name}`,
-            result: null
-        };
-        this.docgeni.hooks.docCompile.call(docSourceFile);
-        return docSourceFile;
+        const docSourceFiles: DocSourceFile[] = [];
+        const destAbsExamplesOverviewPath = path.resolve(this.absDestExamplesOverviewAssetsPath, `${component.name}`);
+
+        for (const local of locals) {
+            const absDocPath = path.resolve(absComponentDocPath, `${local}.md`);
+            const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
+            const docSourceFile: DocSourceFile = {
+                absPath: absDocPath,
+                content,
+                dirname: path.dirname(absDocPath),
+                ext: path.extname(absDocPath),
+                basename: path.basename(absDocPath),
+                docType: DocType.component,
+                importSpecifier: `${this.lib.name}/${component.name}`,
+                result: null
+            };
+            this.docgeni.hooks.docCompile.call(docSourceFile);
+            const filePath = path.resolve(destAbsExamplesOverviewPath, `${local}.html`);
+            await toolkit.fs.ensureFile(filePath);
+            await toolkit.fs.writeFile(filePath, docSourceFile.result.html);
+            docSourceFiles.push(docSourceFile);
+        }
+
+        return docSourceFiles[0];
     }
 
     async compile(): Promise<CategoryItem[]> {
@@ -148,15 +158,6 @@ export class LibraryCompiler {
         const destAbsExamplesSourceAssetsPath = path.resolve(this.absDestExamplesSourceAssetsPath, `${component.name}`);
         await toolkit.fs.copy(absComponentExamplesPath, destAbsComponentExamplesPath);
         await toolkit.fs.copy(absComponentExamplesPath, destAbsExamplesSourceAssetsPath);
-
-        const destAbsExamplesOverviewPath = path.resolve(this.absDestExamplesOverviewAssetsPath, `${component.name}`);
-        const files = await toolkit.fs.getFiles(absComponentDocPath);
-        files.forEach(async file => {
-            const content = await toolkit.fs.readFile(path.resolve(absComponentDocPath, file), 'UTF-8');
-            const filePath = path.resolve(destAbsExamplesOverviewPath, file.replace('.md', '.html'));
-            await toolkit.fs.ensureFile(filePath);
-            await toolkit.fs.writeFile(filePath, Markdown.toHTML(content));
-        });
 
         const dirs = await toolkit.fs.getDirs(absComponentExamplesPath);
         const examples: LiveExample[] = [];
