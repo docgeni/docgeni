@@ -1,7 +1,7 @@
 <ng-container *ngIf="example">
-  <!-- <div class="dg-example-viewer-header">
+  <div class="dg-example-viewer-header">
     <h2>{{ example.title }}</h2>
-  </div> -->
+  </div>
   <div class="dg-example-viewer-body">
     <ng-template
       *ngIf="exampleComponentType && exampleModuleFactory"
@@ -16,13 +16,22 @@
     <a class="action-item" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
     <a class="action-item" href="javascript:;"><dg-icon iconName="external"></dg-icon></a>
   </div>
-  <div class="dg-example-viewer-sources" [ngClass]="{'dg-d-none': !showSource}">
+  <div
+    class="dg-example-viewer-sources"
+    [ngClass]="{ 'dg-sources-show': showSource }"
+  >
     <div class="dg-tab-links">
-      <a class="dg-tab-link active" href="javascript:;">TS</a>
-      <a class="dg-tab-link" href="javascript:;">HTML</a>
+      <a
+        *ngFor="let tab of exampleTabs"
+        [ngClass]="{ active: tab === selectedTab }"
+        class="dg-tab-link"
+        href="javascript:;"
+        (click)="selectExampleTab(tab)"
+        >{{ tab.name }}</a
+      >
     </div>
-    <div class="dg-example-viewer-sources-content">
-      <dg-content-viewer #contentViewer [url]="contentUrl"></dg-content-viewer>
-    </div>
+    <pre class="dg-example-viewer-sources-content">
+      <dg-content-viewer #contentViewer [url]="selectedTab.path"></dg-content-viewer>
+    </pre>
   </div>
 </ng-container>

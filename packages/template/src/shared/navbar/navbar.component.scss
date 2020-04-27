@@ -11,6 +11,7 @@
     box-shadow: $navbar-box-shadow;
     justify-content: space-between;
     font-size: $font-size-md;
+    z-index: 100;
 
     .spacer {
         flex: 1;
@@ -29,7 +30,7 @@
             margin-right: 8px;
 
             &:hover {
-                color: rgba($color: $white, $alpha: 0.8) // $gray-200;
+                color: rgba($color: $white, $alpha: 0.8); // $gray-200;
             }
 
             &.active {

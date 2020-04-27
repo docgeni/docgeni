@@ -8,7 +8,7 @@
         left: 1em;
         margin-left: -4px;
         padding: 0 4px;
-        // color: $gray-700;
+        color: $gray-700;
         font-weight: 500;
         background-color: $white;
         transform: translateY(-50%);
@@ -23,6 +23,8 @@
     .dg-example-viewer-header {
         border-bottom: 1px solid $border-color;
         padding: 5px 20px;
+        background: $gray-100; // rgba(0, 0, 0, 0.03);
+        color: $gray-700;
     }
 
     .dg-example-viewer-body {
@@ -39,7 +41,7 @@
         border-top: 1px dashed $border-color;
         padding: 10px;
         text-align: center;
-        @include top-show-title-variant();
+        // @include top-show-title-variant();
         clear: both;
         .action-item {
             color: $gray-500;
@@ -57,17 +59,31 @@
         border-top: 1px solid $border-color;
         display: block;
         flex-direction: column;
+        transition: opacity 1s;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+
+        &.dg-sources-show {
+            visibility: visible;
+            height: auto;
+            opacity: 1;
+        }
+
+        .dg-doc-content {
+            white-space: break-spaces;
+        }
 
         .dg-tab-links {
             padding: 0px 10px;
         }
 
         .dg-example-viewer-sources-content {
-            padding: 20px;
+            padding: 10px 20px;
             background: $gray-100;
-            pre {
-                margin: 0px;
-            }
+            white-space: nowrap;
+            margin: 0px;
+            min-height: 100px;
         }
     }
 }

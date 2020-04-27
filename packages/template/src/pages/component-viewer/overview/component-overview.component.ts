@@ -5,13 +5,13 @@ const EXAMPLES_OVERVIEW_PATH = `/assets/content/examples-overviews`;
   // TODO:: locales support
 const LOCAL = 'zh-cn';
 @Component({
-    selector: 'doc-component-overview',
+    selector: 'dg-component-overview',
     templateUrl: './component-overview.component.html'
 })
 export class ComponentOverviewComponent implements OnInit {
     contentUrl: string;
 
-    @HostBinding('class.dg-doc-content') contentClass = true;
+    @HostBinding('class.dg-component-overview') contentClass = true;
 
     constructor(public componentViewer: ComponentViewerComponent) {}
 
