@@ -28,10 +28,14 @@ dg-footer {
         overflow: auto;
         padding-top: 20px;
         border-right: 1px solid $gray-300;
+        position: fixed;
     }
 
     .content {
         flex: auto;
-        padding: 20px 20px;
+        padding: 20px 30px;
+        // overflow: auto;
+        max-height: 100vh;
+        margin-left: 300px;
     }
 }

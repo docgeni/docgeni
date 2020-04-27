@@ -1,5 +1,77 @@
+$heading-color: $gray-800;
 .dg-doc-content {
+    display: block;
     padding: 20px 0px;
-    line-height: 20px;
-    white-space: break-spaces;
+    font-size: $font-size-md;
+    // white-space: break-spaces;
+    h1 {
+        font-size: $font-size-xlg;
+        margin: 1rem 0;
+        color: $heading-color;
+    }
+
+    h2 {
+        font-size: $font-size-lg;
+        margin: 1rem 0;
+        color: $heading-color;
+    }
+
+    h1:first-child,
+    h2:first-child {
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 14px;
+        margin-bottom: 1rem;
+    }
+
+    ul,
+    ol {
+        margin: 10px 0 10px 32px;
+        padding: 0;
+        li {
+            padding: 3px 0px;
+        }
+    }
+
+    code {
+        display: inline-block;
+        padding: 0px 4px;
+        margin: 0px 2px;
+        background: $gray-100;
+        border-radius: $border-radius;
+        color: $red;
+        line-height: 1.5;
+    }
+
+    pre {
+        padding: 20px;
+        font-size: $font-size-md;
+        color: $gray-700;
+        background: $gray-100;
+        border-radius: $border-radius;
+        line-height: 1.5;
+        code {
+            padding: 0px;
+            color: $body-color;
+            background: transparent;
+        }
+    }
+
+    p {
+        font-size: $font-size-md;
+        // color: $gray-700;
+        line-height: 24px;
+    }
+
+    blockquote {
+        margin-left: 0px;
+        border-left: 2px solid $gray-300;
+        color: $gray-600;
+        font-size: 14px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
 }
