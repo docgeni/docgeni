@@ -11,32 +11,30 @@ order: 1
 
 ## When to use
 
-标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
+A set of operation commands are marked (or encapsulated) to respond to the user's click behavior and trigger the corresponding business logic.
 
-在 ALib 示例组件中，我们有四种按钮。
+In the Alib sample component, we have four buttons
 
-- 主按钮：用于主行动点，一个操作区域只能有一个主按钮。
-- 默认按钮：用于没有主次之分的一组行动点。
-- 虚线按钮：常用于添加操作。
-- 链接按钮：用于次要或外链的行动点。
+- Main button: used for moving point of main line. There can only be one main button in an operation area.
+- Default button: used for a group of action points without priority.
+- Dotted button: commonly used for adding operations.
+- Link button: used for secondary or external chain action point.
 
-以及四种状态属性与上面配合使用。
+And four state attributes are used with the above.
 
-1. 危险：删除/移动/修改权限等危险操作，一般需要二次确认。
-1. 幽灵：用于背景色比较复杂的地方，常用在首页/产品页等展示场景。
-1. 禁用：行动点不可用的时候，一般需要文案解释。
-1. 加载中：用于异步操作等待反馈的时候，也可以避免多次提交。
+- Danger: delete / move / modify authority and other dangerous operations, generally need to be confirmed twice.
+- Ghost: it is used in places with complex background color, and is often used in the home page / product page and other display scenes.
+- Disable: when the action point is not available, copywriting is generally required.
+- Loading: used for asynchronous operations waiting for feedback, multiple submissions can also be avoided.
 
-<!--example()-->
-
-直接使用`alibButton`指令在原有的按钮元素上扩展：
+Directly use the `alibButton` instruction to expand on the original button element:
 
 ```
-<button alibButton="primary">按钮</button>
+<button alibButton="primary">Button</button>
 ```
 
-直接使用`alib-button`组件：
+Directly use the `alib-button` component tag:
 
 ```
-<alib-button alibType="primary">按钮</alib-button>
+<alib-button alibType="primary">Button</alib-button>
 ```
