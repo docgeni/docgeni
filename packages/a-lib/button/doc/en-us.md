@@ -1,15 +1,15 @@
 ---
 category: general
 title: Button
-subtitle: 按钮
+subtitle: Button
 order: 1
 ---
 
-## 定义
+## Definition
 
-> 按钮用于开始一个即时操作。
+> Button to start an immediate operation.
 
-## 何时使用
+## When to use
 
 标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
 

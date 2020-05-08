@@ -44,12 +44,37 @@
         margin: 0 16px;
     }
 
-    #twitter-logo {
-        height: 40px;
-        margin: 0 16px;
-    }
+    .action-items {
+        display: flex;
+        margin-right: 20px;
+        align-items: center;
 
-    #twitter-logo:hover {
-        opacity: 0.8;
+        .action-item {
+            margin-left: 20px;
+        }
+
+        .repo-url {
+            color: $white;
+            .dg-icon {
+                font-size: 32px;
+            }
+        }
+
+        .locales-selector {
+            width: 60px;
+            outline: none;
+            padding: 0.374rem 10px;
+        }
+
+        .search-container {
+            .search {
+                width: 200px;
+                outline: none;
+                padding: 0.532rem 10px;
+                border: none;
+                border-radius: 4px;
+                -webkit-appearance: none;
+            }
+        }
     }
 }

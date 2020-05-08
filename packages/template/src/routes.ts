@@ -8,7 +8,7 @@ import {
     ComponentExamplesComponent
 } from './pages/pages.module';
 
-export const routes: Routes = [
+const actualRoutes: Routes = [
     {
         path: '',
         component: HomeComponent
@@ -45,4 +45,8 @@ export const routes: Routes = [
             }
         ]
     }
+];
+
+export const routes: Routes = [
+    ...actualRoutes
 ];

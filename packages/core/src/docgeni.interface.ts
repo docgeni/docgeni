@@ -11,6 +11,8 @@ export interface DocgeniPaths {
     absSitePath?: string;
     // site docs content path
     absSiteContentPath?: string;
+    // site assets content path
+    absSiteAssetsContentPath?: string;
 }
 
 export interface DocComponentMeta {
@@ -18,6 +20,7 @@ export interface DocComponentMeta {
     title: string;
     subtitle: string;
     description?: string;
+    order?: number;
 }
 
 export interface DocSourceFile {
@@ -27,12 +30,23 @@ export interface DocSourceFile {
     ext: string;
     basename: string;
     docType: DocType;
-    importSpecifier?: string;
     result: {
         html: string;
         meta?: DocComponentMeta;
     };
 }
+
+// export interface DocOutputFile {
+//     absPath: string;
+//     content: string;
+//     docType: DocType;
+// }
+
+// export interface DocFileContext {
+//     source: DocSourceFile;
+//     output?: DocOutputFile;
+//     meta?: DocComponentMeta;
+// }
 
 export interface LibraryContext {
     lib: Library;
