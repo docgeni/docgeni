@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { GlobalContext } from '../../services';
 
 @Component({
     selector: 'dg-root',
-    templateUrl: './root.component.html',
-    styleUrls: ['./root.component.scss']
+    templateUrl: './root.component.html'
 })
 export class RootComponent {
-    title = '首页';
-
     constructor() {}
 }
+

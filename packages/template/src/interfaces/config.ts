@@ -33,6 +33,8 @@ export interface DocgeniConfig {
     silent?: boolean;
     /** Locales */
     locales?: Locale[];
+    /** Default locale */
+    defaultLocale?: string;
 }
 
 // For Angular Template
@@ -52,7 +54,11 @@ export interface DocgeniSiteConfig {
     /* Repo url*/
     repoUrl?: string;
     /* Navigations for menu and nav */
-    navs?: NavigationItem[];
+    navs: NavigationItem[];
+    // navs?: {
+    //     [key: string]: NavigationItem[];
+    // };
     /** Locales */
     locales?: Locale[];
+    defaultLocale?: string;
 }

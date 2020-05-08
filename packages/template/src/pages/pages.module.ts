@@ -12,6 +12,7 @@ import { ComponentApiComponent } from './component-viewer/api/component-api.comp
 import { ComponentExamplesComponent } from './component-viewer/examples/component-examples.component';
 
 const COMPONENTS = [
+    HomeComponent,
     ChannelComponent,
     DocViewerComponent,
     DocViewerHomeComponent,
@@ -21,7 +22,7 @@ const COMPONENTS = [
     ComponentExamplesComponent
 ];
 @NgModule({
-    declarations: [RootComponent, HomeComponent, ...COMPONENTS],
+    declarations: [RootComponent, ...COMPONENTS],
     imports: [DocgeniSharedModule],
     providers: [],
     exports: [...COMPONENTS]

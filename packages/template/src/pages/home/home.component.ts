@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { ConfigService } from '../../services';
+import { GlobalContext } from '../../services';
 
 @Component({
     selector: 'dg-home',
@@ -8,7 +8,7 @@ import { ConfigService } from '../../services';
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;
 
-    constructor(public config: ConfigService) {}
+    constructor(public global: GlobalContext) {}
 
     ngOnInit(): void {}
 }

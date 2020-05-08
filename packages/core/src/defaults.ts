@@ -20,5 +20,6 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
             key: 'zh-cn',
             name: '中文'
         }
-    ]
+    ],
+    defaultLocale: 'zh-cn'
 };

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces';
-import { CONFIG_TOKEN, DocgeniSiteConfig } from './config';
+import { CONFIG_TOKEN, DocgeniSiteConfig, GlobalContext } from './global-context';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -19,20 +19,24 @@ export class NavigationService {
         return this.docItem$.value;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig) {}
+    get navs() {
+        return this.global.navs[this.global.locale];
+    }
+
+    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private global: GlobalContext) {}
 
     getChannels(): ChannelItem[] {
-        return this.config.navs as ChannelItem[];
+        return this.navs as ChannelItem[];
     }
 
     getChannel(path: string): ChannelItem {
-        return this.config.navs.find(nav => {
+        return this.navs.find(nav => {
             return nav.path === path;
         });
     }
 
     selectChannelByPath(path: string) {
-        const channel = this.config.navs.find(nav => {
+        const channel = this.navs.find(nav => {
             return nav.path === path;
         });
         this.channel$.next(channel);

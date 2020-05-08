@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { NavigationService, ConfigService } from '../../services';
+import { NavigationService, GlobalContext } from '../../services';
 import { ChannelItem } from '../../interfaces';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'dg-navbar',
@@ -9,11 +10,19 @@ import { ChannelItem } from '../../interfaces';
 export class NavbarComponent implements OnInit {
     @HostBinding('class.dg-navbar') isNavbar = true;
 
+    locale: string;
+
     channels: ChannelItem[];
 
-    constructor(public config: ConfigService, public navigationService: NavigationService) {}
+    constructor(public global: GlobalContext, public navigationService: NavigationService) {}
 
     ngOnInit(): void {
         this.channels = this.navigationService.getChannels();
+        this.locale = this.global.locale;
+    }
+
+    localeModelChange() {
+        this.global.setLocale(this.locale);
+        location.href = location.href;
     }
 }

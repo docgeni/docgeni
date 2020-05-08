@@ -9,6 +9,7 @@ module.exports = {
     docsPath: 'docs',
     sitePath: 'packages/site',
     output: 'docgeni-site',
+    repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         {
             title: '指南',
@@ -81,7 +82,7 @@ module.exports = {
                 {
                     id: 'general',
                     title: '通用',
-                    locals: {
+                    locales: {
                         'en-us': {
                             title: 'General'
                         }
@@ -90,7 +91,7 @@ module.exports = {
                 {
                     id: 'layout',
                     title: '布局',
-                    locals: {
+                    locales: {
                         'en-us': {
                             title: 'Layout'
                         }

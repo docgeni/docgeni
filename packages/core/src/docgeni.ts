@@ -16,6 +16,7 @@ import {
 import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
 import { LibraryCompiler, ExamplesEmitter } from './library-compiler';
+import { buildLocalesNavsMap } from './utils';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -25,6 +26,7 @@ export class Docgeni implements DocgeniContext {
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
+    private localesNavsMap: Record<string, NavigationItem[]> = {};
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
@@ -65,25 +67,45 @@ export class Docgeni implements DocgeniContext {
     }
 
     async run(config: DocgeniConfig) {
-        this.config = Object.assign(DEFAULT_CONFIG, config);
-        // this.siteConfig.title = this.config.title;
-        // this.siteConfig.description = this.config.description;
-        // this.siteConfig.locales = this.config.locales;
-        // this.siteConfig.navs = this.config.navs;
+        try {
+            this.config = { ...DEFAULT_CONFIG, ...config };
+            this.siteConfig = {
+                title: this.config.title,
+                heading: this.config.heading,
+                description: this.config.description,
+                mode: this.config.mode,
+                baseHref: this.config.baseHref,
+                heads: this.config.heads,
+                locales: this.config.locales,
+                defaultLocale: this.config.defaultLocale,
+                repoUrl: this.config.repoUrl,
+                navs: this.config.navs
+            };
+            this.hooks.run.call();
+            if (!toolkit.fs.existsSync(config.docsPath)) {
+                throw new Error(`docs folder(${config.docsPath}) has not exists`);
+            }
+            this.paths.absDocsPath = this.getAbsPath(config.docsPath);
+            this.paths.absOutputPath = this.getAbsPath(config.output);
+            this.paths.absSitePath = this.getAbsPath(config.sitePath);
+            this.paths.absSiteContentPath = path.resolve(this.paths.absSitePath, './src/app/content');
+            this.paths.absSiteAssetsContentPath = path.resolve(this.paths.absSitePath, './src/assets/content');
 
-        this.hooks.run.call();
-        if (!toolkit.fs.existsSync(config.docsPath)) {
-            throw new Error(`docs folder(${config.docsPath}) has not exists`);
+            // clear docs content dist dir
+            await toolkit.fs.remove(this.paths.absSiteContentPath);
+            // clear assets content dist dir
+            await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
+
+            // build navs by config
+            this.localesNavsMap = buildLocalesNavsMap(this.config.locales, this.config.navs);
+
+            await this.generateContentDocs();
+            await this.generateContentLibs();
+            await this.generateSiteConfig();
+            await this.generateSiteNavs();
+        } catch (error) {
+            this.logger.error(error);
         }
-        this.paths.absDocsPath = this.getAbsPath(config.docsPath);
-        this.paths.absOutputPath = this.getAbsPath(config.output);
-        this.paths.absSitePath = this.getAbsPath(config.sitePath);
-        this.paths.absSiteContentPath = path.resolve(this.paths.absSitePath, './src/app/content');
-        // clear docs content dest dir
-        await toolkit.fs.remove(this.paths.absSiteContentPath);
-        await this.generateContentDocs();
-        await this.generateContentLibs();
-        await this.generateSiteConfig();
     }
 
     private async generateContentDocs() {
@@ -129,30 +151,26 @@ export class Docgeni implements DocgeniContext {
         const examplesEmitter = new ExamplesEmitter(this);
         for (const lib of this.config.libs) {
             const libraryCompiler = new LibraryCompiler(this, lib, examplesEmitter);
-            const items = await libraryCompiler.compile();
-            const libNav: ChannelItem = this.config.navs.find(nav => {
-                return nav.lib === lib.name;
+            const localesCategoriesMap = await libraryCompiler.compile();
+            this.config.locales.forEach(locale => {
+                const libNav: ChannelItem = this.localesNavsMap[locale.key].find(nav => {
+                    return nav.lib === lib.name;
+                });
+                libNav.items = localesCategoriesMap[locale.key].categories;
             });
-            libNav.items = items;
         }
         examplesEmitter.emit();
     }
 
     private async generateSiteConfig() {
-        Object.assign(this.siteConfig, {
-            title: this.config.title,
-            heading: this.config.heading,
-            description: this.config.description,
-            mode: this.config.mode,
-            baseHref: this.config.baseHref,
-            heads: this.config.heads,
-            locales: this.config.locales,
-            navs: this.config.navs
-        });
         const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
         toolkit.template.generate('config.hbs', outputConfigPath, {
             siteConfig: JSON.stringify(this.siteConfig, null, 4)
         });
+    }
+
+    private async generateSiteNavs() {
+        await toolkit.fs.writeFile(`${this.paths.absSiteAssetsContentPath}/navigations.json`, JSON.stringify(this.localesNavsMap, null, 2));
     }
 
     public getAbsPath(absOrRelativePath: string) {
