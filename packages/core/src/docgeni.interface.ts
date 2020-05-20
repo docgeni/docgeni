@@ -13,17 +13,33 @@ export interface DocgeniPaths {
     absSiteContentPath?: string;
     // site assets content path
     absSiteAssetsContentPath?: string;
+    // site assets content docs path
+    absSiteAssetsContentDocsPath?: string;
 }
 
-export interface DocComponentMeta {
-    category: string;
+export interface ComponentDocMeta {
+    category?: string;
     title: string;
-    subtitle: string;
+    subtitle?: string;
     description?: string;
     order?: number;
 }
 
-export interface DocSourceFile {
+export interface CategoryDocMeta {
+    title: string;
+    order?: number;
+}
+
+export interface GeneralDocMeta {
+    title: string;
+    path?: string;
+    order?: number;
+    category?: CategoryDocMeta;
+}
+
+export type DocMeta = ComponentDocMeta & GeneralDocMeta;
+
+export interface DocSourceFile<TMeta = DocMeta> {
     absPath: string;
     content?: string;
     dirname: string;
@@ -32,7 +48,7 @@ export interface DocSourceFile {
     docType: DocType;
     result: {
         html: string;
-        meta?: DocComponentMeta;
+        meta?: TMeta;
     };
 }
 

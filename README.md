@@ -16,15 +16,15 @@ Add scripts to package.json as followings:
 {
   "scripts": {
     ...
-    "docs:start": "docgeni serve",
-    "docs:build": "docgeni build"
+    "start:docs": "docgeni serve",
+    "build:docs": "docgeni build"
     ...
   }
 }
 ```
 Add `docs` folder and add `index.md` file to docs.
 
-run `npm run docs:start` and open `http://127.0.0.1:8888`
+run `npm run start:docs` and open `http://127.0.0.1:8888`
 
 ## Development
 
@@ -34,8 +34,8 @@ yarn   // install dependencies for all packages
 
 ```
 yarn build-deps   // build all packages
-yarn docs:build   // build docs & lib demo
-yarn docs:start   // build docs for test and watch (WIP)
+yarn build:docs   // build docs & lib demo
+yarn start:docs   // build docs for test and watch (WIP)
 yarn start        // Temporary start demo
 
 yarn test         // run test cases

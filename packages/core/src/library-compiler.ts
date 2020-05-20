@@ -1,20 +1,15 @@
-import { DocgeniContext, DocSourceFile, DocComponentMeta } from './docgeni.interface';
+import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
 import { Library, CategoryItem, LiveExample } from './interfaces';
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
 import { EXAMPLES_SOURCE_RELATIVE_PATH, EXAMPLES_OVERVIEWS_RELATIVE_PATH } from './constants';
-import { getItemLocaleProperty } from './utils';
+import { getItemLocaleProperty, createDocSourceFile } from './utils';
 
 export interface LibComponent {
     name: string;
     absPath: string;
-    meta?: {
-        category: string;
-        title: string;
-        subtitle: string;
-        description?: string;
-    };
+    meta?: ComponentDocMeta;
 }
 
 export type LocaleCategoryMap = Record<
@@ -95,7 +90,7 @@ export class LibraryCompiler {
     async compileComponentDocs(
         component: LibComponent
     ): Promise<{
-        meta: DocComponentMeta;
+        meta: ComponentDocMeta;
         localeDocsMap: Record<string, DocSourceFile>;
     }> {
         const absComponentDocPath = path.resolve(component.absPath, 'doc');
@@ -103,20 +98,12 @@ export class LibraryCompiler {
         const destAbsExamplesOverviewPath = path.resolve(this.absDestExamplesOverviewAssetsPath, `${component.name}`);
 
         const localeDocsMap: { [key: string]: DocSourceFile } = {};
-        let meta: Partial<DocComponentMeta> = {};
+        let meta: Partial<ComponentDocMeta> = {};
         for (const locale of this.docgeni.config.locales) {
             const absDocPath = path.resolve(absComponentDocPath, `${locale.key}.md`);
             if (await toolkit.fs.pathExists(absDocPath)) {
                 const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
-                const docSourceFile: DocSourceFile = {
-                    absPath: absDocPath,
-                    content,
-                    dirname: path.dirname(absDocPath),
-                    ext: path.extname(absDocPath),
-                    basename: path.basename(absDocPath),
-                    docType: DocType.component,
-                    result: null
-                };
+                const docSourceFile = createDocSourceFile(absDocPath, content, DocType.component);
                 this.docgeni.hooks.docCompile.call(docSourceFile);
                 docSourceFiles.push(docSourceFile);
                 localeDocsMap[locale.key] = docSourceFile;
@@ -133,7 +120,7 @@ export class LibraryCompiler {
         }
         return {
             localeDocsMap,
-            meta: meta as DocComponentMeta
+            meta: meta as ComponentDocMeta
         };
     }
 
