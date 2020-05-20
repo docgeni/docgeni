@@ -18,6 +18,34 @@ export async function getDirs(path: string) {
     });
 }
 
+export interface GetDirsAndFilesOptions {
+    /** Include .dot files in normal matches */
+    dot?: boolean;
+    /** Exclude files in normal matches */
+    excludeDirs?: string[];
+}
+
+const DEFAULT_OPTIONS: GetDirsAndFilesOptions = {
+    dot: false
+};
+export async function getDirsAndFiles(path: string, options?: GetDirsAndFilesOptions) {
+    options = {
+        ...DEFAULT_OPTIONS,
+        ...options
+    };
+    const dirs = await fsExtra.readdir(path);
+    return dirs.filter(dir => {
+        if (options.excludeDirs && options.excludeDirs.includes(dir)) {
+            return false;
+        }
+        if (options.dot) {
+            return true;
+        } else {
+            return !dir.startsWith('.');
+        }
+    });
+}
+
 export async function pathsExists(paths: string[]) {
     const result = [];
     let hasExists = false;

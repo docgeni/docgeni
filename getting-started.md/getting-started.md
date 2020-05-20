@@ -1,9 +1,3 @@
----
-title: 开始
-path: 'getting-started'
-order: 2
----
-
 # 快速上手
 
 ## 安装

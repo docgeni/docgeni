@@ -11,57 +11,16 @@ module.exports = {
     output: 'docgeni-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
-        {
-            title: '指南',
-            path: 'guides',
-            items: [
-                {
-                    title: '介绍',
-                    items: [
-                        {
-                            title: '介绍',
-                            path: '',
-                            content: 'Docgeni 是一个现代化，简单好用的文档生成工具'
-                        },
-                        {
-                            title: '开始使用',
-                            path: 'getting-started',
-                            content: '开始使用'
-                        }
-                    ]
-                },
-                {
-                    title: '组件示例',
-                    items: [
-                        {
-                            title: '如何写组件示例',
-                            path: 'how-write-component-demo',
-                            content: '组件'
-                        },
-                        {
-                            title: '组件示例的渲染',
-                            path: 'component-demo-render',
-                            content: '组件示例如何渲染'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            title: '设计',
-            path: 'design',
-            items: [
-                {
-                    title: '设计原则',
-                    path: '',
-                    content: '设计原则'
-                }
-            ]
-        },
+        null,
         {
             title: '组件',
             path: 'components',
-            lib: 'alib'
+            lib: 'alib',
+            locales: {
+                'en-us': {
+                    title: 'Components'
+                }
+            }
         },
         {
             title: 'GitHub',
@@ -71,7 +30,12 @@ module.exports = {
         {
             title: '更新日志',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
+            isExternal: true,
+            locales: {
+                'en-us': {
+                    title: 'Changelog'
+                }
+            }
         }
     ],
     libs: [

@@ -3,13 +3,8 @@ import { DocsMarkdownRenderer } from './renderer';
 import * as fm from 'front-matter';
 const renderer = new DocsMarkdownRenderer();
 
-export interface MarkdownParseResult {
-    attributes: {
-        category: string;
-        title: string;
-        subtitle: string;
-        description?: string;
-    };
+export interface MarkdownParseResult<TAttributes = unknown> {
+    attributes: TAttributes;
     body: string;
     bodyBegin: number;
     frontmatter: string;
@@ -22,8 +17,8 @@ export class Markdown {
         });
     }
 
-    static parse(content: string): MarkdownParseResult {
+    static parse<TAttributes>(content: string): MarkdownParseResult<TAttributes> {
         const result = fm(content);
-        return result as MarkdownParseResult;
+        return result as MarkdownParseResult<TAttributes>;
     }
 }

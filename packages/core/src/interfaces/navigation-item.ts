@@ -6,6 +6,7 @@ export interface DocItem {
     subtitle: string;
     summary?: string;
     path: string;
+    contentPath?: string;
     content?: string;
     // 多语言
     locales?: {

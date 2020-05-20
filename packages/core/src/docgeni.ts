@@ -1,6 +1,15 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, Library, DocgeniSiteConfig, NavigationItem, CategoryItem, ChannelItem } from './interfaces';
+import {
+    DocgeniConfig,
+    Library,
+    DocgeniSiteConfig,
+    NavigationItem,
+    CategoryItem,
+    ChannelItem,
+    DocItem,
+    ComponentDocItem
+} from './interfaces';
 import * as path from 'path';
 import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
@@ -11,12 +20,13 @@ import {
     DocSourceFile,
     DocgeniOptions,
     LibraryContext,
-    LibraryComponentContext
+    LibraryComponentContext,
+    CategoryDocMeta
 } from './docgeni.interface';
 import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
 import { LibraryCompiler, ExamplesEmitter } from './library-compiler';
-import { buildLocalesNavsMap } from './utils';
+import { buildLocalesNavsMap, createDocSourceFile, getDocRoutePath, getDocTitle, isEntryDoc } from './utils';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -90,6 +100,7 @@ export class Docgeni implements DocgeniContext {
             this.paths.absSitePath = this.getAbsPath(config.sitePath);
             this.paths.absSiteContentPath = path.resolve(this.paths.absSitePath, './src/app/content');
             this.paths.absSiteAssetsContentPath = path.resolve(this.paths.absSitePath, './src/assets/content');
+            this.paths.absSiteAssetsContentDocsPath = path.resolve(this.paths.absSiteAssetsContentPath, './docs');
 
             // clear docs content dist dir
             await toolkit.fs.remove(this.paths.absSiteContentPath);
@@ -97,9 +108,17 @@ export class Docgeni implements DocgeniContext {
             await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
 
             // build navs by config
+            let docsNavInsertIndex = this.config.navs.indexOf(null);
+            if (docsNavInsertIndex >= 0) {
+                this.config.navs = this.config.navs.filter(item => {
+                    return !!item;
+                });
+            } else {
+                docsNavInsertIndex = this.config.navs.length;
+            }
             this.localesNavsMap = buildLocalesNavsMap(this.config.locales, this.config.navs);
 
-            await this.generateContentDocs();
+            await this.generateContentDocs(docsNavInsertIndex);
             await this.generateContentLibs();
             await this.generateSiteConfig();
             await this.generateSiteNavs();
@@ -108,43 +127,92 @@ export class Docgeni implements DocgeniContext {
         }
     }
 
-    private async generateContentDocs() {
-        const docPaths = glob.sync(this.paths.absDocsPath + '/**/*', { nosort: true });
-        const docSourceFiles: DocSourceFile[] = [];
-        const absSiteContentDocsPath = path.resolve(this.paths.absSiteContentPath, 'docs');
-        for (const docPath of docPaths) {
-            const stats = await toolkit.fs.stat(docPath);
-            if (stats.isDirectory()) {
-                toolkit.print.info(`${docPath.replace(this.paths.absDocsPath, '')} is folder`);
-            } else {
-                const docDestDirname = path.dirname(docPath).replace(this.paths.absDocsPath, absSiteContentDocsPath);
-                const docSourceFile = await this.generateContentDoc(docPath, docDestDirname);
+    private async generateContentDocs(docsNavInsertIndex: number) {
+        const localeKeys = this.config.locales.map(locale => {
+            return locale.key;
+        });
 
-                docSourceFiles.push(docSourceFile);
+        for (const locale of this.config.locales) {
+            const isDefaultLocale = locale.key === this.config.defaultLocale;
+            const localeDocsPath = isDefaultLocale ? this.paths.absDocsPath : path.resolve(this.paths.absDocsPath, locale.key);
+            if (await toolkit.fs.pathExists(localeDocsPath)) {
+                const result = await this.generateDirContentDocs(localeDocsPath, locale.key, true, isDefaultLocale ? localeKeys : []);
+                this.localesNavsMap[locale.key].splice(docsNavInsertIndex, 0, ...result.navs);
             }
         }
-        if (this.watch) {
-            // watch
+    }
+
+    private async generateDirContentDocs(dirPath: string, locale: string, isRoot?: boolean, excludeDirs?: string[]) {
+        const dirsAndFiles = await toolkit.fs.getDirsAndFiles(dirPath, {
+            excludeDirs
+        });
+        const navOrdersMap: WeakMap<NavigationItem, number> = new WeakMap();
+        let navs: Array<NavigationItem> = [];
+        let categoryMeta: CategoryDocMeta = null;
+        for (const docPath of dirsAndFiles) {
+            const fullPath = path.resolve(dirPath, docPath);
+            if (toolkit.fs.isDirectory(fullPath)) {
+                const category: NavigationItem = {
+                    id: docPath,
+                    path: docPath.toLowerCase(),
+                    title: toolkit.strings.pascalCase(docPath),
+                    subtitle: '',
+                    items: []
+                };
+
+                navs.push(category);
+                const result = await this.generateDirContentDocs(fullPath, locale, false);
+                category.items = result.navs;
+                let order = Number.MAX_SAFE_INTEGER;
+                if (result.categoryMeta) {
+                    category.title = result.categoryMeta.title;
+                    if (toolkit.utils.isNumber(result.categoryMeta.order)) {
+                        order = result.categoryMeta.order;
+                    }
+                }
+                navOrdersMap.set(category, order);
+            } else {
+                const docDestAssetsContentPath = dirPath.replace(this.paths.absDocsPath, this.paths.absSiteAssetsContentDocsPath);
+                const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(fullPath, docDestAssetsContentPath);
+
+                if (isRoot && isEntryDoc(docSourceFile.basename)) {
+                    // do nothings
+                } else {
+                    const docItem: ComponentDocItem = {
+                        id: docSourceFile.basename,
+                        path: getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename),
+                        title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
+                        subtitle: ''
+                    };
+
+                    if (isEntryDoc(docSourceFile.basename)) {
+                        categoryMeta = docSourceFile.result.meta.category;
+                    }
+                    if (toolkit.utils.isNumber(docSourceFile.result.meta.order)) {
+                        navOrdersMap.set(docItem, docSourceFile.result.meta.order);
+                    } else {
+                        navOrdersMap.set(docItem, Number.MAX_SAFE_INTEGER);
+                    }
+
+                    const contentPath = docDestPath.replace(this.paths.absSiteAssetsContentPath, '');
+                    docItem.contentPath = contentPath;
+                    navs.push(docItem);
+                }
+            }
         }
-        // this.hooks.docsCompile.call(docSourceFiles);
+        navs = toolkit.utils.sortByOrderMap(navs, navOrdersMap);
+        return { navs, categoryMeta };
     }
 
     private async generateContentDoc(absDocPath: string, absDestDirPath: string, docType: DocType = DocType.general) {
         const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
-        const docSourceFile: DocSourceFile = {
-            absPath: absDocPath,
-            content,
-            dirname: path.dirname(absDocPath),
-            ext: path.extname(absDocPath),
-            basename: path.basename(absDocPath),
-            docType,
-            result: null
-        };
+        const docSourceFile = createDocSourceFile(absDocPath, content, docType);
         this.hooks.docCompile.call(docSourceFile);
-        const docDestPath = path.resolve(absDestDirPath, docSourceFile.basename);
+        const filename = docSourceFile.basename + docSourceFile.ext;
+        const docDestPath = path.resolve(absDestDirPath, filename);
         await toolkit.fs.ensureDir(absDestDirPath);
-        await toolkit.fs.outputFile(docDestPath, docSourceFile.content, { encoding: 'UTF-8' });
-        return docSourceFile;
+        await toolkit.fs.outputFile(docDestPath, docSourceFile.result.html, { encoding: 'UTF-8' });
+        return { docSourceFile, docDestPath, filename };
     }
 
     private async generateContentLibs() {

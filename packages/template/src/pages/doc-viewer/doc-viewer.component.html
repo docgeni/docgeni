@@ -5,6 +5,8 @@
 
   <ng-template #general>
     <h1>{{ docItem.title }}</h1>
-    <div>{{ docItem.content }}</div>
+    <div>
+      <dg-content-viewer [url]="'/assets/content' + docItem.contentPath"> </dg-content-viewer>
+    </div>
   </ng-template>
 </ng-container>
