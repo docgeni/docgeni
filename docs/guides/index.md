@@ -15,7 +15,10 @@ Docgeni 会自动根据目录结构和 FrontMatter 生成对应的文档导航�
 
 # 特性
 - 📦开箱即用，让你快速开启文档编写和组件开发
-- 📋对 Markdown 语法进行扩展，在文档中导入运行 Demo
+- 🏡独立的 Angular 组件预览体验，组件概览，示例，API
+- 📋对 Markdown 语法进行扩展，在文档中导入运行 Demo（WIP）
+- 💻多语言支持
+- 🚀两种模式以及多种风格支持（WIP）
 
 # 参与贡献
 Docgeni 目前还处于开发中，欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni

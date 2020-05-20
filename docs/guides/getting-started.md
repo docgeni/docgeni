@@ -16,7 +16,7 @@ $ yarn add @docgeni/cli -D
 
 安装后通过
 
-<!-- example(form-field-custom-control) -->
+<!-- example(alib-foo-basic-example) -->
 
 ```js
 export interface MarkdownParseResult<TAttributes = unknown> {
