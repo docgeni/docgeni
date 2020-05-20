@@ -24,7 +24,7 @@ Add scripts to package.json as followings:
 ```
 Add `docs` folder and add `index.md` file to docs.
 
-run `npm run start:docs` and open `http://127.0.0.1:8888`
+run `npm run start:docs` and open `http://127.0.0.1:4600`
 
 ## Development
 

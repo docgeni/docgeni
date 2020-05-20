@@ -2,6 +2,7 @@ import * as marked from 'marked';
 import { DocsMarkdownRenderer } from './renderer';
 import * as fm from 'front-matter';
 const renderer = new DocsMarkdownRenderer();
+import * as Prism from 'node-prismjs';
 
 export interface MarkdownParseResult<TAttributes = unknown> {
     attributes: TAttributes;
@@ -10,10 +11,16 @@ export interface MarkdownParseResult<TAttributes = unknown> {
     frontmatter: string;
 }
 
+function highlight(sourceCode: string, lang: string) {
+    const language = Prism.languages[lang] || Prism.languages.autoit;
+    return Prism.highlight(sourceCode, language);
+}
+
 export class Markdown {
     static toHTML(src: string) {
         return marked(src, {
-            renderer
+            renderer,
+            highlight
         });
     }
 

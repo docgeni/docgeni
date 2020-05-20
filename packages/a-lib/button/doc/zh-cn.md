@@ -31,12 +31,12 @@ order: 1
 
 直接使用`alibButton`指令在原有的按钮元素上扩展：
 
-```
+```html
 <button alibButton="primary">按钮</button>
 ```
 
 直接使用`alib-button`组件：
 
-```
+```html
 <alib-button alibType="primary">按钮</alib-button>
 ```
