@@ -38,12 +38,15 @@
     "glob": "^7.1.6",
     "gulp-watch": "^5.0.1",
     "marked": "^0.8.1",
+    "prismjs": "^1.20.0",
+    "node-prismjs": "0.1.2",
     "tapable": "^1.1.3",
     "ts-morph": "^7.0.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
     "@types/gulp-watch": "^4.1.34",
+    "@types/prismjs": "^1.16.1",
     "@types/tapable": "^1.0.5"
   }
 }

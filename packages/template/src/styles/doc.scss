@@ -41,20 +41,18 @@ $heading-color: $gray-800;
         margin: 0px 2px;
         background: $gray-100;
         border-radius: $border-radius;
-        color: $red;
-        line-height: 1.5;
+        color: $gray-800;
     }
 
     pre {
-        padding: 20px;
+        padding: 1em;
         font-size: $font-size-md;
         color: $gray-700;
         background: $gray-100;
         border-radius: $border-radius;
-        line-height: 1.5;
         code {
             padding: 0px;
-            color: $body-color;
+            // color: $body-color;
             background: transparent;
         }
     }

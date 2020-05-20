@@ -1,6 +1,6 @@
 import { Renderer } from 'marked';
 import { basename, extname } from 'path';
-
+import * as Prism from 'prismjs';
 /** Regular expression that matches whitespace. */
 const whitespaceRegex = /\W+/g;
 
@@ -62,5 +62,27 @@ export class DocsMarkdownRenderer extends Renderer {
      */
     finalizeOutput(output: string): string {
         return `<div class="docs-markdown">${output}</div>`;
+    }
+
+    /**
+     * add langClass to tag pre, marked.js default logic set langClass to code
+     * The prism.js highlight must set langClass (such as language-js) to pre tag <pre class="language-js"></pre>
+     */
+    code(code: string, infostring: string | undefined, escaped: boolean): string {
+        const lang = (infostring || '').match(/\S*/)[0];
+        if (this.options.highlight) {
+            const out = this.options.highlight(code, lang) as string;
+            if (out != null && out !== code) {
+                escaped = true;
+                code = out;
+            }
+        }
+
+        if (!lang) {
+            return '<pre><code>' + (escaped ? code : escape(code)) + '</code></pre>';
+        }
+
+        const langClass = this.options.langPrefix + escape(lang);
+        return `<pre class="${langClass}"><code class="${langClass}">${escaped ? code : escape(code)}</code></pre>\n`;
     }
 }

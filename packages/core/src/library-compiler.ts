@@ -1,6 +1,6 @@
 import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
 import { Library, CategoryItem, LiveExample } from './interfaces';
-import { toolkit, fs } from '@docgeni/toolkit';
+import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
 import { EXAMPLES_SOURCE_RELATIVE_PATH, EXAMPLES_OVERVIEWS_RELATIVE_PATH } from './constants';
@@ -184,7 +184,7 @@ export class LibraryCompiler {
 
         dirs.forEach(dir => {
             const key = `${this.lib.name}-${component.name}-${dir}-example`;
-            const componentName = toolkit.strings.pascalCase(`${this.lib.name}-${component.name}-${dir}-example-component`);
+            const componentName = toolkit.strings.pascalCase(`${key}-component`);
             examples.push({
                 key,
                 name: dir,
