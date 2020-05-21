@@ -7,11 +7,19 @@ import { ContentViewerComponent } from '../content-viewer/content-viewer.compone
 import { CopierService } from '../copier/copier.service';
 
 const EXAMPLES_SOURCE_PATH = `/assets/content/examples-source`;
+const EXAMPLES_HIGHLIGHTED_PATH = `/assets/content/examples-highlighted`;
 
 interface ExampleTab {
     name: string;
     path: string;
 }
+
+const nameOrdersMap = {
+    TS: 1,
+    HTML: 2,
+    SCSS: 3,
+    CSS: 4
+};
 
 @Component({
     selector: 'dg-example-viewer',
@@ -23,7 +31,8 @@ export class ExampleViewerComponent implements OnInit {
     @Input() exampleName: string;
 
     @HostBinding('class.dg-example-viewer-inline')
-    @Input() inline: boolean;
+    @Input()
+    inline: boolean;
 
     @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
 
@@ -44,26 +53,34 @@ export class ExampleViewerComponent implements OnInit {
 
     constructor(private exampleLoader: ExampleLoader, private copier: CopierService) {}
 
+    // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
+    // the file name to match the exampleName.component.* that displays main source files.
+    private transformFileName(fileName: string, exampleName: string) {
+        return fileName.startsWith(`${exampleName}.component.`)
+            ? fileName.replace(`${exampleName}.component.`, '').toUpperCase()
+            : fileName;
+    }
+
     ngOnInit(): void {
         this.exampleLoader.load(this.exampleName).then(result => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
             this.example = result.example;
-            const rootPath = `${EXAMPLES_SOURCE_PATH}/${this.example.module.importSpecifier}/${this.example.name}`;
-            this.exampleTabs = [
-                {
-                    name: `TS`,
-                    path: `${rootPath}/${this.example.name}.component.ts`
-                },
-                {
-                    name: `HTML`,
-                    path: `${rootPath}/${this.example.name}.component.html`
-                },
-                {
-                    name: `CSS`,
-                    path: `${rootPath}/${this.example.name}.component.scss`
-                }
-            ];
+            const rootPath = `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`;
+
+            this.exampleTabs = this.example.sourceFiles
+                .map(file => {
+                    return {
+                        name: this.transformFileName(file.name, this.example.name),
+                        path: `${rootPath}/${file.highlightedPath}`
+                    };
+                })
+                // The order we expect is TS > HTML > SCSS | CSS
+                .sort((a, b) => {
+                    const aOrder = nameOrdersMap[a.name] || Number.MAX_SAFE_INTEGER;
+                    const bOrder = nameOrdersMap[b.name] || Number.MAX_SAFE_INTEGER;
+                    return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
+                });
             this.selectedTab = this.exampleTabs[0];
         });
     }
@@ -73,7 +90,7 @@ export class ExampleViewerComponent implements OnInit {
     }
 
     copy() {
-        const text = this.contentViewer['elementRef'].nativeElement.innerHTML;
+        const text = this.contentViewer.elementRef.nativeElement.textContent;
         this.copier.copyText(text);
         this.copyIcon = 'check';
 

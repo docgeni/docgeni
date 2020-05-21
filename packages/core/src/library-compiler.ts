@@ -1,10 +1,14 @@
 import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
-import { Library, CategoryItem, LiveExample } from './interfaces';
-import { toolkit } from '@docgeni/toolkit';
+import { Library, CategoryItem, LiveExample, ExampleSourceFile } from './interfaces';
+import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
-import { ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH, ASSETS_EXAMPLES_OVERVIEWS_RELATIVE_PATH } from './constants';
-import { getItemLocaleProperty, createDocSourceFile } from './utils';
+import {
+    ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH,
+    ASSETS_EXAMPLES_OVERVIEWS_RELATIVE_PATH,
+    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH
+} from './constants';
+import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
 
 export interface LibComponent {
     name: string;
@@ -54,6 +58,7 @@ export class LibraryCompiler {
     private absLibPath: string;
     private absDestSiteContentComponentsPath: string;
     private absDestAssetsExamplesSourcePath: string;
+    private absDestAssetsExamplesHighlightedPath: string;
     private absDestAssetsExamplesOverviewPath: string;
     private examplesEmitter: ExamplesEmitter;
 
@@ -63,6 +68,10 @@ export class LibraryCompiler {
         this.absDestAssetsExamplesSourcePath = path.resolve(
             this.docgeni.paths.absSitePath,
             `${ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
+        );
+        this.absDestAssetsExamplesHighlightedPath = path.resolve(
+            this.docgeni.paths.absSitePath,
+            `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
         );
         this.absDestAssetsExamplesOverviewPath = path.resolve(
             this.docgeni.paths.absSitePath,
@@ -176,28 +185,55 @@ export class LibraryCompiler {
         const examples: LiveExample[] = [];
         const moduleName = toolkit.strings.pascalCase(`${this.lib.name}-${component.name}-examples-module`);
 
-        dirs.forEach(dir => {
-            const key = `${this.lib.name}-${component.name}-${dir}-example`;
+        for (const dirName of dirs) {
+            const key = `${this.lib.name}-${component.name}-${dirName}-example`;
             const componentName = toolkit.strings.pascalCase(`${key}-component`);
+            const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
+            const sourceFiles = await this.generateComponentExampleHighlighted(component, absComponentExamplePath, dirName);
             examples.push({
                 key,
-                name: dir,
-                title: toolkit.strings.pascalCase(dir),
+                name: dirName,
+                title: toolkit.strings.pascalCase(dirName),
                 componentName,
                 module: {
                     name: moduleName,
                     importSpecifier: `${this.lib.name}/${component.name}`
                 },
+                sourceFiles,
                 additionalFiles: [],
                 additionalComponents: []
             });
-        });
+        }
 
         toolkit.template.generate('component-examples-entry.hbs', path.resolve(destAbsComponentExamplesPath, 'index.ts'), {
             examples,
             examplesModule: moduleName
         });
         return examples;
+    }
+
+    private async generateComponentExampleHighlighted(
+        component: LibComponent,
+        absComponentExamplePath: string,
+        exampleName: string
+    ): Promise<ExampleSourceFile[]> {
+        const files = await toolkit.fs.getFiles(absComponentExamplePath);
+        const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.name, exampleName);
+        const exampleSourceFiles: ExampleSourceFile[] = [];
+        for (const fileName of files) {
+            const ext = toolkit.utils.extractExtname(fileName, true);
+            const sourceCode = await toolkit.fs.readFileContent(path.resolve(absComponentExamplePath, fileName));
+            const highlightedSourceCode = highlight(sourceCode, ext);
+            const destFileName = `${toolkit.strings.paramCase(fileName)}.html`;
+            const destHighlightedSourceFilePath = `${absExampleHighlightPath}/${destFileName}`;
+            await toolkit.fs.ensureWriteFile(destHighlightedSourceFilePath, highlightedSourceCode);
+            exampleSourceFiles.push({
+                name: fileName,
+                highlightedPath: destFileName
+            });
+        }
+
+        return exampleSourceFiles;
     }
 
     private buildLocalesCategoriesMap(categories: CategoryItem[]): LocaleCategoryMap {

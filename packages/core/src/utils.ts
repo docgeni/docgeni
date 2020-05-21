@@ -3,6 +3,7 @@ import * as path from 'path';
 import { DocType } from './enums';
 import { DocSourceFile } from './docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
+import * as Prism from 'node-prismjs';
 export const DOCS_ENTRY_FILE_NAMES = ['index', 'readme'];
 
 type ExtractLocaleItem<T> = T extends {
@@ -48,13 +49,13 @@ export function buildLocalesNavsMap(locales: Locale[], navs: NavigationItem[]): 
 }
 
 export function createDocSourceFile(absDocPath: string, content: string, docType: DocType): DocSourceFile {
-    const ext = path.extname(absDocPath);
+    const result = path.parse(absDocPath);
     return {
         absPath: absDocPath,
         content,
         dirname: path.dirname(absDocPath),
-        ext,
-        basename: path.basename(absDocPath, ext),
+        ext: result.ext,
+        basename: result.name,
         docType,
         result: null
     };
@@ -79,4 +80,9 @@ export function getDocTitle(metaTitle: string, basename: string) {
 
 export function isEntryDoc(basename: string) {
     return DOCS_ENTRY_FILE_NAMES.includes(basename);
+}
+
+export function highlight(sourceCode: string, lang: string) {
+    const language = Prism.languages[lang] || Prism.languages.autoit;
+    return Prism.highlight(sourceCode, language);
 }

@@ -1,7 +1,12 @@
 import { NgModuleInfo } from './module';
 
+export interface ExampleSourceFile {
+    name: string;
+    highlightedPath: string;
+}
+
 export interface LiveExample {
-     /** Key of the example. alib-button-basic-example */
+    /** Key of the example. alib-button-basic-example */
     key: string;
     /** Name of the example. basic or advance */
     name: string;
@@ -9,6 +14,8 @@ export interface LiveExample {
     title: string;
     /** Name of the example component. */
     componentName: string;
+    /** List of source files which are all of the example. */
+    sourceFiles: ExampleSourceFile[];
     /** List of additional components which are part of the example. */
     additionalComponents?: string[];
     /** List of additional files which are part of the example. */

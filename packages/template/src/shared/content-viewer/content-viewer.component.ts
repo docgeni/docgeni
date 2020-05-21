@@ -86,7 +86,7 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
 
     constructor(
         private http: HttpClient,
-        private elementRef: ElementRef<HTMLElement>,
+        public elementRef: ElementRef<HTMLElement>,
         private appRef: ApplicationRef,
         private componentFactoryResolver: ComponentFactoryResolver,
         private injector: Injector,

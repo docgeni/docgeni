@@ -2,18 +2,13 @@ import * as marked from 'marked';
 import { DocsMarkdownRenderer } from './renderer';
 import * as fm from 'front-matter';
 const renderer = new DocsMarkdownRenderer();
-import * as Prism from 'node-prismjs';
+import { highlight } from '../utils';
 
 export interface MarkdownParseResult<TAttributes = unknown> {
     attributes: TAttributes;
     body: string;
     bodyBegin: number;
     frontmatter: string;
-}
-
-function highlight(sourceCode: string, lang: string) {
-    const language = Prism.languages[lang] || Prism.languages.autoit;
-    return Prism.highlight(sourceCode, language);
 }
 
 export class Markdown {
