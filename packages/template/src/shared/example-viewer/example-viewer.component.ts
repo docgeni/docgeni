@@ -22,6 +22,9 @@ export class ExampleViewerComponent implements OnInit {
 
     @Input() exampleName: string;
 
+    @HostBinding('class.dg-example-viewer-inline')
+    @Input() inline: boolean;
+
     @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
 
     /** Component type for the current example. */

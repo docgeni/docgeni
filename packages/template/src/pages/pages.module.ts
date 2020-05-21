@@ -1,5 +1,4 @@
 import { NgModule, ApplicationRef } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 import { ComponentViewerComponent } from './component-viewer/component-viewer.component';
 import { DocViewerComponent, DocViewerHomeComponent } from './doc-viewer/doc-viewer.component';

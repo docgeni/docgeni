@@ -19,6 +19,22 @@
     display: block;
     padding: 20px 0px;
 
+    &.dg-example-viewer-inline {
+        padding: 10px 0px;
+        .dg-example-viewer-wrapper {
+            border: none;
+            box-shadow: none;
+        }
+
+        .dg-example-viewer-header,
+        .dg-example-viewer-actions {
+            display: none;
+        }
+        .dg-example-viewer-body {
+            padding: 0px;
+        }
+    }
+
     .dg-example-viewer-wrapper {
         border: 1px solid $border-color;
         box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.1);

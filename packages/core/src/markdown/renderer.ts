@@ -6,7 +6,7 @@ const whitespaceRegex = /\W+/g;
 
 /** Regular expression that matches example comments. */
 const exampleCommentRegex = /<!--\W*example\(([^)]+)\)\W*-->/g;
-
+const exampleRegex = /<example\W*name=['"]([^"']+)\W*(inline)?\W*\/>/g;
 /**
  * Custom renderer for marked that will be used to transform markdown files to HTML
  * files that can be used in the Angular Material docs.
@@ -48,10 +48,14 @@ export class DocsMarkdownRenderer extends Renderer {
      * Method that will be called whenever inline HTML is processed by marked. In that case,
      * we can easily transform the example comments into real HTML elements. For example:
      *
-     *  `<!-- example(name) -->` turns into `<div material-docs-example="name"></div>`
+     *  `<example name="name" />` turns into `<example name="name"></example>`
+     *  `<example name="name" inline />` turns into `<example name="name"></example>`
      */
     html(html: string) {
-        html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgeni-docs-example="${name}"></div>`);
+        // html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgeni-docs-example="${name}"></div>`);
+        html = html.replace(exampleRegex, (_match: string, name: string, inline: string) => {
+            return `<example name="${name}" ${inline || ''}></example>`;
+        });
 
         return super.html(html);
     }
