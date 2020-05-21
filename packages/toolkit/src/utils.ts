@@ -1,4 +1,5 @@
 import { timestamp } from './timestamp';
+import * as path from 'path';
 
 export function isString(value: any): value is string {
     return typeof value === 'string';
@@ -30,6 +31,11 @@ export function sortByOrderMap<T extends object>(items: T[], ordersMap: WeakMap<
         const bOrder = ordersMap.get(b);
         return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
     });
+}
+
+export function extractExtname(p: string, removeDot = false) {
+    const extname = path.extname(p);
+    return removeDot ? extname.replace('.', '') : extname;
 }
 
 export { timestamp };

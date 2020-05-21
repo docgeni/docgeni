@@ -1,7 +1,8 @@
 import * as pluralize from 'pluralize';
 import camelcase from 'camelcase';
-// import * as changeCase from 'change-case';
+import * as changeCase from 'change-case';
 import { titleCase as _titleCase } from 'title-case';
+import { paramCase as _paramCase } from 'param-case';
 
 /**
  * Whether plural, 是否是复数
@@ -29,6 +30,14 @@ export function pascalCase(input: string | readonly string[]): string {
 
 export function titleCase(input: string) {
     return _titleCase(input);
+}
+
+export function snakeCase(input: string, options?: changeCase.Options) {
+    return changeCase.snakeCase(input, options);
+}
+
+export function paramCase(input: string, options?: changeCase.Options) {
+    return _paramCase(input, options);
 }
 
 export function isString(value: any): value is string {

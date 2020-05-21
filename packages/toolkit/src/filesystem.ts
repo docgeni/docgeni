@@ -11,24 +11,17 @@ export function isDirectory(dir: string) {
     return fsExtra.statSync(dir).isDirectory();
 }
 
-export async function getDirs(path: string) {
-    const dirs = await fsExtra.readdir(path);
-    return dirs.filter(dir => {
-        return isDirectory(nodePath.resolve(path, dir));
-    });
-}
-
-export interface GetDirsAndFilesOptions {
+export interface GetDirsOrFilesOptions {
     /** Include .dot files in normal matches */
     dot?: boolean;
     /** Exclude files in normal matches */
     excludeDirs?: string[];
 }
 
-const DEFAULT_OPTIONS: GetDirsAndFilesOptions = {
+const DEFAULT_OPTIONS: GetDirsOrFilesOptions = {
     dot: false
 };
-export async function getDirsAndFiles(path: string, options?: GetDirsAndFilesOptions) {
+export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
     options = {
         ...DEFAULT_OPTIONS,
         ...options
@@ -43,6 +36,20 @@ export async function getDirsAndFiles(path: string, options?: GetDirsAndFilesOpt
         } else {
             return !dir.startsWith('.');
         }
+    });
+}
+
+export async function getDirs(path: string) {
+    const dirs = await fsExtra.readdir(path);
+    return dirs.filter(dir => {
+        return isDirectory(nodePath.resolve(path, dir));
+    });
+}
+
+export async function getFiles(path: string, options?: GetDirsOrFilesOptions) {
+    const dirs = await getDirsAndFiles(path, options);
+    return dirs.filter(dir => {
+        return !isDirectory(nodePath.resolve(path, dir));
     });
 }
 
@@ -68,6 +75,10 @@ export async function pathsExists(paths: string[]) {
 export async function ensureWriteFile(filePath: string, data: string, options?: fsExtra.WriteFileOptions | string) {
     await fsExtra.ensureFile(filePath);
     await fsExtra.writeFile(filePath, data);
+}
+
+export async function readFileContent(filePath: string, encoding: string = 'UTF-8') {
+    return await fsExtra.readFile(filePath, encoding);
 }
 
 export * from 'fs-extra';
