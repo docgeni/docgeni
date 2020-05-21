@@ -14,17 +14,34 @@ $ npm i @docgeni/cli --save-dev
 $ yarn add @docgeni/cli -D
 ```
 
-安装后通过
+Inline 方式展示示例组件
+
+```html
+<example name="alib-foo-basic-example" inline />
+```
+<example name="alib-foo-basic-example" inline />
+完整展示一个示例组件
+
+```html
+<example name="alib-foo-basic-example" />
+```
+<example name="alib-foo-basic-example" />
 
 <!-- example(alib-foo-basic-example) -->
 
 ```js
-export interface MarkdownParseResult<TAttributes = unknown> {
-    attributes: TAttributes;
-    body: string;
-    bodyBegin: number;
-    frontmatter: string;
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'alib-foo-basic-example',
+    template: `<button alibButton class="btn-primary">Basic Button</button>`
+})
+export class AlibButtonBasicExampleComponent implements OnInit {
+    constructor() {}
+
+    ngOnInit(): void {}
 }
+
 ```
 
 ```css

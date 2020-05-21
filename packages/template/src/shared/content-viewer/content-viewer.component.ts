@@ -18,6 +18,7 @@ import { DomPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
 import { Subscription } from 'rxjs';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'dg-content-viewer',
@@ -55,19 +56,22 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
 
     private updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
-        this.loadComponents('docgeni-docs-example', ExampleViewerComponent);
+        this.loadComponents('example', ExampleViewerComponent);
     }
 
-    private loadComponents(componentName: string, componentClass: any) {
-        const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
+    private loadComponents(selector: string, componentClass: any) {
+        const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
 
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
-            const example = element.getAttribute(componentName);
+            const exampleName = element.getAttribute('name');
+            const inline = element.getAttribute('inline');
             const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
-            const exampleViewer = portalHost.attach(examplePortal);
-            if (example !== null) {
-                (exampleViewer.instance as ExampleViewerComponent).exampleName = example;
+            const exampleViewerRef = portalHost.attach(examplePortal);
+            if (exampleName !== null) {
+                const exampleViewer = exampleViewerRef.instance as ExampleViewerComponent;
+                exampleViewer.exampleName = exampleName;
+                exampleViewer.inline = coerceBooleanProperty(inline);
             }
 
             this.portalHosts.push(portalHost);
