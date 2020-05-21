@@ -19,7 +19,7 @@ Inline 方式展示示例组件
 ```html
 <example name="alib-foo-basic-example" inline />
 ```
-<example name="alib-foo-basic-example" inline />
+<example name="alib-foo-basic-example" />
 完整展示一个示例组件
 
 ```html

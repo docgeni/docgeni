@@ -1,6 +1,6 @@
 import * as pluralize from 'pluralize';
 import camelcase from 'camelcase';
-import * as changeCase from 'change-case';
+// import * as changeCase from 'change-case';
 import { titleCase as _titleCase } from 'title-case';
 
 /**

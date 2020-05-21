@@ -49,7 +49,7 @@ export class DocsMarkdownRenderer extends Renderer {
      * we can easily transform the example comments into real HTML elements. For example:
      *
      *  `<example name="name" />` turns into `<example name="name"></example>`
-     *  `<example name="name" inline />` turns into `<example name="name"></example>`
+     *  `<example name="name" inline />` turns into `<example name="name" inline></example>`
      */
     html(html: string) {
         // html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgeni-docs-example="${name}"></div>`);
