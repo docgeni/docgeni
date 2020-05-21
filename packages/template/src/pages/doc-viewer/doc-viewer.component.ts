@@ -94,7 +94,7 @@ export class DocViewerComponent implements OnInit {
 export class DocViewerHomeComponent implements OnDestroy {
     destroy$ = new Subject();
 
-    constructor(private navigationService: NavigationService, route: ActivatedRoute, router: Router) {
+    constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
             if (docItem) {
                 router.navigate(['../overview'], { relativeTo: route });
