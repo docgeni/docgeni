@@ -14,3 +14,5 @@ Foo component is foo.
 ```
 <alib-foo></alib-foo>
 ```
+展示的效果如下：
+<!-- example(alib-foo-basic-example) -->

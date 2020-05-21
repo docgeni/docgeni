@@ -40,6 +40,10 @@ const actualRoutes: Routes = [
                     {
                         path: 'examples',
                         component: ComponentExamplesComponent
+                    },
+                    {
+                        path: '**',
+                        component: ComponentExamplesComponent
                     }
                 ]
             }
