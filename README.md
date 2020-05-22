@@ -7,6 +7,7 @@
 <p align="center">
 A modern and simply documentation generator for markdown docs and Angular components lib
 </p>
+
 ## Installation
 
 ```bash
@@ -33,11 +34,11 @@ run `npm run start:docs` and open `http://127.0.0.1:4600`
 
 ## Development
 
-```
+```bash
 yarn   // install dependencies for all packages
 ```
 
-```
+```bash
 yarn build-deps   // build all packages
 yarn build:docs   // build docs & lib demo
 yarn start:docs   // build docs for test and watch (WIP)
