@@ -1,4 +1,9 @@
-# Docgeni (WIP)
+<p align="center" style="margin-bottom: -20px">
+  <img width="80px" height="80px" src="https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png">
+</p>
+<p align="center">
+  <strong>Docgeni(WIP)</strong>
+</p>
 
 A modern and simply documentation generator for markdown docs and Angular components lib
 
