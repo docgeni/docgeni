@@ -28,13 +28,14 @@ export interface ComponentDocMeta {
 export interface CategoryDocMeta {
     title: string;
     order?: number;
+    path?: string;
 }
 
 export interface GeneralDocMeta {
     title: string;
     path?: string;
     order?: number;
-    category?: CategoryDocMeta;
+    // category?: CategoryDocMeta;
 }
 
 export type DocMeta = ComponentDocMeta & GeneralDocMeta;

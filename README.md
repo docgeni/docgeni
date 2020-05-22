@@ -4,10 +4,10 @@ A modern and simply documentation generator for markdown docs and Angular compon
 
 ## Installation
 
-```
-npm i @docgeni/cli --save-dev
-or 
-yarn add @docgeni/cli -D
+```bash
+$ npm i @docgeni/cli --save-dev
+# or 
+$ yarn add @docgeni/cli -D
 ```
 
 Add scripts to package.json as followings:
