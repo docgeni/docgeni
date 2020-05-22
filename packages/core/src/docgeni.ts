@@ -176,29 +176,64 @@ export class Docgeni implements DocgeniContext {
                 const docDestAssetsContentPath = dirPath.replace(this.paths.absDocsPath, this.paths.absSiteAssetsContentDocsPath);
                 const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(fullPath, docDestAssetsContentPath);
 
-                if (isRoot && isEntryDoc(docSourceFile.basename)) {
+                const isEntry = isEntryDoc(docSourceFile.basename);
+                if (isRoot) {
                     // do nothings
                 } else {
+                    if (isEntry) {
+                        categoryMeta = docSourceFile.result.meta;
+                    }
                     const docItem: ComponentDocItem = {
                         id: docSourceFile.basename,
                         path: getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename),
                         title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
                         subtitle: ''
                     };
+                    let docItemOrder = Number.MAX_SAFE_INTEGER;
 
-                    if (isEntryDoc(docSourceFile.basename)) {
-                        categoryMeta = docSourceFile.result.meta.category;
-                    }
-                    if (toolkit.utils.isNumber(docSourceFile.result.meta.order)) {
-                        navOrdersMap.set(docItem, docSourceFile.result.meta.order);
+                    if (isEntry) {
+                        // sort default doc at top
+                        if (docSourceFile.content) {
+                            docItemOrder = Number.MIN_SAFE_INTEGER;
+                        } else {
+                            // do nothings when entry doc has not content
+                            continue;
+                        }
                     } else {
-                        navOrdersMap.set(docItem, Number.MAX_SAFE_INTEGER);
+                        if (toolkit.utils.isNumber(docSourceFile.result.meta.order)) {
+                            docItemOrder = docSourceFile.result.meta.order;
+                        }
                     }
 
+                    navOrdersMap.set(docItem, docItemOrder);
                     const contentPath = docDestPath.replace(this.paths.absSiteAssetsContentPath, '');
                     docItem.contentPath = contentPath;
                     navs.push(docItem);
                 }
+
+                // if (isRoot && isEntry) {
+                //     // do nothings
+                // } else {
+                //     const docItem: ComponentDocItem = {
+                //         id: docSourceFile.basename,
+                //         path: getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename),
+                //         title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
+                //         subtitle: ''
+                //     };
+
+                //     if (isEntryDoc(docSourceFile.basename)) {
+                //         categoryMeta = docSourceFile.result.meta;
+                //     }
+                //     if (toolkit.utils.isNumber(docSourceFile.result.meta.order)) {
+                //         navOrdersMap.set(docItem, docSourceFile.result.meta.order);
+                //     } else {
+                //         navOrdersMap.set(docItem, Number.MAX_SAFE_INTEGER);
+                //     }
+
+                //     const contentPath = docDestPath.replace(this.paths.absSiteAssetsContentPath, '');
+                //     docItem.contentPath = contentPath;
+                //     navs.push(docItem);
+                // }
             }
         }
         navs = toolkit.utils.sortByOrderMap(navs, navOrdersMap);

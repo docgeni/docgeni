@@ -15,7 +15,9 @@ export class Markdown {
     static toHTML(src: string) {
         return marked(src, {
             renderer,
-            highlight
+            highlight,
+            gfm: true,
+            breaks: true
         });
     }
 
