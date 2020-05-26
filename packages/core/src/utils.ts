@@ -25,7 +25,7 @@ export function getItemLocaleProperty<
     }
 }
 
-export function buildLocaleNavs(locale: Locale, navs: NavigationItem[]): NavigationItem[] {
+export function buildNavsForLocale(locale: Locale, navs: NavigationItem[]): NavigationItem[] {
     return (navs || []).map(rawNav => {
         const nav: NavigationItem = {
             ...rawNav,
@@ -33,17 +33,17 @@ export function buildLocaleNavs(locale: Locale, navs: NavigationItem[]): Navigat
             subtitle: getItemLocaleProperty(rawNav, locale.key, 'subtitle')
         };
         if (rawNav.items) {
-            nav.items = buildLocaleNavs(locale, rawNav.items);
+            nav.items = buildNavsForLocale(locale, rawNav.items);
         }
         delete nav.locales;
         return nav;
     });
 }
 
-export function buildLocalesNavsMap(locales: Locale[], navs: NavigationItem[]): Record<string, NavigationItem[]> {
+export function buildNavsMapForLocales(locales: Locale[], navs: NavigationItem[]): Record<string, NavigationItem[]> {
     const localeNavsMap: Record<string, NavigationItem[]> = {};
     locales.forEach(locale => {
-        localeNavsMap[locale.key] = this.buildLocaleNavs(locale, navs);
+        localeNavsMap[locale.key] = this.buildNavsForLocale(locale, navs);
     });
     return localeNavsMap;
 }

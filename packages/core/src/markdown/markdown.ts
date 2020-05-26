@@ -16,8 +16,7 @@ export class Markdown {
         return marked(src, {
             renderer,
             highlight,
-            gfm: true,
-            breaks: true
+            gfm: true
         });
     }
 
