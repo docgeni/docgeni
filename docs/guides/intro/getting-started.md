@@ -1,7 +1,7 @@
 ---
 title: 快速开始
 path: 'getting-started'
-order: 2
+order: 3
 ---
 # 脚手架初始化
 

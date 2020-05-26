@@ -61,8 +61,9 @@ export class LibraryCompiler {
     private absDestAssetsExamplesHighlightedPath: string;
     private absDestAssetsExamplesOverviewPath: string;
     private examplesEmitter: ExamplesEmitter;
+    private localesCategoriesMap: LocaleCategoryMap;
 
-    constructor(private docgeni: DocgeniContext, private lib: Library, examplesEmitter: ExamplesEmitter) {
+    constructor(private docgeni: DocgeniContext, public lib: Library, examplesEmitter: ExamplesEmitter) {
         this.absLibPath = this.docgeni.getAbsPath(this.lib.rootPath);
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
         this.absDestAssetsExamplesSourcePath = path.resolve(
@@ -80,10 +81,18 @@ export class LibraryCompiler {
         this.examplesEmitter = examplesEmitter;
     }
 
+    getAbsLibPath() {
+        return this.absLibPath;
+    }
+
+    getLocaleCategories(locale: string) {
+        return this.localesCategoriesMap[locale] && this.localesCategoriesMap[locale].categories;
+    }
+
     async compile(): Promise<LocaleCategoryMap> {
         const components = await this.getComponents();
 
-        const localesCategoriesMap: LocaleCategoryMap = this.buildLocalesCategoriesMap(this.lib.categories);
+        this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
 
         // const examplesEmitter = new ExamplesEmitter(this.docgeni);
         for (const component of components) {
@@ -95,7 +104,7 @@ export class LibraryCompiler {
             component.meta = meta;
 
             this.docgeni.config.locales.forEach(locale => {
-                const localeCategories = localesCategoriesMap[locale.key];
+                const localeCategories = this.localesCategoriesMap[locale.key];
                 let category = localeCategories.categoriesMap[meta.category];
                 let docSourceFile = localeDocsMap[locale.key];
                 // Use default locale's data when locale is not found
@@ -123,7 +132,8 @@ export class LibraryCompiler {
                 });
             });
         }
-        return localesCategoriesMap;
+        this.docgeni.logger.succuss(`Lib(${this.lib.name}) compiled successfully`);
+        return this.localesCategoriesMap;
     }
 
     private async getComponents(): Promise<LibComponent[]> {

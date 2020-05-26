@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { config } from './content/config';
 import { RouterModule } from '@angular/router';
 import { LIB_EXAMPLE_LOADER_PROVIDER } from './content/example-loader';
-
+import './content/navigations.json';
 @NgModule({
     declarations: [],
     imports: [DocgeniTemplateModule, RouterModule.forRoot(routes)],
