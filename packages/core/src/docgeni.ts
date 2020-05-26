@@ -110,17 +110,19 @@ export class Docgeni implements DocgeniContext {
             this.localesNavsMap = buildNavsMapForLocales(this.config.locales, this.config.navs);
 
             // docs compile
-            await this.docsCompiler.compile();
-            if (this.watch) {
-                const watcher = chokidar.watch([this.config.docsPath], { cwd: this.paths.cwd, ignoreInitial: true, interval: 1000 });
-                this.logger.info(`start watch docs folder...`);
-                ['add', 'change'].forEach(eventName => {
-                    watcher.on(eventName, async (filePath: string) => {
-                        this.logger.info(`${filePath} ${eventName}`);
-                        await this.docsCompiler.compile();
-                        await this.generateSiteNavs();
+            if (this.config.docsPath) {
+                await this.docsCompiler.compile();
+                if (this.watch) {
+                    const watcher = chokidar.watch([this.config.docsPath], { cwd: this.paths.cwd, ignoreInitial: true, interval: 1000 });
+                    this.logger.info(`start watch docs folder...`);
+                    ['add', 'change'].forEach(eventName => {
+                        watcher.on(eventName, async (filePath: string) => {
+                            this.logger.info(`${filePath} ${eventName}`);
+                            await this.docsCompiler.compile();
+                            await this.generateSiteNavs();
+                        });
                     });
-                });
+                }
             }
 
             // compile all libs
@@ -186,7 +188,7 @@ export class Docgeni implements DocgeniContext {
     }
 
     private async generateSiteNavs() {
-        const localesNavsMap = JSON.parse(JSON.stringify(this.localesNavsMap));
+        const localesNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localesNavsMap));
         this.config.locales.forEach(locale => {
             localesNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...this.docsCompiler.getLocaleNavs(locale.key));
             this.libraryCompilers.forEach(libraryCompiler => {

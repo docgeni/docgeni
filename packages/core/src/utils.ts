@@ -43,7 +43,7 @@ export function buildNavsForLocale(locale: Locale, navs: NavigationItem[]): Navi
 export function buildNavsMapForLocales(locales: Locale[], navs: NavigationItem[]): Record<string, NavigationItem[]> {
     const localeNavsMap: Record<string, NavigationItem[]> = {};
     locales.forEach(locale => {
-        localeNavsMap[locale.key] = this.buildNavsForLocale(locale, navs);
+        localeNavsMap[locale.key] = buildNavsForLocale(locale, navs);
     });
     return localeNavsMap;
 }

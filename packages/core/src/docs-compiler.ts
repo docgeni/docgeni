@@ -24,7 +24,7 @@ export class DocsCompiler {
     }
 
     getLocaleNavs(locale: string) {
-        return this.localesDocsDataMap[locale] && this.localesDocsDataMap[locale].navs;
+        return this.localesDocsDataMap[locale] && this.localesDocsDataMap[locale].navs || [];
     }
 
     constructor(private docgeni: DocgeniContext) {}

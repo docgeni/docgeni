@@ -6,7 +6,7 @@ module.exports = {
     title: 'Docgeni',
     heading: 'Doc Generator',
     description: 'A modern documentation generator for doc and Angular Lib',
-    docsPath: 'docs',
+    docsPath: './docs',
     sitePath: 'packages/site',
     output: 'docgeni-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
