@@ -9,13 +9,15 @@
       "conventionalCommits": true
     },
     "publish": {
-      "ignoreChanges": ["*.md"],
+      "ignoreChanges": [
+        "*.md"
+      ],
       "verifyAccess": false,
       "verifyRegistry": false,
       "message": "chore: release %s"
     }
   },
   "npmClient": "yarn",
-  "version": "0.0.1-alpha.0",
+  "version": "0.1.0-alpha.0",
   "useWorkspaces": true
 }
