@@ -108,6 +108,9 @@ export class Docgeni implements DocgeniContext {
             await toolkit.fs.remove(this.paths.absSiteContentPath);
             // clear assets content dist dir
             await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
+            // ensure docs content dist dir and assets content dist dir
+            toolkit.fs.ensureDir(this.paths.absSiteContentPath);
+            toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
 
             // build navs by config
             this.localesNavsMap = buildNavsMapForLocales(this.config.locales, this.config.navs);
@@ -129,7 +132,6 @@ export class Docgeni implements DocgeniContext {
             }
 
             // compile all libs
-            toolkit.fs.ensureDir(this.paths.absSiteContentPath);
             for (const libraryCompiler of this.libraryCompilers) {
                 await libraryCompiler.compile();
                 if (this.watch) {
