@@ -6,7 +6,10 @@
   ],
   "command": {
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "gitTagVersion": false,
+      "push": false,
+      "yes": true
     },
     "publish": {
       "ignoreChanges": [

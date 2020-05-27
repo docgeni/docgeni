@@ -18,7 +18,9 @@
     "url": "git+https://github.com/docgeni/docgeni.git"
   },
   "scripts": {
-    "build": "tsc -b && ncp ./src/templates ./lib/templates",
+    "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
+    "build-only": "tsc -b && cpx ./src/templates/**/* ./lib/templates",
+    "build": "yarn clean && yarn build-only",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
