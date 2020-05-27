@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalContext } from '../../services';
 
@@ -7,6 +7,7 @@ import { GlobalContext } from '../../services';
     templateUrl: './root.component.html'
 })
 export class RootComponent {
+    @HostBinding(`class.dg-main`) isMain = true;
+
     constructor() {}
 }
-

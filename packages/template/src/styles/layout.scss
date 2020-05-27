@@ -1,4 +1,4 @@
-dg-root {
+.dg-main {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -8,7 +8,7 @@ dg-root {
     right: 0;
 }
 
-dg-footer {
+.dg-footer {
     display: block;
     margin: 72px 0 -32px;
     padding-top: 24px;
