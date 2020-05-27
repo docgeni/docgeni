@@ -13,16 +13,12 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "files": [
-    "lib",
-    "index.js"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/docgeni/docgeni.git"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && ncp ./src/templates ./lib/templates",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {

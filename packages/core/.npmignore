@@ -1,4 +1,5 @@
 src
+test
 tsconfig.tsbuildinfo
 yarn.lock
 tsconfig.json

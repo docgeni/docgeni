@@ -86,6 +86,9 @@ export class Docgeni implements DocgeniContext {
             defaultLocale: this.config.defaultLocale,
             repoUrl: this.config.repoUrl
         };
+        if (!this.config.libs) {
+            this.config.libs = [];
+        }
         this.paths.absDocsPath = this.getAbsPath(config.docsPath);
         this.paths.absOutputPath = this.getAbsPath(config.output);
         this.paths.absSitePath = this.getAbsPath(config.sitePath);
@@ -126,6 +129,7 @@ export class Docgeni implements DocgeniContext {
             }
 
             // compile all libs
+            toolkit.fs.ensureDir(this.paths.absSiteContentPath);
             for (const libraryCompiler of this.libraryCompilers) {
                 await libraryCompiler.compile();
                 if (this.watch) {
@@ -146,8 +150,6 @@ export class Docgeni implements DocgeniContext {
             await this.generateSiteNavs();
         } catch (error) {
             this.logger.error(error);
-            this.logger.info(error.stack);
-            throw error;
         }
     }
 
