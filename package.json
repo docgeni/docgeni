@@ -22,7 +22,8 @@
     "preinstall": "node scripts/check-yarn.js",
     "release-only": "ts-node --project ./scripts/tsconfig.json ./scripts/release.ts",
     "sync-interfaces": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-interfaces.ts",
-    "release": "yarn build && yarn release-only"
+    "release": "yarn build && yarn release-only",
+    "pub": "yarn build && lerna publish"
   },
   "private": true,
   "workspaces": [
