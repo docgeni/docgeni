@@ -1,11 +1,8 @@
 import {
     Component,
     OnInit,
-    HostBinding,
-    ɵNgModuleFactory,
     NgModuleFactory,
     Type,
-    ɵrenderComponent,
     ElementRef,
     Injector,
     OnDestroy
