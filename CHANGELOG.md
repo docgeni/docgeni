@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.7](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.6...v0.1.0-alpha.7) (2020-05-27)
+
+
+### Bug Fixes
+
+* **template:** remove bootstrap, add dg-main dg-footer class ([3144ace](https://github.com/docgeni/docgeni/commit/3144ace7f69ec2a584eea3e849c8b68ec1929def))
+
+
+
+
+
 # [0.1.0-alpha.6](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.5...v0.1.0-alpha.6) (2020-05-27)
 
 **Note:** Version bump only for package docgeni
