@@ -1,6 +1,20 @@
 import { Library } from './library';
 import { NavigationItem } from './navigation-item';
 import { Locale } from './locale';
+export interface HomeDocMeta {
+    title: string;
+    hero: {
+        title: string;
+        description: string;
+        actions: { text: string; link: string }[];
+    };
+    features: {
+        icon: string;
+        title: string;
+        description: string;
+    }[];
+    footer: string;
+}
 
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
@@ -53,6 +67,8 @@ export interface DocgeniSiteConfig {
     heads?: [];
     /* Repo url*/
     repoUrl?: string;
+    /** Home meta */
+    homeMeta?: HomeDocMeta;
     /* Navigations for menu and nav */
     navs: NavigationItem[];
     // navs?: {

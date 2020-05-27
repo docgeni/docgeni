@@ -1,4 +1,4 @@
-import { DocgeniConfig, Library } from './interfaces';
+import { DocgeniConfig, Library, HomeDocMeta } from './interfaces';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
@@ -38,7 +38,7 @@ export interface GeneralDocMeta {
     // category?: CategoryDocMeta;
 }
 
-export type DocMeta = ComponentDocMeta & GeneralDocMeta;
+export type DocMeta = ComponentDocMeta & GeneralDocMeta & HomeDocMeta;
 
 export interface DocSourceFile<TMeta = DocMeta> {
     absPath: string;
