@@ -8,7 +8,7 @@ module.exports = {
     description: 'A modern documentation generator for doc and Angular Lib',
     docsPath: './docs',
     sitePath: 'packages/site',
-    output: 'docgeni-site',
+    output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,
@@ -42,6 +42,7 @@ module.exports = {
         {
             name: 'alib',
             rootPath: './packages/a-lib',
+            exclude: '',
             categories: [
                 {
                     id: 'general',

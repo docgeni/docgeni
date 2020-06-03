@@ -5,8 +5,8 @@
 
   <ng-template let-menu #navTemplate>
     <ng-container *ngIf="menu.items; else item">
-      <li class="menu-group">
-        <div class="title">{{ menu.title }}</div>
+      <li class="menu-group" *ngIf="menu.items.length > 0">
+        <div class="title" *ngIf="menu.title">{{ menu.title }}</div>
         <ul *ngFor="let menu of menu.items" class="dg-menus">
           <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
         </ul>

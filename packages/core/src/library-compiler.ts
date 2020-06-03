@@ -33,21 +33,20 @@ export class ExamplesEmitter {
         this.absDestSiteContentPath = docgeni.paths.absSiteContentPath;
     }
 
-    addExamples(key: string, examples: LiveExample[]) {
-        this.componentLiveExamples.set(key, examples);
-        examples.forEach(example => {
-            this.liveExampleComponents[example.key] = example;
-        });
+    addExamples(key: string, examples: LiveExample[] = []) {
+        if (!toolkit.utils.isEmpty(examples)) {
+            this.componentLiveExamples.set(key, examples);
+            examples.forEach(example => {
+                this.liveExampleComponents[example.key] = example;
+            });
+        }
     }
 
     emit() {
         toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
             data: JSON.stringify(this.liveExampleComponents, null, 4)
         });
-        const moduleKeys = [];
-        this.componentLiveExamples.forEach((value, key) => {
-            moduleKeys.push(key);
-        });
+        const moduleKeys = this.componentLiveExamples.keys();
         toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
             moduleKeys
         });
@@ -95,7 +94,7 @@ export class LibraryCompiler {
         this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
 
         // const examplesEmitter = new ExamplesEmitter(this.docgeni);
-        for (const component of components) {
+        for await (const component of components) {
             // Component Doc
             const { meta, localeDocsMap } = await this.compileComponentDocs(component);
             // Examples
@@ -122,13 +121,16 @@ export class LibraryCompiler {
                     localeCategories.categories.push(category);
                     localeCategories.categoriesMap[meta.category] = category;
                 }
+                const title = docSourceFile ? docSourceFile.result.meta.title : toolkit.strings.titleCase(component.name);
+                const subtitle = docSourceFile ? docSourceFile.result.meta.subtitle : '';
                 category.items.push({
                     id: component.name,
-                    title: docSourceFile.result.meta.title,
-                    subtitle: docSourceFile.result.meta.subtitle,
+                    title,
+                    subtitle,
                     path: component.name,
                     importSpecifier: `${this.lib.name}/${component.name}`,
-                    examples: examples.map(example => example.key)
+                    examples: examples.map(example => example.key),
+                    overview: docSourceFile && docSourceFile.result.html ? true : false
                 });
             });
         }
@@ -136,15 +138,27 @@ export class LibraryCompiler {
         return this.localesCategoriesMap;
     }
 
+    private match(exclude: string | string[], target: string) {
+        const excludeArray = toolkit.utils.coerceArray(exclude);
+        const matchExclude = excludeArray.find(item => {
+            return toolkit.utils.matchGlob(target, item);
+        });
+        return matchExclude ? false : true;
+    }
+
     private async getComponents(): Promise<LibComponent[]> {
         const dirs = await toolkit.fs.getDirs(this.absLibPath);
-        return dirs.map(dir => {
-            const absComponentPath = path.resolve(this.absLibPath, dir);
-            return {
-                name: dir,
-                absPath: absComponentPath
-            };
-        });
+        return dirs
+            .filter(dir => {
+                return this.lib.exclude ? this.match(this.lib.exclude, dir) : true;
+            })
+            .map(dir => {
+                const absComponentPath = path.resolve(this.absLibPath, dir);
+                return {
+                    name: dir,
+                    absPath: absComponentPath
+                };
+            });
     }
 
     private async compileComponentDocs(
@@ -188,6 +202,9 @@ export class LibraryCompiler {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
         const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
         const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.name}`);
+        if (!(await toolkit.fs.pathExists(absComponentExamplesPath))) {
+            return [];
+        }
         await toolkit.fs.copy(absComponentExamplesPath, destAbsComponentExamplesPath);
         await toolkit.fs.copy(absComponentExamplesPath, destAbsAssetsExamplesSourcePath);
 

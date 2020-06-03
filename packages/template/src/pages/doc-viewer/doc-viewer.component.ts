@@ -1,12 +1,4 @@
-import {
-    Component,
-    OnInit,
-    NgModuleFactory,
-    Type,
-    ElementRef,
-    Injector,
-    OnDestroy
-} from '@angular/core';
+import { Component, OnInit, NgModuleFactory, Type, ElementRef, Injector, OnDestroy } from '@angular/core';
 import * as core from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -94,7 +86,8 @@ export class DocViewerHomeComponent implements OnDestroy {
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
             if (docItem) {
-                router.navigate(['../overview'], { relativeTo: route });
+                const defaultPath = docItem.overview ? '../overview' : '../examples';
+                router.navigate([defaultPath], { relativeTo: route });
             }
         });
     }

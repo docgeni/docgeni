@@ -21,6 +21,7 @@ export interface DocItem {
 export interface ComponentDocItem extends DocItem {
     examples?: string[];
     importSpecifier?: string;
+    overview?: boolean;
 }
 
 export interface CategoryItem {
@@ -50,4 +51,4 @@ export interface ChannelItem {
     items?: Array<CategoryItem | DocItem>;
 }
 
-export type NavigationItem = ChannelItem & CategoryItem & DocItem;
+export type NavigationItem = ChannelItem & CategoryItem & DocItem & ComponentDocItem;

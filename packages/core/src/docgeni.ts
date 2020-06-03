@@ -132,7 +132,7 @@ export class Docgeni implements DocgeniContext {
             }
 
             // compile all libs
-            for (const libraryCompiler of this.libraryCompilers) {
+            for await (const libraryCompiler of this.libraryCompilers) {
                 await libraryCompiler.compile();
                 if (this.watch) {
                     const watcher = chokidar.watch([libraryCompiler.getAbsLibPath()], { ignoreInitial: true, interval: 1000 });

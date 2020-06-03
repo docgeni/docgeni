@@ -9,7 +9,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 export class NavigationService {
     channel$ = new BehaviorSubject<ChannelItem>(null);
 
-    docItem$ = new BehaviorSubject<DocItem>(null);
+    docItem$ = new BehaviorSubject<NavigationItem>(null);
 
     get channel() {
         return this.channel$.value;

@@ -24,7 +24,29 @@
       "cwd": "${workspaceRoot}",
       "skipFiles": [
         "<node_internals>/**"
-    ],
+      ],
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha Tests",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--timeout",
+        "9999999",
+        "--colors",
+        "${workspaceFolder}/packages/**/test/**/*.spec.ts",
+        "--require",
+        "ts-node/register/transpile-only",
+        "--module",
+        "api"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "NODE_ENV": "test",
+        "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"commonjs\"}"
+      },
+      "cwd": "${workspaceRoot}"
     }
   ]
 }
