@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/toolkit",
-  "version": "0.1.0-alpha.7",
+  "version": "0.1.0-alpha.8",
   "description": "Kits",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -40,15 +40,15 @@
     "front-matter": "^3.1.0",
     "fs-extra": "^9.0.0",
     "handlebars": "^4.7.3",
+    "minimatch": "3.0.4",
     "param-case": "^3.0.2",
     "pluralize": "^8.0.0",
     "time-stamp": "^2.2.0",
-    "title-case": "^3.0.2",
-    "minimatch": "3.0.4"
+    "title-case": "^3.0.2"
   },
   "devDependencies": {
-    "@types/minimatch": "^3.0.3",
     "@types/fancy-log": "^1.3.1",
+    "@types/minimatch": "^3.0.3",
     "@types/pluralize": "^0.0.29"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "docgeni",
-  "version": "0.1.0-alpha.7",
+  "version": "0.1.0-alpha.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4600 --hmr",
