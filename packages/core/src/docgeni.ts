@@ -2,16 +2,11 @@ import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import {
     DocgeniConfig,
-    Library,
     DocgeniSiteConfig,
     NavigationItem,
-    CategoryItem,
     ChannelItem,
-    DocItem,
-    ComponentDocItem
 } from './interfaces';
 import * as path from 'path';
-import * as glob from 'glob';
 import { toolkit } from '@docgeni/toolkit';
 
 import {

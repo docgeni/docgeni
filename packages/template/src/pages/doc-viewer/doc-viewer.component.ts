@@ -1,5 +1,4 @@
 import { Component, OnInit, NgModuleFactory, Type, ElementRef, Injector, OnDestroy } from '@angular/core';
-import * as core from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '../../services';

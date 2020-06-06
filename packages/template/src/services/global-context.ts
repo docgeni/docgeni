@@ -3,8 +3,6 @@ import { DocgeniSiteConfig, NavigationItem } from '../interfaces';
 import { HttpClient } from '@angular/common/http';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
-export { DocgeniSiteConfig };
-
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
     title: 'Docgeni',
     description: '为 Angular 组件开发场景而生的文档工具',

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces';
-import { CONFIG_TOKEN, DocgeniSiteConfig, GlobalContext } from './global-context';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { NavigationItem, DocItem, ChannelItem, CategoryItem, DocgeniSiteConfig } from '../interfaces';
+import { CONFIG_TOKEN, GlobalContext } from './global-context';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
