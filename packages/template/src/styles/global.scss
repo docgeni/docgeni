@@ -7,6 +7,13 @@ body {
     padding: 0px;
 }
 
+html {
+    -webkit-text-size-adjust: 100%; // 4
+    -ms-text-size-adjust: 100%; // 4
+    -ms-overflow-style: scrollbar; // 5
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // 6
+}
+
 body {
     font-family: $font-family;
     font-size: $font-size-base;
