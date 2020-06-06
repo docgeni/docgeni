@@ -63,7 +63,7 @@ export class LibraryCompiler {
     private localesCategoriesMap: LocaleCategoryMap;
 
     constructor(private docgeni: DocgeniContext, public lib: Library, examplesEmitter: ExamplesEmitter) {
-        this.absLibPath = this.docgeni.getAbsPath(this.lib.rootPath);
+        this.absLibPath = this.docgeni.getAbsPath(this.lib.rootDir);
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
         this.absDestAssetsExamplesSourcePath = path.resolve(
             this.docgeni.paths.absSitePath,
@@ -123,6 +123,7 @@ export class LibraryCompiler {
                 }
                 const title = docSourceFile ? docSourceFile.result.meta.title : toolkit.strings.titleCase(component.name);
                 const subtitle = docSourceFile ? docSourceFile.result.meta.subtitle : '';
+
                 category.items.push({
                     id: component.name,
                     title,
@@ -198,6 +199,10 @@ export class LibraryCompiler {
         };
     }
 
+    private getLibAbbrName(lib: Library) {
+        return lib.abbrName || lib.name;
+    }
+
     private async generateComponentExamples(component: LibComponent) {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
         const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
@@ -210,10 +215,10 @@ export class LibraryCompiler {
 
         const dirs = await toolkit.fs.getDirs(absComponentExamplesPath);
         const examples: LiveExample[] = [];
-        const moduleName = toolkit.strings.pascalCase(`${this.lib.name}-${component.name}-examples-module`);
+        const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${component.name}-examples-module`);
 
         for (const dirName of dirs) {
-            const key = `${this.lib.name}-${component.name}-${dirName}-example`;
+            const key = `${this.getLibAbbrName(this.lib)}-${component.name}-${dirName}-example`;
             const componentName = toolkit.strings.pascalCase(`${key}-component`);
             const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
             const sourceFiles = await this.generateComponentExampleHighlighted(component, absComponentExamplePath, dirName);
