@@ -124,15 +124,17 @@ export class LibraryCompiler {
                 const title = docSourceFile ? docSourceFile.result.meta.title : toolkit.strings.titleCase(component.name);
                 const subtitle = docSourceFile ? docSourceFile.result.meta.subtitle : '';
 
-                category.items.push({
-                    id: component.name,
-                    title,
-                    subtitle,
-                    path: component.name,
-                    importSpecifier: `${this.lib.name}/${component.name}`,
-                    examples: examples.map(example => example.key),
-                    overview: docSourceFile && docSourceFile.result.html ? true : false
-                });
+                if (docSourceFile || !toolkit.utils.isEmpty(examples)) {
+                    category.items.push({
+                        id: component.name,
+                        title,
+                        subtitle,
+                        path: component.name,
+                        importSpecifier: `${this.lib.name}/${component.name}`,
+                        examples: examples.map(example => example.key),
+                        overview: docSourceFile && docSourceFile.result.html ? true : false
+                    });
+                }
             });
         }
         this.docgeni.logger.succuss(`Lib(${this.lib.name}) compiled successfully`);
