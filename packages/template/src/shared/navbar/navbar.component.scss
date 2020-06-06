@@ -61,9 +61,15 @@
         }
 
         .locales-selector {
-            width: 60px;
-            outline: none;
             padding: 0.374rem 10px;
+            width: 70px;
+            height: 32px;
+            outline: none;
+            appearance: none;
+            // border: 1px solid $gray-400;
+            // &:hover {
+            //     border-color: $primary;
+            // }
         }
 
         .search-container {
