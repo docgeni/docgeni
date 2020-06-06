@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.9](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.8...v0.1.0-alpha.9) (2020-06-06)
+
+
+### Bug Fixes
+
+* remove nav item when there is no doc or examples ([3903799](https://github.com/docgeni/docgeni/commit/3903799697f165b2b851fb8e3542618307288cd1))
+
+
+### Features
+
+* **template:** change doc content styles ([b4952ce](https://github.com/docgeni/docgeni/commit/b4952ce00b13d48e2a26d152500a08a33eca9ba7))
+
+
+
+
+
 # [0.1.0-alpha.8](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.7...v0.1.0-alpha.8) (2020-06-03)
 
 
