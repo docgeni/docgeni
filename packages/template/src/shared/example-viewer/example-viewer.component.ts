@@ -66,13 +66,13 @@ export class ExampleViewerComponent implements OnInit {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
             this.example = result.example;
-            const rootPath = `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`;
+            const rootDir = `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`;
 
             this.exampleTabs = this.example.sourceFiles
                 .map(file => {
                     return {
                         name: this.transformFileName(file.name, this.example.name),
-                        path: `${rootPath}/${file.highlightedPath}`
+                        path: `${rootDir}/${file.highlightedPath}`
                     };
                 })
                 // The order we expect is TS > HTML > SCSS | CSS
