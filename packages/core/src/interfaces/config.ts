@@ -29,6 +29,8 @@ export interface DocgeniConfig {
     baseHref?: string;
     /* Heads of documentation*/
     heads?: [];
+    /* Logo url*/
+    logoUrl?: string;
     /* Repo url*/
     repoUrl?: string;
     /* Docs folder */
@@ -65,6 +67,8 @@ export interface DocgeniSiteConfig {
     baseHref?: string;
     /* Heads of documentation*/
     heads?: [];
+    /* Logo url*/
+    logoUrl?: string;
     /* Repo url*/
     repoUrl?: string;
     /** Home meta */

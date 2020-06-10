@@ -1,11 +1,6 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import {
-    DocgeniConfig,
-    DocgeniSiteConfig,
-    NavigationItem,
-    ChannelItem,
-} from './interfaces';
+import { DocgeniConfig, DocgeniSiteConfig, NavigationItem, ChannelItem } from './interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
@@ -79,6 +74,7 @@ export class Docgeni implements DocgeniContext {
             heads: this.config.heads,
             locales: this.config.locales,
             defaultLocale: this.config.defaultLocale,
+            logoUrl: this.config.logoUrl,
             repoUrl: this.config.repoUrl
         };
         if (!this.config.libs) {
