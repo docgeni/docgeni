@@ -16,7 +16,11 @@ export const serveCommand: CommandModule = {
         const config = argv as DocgeniConfig;
         const docgeni = new Docgeni({
             watch: true,
-            config
+            config,
+            cmdArgs: {
+                prod: argv.prod,
+                skipSite: argv.skipSite
+            }
         });
         docgeni.run();
     }

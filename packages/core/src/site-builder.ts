@@ -31,8 +31,8 @@ export class SiteBuilder {
         }
     }
 
-    async build(cmdOptions: AngularCommandOptions): Promise<void> {
-        this.execAngularCommand('build', ['--prod', cmdOptions.prod ? 'true' : 'false']);
+    async build(cmdArgs: AngularCommandOptions): Promise<void> {
+        this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
     }
 
     private execAngularCommand(command: string, args: Array<string> = []) {

@@ -109,5 +109,5 @@ export interface DocgeniOptions {
     presets?: string[];
     plugins?: string[];
     config: DocgeniConfig;
-    cmdOptions: AngularCommandOptions;
+    cmdArgs: AngularCommandOptions;
 }

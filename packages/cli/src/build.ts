@@ -30,7 +30,7 @@ export const buildCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: argv.watch,
             config,
-            cmdOptions: {
+            cmdArgs: {
                 prod: argv.prod,
                 skipSite: argv.skipSite
             }

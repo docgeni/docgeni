@@ -148,11 +148,11 @@ export class Docgeni implements DocgeniContext {
             this.examplesEmitter.emit();
             await this.generateSiteConfig();
             await this.generateSiteNavs();
-            if (!this.options.cmdOptions.skipSite) {
+            if (!this.options.cmdArgs.skipSite) {
                 if (this.watch) {
                     await this.siteBuilder.start();
                 } else {
-                    await this.siteBuilder.build(this.options.cmdOptions);
+                    await this.siteBuilder.build(this.options.cmdArgs);
                 }
             }
         } catch (error) {
