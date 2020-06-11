@@ -15,9 +15,9 @@ html {
 }
 
 body {
-    font-family: $font-family;
-    font-size: $font-size-base;
-    color: $color-body;
+    font-family: $dg-font-family;
+    font-size: $dg-font-size-base;
+    color: $dg-color-body;
 }
 
 h1,
@@ -36,7 +36,7 @@ p {
 a,
 a:visited,
 a:hover {
-    color: $primary;
+    color: $dg-primary;
     text-decoration: none;
 }
 

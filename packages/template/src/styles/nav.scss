@@ -1,7 +1,7 @@
 .dg-tab-links {
     position: relative;
     display: flex;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $dg-border-color;
     .dg-tab-link {
         display: inline-flex;
         justify-content: center;
@@ -10,14 +10,14 @@
         padding: 8px 30px;
         margin-right: 20px;
         transform: translateY(1px);
-        color: $gray-700;
+        color: $dg-gray-700;
         border-bottom: 2px solid transparent;
         font-weight: 500;
         // font-family: Roboto,"Helvetica Neue",sans-serif;
         &:hover,
         &.active {
-            color: $primary;
-            border-bottom: 2px solid $primary;
+            color: $dg-primary;
+            border-bottom: 2px solid $dg-primary;
         }
     }
 }

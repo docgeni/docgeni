@@ -6,7 +6,7 @@
     .menu-group {
         .title {
             padding: 10px 30px;
-            color: $gray-600;
+            color: $dg-gray-600;
         }
 
         .menu-item {
@@ -23,21 +23,21 @@
         display: block;
         a {
             display: block;
-            color: $gray-800;
+            color: $dg-gray-800;
 
         }
 
         &.active {
-            background: rgba($primary, 0.1);
-            border-right: 3px solid $primary;
+            background: rgba($dg-primary, 0.1);
+            border-right: 3px solid $dg-primary;
             a {
-                color: $primary;
+                color: $dg-primary;
             }
         }
 
         &:hover {
             a {
-                color: $primary;
+                color: $dg-primary;
             }
         }
     }

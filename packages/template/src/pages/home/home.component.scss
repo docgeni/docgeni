@@ -4,11 +4,11 @@
     display: block;
 
     .dg-launch {
-        background: $launch-background;
+        background: $dg-launch-background;
         text-align: center;
         padding-top: 100px;
         h1 {
-            color: $black;
+            color: $dg-black;
         }
         .launch-description {
             margin-bottom: 20px;

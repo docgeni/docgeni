@@ -8,9 +8,9 @@
         left: 1em;
         margin-left: -4px;
         padding: 0 4px;
-        color: $gray-700;
+        color: $dg-gray-700;
         font-weight: 500;
-        background-color: $white;
+        background-color: $dg-white;
         transform: translateY(-50%);
     }
 }
@@ -36,15 +36,15 @@
     }
 
     .dg-example-viewer-wrapper {
-        border: 1px solid $border-color;
+        border: 1px solid $dg-border-color;
         box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.1);
     }
 
     .dg-example-viewer-header {
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $dg-border-color;
         padding: 5px 20px;
-        background: $gray-100; // rgba(0, 0, 0, 0.03);
-        color: $gray-700;
+        background: $dg-gray-100; // rgba(0, 0, 0, 0.03);
+        color: $dg-gray-700;
     }
 
     .dg-example-viewer-body {
@@ -52,31 +52,31 @@
     }
 
     .dg-example-viewer-intro {
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $dg-border-color;
         padding: 20px;
         @include top-show-title-variant();
     }
 
     .dg-example-viewer-actions {
-        border-top: 1px dashed $border-color;
+        border-top: 1px dashed $dg-border-color;
         padding: 10px;
         text-align: center;
         // @include top-show-title-variant();
         clear: both;
         .action-item {
-            color: $gray-500;
+            color: $dg-gray-500;
             padding: 5px;
             margin-right: 10px;
 
             &:hover {
-                color: $primary;
+                color: $dg-primary;
                 font-weight: 500;
             }
         }
     }
 
     .dg-example-viewer-sources {
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $dg-border-color;
         display: block;
         flex-direction: column;
         transition: opacity 1s;
@@ -100,7 +100,7 @@
 
         .dg-example-viewer-sources-content {
             padding: 10px 20px;
-            background: $gray-100;
+            background: $dg-gray-100;
             white-space: nowrap;
             margin: 0px;
             min-height: 100px;

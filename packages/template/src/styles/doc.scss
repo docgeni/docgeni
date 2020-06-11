@@ -1,19 +1,19 @@
-$heading-color: $gray-800;
+$dg-heading-color: $dg-gray-800;
 .dg-doc-content {
     display: block;
     padding: 20px 0px;
     font-size: 16px;
     // white-space: break-spaces;
     h1 {
-        font-size: $font-size-xlg;
+        font-size: $dg-font-size-xlg;
         margin: 1rem 0;
-        color: $heading-color;
+        color: $dg-heading-color;
     }
 
     h2 {
-        font-size: $font-size-lg;
+        font-size: $dg-font-size-lg;
         margin: 1rem 0;
-        color: $heading-color;
+        color: $dg-heading-color;
     }
 
     h1:first-child,
@@ -39,21 +39,21 @@ $heading-color: $gray-800;
         display: inline-block;
         padding: 0px 4px;
         margin: 0px 2px;
-        background: $gray-100;
-        border-radius: $border-radius;
-        color: $gray-800;
+        background: $dg-gray-100;
+        border-radius: $dg-border-radius;
+        color: $dg-gray-800;
     }
 
     pre {
         padding: 1em;
-        color: $gray-700;
-        background: $gray-100;
-        border-radius: $border-radius;
+        color: $dg-gray-700;
+        background: $dg-gray-100;
+        border-radius: $dg-border-radius;
         code {
             padding: 0px;
             // color: $body-color;
             background: transparent;
-            font-size: $font-size-base;
+            font-size: $dg-font-size-base;
         }
     }
 
@@ -66,8 +66,8 @@ $heading-color: $gray-800;
 
     blockquote {
         margin-left: 0px;
-        border-left: 2px solid $gray-300;
-        color: $gray-600;
+        border-left: 2px solid $dg-gray-300;
+        color: $dg-gray-600;
         font-size: 14px;
         margin-bottom: 5px;
         margin-top: 5px;
