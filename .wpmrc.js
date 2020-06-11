@@ -14,7 +14,7 @@ module.exports = {
     commitAll: true,
     hooks: {
         prepublish: 'yarn run build',
-        postpublish: 'lerna publish from-git && yarn pub-template',
+        postpublish: 'lerna publish from-git && yarn pub:template',
         postreleaseBranch: 'lerna version {{version}} && git add .'
     }
 };

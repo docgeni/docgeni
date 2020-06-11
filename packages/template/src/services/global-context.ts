@@ -9,7 +9,7 @@ export const DEFAULT_CONFIG: DocgeniSiteConfig = {
     navs: []
 };
 
-const DOCGENI_LOCALE = 'docgeni-locale';
+const DOCGENI_LOCALE_KEY = 'docgeni-locale';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class GlobalContext {
 
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
-        const locale = window.localStorage.getItem(DOCGENI_LOCALE);
+        const locale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
         if (locale) {
             this.locale = locale;
         }
@@ -33,7 +33,7 @@ export class GlobalContext {
 
     setLocale(locale: string) {
         this.locale = locale;
-        window.localStorage.setItem(DOCGENI_LOCALE, locale);
+        window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
     }
 
     initialize() {
