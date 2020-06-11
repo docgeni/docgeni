@@ -77,6 +77,8 @@ export class NavigationService {
             const category = this.channel.items[0];
             if (category && this.isCategoryItem(category)) {
                 docItem = category.items[0];
+            } else {
+                docItem = category as DocItem;
             }
         }
         return docItem;

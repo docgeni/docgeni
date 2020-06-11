@@ -24,9 +24,9 @@
     "sync-interfaces": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-interfaces.ts",
     "release": "wpm release",
     "pub": "wpm publish",
-    "pub:docs": "yarn build:docs:prod && cpx ./packages/site/package.json ./dist/site && pub:docs:git",
+    "pub:docs": "yarn build:docs:prod && cpx ./packages/site/package.json ./dist/site && yarn pub:docs:git",
     "pub:docs:git": "wpm git-publish --source ./dist/site --name docgeni-site --organization docgeni",
-    "pub-template": "cd dist/template && npm publish --access=public",
+    "pub:template": "cd dist/template && npm publish --access=public",
     "copy-styles": "cpx \"./packages/template/src/**/*/*.scss\" dist/template"
   },
   "private": true,
