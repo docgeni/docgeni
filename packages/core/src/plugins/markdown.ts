@@ -6,7 +6,7 @@ import { toolkit } from '@docgeni/toolkit';
 
 export class MarkdownPlugin implements Plugin {
     apply(docgeni: DocgeniContext): void {
-        toolkit.print.info(`[MarkdownPlugin] load success`);
+        toolkit.print.info(`Markdown plugin has been loaded`);
         docgeni.hooks.docCompile.tap('MarkdownPlugin', docSourceFile => {
             if (docSourceFile.docType === DocType.component) {
                 const result = Markdown.parse<DocMeta>(docSourceFile.content);

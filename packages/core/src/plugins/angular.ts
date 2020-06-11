@@ -5,7 +5,7 @@ import { CategoryItem } from '../interfaces';
 
 export class AngularLibPlugin implements Plugin {
     apply(context: DocgeniContext): void {
-        context.logger.info(`[AngularLibPlugin] load success`);
+        toolkit.print.info(`Angular plugin has been loaded`);
         // let categories: CategoryItem[];
         // let categoriesNameMap: { [key: string]: CategoryItem };
         // context.hooks.libCompile.tap('AngularLibPlugin', libContext => {

@@ -5,18 +5,36 @@ export const buildCommand: CommandModule = {
     command: ['build'],
     describe: 'Build documentation site',
     builder: yargs => {
-        yargs.option('skip', {
-            alias: 's',
-            // choices: ['bump', 'changelog', 'commit', 'branch', 'push'],
-            desc: `Map of steps in the release process that should be skipped`,
-            default: 0
-        });
+        yargs
+            .option('watch', {
+                alias: 'w',
+                desc: `Watch`,
+                boolean: true,
+                default: false
+            })
+            .option('prod', {
+                desc: `Production`,
+                boolean: true,
+                default: false
+            })
+            .option('skip-site', {
+                desc: `skip build site`,
+                boolean: true,
+                default: false
+            });
 
         return yargs;
     },
     handler: async (argv: any) => {
         const config = argv as DocgeniConfig;
-        const docgeni = new Docgeni({});
-        docgeni.run(config);
+        const docgeni = new Docgeni({
+            watch: argv.watch,
+            config,
+            cmdOptions: {
+                prod: argv.prod,
+                skipSite: argv.skipSite
+            }
+        });
+        docgeni.run();
     }
 };

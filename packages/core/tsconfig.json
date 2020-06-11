@@ -14,7 +14,8 @@
     "test",
     "lib",
     "**/*/*.spec.ts",
-    "src/test"
+    "src/test",
+    "src/site-template"
   ],
   "references": [
     {

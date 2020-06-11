@@ -59,14 +59,14 @@ export class Print {
     }
 
     warn(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.warn, message, optionalParams);
+        const msg = this.format(Levels.warn, message, ...optionalParams);
         if (!this.options.silent) {
             console.log(msg);
         }
     }
 
     error(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.error, message, optionalParams);
+        const msg = this.format(Levels.error, message, ...optionalParams);
         if (!this.options.silent) {
             console.log(msg);
         }

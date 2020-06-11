@@ -63,7 +63,7 @@ export class LibraryCompiler {
     private localesCategoriesMap: LocaleCategoryMap;
 
     constructor(private docgeni: DocgeniContext, public lib: Library, examplesEmitter: ExamplesEmitter) {
-        this.absLibPath = this.docgeni.getAbsPath(this.lib.rootDir);
+        this.absLibPath = this.docgeni.paths.getAbsPath(this.lib.rootDir);
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
         this.absDestAssetsExamplesSourcePath = path.resolve(
             this.docgeni.paths.absSitePath,

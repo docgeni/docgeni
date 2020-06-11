@@ -6,7 +6,6 @@ import { ExampleLoader } from '../../services/example-loader';
 import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
 import { CopierService } from '../copier/copier.service';
 
-const EXAMPLES_SOURCE_PATH = `/assets/content/examples-source`;
 const EXAMPLES_HIGHLIGHTED_PATH = `/assets/content/examples-highlighted`;
 
 interface ExampleTab {

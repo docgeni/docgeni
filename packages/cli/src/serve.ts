@@ -15,8 +15,9 @@ export const serveCommand: CommandModule = {
     handler: async (argv: any) => {
         const config = argv as DocgeniConfig;
         const docgeni = new Docgeni({
-            watch: true
+            watch: true,
+            config
         });
-        docgeni.run(config);
+        docgeni.run();
     }
 };

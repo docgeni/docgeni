@@ -6,7 +6,6 @@ import { toolkit } from '@docgeni/toolkit';
 
 import {
     DocgeniContext,
-    DocgeniPaths,
     DocgeniHooks,
     DocSourceFile,
     DocgeniOptions,
@@ -20,12 +19,17 @@ import { LibraryCompiler, ExamplesEmitter } from './library-compiler';
 import { buildNavsMapForLocales, createDocSourceFile, getDocRoutePath, getDocTitle, isEntryDoc } from './utils';
 import * as chokidar from 'chokidar';
 import { DocsCompiler } from './docs-compiler';
+import { Detector } from './detector';
+import { SiteBuilder } from './site-builder';
+import { DocgeniPaths } from './docgeni-paths';
+import { ValidationError } from './errors';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
     paths: DocgeniPaths;
     config: DocgeniConfig;
     siteConfig: Partial<DocgeniSiteConfig> = {};
+    private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
@@ -35,6 +39,7 @@ export class Docgeni implements DocgeniContext {
     private docsCompiler: DocsCompiler = new DocsCompiler(this);
     private examplesEmitter: ExamplesEmitter;
     private libraryCompilers: LibraryCompiler[] = [];
+    private siteBuilder: SiteBuilder;
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
@@ -50,21 +55,8 @@ export class Docgeni implements DocgeniContext {
     }
 
     constructor(options: DocgeniOptions) {
-        this.paths = {
-            cwd: options.cwd || process.cwd()
-        };
-        this.watch = options.watch || false;
-        this.presets = options.presets || [];
-        this.plugins = options.plugins || [
-            require.resolve('./plugins/markdown'),
-            require.resolve('./plugins/config'),
-            require.resolve('./plugins/angular')
-        ];
-        this.initialize();
-    }
-
-    async run(config: DocgeniConfig) {
-        this.config = { ...DEFAULT_CONFIG, ...config };
+        this.options = options;
+        this.config = { ...DEFAULT_CONFIG, ...options.config };
         this.siteConfig = {
             title: this.config.title,
             heading: this.config.heading,
@@ -77,19 +69,32 @@ export class Docgeni implements DocgeniContext {
             logoUrl: this.config.logoUrl,
             repoUrl: this.config.repoUrl
         };
+        this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsPath, this.config.output);
+        this.watch = options.watch || false;
+        this.presets = options.presets || [];
+        this.plugins = options.plugins || [
+            require.resolve('./plugins/markdown'),
+            require.resolve('./plugins/config'),
+            require.resolve('./plugins/angular')
+        ];
         if (!this.config.libs) {
             this.config.libs = [];
         }
-        this.paths.absDocsPath = this.getAbsPath(config.docsPath);
-        this.paths.absOutputPath = this.getAbsPath(config.output);
-        this.paths.absSitePath = this.getAbsPath(config.sitePath);
-        this.paths.absSiteContentPath = path.resolve(this.paths.absSitePath, './src/app/content');
-        this.paths.absSiteAssetsContentPath = path.resolve(this.paths.absSitePath, './src/assets/content');
-        this.paths.absSiteAssetsContentDocsPath = path.resolve(this.paths.absSiteAssetsContentPath, './docs');
-        await this.verifyConfig();
-        this.hooks.run.call();
 
+        this.initialize();
+    }
+
+    async run() {
         try {
+            await this.verifyConfig();
+            const detector = new Detector(this);
+            await detector.detect();
+            if (this.config.siteProjectName && !detector.siteProject) {
+                throw new ValidationError(`site project name(${this.config.siteProjectName}) is not exists`);
+            }
+            this.siteBuilder = new SiteBuilder(this);
+            await this.siteBuilder.initialize(detector.siteProject);
+            this.hooks.run.call();
             this.setDocsNavInsertIndex();
             this.examplesEmitter = new ExamplesEmitter(this);
             this.libraryCompilers = this.config.libs.map(lib => {
@@ -111,7 +116,7 @@ export class Docgeni implements DocgeniContext {
                 await this.docsCompiler.compile();
                 if (this.watch) {
                     const watcher = chokidar.watch([this.config.docsPath], { cwd: this.paths.cwd, ignoreInitial: true, interval: 1000 });
-                    this.logger.info(`start watch docs folder...`);
+                    this.logger.info(`Start watching docs folder [${this.config.docsPath}] ...`);
                     ['add', 'change'].forEach(eventName => {
                         watcher.on(eventName, async (filePath: string) => {
                             this.logger.info(`${filePath} ${eventName}`);
@@ -127,7 +132,7 @@ export class Docgeni implements DocgeniContext {
                 await libraryCompiler.compile();
                 if (this.watch) {
                     const watcher = chokidar.watch([libraryCompiler.getAbsLibPath()], { ignoreInitial: true, interval: 1000 });
-                    this.logger.info(`start watch docs lib ${libraryCompiler.lib.name}...`);
+                    this.logger.info(`Start watching lib [${libraryCompiler.lib.name}] ...`);
                     ['add', 'change'].forEach(eventName => {
                         watcher.on(eventName, async (filePath: string) => {
                             this.logger.info(`${eventName}  ${filePath}`);
@@ -141,8 +146,20 @@ export class Docgeni implements DocgeniContext {
             this.examplesEmitter.emit();
             await this.generateSiteConfig();
             await this.generateSiteNavs();
+            if (!this.options.cmdOptions.skipSite) {
+                if (this.watch) {
+                    await this.siteBuilder.start();
+                } else {
+                    await this.siteBuilder.build(this.options.cmdOptions);
+                }
+            }
         } catch (error) {
-            this.logger.error(error);
+            if (error instanceof ValidationError) {
+                this.logger.error(error.message);
+            } else {
+                this.logger.error(error);
+            }
+            process.exit(0);
         }
     }
 
@@ -159,7 +176,7 @@ export class Docgeni implements DocgeniContext {
 
     private async verifyConfig() {
         if (this.config.docsPath && !toolkit.fs.existsSync(this.config.docsPath)) {
-            throw new Error(`docs folder(${this.config.docsPath}) has not exists`);
+            throw new ValidationError(`docs folder(${this.config.docsPath}) has not exists`);
         }
     }
 

@@ -2,20 +2,21 @@ import { DocgeniConfig, Library, HomeDocMeta } from './interfaces';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
+import { DocgeniPaths } from './docgeni-paths';
 
-export interface DocgeniPaths {
-    cwd: string;
-    absDocsPath?: string;
-    absOutputPath?: string;
-    // site path, default site
-    absSitePath?: string;
-    // site docs content path
-    absSiteContentPath?: string;
-    // site assets content path
-    absSiteAssetsContentPath?: string;
-    // site assets content docs path
-    absSiteAssetsContentDocsPath?: string;
-}
+// export interface DocgeniPaths {
+//     cwd: string;
+//     absDocsPath?: string;
+//     absOutputPath?: string;
+//     // site path, default site
+//     absSitePath?: string;
+//     // site docs content path
+//     absSiteContentPath?: string;
+//     // site assets content path
+//     absSiteAssetsContentPath?: string;
+//     // site assets content docs path
+//     absSiteAssetsContentDocsPath?: string;
+// }
 
 export interface ComponentDocMeta {
     category?: string;
@@ -65,6 +66,12 @@ export interface DocSourceFile<TMeta = DocMeta> {
 //     meta?: DocComponentMeta;
 // }
 
+export interface SiteProject {
+    name: string;
+    root: string;
+    sourceRoot?: string;
+}
+
 export interface LibraryContext {
     lib: Library;
 }
@@ -88,7 +95,11 @@ export interface DocgeniContext {
     readonly paths: DocgeniPaths;
     readonly hooks: DocgeniHooks;
     readonly logger: Print;
-    getAbsPath(absOrRelativePath: string): string;
+}
+
+export interface AngularCommandOptions {
+    prod: boolean;
+    skipSite?: boolean;
 }
 
 export interface DocgeniOptions {
@@ -96,4 +107,6 @@ export interface DocgeniOptions {
     watch?: boolean;
     presets?: string[];
     plugins?: string[];
+    config: DocgeniConfig;
+    cmdOptions: AngularCommandOptions;
 }

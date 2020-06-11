@@ -3,6 +3,8 @@ import * as fs from './filesystem';
 import * as path from 'path';
 import * as strings from './strings';
 import * as utils from './utils';
+import * as shell from './shell';
+
 import { Print } from './print';
 
 export interface ToolkitConfig {
@@ -44,6 +46,10 @@ export class Toolkit {
 
     static get utils() {
         return utils;
+    }
+
+    static get shell() {
+        return shell;
     }
 
     static get print() {
