@@ -7,6 +7,7 @@ import { AlibButtonModule } from 'a-lib/button';
 @NgModule({
     declarations: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent],
     imports: [CommonModule, AlibButtonModule],
+    entryComponents: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent],
     exports: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent],
     providers: []
 })

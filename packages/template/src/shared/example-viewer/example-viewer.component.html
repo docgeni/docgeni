@@ -4,9 +4,13 @@
   </div>
   <div class="dg-example-viewer-body">
     <ng-template
-      *ngIf="exampleComponentType && exampleModuleFactory"
+      *ngIf="enableIvy && exampleComponentType && exampleModuleFactory"
       [ngComponentOutlet]="exampleComponentType"
       [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
+    ></ng-template>
+    <ng-template
+      *ngIf="!enableIvy && exampleComponentType"
+      [ngComponentOutlet]="exampleComponentType"
     ></ng-template>
   </div>
   <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">

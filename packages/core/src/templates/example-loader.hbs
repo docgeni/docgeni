@@ -4,6 +4,9 @@ import { EXAMPLE_COMPONENTS } from './component-examples';
 
 @Injectable()
 export class LibExampleLoader extends ExampleLoader {
+
+    enableIvy = {{enableIvy}};
+
     {{#each moduleKeys}}
     '{{this}}'() {
        return import('./components/{{this}}/index');

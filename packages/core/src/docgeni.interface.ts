@@ -95,6 +95,7 @@ export interface DocgeniContext {
     readonly paths: DocgeniPaths;
     readonly hooks: DocgeniHooks;
     readonly logger: Print;
+    readonly enableIvy: boolean;
 }
 
 export interface AngularCommandOptions {

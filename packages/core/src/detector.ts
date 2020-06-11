@@ -3,7 +3,7 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
 export class Detector {
-    angularVersion: string;
+    ngVersion: string;
 
     siteProject: SiteProject;
 
@@ -18,7 +18,7 @@ export class Detector {
 
         if (hasAngularModule) {
             const angularCorePackageJson = toolkit.fs.readJSONSync(angularCorePackageJsonPath, { encoding: 'UTF-8' });
-            this.angularVersion = angularCorePackageJson.version;
+            this.ngVersion = angularCorePackageJson.version;
         }
 
         if (hasAngularJson) {

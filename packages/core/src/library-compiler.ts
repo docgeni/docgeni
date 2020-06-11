@@ -48,7 +48,23 @@ export class ExamplesEmitter {
         });
         const moduleKeys = this.componentLiveExamples.keys();
         toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
-            moduleKeys
+            moduleKeys,
+            enableIvy: this.docgeni.enableIvy
+        });
+
+        // generate all modules fallback for below angular 9
+        const modules: Array<{
+            key: string;
+            name: string;
+        }> = [];
+        for (const key of this.componentLiveExamples.keys()) {
+            modules.push({
+                key,
+                name: toolkit.strings.pascalCase(key.replace('/', '-'))
+            });
+        }
+        toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
+            modules
         });
     }
 }

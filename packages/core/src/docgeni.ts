@@ -23,12 +23,13 @@ import { Detector } from './detector';
 import { SiteBuilder } from './site-builder';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
-
+import * as semver from 'semver';
 export class Docgeni implements DocgeniContext {
     watch: boolean;
     paths: DocgeniPaths;
     config: DocgeniConfig;
     siteConfig: Partial<DocgeniSiteConfig> = {};
+    enableIvy: boolean;
     private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
@@ -92,6 +93,7 @@ export class Docgeni implements DocgeniContext {
             if (this.config.siteProjectName && !detector.siteProject) {
                 throw new ValidationError(`site project name(${this.config.siteProjectName}) is not exists`);
             }
+            this.enableIvy = semver.gte(detector.ngVersion, '9.0.0');
             this.siteBuilder = new SiteBuilder(this);
             await this.siteBuilder.initialize(detector.siteProject);
             this.hooks.run.call();

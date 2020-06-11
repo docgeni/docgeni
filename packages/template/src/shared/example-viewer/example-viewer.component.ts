@@ -50,6 +50,10 @@ export class ExampleViewerComponent implements OnInit {
 
     selectedTab: ExampleTab;
 
+    get enableIvy() {
+        return this.exampleLoader.enableIvy;
+    }
+
     constructor(private exampleLoader: ExampleLoader, private copier: CopierService) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
