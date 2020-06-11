@@ -2265,10 +2265,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@worktile-devkit/core@^1.0.0-beta.15":
-  version "1.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@worktile-devkit/core/-/core-1.0.0-beta.15.tgz#cddad1b62a171a25c823045ac7e79de96890a424"
-  integrity sha512-KZzVoi2rRT27tT+5574s43A3YaKeHoQKJ1X3WU3+ePM2ebCR9mJO8SyQNEHeMSKgVd/HkcEizqup5k1r+iW89w==
+"@worktile-devkit/core@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.npmjs.org/@worktile-devkit/core/-/core-1.0.0-beta.21.tgz#acc3dc8d42b27278677175f5022b3e67c8f5295e"
+  integrity sha512-5rf0nATUZU4jc+VUKDiBfk8pW/6dWpCeqH+77kf1KMYMn+/j3hdLcR4blnAqbncpP6caA3ViOP5HlS9VMSy5Xw==
   dependencies:
     chalk "^3.0.0"
     copy "^0.3.2"
@@ -2277,12 +2277,12 @@
     simple-git "^1.110.0"
     write-json-file "^4.3.0"
 
-"@worktile-devkit/pm@^1.0.0-beta.15":
-  version "1.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@worktile-devkit/pm/-/pm-1.0.0-beta.15.tgz#4f5366ce441334e2f3df3ceb8104d88868cae291"
-  integrity sha512-BjSle5sX7FtMjsh323RGgGrUv0bGQTLg5HQO++Rj0ByEoCLYcMc09v18PfOkIqHgoD6JsUUv5/5A9rrFaQJ0xw==
+"@worktile-devkit/pm@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.npmjs.org/@worktile-devkit/pm/-/pm-1.0.0-beta.21.tgz#ae34cf55ab278f0cc66c6fe6a7a4fc82fcce05da"
+  integrity sha512-fH1ZAouSRaXtzDs6TLaWAkjtho/O14ASUocG3GG/gTGeCUu3WaZtmaWJzAvNSDBls8Cn2Y/7OCJPhuf2hyQAfg==
   dependencies:
-    "@worktile-devkit/core" "^1.0.0-beta.15"
+    "@worktile-devkit/core" "^1.0.0-beta.21"
     chalk "^3.0.0"
     cosmiconfig "^6.0.0"
     inquirer "^6.3.1"
@@ -2290,6 +2290,7 @@
     load-json-file "^6.2.0"
     lodash "^4.17.11"
     log-symbols "^3.0.0"
+    minimatch "3.0.4"
     ora "^3.4.0"
     semver "^6.2.0"
     simple-git "^1.110.0"

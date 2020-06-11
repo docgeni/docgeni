@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: Getting Started
 path: 'getting-started'
 order: 3
 ---

@@ -1,5 +1,5 @@
 ---
-title: 动机
+title: Motivation
 path: 'motivation'
 order: 2
 ---

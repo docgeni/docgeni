@@ -2,6 +2,7 @@ module.exports = {
     defaultBranch: 'master',
     bumpFiles: [
         'package.json',
+        './packages/site/package.json',
         {
             filename: './packages/template/package.json',
             type: 'json'
