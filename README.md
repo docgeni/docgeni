@@ -41,8 +41,8 @@ yarn   // install dependencies for all packages
 ```bash
 yarn build-deps   // build all packages
 yarn build:docs   // build docs & lib demo
-yarn start:docs   // build docs for test and watch (WIP)
-yarn start        // Temporary start demo
+yarn start        // build docs, watch docs change and start site project
+yarn start:site   // Ony start site project use ng serve
 
 yarn test         // run test cases
 ```

@@ -1,4 +1,7 @@
 $dg-heading-color: $dg-gray-800;
+$dg-table-border-color: $dg-gray-200;
+$dg-table-header-bg-color: $dg-gray-100;
+
 .dg-doc-content {
     display: block;
     padding: 20px 0px;
@@ -72,5 +75,29 @@ $dg-heading-color: $dg-gray-800;
         margin-bottom: 5px;
         margin-top: 5px;
         padding-left: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+
+        th,
+        td {
+            border: 1px solid $dg-table-border-color;
+            padding: 8px;
+        }
+
+        th {
+            background: $dg-table-header-bg-color;
+            text-align: center;
+        }
+
+        td {
+            vertical-align: middle;
+        }
     }
 }

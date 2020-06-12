@@ -3,7 +3,9 @@
   "version": "0.1.0-alpha.11",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "yarn run start:docs",
+    "start:docs": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
+    "start:site": "ng serve site",
     "build:a-lib": "ng build a-lib",
     "build": "yarn build-deps && yarn build:cli && yarn build:template",
     "build:template": "ng build template && yarn copy-styles",
@@ -17,7 +19,6 @@
     "e2e": "ng e2e",
     "build:docs": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build",
     "build:docs:prod": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build --prod",
-    "start:docs": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
     "tsc": "tsc -p ./packages/docgeni",
     "preinstall": "node scripts/check-yarn.js",
     "release-only": "ts-node --project ./scripts/tsconfig.json ./scripts/release.ts",
