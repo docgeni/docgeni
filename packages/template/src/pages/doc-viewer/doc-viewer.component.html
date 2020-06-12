@@ -4,7 +4,7 @@
   </ng-container>
 
   <ng-template #general>
-    <h1>{{ docItem.title }}</h1>
+    <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
     <div>
       <dg-content-viewer [url]="'/assets/content' + docItem.contentPath"> </dg-content-viewer>
     </div>

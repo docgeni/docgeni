@@ -33,7 +33,7 @@ export class ExamplesEmitter {
         this.absDestSiteContentPath = docgeni.paths.absSiteContentPath;
     }
 
-    addExamples(key: string, examples: LiveExample[] = []) {
+    public addExamples(key: string, examples: LiveExample[] = []) {
         if (!toolkit.utils.isEmpty(examples)) {
             this.componentLiveExamples.set(key, examples);
             examples.forEach(example => {
@@ -42,12 +42,12 @@ export class ExamplesEmitter {
         }
     }
 
-    emit() {
-        toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
+    public async emit() {
+        await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
             data: JSON.stringify(this.liveExampleComponents, null, 4)
         });
         const moduleKeys = this.componentLiveExamples.keys();
-        toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
+        await toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
             moduleKeys,
             enableIvy: this.docgeni.enableIvy
         });
@@ -63,7 +63,7 @@ export class ExamplesEmitter {
                 name: toolkit.strings.pascalCase(key.replace('/', '-'))
             });
         }
-        toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
+        await toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
             modules
         });
     }
@@ -96,21 +96,19 @@ export class LibraryCompiler {
         this.examplesEmitter = examplesEmitter;
     }
 
-    getAbsLibPath() {
+    public getAbsLibPath() {
         return this.absLibPath;
     }
 
-    getLocaleCategories(locale: string) {
+    public getLocaleCategories(locale: string) {
         return this.localesCategoriesMap[locale] && this.localesCategoriesMap[locale].categories;
     }
 
-    async compile(): Promise<LocaleCategoryMap> {
+    public async compile(): Promise<LocaleCategoryMap> {
         const components = await this.getComponents();
 
         this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
-
-        // const examplesEmitter = new ExamplesEmitter(this.docgeni);
-        for await (const component of components) {
+        for (const component of components) {
             // Component Doc
             const { meta, localeDocsMap } = await this.compileComponentDocs(component);
             // Examples
@@ -157,7 +155,7 @@ export class LibraryCompiler {
         return this.localesCategoriesMap;
     }
 
-    private match(exclude: string | string[], target: string) {
+    private match(exclude: string | string[], target: string): boolean {
         const excludeArray = toolkit.utils.coerceArray(exclude);
         const matchExclude = excludeArray.find(item => {
             return toolkit.utils.matchGlob(target, item);
@@ -217,11 +215,11 @@ export class LibraryCompiler {
         };
     }
 
-    private getLibAbbrName(lib: Library) {
+    private getLibAbbrName(lib: Library): string {
         return lib.abbrName || lib.name;
     }
 
-    private async generateComponentExamples(component: LibComponent) {
+    private async generateComponentExamples(component: LibComponent): Promise<LiveExample[]> {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
         const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
         const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.name}`);
@@ -255,7 +253,7 @@ export class LibraryCompiler {
             });
         }
 
-        toolkit.template.generate('component-examples-entry.hbs', path.resolve(destAbsComponentExamplesPath, 'index.ts'), {
+        await toolkit.template.generate('component-examples-entry.hbs', path.resolve(destAbsComponentExamplesPath, 'index.ts'), {
             examples,
             examplesModule: moduleName
         });

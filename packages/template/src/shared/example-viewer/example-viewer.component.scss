@@ -45,6 +45,11 @@
         padding: 5px 20px;
         background: $dg-gray-100; // rgba(0, 0, 0, 0.03);
         color: $dg-gray-700;
+
+        .title {
+            font-size: $dg-font-size-lg;
+            font-weight: bold;
+        }
     }
 
     .dg-example-viewer-body {

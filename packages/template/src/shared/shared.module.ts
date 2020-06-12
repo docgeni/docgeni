@@ -11,10 +11,20 @@ import { FooterComponent } from './footer/footer.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
 import { IconComponent } from './icon/icon.component';
 import { ContentViewerComponent } from './content-viewer/content-viewer.component';
+import { DocHeaderComponent } from './doc-header/doc-header.component';
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent, IconComponent, ContentViewerComponent],
+    declarations: [
+        NavbarComponent,
+        FooterComponent,
+        SidebarComponent,
+        ExampleViewerComponent,
+        IconComponent,
+        DocHeaderComponent,
+        ContentViewerComponent
+    ],
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
+    entryComponents: [ExampleViewerComponent],
     exports: [
         CommonModule,
         BrowserModule,
@@ -26,6 +36,7 @@ import { ContentViewerComponent } from './content-viewer/content-viewer.componen
         SidebarComponent,
         FooterComponent,
         ExampleViewerComponent,
+        DocHeaderComponent,
         ContentViewerComponent,
         IconComponent
     ]

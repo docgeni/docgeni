@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostBinding } from '@angular/core';
 import { DocItem, ComponentDocItem } from '../../interfaces';
 
 @Component({
@@ -6,6 +6,8 @@ import { DocItem, ComponentDocItem } from '../../interfaces';
     templateUrl: './component-viewer.component.html'
 })
 export class ComponentViewerComponent implements OnInit {
+    @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
+
     @Input() docItem: ComponentDocItem;
 
     constructor() {}

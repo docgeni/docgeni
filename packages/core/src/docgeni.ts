@@ -130,7 +130,7 @@ export class Docgeni implements DocgeniContext {
             }
 
             // compile all libs
-            for await (const libraryCompiler of this.libraryCompilers) {
+            for (const libraryCompiler of this.libraryCompilers) {
                 await libraryCompiler.compile();
                 if (this.watch) {
                     const watcher = chokidar.watch([libraryCompiler.getAbsLibPath()], { ignoreInitial: true, interval: 1000 });
@@ -145,7 +145,7 @@ export class Docgeni implements DocgeniContext {
                     });
                 }
             }
-            this.examplesEmitter.emit();
+            await this.examplesEmitter.emit();
             await this.generateSiteConfig();
             await this.generateSiteNavs();
             if (!this.options.cmdArgs.skipSite) {

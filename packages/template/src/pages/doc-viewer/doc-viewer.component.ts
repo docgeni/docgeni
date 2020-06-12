@@ -1,4 +1,14 @@
-import { Component, OnInit, NgModuleFactory, Type, ElementRef, Injector, OnDestroy } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    NgModuleFactory,
+    Type,
+    ElementRef,
+    Injector,
+    OnDestroy,
+    HostBinding,
+    ChangeDetectionStrategy
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '../../services';
@@ -12,7 +22,7 @@ import { PageTitleService } from '../../services/page-title.service';
     templateUrl: './doc-viewer.component.html'
 })
 export class DocViewerComponent implements OnInit {
-    // @HostBinding(`class.layout`) isLayout = true;
+    @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;

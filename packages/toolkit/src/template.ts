@@ -1,5 +1,5 @@
 import * as handlebars from 'handlebars';
-import { readFileSync, writeFileSync, throwErrorWhenNotExists } from './filesystem';
+import { readFileSync, writeFileSync, writeFile, throwErrorWhenNotExists } from './filesystem';
 import * as path from 'path';
 
 export interface TemplateOptions {
@@ -21,8 +21,8 @@ export class Template {
         return template(data);
     }
 
-    public generate<T>(templatePath: string, destPath: string, data?: T) {
+    public async generate<T>(templatePath: string, destPath: string, data?: T) {
         const content = this.compile(templatePath, data);
-        writeFileSync(destPath, content, {});
+        await writeFile(destPath, content, {});
     }
 }

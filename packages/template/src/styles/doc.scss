@@ -2,6 +2,28 @@ $dg-heading-color: $dg-gray-800;
 $dg-table-border-color: $dg-gray-200;
 $dg-table-header-bg-color: $dg-gray-100;
 
+.dg-doc-viewer {
+    .dg-doc-header {
+        display: block;
+        .title {
+            font-size: $dg-font-size-xlg;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            margin-left: 10px;
+            font-size: $dg-font-size-xlg;
+            color: $dg-gray-700;
+        }
+    }
+
+    .dg-component-viewer {
+        .dg-doc-header {
+            margin-bottom: 10px;
+        }
+    }
+}
+
 .dg-doc-content {
     display: block;
     padding: 20px 0px;
