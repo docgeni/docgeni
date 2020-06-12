@@ -1,7 +1,7 @@
 ---
 category: general
 title: Global
-subtitle: Global
+subtitle: 全局
 order: 1
 ---
 

@@ -24,7 +24,12 @@
         a {
             display: block;
             color: $dg-gray-800;
+        }
 
+        .subtitle {
+            color: $dg-gray-600;
+            font-size: $dg-font-size-sm;
+            margin-left: 4px;
         }
 
         &.active {

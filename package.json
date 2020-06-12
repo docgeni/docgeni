@@ -3,7 +3,7 @@
   "version": "0.1.0-alpha.10",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4600 --hmr",
+    "start": "ng serve",
     "build:a-lib": "ng build a-lib",
     "build": "yarn build-deps && yarn build:cli && yarn build:template",
     "build:template": "ng build template && yarn copy-styles",

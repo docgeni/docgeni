@@ -66,7 +66,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "site:build"
+            "browserTarget": "site:build",
+            "port": 4600,
+            "hmr": true
           },
           "configurations": {
             "production": {

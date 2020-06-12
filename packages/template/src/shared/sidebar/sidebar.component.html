@@ -14,7 +14,7 @@
     </ng-container>
     <ng-template #item>
       <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !menu.examples}">
-        <a [routerLink]="['./' + menu.path]">{{ menu.title }}</a>
+        <a [routerLink]="['./' + menu.path]">{{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{menu.subtitle}}</span></a>
       </li>
     </ng-template>
   </ng-template>

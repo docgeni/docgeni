@@ -1,7 +1,6 @@
 ---
 category: general
 title: Button
-subtitle: Button
 order: 1
 ---
 
