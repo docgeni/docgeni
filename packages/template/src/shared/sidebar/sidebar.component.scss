@@ -19,7 +19,7 @@
 
     .menu-item {
         list-style: none;
-        padding: 10px 30px;
+        padding: $dg-sidebar-menu-item-padding;
         display: block;
         a {
             display: block;

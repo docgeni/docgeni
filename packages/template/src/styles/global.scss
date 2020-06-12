@@ -18,6 +18,7 @@ body {
     font-family: $dg-font-family;
     font-size: $dg-font-size-base;
     color: $dg-color-body;
+    line-height: $dg-line-height;
 }
 
 h1,
@@ -37,7 +38,7 @@ a,
 a:visited,
 a:hover {
     color: $dg-primary;
-    text-decoration: none;
+    text-decoration: $dg-link-hover-decoration;
 }
 
 .dg-hidden {
@@ -64,4 +65,4 @@ a:hover {
     // Avoid some cases where the browser will still render the native controls (see #9049).
     -webkit-appearance: none;
     -moz-appearance: none;
-  }
+}
