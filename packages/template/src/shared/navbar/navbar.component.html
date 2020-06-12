@@ -81,7 +81,7 @@
   <!-- <div class="action-item  search-container">
     <input class="search" placeholder="搜索" />
   </div> -->
-  <select class="action-item locales-selector" name="locale" [(ngModel)]="locale" (ngModelChange)="localeModelChange()">
+  <select *ngIf="global.config.locales && global.config.locales.length > 1" class="action-item locales-selector" name="locale" [(ngModel)]="locale" (ngModelChange)="localeModelChange()">
     <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
   </select>
   <a *ngIf="global.config.repoUrl" class="action-item repo-url" href="{{ global.config.repoUrl }}" target="_blank">

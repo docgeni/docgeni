@@ -38,7 +38,7 @@ export class SiteBuilder {
     private execAngularCommand(command: string, args: Array<string> = []) {
         try {
             const commandArgs = [command, this.siteProject.name, ...args];
-            this.docgeni.logger.info(`Starting exec ${commandArgs.join(' ')} for site...`);
+            this.docgeni.logger.info(`Start execute ${commandArgs.join(' ')} for site...`);
             const child = spawn('node_modules/@angular/cli/bin/ng', commandArgs, { stdio: 'inherit' });
             child.on('data', data => {
                 this.docgeni.logger.error(data);
