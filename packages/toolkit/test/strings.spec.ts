@@ -52,4 +52,30 @@ describe('#toolkit.string', () => {
             expect(result).eq('basic-component-ts');
         });
     });
+
+    describe('titleCase', () => {
+        it('hello world => Hello World', () => {
+            const result = toolkit.strings.titleCase('hello world');
+            expect(result).eq('Hello World');
+        });
+
+        it('basic.component.ts => Basic Component Ts', () => {
+            const result = toolkit.strings.titleCase('basic.component.ts');
+            expect(result).eq('basic.component.ts');
+        });
+    });
+
+    describe('headerCase', () => {
+        it('hello world => Hello World', () => {
+            const result = toolkit.strings.headerCase('hello world');
+            expect(result).eq('Hello-World');
+        });
+
+        it('should get Hello World with delimiter is " "', () => {
+            const result = toolkit.strings.headerCase('hello world', {
+                delimiter: ' '
+            });
+            expect(result).eq('Hello World');
+        });
+    });
 });
