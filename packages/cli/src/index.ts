@@ -11,9 +11,9 @@ const argv = yargs
         desc: `Docs folder path`,
         default: DEFAULT_CONFIG.docsPath
     })
-    .option('site-path', {
-        desc: `Site path`,
-        default: DEFAULT_CONFIG.sitePath
+    .option('siteProjectName', {
+        desc: `Site project name`,
+        default: ''
     })
     .command(buildCommand)
     .command(serveCommand)

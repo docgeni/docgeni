@@ -5,5 +5,6 @@ export interface Library {
     abbrName?: string;
     rootDir: string;
     categories?: CategoryItem[];
+    include?: string | string[];
     exclude?: string | string[];
 }

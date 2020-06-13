@@ -8,7 +8,6 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     baseHref: '/',
     heads: [],
     docsPath: 'docs',
-    sitePath: 'site',
     silent: false,
     output: 'dist/docs-site',
     locales: [

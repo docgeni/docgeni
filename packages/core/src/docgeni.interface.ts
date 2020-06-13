@@ -4,20 +4,6 @@ import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
 
-// export interface DocgeniPaths {
-//     cwd: string;
-//     absDocsPath?: string;
-//     absOutputPath?: string;
-//     // site path, default site
-//     absSitePath?: string;
-//     // site docs content path
-//     absSiteContentPath?: string;
-//     // site assets content path
-//     absSiteAssetsContentPath?: string;
-//     // site assets content docs path
-//     absSiteAssetsContentDocsPath?: string;
-// }
-
 export interface ComponentDocMeta {
     category?: string;
     title: string;

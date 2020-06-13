@@ -35,8 +35,6 @@ export interface DocgeniConfig {
     repoUrl?: string;
     /* Docs folder */
     docsPath: string;
-    /* Angular docs site app path */
-    sitePath: string;
     /* Components library folder */
     libs?: Library[];
     /* Output folder */
