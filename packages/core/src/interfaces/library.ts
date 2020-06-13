@@ -7,4 +7,6 @@ export interface Library {
     categories?: CategoryItem[];
     include?: string | string[];
     exclude?: string | string[];
+    docDir?: string;
+    examplesDir?: string;
 }

@@ -51,8 +51,14 @@ export function extractExtname(p: string, removeDot = false) {
     return removeDot ? extname.replace('.', '') : extname;
 }
 
-export function matchGlob(target: string, pattern: string, options?: minimatch.IOptions) {
-    return minimatch(target, pattern, options);
+export function matchGlob(target: string, pattern: string | string[], options?: minimatch.IOptions): boolean {
+    if (isArray(pattern)) {
+        return !!pattern.find(item => {
+            return minimatch(target, item, options);
+        });
+    } else {
+        return minimatch(target, pattern, options);
+    }
 }
 
 export function coerceArray<T>(value: T | T[]): T[] {

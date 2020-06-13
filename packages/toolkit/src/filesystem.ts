@@ -1,5 +1,6 @@
 import * as fsExtra from 'fs-extra';
 import * as nodePath from 'path';
+import { matchGlob } from './utils';
 
 export function throwErrorWhenNotExists(absPath: string) {
     if (!fsExtra.existsSync(absPath)) {
@@ -15,7 +16,7 @@ export interface GetDirsOrFilesOptions {
     /** Include .dot files in normal matches */
     dot?: boolean;
     /** Exclude files in normal matches */
-    excludeDirs?: string[];
+    exclude?: string | string[];
 }
 
 const DEFAULT_OPTIONS: GetDirsOrFilesOptions = {
@@ -28,7 +29,7 @@ export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOpti
     };
     const dirs = await fsExtra.readdir(path);
     return dirs.filter(dir => {
-        if (options.excludeDirs && options.excludeDirs.includes(dir)) {
+        if (options.exclude && matchGlob(dir, options.exclude)) {
             return false;
         }
         if (options.dot) {
@@ -39,8 +40,8 @@ export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOpti
     });
 }
 
-export async function getDirs(path: string) {
-    const dirs = await fsExtra.readdir(path);
+export async function getDirs(path: string, options?: GetDirsOrFilesOptions) {
+    const dirs = await getDirsAndFiles(path, options);
     return dirs.filter(dir => {
         return isDirectory(nodePath.resolve(path, dir));
     });

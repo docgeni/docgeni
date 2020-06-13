@@ -24,7 +24,7 @@ export class DocsCompiler {
     }
 
     getLocaleNavs(locale: string) {
-        return this.localesDocsDataMap[locale] && this.localesDocsDataMap[locale].navs || [];
+        return (this.localesDocsDataMap[locale] && this.localesDocsDataMap[locale].navs) || [];
     }
 
     constructor(private docgeni: DocgeniContext) {}
@@ -107,7 +107,7 @@ export class DocsCompiler {
 
     private async generateDirContentDocs(dirPath: string, locale: string, isRoot?: boolean, excludeDirs?: string[]) {
         const dirsAndFiles = await toolkit.fs.getDirsAndFiles(dirPath, {
-            excludeDirs
+            exclude: excludeDirs
         });
         const navOrdersMap: WeakMap<NavigationItem, number> = new WeakMap();
         let navs: Array<NavigationItem> = [];

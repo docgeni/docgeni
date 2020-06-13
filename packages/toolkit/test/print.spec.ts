@@ -11,7 +11,7 @@ describe('#toolkit.print', () => {
         // toolkit.print.debug('debug');
         // mock.reset();
 
-        toolkit.print.fancy('books', 'sdd');
+        // toolkit.print.fancy('books', 'sdd');
         // toolkit.print.info('info', 'info2', { name: 2 });
         // toolkit.print.warn('warn');
         // toolkit.print.debug('debug');
