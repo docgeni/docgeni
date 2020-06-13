@@ -23,6 +23,7 @@
     "preinstall": "node scripts/check-yarn.js",
     "release-only": "ts-node --project ./scripts/tsconfig.json ./scripts/release.ts",
     "sync-interfaces": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-interfaces.ts",
+    "sync-template-version": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-template-version.ts",
     "release": "wpm release",
     "pub": "wpm publish",
     "pub:docs": "yarn build:docs:prod && cpx ./packages/site/package.json ./dist/site && yarn pub:docs:git",
