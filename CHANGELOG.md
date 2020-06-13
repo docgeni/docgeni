@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.12](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.11...v0.1.0-alpha.12) (2020-06-13)
+
+
+### Bug Fixes
+
+* **template:** set line-height as 1.5715 ([cc15b95](https://github.com/docgeni/docgeni/commit/cc15b950a3253c5f7d49c8deae40d2f253c168ef))
+* **ui:** layout style error ([9d943ed](https://github.com/docgeni/docgeni/commit/9d943ed3e8846c7102c3ea1574c08380f3d0e7ac))
+
+
+### Features
+
+* **core:** add include for lib support subdir components #INFR-662 ([ee3a255](https://github.com/docgeni/docgeni/commit/ee3a25524ebf0a5b39cefd25ee362c5d0429e03e)), closes [#INFR-662](https://github.com/docgeni/docgeni/issues/INFR-662)
+* **core:** sort lib components by order, and support example front-matter #INFR-643 ([3df0d03](https://github.com/docgeni/docgeni/commit/3df0d030ad66bbe5b3bc839c760fb70b73563f5b)), closes [#INFR-643](https://github.com/docgeni/docgeni/issues/INFR-643)
+* **template:** add table style for doc content ([19457aa](https://github.com/docgeni/docgeni/commit/19457aa244e1d730605a5ae9bd09091c716fb837))
+
+
+
+
+
 # [0.1.0-alpha.11](https://github.com/docgeni/docgeni/compare/v0.1.0-alpha.10...v0.1.0-alpha.11) (2020-06-12)
 
 
