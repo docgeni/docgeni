@@ -1,5 +1,5 @@
 import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
-import { Library, CategoryItem, LiveExample, ExampleSourceFile } from './interfaces';
+import { Library, CategoryItem, LiveExample, ExampleSourceFile, ComponentDocItem } from './interfaces';
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
@@ -9,6 +9,7 @@ import {
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
+import * as glob from 'glob';
 
 export interface LibComponent {
     name: string;
@@ -125,7 +126,7 @@ export class LibraryCompiler {
                     docSourceFile = localeDocsMap[this.docgeni.config.defaultLocale];
                 }
                 // category 不存在，根据文档中配置的 Title 动态添加
-                if (!localeCategories.categoriesMap[meta.category]) {
+                if (!localeCategories.categoriesMap[meta.category] && meta.title) {
                     category = {
                         id: meta.category,
                         title: meta.title,
@@ -135,11 +136,11 @@ export class LibraryCompiler {
                     localeCategories.categories.push(category);
                     localeCategories.categoriesMap[meta.category] = category;
                 }
-                const title = docSourceFile ? docSourceFile.result.meta.title : toolkit.strings.titleCase(component.name);
-                const subtitle = docSourceFile ? docSourceFile.result.meta.subtitle : '';
+                const title = this.getComponentMetaProperty(docSourceFile, 'title') || toolkit.strings.titleCase(component.name);
+                const subtitle = this.getComponentMetaProperty(docSourceFile, 'subtitle') || '';
 
                 if (docSourceFile || !toolkit.utils.isEmpty(examples)) {
-                    category.items.push({
+                    const componentNav: ComponentDocItem = {
                         id: component.name,
                         title,
                         subtitle,
@@ -147,7 +148,12 @@ export class LibraryCompiler {
                         importSpecifier: `${this.lib.name}/${component.name}`,
                         examples: examples.map(example => example.key),
                         overview: docSourceFile && docSourceFile.result.html ? true : false
-                    });
+                    };
+                    if (category) {
+                        category.items.push(componentNav);
+                    } else {
+                        localeCategories.categories.push(componentNav);
+                    }
                 }
             });
         }
@@ -155,27 +161,44 @@ export class LibraryCompiler {
         return this.localesCategoriesMap;
     }
 
-    private match(exclude: string | string[], target: string): boolean {
-        const excludeArray = toolkit.utils.coerceArray(exclude);
-        const matchExclude = excludeArray.find(item => {
-            return toolkit.utils.matchGlob(target, item);
-        });
-        return matchExclude ? false : true;
+    private async hasComponentDocOrExamples(absComponentPath: string): Promise<boolean> {
+        const hasDocFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'doc'));
+        const hasExamplesFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'examples'));
+        return hasDocFolder || hasExamplesFolder;
+    }
+
+    private getComponentMetaProperty<TPropertyKey extends keyof ComponentDocMeta>(
+        docSourceFile: DocSourceFile<ComponentDocMeta>,
+        propertyName: TPropertyKey
+    ): ComponentDocMeta[TPropertyKey] {
+        return docSourceFile && docSourceFile.result.meta && docSourceFile.result.meta[propertyName];
     }
 
     private async getComponents(): Promise<LibComponent[]> {
-        const dirs = await toolkit.fs.getDirs(this.absLibPath);
-        return dirs
-            .filter(dir => {
-                return this.lib.exclude ? this.match(this.lib.exclude, dir) : true;
-            })
-            .map(dir => {
-                const absComponentPath = path.resolve(this.absLibPath, dir);
-                return {
-                    name: dir,
-                    absPath: absComponentPath
-                };
+        const components: LibComponent[] = [];
+        if (this.lib.include) {
+            const includes = toolkit.utils.coerceArray(this.lib.include);
+            for (const include of includes) {
+                const includeAbsPath = path.resolve(this.absLibPath, include);
+                const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
+                subDirs.forEach(dir => {
+                    const component: LibComponent = {
+                        name: `${include}-${dir}`,
+                        absPath: path.resolve(includeAbsPath, dir)
+                    };
+                    components.push(component);
+                });
+            }
+        }
+        const dirs = await toolkit.fs.getDirs(this.absLibPath, { exclude: this.lib.exclude });
+        dirs.map(dir => {
+            const absComponentPath = path.resolve(this.absLibPath, dir);
+            components.push({
+                name: dir,
+                absPath: absComponentPath
             });
+        });
+        return components;
     }
 
     private async compileComponentDocs(

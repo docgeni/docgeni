@@ -27,12 +27,16 @@ export class SiteBuilder {
         if (this.siteProject) {
             this.execAngularCommand('serve');
         } else {
-            this.docgeni.logger.warn(`not support auto create site`);
+            this.docgeni.logger.warn(`not support start for auto create site`);
         }
     }
 
     async build(cmdArgs: AngularCommandOptions): Promise<void> {
-        this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
+        if (this.siteProject) {
+            this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
+        } else {
+            this.docgeni.logger.warn(`not support build for auto create site`);
+        }
     }
 
     private execAngularCommand(command: string, args: Array<string> = []) {
