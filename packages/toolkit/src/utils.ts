@@ -40,8 +40,8 @@ export function keyBy<T>(value: Array<T>, key: keyof T): { [key: string]: T } {
 
 export function sortByOrderMap<T extends object>(items: T[], ordersMap: WeakMap<T, number>): T[] {
     return items.sort((a, b) => {
-        const aOrder = ordersMap.get(a);
-        const bOrder = ordersMap.get(b);
+        const aOrder = isNumber(ordersMap.get(a)) ? ordersMap.get(a) : Number.MAX_SAFE_INTEGER;
+        const bOrder = isNumber(ordersMap.get(b)) ? ordersMap.get(b) : Number.MAX_SAFE_INTEGER;
         return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
     });
 }

@@ -10,6 +10,7 @@ import {
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
 import * as glob from 'glob';
+import * as fm from 'front-matter';
 
 export interface LibComponent {
     name: string;
@@ -109,6 +110,7 @@ export class LibraryCompiler {
         const components = await this.getComponents();
 
         this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
+        const componentOrderMap: WeakMap<ComponentDocItem, number> = new WeakMap();
         for (const component of components) {
             // Component Doc
             const { meta, localeDocsMap } = await this.compileComponentDocs(component);
@@ -136,8 +138,10 @@ export class LibraryCompiler {
                     localeCategories.categories.push(category);
                     localeCategories.categoriesMap[meta.category] = category;
                 }
+
                 const title = this.getComponentMetaProperty(docSourceFile, 'title') || toolkit.strings.titleCase(component.name);
                 const subtitle = this.getComponentMetaProperty(docSourceFile, 'subtitle') || '';
+                const order = this.getComponentMetaProperty(docSourceFile, 'order');
 
                 if (docSourceFile || !toolkit.utils.isEmpty(examples)) {
                     const componentNav: ComponentDocItem = {
@@ -149,6 +153,7 @@ export class LibraryCompiler {
                         examples: examples.map(example => example.key),
                         overview: docSourceFile && docSourceFile.result.html ? true : false
                     };
+                    componentOrderMap.set(componentNav, toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER);
                     if (category) {
                         category.items.push(componentNav);
                     } else {
@@ -157,15 +162,25 @@ export class LibraryCompiler {
                 }
             });
         }
-        this.docgeni.logger.succuss(`Lib(${this.lib.name}) compiled successfully`);
+
+        this.docgeni.config.locales.forEach(locale => {
+            const localeCategories = this.localesCategoriesMap[locale.key];
+            localeCategories.categories = toolkit.utils.sortByOrderMap(localeCategories.categories, componentOrderMap);
+            localeCategories.categories.forEach(category => {
+                if (category.items) {
+                    category.items = toolkit.utils.sortByOrderMap(category.items, componentOrderMap);
+                }
+            });
+        });
+        this.docgeni.logger.succuss(`Lib: ${this.lib.name} compiled successfully`);
         return this.localesCategoriesMap;
     }
 
-    private async hasComponentDocOrExamples(absComponentPath: string): Promise<boolean> {
-        const hasDocFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'doc'));
-        const hasExamplesFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'examples'));
-        return hasDocFolder || hasExamplesFolder;
-    }
+    // private async hasComponentDocOrExamples(absComponentPath: string): Promise<boolean> {
+    //     const hasDocFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'doc'));
+    //     const hasExamplesFolder = await toolkit.fs.pathExists(path.resolve(absComponentPath, 'examples'));
+    //     return hasDocFolder || hasExamplesFolder;
+    // }
 
     private getComponentMetaProperty<TPropertyKey extends keyof ComponentDocMeta>(
         docSourceFile: DocSourceFile<ComponentDocMeta>,
@@ -242,40 +257,69 @@ export class LibraryCompiler {
         return lib.abbrName || lib.name;
     }
 
+    // private async getExampleComponentFile(absComponentExamplePath: string, dirName: string) {
+    //     const files = await toolkit.fs.getFiles(absComponentExamplePath);
+    //     if (files.includes(`${dirName}.component.ts`)) {
+    //         return `${dirName}.component.ts`;
+    //     } else {
+    //         const componentFiles = files.filter(file => {
+    //             return file.endsWith('.component.ts');
+    //         });
+    //         return toolkit.utils.isEmpty(componentFiles) ? null : componentFiles[0];
+    //     }
+    // }
+
     private async generateComponentExamples(component: LibComponent): Promise<LiveExample[]> {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
         const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
-        const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.name}`);
+        // const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.name}`);
         if (!(await toolkit.fs.pathExists(absComponentExamplesPath))) {
             return [];
         }
         await toolkit.fs.copy(absComponentExamplesPath, destAbsComponentExamplesPath);
-        await toolkit.fs.copy(absComponentExamplesPath, destAbsAssetsExamplesSourcePath);
+        // await toolkit.fs.copy(absComponentExamplesPath, destAbsAssetsExamplesSourcePath);
 
         const dirs = await toolkit.fs.getDirs(absComponentExamplesPath);
-        const examples: LiveExample[] = [];
+        let examples: LiveExample[] = [];
         const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${component.name}-examples-module`);
+        const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
 
         for (const dirName of dirs) {
             const key = `${this.getLibAbbrName(this.lib)}-${component.name}-${dirName}-example`;
             const componentName = toolkit.strings.pascalCase(`${key}-component`);
             const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
-            const sourceFiles = await this.generateComponentExampleHighlighted(component, absComponentExamplePath, dirName);
-            examples.push({
+            const absComponentExampleDocPath = path.resolve(absComponentExamplePath, `index.md`);
+
+            const liveExample: LiveExample = {
                 key,
                 name: dirName,
-                title: toolkit.strings.pascalCase(dirName),
+                title: toolkit.strings.headerCase(dirName, { delimiter: ' ' }),
                 componentName,
                 module: {
                     name: moduleName,
                     importSpecifier: `${this.lib.name}/${component.name}`
                 },
-                sourceFiles,
+                sourceFiles: [],
                 additionalFiles: [],
                 additionalComponents: []
-            });
+            };
+            let exampleOrder = Number.MAX_SAFE_INTEGER;
+            if (await toolkit.fs.pathExists(absComponentExampleDocPath)) {
+                const content = await toolkit.fs.readFileContent(absComponentExampleDocPath);
+                const exampleFmResult = fm<{ title: string; order: number }>(content);
+                if (exampleFmResult.attributes.title) {
+                    liveExample.title = exampleFmResult.attributes.title;
+                }
+                if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
+                    exampleOrder = exampleFmResult.attributes.order;
+                }
+            }
+            exampleOrderMap.set(liveExample, exampleOrder);
+            const sourceFiles = await this.generateComponentExampleHighlighted(component, absComponentExamplePath, dirName);
+            liveExample.sourceFiles = sourceFiles;
+            examples.push(liveExample);
         }
-
+        examples = toolkit.utils.sortByOrderMap(examples, exampleOrderMap);
         await toolkit.template.generate('component-examples-entry.hbs', path.resolve(destAbsComponentExamplesPath, 'index.ts'), {
             examples,
             examplesModule: moduleName

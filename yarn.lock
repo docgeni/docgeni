@@ -912,6 +912,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@docgeni/template@^0.1.0-alpha.11":
+  version "0.1.0-alpha.11"
+  resolved "https://registry.npmjs.org/@docgeni/template/-/template-0.1.0-alpha.11.tgz#f2b9b29ef4f15fc8eb21116875980f81c8c0793a"
+  integrity sha512-2FePfIXSSZD7hkSAX2/fPmjU92q613cJMV5y9i0EvMM9Nc3Mi+/8IrTDMpjt91ot9czofz0qqJSdxxMLsMwarA==
+
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@dsherret/to-absolute-glob/-/to-absolute-glob-2.0.2.tgz#1f6475dc8bd974cea07a2daf3864b317b1dd332c"

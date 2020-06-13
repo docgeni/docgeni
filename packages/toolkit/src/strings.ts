@@ -32,6 +32,10 @@ export function titleCase(input: string) {
     return _titleCase(input);
 }
 
+export function headerCase(input: string, options?: changeCase.Options) {
+    return changeCase.headerCase(input, options);
+}
+
 export function snakeCase(input: string, options?: changeCase.Options) {
     return changeCase.snakeCase(input, options);
 }
