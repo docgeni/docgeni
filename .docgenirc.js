@@ -41,7 +41,7 @@ module.exports = {
         {
             name: 'alib',
             rootDir: './packages/a-lib',
-            // include: ['common'],
+            include: ['common'],
             exclude: '',
             categories: [
                 {

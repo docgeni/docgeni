@@ -14,6 +14,7 @@ import * as fm from 'front-matter';
 
 export interface LibComponent {
     name: string;
+    fullName: string;
     absPath: string;
     meta?: ComponentDocMeta;
 }
@@ -116,7 +117,7 @@ export class LibraryCompiler {
             const { meta, localeDocsMap } = await this.compileComponentDocs(component);
             // Examples
             const examples = await this.generateComponentExamples(component);
-            this.examplesEmitter.addExamples(`${this.lib.name}/${component.name}`, examples);
+            this.examplesEmitter.addExamples(`${this.lib.name}/${component.fullName}`, examples);
             component.meta = meta;
 
             this.docgeni.config.locales.forEach(locale => {
@@ -149,7 +150,7 @@ export class LibraryCompiler {
                         title,
                         subtitle,
                         path: component.name,
-                        importSpecifier: `${this.lib.name}/${component.name}`,
+                        importSpecifier: `${this.lib.name}/${component.fullName}`,
                         examples: examples.map(example => example.key),
                         overview: docSourceFile && docSourceFile.result.html ? true : false
                     };
@@ -198,7 +199,8 @@ export class LibraryCompiler {
                 const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
                 subDirs.forEach(dir => {
                     const component: LibComponent = {
-                        name: `${include}-${dir}`,
+                        name: dir,
+                        fullName: `${include}-${dir}`,
                         absPath: path.resolve(includeAbsPath, dir)
                     };
                     components.push(component);
@@ -210,6 +212,7 @@ export class LibraryCompiler {
             const absComponentPath = path.resolve(this.absLibPath, dir);
             components.push({
                 name: dir,
+                fullName: dir,
                 absPath: absComponentPath
             });
         });
@@ -224,7 +227,7 @@ export class LibraryCompiler {
     }> {
         const absComponentDocPath = path.resolve(component.absPath, 'doc');
         const docSourceFiles: DocSourceFile[] = [];
-        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsExamplesOverviewPath, `${component.name}`);
+        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsExamplesOverviewPath, `${component.fullName}`);
 
         const localeDocsMap: { [key: string]: DocSourceFile } = {};
         let meta: Partial<ComponentDocMeta> = {};
@@ -271,8 +274,8 @@ export class LibraryCompiler {
 
     private async generateComponentExamples(component: LibComponent): Promise<LiveExample[]> {
         const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
-        const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
-        // const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.name}`);
+        const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.fullName}`);
+        // const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.fullName}`);
         if (!(await toolkit.fs.pathExists(absComponentExamplesPath))) {
             return [];
         }
@@ -285,19 +288,20 @@ export class LibraryCompiler {
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
 
         for (const dirName of dirs) {
-            const key = `${this.getLibAbbrName(this.lib)}-${component.name}-${dirName}-example`;
-            const componentName = toolkit.strings.pascalCase(`${key}-component`);
+            const libAbbrName = this.getLibAbbrName(this.lib);
+            const componentKey = `${libAbbrName}-${component.fullName}-${dirName}-example`;
+            const componentName = toolkit.strings.pascalCase( `${libAbbrName}-${component.name}-${dirName}-example-component`);
             const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
             const absComponentExampleDocPath = path.resolve(absComponentExamplePath, `index.md`);
 
             const liveExample: LiveExample = {
-                key,
+                key: componentKey,
                 name: dirName,
                 title: toolkit.strings.headerCase(dirName, { delimiter: ' ' }),
                 componentName,
                 module: {
                     name: moduleName,
-                    importSpecifier: `${this.lib.name}/${component.name}`
+                    importSpecifier: `${this.lib.name}/${component.fullName}`
                 },
                 sourceFiles: [],
                 additionalFiles: [],
@@ -333,7 +337,7 @@ export class LibraryCompiler {
         exampleName: string
     ): Promise<ExampleSourceFile[]> {
         const files = await toolkit.fs.getFiles(absComponentExamplePath);
-        const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.name, exampleName);
+        const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.fullName, exampleName);
         const exampleSourceFiles: ExampleSourceFile[] = [];
         for (const fileName of files) {
             const ext = toolkit.utils.extractExtname(fileName, true);
