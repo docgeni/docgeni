@@ -5,8 +5,9 @@ import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
 
 export interface ComponentDocMeta {
+    title?: string;
+    name?: string;
     category?: string;
-    title: string;
     subtitle?: string;
     description?: string;
     order?: number;
