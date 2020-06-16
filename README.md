@@ -5,7 +5,7 @@
   <strong>Docgeni(WIP)</strong>
 </p>
 <p align="center">
-A modern and simply documentation generator for markdown docs and Angular components lib
+A modern and powerful documentation generator for Angular components lib and markdown docs
 </p>
 
 ## Installation

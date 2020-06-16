@@ -33,14 +33,12 @@ $ yarn add @docgeni/cli @docgeni/template -D
 ```
 
 # 配置
-在根目录新建 `.docgenirc.js` 配置文件参考如下:
+在根目录新建 `.docgenirc.js` 配置文件，拷贝如下配置代码:
 
 ```ts
 module.exports = {
     mode: 'site',
     title: 'Docgeni',
-    docsPath: './docs',
-    output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,
