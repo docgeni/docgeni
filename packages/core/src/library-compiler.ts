@@ -6,15 +6,15 @@ import { DocType } from './enums';
 import {
     ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH,
     ASSETS_EXAMPLES_OVERVIEWS_RELATIVE_PATH,
-    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH
+    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    DEFAULT_COMPONENT_DOC_DIR,
+    DEFAULT_COMPONENT_EXAMPLES_DIR
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
-import * as glob from 'glob';
 import * as fm from 'front-matter';
 
 export interface LibComponent {
     name: string;
-    fullName: string;
     absPath: string;
     meta?: ComponentDocMeta;
 }
@@ -113,31 +113,37 @@ export class LibraryCompiler {
         this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
         const componentOrderMap: WeakMap<ComponentDocItem, number> = new WeakMap();
         for (const component of components) {
-            // Component Doc
-            const { meta, localeDocsMap } = await this.compileComponentDocs(component);
+            // Component docs
+            const localeDocsMap = await this.readComponentDocs(component);
+            const defaultLocaleDoc = localeDocsMap[this.docgeni.config.defaultLocale];
+            component.meta = {};
+            if (defaultLocaleDoc) {
+                component.meta = defaultLocaleDoc.result.meta;
+                component.name = defaultLocaleDoc.result.meta.name || component.name;
+            }
+            await this.emitComponentDocs(component, localeDocsMap);
             // Examples
             const examples = await this.generateComponentExamples(component);
-            this.examplesEmitter.addExamples(`${this.lib.name}/${component.fullName}`, examples);
-            component.meta = meta;
+            this.examplesEmitter.addExamples(`${this.lib.name}/${component.name}`, examples);
 
             this.docgeni.config.locales.forEach(locale => {
                 const localeCategories = this.localesCategoriesMap[locale.key];
-                let category = localeCategories.categoriesMap[meta.category];
+                let category = localeCategories.categoriesMap[component.meta.category];
                 let docSourceFile = localeDocsMap[locale.key];
                 // Use default locale's data when locale is not found
                 if (!docSourceFile) {
                     docSourceFile = localeDocsMap[this.docgeni.config.defaultLocale];
                 }
                 // category 不存在，根据文档中配置的 Title 动态添加
-                if (!localeCategories.categoriesMap[meta.category] && meta.title) {
+                if (!localeCategories.categoriesMap[component.meta.category] && component.meta.title) {
                     category = {
-                        id: meta.category,
-                        title: meta.title,
-                        subtitle: meta.subtitle,
+                        id: component.meta.category,
+                        title: component.meta.title,
+                        subtitle: component.meta.subtitle,
                         items: []
                     };
                     localeCategories.categories.push(category);
-                    localeCategories.categoriesMap[meta.category] = category;
+                    localeCategories.categoriesMap[component.meta.category] = category;
                 }
 
                 const title = this.getComponentMetaProperty(docSourceFile, 'title') || toolkit.strings.titleCase(component.name);
@@ -150,7 +156,7 @@ export class LibraryCompiler {
                         title,
                         subtitle,
                         path: component.name,
-                        importSpecifier: `${this.lib.name}/${component.fullName}`,
+                        importSpecifier: `${this.lib.name}/${component.name}`,
                         examples: examples.map(example => example.key),
                         overview: docSourceFile && docSourceFile.result.html ? true : false
                     };
@@ -200,7 +206,6 @@ export class LibraryCompiler {
                 subDirs.forEach(dir => {
                     const component: LibComponent = {
                         name: dir,
-                        fullName: `${include}-${dir}`,
                         absPath: path.resolve(includeAbsPath, dir)
                     };
                     components.push(component);
@@ -212,25 +217,16 @@ export class LibraryCompiler {
             const absComponentPath = path.resolve(this.absLibPath, dir);
             components.push({
                 name: dir,
-                fullName: dir,
                 absPath: absComponentPath
             });
         });
         return components;
     }
 
-    private async compileComponentDocs(
-        component: LibComponent
-    ): Promise<{
-        meta: ComponentDocMeta;
-        localeDocsMap: Record<string, DocSourceFile>;
-    }> {
-        const absComponentDocPath = path.resolve(component.absPath, 'doc');
+    private async readComponentDocs(component: LibComponent): Promise<Record<string, DocSourceFile>> {
+        const absComponentDocPath = path.resolve(component.absPath, this.lib.docDir || DEFAULT_COMPONENT_DOC_DIR);
         const docSourceFiles: DocSourceFile[] = [];
-        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsExamplesOverviewPath, `${component.fullName}`);
-
-        const localeDocsMap: { [key: string]: DocSourceFile } = {};
-        let meta: Partial<ComponentDocMeta> = {};
+        const localeDocsMap: Record<string, DocSourceFile> = {};
         for (const locale of this.docgeni.config.locales) {
             const absDocPath = path.resolve(absComponentDocPath, `${locale.key}.md`);
             if (await toolkit.fs.pathExists(absDocPath)) {
@@ -239,21 +235,21 @@ export class LibraryCompiler {
                 this.docgeni.hooks.docCompile.call(docSourceFile);
                 docSourceFiles.push(docSourceFile);
                 localeDocsMap[locale.key] = docSourceFile;
-                // Use Default Locale meta
-                if (locale.key === this.docgeni.config.defaultLocale) {
-                    meta = {
-                        category: docSourceFile.result.meta.category,
-                        order: docSourceFile.result.meta.order
-                    };
-                }
-                const filePath = path.resolve(destAbsExamplesOverviewPath, `${locale.key}.html`);
-                await toolkit.fs.ensureWriteFile(filePath, docSourceFile.result.html);
             }
         }
-        return {
-            localeDocsMap,
-            meta: meta as ComponentDocMeta
-        };
+        return localeDocsMap;
+    }
+
+    private async emitComponentDocs(component: LibComponent, localeDocsMap: Record<string, DocSourceFile>) {
+        const defaultSourceFile = localeDocsMap[this.docgeni.config.defaultLocale];
+        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsExamplesOverviewPath, `${component.name}`);
+        for (const locale of this.docgeni.config.locales) {
+            const sourceFile = localeDocsMap[locale.key] || defaultSourceFile;
+            if (sourceFile) {
+                const filePath = path.resolve(destAbsExamplesOverviewPath, `${locale.key}.html`);
+                await toolkit.fs.ensureWriteFile(filePath, sourceFile.result.html);
+            }
+        }
     }
 
     private getLibAbbrName(lib: Library): string {
@@ -273,8 +269,8 @@ export class LibraryCompiler {
     // }
 
     private async generateComponentExamples(component: LibComponent): Promise<LiveExample[]> {
-        const absComponentExamplesPath = path.resolve(component.absPath, 'examples');
-        const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.fullName}`);
+        const absComponentExamplesPath = path.resolve(component.absPath, this.lib.examplesDir || DEFAULT_COMPONENT_EXAMPLES_DIR);
+        const destAbsComponentExamplesPath = path.resolve(this.absDestSiteContentComponentsPath, `${component.name}`);
         // const destAbsAssetsExamplesSourcePath = path.resolve(this.absDestAssetsExamplesSourcePath, `${component.fullName}`);
         if (!(await toolkit.fs.pathExists(absComponentExamplesPath))) {
             return [];
@@ -289,8 +285,8 @@ export class LibraryCompiler {
 
         for (const dirName of dirs) {
             const libAbbrName = this.getLibAbbrName(this.lib);
-            const componentKey = `${libAbbrName}-${component.fullName}-${dirName}-example`;
-            const componentName = toolkit.strings.pascalCase( `${libAbbrName}-${component.name}-${dirName}-example-component`);
+            const componentKey = `${libAbbrName}-${component.name}-${dirName}-example`;
+            const componentName = toolkit.strings.pascalCase(`${libAbbrName}-${component.name}-${dirName}-example-component`);
             const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
             const absComponentExampleDocPath = path.resolve(absComponentExamplePath, `index.md`);
 
@@ -301,7 +297,7 @@ export class LibraryCompiler {
                 componentName,
                 module: {
                     name: moduleName,
-                    importSpecifier: `${this.lib.name}/${component.fullName}`
+                    importSpecifier: `${this.lib.name}/${component.name}`
                 },
                 sourceFiles: [],
                 additionalFiles: [],
@@ -337,7 +333,7 @@ export class LibraryCompiler {
         exampleName: string
     ): Promise<ExampleSourceFile[]> {
         const files = await toolkit.fs.getFiles(absComponentExamplePath);
-        const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.fullName, exampleName);
+        const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.name, exampleName);
         const exampleSourceFiles: ExampleSourceFile[] = [];
         for (const fileName of files) {
             const ext = toolkit.utils.extractExtname(fileName, true);
