@@ -28,7 +28,7 @@ module.exports = {
         },
         {
             title: '更新日志',
-            path: 'https://github.com/docgeni/docgeni',
+            path: 'https://github.com/docgeni/docgeni/blob/master/CHANGELOG.md',
             isExternal: true,
             locales: {
                 'en-us': {
