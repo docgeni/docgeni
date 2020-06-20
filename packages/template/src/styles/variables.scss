@@ -1,4 +1,9 @@
 $dg-primary: #348fe4 !default;
+$dg-success: #66c060 !default; // 2dbcff
+$dg-info: #2dbcff !default;
+$dg-warning: #ffc442 !default;
+$dg-danger: #ff5b57 !default;
+
 $dg-gray-80: #fafafa !default;
 $dg-gray-100: #f3f3f3 !default;
 $dg-gray-200: #eee !default;
@@ -14,6 +19,20 @@ $dg-white: #fff;
 $dg-black: #000;
 $dg-border-color: #eee;
 $dg-border-radius: 4px;
+
+$dg-theme-colors: () !default;
+$dg-theme-colors: map-merge(
+  (
+    "primary":    $dg-primary,
+    "success":    $dg-success,
+    "info":       $dg-info,
+    "warning":    $dg-warning,
+    "danger":     $dg-danger,
+    "light":      $dg-gray-300,
+    "dark":       $dg-gray-700
+  ),
+  $dg-theme-colors
+);
 
 $dg-line-height: 1.5715 !default;
 

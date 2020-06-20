@@ -1,0 +1,39 @@
+{{#each declarations}}
+  <div class="dg-api-header">
+     <span class="name">{{name}}</span>
+     <label class="type-label dg-label {{type}}">{{type}}</label>
+  </div>
+  {{#if description}}
+  <div class="dg-api-class-description">{{{description}}}</div>
+  {{/if}}
+
+  <table class="dg-api-properties-table">
+    <thead>
+      <tr class="dg-api-properties-header-row">
+        <th class="dg-api-properties-name-th">Name</th>
+        <th class="dg-api-properties-type-th">Type</th>
+        <th class="dg-api-properties-default-th">Default</th>
+        <th class="dg-api-properties-description-th">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {{#each properties}}
+      <tr class="dg-api-properties-row">
+         <td class="dg-api-properties-name-cell">
+          {{name}}
+         </td>
+         <td class="dg-api-properties-type-cell">
+             <label class="dg-label dg-label-outline-info">{{type}}</label>
+         </td>
+         <td class="dg-api-properties-default-cell">
+           <label class="dg-label dg-label-default">{{default}}</label>
+         </td>
+         <td class="dg-api-property-description">
+           <p>{{{description}}}</p>
+         </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/each}}

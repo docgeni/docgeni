@@ -2,7 +2,7 @@
   <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
   <div class="dg-tab-links">
     <a *ngIf="docItem.overview" class="dg-tab-link" [routerLink]="['./overview']" routerLinkActive="active">概览</a>
-    <!-- <a [routerLink]="['./api']" routerLinkActive="active">API</a> -->
+    <a *ngIf="docItem.api" class="dg-tab-link" [routerLink]="['./api']" routerLinkActive="active">API</a>
     <a *ngIf="docItem.examples.length > 0" class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">示例</a>
   </div>
 </ng-container>

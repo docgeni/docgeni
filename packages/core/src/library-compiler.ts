@@ -1,17 +1,22 @@
 import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
-import { Library, CategoryItem, LiveExample, ExampleSourceFile, ComponentDocItem } from './interfaces';
+import { Library, CategoryItem, LiveExample, ExampleSourceFile, ComponentDocItem, DirectiveDeclaration } from './interfaces';
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
 import {
     ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH,
-    ASSETS_EXAMPLES_OVERVIEWS_RELATIVE_PATH,
+    ASSETS_OVERVIEWS_RELATIVE_PATH,
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
     DEFAULT_COMPONENT_DOC_DIR,
-    DEFAULT_COMPONENT_EXAMPLES_DIR
+    DEFAULT_COMPONENT_EXAMPLES_DIR,
+    ASSETS_API_DOCS_RELATIVE_PATH,
+    DEFAULT_COMPONENT_API_DIR
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
 import * as fm from 'front-matter';
+import * as yaml from 'js-yaml';
+import { cosmiconfig, defaultLoaders } from 'cosmiconfig';
+import { Markdown } from './markdown';
 
 export interface LibComponent {
     name: string;
@@ -77,7 +82,8 @@ export class LibraryCompiler {
     private absDestSiteContentComponentsPath: string;
     private absDestAssetsExamplesSourcePath: string;
     private absDestAssetsExamplesHighlightedPath: string;
-    private absDestAssetsExamplesOverviewPath: string;
+    private absDestAssetsOverviewsPath: string;
+    private absDestAssetsApiDocsPath: string;
     private examplesEmitter: ExamplesEmitter;
     private localesCategoriesMap: LocaleCategoryMap;
 
@@ -92,10 +98,11 @@ export class LibraryCompiler {
             this.docgeni.paths.absSitePath,
             `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
         );
-        this.absDestAssetsExamplesOverviewPath = path.resolve(
+        this.absDestAssetsOverviewsPath = path.resolve(
             this.docgeni.paths.absSitePath,
-            `${ASSETS_EXAMPLES_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`
+            `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`
         );
+        this.absDestAssetsApiDocsPath = path.resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}`);
         this.examplesEmitter = examplesEmitter;
     }
 
@@ -109,19 +116,24 @@ export class LibraryCompiler {
 
     public async compile(): Promise<LocaleCategoryMap> {
         const components = await this.getComponents();
-
         this.localesCategoriesMap = this.buildLocalesCategoriesMap(this.lib.categories);
         const componentOrderMap: WeakMap<ComponentDocItem, number> = new WeakMap();
         for (const component of components) {
             // Component docs
             const localeDocsMap = await this.readComponentDocs(component);
             const defaultLocaleDoc = localeDocsMap[this.docgeni.config.defaultLocale];
-            component.meta = {};
             if (defaultLocaleDoc) {
                 component.meta = defaultLocaleDoc.result.meta;
                 component.name = defaultLocaleDoc.result.meta.name || component.name;
             }
             await this.emitComponentDocs(component, localeDocsMap);
+
+            // Api Doc
+            const absComponentApiPath = path.resolve(component.absPath, this.lib.apiDir || DEFAULT_COMPONENT_API_DIR);
+            const localeApiDocsMap = await this.readComponentApiDocs(absComponentApiPath);
+            const defaultApiDoc = localeApiDocsMap[this.docgeni.config.defaultLocale];
+            await this.emitComponentApiDocs(component, localeApiDocsMap);
+
             // Examples
             const examples = await this.generateComponentExamples(component);
             this.examplesEmitter.addExamples(`${this.lib.name}/${component.name}`, examples);
@@ -150,7 +162,8 @@ export class LibraryCompiler {
                 const subtitle = this.getComponentMetaProperty(docSourceFile, 'subtitle') || '';
                 const order = this.getComponentMetaProperty(docSourceFile, 'order');
 
-                if (docSourceFile || !toolkit.utils.isEmpty(examples)) {
+                const apiDoc = localeApiDocsMap[locale.key] || defaultApiDoc;
+                if (docSourceFile || !toolkit.utils.isEmpty(examples) || apiDoc) {
                     const componentNav: ComponentDocItem = {
                         id: component.name,
                         title,
@@ -158,7 +171,8 @@ export class LibraryCompiler {
                         path: component.name,
                         importSpecifier: `${this.lib.name}/${component.name}`,
                         examples: examples.map(example => example.key),
-                        overview: docSourceFile && docSourceFile.result.html ? true : false
+                        overview: docSourceFile && docSourceFile.result.html ? true : false,
+                        api: apiDoc ? true : false
                     };
                     componentOrderMap.set(componentNav, toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER);
                     if (category) {
@@ -206,7 +220,8 @@ export class LibraryCompiler {
                 subDirs.forEach(dir => {
                     const component: LibComponent = {
                         name: dir,
-                        absPath: path.resolve(includeAbsPath, dir)
+                        absPath: path.resolve(includeAbsPath, dir),
+                        meta: {}
                     };
                     components.push(component);
                 });
@@ -217,7 +232,8 @@ export class LibraryCompiler {
             const absComponentPath = path.resolve(this.absLibPath, dir);
             components.push({
                 name: dir,
-                absPath: absComponentPath
+                absPath: absComponentPath,
+                meta: {}
             });
         });
         return components;
@@ -242,12 +258,58 @@ export class LibraryCompiler {
 
     private async emitComponentDocs(component: LibComponent, localeDocsMap: Record<string, DocSourceFile>) {
         const defaultSourceFile = localeDocsMap[this.docgeni.config.defaultLocale];
-        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsExamplesOverviewPath, `${component.name}`);
+        const destAbsExamplesOverviewPath = path.resolve(this.absDestAssetsOverviewsPath, `${component.name}`);
         for (const locale of this.docgeni.config.locales) {
             const sourceFile = localeDocsMap[locale.key] || defaultSourceFile;
             if (sourceFile) {
                 const filePath = path.resolve(destAbsExamplesOverviewPath, `${locale.key}.html`);
                 await toolkit.fs.ensureWriteFile(filePath, sourceFile.result.html);
+            }
+        }
+    }
+
+    private async readComponentApiDocs(absComponentApiDocPath: string): Promise<Record<string, DirectiveDeclaration[]>> {
+        const localeApiDocsMap: Record<string, DirectiveDeclaration[]> = {};
+        for (const locale of this.docgeni.config.locales) {
+            const localeKey = locale.key;
+            const explorer = cosmiconfig(localeKey, {
+                searchPlaces: [
+                    localeKey,
+                    `${localeKey}.json`,
+                    `${localeKey}.yaml`,
+                    `${localeKey}.yml`,
+                    `${localeKey}.js`,
+                    `${localeKey}.config.js`
+                ],
+                stopDir: absComponentApiDocPath
+            });
+            const result: { config: DirectiveDeclaration[]; filepath: string } = await explorer.search(absComponentApiDocPath);
+
+            if (result && result.config && toolkit.utils.isArray(result.config)) {
+                result.config.forEach(item => {
+                    item.description = item.description ? Markdown.toHTML(item.description) : '';
+                    item.properties.forEach(property => {
+                        property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '-';
+                        property.description = property.description ? Markdown.toHTML(property.description) : '';
+                    });
+                });
+                localeApiDocsMap[localeKey] = result.config;
+            }
+        }
+        return localeApiDocsMap;
+    }
+
+    private async emitComponentApiDocs(component: LibComponent, localeApiDocsMap: Record<string, DirectiveDeclaration[]>) {
+        const defaultApiDoc = localeApiDocsMap[this.docgeni.config.defaultLocale];
+        const destAbsApiDocPath = path.resolve(this.absDestAssetsApiDocsPath, `${component.name}`);
+        await toolkit.fs.ensureDir(destAbsApiDocPath);
+        for (const locale of this.docgeni.config.locales) {
+            const apiDocs = localeApiDocsMap[locale.key] || defaultApiDoc;
+            if (apiDocs) {
+                const componentApiDocDistPath = path.resolve(destAbsApiDocPath, `${locale.key}.html`);
+                await toolkit.template.generate('api-doc.hbs', componentApiDocDistPath, {
+                    declarations: apiDocs
+                });
             }
         }
     }

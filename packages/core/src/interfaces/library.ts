@@ -8,5 +8,6 @@ export interface Library {
     include?: string | string[];
     exclude?: string | string[];
     docDir?: string;
+    apiDir?: string;
     examplesDir?: string;
 }

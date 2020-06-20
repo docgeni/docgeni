@@ -12,6 +12,7 @@ import { ExampleViewerComponent } from './example-viewer/example-viewer.componen
 import { IconComponent } from './icon/icon.component';
 import { ContentViewerComponent } from './content-viewer/content-viewer.component';
 import { DocHeaderComponent } from './doc-header/doc-header.component';
+import { LabelComponent } from './label/label.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { DocHeaderComponent } from './doc-header/doc-header.component';
         ExampleViewerComponent,
         IconComponent,
         DocHeaderComponent,
-        ContentViewerComponent
+        ContentViewerComponent,
+        LabelComponent
     ],
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
     entryComponents: [ExampleViewerComponent],
@@ -38,7 +40,8 @@ import { DocHeaderComponent } from './doc-header/doc-header.component';
         ExampleViewerComponent,
         DocHeaderComponent,
         ContentViewerComponent,
-        IconComponent
+        IconComponent,
+        LabelComponent
     ]
 })
 export class DocgeniSharedModule {}

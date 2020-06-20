@@ -1,0 +1,24 @@
+- type: component
+  name: alibButton,alib-button
+  description: 'alib-button 是一个 Directive，但是也可以当作一个组件使用'
+  properties:
+      - name: alibButton
+        type: string
+        description: 按钮类型，类型为 `'primary' | 'secondary' | 'danger'`
+        default: primary
+      - name: alibType
+        type: string
+        description: 和 alibButton 含义相同，一般使用 alibButton，为了减少参数输入, 设置按钮组件通过 alib-button 时，只能使用该参数控制类型
+        default: primary
+      - name: alibSize
+        type: string
+        description: 按钮大小，目前可传的大小为：`'xs' | 'sm' | 'md' | 'lg'`
+        default: default
+- type: directive
+  name: alibButtonIcon
+  description: ''
+  properties:
+    - name: alibButtonIcon
+      type: string
+      description: 按钮图标类型
+      default: primary

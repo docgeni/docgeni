@@ -2,6 +2,9 @@ $dg-heading-color: $dg-gray-800;
 $dg-table-border-color: $dg-gray-200;
 $dg-table-header-bg-color: $dg-gray-100;
 
+$dg-directive-color: #d81b60;
+$dg-component-color: #348fe4;
+
 .dg-doc-viewer {
     .dg-doc-header {
         display: block;
@@ -20,6 +23,77 @@ $dg-table-header-bg-color: $dg-gray-100;
     .dg-component-viewer {
         .dg-doc-header {
             margin-bottom: 10px;
+        }
+
+        .dg-component-api {
+            .dg-api-header {
+                display: flex;
+                align-items: center;
+
+                &:not(:first-child) {
+                    margin-top: 20px;
+                }
+
+                .name {
+                    font-size: $dg-font-size-lg;
+                    font-weight: bold;
+                }
+
+                .type-label {
+                    background-color: $dg-component-color;
+                    font-weight: 500;
+                    font-size: $dg-font-size-sm;
+                    text-transform: uppercase;
+                    margin-left: 8px;
+
+                    &.directive {
+                        background-color: $dg-directive-color
+                    }
+                }
+            }
+
+            .dg-api-class-description {
+                color: $dg-gray-700;
+                margin: 6px 0px 10px 0px;
+            }
+
+            .dg-api-properties-table {
+                margin-top: 20px;
+                display: table;
+                min-width: 720px;
+
+                .dg-api-properties-header-row {
+                    .dg-api-properties-name-th {
+                        width: 100px;
+                    }
+
+                    .dg-api-properties-type-th {
+                        width: 80px;
+                    }
+
+                    .dg-api-properties-default-th {
+                        width: 80px;
+                    }
+                }
+
+                .dg-api-properties-row {
+                    .dg-api-properties-name-cell {
+                        text-align: left;
+                    }
+
+                    .dg-api-properties-type-cell {
+                        text-align: center;
+                    }
+
+                    .dg-api-properties-type-cell {
+                        text-align: center;
+                    }
+
+                    .dg-api-property-description-cell {
+
+                    }
+                }
+            }
         }
     }
 }
