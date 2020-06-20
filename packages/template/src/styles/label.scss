@@ -1,0 +1,36 @@
+// $dg-danger-color: #d81b60;
+// $dg-primary-color: #348fe4;
+
+.dg-label {
+    display: inline-flex;
+    align-items: center;
+    color: $dg-white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: $dg-font-size-sm;
+}
+
+@each $name, $color in $dg-theme-colors {
+    .dg-label-#{$name} {
+        background-color: $color;
+        color: color-yiq($color);
+    }
+}
+
+.dg-label-default {
+    background-color: $dg-gray-200;
+    color: $dg-gray-700;
+}
+
+.dg-label-light {
+    color: $dg-gray-700;
+}
+
+@each $name, $color in $dg-theme-colors {
+    .dg-label-outline-#{$name} {
+        color: $color;
+        background-color: transparent;
+        border: 1px solid $color;
+    }
+}
+

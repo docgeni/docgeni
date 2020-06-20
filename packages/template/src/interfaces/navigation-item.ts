@@ -22,6 +22,7 @@ export interface ComponentDocItem extends DocItem {
     examples?: string[];
     importSpecifier?: string;
     overview?: boolean;
+    api?: boolean;
 }
 
 export interface CategoryItem {

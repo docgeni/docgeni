@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding, Input } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services';
 
-const EXAMPLES_OVERVIEW_PATH = `/assets/content/examples-overviews`;
+const OVERVIEWS_PATH = `/assets/content/overviews`;
 
 @Component({
     selector: 'dg-component-overview',
@@ -16,6 +16,6 @@ export class ComponentOverviewComponent implements OnInit {
     constructor(public componentViewer: ComponentViewerComponent, private global: GlobalContext) {}
 
     ngOnInit(): void {
-        this.contentUrl = `${EXAMPLES_OVERVIEW_PATH}/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`;
+        this.contentUrl = `${OVERVIEWS_PATH}/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`;
     }
 }
