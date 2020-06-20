@@ -40,9 +40,6 @@ export class DocViewerComponent implements OnInit {
     }
 
     constructor(
-        private http: HttpClient,
-        private elementRef: ElementRef<HTMLElement>,
-        private injector: Injector,
         private route: ActivatedRoute,
         private router: Router,
         private navigationService: NavigationService,
@@ -75,8 +72,17 @@ export class DocViewerHomeComponent implements OnDestroy {
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
             if (docItem) {
-                const defaultPath = docItem.overview ? '../overview' : '../examples';
-                router.navigate([defaultPath], { relativeTo: route });
+                let redirectTo = '';
+                if (docItem.overview) {
+                    redirectTo = '../overview';
+                } else if (docItem.examples && docItem.examples.length > 0) {
+                    redirectTo = '../examples';
+                } else if (docItem.api) {
+                    redirectTo = '../api';
+                }
+                if (redirectTo) {
+                    router.navigate([redirectTo], { relativeTo: route });
+                }
             }
         });
     }

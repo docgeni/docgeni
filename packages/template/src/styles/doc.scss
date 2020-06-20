@@ -47,7 +47,7 @@ $dg-component-color: #348fe4;
                     margin-left: 8px;
 
                     &.directive {
-                        background-color: $dg-directive-color
+                        background-color: $dg-directive-color;
                     }
                 }
             }
@@ -60,7 +60,8 @@ $dg-component-color: #348fe4;
             .dg-api-properties-table {
                 margin-top: 20px;
                 display: table;
-                min-width: 720px;
+                width: 100%;
+                max-width: 100%;
 
                 .dg-api-properties-header-row {
                     .dg-api-properties-name-th {
@@ -72,7 +73,11 @@ $dg-component-color: #348fe4;
                     }
 
                     .dg-api-properties-default-th {
-                        width: 80px;
+                        width: 100px;
+                    }
+
+                    .dg-api-properties-description-th {
+                        width: auto;
                     }
                 }
 
@@ -85,12 +90,11 @@ $dg-component-color: #348fe4;
                         text-align: center;
                     }
 
-                    .dg-api-properties-type-cell {
+                    .dg-api-properties-default-cell {
                         text-align: center;
                     }
 
                     .dg-api-property-description-cell {
-
                     }
                 }
             }

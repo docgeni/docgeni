@@ -288,8 +288,8 @@ export class LibraryCompiler {
             if (result && result.config && toolkit.utils.isArray(result.config)) {
                 result.config.forEach(item => {
                     item.description = item.description ? Markdown.toHTML(item.description) : '';
-                    item.properties.forEach(property => {
-                        property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '-';
+                    (item.properties || []).forEach(property => {
+                        property.default = !toolkit.utils.isEmpty(property.default) ? property.default : '-';
                         property.description = property.description ? Markdown.toHTML(property.description) : '';
                     });
                 });

@@ -6,7 +6,7 @@
   {{#if description}}
   <div class="dg-api-class-description">{{{description}}}</div>
   {{/if}}
-
+  {{#if properties}}
   <table class="dg-api-properties-table">
     <thead>
       <tr class="dg-api-properties-header-row">
@@ -36,4 +36,5 @@
       {{/each}}
     </tbody>
   </table>
+   {{/if}}
 {{/each}}
