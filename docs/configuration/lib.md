@@ -49,7 +49,7 @@ order: 30
 
 ## docDir
 
-- 类型：`string?`
+- 类型：`string`
 - 默认：`doc`
 
 组件的文档目录，`Docgeni` 会根据配置的`locales`查找`{localeKey}.md`文件，当作组件的文档，会展示在组件的概览中。
@@ -61,7 +61,7 @@ order: 30
 
 ## apiDir
 
-- 类型：`string?`
+- 类型：`string`
 - 默认：`api`
 
 组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.json`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 5种后缀，`json`、`yaml`、`js`三种格式，以下以js举例：
@@ -93,7 +93,7 @@ module.exports = [
 
 ## examplesDir
 
-- 类型：`string?`
+- 类型：`string`
 - 默认：`examples`
 
 组件示例根目录，`Docgeni` 会把该目录下的每一个一级文件夹当作一个示例。
@@ -108,4 +108,40 @@ module.exports = [
 │   │   ├── advance.component.html
 │   │   ├── advance.component.scss
 │   │   └── advance.component.ts
+```
+
+## categories
+
+- 类型：`Array<Category>`
+- 默认：`null`
+
+组件库的组件分类，`Docgeni`会在左侧菜单中把相同分类的组件放在一起，便于统一管理和查看。
+包含 `id`、`title`和`locales` 属性，`id`为当前分类的唯一标识，组件概览文档中会使用名为`category`的FrontMatter进行配置，`title`为分类的标题。
+```json
+[
+    {
+        "name": "alib",
+        "rootDir": "./packages/a-lib",
+        "categories": [
+            {
+                "id": "general",
+                "title": "通用",
+                "locales": {
+                    "en-us": {
+                        "title": "General"
+                    }
+                }
+            },
+            {
+                "id": "layout",
+                "title": "布局",
+                "locales": {
+                    "en-us": {
+                        "title": "Layout"
+                    }
+                }
+            }
+        ]
+    }
+]
 ```

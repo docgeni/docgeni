@@ -1,39 +1,8 @@
 ---
-title: 组件文档
-path: 'docs'
-order: 1
+title: 组件示例
+path: 'examples'
+order: 10
 ---
-
-
-`Docgeni`会动态识别每个类库下的子文件夹，每个子文件夹相当于一个组件，每个组件包含对应的文档、API和示例。
-组件的文件夹结构如下：
-```
-├── button
-│   ├── button.component.ts
-│   ├── button.module.ts
-│   ├── doc
-│   │   ├── en-us.md
-│   │   └── zh-cn.md
-│   ├── api
-│   │   ├── en-us.js
-│   │   └── zh-cn.js
-│   ├── examples
-│   │   ├── advance
-│   │   │   ├── advance.component.html
-│   │   │   ├── advance.component.scss
-│   │   │   └── advance.component.ts
-│   │   ├── basic
-│   │   │   ├── basic.component.html
-│   │   │   ├── basic.component.scss
-│   │   │   ├── basic.component.ts
-│   │   │   └── index.md
-│   │   └── module.ts
-│   ├── index.ts
-```
-
-## 概览文档
-
-`doc` 文件夹下存放每个多语言对应的组件文档，会展示在组件的概览中。
 
 ## 示例
 `examples` 文件夹存放当前组件的所有示例，每个类型的示例以独立文件夹的方式存在，`Docgeni`会按照约定的命名识别示例组件。
