@@ -59,6 +59,38 @@ order: 30
 │   ├── en-us.md
 ```
 
+## apiDir
+
+- 类型：`string?`
+- 默认：`api`
+
+组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.json`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 5种后缀，`json`、`yaml`、`js`三种格式，以下以js举例：
+
+```js
+module.exports = [
+  {
+    type: 'directive',
+    name: 'alibButton',
+    description: '按钮组件，支持 alibButton 指令和 alib-button 组件两种形式', // Optional
+    properties: [
+        {
+            name: 'alibType',
+            type: 'string',
+            default: 'primary',
+            description: '按钮的类型，支持 \`primary | info | warning | danger\`' 
+        },
+        {
+            name: 'alibSize',
+            type: 'string',
+            default: 'null', 
+            description: '按钮的大小，支持 \`sm | md | lg\`'
+        }
+    ]
+  }
+];
+
+```
+
 ## examplesDir
 
 - 类型：`string?`
