@@ -8,7 +8,15 @@ import { EXAMPLE_MODULES } from './content/example-modules';
 import './content/navigations.json';
 @NgModule({
     declarations: [],
-    imports: [DocgeniTemplateModule, RouterModule.forRoot(routes), ...EXAMPLE_MODULES],
+    imports: [
+        DocgeniTemplateModule,
+        RouterModule.forRoot(routes, {
+            // scrollPositionRestoration: 'enabled',
+            anchorScrolling: 'disabled',
+            // relativeLinkResolution: 'corrected'
+        }),
+        ...EXAMPLE_MODULES
+    ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeDocgeniSite, deps: [GlobalContext], multi: true },
         LIB_EXAMPLE_LOADER_PROVIDER,

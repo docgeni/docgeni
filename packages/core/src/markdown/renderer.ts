@@ -2,7 +2,8 @@ import { Renderer } from 'marked';
 import { basename, extname } from 'path';
 import * as Prism from 'prismjs';
 /** Regular expression that matches whitespace. */
-const whitespaceRegex = /\W+/g;
+// const whitespaceRegex = /\W+/g;
+const whitespaceRegex = /( |\.|\?)/g
 
 /** Regular expression that matches example comments. */
 const exampleCommentRegex = /<!--\W*example\(([^)]+)\)\W*-->/g;
@@ -18,9 +19,8 @@ export class DocsMarkdownRenderer extends Renderer {
      * specific parts of the docs.
      */
     heading(label: string, level: number, raw: string) {
-        if (level === 3 || level === 4) {
+        if (level === 1 || level === 2 || level === 3 || level === 4) {
             const headingId = label.toLowerCase().replace(whitespaceRegex, '-');
-
             return `
         <h${level} id="${headingId}" class="docs-header-link">
           <span header-link="${headingId}"></span>

@@ -6,6 +6,8 @@ $dg-directive-color: #d81b60;
 $dg-component-color: #348fe4;
 
 .dg-doc-viewer {
+    display: block;
+
     .dg-doc-header {
         display: block;
         .title {
@@ -20,7 +22,13 @@ $dg-component-color: #348fe4;
         }
     }
 
+    .dg-doc-viewer-inner {
+        max-width: 78%;
+    }
+
     .dg-component-viewer {
+        display: block;
+
         .dg-doc-header {
             margin-bottom: 10px;
         }
@@ -98,6 +106,10 @@ $dg-component-color: #348fe4;
                     }
                 }
             }
+        }
+
+        .dg-toc {
+            top: 180px
         }
     }
 }

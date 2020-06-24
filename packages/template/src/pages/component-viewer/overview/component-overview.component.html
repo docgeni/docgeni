@@ -1,1 +1,2 @@
-<dg-content-viewer [url]="contentUrl"> </dg-content-viewer>
+<dg-content-viewer class="dg-doc-viewer-inner" [url]="contentUrl" (contentRendered)="updateTableOfContents($event)"> </dg-content-viewer>
+<dg-toc #toc></dg-toc>
