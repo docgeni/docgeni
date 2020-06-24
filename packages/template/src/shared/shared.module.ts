@@ -49,4 +49,12 @@ import { TableOfContentsComponent } from './toc/toc.component';
 })
 export class DocgeniSharedModule {}
 
-export { NavbarComponent, FooterComponent, SidebarComponent, ExampleViewerComponent, IconComponent, ContentViewerComponent };
+export {
+    NavbarComponent,
+    FooterComponent,
+    SidebarComponent,
+    ExampleViewerComponent,
+    IconComponent,
+    ContentViewerComponent,
+    TableOfContentsComponent
+};
