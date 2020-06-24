@@ -47,7 +47,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
         private router: Router,
         private route: ActivatedRoute,
         private element: ElementRef,
-        @Inject(DOCUMENT) private document: Document,
+        @Inject(DOCUMENT) private document: any,
         private viewportScroller: ViewportScroller
     ) {
         this.router.events.pipe(takeUntil(this.destroyed)).subscribe(event => {
