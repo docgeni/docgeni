@@ -7,7 +7,8 @@ import {
     Injector,
     OnDestroy,
     HostBinding,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    ViewChild
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,12 +17,13 @@ import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DocItem, NavigationItem } from '../../interfaces';
 import { PageTitleService } from '../../services/page-title.service';
+import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 
 @Component({
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html'
 })
-export class DocViewerComponent implements OnInit {
+export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
 
     /** Component type for the current example. */
@@ -30,6 +32,10 @@ export class DocViewerComponent implements OnInit {
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
     docItem$: Observable<DocItem | NavigationItem> = this.navigationService.docItem$.asObservable();
+
+    @ViewChild('toc') tableOfContents: TableOfContentsComponent;
+
+    private destroyed = new Subject();
 
     get channel() {
         return this.navigationService.channel;
@@ -59,6 +65,26 @@ export class DocViewerComponent implements OnInit {
                 this.pageTitle.title = `${this.navigationService.docItem.title}`;
             }
         });
+
+        this.navigationService.docItem$.pipe(takeUntil(this.destroyed)).subscribe(() => {
+            // 100ms timeout is used to allow the page to settle before moving focus for screen readers.
+            // setTimeout(() => this.focusTarget.nativeElement.focus({preventScroll: true}), 100);
+            if (this.tableOfContents) {
+                this.tableOfContents.resetHeaders();
+            }
+        });
+    }
+
+    updateTableOfContents(sectionName: string, docViewerContent: HTMLElement, sectionIndex = 0) {
+        if (this.tableOfContents) {
+            this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
+            this.tableOfContents.updateScrollPosition();
+        }
+    }
+
+    ngOnDestroy() {
+        this.destroyed.next();
+        this.destroyed.complete();
     }
 }
 

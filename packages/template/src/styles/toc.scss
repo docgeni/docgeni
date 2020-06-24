@@ -1,0 +1,84 @@
+.dg-toc {
+    width: 18%;
+    position: fixed;
+    top: 76px;
+    right: 0;
+    bottom: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .dg-toc-container {
+        font-size: 13px;
+        // Width is container width minus content width
+        width: 19%;
+        position: sticky;
+        top: 0;
+        padding-left: 25px;
+        box-sizing: border-box;
+        display: inline-flex;
+        flex-direction: column;
+
+        width: 100%;
+        padding: 5px 0 10px 10px;
+
+        & + .docs-toc-container {
+            padding-top: 8px;
+        }
+    }
+
+    .dg-toc-heading {
+        margin: 0;
+        padding: 6px 12px 6px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: capitalize;
+
+        // &::before {
+        //     border-left: 1px solid #dbdbdb;
+        //     bottom: 0;
+        //     content: '';
+        //     left: 0;
+        //     position: absolute;
+        //     top: 0;
+        // }
+    }
+
+    .dg-link {
+        padding: 6px 12px 6px 12px;
+        color: $dg-gray-700;
+        line-height: 16px;
+        position: relative;
+        text-decoration: none;
+        display: block;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+
+        &::before {
+            border-left: 1px solid #dbdbdb;
+            bottom: 0;
+            content: '';
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        &.active {
+            color: $dg-primary;
+            &::before {
+                content: '';
+                border-radius: 50%;
+                left: -3px;
+                top: 12px;
+                background: #1976d2;
+                position: absolute;
+                width: 6px;
+                height: 6px;
+            }
+        }
+    }
+
+    .dg-level-h4 {
+        margin-left: 12px;
+    }
+}

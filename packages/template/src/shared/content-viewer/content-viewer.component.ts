@@ -19,6 +19,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
 import { Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'dg-content-viewer',
@@ -57,6 +58,15 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     private updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
+
+        // Resolving and creating components dynamically in Angular happens synchronously, but since
+        // we want to emit the output if the components are actually rendered completely, we wait
+        // until the Angular zone becomes stable.
+        this.ngZone.onStable.pipe(take(1)).subscribe(() => {
+            this.ngZone.run(() => {
+                this.contentRendered.emit(this.elementRef.nativeElement);
+            });
+        });
     }
 
     private loadComponents(selector: string, componentClass: any) {
