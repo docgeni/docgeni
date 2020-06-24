@@ -29,6 +29,11 @@ $dg-component-color: #348fe4;
     .dg-component-viewer {
         display: block;
 
+        .dg-component-empty {
+            display: block;
+            margin-top: 20px;
+        }
+
         .dg-doc-header {
             margin-bottom: 10px;
         }

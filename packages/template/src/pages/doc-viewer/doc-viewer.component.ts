@@ -98,7 +98,7 @@ export class DocViewerHomeComponent implements OnDestroy {
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
             if (docItem) {
-                let redirectTo = '';
+                let redirectTo = '../empty';
                 if (docItem.overview) {
                     redirectTo = '../overview';
                 } else if (docItem.examples && docItem.examples.length > 0) {

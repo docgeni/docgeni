@@ -5,7 +5,8 @@ import { DocViewerComponent, DocViewerHomeComponent } from './pages/doc-viewer/d
 import {
     ComponentOverviewComponent,
     ComponentApiComponent,
-    ComponentExamplesComponent
+    ComponentExamplesComponent,
+    ComponentEmptyComponent
 } from './pages/pages.module';
 
 const actualRoutes: Routes = [
@@ -42,6 +43,10 @@ const actualRoutes: Routes = [
                         component: ComponentExamplesComponent
                     },
                     {
+                        path: 'empty',
+                        component: ComponentEmptyComponent
+                    },
+                    {
                         path: '**',
                         component: ComponentExamplesComponent
                     }
@@ -51,6 +56,4 @@ const actualRoutes: Routes = [
     }
 ];
 
-export const routes: Routes = [
-    ...actualRoutes
-];
+export const routes: Routes = [...actualRoutes];

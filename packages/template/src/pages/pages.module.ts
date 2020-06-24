@@ -1,6 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 
-import { ComponentViewerComponent } from './component-viewer/component-viewer.component';
+import { ComponentViewerComponent, ComponentEmptyComponent } from './component-viewer/component-viewer.component';
 import { DocViewerComponent, DocViewerHomeComponent } from './doc-viewer/doc-viewer.component';
 import { DocgeniSharedModule } from '../shared/shared.module';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +18,8 @@ const COMPONENTS = [
     ComponentViewerComponent,
     ComponentOverviewComponent,
     ComponentApiComponent,
-    ComponentExamplesComponent
+    ComponentExamplesComponent,
+    ComponentEmptyComponent
 ];
 @NgModule({
     declarations: [RootComponent, ...COMPONENTS],
@@ -39,5 +40,6 @@ export {
     ComponentViewerComponent,
     ComponentOverviewComponent,
     ComponentApiComponent,
-    ComponentExamplesComponent
+    ComponentExamplesComponent,
+    ComponentEmptyComponent
 };
