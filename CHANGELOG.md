@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/docgeni/docgeni/compare/v0.2.1...v0.3.0) (2020-06-24)
+
+
+### Bug Fixes
+
+* redirect to empty when component has not doc, api and examples ([1ba8f6f](https://github.com/docgeni/docgeni/commit/1ba8f6f5ffc053a8e91ae1fbfed69ee973547934))
+
+
+
+
+
 ## [0.2.1](https://github.com/docgeni/docgeni/compare/v0.2.0...v0.2.1) (2020-06-24)
 
 
