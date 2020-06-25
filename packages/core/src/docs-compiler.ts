@@ -129,7 +129,9 @@ export class DocsCompiler {
                 let order = Number.MAX_SAFE_INTEGER;
                 if (result.categoryMeta) {
                     category.title = result.categoryMeta.title;
-                    // category.path = result.categoryMeta.path;
+                    if (result.categoryMeta.path) {
+                        category.path = result.categoryMeta.path;
+                    }
                     if (toolkit.utils.isNumber(result.categoryMeta.order)) {
                         order = result.categoryMeta.order;
                     }
