@@ -197,10 +197,12 @@ $dg-component-color: #348fe4;
     table {
         border-collapse: collapse;
         border-spacing: 0;
-        display: block;
+        display: table;
         overflow: auto;
         word-break: normal;
         word-break: keep-all;
+        width: 100%;
+        max-width: 100%;
 
         th,
         td {
