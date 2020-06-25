@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/docgeni/docgeni/compare/v0.3.0...v0.4.0) (2020-06-25)
+
+
+### Bug Fixes
+
+* **core:** category support front-matter path ([bebf0cc](https://github.com/docgeni/docgeni/commit/bebf0cca40f89e8f866fd0cf5d6203554716645f))
+
+
+
+
+
 # [0.3.0](https://github.com/docgeni/docgeni/compare/v0.2.1...v0.3.0) (2020-06-24)
 
 **Note:** Version bump only for package @docgeni/core
