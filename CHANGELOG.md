@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/docgeni/docgeni/compare/v0.4.0...v0.5.0) (2020-06-26)
+
+
+### Features
+
+* **template:** mobile responsive for nav and sidebar ([54de98e](https://github.com/docgeni/docgeni/commit/54de98e5a43c896bb8595b9530458e38364adf43))
+
+
+
+
+
 # [0.4.0](https://github.com/docgeni/docgeni/compare/v0.3.0...v0.4.0) (2020-06-25)
 
 
