@@ -1,5 +1,7 @@
-<img *ngIf="global.config.logoUrl; else defaultLogo" class="logo" alt="Logo" [src]="global.config.logoUrl" />
-
+<div class="navbar-brand">
+  <img *ngIf="global.config.logoUrl; else defaultLogo" class="logo" alt="Logo" [src]="global.config.logoUrl" />
+  <a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
+</div>
 <ng-template #defaultLogo>
   <svg
     class="logo"
@@ -64,8 +66,7 @@
   </svg>
 </ng-template>
 
-<a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
-
+<button class="navbar-toggler dg-btn dg-btn-primary" (click)="toggleNavbar()"><dg-icon iconName="list"></dg-icon></button>
 <div class="nav">
   <ng-container *ngFor="let channel of channels">
     <a *ngIf="channel.isExternal; else navLink" href="{{ channel.path }}" target="_blank"
@@ -79,9 +80,15 @@
 <div class="spacer"></div>
 <div class="action-items">
   <!-- <div class="action-item  search-container">
-    <input class="search" placeholder="搜索" />
-  </div> -->
-  <select *ngIf="global.config.locales && global.config.locales.length > 1" class="action-item locales-selector" name="locale" [(ngModel)]="locale" (ngModelChange)="localeModelChange()">
+      <input class="search" placeholder="搜索" />
+    </div> -->
+  <select
+    *ngIf="global.config.locales && global.config.locales.length > 1"
+    class="action-item locales-selector"
+    name="locale"
+    [(ngModel)]="locale"
+    (ngModelChange)="localeModelChange()"
+  >
     <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
   </select>
   <a *ngIf="global.config.repoUrl" class="action-item repo-url" href="{{ global.config.repoUrl }}" target="_blank">

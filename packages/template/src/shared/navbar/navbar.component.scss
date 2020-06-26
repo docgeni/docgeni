@@ -3,9 +3,10 @@
     top: 0;
     left: 0;
     right: 0;
-    height: $dg-navbar-height;
+    // height: $dg-navbar-height;
     display: flex;
     align-items: center;
+    padding: 0.719rem 1.25rem;
     background-color: $dg-navbar-background;
     color: $dg-navbar-color;
     box-shadow: $dg-navbar-box-shadow;
@@ -13,17 +14,30 @@
     font-size: $dg-font-size-md;
     z-index: 100;
 
-    .spacer {
-        flex: 1;
+    .navbar-brand {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        .logo {
+            margin-right: 20px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .title {
+            font-weight: 600;
+            color: $dg-white;
+        }
     }
 
-    .title {
-        font-weight: 600;
-        color: $dg-white;
+    .navbar-toggler {
+        margin-left: 10px;
+        display: none;
     }
 
     .nav {
-        margin-left: 20px;
+        display: flex;
         a {
             color: $dg-white;
             padding: 6px 18px;
@@ -40,15 +54,12 @@
         }
     }
 
-    .logo {
-        margin: 0 20px;
-        width: 30px;
-        height: 30px;
+    .spacer {
+        flex: 1;
     }
 
     .action-items {
         display: flex;
-        margin-right: 20px;
         align-items: center;
 
         .action-item {
@@ -82,6 +93,44 @@
                 border: none;
                 border-radius: 4px;
                 -webkit-appearance: none;
+            }
+        }
+    }
+
+    @include dg-media-breakpoint-down('md') {
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .navbar-toggler {
+            display: block;
+        }
+
+        .spacer,
+        .nav,
+        .action-items {
+            display: none;
+        }
+
+        .nav {
+            flex-direction: column;
+            flex-basis: 100%;
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .action-items {
+            flex-direction: column;
+            align-items: flex-start;
+            .action-item {
+                margin-bottom: 10px;
+            }
+        }
+
+        &.show {
+            .spacer,
+            .nav,
+            .action-items {
+                display: flex;
             }
         }
     }

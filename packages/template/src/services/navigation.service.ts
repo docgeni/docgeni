@@ -11,6 +11,9 @@ export class NavigationService {
 
     docItem$ = new BehaviorSubject<NavigationItem>(null);
 
+    /** Responsive layout, sidebar default is hide */
+    showSidebar = false;
+
     get channel() {
         return this.channel$.value;
     }
@@ -82,6 +85,10 @@ export class NavigationService {
             }
         }
         return docItem;
+    }
+
+    toggleSidebar() {
+        this.showSidebar = !this.showSidebar;
     }
 
     private isPathEqual(path1: string, path2: string) {

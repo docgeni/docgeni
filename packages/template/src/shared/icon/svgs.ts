@@ -62,10 +62,17 @@ const check = `
   <path d="M6.012 11.201L1.313 6.832l-.817.879 5.54 5.15 9.304-9.163-.842-.855z"></path>
 </svg>`;
 
+const list = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="align-justify">
+<g id="ageditor/align-justify" stroke-width="1" fill-rule="evenodd">
+  <path d="M0 1h16v1.2H0V1zm0 6.4h16v1.2H0V7.4zm0 6.4h16V15H0v-1.2z" id="ag合并形状"></path>
+</g>
+</svg>`;
+
 export const BUILTIN_SVGS = {
     github,
     code,
     external,
     copy,
-    check
+    check,
+    list
 };

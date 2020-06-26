@@ -9,7 +9,31 @@ $dg-component-color: #348fe4;
     display: block;
 
     .dg-doc-header {
-        display: block;
+        display: flex;
+        align-items: center;
+
+        .sidebar-toggler {
+            display: none;
+            margin-right: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+
+            .dg-icon {
+                font-size: 14px;
+            }
+
+            &:hover {
+                background: $dg-primary;
+                color: $dg-white;
+            }
+        }
+
+        @include dg-media-breakpoint-down('md') {
+            .sidebar-toggler {
+                display: block;
+            }
+        }
+
         .title {
             font-size: $dg-font-size-xlg;
             font-weight: bold;
@@ -115,6 +139,15 @@ $dg-component-color: #348fe4;
 
         .dg-toc {
             top: 180px
+        }
+    }
+
+    @include dg-media-breakpoint-down('md') {
+        .dg-doc-viewer-inner {
+            max-width: 100%;
+        }
+        .dg-toc {
+            display: none;
         }
     }
 }

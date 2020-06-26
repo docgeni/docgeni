@@ -1,4 +1,6 @@
 @import './variables.scss';
+@import './functions.scss';
+@import './mixins/index.scss';
 @import './global.scss';
 @import './layout.scss';
 @import './nav.scss';
@@ -6,6 +8,7 @@
 @import './icon.scss';
 @import './label.scss';
 @import './toc.scss';
+@import './button.scss';
 @import '../shared/navbar/navbar.component.scss';
 @import '../shared/footer/footer.component.scss';
 @import '../shared/sidebar/sidebar.component.scss';

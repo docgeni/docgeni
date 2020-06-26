@@ -39,4 +39,25 @@
         max-height: 100vh;
         margin-left: 300px;
     }
+
+    @include dg-media-breakpoint-down('md') {
+        &.dg-sidebar-show {
+            .dg-sidebar {
+                display: block;
+            }
+
+            .content {
+                margin-left: 300px;
+            }
+        }
+
+        .dg-sidebar {
+            display: none;
+        }
+
+        .content {
+            margin-left: 0px;
+            padding: 20px 15px;
+        }
+    }
 }

@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     @HostBinding('class.dg-navbar') isNavbar = true;
 
+    @HostBinding('class.show') showNav = false;
+
     locale: string;
 
     channels: ChannelItem[];
@@ -19,6 +21,10 @@ export class NavbarComponent implements OnInit {
     ngOnInit(): void {
         this.channels = this.navigationService.getChannels();
         this.locale = this.global.locale;
+    }
+
+    toggleNavbar() {
+        this.showNav = !this.showNav;
     }
 
     localeModelChange() {

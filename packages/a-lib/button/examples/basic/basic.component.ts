@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'alib-foo-basic-example',
+    selector: 'alib-button-basic-example',
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss']
 })
