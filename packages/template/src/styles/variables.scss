@@ -26,8 +26,8 @@ $dg-enable-gradients: false !default;
 $dg-enable-shadows: true !default;
 $dg-enable-rounded: true !default;
 
-$dg-border-color: #eee;
-$dg-border-radius: 4px;
+$dg-border-color: #eee !default;
+$dg-border-radius: 4px !default;
 
 $dg-theme-colors: () !default;
 $dg-theme-colors: map-merge(
@@ -71,7 +71,7 @@ $dg-font-size-xlg: 1.5rem !default; // 24px
 
 // navbar
 $dg-navbar-height: 60px !default;
-$dg-navbar-background: $dg-primary;
+$dg-navbar-background: $dg-primary !default;
 $dg-navbar-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color: $dg-white !default;
 
