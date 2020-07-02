@@ -12,7 +12,7 @@ import './content/navigations.json';
         DocgeniTemplateModule,
         RouterModule.forRoot(routes, {
             // scrollPositionRestoration: 'enabled',
-            anchorScrolling: 'disabled',
+            // anchorScrolling: 'enabled',
             // relativeLinkResolution: 'corrected'
         }),
         ...EXAMPLE_MODULES

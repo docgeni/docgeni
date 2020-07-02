@@ -55,7 +55,7 @@
         overflow: hidden;
 
         &::before {
-            border-left: 1px solid #dbdbdb;
+            border-left: 2px solid #dbdbdb;
             bottom: 0;
             content: '';
             left: 0;
@@ -66,14 +66,16 @@
         &.active {
             color: $dg-primary;
             &::before {
-                content: '';
-                border-radius: 50%;
-                left: -3px;
-                top: 12px;
-                background: #1976d2;
-                position: absolute;
-                width: 6px;
-                height: 6px;
+                border-color: $dg-primary;
+                border-width: 2px;
+                // content: '';
+                // border-radius: 50%;
+                // left: -3px;
+                // top: 12px;
+                // background: dg-primary;;
+                // position: absolute;
+                // width: 6px;
+                // height: 6px;
             }
         }
     }

@@ -6,7 +6,7 @@
       [href]="rootUrl + '#' + link.id"
       *ngFor="let link of linkSection.links; let i = index"
       class="dg-level-{{ link.type }} dg-link"
-      [class.docs-active]="link.active"
+      [class.active]="link.active"
     >
       {{ link.name }}
     </a>

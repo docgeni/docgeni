@@ -26,6 +26,8 @@ interface Link {
     top: number;
 }
 
+const OFFSET = 60;
+
 @Component({
     selector: 'dg-toc',
     templateUrl: './toc.component.html'
@@ -59,7 +61,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
             }
         });
 
-        this.viewportScroller.setOffset([0, 60]);
+        this.viewportScroller.setOffset([0, OFFSET]);
 
         this.route.fragment.pipe(takeUntil(this.destroyed)).subscribe(fragment => {
             this.urlFragment = fragment;
@@ -119,7 +121,8 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
 
     /** Gets the scroll offset of the scroll container */
     private getScrollOffset(): number | void {
-        const { top } = this.element.nativeElement.getBoundingClientRect();
+        let { top } = this.element.nativeElement.getBoundingClientRect();
+        top = top + OFFSET;
         if (typeof this.scrollContainer.scrollTop !== 'undefined') {
             return this.scrollContainer.scrollTop + top;
         } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
