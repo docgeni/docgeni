@@ -107,7 +107,7 @@ export class DocViewerHomeComponent implements OnDestroy {
                     redirectTo = '../api';
                 }
                 if (redirectTo) {
-                    router.navigate([redirectTo], { relativeTo: route });
+                    router.navigate([redirectTo], { relativeTo: route, replaceUrl: true });
                 }
             }
         });

@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit {
         if (!global.config.homeMeta) {
             const channels = navigationService.getChannels();
             if (channels && channels[0].path && !channels[0].isExternal) {
-                router.navigateByUrl(channels[0].path);
+                router.navigateByUrl(channels[0].path, {
+                    replaceUrl: true
+                });
                 return;
             }
         }
