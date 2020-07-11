@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/docgeni/docgeni/compare/v0.5.2...v0.5.3) (2020-07-11)
+
+
+### Bug Fixes
+
+* export all public-api remove barrel index ([c47db82](https://github.com/docgeni/docgeni/commit/c47db82923ddd004adada93937724ae997c9c1a1))
+
+
+
+
+
 ## [0.5.2](https://github.com/docgeni/docgeni/compare/v0.5.1...v0.5.2) (2020-07-11)
 
 
