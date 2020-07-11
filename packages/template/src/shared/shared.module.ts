@@ -15,6 +15,7 @@ import { DocHeaderComponent } from './doc-header/doc-header.component';
 import { LabelComponent } from './label/label.component';
 import { TableOfContentsComponent } from './toc/toc.component';
 import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
+import { CopierService } from './copier/copier.service';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,10 @@ export {
     SidebarComponent,
     ExampleViewerComponent,
     IconComponent,
+    DocHeaderComponent,
+    LabelComponent,
     ContentViewerComponent,
     TableOfContentsComponent,
-    AssetsContentPathPipe
+    AssetsContentPathPipe,
+    CopierService
 };

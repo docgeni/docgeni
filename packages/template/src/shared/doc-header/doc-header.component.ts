@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, ChangeDetectionStrategy, Input } from '@angular/core';
-import { NavigationService } from '../../services';
+import { NavigationService } from '../../services/public-api';
 
 @Component({
     selector: 'dg-doc-header',

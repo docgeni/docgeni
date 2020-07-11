@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
-import { NavigationService } from '../../../services';
+import { NavigationService } from '../../../services/public-api';
 
 @Component({
     selector: 'dg-component-examples',

@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { NavigationService, GlobalContext } from '../../services';
-import { ChannelItem } from '../../interfaces';
-import { Router } from '@angular/router';
+import { NavigationService, GlobalContext } from '../../services/public-api';
+import { ChannelItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-navbar',

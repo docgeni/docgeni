@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, NgModuleFactory, Type, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationService } from '../../services';
+import { NavigationService } from '../../services/public-api';
 
 @Component({
     selector: 'dg-channel',

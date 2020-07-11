@@ -12,10 +12,10 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationService } from '../../services';
+import { NavigationService } from '../../services/public-api';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DocItem, NavigationItem } from '../../interfaces';
+import { DocItem, NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 

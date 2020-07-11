@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
-import { GlobalContext } from '../../../services';
+import { GlobalContext } from '../../../services/public-api';
 
 @Component({
     selector: 'dg-component-api',

@@ -1,11 +1,11 @@
 import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory, ViewChild } from '@angular/core';
 // import { trigger, transition, state, style, animate } from '@angular/animations';
 
-import { LiveExample } from '../../interfaces';
+import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
 import { CopierService } from '../copier/copier.service';
-import { GlobalContext } from '../../services';
+import { GlobalContext } from '../../services/public-api';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 

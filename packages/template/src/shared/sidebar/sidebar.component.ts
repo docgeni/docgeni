@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, Input } from '@angular/core';
-import { NavigationItem } from '../../interfaces';
+import { NavigationItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-sidebar',

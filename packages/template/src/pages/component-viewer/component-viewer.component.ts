@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { ComponentDocItem } from '../../interfaces';
+import { ComponentDocItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-component-viewer',

@@ -1,6 +1,4 @@
 import { Component, HostBinding } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GlobalContext } from '../../services';
 
 @Component({
     selector: 'dg-root',

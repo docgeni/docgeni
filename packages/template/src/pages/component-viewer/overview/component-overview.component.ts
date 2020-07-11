@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding, Input, ViewChild } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
-import { GlobalContext } from '../../../services';
+import { GlobalContext } from '../../../services/public-api';
 import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
 
 @Component({

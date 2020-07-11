@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem } from '../interfaces';
+import { DocgeniSiteConfig, NavigationItem } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
