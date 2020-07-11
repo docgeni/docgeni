@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/template",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "peerDependencies": {
     "@angular/common": "^9.0.7",
     "@angular/core": "^9.0.7",
