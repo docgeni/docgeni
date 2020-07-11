@@ -9,3 +9,5 @@ export const ASSETS_DOCS_RELATIVE_PATH = `${ASSETS_CONTENT_RELATIVE_PATH}/docs`;
 export const DEFAULT_COMPONENT_DOC_DIR = 'doc';
 export const DEFAULT_COMPONENT_API_DIR = 'api';
 export const DEFAULT_COMPONENT_EXAMPLES_DIR = 'examples';
+
+export const EXAMPLE_META_FILE_NAME = 'index.md';

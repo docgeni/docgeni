@@ -10,7 +10,8 @@ import {
     DEFAULT_COMPONENT_DOC_DIR,
     DEFAULT_COMPONENT_EXAMPLES_DIR,
     ASSETS_API_DOCS_RELATIVE_PATH,
-    DEFAULT_COMPONENT_API_DIR
+    DEFAULT_COMPONENT_API_DIR,
+    EXAMPLE_META_FILE_NAME
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
 import * as fm from 'front-matter';
@@ -350,7 +351,7 @@ export class LibraryCompiler {
             const componentKey = `${libAbbrName}-${component.name}-${dirName}-example`;
             const componentName = toolkit.strings.pascalCase(`${libAbbrName}-${component.name}-${dirName}-example-component`);
             const absComponentExamplePath = path.resolve(absComponentExamplesPath, dirName);
-            const absComponentExampleDocPath = path.resolve(absComponentExamplePath, `index.md`);
+            const absComponentExampleDocPath = path.resolve(absComponentExamplePath, EXAMPLE_META_FILE_NAME);
 
             const liveExample: LiveExample = {
                 key: componentKey,
@@ -394,7 +395,9 @@ export class LibraryCompiler {
         absComponentExamplePath: string,
         exampleName: string
     ): Promise<ExampleSourceFile[]> {
-        const files = await toolkit.fs.getFiles(absComponentExamplePath);
+        const files = await toolkit.fs.getFiles(absComponentExamplePath, {
+            exclude: EXAMPLE_META_FILE_NAME
+        });
         const absExampleHighlightPath = path.resolve(this.absDestAssetsExamplesHighlightedPath, component.name, exampleName);
         const exampleSourceFiles: ExampleSourceFile[] = [];
         for (const fileName of files) {
