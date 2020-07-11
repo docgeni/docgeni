@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/docgeni/docgeni/compare/v0.5.0...v0.5.1) (2020-07-11)
+
+
+### Bug Fixes
+
+* **template:** fix navigations json assets path ([9dcb715](https://github.com/docgeni/docgeni/commit/9dcb715c7ec20505015e081a76802b530396b9e0))
+* **template:** heading font-size change ([098036a](https://github.com/docgeni/docgeni/commit/098036a3d1327779a3414da27d0cd46f9243b620))
+* **template:** replace url when navigate to channel paage from home ([e902f74](https://github.com/docgeni/docgeni/commit/e902f7457378f5b0eb2e8f9a406fbcccbfb55773))
+* **template:** toc active scroll to anchor ([774004e](https://github.com/docgeni/docgeni/commit/774004e7f37dfd55c73c3f414c00874471530851))
+
+
+
+
+
 # [0.5.0](https://github.com/docgeni/docgeni/compare/v0.4.0...v0.5.0) (2020-06-26)
 
 
