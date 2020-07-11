@@ -49,6 +49,10 @@ export class GlobalContext {
             });
         });
     }
+
+    getAssetsContentPath(path: string) {
+        return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
+    }
 }
 
 export function initializeDocgeniSite(globalContext: GlobalContext) {

@@ -14,6 +14,7 @@ import { ContentViewerComponent } from './content-viewer/content-viewer.componen
 import { DocHeaderComponent } from './doc-header/doc-header.component';
 import { LabelComponent } from './label/label.component';
 import { TableOfContentsComponent } from './toc/toc.component';
+import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { TableOfContentsComponent } from './toc/toc.component';
         DocHeaderComponent,
         ContentViewerComponent,
         LabelComponent,
-        TableOfContentsComponent
+        TableOfContentsComponent,
+        AssetsContentPathPipe
     ],
     imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
     entryComponents: [ExampleViewerComponent],
@@ -44,7 +46,8 @@ import { TableOfContentsComponent } from './toc/toc.component';
         ContentViewerComponent,
         IconComponent,
         LabelComponent,
-        TableOfContentsComponent
+        TableOfContentsComponent,
+        AssetsContentPathPipe
     ]
 })
 export class DocgeniSharedModule {}
@@ -56,5 +59,6 @@ export {
     ExampleViewerComponent,
     IconComponent,
     ContentViewerComponent,
-    TableOfContentsComponent
+    TableOfContentsComponent,
+    AssetsContentPathPipe
 };

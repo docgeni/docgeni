@@ -5,8 +5,9 @@ import { LiveExample } from '../../interfaces';
 import { ExampleLoader } from '../../services/example-loader';
 import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
 import { CopierService } from '../copier/copier.service';
+import { GlobalContext } from '../../services';
 
-const EXAMPLES_HIGHLIGHTED_PATH = `/assets/content/examples-highlighted`;
+const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 
 interface ExampleTab {
     name: string;
@@ -54,7 +55,7 @@ export class ExampleViewerComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader, private copier: CopierService) {}
+    constructor(private exampleLoader: ExampleLoader, private copier: CopierService, private globalContext: GlobalContext) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
     // the file name to match the exampleName.component.* that displays main source files.
@@ -69,7 +70,9 @@ export class ExampleViewerComponent implements OnInit {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
             this.example = result.example;
-            const rootDir = `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`;
+            const rootDir = this.globalContext.getAssetsContentPath(
+                `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`
+            );
 
             this.exampleTabs = this.example.sourceFiles
                 .map(file => {
