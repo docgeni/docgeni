@@ -38,7 +38,7 @@ export class GlobalContext {
 
     initialize() {
         return new Promise((resolve, reject) => {
-            this.http.get(`/assets/content/navigations.json`).subscribe({
+            this.http.get(`assets/content/navigations.json`).subscribe({
                 next: (response: Record<string, NavigationItem[]>) => {
                     this.navs = response;
                     resolve(response);
