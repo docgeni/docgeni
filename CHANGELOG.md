@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/docgeni/docgeni/compare/v0.5.3...v0.5.4) (2020-07-14)
+
+
+### Bug Fixes
+
+* **template:** fix error about BrowserModule has already been loaded ([48cb303](https://github.com/docgeni/docgeni/commit/48cb303c3b1d3037f405a277e1767bf357357589))
+* **template:** remove BrowserModule from shared module ([eb4f041](https://github.com/docgeni/docgeni/commit/eb4f04198b7a996cb7d71b84a75c01ae39b8272d))
+
+
+
+
+
 ## [0.5.3](https://github.com/docgeni/docgeni/compare/v0.5.2...v0.5.3) (2020-07-11)
 
 
