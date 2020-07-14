@@ -6,9 +6,11 @@ import { LIB_EXAMPLE_LOADER_PROVIDER } from './content/example-loader';
 import { EXAMPLE_MODULES } from './content/example-modules';
 
 import './content/navigations.json';
+import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
     declarations: [],
     imports: [
+        BrowserModule,
         DocgeniTemplateModule,
         RouterModule.forRoot(routes, {
             // scrollPositionRestoration: 'enabled',

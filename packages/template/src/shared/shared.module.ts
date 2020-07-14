@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -33,7 +32,6 @@ import { CopierService } from './copier/copier.service';
     entryComponents: [ExampleViewerComponent],
     exports: [
         CommonModule,
-        BrowserAnimationsModule,
         FormsModule,
         RouterModule,
         HttpClientModule,

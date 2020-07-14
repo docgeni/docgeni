@@ -4,10 +4,11 @@ import { AlibButtonBasicExampleComponent } from './basic/basic.component';
 import { AlibButtonAdvanceExampleComponent } from './advance/advance.component';
 import { AlibButtonModule } from 'a-lib/button';
 import { AlibButtonAdvanceTitleExampleComponent } from './advance-title/advance-title.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent, AlibButtonAdvanceTitleExampleComponent],
-    imports: [CommonModule, AlibButtonModule],
+    imports: [CommonModule, AlibButtonModule, FormsModule],
     entryComponents: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent, AlibButtonAdvanceTitleExampleComponent],
     exports: [AlibButtonBasicExampleComponent, AlibButtonAdvanceExampleComponent, AlibButtonAdvanceTitleExampleComponent],
     providers: []
