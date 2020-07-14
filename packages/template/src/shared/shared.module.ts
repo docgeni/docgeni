@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,11 +29,10 @@ import { CopierService } from './copier/copier.service';
         TableOfContentsComponent,
         AssetsContentPathPipe
     ],
-    imports: [CommonModule, BrowserModule, FormsModule, RouterModule, HttpClientModule],
+    imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
     entryComponents: [ExampleViewerComponent],
     exports: [
         CommonModule,
-        BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
         RouterModule,
