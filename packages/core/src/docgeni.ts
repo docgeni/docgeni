@@ -63,6 +63,7 @@ export class Docgeni implements DocgeniContext {
             heading: this.config.heading,
             description: this.config.description,
             mode: this.config.mode,
+            theme: this.config.theme,
             baseHref: this.config.baseHref,
             heads: this.config.heads,
             locales: this.config.locales,

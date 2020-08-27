@@ -25,6 +25,8 @@ export interface DocgeniConfig {
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
     mode?: 'full' | 'lite';
+    /** Theme, angular navbar style and default style */
+    theme?: 'default' | 'angular';
     /* Base href of documentation, default is / */
     baseHref?: string;
     /* Heads of documentation*/
@@ -63,6 +65,8 @@ export interface DocgeniSiteConfig {
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
     mode?: 'full' | 'lite';
+    /** Theme, angular navbar style and default style */
+    theme?: 'default' | 'angular';
     /* Base href of documentation, default is / */
     baseHref?: string;
     /* Heads of documentation*/

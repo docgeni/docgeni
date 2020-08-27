@@ -71,16 +71,22 @@ $dg-font-size-xlg: 1.5rem !default; // 24px
 
 // navbar
 $dg-navbar-height: 60px !default;
-$dg-navbar-background: $dg-primary !default;
-$dg-navbar-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
-$dg-navbar-color: $dg-white !default;
+
+// default theme
+$dg-navbar-background-default: $dg-white;
+$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0,0,0,.05);
+$dg-navbar-color-default: $dg-body-color;
+
+// angular theme
+$dg-navbar-background-angular: #3f51b5 !default;
+$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-color-angular: $dg-white !default;
+
+
+$launch-background: #f5f6f8;
 
 $dg-launch-background: $dg-white !default;
 
-// $navbar-background: $white;
-// $navbar-box-shadow: 0 8px 24px -2px rgba(0,0,0,.05);
-// $navbar-color: $black;
-// $launch-background: #f5f6f8;
 
 // sidebar
 $dg-sidebar-menu-item-padding: 9px 30px !default;
