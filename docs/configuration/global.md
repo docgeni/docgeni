@@ -11,6 +11,16 @@ order: 30
 
 用于设定文档的展现模式，默认为简易模式（左侧菜单 + 右侧内容），`full` 为站点模式，包含：首页 + 头部导航 + 左侧菜单 + 右侧内容。
 
+## theme
+
+- 类型：`default`｜`angular`
+- 默认：`default`
+
+主题设置：
+- `default`: 默认主题，导航背景色为白色
+- `angular`：`Angular`官网风格，导航背景色为: <code style="color: #3f51b5">#3f51b5</code>
+
+
 ## title
 
 - 类型：`string`
