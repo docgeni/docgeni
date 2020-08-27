@@ -5,6 +5,7 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     heading: 'Doc Generator',
     description: '为 Angular 组件开发场景而生的文档工具',
     mode: 'full',
+    theme: 'default',
     baseHref: '/',
     heads: [],
     docsPath: 'docs',

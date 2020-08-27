@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { ChannelItem } from '../../interfaces/public-api';
 
@@ -15,11 +15,12 @@ export class NavbarComponent implements OnInit {
 
     channels: ChannelItem[];
 
-    constructor(public global: GlobalContext, public navigationService: NavigationService) {}
+    constructor(public global: GlobalContext, public navigationService: NavigationService, private elementRef: ElementRef<HTMLElement>) {}
 
     ngOnInit(): void {
         this.channels = this.navigationService.getChannels();
         this.locale = this.global.locale;
+        this.elementRef.nativeElement.classList.add(this.global.config.theme);
     }
 
     toggleNavbar() {
