@@ -13,7 +13,7 @@
       - name: alibSize
         type: string
         description: 按钮大小，目前可传的大小为：`'xs' | 'sm' | 'md' | 'lg'`
-        default: default
+        default:
 - type: directive
   name: alibButtonIcon
   description: ''

@@ -29,9 +29,7 @@
 
 @each $name, $color in $dg-theme-colors {
     .dg-label-outline-#{$name} {
-        color: $color;
-        background-color: transparent;
-        border: 1px solid $color;
+        @include label-outline($color);
     }
 }
 

@@ -1,6 +1,6 @@
 $dg-heading-color: $dg-gray-800;
 $dg-table-border-color: $dg-gray-200;
-$dg-table-header-bg-color: $dg-gray-100;
+$dg-table-header-bg-color: $dg-gray-80;
 
 $dg-directive-color: #d81b60;
 $dg-component-color: #348fe4;
@@ -36,7 +36,7 @@ $dg-component-color: #348fe4;
 
         .title {
             font-size: $dg-font-size-xlg;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .subtitle {
@@ -68,34 +68,35 @@ $dg-component-color: #348fe4;
                 align-items: center;
 
                 &:not(:first-child) {
-                    margin-top: 20px;
+                    margin-top: 30px;
                 }
 
                 .name {
                     font-size: $dg-font-size-lg;
-                    font-weight: bold;
+                    font-weight: 500;
                 }
 
                 .type-label {
-                    background-color: $dg-component-color;
-                    font-weight: 500;
+                    background-color: rgba($color: $dg-component-color, $alpha: 0.8);
                     font-size: $dg-font-size-sm;
+                    font-weight: 400;
                     text-transform: uppercase;
                     margin-left: 8px;
 
                     &.directive {
-                        background-color: $dg-directive-color;
+                        background-color: rgba($color: $dg-directive-color, $alpha: 0.8);
                     }
                 }
             }
 
             .dg-api-class-description {
                 color: $dg-gray-700;
-                margin: 6px 0px 10px 0px;
+                margin: 6px 0px 6px 0px;
+                font-size: $dg-font-size-base;
             }
 
             .dg-api-properties-table {
-                margin-top: 20px;
+                margin-top: 14px;
                 display: table;
                 width: 100%;
                 max-width: 100%;
@@ -124,11 +125,11 @@ $dg-component-color: #348fe4;
                     }
 
                     .dg-api-properties-type-cell {
-                        text-align: center;
+                        text-align: left;
                     }
 
                     .dg-api-properties-default-cell {
-                        text-align: center;
+                        text-align: left;
                     }
 
                     .dg-api-property-description-cell {
@@ -138,7 +139,7 @@ $dg-component-color: #348fe4;
         }
 
         .dg-toc {
-            top: 180px
+            top: 200px;
         }
     }
 
@@ -246,11 +247,11 @@ $dg-component-color: #348fe4;
         word-break: keep-all;
         width: 100%;
         max-width: 100%;
-
+        font-size: $dg-font-size-base;
         th,
         td {
             border: 1px solid $dg-table-border-color;
-            padding: 8px;
+            padding: 6px;
         }
 
         th {

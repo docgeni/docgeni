@@ -1,5 +1,5 @@
 import { DocgeniContext, DocSourceFile, ComponentDocMeta } from './docgeni.interface';
-import { Library, CategoryItem, LiveExample, ExampleSourceFile, ComponentDocItem, DirectiveDeclaration } from './interfaces';
+import { Library, CategoryItem, LiveExample, ExampleSourceFile, ComponentDocItem, ApiDeclaration } from './interfaces';
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocType } from './enums';
@@ -269,8 +269,8 @@ export class LibraryCompiler {
         }
     }
 
-    private async readComponentApiDocs(absComponentApiDocPath: string): Promise<Record<string, DirectiveDeclaration[]>> {
-        const localeApiDocsMap: Record<string, DirectiveDeclaration[]> = {};
+    private async readComponentApiDocs(absComponentApiDocPath: string): Promise<Record<string, ApiDeclaration[]>> {
+        const localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
             const explorer = cosmiconfig(localeKey, {
@@ -284,13 +284,13 @@ export class LibraryCompiler {
                 ],
                 stopDir: absComponentApiDocPath
             });
-            const result: { config: DirectiveDeclaration[]; filepath: string } = await explorer.search(absComponentApiDocPath);
+            const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(absComponentApiDocPath);
 
             if (result && result.config && toolkit.utils.isArray(result.config)) {
                 result.config.forEach(item => {
                     item.description = item.description ? Markdown.toHTML(item.description) : '';
                     (item.properties || []).forEach(property => {
-                        property.default = !toolkit.utils.isEmpty(property.default) ? property.default : '-';
+                        property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
                         property.description = property.description ? Markdown.toHTML(property.description) : '';
                     });
                 });
@@ -300,7 +300,7 @@ export class LibraryCompiler {
         return localeApiDocsMap;
     }
 
-    private async emitComponentApiDocs(component: LibComponent, localeApiDocsMap: Record<string, DirectiveDeclaration[]>) {
+    private async emitComponentApiDocs(component: LibComponent, localeApiDocsMap: Record<string, ApiDeclaration[]>) {
         const defaultApiDoc = localeApiDocsMap[this.docgeni.config.defaultLocale];
         const destAbsApiDocPath = path.resolve(this.absDestAssetsApiDocsPath, `${component.name}`);
         await toolkit.fs.ensureDir(destAbsApiDocPath);
@@ -308,9 +308,11 @@ export class LibraryCompiler {
             const apiDocs = localeApiDocsMap[locale.key] || defaultApiDoc;
             if (apiDocs) {
                 const componentApiDocDistPath = path.resolve(destAbsApiDocPath, `${locale.key}.html`);
+                const componentApiJsonDistPath = path.resolve(destAbsApiDocPath, `${locale.key}.json`);
                 await toolkit.template.generate('api-doc.hbs', componentApiDocDistPath, {
                     declarations: apiDocs
                 });
+                await toolkit.fs.writeJSON(componentApiJsonDistPath, apiDocs);
             }
         }
     }

@@ -1,0 +1,5 @@
+@mixin label-outline($color) {
+    color: $color;
+    background-color: transparent;
+    border: 1px solid $color;
+}

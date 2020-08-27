@@ -1,1 +1,37 @@
-<dg-content-viewer [url]="contentUrl"> </dg-content-viewer>
+<!-- <dg-content-viewer [url]="contentUrl"> </dg-content-viewer> -->
+<ng-container *ngIf="apiDeclarations">
+  <ng-container *ngFor="let apiDeclaration of apiDeclarations">
+    <div class="dg-api-header">
+      <span class="name">{{ apiDeclaration.name }}</span>
+      <label class="type-label dg-label {{ apiDeclaration.type }}">{{ apiDeclaration.type }}</label>
+    </div>
+    <div *ngIf="apiDeclaration.description" class="dg-api-class-description" [innerHTML]="apiDeclaration.description"></div>
+
+    <table class="dg-api-properties-table" *ngIf="apiDeclaration.properties && apiDeclaration.properties.length > 0">
+      <thead>
+        <tr class="dg-api-properties-header-row">
+          <th class="dg-api-properties-name-th">Name</th>
+          <th class="dg-api-properties-type-th">Type</th>
+          <th class="dg-api-properties-default-th">Default</th>
+          <th class="dg-api-properties-description-th">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="dg-api-properties-row" *ngFor="let property of apiDeclaration.properties">
+          <td class="dg-api-properties-name-cell">
+            {{ property.name }}
+          </td>
+          <td class="dg-api-properties-type-cell">
+            {{ property.type }}
+          </td>
+          <td class="dg-api-properties-default-cell">
+            {{ property.default || '-' }}
+          </td>
+          <td class="dg-api-property-description">
+            <p [innerHTML]="property.description"></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</ng-container>

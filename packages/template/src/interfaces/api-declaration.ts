@@ -1,5 +1,3 @@
-import * as ts from 'typescript';
-
 export interface PropertyDeclaration {
     name: string;
     type: string;
@@ -7,8 +5,8 @@ export interface PropertyDeclaration {
     default?: string;
 }
 
-export interface DirectiveDeclaration {
-    type: 'directive' | 'component';
+export interface ApiDeclaration {
+    type: 'directive' | 'component' | 'service';
     name: string;
     description?: string;
     properties?: Array<PropertyDeclaration>;
