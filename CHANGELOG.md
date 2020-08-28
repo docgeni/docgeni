@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6](https://github.com/docgeni/docgeni/compare/v0.5.5...v0.5.6) (2020-08-28)
+
+
+### Bug Fixes
+
+* **template:** fix navbar responsive for theme ([abfe573](https://github.com/docgeni/docgeni/commit/abfe573207c12ee1be96bd70869c9c84f2b38160))
+* **template:** update background rgba from 12% to 0.12 ([088ea49](https://github.com/docgeni/docgeni/commit/088ea49fd11300dbe21beec63d82a365748ddf8e))
+
+
+
+
+
 ## [0.5.5](https://github.com/docgeni/docgeni/compare/v0.5.4...v0.5.5) (2020-08-28)
 
 
