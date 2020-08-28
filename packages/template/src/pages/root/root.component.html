@@ -1,3 +1,4 @@
 
-<dg-navbar></dg-navbar>
+<dg-navbar *ngIf="global.config.mode === 'full'"></dg-navbar>
+<dg-sidebar *ngIf="global.config.mode === 'lite'" [menus]="channels"></dg-sidebar>
 <router-outlet></router-outlet>

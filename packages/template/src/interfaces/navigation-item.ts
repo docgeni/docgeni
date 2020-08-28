@@ -6,6 +6,7 @@ export interface DocItem {
     subtitle: string;
     summary?: string;
     path: string;
+    fullPath?: string;
     contentPath?: string;
     content?: string;
     // 多语言
@@ -42,6 +43,7 @@ export interface ChannelItem {
     id: string;
     title: string;
     path: string;
+    fullPath?: string;
     isExternal?: boolean;
     lib?: string;
     locales?: {

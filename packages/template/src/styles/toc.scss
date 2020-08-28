@@ -84,3 +84,16 @@
         margin-left: 12px;
     }
 }
+
+.dg-mode-lite {
+    .dg-toc {
+        top: 16px;
+    }
+    .dg-doc-viewer {
+        .dg-component-viewer {
+            .dg-toc {
+                top: 140px;
+            }
+        }
+    }
+}

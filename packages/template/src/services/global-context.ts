@@ -37,6 +37,7 @@ export class GlobalContext {
     }
 
     initialize() {
+        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
         return new Promise((resolve, reject) => {
             this.http.get(`assets/content/navigations.json`).subscribe({
                 next: (response: Record<string, NavigationItem[]>) => {

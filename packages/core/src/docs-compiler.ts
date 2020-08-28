@@ -5,7 +5,7 @@ import * as through2 from 'through2';
 import { toolkit } from '@docgeni/toolkit';
 import { NavigationItem, ComponentDocItem } from './interfaces';
 import * as path from 'path';
-import { getDocRoutePath, getDocTitle, createDocSourceFile, isEntryDoc } from './utils';
+import { getDocRoutePath, getDocTitle, createDocSourceFile, isEntryDoc, combineRoutePath } from './utils';
 import { DocType } from './enums';
 
 export class DocsCompiler {
@@ -94,7 +94,7 @@ export class DocsCompiler {
                 ? this.docgeni.paths.absDocsPath
                 : path.resolve(this.docgeni.paths.absDocsPath, locale.key);
             if (await toolkit.fs.pathExists(localeDocsPath)) {
-                const result = await this.generateDirContentDocs(localeDocsPath, locale.key, true, isDefaultLocale ? localeKeys : []);
+                const result = await this.generateDirContentDocs(localeDocsPath, locale.key, undefined, isDefaultLocale ? localeKeys : []);
                 // this.localesNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...result.navs);
                 this.localesDocsDataMap[locale.key] = {
                     navs: result.navs,
@@ -105,7 +105,7 @@ export class DocsCompiler {
         return this.localesDocsDataMap;
     }
 
-    private async generateDirContentDocs(dirPath: string, locale: string, isRoot?: boolean, excludeDirs?: string[]) {
+    private async generateDirContentDocs(dirPath: string, locale: string, parentNav?: NavigationItem, excludeDirs?: string[]) {
         const dirsAndFiles = await toolkit.fs.getDirsAndFiles(dirPath, {
             exclude: excludeDirs
         });
@@ -113,18 +113,19 @@ export class DocsCompiler {
         let navs: Array<NavigationItem> = [];
         let categoryMeta: CategoryDocMeta = null;
         for (const docPath of dirsAndFiles) {
-            const fullPath = path.resolve(dirPath, docPath);
-            if (toolkit.fs.isDirectory(fullPath)) {
+            const fullDocPath = path.resolve(dirPath, docPath);
+            if (toolkit.fs.isDirectory(fullDocPath)) {
                 const category: NavigationItem = {
                     id: docPath,
-                    path: docPath.toLowerCase(),
+                    path: docPath,
+                    fullPath: combineRoutePath(parentNav && parentNav.path, docPath),
                     title: toolkit.strings.pascalCase(docPath),
                     subtitle: '',
                     items: []
                 };
 
                 navs.push(category);
-                const result = await this.generateDirContentDocs(fullPath, locale, false);
+                const result = await this.generateDirContentDocs(fullDocPath, locale, category);
                 category.items = result.navs;
                 let order = Number.MAX_SAFE_INTEGER;
                 if (result.categoryMeta) {
@@ -142,18 +143,20 @@ export class DocsCompiler {
                     this.docgeni.paths.absDocsPath,
                     this.docgeni.paths.absSiteAssetsContentDocsPath
                 );
-                const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(fullPath, docDestAssetsContentPath);
+                const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(fullDocPath, docDestAssetsContentPath);
 
                 const isEntry = isEntryDoc(docSourceFile.basename);
-                if (isRoot) {
+                if (!parentNav) {
                     // do nothings
                 } else {
                     if (isEntry) {
                         categoryMeta = docSourceFile.result.meta;
                     }
+                    const docRoutePath = getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename);
                     const docItem: ComponentDocItem = {
                         id: docSourceFile.basename,
-                        path: getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename),
+                        path: docRoutePath,
+                        fullPath: combineRoutePath(parentNav && parentNav.path, docRoutePath),
                         title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
                         subtitle: ''
                     };

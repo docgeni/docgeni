@@ -1,0 +1,48 @@
+.dg-menu {
+    .menu-group {
+        .group-header {
+            .group-title {
+                padding: $dg-sidebar-menu-item-space-y 30px;
+                color: $dg-gray-600;
+            }
+        }
+        .group-body {
+            margin-left: $dg-sidebar-item-indent;
+        }
+    }
+
+    .menu-item {
+        padding: 0px $dg-sidebar-menu-item-space-x;
+        margin-left: $dg-sidebar-item-indent;
+        display: block;
+        a {
+            color: $dg-gray-800;
+        }
+
+        &.active {
+            border-right: 3px solid $dg-primary;
+            .item-content {
+                background: rgba($dg-primary, 0.1);
+                color: $dg-primary;
+            }
+        }
+
+        .item-content {
+            display: block;
+            margin: 0 -1000px;
+            padding: $dg-sidebar-menu-item-space-y 1000px;
+        }
+
+        .subtitle {
+            color: $dg-gray-600;
+            font-size: $dg-font-size-sm;
+            margin-left: 4px;
+        }
+
+        &:hover {
+            a {
+                color: $dg-primary;
+            }
+        }
+    }
+}

@@ -1,21 +1,27 @@
-<ul class="dg-menus">
+<div class="dg-menu">
   <ng-container *ngFor="let menu of menus" class="menu-item">
     <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
   </ng-container>
 
   <ng-template let-menu #navTemplate>
     <ng-container *ngIf="menu.items; else item">
-      <li class="menu-group" *ngIf="menu.items.length > 0">
-        <div class="title" *ngIf="menu.title">{{ menu.title }}</div>
-        <ul *ngFor="let menu of menu.items" class="dg-menus">
-          <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
-        </ul>
-      </li>
+      <div class="menu-group" *ngIf="menu.items.length > 0">
+        <div class="group-header">
+          <div class="group-title" *ngIf="menu.title">{{ menu.title }}</div>
+        </div>
+        <div class="group-body">
+          <ng-container *ngFor="let menu of menu.items">
+            <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
+          </ng-container>
+        </div>
+      </div>
     </ng-container>
     <ng-template #item>
-      <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !menu.examples}">
-        <a [routerLink]="['./' + menu.path]">{{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{menu.subtitle}}</span></a>
-      </li>
+      <div class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !menu.examples }">
+        <a class="item-content" [routerLink]="['./' + menu.path]"
+          >{{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{ menu.subtitle }}</span></a
+        >
+      </div>
     </ng-template>
   </ng-template>
-</ul>
+</div>

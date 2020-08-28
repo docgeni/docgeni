@@ -8,6 +8,17 @@
     right: 0;
 }
 
+.dg-mode-lite {
+    .dg-main {
+        top: 0;
+    }
+    .dg-layout {
+        .dg-sidebar {
+            top: 0;
+        }
+    }
+}
+
 .dg-footer {
     display: block;
     margin: 72px 0 -32px;
@@ -34,7 +45,7 @@
 
     .content {
         flex: auto;
-        padding: 30px 40px;
+        padding: 30px 50px;
         // overflow: auto;
         max-height: 100vh;
         margin-left: 300px;

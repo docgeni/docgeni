@@ -86,3 +86,11 @@ export function highlight(sourceCode: string, lang: string) {
     const language = Prism.languages[lang] || Prism.languages.autoit;
     return Prism.highlight(sourceCode, language);
 }
+
+export function combineRoutePath(...paths: string[]): string {
+    let result = '';
+    paths.forEach((item: string) => {
+        result = result + (item ? `/${item.toLowerCase()}` : '');
+    });
+    return result;
+}
