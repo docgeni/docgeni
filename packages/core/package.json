@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/core",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "> TODO: description",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -27,7 +27,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/template": "^0.5.5",
+    "@docgeni/template": "^0.5.6",
     "@docgeni/toolkit": "^0.5.0",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
@@ -47,7 +47,7 @@
     "vinyl-fs": "^3.0.3"
   },
   "peerDependencies": {
-    "@docgeni/template": "^0.5.5"
+    "@docgeni/template": "^0.5.6"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
