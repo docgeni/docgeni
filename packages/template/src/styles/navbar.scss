@@ -3,11 +3,10 @@
     top: 0;
     left: 0;
     right: 0;
-    height: $dg-navbar-height;
+    // height: $dg-navbar-height;
     display: flex;
     align-items: center;
-    // padding: 0.719rem 1.25rem;
-    padding: 0 1.25rem;
+    padding: 0.719rem 1.25rem;
     justify-content: space-between;
     font-size: $dg-font-size-md;
     z-index: 100;
@@ -37,16 +36,10 @@
     .nav {
         display: flex;
         a {
-            color: $dg-white;
             padding: 6px 18px;
             margin-right: 8px;
 
-            &:hover {
-                color: rgba($color: $dg-white, $alpha: 0.8); // $gray-200;
-            }
-
             &.active {
-                background: hsla(0, 0%, 100%, 0.15);
                 border-radius: 4px;
             }
         }
@@ -138,6 +131,11 @@
     box-shadow: $box-shadow;
     color: $color;
 
+    .nav {
+        a {
+            color: $color;
+        }
+    }
     .navbar-brand {
         .title {
             color: $color;
@@ -155,7 +153,6 @@
 
         .nav {
             a {
-                color: $dg-navbar-color-angular;
                 &:hover {
                     color: rgba($color: $dg-white, $alpha: 0.8); // $gray-200;
                 }
@@ -174,16 +171,13 @@
 
         .nav {
             a {
-                color: $dg-navbar-color-default;
                 &:hover {
                     color: $dg-primary;
-                    // color: $dg-navbar-color-default; // $gray-200;
                 }
 
                 &.active {
                     color: $dg-primary;
                     background: rgba($dg-primary, 12%);
-                    // background: hsla(0, 0%, 100%, 0.15);
                 }
             }
         }
