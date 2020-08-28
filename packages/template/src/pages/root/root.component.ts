@@ -1,7 +1,7 @@
-import { ChannelItem } from './../../../../core/src/interfaces/navigation-item';
 import { NavigationService } from './../../services/navigation.service';
 import { Component, HostBinding } from '@angular/core';
 import { GlobalContext } from '../../services/public-api';
+import { ChannelItem } from '../../interfaces';
 
 @Component({
     selector: 'dg-root',
