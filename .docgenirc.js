@@ -1,8 +1,6 @@
 module.exports = {
     $schema: './packages/cli/cli.schema.json',
-    baseHref: '/',
-    heads: [],
-    mode: 'site',
+    mode: 'full',
     title: 'Docgeni',
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
     docsPath: './docs',

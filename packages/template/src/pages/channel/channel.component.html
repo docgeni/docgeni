@@ -1,5 +1,5 @@
 <ng-container *ngIf="navigationService.channel">
-  <dg-sidebar [menus]="navigationService.channel.items"></dg-sidebar>
+  <dg-sidebar *ngIf="global.config.mode === 'full'" [menus]="navigationService.channel.items"></dg-sidebar>
   <div class="content">
     <router-outlet></router-outlet>
   </div>

@@ -89,7 +89,9 @@ $dg-launch-background: $dg-white !default;
 
 
 // sidebar
-$dg-sidebar-menu-item-padding: 9px 30px !default;
+$dg-sidebar-item-indent: 10px !default;
+$dg-sidebar-menu-item-space-x: 30px !default;
+$dg-sidebar-menu-item-space-y: 9px !default;
 
 // button
 $dg-btn-border-width: 1px !default;

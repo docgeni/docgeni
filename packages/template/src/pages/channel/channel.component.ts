@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, NgModuleFactory, Type, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationService } from '../../services/public-api';
+import { NavigationService, GlobalContext } from '../../services/public-api';
 
 @Component({
     selector: 'dg-channel',
@@ -23,7 +23,8 @@ export class ChannelComponent implements OnInit {
         private http: HttpClient,
         private elementRef: ElementRef<HTMLElement>,
         private route: ActivatedRoute,
-        public navigationService: NavigationService
+        public navigationService: NavigationService,
+        public global: GlobalContext
     ) {}
 
     ngOnInit(): void {
