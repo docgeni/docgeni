@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/docgeni/docgeni/compare/v0.5.4...v0.5.5) (2020-08-28)
+
+
+### Features
+
+* **template:** change api doc style and generate json files ([b6404d4](https://github.com/docgeni/docgeni/commit/b6404d4982a9770e51c87e007f666db49fddc31f))
+* **template:** support default and angular theme #INFR-606 ([#59](https://github.com/docgeni/docgeni/issues/59)) ([b64a246](https://github.com/docgeni/docgeni/commit/b64a24698a4c23366df68254d81b13b00350bc65)), closes [#INFR-606](https://github.com/docgeni/docgeni/issues/INFR-606)
+
+
+
+
+
 ## [0.5.4](https://github.com/docgeni/docgeni/compare/v0.5.3...v0.5.4) (2020-07-14)
 
 **Note:** Version bump only for package @docgeni/core
