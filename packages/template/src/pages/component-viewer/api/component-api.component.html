@@ -19,17 +19,15 @@
       <tbody>
         <tr class="dg-api-properties-row" *ngFor="let property of apiDeclaration.properties">
           <td class="dg-api-properties-name-cell">
-            {{ property.name }}
+            <label class="dg-label dg-label-sm dg-label-outline-primary">{{ property.name }}</label>
           </td>
           <td class="dg-api-properties-type-cell">
-            {{ property.type }}
+            <label class=""> {{ property.type }}</label>
           </td>
           <td class="dg-api-properties-default-cell">
             {{ property.default || '-' }}
           </td>
-          <td class="dg-api-property-description">
-            <p [innerHTML]="property.description"></p>
-          </td>
+          <td class="dg-api-property-description" [innerHTML]="property.description"></td>
         </tr>
       </tbody>
     </table>

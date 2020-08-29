@@ -95,7 +95,6 @@ export class DocsCompiler {
                 : path.resolve(this.docgeni.paths.absDocsPath, locale.key);
             if (await toolkit.fs.pathExists(localeDocsPath)) {
                 const result = await this.generateDirContentDocs(localeDocsPath, locale.key, undefined, isDefaultLocale ? localeKeys : []);
-                // this.localesNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...result.navs);
                 this.localesDocsDataMap[locale.key] = {
                     navs: result.navs,
                     homeMeta: result.categoryMeta
@@ -113,25 +112,26 @@ export class DocsCompiler {
         let navs: Array<NavigationItem> = [];
         let categoryMeta: CategoryDocMeta = null;
         for (const docPath of dirsAndFiles) {
-            const fullDocPath = path.resolve(dirPath, docPath);
-            if (toolkit.fs.isDirectory(fullDocPath)) {
+            const absDocPath = path.resolve(dirPath, docPath);
+            if (toolkit.fs.isDirectory(absDocPath)) {
                 const category: NavigationItem = {
                     id: docPath,
                     path: docPath,
-                    fullPath: combineRoutePath(parentNav && parentNav.path, docPath),
+                    fullPath: combineRoutePath(parentNav && parentNav.fullPath, docPath),
                     title: toolkit.strings.pascalCase(docPath),
                     subtitle: '',
                     items: []
                 };
 
                 navs.push(category);
-                const result = await this.generateDirContentDocs(fullDocPath, locale, category);
+                const result = await this.generateDirContentDocs(absDocPath, locale, category);
                 category.items = result.navs;
                 let order = Number.MAX_SAFE_INTEGER;
                 if (result.categoryMeta) {
                     category.title = result.categoryMeta.title;
                     if (result.categoryMeta.path) {
                         category.path = result.categoryMeta.path;
+                        category.fullPath = combineRoutePath(parentNav && parentNav.fullPath, category.path);
                     }
                     if (toolkit.utils.isNumber(result.categoryMeta.order)) {
                         order = result.categoryMeta.order;
@@ -143,20 +143,18 @@ export class DocsCompiler {
                     this.docgeni.paths.absDocsPath,
                     this.docgeni.paths.absSiteAssetsContentDocsPath
                 );
-                const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(fullDocPath, docDestAssetsContentPath);
+                const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(absDocPath, docDestAssetsContentPath);
 
                 const isEntry = isEntryDoc(docSourceFile.basename);
-                if (!parentNav) {
-                    // do nothings
-                } else {
+                if (parentNav) {
                     if (isEntry) {
                         categoryMeta = docSourceFile.result.meta;
                     }
                     const docRoutePath = getDocRoutePath(docSourceFile.result.meta.path, docSourceFile.basename);
-                    const docItem: ComponentDocItem = {
+                    const docItem: NavigationItem = {
                         id: docSourceFile.basename,
                         path: docRoutePath,
-                        fullPath: combineRoutePath(parentNav && parentNav.path, docRoutePath),
+                        fullPath: combineRoutePath(parentNav && parentNav.fullPath, docRoutePath),
                         title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
                         subtitle: ''
                     };

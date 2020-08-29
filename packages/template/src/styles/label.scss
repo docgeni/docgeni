@@ -11,6 +11,14 @@
     margin-bottom: 0px;
 }
 
+$dg-theme-colors: map-merge(
+    (
+        'default': $dg-gray-200,
+        'light': $dg-gray-700
+    ),
+    $dg-theme-colors
+);
+
 @each $name, $color in $dg-theme-colors {
     .dg-label-#{$name} {
         background-color: $color;
@@ -19,7 +27,6 @@
 }
 
 .dg-label-default {
-    background-color: $dg-gray-200;
     color: $dg-gray-700;
 }
 
@@ -33,3 +40,7 @@
     }
 }
 
+.dg-label-sm {
+    padding: 2px 8px;
+    font-size: $dg-font-size-sm;
+}

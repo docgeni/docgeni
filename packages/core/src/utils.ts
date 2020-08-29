@@ -87,10 +87,9 @@ export function highlight(sourceCode: string, lang: string) {
     return Prism.highlight(sourceCode, language);
 }
 
-export function combineRoutePath(...paths: string[]): string {
-    let result = '';
-    paths.forEach((item: string) => {
-        result = result + (item ? `/${item.toLowerCase()}` : '');
-    });
-    return result;
+export function combineRoutePath(parentPath: string, currentPath: string): string {
+    if (!currentPath) {
+        return parentPath;
+    }
+    return parentPath ? `${parentPath}/${currentPath.toLowerCase()}` : `/${currentPath}`;
 }

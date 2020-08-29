@@ -203,7 +203,7 @@ $dg-component-color: #348fe4;
         display: inline-block;
         padding: 0px 4px;
         margin: 0px 2px;
-        background: $dg-gray-100;
+        background: $dg-code-bg-color;
         border-radius: $dg-border-radius;
         color: $dg-gray-800;
     }
@@ -251,7 +251,10 @@ $dg-component-color: #348fe4;
         th,
         td {
             border: 1px solid $dg-table-border-color;
-            padding: 6px;
+            padding: 8px 14px;
+            p {
+                margin: 0px;
+            }
         }
 
         th {
