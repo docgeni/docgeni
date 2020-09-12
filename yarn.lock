@@ -912,10 +912,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@docgeni/template@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.npmjs.org/@docgeni/template/-/template-0.5.4.tgz#17e179571d413fbbbd63caed7296cda4162e2748"
-  integrity sha512-V8D+eC4Gt4T4FBWveNAn8e7Wq2W65/llVqkC0jp2a3LzHAHFPMTmTE2JNPOwXORIfo1yJUl7dRyKoNegiocPOA==
+"@docgeni/template@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.npmjs.org/@docgeni/template/-/template-0.5.6.tgz#07cc5779c8deac7acffc21e61a2cd668395e5d0c"
+  integrity sha512-E0FuCXPSac8cVM6Bhpyx89WDODOCvjWDFMZbfXXLAK4mFRRbQPUIg5Zmf+1h6vrkYpYhTH2SQUN8gXr6uZybSA==
 
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
@@ -9058,9 +9058,9 @@ node-fetch-npm@^2.0.2:
     safe-buffer "^5.1.1"
 
 node-fetch@^2.3.0, node-fetch@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-forge@0.9.0:
   version "0.9.0"
