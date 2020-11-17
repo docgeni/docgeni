@@ -13,8 +13,8 @@ interface ExampleTab {
 }
 
 const nameOrdersMap = {
-    TS: 1,
-    HTML: 2,
+    HTML: 1,
+    TS: 2,
     SCSS: 3,
     CSS: 4
 };
