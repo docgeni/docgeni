@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7](https://github.com/docgeni/docgeni/compare/v0.5.6...v0.5.7) (2020-12-05)
+
+
+### Bug Fixes
+
+* **template:** img max width 100% ([5ce156c](https://github.com/docgeni/docgeni/commit/5ce156c8b76a3c09480be8f304ec575efd9a9b1d))
+* **template:** remove min-height for example-viewer-sources-content ([1353e2b](https://github.com/docgeni/docgeni/commit/1353e2bee3a65667ba8cf3907fe123b9a1b3b594))
+
+
+### Features
+
+* **template:** beautify style for navbar and api table ([a5b1a2c](https://github.com/docgeni/docgeni/commit/a5b1a2c7fae3937642a87ef723c7dd54c349159d))
+* **template:** increase HTML display priority ([e3503b7](https://github.com/docgeni/docgeni/commit/e3503b771563f2aab65cac77d434360f86e3eac3))
+
+
+
+
+
 ## [0.5.6](https://github.com/docgeni/docgeni/compare/v0.5.5...v0.5.6) (2020-08-28)
 
 
