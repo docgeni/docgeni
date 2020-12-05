@@ -26,7 +26,7 @@ const argv = yargs
     .config(getConfiguration())
     .help().argv;
 
-const command = argv._[0];
+const command = argv._[0] as string;
 
 if (!['build', 'dev', 'serve'].includes(command)) {
     yargs.showHelp();

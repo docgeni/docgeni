@@ -1,6 +1,6 @@
-import * as marked from 'marked';
+import marked from 'marked';
 import { DocsMarkdownRenderer } from './renderer';
-import * as fm from 'front-matter';
+import fm from 'front-matter';
 const renderer = new DocsMarkdownRenderer();
 import { highlight } from '../utils';
 

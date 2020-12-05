@@ -1,6 +1,6 @@
 import { timestamp } from './timestamp';
 import * as path from 'path';
-import * as minimatch from 'minimatch';
+import minimatch from 'minimatch';
 
 export function isString(value: any): value is string {
     return typeof value === 'string';

@@ -14,9 +14,8 @@ import {
     EXAMPLE_META_FILE_NAME
 } from './constants';
 import { getItemLocaleProperty, createDocSourceFile, highlight } from './utils';
-import * as fm from 'front-matter';
-import * as yaml from 'js-yaml';
-import { cosmiconfig, defaultLoaders } from 'cosmiconfig';
+import fm from 'front-matter';
+import { cosmiconfig } from 'cosmiconfig';
 import { Markdown } from './markdown';
 
 export interface LibComponent {

@@ -6,7 +6,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "composite": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@docgeni/*": ["./packages/*/src"]

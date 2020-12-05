@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { colors, Colors } from './colors';
 import { timestamp, isFunction } from './utils';
 import { format } from 'util';
