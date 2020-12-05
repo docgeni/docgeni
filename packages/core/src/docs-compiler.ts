@@ -104,7 +104,7 @@ export class DocsCompiler {
         return this.localesDocsDataMap;
     }
 
-    private async generateDirContentDocs(dirPath: string, locale: string, parentNav?: NavigationItem, excludeDirs?: string[]) {
+    private async generateDirContentDocs(dirPath: string, locale: string, parentItem?: NavigationItem, excludeDirs?: string[]) {
         const dirsAndFiles = await toolkit.fs.getDirsAndFiles(dirPath, {
             exclude: excludeDirs
         });
@@ -117,7 +117,7 @@ export class DocsCompiler {
                 const category: NavigationItem = {
                     id: docPath,
                     path: docPath,
-                    fullPath: combineRoutePath(parentNav && parentNav.fullPath, docPath),
+                    fullPath: combineRoutePath(parentItem && parentItem.fullPath, docPath),
                     title: toolkit.strings.pascalCase(docPath),
                     subtitle: '',
                     items: []
@@ -131,7 +131,7 @@ export class DocsCompiler {
                     category.title = result.categoryMeta.title;
                     if (result.categoryMeta.path) {
                         category.path = result.categoryMeta.path;
-                        category.fullPath = combineRoutePath(parentNav && parentNav.fullPath, category.path);
+                        category.fullPath = combineRoutePath(parentItem && parentItem.fullPath, category.path);
                     }
                     if (toolkit.utils.isNumber(result.categoryMeta.order)) {
                         order = result.categoryMeta.order;
@@ -146,7 +146,7 @@ export class DocsCompiler {
                 const { docSourceFile, docDestPath, filename } = await this.generateContentDoc(absDocPath, docDestAssetsContentPath);
 
                 const isEntry = isEntryDoc(docSourceFile.basename);
-                if (parentNav) {
+                if (parentItem) {
                     if (isEntry) {
                         categoryMeta = docSourceFile.result.meta;
                     }
@@ -154,7 +154,7 @@ export class DocsCompiler {
                     const docItem: NavigationItem = {
                         id: docSourceFile.basename,
                         path: docRoutePath,
-                        fullPath: combineRoutePath(parentNav && parentNav.fullPath, docRoutePath),
+                        fullPath: combineRoutePath(parentItem && parentItem.fullPath, docRoutePath),
                         title: getDocTitle(docSourceFile.result.meta.title, docSourceFile.basename),
                         subtitle: ''
                     };

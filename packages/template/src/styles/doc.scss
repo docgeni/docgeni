@@ -228,6 +228,10 @@ $dg-component-color: #348fe4;
         margin-bottom: 8px;
     }
 
+    img {
+        max-width: 100%;
+    }
+
     blockquote {
         margin-left: 0px;
         border-left: 2px solid $dg-gray-300;
