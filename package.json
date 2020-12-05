@@ -68,7 +68,7 @@
     "@types/marked": "^0.7.3",
     "@types/node": "^12.12.30",
     "@types/yargs": "^15.0.4",
-    "@worktile-devkit/pm": "^1.0.0-beta.21",
+    "@worktile-devkit/pm": "^1.0.0-beta.23",
     "chai": "^4.2.0",
     "codelyzer": "^5.1.2",
     "cpx": "^1.5.0",
