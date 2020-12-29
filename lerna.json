@@ -2,8 +2,7 @@
   "packages": [
     "packages/toolkit",
     "packages/core",
-    "packages/cli",
-    "packages/template"
+    "packages/cli"
   ],
   "command": {
     "version": {
