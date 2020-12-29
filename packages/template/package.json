@@ -1,14 +1,14 @@
 {
   "name": "@docgeni/template",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
+    "@angular/cdk": "*",
     "@angular/common": "^9.0.7",
     "@angular/core": "^9.0.7",
     "@angular/router": "^9.0.7",
-    "@docgeni/core": "*",
-    "@angular/cdk": "*"
+    "@docgeni/core": "*"
   }
 }
