@@ -5,10 +5,10 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/cdk": "*",
-    "@angular/common": "^9.0.7",
-    "@angular/core": "^9.0.7",
-    "@angular/router": "^9.0.7",
+    "@angular/cdk":"^9.0.0 || ^10.0.0",
+    "@angular/common": "^9.0.0 || ^10.0.0",
+    "@angular/core": "^9.0.0 || ^10.0.0",
+    "@angular/router": "^9.0.0 || ^10.0.0",
     "@docgeni/core": "*"
   }
 }
