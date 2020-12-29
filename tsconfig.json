@@ -7,7 +7,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "ESNext",
+    "module": "es2020",
     "moduleResolution": "node",
     "esModuleInterop": false,
     "importHelpers": true,
