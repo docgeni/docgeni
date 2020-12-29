@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/template",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "dependencies": {
     "tslib": "^2.0.0"
   },
