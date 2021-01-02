@@ -1,4 +1,4 @@
-<div class="dg-sidebar-header">
+<div class="dg-sidebar-header" *ngIf="global.config.mode | dgIsLite">
   <img *ngIf="global.config.logoUrl; else defaultLogo" class="logo" alt="Logo" [src]="global.config.logoUrl" />
   <a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
   <span class="description" *ngIf="global.config.description">{{ global.config.description }}</span>

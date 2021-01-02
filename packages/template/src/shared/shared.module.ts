@@ -15,6 +15,7 @@ import { LabelComponent } from './label/label.component';
 import { TableOfContentsComponent } from './toc/toc.component';
 import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
 import { CopierService } from './copier/copier.service';
+import { IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,9 @@ import { CopierService } from './copier/copier.service';
         LabelComponent,
         TableOfContentsComponent,
         AssetsContentPathPipe,
-        IsComponentDocPipe
+        IsComponentDocPipe,
+        IsModeLitePipe,
+        IsModeFullPipe
     ],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
     entryComponents: [ExampleViewerComponent],
@@ -47,7 +50,9 @@ import { CopierService } from './copier/copier.service';
         LabelComponent,
         TableOfContentsComponent,
         AssetsContentPathPipe,
-        IsComponentDocPipe
+        IsComponentDocPipe,
+        IsModeLitePipe,
+        IsModeFullPipe
     ]
 })
 export class DocgeniSharedModule {}
