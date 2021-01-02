@@ -34,41 +34,6 @@ export class DocsCompiler {
         const result = await this.generateContentDocs();
         this.docgeni.logger.succuss(`Docs compiled successfully`);
         return result;
-        // const result = vfs
-        //     .src(`${this.docgeni.paths.absDocsPath}/**`, {})
-        //     .pipe(
-        //         through2.obj((chunk: vinyl.BufferFile, enc, callback) => {
-        //             // console.log(chunk.inspect());
-        //             // console.log(JSON.stringify(chunk, null, 2));
-        //             console.log(`path: ${chunk.path}`);
-        //             console.log(`dirname: ${chunk.dirname}`);
-        //             console.log(`extname: ${chunk.extname}`);
-        //             console.log(`relative: ${chunk.relative}`);
-
-        //             if (chunk.isBuffer()) {
-        //                 console.log(chunk.contents.toString());
-        //             }
-
-        //             for (let i = 0; i < chunk.length; i++) {
-        //                 if (chunk[i] === 97) {
-        //                     chunk[i] = 122; // swap 'a' for 'z'
-        //                 }
-        //             }
-
-        //             // this.push(chunk);
-
-        //             callback();
-        //         })
-        //     )
-        //     .pipe(vfs.dest('./dist/docs'));
-
-        // result
-        //     .on('data', chunk => {
-        //         // console.log('data', chunk);
-        //     })
-        //     .on('end', () => {
-        //         console.log('end');
-        //     });
     }
 
     private async setDocsNavInsertIndex() {

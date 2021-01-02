@@ -12,13 +12,22 @@ export class HomeComponent implements OnInit {
 
     constructor(public global: GlobalContext, router: Router, navigationService: NavigationService, pageTitle: PageTitleService) {
         if (!global.config.homeMeta) {
-            const channels = navigationService.getChannels();
-            if (channels && channels[0].path && !channels[0].isExternal) {
-                router.navigateByUrl(channels[0].path, {
-                    replaceUrl: true
-                });
-                return;
+            if (global.config.mode === 'full') {
+                const channels = navigationService.getChannels();
+                if (channels && channels[0].path && !channels[0].isExternal) {
+                    router.navigateByUrl(channels[0].path, {
+                        replaceUrl: true
+                    });
+                }
+            } else {
+                const docItem = navigationService.searchFirstDocItem();
+                if(docItem) {
+                    router.navigateByUrl(docItem.path, {
+                        replaceUrl: true
+                    });
+                }
             }
+            return;
         }
         pageTitle.title = 'Home';
     }

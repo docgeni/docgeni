@@ -1,8 +1,10 @@
+import { DocsBuilder } from './builders/docs-builder';
 import { DocgeniConfig, Library, HomeDocMeta } from './interfaces';
-import { SyncHook, AsyncSeriesHook } from 'tapable';
+import { SyncHook } from 'tapable';
 import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
+import { LibrariesBuilder } from './builders';
 
 export interface ComponentDocMeta {
     title?: string;
@@ -41,18 +43,6 @@ export interface DocSourceFile<TMeta = DocMeta> {
     };
 }
 
-// export interface DocOutputFile {
-//     absPath: string;
-//     content: string;
-//     docType: DocType;
-// }
-
-// export interface DocFileContext {
-//     source: DocSourceFile;
-//     output?: DocOutputFile;
-//     meta?: DocComponentMeta;
-// }
-
 export interface SiteProject {
     name: string;
     root: string;
@@ -83,6 +73,8 @@ export interface DocgeniContext {
     readonly hooks: DocgeniHooks;
     readonly logger: Print;
     readonly enableIvy: boolean;
+    readonly librariesBuilders: LibrariesBuilder;
+    readonly docsBuilder: DocsBuilder;
 }
 
 export interface AngularCommandOptions {

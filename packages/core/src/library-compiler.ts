@@ -85,7 +85,7 @@ export class LibraryCompiler {
     private absDestAssetsOverviewsPath: string;
     private absDestAssetsApiDocsPath: string;
     private examplesEmitter: ExamplesEmitter;
-    private localesCategoriesMap: LocaleCategoryMap;
+    private localesCategoriesMap: LocaleCategoryMap = {};
 
     constructor(private docgeni: DocgeniContext, public lib: Library, examplesEmitter: ExamplesEmitter) {
         this.absLibPath = this.docgeni.paths.getAbsPath(this.lib.rootDir);
@@ -339,6 +339,7 @@ export class LibraryCompiler {
         if (!(await toolkit.fs.pathExists(absComponentExamplesPath))) {
             return [];
         }
+
         await toolkit.fs.copy(absComponentExamplesPath, destAbsComponentExamplesPath);
         // await toolkit.fs.copy(absComponentExamplesPath, destAbsAssetsExamplesSourcePath);
 

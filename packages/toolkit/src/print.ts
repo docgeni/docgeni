@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { colors, Colors } from './colors';
-import { timestamp, isFunction } from './utils';
+import { timestamp, isFunction, isString } from './utils';
 import { format } from 'util';
 
 export interface PrintOptions {
@@ -65,10 +65,14 @@ export class Print {
         }
     }
 
-    error(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.error, message, ...optionalParams);
-        if (!this.options.silent) {
-            console.log(msg);
+    error(message: string | Error, ...optionalParams: any[]) {
+        if (isString(message)) {
+            const msg = this.format(Levels.error, message, ...optionalParams);
+            if (!this.options.silent) {
+                console.log(msg);
+            }
+        } else {
+            console.error(message);
         }
     }
 

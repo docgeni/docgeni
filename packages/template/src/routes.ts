@@ -14,46 +14,46 @@ const actualRoutes: Routes = [
         path: '',
         component: HomeComponent
     },
-    {
-        path: ':channel',
-        component: ChannelComponent,
-        children: [
-            {
-                path: '',
-                component: DocViewerComponent
-            },
-            {
-                path: ':id',
-                component: DocViewerComponent,
-                children: [
-                    {
-                        path: '',
-                        component: DocViewerHomeComponent
-                    },
-                    {
-                        path: 'overview',
-                        component: ComponentOverviewComponent
-                    },
-                    {
-                        path: 'api',
-                        component: ComponentApiComponent
-                    },
-                    {
-                        path: 'examples',
-                        component: ComponentExamplesComponent
-                    },
-                    {
-                        path: 'empty',
-                        component: ComponentEmptyComponent
-                    },
-                    {
-                        path: '**',
-                        component: ComponentExamplesComponent
-                    }
-                ]
-            }
-        ]
-    }
+    // {
+    //     path: ':channel',
+    //     component: ChannelComponent,
+    //     children: [
+    //         {
+    //             path: '',
+    //             component: DocViewerComponent
+    //         },
+    //         {
+    //             path: ':id',
+    //             component: DocViewerComponent,
+    //             children: [
+    //                 {
+    //                     path: '',
+    //                     component: DocViewerHomeComponent
+    //                 },
+    //                 {
+    //                     path: 'overview',
+    //                     component: ComponentOverviewComponent
+    //                 },
+    //                 {
+    //                     path: 'api',
+    //                     component: ComponentApiComponent
+    //                 },
+    //                 {
+    //                     path: 'examples',
+    //                     component: ComponentExamplesComponent
+    //                 },
+    //                 {
+    //                     path: 'empty',
+    //                     component: ComponentEmptyComponent
+    //                 },
+    //                 {
+    //                     path: '**',
+    //                     component: ComponentExamplesComponent
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
 ];
 
 export const routes: Routes = [...actualRoutes];

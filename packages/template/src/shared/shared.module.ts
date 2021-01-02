@@ -1,3 +1,4 @@
+import { IsComponentDocPipe } from './pipes/nav.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,7 +27,8 @@ import { CopierService } from './copier/copier.service';
         ContentViewerComponent,
         LabelComponent,
         TableOfContentsComponent,
-        AssetsContentPathPipe
+        AssetsContentPathPipe,
+        IsComponentDocPipe
     ],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
     entryComponents: [ExampleViewerComponent],
@@ -44,7 +46,8 @@ import { CopierService } from './copier/copier.service';
         IconComponent,
         LabelComponent,
         TableOfContentsComponent,
-        AssetsContentPathPipe
+        AssetsContentPathPipe,
+        IsComponentDocPipe
     ]
 })
 export class DocgeniSharedModule {}

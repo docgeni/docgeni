@@ -1,5 +1,5 @@
 ---
 title: 组件
-path: 'components '
+path: 'components'
 order: 30
 ---

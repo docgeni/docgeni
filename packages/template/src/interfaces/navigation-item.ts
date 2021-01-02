@@ -6,9 +6,10 @@ export interface DocItem {
     subtitle: string;
     summary?: string;
     path: string;
-    fullPath?: string;
+    channel_path?: string;
     contentPath?: string;
     content?: string;
+    order?: number;
     // 多语言
     locales?: {
         [key: string]: {
@@ -24,6 +25,7 @@ export interface ComponentDocItem extends DocItem {
     importSpecifier?: string;
     overview?: boolean;
     api?: boolean;
+    category?: string;
 }
 
 export interface CategoryItem {

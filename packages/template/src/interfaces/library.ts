@@ -10,4 +10,6 @@ export interface Library {
     docDir?: string;
     apiDir?: string;
     examplesDir?: string;
+    // 绝对路径
+    absRootPath?: string;
 }

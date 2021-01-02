@@ -4,19 +4,9 @@ import { DocgeniConfig, DocgeniSiteConfig, NavigationItem, ChannelItem } from '.
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
-import {
-    DocgeniContext,
-    DocgeniHooks,
-    DocSourceFile,
-    DocgeniOptions,
-    LibraryContext,
-    LibraryComponentContext,
-    CategoryDocMeta
-} from './docgeni.interface';
+import { DocgeniContext, DocgeniHooks, DocSourceFile, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
 import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
-import { LibraryCompiler, ExamplesEmitter } from './library-compiler';
-import { buildNavsMapForLocales, createDocSourceFile, getDocRoutePath, getDocTitle, isEntryDoc } from './utils';
 import * as chokidar from 'chokidar';
 import { DocsCompiler } from './docs-compiler';
 import { Detector } from './detector';
@@ -24,22 +14,21 @@ import { SiteBuilder } from './site-builder';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import * as semver from 'semver';
+import { DocsBuilder, LibrariesBuilder, NavsBuilder } from './builders';
+
 export class Docgeni implements DocgeniContext {
     watch: boolean;
     paths: DocgeniPaths;
     config: DocgeniConfig;
     siteConfig: Partial<DocgeniSiteConfig> = {};
     enableIvy: boolean;
+    public docsBuilder: DocsBuilder;
+    public librariesBuilders: LibrariesBuilder;
+    public navsBuilder: NavsBuilder;
     private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
-    private localesNavsMap: Record<string, NavigationItem[]> = {};
-    /* The navs that generate by docs dir insertion location  */
-    private docsNavInsertIndex: number;
-    private docsCompiler: DocsCompiler = new DocsCompiler(this);
-    private examplesEmitter: ExamplesEmitter;
-    private libraryCompilers: LibraryCompiler[] = [];
     private siteBuilder: SiteBuilder;
 
     hooks: DocgeniHooks = {
@@ -98,57 +87,36 @@ export class Docgeni implements DocgeniContext {
             this.siteBuilder = new SiteBuilder(this);
             await this.siteBuilder.initialize(detector.siteProject);
             this.hooks.run.call();
-            this.setDocsNavInsertIndex();
-            this.examplesEmitter = new ExamplesEmitter(this);
-            this.libraryCompilers = this.config.libs.map(lib => {
-                return new LibraryCompiler(this, lib, this.examplesEmitter);
-            });
+
+            this.librariesBuilders = new LibrariesBuilder(this);
+            this.docsBuilder = new DocsBuilder(this);
+            this.navsBuilder = new NavsBuilder(this);
+
             // clear docs content dist dir
             await toolkit.fs.remove(this.paths.absSiteContentPath);
             // clear assets content dist dir
             await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
+
             // ensure docs content dist dir and assets content dist dir
             toolkit.fs.ensureDir(this.paths.absSiteContentPath);
             toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
 
-            // build navs by config
-            this.localesNavsMap = buildNavsMapForLocales(this.config.locales, this.config.navs);
+            this.docsBuilder.hooks.buildDocsSucceed.tap('EmitDocs', async docsBuilder => {
+                await docsBuilder.emit();
+            });
+            await this.docsBuilder.build();
 
-            // docs compile
-            if (this.config.docsPath) {
-                await this.docsCompiler.compile();
-                if (this.watch) {
-                    const watcher = chokidar.watch([this.config.docsPath], { cwd: this.paths.cwd, ignoreInitial: true, interval: 1000 });
-                    this.logger.info(`Start watching docs folder [${this.config.docsPath}] ...`);
-                    ['add', 'change'].forEach(eventName => {
-                        watcher.on(eventName, async (filePath: string) => {
-                            this.logger.info(`${filePath} ${eventName}`);
-                            await this.docsCompiler.compile();
-                            await this.generateSiteNavs();
-                        });
-                    });
-                }
-            }
+            this.librariesBuilders.hooks.buildLibrariesSucceed.tap('EmitLibs', async librariesBuilders => {
+                await librariesBuilders.emit();
+            });
+            await this.librariesBuilders.build();
+            await this.navsBuilder.run();
 
-            // compile all libs
-            for (const libraryCompiler of this.libraryCompilers) {
-                await libraryCompiler.compile();
-                if (this.watch) {
-                    const watcher = chokidar.watch([libraryCompiler.getAbsLibPath()], { ignoreInitial: true, interval: 1000 });
-                    this.logger.info(`Start watching lib [${libraryCompiler.lib.name}] ...`);
-                    ['add', 'change'].forEach(eventName => {
-                        watcher.on(eventName, async (filePath: string) => {
-                            this.logger.info(`${eventName}  ${filePath}`);
-                            await libraryCompiler.compile();
-                            this.examplesEmitter.emit();
-                            await this.generateSiteNavs();
-                        });
-                    });
-                }
-            }
-            await this.examplesEmitter.emit();
+            this.docsBuilder.watch();
+            this.librariesBuilders.watch();
+
             await this.generateSiteConfig();
-            await this.generateSiteNavs();
+
             if (!this.options.cmdArgs.skipSite) {
                 if (this.watch) {
                     await this.siteBuilder.start();
@@ -183,38 +151,11 @@ export class Docgeni implements DocgeniContext {
         }
     }
 
-    private async setDocsNavInsertIndex() {
-        let docsNavInsertIndex = this.config.navs.indexOf(null);
-        if (docsNavInsertIndex >= 0) {
-            this.config.navs = this.config.navs.filter(item => {
-                return !!item;
-            });
-        } else {
-            docsNavInsertIndex = this.config.navs.length;
-        }
-        this.docsNavInsertIndex = docsNavInsertIndex;
-    }
-
     private async generateSiteConfig() {
         const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
         toolkit.template.generate('config.hbs', outputConfigPath, {
             siteConfig: JSON.stringify(this.siteConfig, null, 4)
         });
-    }
-
-    private async generateSiteNavs() {
-        const localesNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localesNavsMap));
-        this.config.locales.forEach(locale => {
-            localesNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...this.docsCompiler.getLocaleNavs(locale.key));
-            this.libraryCompilers.forEach(libraryCompiler => {
-                const libNav: ChannelItem = localesNavsMap[locale.key].find(nav => {
-                    return nav.lib === libraryCompiler.lib.name;
-                });
-                libNav.items = libraryCompiler.getLocaleCategories(locale.key);
-            });
-        });
-        await toolkit.fs.writeFile(`${this.paths.absSiteContentPath}/navigations.json`, JSON.stringify(localesNavsMap, null, 2));
-        await toolkit.fs.writeFile(`${this.paths.absSiteAssetsContentPath}/navigations.json`, JSON.stringify(localesNavsMap, null, 2));
     }
 
     public getAbsPath(absOrRelativePath: string) {

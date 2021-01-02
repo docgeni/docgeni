@@ -14,8 +14,15 @@
     }
     .dg-layout {
         .dg-sidebar {
+            background: $dg-gray-100;
             top: 0;
         }
+    }
+    .dg-doc-viewer {
+        flex: auto;
+        padding: 30px 50px;
+        max-height: 100vh;
+        margin-left: 300px;
     }
 }
 

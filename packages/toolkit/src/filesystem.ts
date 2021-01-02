@@ -1,6 +1,8 @@
 import * as fsExtra from 'fs-extra';
 import * as nodePath from 'path';
+import { WriteStream, ReadStream } from 'fs';
 import { matchGlob } from './utils';
+import glob from 'glob';
 
 export function throwErrorWhenNotExists(absPath: string) {
     if (!fsExtra.existsSync(absPath)) {
@@ -54,6 +56,23 @@ export async function getFiles(path: string, options?: GetDirsOrFilesOptions) {
     });
 }
 
+export function globSync(pattern: string, options?: GetDirsOrFilesOptions & { root?: string }) {
+    options = {
+        ...DEFAULT_OPTIONS,
+        ...options
+    };
+    const result = glob.sync(pattern, {
+        dot: options.dot,
+        root: options.root
+    });
+    return result.filter(dir => {
+        if (options.exclude && matchGlob(dir, options.exclude)) {
+            return false;
+        }
+        return true;
+    });
+}
+
 export async function pathsExists(paths: string[]) {
     const result = [];
     let hasExists = false;
@@ -80,6 +99,18 @@ export async function ensureWriteFile(filePath: string, data: string, options?: 
 
 export async function readFileContent(filePath: string, encoding: string = 'UTF-8') {
     return await fsExtra.readFile(filePath, encoding);
+}
+
+export function isStream(stream: any): stream is NodeJS.ReadableStream {
+    if (!stream) {
+        return false;
+    }
+
+    if (typeof stream.pipe !== 'function') {
+        return false;
+    }
+
+    return true;
 }
 
 export * from 'fs-extra';

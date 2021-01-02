@@ -78,8 +78,8 @@ export function getDocTitle(metaTitle: string, basename: string) {
     return title.replace(/-/g, ' ');
 }
 
-export function isEntryDoc(basename: string) {
-    return DOCS_ENTRY_FILE_NAMES.includes(basename);
+export function isEntryDoc(name: string) {
+    return DOCS_ENTRY_FILE_NAMES.includes(name);
 }
 
 export function highlight(sourceCode: string, lang: string) {
@@ -91,5 +91,11 @@ export function combineRoutePath(parentPath: string, currentPath: string): strin
     if (!currentPath) {
         return parentPath;
     }
-    return parentPath ? `${parentPath}/${currentPath.toLowerCase()}` : `/${currentPath}`;
+    return parentPath ? `${parentPath}/${currentPath.toLowerCase()}` : `${currentPath}`;
+}
+
+export function ascendingSortByOrder<T extends { order?: number }>(items: T[]) {
+    return items.sort((a, b) => {
+        return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
+    });
 }

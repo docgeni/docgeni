@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding, NgModuleFactory, Type, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 
 @Component({
@@ -23,14 +23,19 @@ export class ChannelComponent implements OnInit {
         private http: HttpClient,
         private elementRef: ElementRef<HTMLElement>,
         private route: ActivatedRoute,
+        private router: Router,
         public navigationService: NavigationService,
         public global: GlobalContext
     ) {}
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
-            const path = params.get('channel');
-            this.navigationService.selectChannelByPath(path);
+            const path = this.route.snapshot.routeConfig.path;
+            const channel = this.navigationService.selectChannelByPath(path);
+            const firstDocItem = this.navigationService.getChannelFirstDocItem();
+            if (firstDocItem) {
+                this.router.navigate([`./${firstDocItem.path}`], { relativeTo: this.route, replaceUrl: true });
+            }
         });
     }
 }

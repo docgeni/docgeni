@@ -23,7 +23,11 @@ export class NavigationService {
     }
 
     get navs() {
-        return this.global.navs[this.global.locale];
+        return this.global.navs;
+    }
+
+    get docItems() {
+        return this.global.docItems;
     }
 
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private global: GlobalContext) {}
@@ -43,9 +47,10 @@ export class NavigationService {
             return nav.path === path;
         });
         this.channel$.next(channel);
+        return channel;
     }
 
-    getDocItem(path: string): DocItem {
+    getDocItemInChannel(path: string): DocItem {
         if (!this.channel || !this.channel.items) {
             return null;
         }
@@ -70,8 +75,15 @@ export class NavigationService {
     }
 
     selectDocItem(path: string) {
-        const docItem = this.getDocItem(path);
-        this.docItem$.next(docItem);
+        if (this.config.mode === 'full') {
+            const docItem = this.getDocItemInChannel(path);
+            this.docItem$.next(docItem);
+        } else {
+            const docItem = this.docItems.find(docItem => {
+                return docItem.path === path;
+            });
+            this.docItem$.next(docItem);
+        }
     }
 
     getChannelFirstDocItem() {
@@ -82,6 +94,32 @@ export class NavigationService {
                 docItem = category.items[0];
             } else {
                 docItem = category as DocItem;
+            }
+        }
+        return docItem;
+    }
+
+    searchFirstDocItem() {
+        let docItem: DocItem;
+        for (const channel of this.getChannels()) {
+            docItem = this.getNavFirstDocItem(channel as NavigationItem);
+            if (docItem) {
+                break;
+            }
+        }
+        return docItem;
+    }
+
+    getNavFirstDocItem(nav: NavigationItem) {
+        let docItem: DocItem;
+        for (const item of nav.items) {
+            if (item && this.isCategoryItem(item)) {
+                docItem = this.getNavFirstDocItem(item);
+            } else {
+                docItem = item as DocItem;
+            }
+            if (docItem) {
+                break;
             }
         }
         return docItem;

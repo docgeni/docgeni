@@ -1,5 +1,6 @@
 import { Component, OnInit, HostBinding, Input } from '@angular/core';
 import { NavigationItem } from '../../interfaces/public-api';
+import { GlobalContext } from '../../services/global-context';
 
 @Component({
     selector: 'dg-sidebar',
@@ -10,7 +11,7 @@ export class SidebarComponent implements OnInit {
 
     @Input() menus: NavigationItem[];
 
-    constructor() {}
+    constructor(public global: GlobalContext) {}
 
     ngOnInit(): void {}
 }

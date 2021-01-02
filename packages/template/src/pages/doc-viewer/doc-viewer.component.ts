@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationService } from '../../services/public-api';
+import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DocItem, NavigationItem } from '../../interfaces/public-api';
@@ -31,7 +31,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    docItem$: Observable<DocItem | NavigationItem> = this.navigationService.docItem$.asObservable();
+    docItem$: Observable<NavigationItem> = this.navigationService.docItem$.asObservable();
 
     @ViewChild('toc') tableOfContents: TableOfContentsComponent;
 
@@ -41,24 +41,21 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         return this.navigationService.channel;
     }
 
-    get isComponentDoc() {
-        return this.navigationService.channel && this.navigationService.channel.lib;
-    }
-
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private navigationService: NavigationService,
-        private pageTitle: PageTitleService
+        private pageTitle: PageTitleService,
+        private global: GlobalContext
     ) {}
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
-            const id = params.get('id');
-            this.navigationService.selectDocItem(id);
+            const path = this.route.routeConfig.path;
+            this.navigationService.selectDocItem(path);
             if (!this.navigationService.docItem) {
                 const firstDoc = this.navigationService.getChannelFirstDocItem();
-                if (!id) {
+                if (!path) {
                     this.router.navigate([`./${firstDoc.path}`], { relativeTo: this.route });
                 }
             } else {
@@ -98,13 +95,13 @@ export class DocViewerHomeComponent implements OnDestroy {
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
             if (docItem) {
-                let redirectTo = '../empty';
+                let redirectTo = './empty';
                 if (docItem.overview) {
-                    redirectTo = '../overview';
+                    redirectTo = './overview';
                 } else if (docItem.examples && docItem.examples.length > 0) {
-                    redirectTo = '../examples';
+                    redirectTo = './examples';
                 } else if (docItem.api) {
-                    redirectTo = '../api';
+                    redirectTo = './api';
                 }
                 if (redirectTo) {
                     router.navigate([redirectTo], { relativeTo: route, replaceUrl: true });

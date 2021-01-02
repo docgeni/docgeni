@@ -3,6 +3,7 @@ import { NgModuleInfo } from './module';
 export interface ExampleSourceFile {
     name: string;
     highlightedPath: string;
+    highlightedContent?: string;
 }
 
 export interface LiveExample {
