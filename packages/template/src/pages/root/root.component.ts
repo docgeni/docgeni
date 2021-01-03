@@ -11,6 +11,7 @@ import {
     ComponentOverviewComponent
 } from '../component-viewer';
 import { ChannelComponent } from '../channel/channel.component';
+import { RouterResetService } from '../../services/router-reset.service';
 
 const componentChildrenRoutes: Routes = [
     {
@@ -47,81 +48,11 @@ export class RootComponent {
 
     @HostBinding(`class.dg-layout`) isLayout = true;
 
-    channels: ChannelItem[];
-
-    constructor(public global: GlobalContext, private navigationService: NavigationService, private router: Router) {
-        this.channels = navigationService.getChannels();
-        this.resetRoutes();
+    constructor(
+        public global: GlobalContext,
+        public navigationService: NavigationService
+    ) {
     }
 
-    resetRoutes() {
-        const config = this.router.config;
-        let routes: Routes = [];
-        const channelPathToRoutes: Record<string, Route> = {};
-        if (this.global.config.mode === 'full') {
-            const rootNavs = this.global.navs.filter(nav => {
-                return !nav.isExternal;
-            });
-            rootNavs.forEach(nav => {
-                if (nav.items) {
-                    const route = {
-                        path: nav.path,
-                        component: ChannelComponent,
-                        children: []
-                    };
-                    if (nav.lib) {
-                        route.children = [
-                            {
-                                path: ':id',
-                                component: DocViewerComponent,
-                                children: componentChildrenRoutes
-                            }
-                        ];
-                    }
-                    routes.push(route);
-                    channelPathToRoutes[nav.path] = route;
-                } else {
-                    routes.push({
-                        path: nav.path,
-                        component: DocViewerComponent
-                    });
-                }
-            });
-            this.global.docItems.forEach(docItem => {
-                const route = docItem.importSpecifier
-                    ? {
-                          path: docItem.path,
-                          component: DocViewerComponent,
-                          children: componentChildrenRoutes
-                      }
-                    : {
-                          path: docItem.path,
-                          component: DocViewerComponent
-                      };
 
-                const channelRoute = channelPathToRoutes[docItem.channel_path];
-                if (channelRoute) {
-                    channelRoute.children.push(route);
-                } else if (!docItem.importSpecifier) {
-                    routes.push(route);
-                }
-            });
-        } else {
-            this.global.docItems.forEach(docItem => {
-                const route = docItem.importSpecifier
-                    ? {
-                          path: docItem.path,
-                          component: DocViewerComponent,
-                          children: componentChildrenRoutes
-                      }
-                    : {
-                          path: docItem.path,
-                          component: DocViewerComponent
-                      };
-                routes.push(route);
-            });
-        }
-
-        this.router.resetConfig([...config, ...routes]);
-    }
 }

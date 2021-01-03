@@ -8,3 +8,4 @@ export * from './pages/pages.module';
 export * from './services/public-api';
 export * from './routes';
 export * from './interfaces/public-api';
+export * from './initializer';

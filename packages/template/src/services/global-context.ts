@@ -63,9 +63,3 @@ export class GlobalContext {
         return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
     }
 }
-
-export function initializeDocgeniSite(globalContext: GlobalContext) {
-    return (): Promise<any> => {
-        return globalContext.initialize();
-    };
-}

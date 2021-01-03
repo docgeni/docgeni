@@ -5,7 +5,8 @@ import {
     RootComponent,
     initializeDocgeniSite,
     GlobalContext,
-    DocViewerComponent
+    DocViewerComponent,
+    DOCGENI_INITIALIZER_PROVIDERS
 } from '@docgeni/template';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { config } from './content/config';
@@ -28,7 +29,7 @@ import { BrowserModule } from '@angular/platform-browser';
         ...EXAMPLE_MODULES
     ],
     providers: [
-        { provide: APP_INITIALIZER, useFactory: initializeDocgeniSite, deps: [GlobalContext], multi: true },
+        ...DOCGENI_INITIALIZER_PROVIDERS,
         LIB_EXAMPLE_LOADER_PROVIDER,
         {
             provide: CONFIG_TOKEN,
