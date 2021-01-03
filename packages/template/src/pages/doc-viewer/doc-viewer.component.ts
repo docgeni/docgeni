@@ -51,15 +51,23 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
-            const path = this.route.routeConfig.path;
-            this.navigationService.selectDocItem(path);
-            if (!this.navigationService.docItem) {
-                const firstDoc = this.navigationService.getChannelFirstDocItem();
-                if (!path) {
-                    this.router.navigate([`./${firstDoc.path}`], { relativeTo: this.route });
+            const id = params.get('id');
+            // component doc
+            if (id) {
+                this.navigationService.selectDocItem(id);
+                if (this.navigationService.docItem) {
+                    this.pageTitle.title = '' + this.navigationService.docItem.title;
+                } else {
+                    const firstDoc = this.navigationService.getChannelFirstDocItem();
+                    if (firstDoc) {
+                        this.router.navigate(['./' + firstDoc.path], { relativeTo: this.route });
+                    }
                 }
             } else {
-                this.pageTitle.title = `${this.navigationService.docItem.title}`;
+                // doc
+                const path = this.route.snapshot.routeConfig.path;
+                this.navigationService.selectDocItem(path);
+                // this.pageTitle.title = '' + this.navigationService.docItem.title;
             }
         });
 

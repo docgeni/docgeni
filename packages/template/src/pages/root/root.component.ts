@@ -57,7 +57,7 @@ export class RootComponent {
     resetRoutes() {
         const config = this.router.config;
         let routes: Routes = [];
-        const channelKeyToRoutes: Record<string, Route> = {};
+        const channelPathToRoutes: Record<string, Route> = {};
         if (this.global.config.mode === 'full') {
             const rootNavs = this.global.navs.filter(nav => {
                 return !nav.isExternal;
@@ -69,8 +69,17 @@ export class RootComponent {
                         component: ChannelComponent,
                         children: []
                     };
+                    if (nav.lib) {
+                        route.children = [
+                            {
+                                path: ':id',
+                                component: DocViewerComponent,
+                                children: componentChildrenRoutes
+                            }
+                        ];
+                    }
                     routes.push(route);
-                    channelKeyToRoutes[nav.lib ? nav.lib : nav.path] = route;
+                    channelPathToRoutes[nav.path] = route;
                 } else {
                     routes.push({
                         path: nav.path,
@@ -90,17 +99,10 @@ export class RootComponent {
                           component: DocViewerComponent
                       };
 
-                let channelRoute: Route;
-                if (docItem.importSpecifier) {
-                    const lib = docItem.importSpecifier.substr(0, docItem.importSpecifier.indexOf('/'));
-                    channelRoute = channelKeyToRoutes[lib];
-                } else {
-                    channelRoute = channelKeyToRoutes[docItem.channel_path];
-                }
-
+                const channelRoute = channelPathToRoutes[docItem.channel_path];
                 if (channelRoute) {
                     channelRoute.children.push(route);
-                } else {
+                } else if (!docItem.importSpecifier) {
                     routes.push(route);
                 }
             });

@@ -3,6 +3,7 @@ import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { GlobalContext } from '../../services/global-context';
 
 interface LinkSection {
     name: string;
@@ -26,7 +27,7 @@ interface Link {
     top: number;
 }
 
-const OFFSET = 60;
+let OFFSET = 60;
 
 @Component({
     selector: 'dg-toc',
@@ -50,8 +51,12 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
         private route: ActivatedRoute,
         private element: ElementRef,
         @Inject(DOCUMENT) private document: any,
-        private viewportScroller: ViewportScroller
+        private viewportScroller: ViewportScroller,
+        global: GlobalContext
     ) {
+        if (global.config.mode === 'lite') {
+            OFFSET = 10;
+        }
         this.router.events.pipe(takeUntil(this.destroyed)).subscribe(event => {
             if (event instanceof NavigationEnd) {
                 const rootUrl = router.url.split('#')[0];

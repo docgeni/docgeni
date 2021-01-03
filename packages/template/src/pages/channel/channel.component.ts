@@ -29,13 +29,11 @@ export class ChannelComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap.subscribe(params => {
-            const path = this.route.snapshot.routeConfig.path;
-            const channel = this.navigationService.selectChannelByPath(path);
-            const firstDocItem = this.navigationService.getChannelFirstDocItem();
-            if (firstDocItem) {
-                this.router.navigate([`./${firstDocItem.path}`], { relativeTo: this.route, replaceUrl: true });
-            }
-        });
+        const path = this.route.snapshot.routeConfig.path;
+        const channel = this.navigationService.selectChannelByPath(path);
+        const firstDocItem = this.navigationService.getChannelFirstDocItem();
+        if (firstDocItem) {
+            this.router.navigateByUrl(channel.path + '/' + firstDocItem.path, { replaceUrl: true });
+        }
     }
 }

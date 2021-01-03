@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem } from '../interfaces/public-api';
+import { DocgeniSiteConfig, NavigationItem, DocgeniMode } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
@@ -10,6 +10,7 @@ export const DEFAULT_CONFIG: DocgeniSiteConfig = {
 };
 
 const DOCGENI_LOCALE_KEY = 'docgeni-locale';
+const DOCGENI_MODE_KEY = 'docgeni-mode';
 
 @Injectable({
     providedIn: 'root'
@@ -28,8 +29,12 @@ export class GlobalContext {
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
         const locale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
+        const mode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (locale) {
             this.locale = locale;
+        }
+        if (mode && ['lite', 'full'].includes(mode)) {
+            config.mode = mode as DocgeniMode;
         }
     }
 

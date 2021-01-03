@@ -16,6 +16,7 @@ export interface HomeDocMeta {
     footer: string;
 }
 
+export type DocgeniMode = 'full' | 'lite';
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
     title: string;
@@ -24,7 +25,7 @@ export interface DocgeniConfig {
     /* Description of documentation */
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
-    mode?: 'full' | 'lite';
+    mode?: DocgeniMode;
     /** Theme, angular navbar style and default style */
     theme?: 'default' | 'angular';
     /* Base href of documentation, default is / */
