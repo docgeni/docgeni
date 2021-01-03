@@ -16,7 +16,6 @@ export class DocFileBuilder {
     public cwd: string;
     public base: string;
     public path: string;
-    public raw: Buffer | string | NodeJS.ReadableStream;
     public content: string;
     public meta?: DocMeta;
     public output: string;
@@ -67,26 +66,11 @@ export class DocFileBuilder {
         this.base = options.base;
         this.path = options.path;
         this.locale = options.locale;
-        this.raw = fs.createReadStream(this.path);
     }
 
-    private read(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            if (toolkit.fs.isStream(this.raw)) {
-                const chunks = [];
-                this.raw.on('data', chunk => chunks.push(chunk));
-                this.raw.on('error', reject);
-                this.raw.on('end', () => {
-                    this.raw = Buffer.concat(chunks).toString('utf8');
-                    resolve(this.raw);
-                });
-            } else if (Buffer.isBuffer(this.raw)) {
-                this.raw = this.raw.toString('utf8');
-                return resolve(this.raw);
-            } else {
-                return resolve(this.raw);
-            }
-        });
+    private async read(): Promise<string> {
+        this.content = await toolkit.fs.readFileContent(this.path, 'utf-8');
+        return this.content;
     }
 
     public async build() {
