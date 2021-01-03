@@ -35,8 +35,7 @@
   "workspaces": [
     "./packages/cli",
     "./packages/core",
-    "./packages/toolkit",
-    "./packages/template"
+    "./packages/toolkit"
   ],
   "dependencies": {
     "@angular/animations": "~10.2.4",
