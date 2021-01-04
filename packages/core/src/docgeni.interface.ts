@@ -4,7 +4,7 @@ import { SyncHook } from 'tapable';
 import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
-import { LibrariesBuilder } from './builders';
+import { DocSourceFile, LibrariesBuilder } from './builders';
 
 export interface ComponentDocMeta {
     title?: string;
@@ -25,23 +25,9 @@ export interface GeneralDocMeta {
     title: string;
     path?: string;
     order?: number;
-    // category?: CategoryDocMeta;
 }
 
 export type DocMeta = ComponentDocMeta & GeneralDocMeta & HomeDocMeta;
-
-export interface DocSourceFile<TMeta = DocMeta> {
-    absPath: string;
-    content?: string;
-    dirname: string;
-    ext: string;
-    basename: string;
-    docType: DocType;
-    result: {
-        html: string;
-        meta?: TMeta;
-    };
-}
 
 export interface SiteProject {
     name: string;
@@ -60,10 +46,10 @@ export interface LibraryComponentContext {
 
 export interface DocgeniHooks {
     run: SyncHook;
-    docCompile: SyncHook<DocSourceFile>;
-    docsCompile: SyncHook<DocSourceFile[]>;
-    libCompile: SyncHook<LibraryContext>;
-    libComponentCompile: SyncHook<LibraryContext, LibraryComponentContext>;
+    docBuild: SyncHook<DocSourceFile>;
+    docBuildSucceed: SyncHook<DocSourceFile>;
+    // libBuild: SyncHook<LibraryContext>;
+    // componentBuild: SyncHook<LibraryContext, LibraryComponentContext>;
     emit: SyncHook<unknown>;
 }
 

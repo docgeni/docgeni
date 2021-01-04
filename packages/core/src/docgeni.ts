@@ -4,14 +4,14 @@ import { DocgeniConfig, DocgeniSiteConfig, NavigationItem, ChannelItem } from '.
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
-import { DocgeniContext, DocgeniHooks, DocSourceFile, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
+import { DocgeniContext, DocgeniHooks, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
 import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
 import { SiteBuilder } from './site-builder';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import * as semver from 'semver';
-import { DocsBuilder, LibrariesBuilder, NavsBuilder } from './builders';
+import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -30,10 +30,8 @@ export class Docgeni implements DocgeniContext {
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
-        docCompile: new SyncHook<DocSourceFile>(['docSourceFile']),
-        docsCompile: new SyncHook<DocSourceFile[]>(['docSourceFiles']),
-        libCompile: new SyncHook<LibraryContext>(['lib']),
-        libComponentCompile: new SyncHook<LibraryContext, LibraryComponentContext>(['lib', 'component']),
+        docBuild: new SyncHook<DocSourceFile>(['docSourceFile']),
+        docBuildSucceed: new SyncHook<DocSourceFile>(['docSourceFile']),
         emit: new AsyncSeriesHook<void>([])
     };
 

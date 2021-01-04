@@ -12,10 +12,6 @@ export class ConfigPlugin implements Plugin {
             siteConfig.locales = docgeni.config.locales;
             siteConfig.navs = docgeni.config.navs;
         });
-
-        docgeni.hooks.docCompile.tap(PLUGIN_NAME, docSourceFile => {
-            // console.log(docSourceFile);
-        });
     }
 }
 

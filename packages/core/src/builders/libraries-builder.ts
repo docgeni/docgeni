@@ -1,5 +1,5 @@
-import { DocgeniContext, DocSourceFile } from '../docgeni.interface';
-import { CategoryItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
+import { DocgeniContext } from '../docgeni.interface';
+import { Library, LiveExample } from '../interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { AsyncSeriesHook, SyncHook } from 'tapable';

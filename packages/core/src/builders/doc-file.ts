@@ -1,6 +1,7 @@
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
 import { DocMeta } from '../docgeni.interface';
+import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 
 export interface DocSourceFileOptions {
@@ -8,6 +9,7 @@ export interface DocSourceFileOptions {
     base: string;
     path: string;
     locale: string;
+    type?: DocType;
 }
 
 export class DocSourceFile {
@@ -16,6 +18,7 @@ export class DocSourceFile {
     public cwd: string;
     public base: string;
     public path: string;
+    public type: DocType;
     public content: string;
     public meta?: DocMeta;
     public output: string;
@@ -66,6 +69,7 @@ export class DocSourceFile {
         this.base = options.base;
         this.path = options.path;
         this.locale = options.locale;
+        this.type = options.type || DocType.general;
     }
 
     private async read(): Promise<string> {

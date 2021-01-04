@@ -48,19 +48,6 @@ export function buildNavsMapForLocales(locales: Locale[], navs: NavigationItem[]
     return localeNavsMap;
 }
 
-export function createDocSourceFile(absDocPath: string, content: string, docType: DocType): DocSourceFile {
-    const result = path.parse(absDocPath);
-    return {
-        absPath: absDocPath,
-        content,
-        dirname: path.dirname(absDocPath),
-        ext: result.ext,
-        basename: result.name,
-        docType,
-        result: null
-    };
-}
-
 export function getDocRoutePath(metaPath: string, basename: string) {
     if (!toolkit.utils.isUndefinedOrNull(metaPath)) {
         return metaPath;

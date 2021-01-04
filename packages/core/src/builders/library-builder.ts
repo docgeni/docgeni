@@ -1,4 +1,4 @@
-import { DocgeniContext, DocSourceFile } from '../docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';

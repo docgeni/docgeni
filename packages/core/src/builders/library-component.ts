@@ -1,13 +1,14 @@
-import { ComponentDocMeta, DocgeniContext, DocSourceFile } from '../docgeni.interface';
+import { ComponentDocMeta, DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration, CategoryItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { EXAMPLE_META_FILE_NAME } from '../constants';
-import { createDocSourceFile, highlight } from '../utils';
+import { highlight } from '../utils';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
+import { DocSourceFile } from './doc-file';
 
 export class LibComponent {
     public name: string;
@@ -66,19 +67,31 @@ export class LibComponent {
         for (const locale of this.docgeni.config.locales) {
             const absDocPath = path.resolve(this.absDocPath, `${locale.key}.md`);
             if (await toolkit.fs.pathExists(absDocPath)) {
-                const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
-                const docSourceFile = createDocSourceFile(absDocPath, content, DocType.component);
-                this.docgeni.hooks.docCompile.call(docSourceFile);
+                // const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
+                const docSourceFile = new DocSourceFile({
+                    cwd: this.docgeni.paths.cwd,
+                    base: this.docgeni.paths.cwd,
+                    path: absDocPath,
+                    type: DocType.component,
+                    locale: locale.key
+                });
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;
+                await this.buildOverview(docSourceFile);
             }
         }
 
         const defaultLocaleDoc = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
         if (defaultLocaleDoc) {
-            this.meta = defaultLocaleDoc.result.meta;
-            this.name = defaultLocaleDoc.result.meta.name || this.name;
+            this.meta = defaultLocaleDoc.meta;
+            this.name = defaultLocaleDoc.meta.name || this.name;
         }
+    }
+
+    private async buildOverview(docSourceFile: DocSourceFile) {
+        // this.hooks.buildDoc.call(docSourceFile);
+        await docSourceFile.build();
+        // this.hooks.buildDocSucceed.call(docSourceFile);
     }
 
     private async buildApiDocs(): Promise<void> {
@@ -209,7 +222,7 @@ export class LibComponent {
                     path: this.name,
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
-                    overview: overviewSourceFile && overviewSourceFile.result.html ? true : false,
+                    overview: overviewSourceFile && overviewSourceFile.output ? true : false,
                     api: apiDoc ? true : false,
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category
@@ -218,6 +231,7 @@ export class LibComponent {
             }
         });
     }
+
     private async emitOverviews(absDestAssetsOverviewsPath: string) {
         const defaultSourceFile = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
         const destAbsExamplesOverviewPath = path.resolve(absDestAssetsOverviewsPath, `${this.name}`);
@@ -225,7 +239,7 @@ export class LibComponent {
             const sourceFile = this.localeOverviewsMap[locale.key] || defaultSourceFile;
             if (sourceFile) {
                 const filePath = path.resolve(destAbsExamplesOverviewPath, `${locale.key}.html`);
-                await toolkit.fs.ensureWriteFile(filePath, sourceFile.result.html);
+                await toolkit.fs.ensureWriteFile(filePath, sourceFile.output);
             }
         }
     }
@@ -269,9 +283,9 @@ export class LibComponent {
     }
 
     private getMetaProperty<TPropertyKey extends keyof ComponentDocMeta>(
-        docSourceFile: DocSourceFile<ComponentDocMeta>,
+        docSourceFile: DocSourceFile,
         propertyName: TPropertyKey
     ): ComponentDocMeta[TPropertyKey] {
-        return docSourceFile && docSourceFile.result.meta && docSourceFile.result.meta[propertyName];
+        return docSourceFile && docSourceFile.meta && docSourceFile.meta[propertyName];
     }
 }
