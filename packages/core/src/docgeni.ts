@@ -5,10 +5,7 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
 import { DocgeniContext, DocgeniHooks, DocSourceFile, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
-import { DocType } from './enums';
 import { DEFAULT_CONFIG } from './defaults';
-import * as chokidar from 'chokidar';
-import { DocsCompiler } from './docs-compiler';
 import { Detector } from './detector';
 import { SiteBuilder } from './site-builder';
 import { DocgeniPaths } from './docgeni-paths';
