@@ -151,5 +151,6 @@ export class LibrariesBuilder {
         await toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
             modules
         });
+        await toolkit.template.generate('content-index.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'index.ts'), {});
     }
 }

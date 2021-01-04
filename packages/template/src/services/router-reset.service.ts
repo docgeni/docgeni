@@ -5,6 +5,7 @@ import { ChannelComponent } from '../pages/channel/channel.component';
 import { DocViewerComponent, DocViewerHomeComponent } from '../pages/doc-viewer/doc-viewer.component';
 import { ComponentOverviewComponent } from '../pages/component-viewer/overview/component-overview.component';
 import { ComponentApiComponent, ComponentEmptyComponent, ComponentExamplesComponent } from '../pages/component-viewer';
+import { HomeComponent } from '../pages/home/home.component';
 
 const componentChildrenRoutes: Routes = [
     {
@@ -37,12 +38,16 @@ const componentChildrenRoutes: Routes = [
     providedIn: 'root'
 })
 export class RouterResetService {
-    constructor(private router: Router, private global: GlobalContext) {
-    }
+    constructor(private router: Router, private global: GlobalContext) {}
 
     resetRoutes() {
         const config = this.router.config;
-        let routes: Routes = [];
+        const routes: Routes = [
+            {
+                path: '',
+                component: HomeComponent
+            }
+        ];
         const channelPathToRoutes: Record<string, Route> = {};
         if (this.global.config.mode === 'full') {
             const rootNavs = this.global.navs.filter(nav => {
