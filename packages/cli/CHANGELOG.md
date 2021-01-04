@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.2](https://github.com/docgeni/docgeni/compare/v0.6.0-next.1...v0.6.0-next.2) (2021-01-04)
+
+
+### Features
+
+* **core:** support project without angular siteProject ([29bb54d](https://github.com/docgeni/docgeni/commit/29bb54d51d3dde23fcb0f1b8d937a44b09da8923))
+
+
+
+
+
 # [0.6.0-next.1](https://github.com/docgeni/docgeni/compare/v0.6.0-next.0...v0.6.0-next.1) (2021-01-03)
 
 **Note:** Version bump only for package @docgeni/cli
