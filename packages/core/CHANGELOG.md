@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.2](https://github.com/docgeni/docgeni/compare/v0.6.0-next.1...v0.6.0-next.2) (2021-01-04)
+
+
+### Bug Fixes
+
+* **core:** fix build error remove unused code ([3e470a7](https://github.com/docgeni/docgeni/commit/3e470a7d90ea2ba2e9f134046d05e977d803dcd0))
+* **core:** should reread doc content when watch changes ([2c8f4bf](https://github.com/docgeni/docgeni/commit/2c8f4bf874003bcbba9c795a844b2f6e9717ab29))
+
+
+### Features
+
+* **core:** generate content index.ts for AppModule ([1041345](https://github.com/docgeni/docgeni/commit/1041345786f8a4415ecf83e508f38aca992037f5))
+* **core:** support project without angular siteProject ([29bb54d](https://github.com/docgeni/docgeni/commit/29bb54d51d3dde23fcb0f1b8d937a44b09da8923))
+
+
+
+
+
 # [0.6.0-next.1](https://github.com/docgeni/docgeni/compare/v0.6.0-next.0...v0.6.0-next.1) (2021-01-03)
 
 **Note:** Version bump only for package @docgeni/core
