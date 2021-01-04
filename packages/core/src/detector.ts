@@ -24,9 +24,10 @@ export class Detector {
         if (hasAngularJson) {
             const angularJson = toolkit.fs.readJSONSync(angularJsonPath, { encoding: 'UTF-8' });
             if (this.docgeni.config.siteProjectName) {
-                const siteProject = angularJson.projects[this.docgeni.config.siteProjectName];
+                const siteProject: SiteProject = angularJson.projects[this.docgeni.config.siteProjectName];
                 if (siteProject) {
                     siteProject.name = this.docgeni.config.siteProjectName;
+                    siteProject.custom = true;
                     this.siteProject = siteProject;
                 }
             }

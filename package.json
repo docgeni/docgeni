@@ -14,7 +14,7 @@
     "build:core": "yarn workspace @docgeni/core run build",
     "build-deps": "yarn build:toolkit && yarn build:core",
     "build:cli": "yarn workspace @docgeni/cli run build",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
+    "test": "TS_NODE_PROJECT='./packages/cli/tsconfig.json' NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:docs": "NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build",

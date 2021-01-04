@@ -11,57 +11,96 @@ describe('docgeni build', () => {
 
         const siteSrcPath = path.resolve(basicFixturePath, './_site/src');
         const assetsContentPath = path.resolve(siteSrcPath, './assets/content');
-        const navigationsFilePath = path.resolve(assetsContentPath, './navigations.json');
+        const navigationsFilePath = path.resolve(assetsContentPath, './navigations-zh-cn.json');
         expect(toolkit.fs.pathExistsSync(siteSrcPath)).equals(true);
         expect(toolkit.fs.pathExistsSync(assetsContentPath)).equals(true);
         expect(toolkit.fs.pathExistsSync(navigationsFilePath)).equals(true);
         const navigations = await toolkit.fs.readFileContent(navigationsFilePath);
         expect(JSON.parse(navigations)).deep.equals({
-            'en-us': [],
-            'zh-cn': [
+            navs: [
                 {
                     id: 'guide',
                     path: 'guide',
+                    channel_path: 'guide',
                     title: 'Guide',
-                    subtitle: '',
                     items: [
                         {
-                            id: 'intro',
-                            path: 'intro',
+                            id: 'guide/intro',
+                            path: 'guide/intro',
+                            channel_path: 'guide',
                             title: 'Intro',
-                            subtitle: '',
                             items: [
                                 {
                                     id: 'intro2',
-                                    path: 'intro2',
+                                    path: 'guide/intro/intro2',
+                                    channel_path: 'guide',
                                     title: 'Intro 2',
-                                    subtitle: '',
-                                    contentPath: '/docs/guide/intro/intro2.html'
+                                    order: 1,
+                                    contentPath: 'docs/guide/intro/intro2.html'
                                 },
                                 {
                                     id: 'intro1',
-                                    path: 'intro1',
+                                    path: 'guide/intro/intro1',
+                                    channel_path: 'guide',
                                     title: 'Intro 1',
-                                    subtitle: '',
-                                    contentPath: '/docs/guide/intro/intro1.html'
+                                    order: 2,
+                                    contentPath: 'docs/guide/intro/intro1.html'
                                 }
-                            ]
+                            ],
+                            order: 1
                         },
                         {
                             id: 'getting-started',
-                            path: 'getting-started',
+                            path: 'guide/getting-started',
+                            channel_path: 'guide',
                             title: '快速开始',
-                            subtitle: '',
-                            contentPath: '/docs/guide/getting-started.html'
+                            order: 2,
+                            contentPath: 'docs/guide/getting-started.html'
                         },
                         {
                             id: 'installation',
-                            path: 'installation',
+                            path: 'guide/installation',
+                            channel_path: 'guide',
                             title: '安装',
-                            subtitle: '',
-                            contentPath: '/docs/guide/installation.html'
+                            order: 2,
+                            contentPath: 'docs/guide/installation.html'
                         }
-                    ]
+                    ],
+                    order: 1
+                }
+            ],
+            docs: [
+                {
+                    id: 'getting-started',
+                    path: 'guide/getting-started',
+                    channel_path: 'guide',
+                    title: '快速开始',
+                    order: 2,
+                    contentPath: 'docs/guide/getting-started.html'
+                },
+                {
+                    id: 'installation',
+                    path: 'guide/installation',
+                    channel_path: 'guide',
+                    title: '安装',
+                    order: 2,
+                    contentPath: 'docs/guide/installation.html'
+                },
+                {
+                    id: 'intro1',
+                    path: 'guide/intro/intro1',
+                    channel_path: 'guide',
+                    title: 'Intro 1',
+                    order: 2,
+                    contentPath: 'docs/guide/intro/intro1.html'
+                },
+                {
+                    id: 'intro2',
+                    path: 'guide/intro/intro2',
+                    channel_path: 'guide',
+                    title: 'Intro 2',
+                    order: 1,
+                    contentPath: 'docs/guide/intro/intro2.html'
                 }
             ]
         });

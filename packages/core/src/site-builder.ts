@@ -14,13 +14,19 @@ export class SiteBuilder {
             this.docgeni.paths.setSitePaths(siteProject.root, siteProject.sourceRoot);
         } else {
             const sitePath = path.resolve(this.docgeni.paths.cwd, '_site');
-            this.docgeni.paths.setSitePaths(sitePath);
-            await this.createProject(sitePath);
+            await this.createSiteProject(sitePath);
         }
     }
 
-    async createProject(sitePath: string): Promise<void> {
-        await toolkit.fs.copy(path.resolve(__dirname, './site-template'), sitePath);
+    async createSiteProject(sitePath: string): Promise<void> {
+        if (!toolkit.fs.existsSync(path.resolve(sitePath, './angular.json'))) {
+            await toolkit.fs.copy(path.resolve(__dirname, './site-template'), sitePath);
+        }
+        this.siteProject = {
+            name: 'site',
+            root: sitePath
+        };
+        this.docgeni.paths.setSitePaths(sitePath);
     }
 
     async start(): Promise<void> {
@@ -32,20 +38,20 @@ export class SiteBuilder {
     }
 
     async build(cmdArgs: AngularCommandOptions): Promise<void> {
-        if (this.siteProject) {
-            this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
-        } else {
-            this.docgeni.logger.warn(`not support build for auto create site`);
-        }
+        this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
     }
 
     private execAngularCommand(command: string, args: Array<string> = []) {
         try {
+            const ngCommandPath = this.siteProject.custom ? 'node_modules/@angular/cli/bin/ng' : '../node_modules/@angular/cli/bin/ng';
             const commandArgs = [command, this.siteProject.name, ...args];
             this.docgeni.logger.info(`Start execute ng ${commandArgs.join(' ')} for site...`);
-            const child = spawn('node_modules/@angular/cli/bin/ng', commandArgs, { stdio: 'inherit' });
+            const child = spawn(ngCommandPath, commandArgs, {
+                stdio: 'inherit',
+                cwd: this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath
+            });
             child.on('data', data => {
-                this.docgeni.logger.error(data);
+                this.docgeni.logger.info(data);
             });
         } catch (error) {
             this.docgeni.logger.error(error);

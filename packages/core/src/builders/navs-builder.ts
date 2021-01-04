@@ -1,7 +1,6 @@
-import { ComponentDocItem } from './../../../../dist/template/interfaces/navigation-item.d';
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { ChannelItem, DocItem, Locale, NavigationItem } from '../interfaces';
+import { ChannelItem, ComponentDocItem, DocItem, Locale, NavigationItem } from '../interfaces';
 import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocFileBuilder } from './doc-file-builder';
 import * as path from 'path';
