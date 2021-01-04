@@ -1,7 +1,5 @@
 import { NavigationItem, Locale } from './interfaces';
 import * as path from 'path';
-import { DocType } from './enums';
-import { DocSourceFile } from './docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
 import * as Prism from 'node-prismjs';
 export const DOCS_ENTRY_FILE_NAMES = ['index', 'readme'];
@@ -48,20 +46,11 @@ export function buildNavsMapForLocales(locales: Locale[], navs: NavigationItem[]
     return localeNavsMap;
 }
 
-export function getDocRoutePath(metaPath: string, basename: string) {
-    if (!toolkit.utils.isUndefinedOrNull(metaPath)) {
-        return metaPath;
-    }
-
-    const routePath = basename.toLowerCase();
-    return isEntryDoc(basename) ? '' : routePath;
-}
-
-export function getDocTitle(metaTitle: string, basename: string) {
+export function getDocTitle(metaTitle: string, name: string) {
     if (metaTitle) {
         return metaTitle;
     }
-    const title = toolkit.strings.titleCase(basename);
+    const title = toolkit.strings.titleCase(name);
     return title.replace(/-/g, ' ');
 }
 
@@ -72,13 +61,6 @@ export function isEntryDoc(name: string) {
 export function highlight(sourceCode: string, lang: string) {
     const language = Prism.languages[lang] || Prism.languages.autoit;
     return Prism.highlight(sourceCode, language);
-}
-
-export function combineRoutePath(parentPath: string, currentPath: string): string {
-    if (!currentPath) {
-        return parentPath;
-    }
-    return parentPath ? `${parentPath}/${currentPath.toLowerCase()}` : `${currentPath}`;
 }
 
 export function ascendingSortByOrder<T extends { order?: number }>(items: T[]) {
