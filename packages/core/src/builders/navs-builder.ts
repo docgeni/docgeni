@@ -2,7 +2,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
 import { ChannelItem, ComponentDocItem, DocItem, Locale, NavigationItem } from '../interfaces';
 import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
-import { DocFileBuilder } from './doc-file-builder';
+import { DocSourceFile } from './doc-file';
 import * as path from 'path';
 
 export class NavsBuilder {
@@ -22,8 +22,8 @@ export class NavsBuilder {
         }
     > = {};
 
-    private get docFileBuilders() {
-        return this.docgeni.docsBuilder.fileBuilders;
+    private get docFiles() {
+        return this.docgeni.docsBuilder.docs;
     }
 
     constructor(private docgeni: DocgeniContext) {
@@ -156,7 +156,7 @@ export class NavsBuilder {
                 navs.push(navItem);
                 navItem.items = await this.buildDocDirNavs(absDocPath, locale, docItems, navItem, excludeDirs);
             } else {
-                const docFile = this.docFileBuilders.get(absDocPath);
+                const docFile = this.docFiles.get(absDocPath);
                 if (!docFile) {
                     throw new Error(`Can't find doc file for ${absDocPath}`);
                 }
@@ -187,10 +187,10 @@ export class NavsBuilder {
         const fullPath = DOCS_ENTRY_FILE_NAMES.map(name => {
             return path.resolve(dirPath, `${name}.md`);
         }).find(path => {
-            return this.docFileBuilders.get(path);
+            return this.docFiles.get(path);
         });
         if (fullPath) {
-            return this.docFileBuilders.get(fullPath);
+            return this.docFiles.get(fullPath);
         } else {
             return undefined;
         }
@@ -208,7 +208,7 @@ export class NavsBuilder {
         }
     }
 
-    private getCurrentRoutePath(dirname: string, file?: DocFileBuilder) {
+    private getCurrentRoutePath(dirname: string, file?: DocSourceFile) {
         let currentPath = dirname;
         if (file && !toolkit.utils.isUndefinedOrNull(file.meta.path)) {
             currentPath = file.meta.path;

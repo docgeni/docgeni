@@ -1,4 +1,4 @@
-export * from './doc-file-builder';
+export * from './doc-file';
 export * from './docs-builder';
 export * from './navs-builder';
 export * from './library-builder';

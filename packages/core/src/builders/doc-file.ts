@@ -3,14 +3,14 @@ import * as path from 'path';
 import { DocMeta } from '../docgeni.interface';
 import { Markdown } from '../markdown';
 
-export interface DocFileBuilderOptions {
+export interface DocSourceFileOptions {
     cwd: string;
     base: string;
     path: string;
     locale: string;
 }
 
-export class DocFileBuilder {
+export class DocSourceFile {
     private emitted = false;
     public locale: string;
     public cwd: string;
@@ -61,7 +61,7 @@ export class DocFileBuilder {
         return path.basename(this.path, this.extname);
     }
 
-    constructor(options: DocFileBuilderOptions) {
+    constructor(options: DocSourceFileOptions) {
         this.cwd = options.cwd;
         this.base = options.base;
         this.path = options.path;

@@ -1,19 +1,19 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocFileBuilder } from './doc-file-builder';
+import { DocSourceFile } from './doc-file';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Locale } from '../interfaces';
 import * as chokidar from 'chokidar';
 
 export class DocsBuilder {
-    private docFileBuilders = new Map<string, DocFileBuilder>();
+    private docFiles = new Map<string, DocSourceFile>();
 
     private watchers: chokidar.FSWatcher[] = [];
 
     public hooks = {
-        buildDoc: new SyncHook<DocFileBuilder>(['docBuilder']),
-        buildDocSucceed: new SyncHook<DocFileBuilder>(['docBuilder']),
+        buildDoc: new SyncHook<DocSourceFile>(['docBuilder']),
+        buildDocSucceed: new SyncHook<DocSourceFile>(['docBuilder']),
         buildDocs: new AsyncSeriesHook<DocsBuilder>(['docsBuilder']),
         buildDocsSucceed: new SyncHook<DocsBuilder>(['docsBuilder'])
     };
@@ -22,8 +22,8 @@ export class DocsBuilder {
         return this.docgeni.config;
     }
 
-    public get fileBuilders() {
-        return this.docFileBuilders;
+    public get docs() {
+        return this.docFiles;
     }
 
     constructor(private docgeni: DocgeniContext) {}
@@ -37,7 +37,7 @@ export class DocsBuilder {
     }
 
     public async emit() {
-        for (const file of this.docFileBuilders.values()) {
+        for (const file of this.docFiles.values()) {
             await file.emit(this.docgeni.paths.absSiteAssetsContentPath);
         }
     }
@@ -47,8 +47,8 @@ export class DocsBuilder {
             watcher.close();
         });
         this.watchers = [];
-        delete this.docFileBuilders;
-        this.docFileBuilders = new Map<string, DocFileBuilder>();
+        delete this.docFiles;
+        this.docFiles = new Map<string, DocSourceFile>();
     }
 
     public watch() {
@@ -82,7 +82,7 @@ export class DocsBuilder {
             });
     }
 
-    private async buildDoc(docFileBuilder: DocFileBuilder) {
+    private async buildDoc(docFileBuilder: DocSourceFile) {
         this.hooks.buildDoc.call(docFileBuilder);
         await docFileBuilder.build();
         this.hooks.buildDocSucceed.call(docFileBuilder);
@@ -99,9 +99,9 @@ export class DocsBuilder {
         });
         // build all doc files
         for (const filepath of allFiles) {
-            const docFileBuilder = this.createDocFileBuilder(locale, filepath);
-            this.docFileBuilders.set(docFileBuilder.path, docFileBuilder);
-            await this.buildDoc(docFileBuilder);
+            const docFile = this.createDocSourceFile(locale, filepath);
+            this.docFiles.set(docFile.path, docFile);
+            await this.buildDoc(docFile);
         }
     }
 
@@ -118,19 +118,19 @@ export class DocsBuilder {
                 this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
                 // watch filePath is relative path
                 const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath)
-                let docFileBuilder = this.docFileBuilders.get(absFilePath);
-                if (!docFileBuilder) {
-                    docFileBuilder = this.createDocFileBuilder(locale, absFilePath);
-                    this.docFileBuilders.set(docFileBuilder.path, docFileBuilder);
+                let docFile = this.docFiles.get(absFilePath);
+                if (!docFile) {
+                    docFile = this.createDocSourceFile(locale, absFilePath);
+                    this.docFiles.set(docFile.path, docFile);
                 }
-                await this.buildDoc(docFileBuilder);
+                await this.buildDoc(docFile);
                 this.hooks.buildDocsSucceed.call(this);
             });
         });
     }
 
-    private createDocFileBuilder(locale: Locale, absFilePath: string) {
-        return new DocFileBuilder({
+    private createDocSourceFile(locale: Locale, absFilePath: string) {
+        return new DocSourceFile({
             locale: locale.key,
             cwd: this.docgeni.paths.cwd,
             base: this.docgeni.paths.cwd,
