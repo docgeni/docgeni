@@ -149,13 +149,16 @@ export class NavsBuilder {
                     path: fullRoutePath,
                     channel_path: parentItem ? parentItem.channel_path : fullRoutePath,
                     title: getDocTitle(entryFile && entryFile.meta.title, dirname),
-                    subtitle: entryFile.meta.subtitle,
+                    subtitle: entryFile && entryFile.meta.subtitle,
                     items: [],
                     order: entryFile && toolkit.utils.isNumber(entryFile.meta.order) ? entryFile.meta.order : Number.MAX_SAFE_INTEGER
                 };
                 navs.push(navItem);
                 navItem.items = await this.buildDocDirNavs(absDocPath, locale, docItems, navItem, excludeDirs);
             } else {
+                if (path.extname(absDocPath) !== '.md') {
+                    continue;
+                }
                 const docFile = this.docFiles.get(absDocPath);
                 if (!docFile) {
                     throw new Error(`Can't find doc file for ${absDocPath}`);
