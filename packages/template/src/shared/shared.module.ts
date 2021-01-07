@@ -67,6 +67,8 @@ export {
     LabelComponent,
     ContentViewerComponent,
     TableOfContentsComponent,
+    CopierService,
     AssetsContentPathPipe,
-    CopierService
+    IsModeFullPipe,
+    IsModeLitePipe
 };

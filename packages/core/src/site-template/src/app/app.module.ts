@@ -1,41 +1,14 @@
-import {
-    DocgeniTemplateModule,
-    CONFIG_TOKEN,
-    routes,
-    RootComponent,
-    DOCGENI_INITIALIZER_PROVIDERS
-} from '@docgeni/template';
 import { NgModule } from '@angular/core';
-import { config } from './content/config';
 import { RouterModule } from '@angular/router';
-import { LIB_EXAMPLE_LOADER_PROVIDER } from './content/example-loader';
-import { EXAMPLE_MODULES } from './content/example-modules';
-
-import './content/navigations.json';
 import { BrowserModule } from '@angular/platform-browser';
+import { DocgeniTemplateModule } from "@docgeni/template";
+import { DOCGENI_SITE_PROVIDERS, RootComponent, EXAMPLE_MODULES } from './content/index';
 @NgModule({
     declarations: [],
-    imports: [
-        BrowserModule,
-        DocgeniTemplateModule,
-        RouterModule.forRoot(routes, {
-            // scrollPositionRestoration: 'enabled',
-            // anchorScrolling: 'enabled',
-            // relativeLinkResolution: 'corrected'
-        }),
-        ...EXAMPLE_MODULES
-    ],
-    providers: [
-        ...DOCGENI_INITIALIZER_PROVIDERS,
-        LIB_EXAMPLE_LOADER_PROVIDER,
-        {
-            provide: CONFIG_TOKEN,
-            useValue: config
-        }
-    ],
+    imports: [BrowserModule, DocgeniTemplateModule, RouterModule.forRoot([]), ...EXAMPLE_MODULES],
+    providers: [...DOCGENI_SITE_PROVIDERS],
     bootstrap: [RootComponent]
 })
 export class AppModule {
-    constructor() {
-    }
+    constructor() {}
 }

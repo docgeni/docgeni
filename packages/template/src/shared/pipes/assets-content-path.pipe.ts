@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { GlobalContext } from '../../services/public-api';
+import { GlobalContext } from '../../services/global-context';
 
 @Pipe({ name: 'dgAssetsContentPath' })
 export class AssetsContentPathPipe implements PipeTransform {
