@@ -101,8 +101,12 @@ export class NavigationService {
 
     searchFirstDocItem() {
         let docItem: DocItem;
-        for (const channel of this.getChannels()) {
-            docItem = this.getNavFirstDocItem(channel as NavigationItem);
+        for (const nav of this.navs) {
+            if (this.isDocItem(nav)) {
+                docItem = nav;
+            } else {
+                docItem = this.getNavFirstDocItem(nav as NavigationItem);
+            }
             if (docItem) {
                 break;
             }

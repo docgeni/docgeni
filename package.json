@@ -23,6 +23,7 @@
     "preinstall": "node scripts/check-yarn.js",
     "sync-interfaces": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-interfaces.ts",
     "sync-template-version": "ts-node --project ./scripts/tsconfig.json ./scripts/sync-template-version.ts",
+    "update-template-package": "ts-node --project ./scripts/tsconfig.json ./scripts/update-template-package.ts",
     "release": "yarn build && yarn release-only",
     "release-only": "wpm release",
     "pub": "wpm publish",
@@ -35,7 +36,8 @@
   "workspaces": [
     "./packages/cli",
     "./packages/core",
-    "./packages/toolkit"
+    "./packages/toolkit",
+    "./packages/template"
   ],
   "dependencies": {
     "@angular/animations": "~10.2.4",

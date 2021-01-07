@@ -27,7 +27,6 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/template": "^0.6.0-next.2",
     "@docgeni/toolkit": "^0.6.0-next.2",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
@@ -45,9 +44,6 @@
     "ts-morph": "^7.0.2",
     "vinyl": "^2.2.0",
     "vinyl-fs": "^3.0.3"
-  },
-  "peerDependencies": {
-    "@docgeni/template": "^0.6.0-next.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
