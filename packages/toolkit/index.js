@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV;
-if (env === 'development') {
+if (['development', 'test'].includes(env)) {
     module.exports = require('./src/index');
 } else {
     module.exports = require('./lib/index');
