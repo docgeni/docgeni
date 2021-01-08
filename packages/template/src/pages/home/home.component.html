@@ -1,19 +1,21 @@
-<div class="dg-launch">
-  <h1>{{ global.config.title }}</h1>
-  <p class="text-muted launch-description">{{ global.config.description }}</p>
-  <button class="btn btn-primary btn-lg">快速上手</button>
-</div>
+<ng-container *ngIf="hasHome">
+  <div class="dg-launch">
+    <h1>{{ global.config.title }}</h1>
+    <p class="text-muted launch-description">{{ global.config.description }}</p>
+    <button class="btn btn-primary btn-lg">快速上手</button>
+  </div>
 
-<div class="dg-features">
-  <div class="feature">
-    功能1
+  <div class="dg-features">
+    <div class="feature">
+      功能1
+    </div>
+    <div class="feature">
+      功能2
+    </div>
+    <div class="feature">
+      功能3
+    </div>
   </div>
-  <div class="feature">
-    功能2
-  </div>
-  <div class="feature">
-    功能3
-  </div>
-</div>
 
-<dg-footer></dg-footer>
+  <dg-footer></dg-footer>
+</ng-container>

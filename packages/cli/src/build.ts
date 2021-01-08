@@ -1,5 +1,6 @@
 import { CommandModule } from 'yargs';
 import { Docgeni, DocgeniConfig } from '@docgeni/core';
+import { normalizeCommandArgsForAngular } from './angular-args';
 
 export const buildCommand: CommandModule = {
     command: ['build'],
@@ -30,10 +31,7 @@ export const buildCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: argv.watch,
             config,
-            cmdArgs: {
-                prod: argv.prod,
-                skipSite: argv.skipSite
-            }
+            cmdArgs: normalizeCommandArgsForAngular(config)
         });
         docgeni.run();
     }

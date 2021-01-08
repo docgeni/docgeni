@@ -55,19 +55,18 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             // component doc
             if (id) {
                 this.navigationService.selectDocItem(id);
-                if (this.navigationService.docItem) {
-                    this.pageTitle.title = '' + this.navigationService.docItem.title;
-                } else {
-                    const firstDoc = this.navigationService.getChannelFirstDocItem();
-                    if (firstDoc) {
-                        this.router.navigate(['./' + firstDoc.path], { relativeTo: this.route });
-                    }
-                }
             } else {
                 // doc
                 const path = this.route.snapshot.routeConfig.path;
                 this.navigationService.selectDocItem(path);
-                // this.pageTitle.title = '' + this.navigationService.docItem.title;
+            }
+            if (this.navigationService.docItem) {
+                this.pageTitle.title = '' + this.navigationService.docItem.title;
+            } else {
+                const firstDoc = this.navigationService.searchFirstDocItem();
+                if (firstDoc) {
+                    this.router.navigate(['./' + firstDoc.path], { relativeTo: this.route });
+                }
             }
         });
 

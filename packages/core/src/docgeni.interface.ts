@@ -65,8 +65,11 @@ export interface DocgeniContext {
 }
 
 export interface AngularCommandOptions {
-    prod: boolean;
     skipSite?: boolean;
+    port?: string | number;
+    prod?: boolean;
+    deployUrl?: string;
+    baseHref?: string;
 }
 
 export interface DocgeniOptions {

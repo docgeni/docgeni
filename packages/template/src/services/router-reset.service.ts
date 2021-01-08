@@ -113,6 +113,6 @@ export class RouterResetService {
             });
         }
 
-        this.router.resetConfig([...config, ...routes]);
+        this.router.resetConfig([...config, ...routes, { path: '**', redirectTo: '' }]);
     }
 }

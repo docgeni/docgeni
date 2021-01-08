@@ -10,7 +10,7 @@ async function update() {
         detectIndent: true,
         indent: 2
     });
-    toolkit.print.info(`update dist/template/package.json 's private to true`);
+    toolkit.print.succuss(`update dist/template/package.json 's private to false success`);
 }
 
 update();

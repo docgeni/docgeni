@@ -114,7 +114,7 @@ export class Docgeni implements DocgeniContext {
 
             if (!this.options.cmdArgs.skipSite) {
                 if (this.watch) {
-                    await this.siteBuilder.start();
+                    await this.siteBuilder.serve(this.options.cmdArgs);
                 } else {
                     await this.siteBuilder.build(this.options.cmdArgs);
                 }

@@ -10,6 +10,8 @@ import { PageTitleService } from '../../services/page-title.service';
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;
 
+    hasHome = false;
+
     constructor(public global: GlobalContext, router: Router, navigationService: NavigationService, pageTitle: PageTitleService) {
         if (!global.config.homeMeta) {
             if (global.config.mode === 'full') {
@@ -30,6 +32,7 @@ export class HomeComponent implements OnInit {
             return;
         }
         pageTitle.title = 'Home';
+        this.hasHome = true;
     }
 
     ngOnInit(): void {}

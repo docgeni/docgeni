@@ -29,16 +29,22 @@ export class SiteBuilder {
         this.docgeni.paths.setSitePaths(sitePath);
     }
 
-    async start(): Promise<void> {
-        if (this.siteProject) {
-            this.execAngularCommand('serve');
-        } else {
-            this.docgeni.logger.warn(`not support start for auto create site`);
-        }
+    private parseCommandOptionsToArgs(cmdOptions: AngularCommandOptions) {
+        return Object.keys(cmdOptions)
+            .filter(key => {
+                return !toolkit.utils.isUndefinedOrNull(cmdOptions[key]);
+            })
+            .reduce((result, key) => {
+                return [...result, `--${key}`, cmdOptions[key]];
+            }, []);
     }
 
-    async build(cmdArgs: AngularCommandOptions): Promise<void> {
-        this.execAngularCommand('build', ['--prod', cmdArgs.prod ? 'true' : 'false']);
+    async serve(cmdOptions: AngularCommandOptions): Promise<void> {
+        this.execAngularCommand('serve', this.parseCommandOptionsToArgs(cmdOptions));
+    }
+
+    async build(cmdOptions: AngularCommandOptions): Promise<void> {
+        this.execAngularCommand('build', this.parseCommandOptionsToArgs(cmdOptions));
     }
 
     private execAngularCommand(command: string, args: Array<string> = []) {
