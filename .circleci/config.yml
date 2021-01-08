@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/docgeni
+    docker:
+      - image: circleci/node:12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: docgeni-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - save_cache:
+          key: yarn install --frozen-lockfile --cache-folder node_modules
+          paths:
+            - 'node_modules'
+      - run: yarn test
