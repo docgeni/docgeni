@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.4](https://github.com/docgeni/docgeni/compare/v0.6.0-next.3...v0.6.0-next.4) (2021-01-18)
+
+
+### Bug Fixes
+
+* **cli:** update cli dependencies @docgeni/template ([2ccebaa](https://github.com/docgeni/docgeni/commit/2ccebaa797659bf2511eb43251332eb35b753077))
+
+
+### Features
+
+* **cli:** add angular build & serve command options contains port,deployUrl,baseHref support ([66dced5](https://github.com/docgeni/docgeni/commit/66dced546b7e291a56ce8aeafdf00d48fe4d967f))
+
+
+
+
+
 # [0.6.0-next.3](https://github.com/docgeni/docgeni/compare/v0.6.0-next.2...v0.6.0-next.3) (2021-01-07)
 
 
