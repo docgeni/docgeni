@@ -6,7 +6,7 @@ import writeJsonFile from 'write-json-file';
 async function sync() {
     const args = yargs(process.argv);
     if (args.version) {
-        const corePackageJsonPath = path.resolve(process.cwd(), './packages/core/package.json');
+        const corePackageJsonPath = path.resolve(process.cwd(), './packages/cli/package.json');
         const corePackageJson = await toolkit.fs.readJson(corePackageJsonPath);
         const toVersion = `^${args.version}`;
         corePackageJson.dependencies['@docgeni/template'] = toVersion;
