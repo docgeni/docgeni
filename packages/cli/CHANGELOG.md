@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.5](https://github.com/docgeni/docgeni/compare/v0.6.0-next.4...v0.6.0-next.5) (2021-01-18)
+
+
+### Bug Fixes
+
+* **cli:** update angular dependencies version ([ab749bb](https://github.com/docgeni/docgeni/commit/ab749bbe9e9f555f793a5d0aa210f4e5c50f47c8))
+
+
+
+
+
 # [0.6.0-next.4](https://github.com/docgeni/docgeni/compare/v0.6.0-next.3...v0.6.0-next.4) (2021-01-18)
 
 
