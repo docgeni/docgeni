@@ -41,7 +41,7 @@ export class Docgeni implements DocgeniContext {
 
     constructor(options: DocgeniOptions) {
         this.options = options;
-        this.config = { ...DEFAULT_CONFIG, ...options.config };
+        this.config = this.normalizeConfig(options.config);
         this.siteConfig = {
             title: this.config.title,
             heading: this.config.heading,
@@ -63,9 +63,6 @@ export class Docgeni implements DocgeniContext {
             require.resolve('./plugins/config'),
             require.resolve('./plugins/angular')
         ];
-        if (!this.config.libs) {
-            this.config.libs = [];
-        }
 
         this.initialize();
     }
@@ -144,6 +141,14 @@ export class Docgeni implements DocgeniContext {
         if (this.config.docsPath && !toolkit.fs.existsSync(this.config.docsPath)) {
             throw new ValidationError(`docs folder(${this.config.docsPath}) has not exists`);
         }
+    }
+
+    private normalizeConfig(inputConfig: DocgeniConfig) {
+        const config = { ...DEFAULT_CONFIG, ...inputConfig };
+        if (!config.libs) {
+            config.libs = [];
+        }
+        return config;
     }
 
     private async generateSiteConfig() {

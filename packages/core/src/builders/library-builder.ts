@@ -121,7 +121,8 @@ export class LibraryBuilder {
 
         // 排除 includes, include 一般用于某个文件夹所有的子文件夹都是独立的组件，那么如果这个文件夹处理类库的根目录，大多数场景是需要排除的
         // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
-        const dirs = await toolkit.fs.getDirs(this.absLibPath, { exclude: [...this.lib.exclude, ...includes] });
+        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
+        const dirs = await toolkit.fs.getDirs(this.absLibPath, { exclude: [...excludes, ...includes] });
         dirs.forEach(dir => {
             const absComponentPath = path.resolve(this.absLibPath, dir);
             const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
