@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.5](https://github.com/docgeni/docgeni/compare/v0.6.0-next.4...v0.6.0-next.5) (2021-01-18)
+
+
+### Bug Fixes
+
+* **cli:** update angular dependencies version ([ab749bb](https://github.com/docgeni/docgeni/commit/ab749bbe9e9f555f793a5d0aa210f4e5c50f47c8))
+* **core:** should not throw error when exclude is undefined ([0a8999e](https://github.com/docgeni/docgeni/commit/0a8999e9990c3641a9a3ab16040f7407cc951205))
+
+
+
+
+
 # [0.6.0-next.4](https://github.com/docgeni/docgeni/compare/v0.6.0-next.3...v0.6.0-next.4) (2021-01-18)
 
 
