@@ -54,7 +54,8 @@ export class SiteBuilder {
             this.docgeni.logger.info(`Start execute ng ${commandArgs.join(' ')} for site...`);
             const child = spawn(ngCommandPath, commandArgs, {
                 stdio: 'inherit',
-                cwd: this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath
+                cwd: this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath,
+                shell: process.platform === 'win32' // 仅在当前运行环境为 Windows 时，才使用 shell
             });
             child.on('data', data => {
                 this.docgeni.logger.info(data);
