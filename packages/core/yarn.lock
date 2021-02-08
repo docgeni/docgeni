@@ -30,15 +30,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@docgeni/template@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@docgeni/template/-/template-0.5.4.tgz#17e179571d413fbbbd63caed7296cda4162e2748"
-  integrity sha512-V8D+eC4Gt4T4FBWveNAn8e7Wq2W65/llVqkC0jp2a3LzHAHFPMTmTE2JNPOwXORIfo1yJUl7dRyKoNegiocPOA==
-
-"@docgeni/toolkit@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@docgeni/toolkit/-/toolkit-0.5.0.tgz#449d01d84c37af34eef08d9bdb772571ee30734c"
-  integrity sha512-fOCnUsctHB2T4tDPs/ZVzamIzYQHm0pR9cmf7JLfHf2skHiduWpl/4DcxVi0QoNIzknuc4k3H5fiSPHPgANOZw==
+"@docgeni/toolkit@^0.6.0-next.5":
+  version "0.6.0-next.5"
+  resolved "https://registry.yarnpkg.com/@docgeni/toolkit/-/toolkit-0.6.0-next.5.tgz#01d3928f0991a7c5a0f987145340ad220bbe9a30"
+  integrity sha512-6tHb03mF4mINKwcOvp7xnbSZqmi2zYZpIJkFj95eq1i+J8Sup+JUHDXSUIUwqRXNt9Q8di9oJcYVA0HL9aNfww==
   dependencies:
     camelcase "^6.0.0"
     chalk "^3.0.0"
@@ -1525,10 +1520,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
-  integrity sha512-mJzT8D2yPxoPh7h0UXkB+dBj4FykPJ2OIfxAWeIHrvoHDkFxukV/29QxoFQoPM6RLEwhIFdJpmKBlqVM3s2ZIw==
+marked@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-2.0.0.tgz#9662bbcb77ebbded0662a7be66ff929a8611cee5"
+  integrity sha512-NqRSh2+LlN2NInpqTQnS614Y/3NkVMFFU6sJlRFEpxJ/LHuK/qJECH7/fXZjk4VZstPW/Pevjil/VtSONsLc7Q==
 
 math-random@^1.0.1:
   version "1.0.4"
