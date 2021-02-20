@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.7](https://github.com/docgeni/docgeni/compare/v0.6.0-next.6...v0.6.0-next.7) (2021-02-20)
+
+
+### Bug Fixes
+
+* **core:** generate example module keys exclude components with out examples #INFR-1644 ([8acbbb8](https://github.com/docgeni/docgeni/commit/8acbbb8a63755d6e8fb218b4ea4cae5704f3c309)), closes [#INFR-1644](https://github.com/docgeni/docgeni/issues/INFR-1644)
+
+
+
+
+
 # [0.6.0-next.6](https://github.com/docgeni/docgeni/compare/v0.6.0-next.5...v0.6.0-next.6) (2021-02-20)
 
 
