@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.6](https://github.com/docgeni/docgeni/compare/v0.6.0-next.5...v0.6.0-next.6) (2021-02-20)
+
+
+### Bug Fixes
+
+* **core:** fix windows err about spawn and cross-env #INFR-1574 ([3750db8](https://github.com/docgeni/docgeni/commit/3750db82b4b539a3560de91b7b1a6c89bffb0972)), closes [#INFR-1574](https://github.com/docgeni/docgeni/issues/INFR-1574)
+* **core:** should remove example highlighted content from EXAMPLE_COMPONENTS #INFR-1644 ([9bd7077](https://github.com/docgeni/docgeni/commit/9bd7077e628c688a8e2bb47ec11077a661892179)), closes [#INFR-1644](https://github.com/docgeni/docgeni/issues/INFR-1644)
+
+
+
+
+
 # [0.6.0-next.5](https://github.com/docgeni/docgeni/compare/v0.6.0-next.4...v0.6.0-next.5) (2021-01-18)
 
 

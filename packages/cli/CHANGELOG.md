@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.6](https://github.com/docgeni/docgeni/compare/v0.6.0-next.5...v0.6.0-next.6) (2021-02-20)
+
+
+### Bug Fixes
+
+* **cli:** update cli rxjs tslib and zone.js versions ([0862480](https://github.com/docgeni/docgeni/commit/08624806d48fd078814f157cb4ca589c2d664bbb))
+
+
+
+
+
 # [0.6.0-next.5](https://github.com/docgeni/docgeni/compare/v0.6.0-next.4...v0.6.0-next.5) (2021-01-18)
 
 
