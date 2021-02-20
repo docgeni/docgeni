@@ -6,6 +6,10 @@ module.exports = {
         {
             filename: './packages/template/package.json',
             type: 'json'
+        },
+        {
+            filename: './packages/cli/src/version.ts',
+            type: 'code'
         }
     ],
     skip: {

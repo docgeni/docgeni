@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "ng-add",
+  "title": "ng-add",
+  "type": "object",
+  "properties": {
+    "project": {
+      "description": "Name of the project.",
+      "type": "string",
+      "$default": {
+        "$source": "projectName"
+      }
+    },
+    "icon": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether add @tethys/icons.",
+      "x-prompt": "Whether add @tethys/icons?"
+    }
+  }
+}

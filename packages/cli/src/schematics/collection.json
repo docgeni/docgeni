@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "add docgeni",
+      "schema": "./ng-add/schema.json",
+      "factory": "./ng-add/index#main"
+    }
+  }
+}

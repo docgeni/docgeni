@@ -23,25 +23,27 @@
   "scripts": {
     "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
     "build-only": "tsc -b",
-    "build": "yarn clean && yarn build-only",
+    "build": "yarn clean && yarn build-only && yarn copy:schematics",
+    "copy:schematics": "cpx \"./src/schematics/**/*.{json,template}\" ./lib/schematics/ -v",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": ">=0.900.0 <0.1200.0",
-    "@angular/animations": ">=9.0.0 <12.0.0",
-    "@angular/cdk": ">=9.0.0 <12.0.0",
-    "@angular/cli": ">=9.0.0 <12.0.0",
-    "@angular/common": ">=9.0.0 <12.0.0",
-    "@angular/compiler": ">=9.0.0 <12.0.0",
-    "@angular/compiler-cli": ">=9.0.0 <12.0.0",
-    "@angular/core": ">=9.0.0 <12.0.0",
-    "@angular/forms": ">=9.0.0 <12.0.0",
-    "@angular/platform-browser": ">=9.0.0 <12.0.0",
-    "@angular/platform-browser-dynamic": ">=9.0.0 <12.0.0",
-    "@angular/router": ">=9.0.0 <12.0.0",
+    "@angular-devkit/build-angular": "~0.1002.1",
+    "@angular-devkit/schematics": "~10.2.1",
+    "@angular/animations": "~10.2.4",
+    "@angular/cdk": "^10.2.7",
+    "@angular/cli": "~10.2.1",
+    "@angular/common": "~10.2.4",
+    "@angular/compiler": "~10.2.4",
+    "@angular/compiler-cli": "~10.2.4",
+    "@angular/core": "~10.2.4",
+    "@angular/forms": "~10.2.4",
+    "@angular/platform-browser": "~10.2.4",
+    "@angular/platform-browser-dynamic": "~10.2.4",
+    "@angular/router": "~10.2.4",
     "@docgeni/core": "^0.6.0-next.7",
     "@docgeni/template": "^0.6.0-next.7",
     "@docgeni/toolkit": "^0.6.0-next.7",
@@ -81,5 +83,6 @@
     "@types/fs-extra": "^8.1.0",
     "@types/gulp-watch": "^4.1.34",
     "@types/tapable": "^1.0.5"
-  }
+  },
+  "schematics": "./lib/schematics/collection.json"
 }
