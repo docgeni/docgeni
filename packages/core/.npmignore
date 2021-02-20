@@ -1,4 +1,4 @@
-src
+/src
 test
 tsconfig.tsbuildinfo
 yarn.lock
