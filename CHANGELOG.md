@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.8](https://github.com/docgeni/docgeni/compare/v0.6.0-next.7...v0.6.0-next.8) (2021-02-20)
+
+
+### Features
+
+* **cli:** add partial schematics to cli #INFR-1648 ([88abf5a](https://github.com/docgeni/docgeni/commit/88abf5a1e417151ff82d1fd34d8d398b332ed81a)), closes [#INFR-1648](https://github.com/docgeni/docgeni/issues/INFR-1648)
+
+
+
+
+
 # [0.6.0-next.7](https://github.com/docgeni/docgeni/compare/v0.6.0-next.6...v0.6.0-next.7) (2021-02-20)
 
 
