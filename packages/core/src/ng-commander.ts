@@ -3,7 +3,9 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
 
-export class SiteBuilder {
+const EXCLUDE_ARGS = ['skipSite'];
+
+export class AngularCommander {
     private siteProject: SiteProject;
 
     constructor(private docgeni: DocgeniContext) {}
@@ -32,7 +34,7 @@ export class SiteBuilder {
     private parseCommandOptionsToArgs(cmdOptions: AngularCommandOptions) {
         return Object.keys(cmdOptions)
             .filter(key => {
-                return !toolkit.utils.isUndefinedOrNull(cmdOptions[key]);
+                return !toolkit.utils.isUndefinedOrNull(cmdOptions[key]) && !EXCLUDE_ARGS.includes(key);
             })
             .reduce((result, key) => {
                 return [...result, `--${key}`, cmdOptions[key]];

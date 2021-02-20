@@ -61,6 +61,14 @@ export class LibComponent {
         return this.localeDocItemsMap[locale];
     }
 
+    /**
+     * Get module key, `{libName}/{name}`
+     * example alib/button
+     */
+    public getModuleKey() {
+        return `${this.lib.name}/${this.name}`;
+    }
+
     private async buildOverviews(): Promise<void> {
         const docSourceFiles: DocSourceFile[] = [];
 

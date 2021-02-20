@@ -7,11 +7,11 @@ import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext, DocgeniHooks, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
 import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
-import { SiteBuilder } from './site-builder';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import * as semver from 'semver';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
+import { AngularCommander } from './ng-commander';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -26,7 +26,7 @@ export class Docgeni implements DocgeniContext {
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
-    private siteBuilder: SiteBuilder;
+    private ngCommander: AngularCommander;
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
@@ -76,8 +76,8 @@ export class Docgeni implements DocgeniContext {
                 throw new ValidationError(`site project name(${this.config.siteProjectName}) is not exists`);
             }
             this.enableIvy = detector.ngVersion ? semver.gte(detector.ngVersion, '9.0.0') : true;
-            this.siteBuilder = new SiteBuilder(this);
-            await this.siteBuilder.initialize(detector.siteProject);
+            this.ngCommander = new AngularCommander(this);
+            await this.ngCommander.initialize(detector.siteProject);
             this.hooks.run.call();
 
             this.librariesBuilders = new LibrariesBuilder(this);
@@ -111,9 +111,9 @@ export class Docgeni implements DocgeniContext {
 
             if (!this.options.cmdArgs.skipSite) {
                 if (this.watch) {
-                    await this.siteBuilder.serve(this.options.cmdArgs);
+                    await this.ngCommander.serve(this.options.cmdArgs);
                 } else {
-                    await this.siteBuilder.build(this.options.cmdArgs);
+                    await this.ngCommander.build(this.options.cmdArgs);
                 }
             }
         } catch (error) {

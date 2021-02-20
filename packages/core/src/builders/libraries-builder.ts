@@ -11,10 +11,6 @@ import { LibComponent } from './library-component';
 export class LibrariesBuilder {
     private libraryBuilders: LibraryBuilder[];
     private absDestSiteContentPath: string;
-    // key is component identifer: {{lib.name}}-{{componentName}} e.g. alib-button
-    private componentLiveExamples: Map<string, LiveExample[]> = new Map();
-    // key is example identifer: {{lib.name}}-{{componentName}}-{{exampleName}} e.g. alib-button-basic-example
-    private liveExampleComponents: { [key: string]: LiveExample } = {};
 
     private building = false;
     private emitting = false;
@@ -37,11 +33,6 @@ export class LibrariesBuilder {
         this.libraryBuilders = this.config.libs.map(lib => {
             this.normalizeLibConfig(lib);
             return new LibraryBuilder(docgeni, lib);
-        });
-        this.libraryBuilders.forEach(libraryBuilder => {
-            libraryBuilder.hooks.buildComponentSucceed.tap('LibrariesBuilder', component => {
-                this.addExamples(`${libraryBuilder.lib.name}/${component.name}`, component.examples);
-            });
         });
     }
 
@@ -118,20 +109,29 @@ export class LibrariesBuilder {
         lib.absRootPath = path.resolve(this.docgeni.paths.cwd, lib.rootDir);
     }
 
-    private addExamples(key: string, examples: LiveExample[] = []) {
-        if (!toolkit.utils.isEmpty(examples)) {
-            this.componentLiveExamples.set(key, examples);
-            examples.forEach(example => {
-                this.liveExampleComponents[example.key] = example;
-            });
-        }
-    }
-
     private async emitAllEntries() {
-        await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
-            data: JSON.stringify(this.liveExampleComponents, null, 4)
+        const moduleKeys: string[] = [];
+        const liveExampleComponents: Record<string, LiveExample> = {};
+        this.libraryBuilders.forEach(libraryBuilder => {
+            libraryBuilder.components.forEach(component => {
+                moduleKeys.push(component.getModuleKey());
+                component.examples.forEach(example => {
+                    liveExampleComponents[example.key] = {
+                        ...example,
+                        sourceFiles: example.sourceFiles.map(sourceFile => {
+                            return {
+                                name: sourceFile.name,
+                                highlightedPath: sourceFile.highlightedPath
+                            };
+                        })
+                    };
+                    example.key;
+                });
+            });
         });
-        const moduleKeys = this.componentLiveExamples.keys();
+        await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
+            data: JSON.stringify(liveExampleComponents, null, 4)
+        });
         await toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
             moduleKeys,
             enableIvy: this.docgeni.enableIvy
@@ -142,7 +142,7 @@ export class LibrariesBuilder {
             key: string;
             name: string;
         }> = [];
-        for (const key of this.componentLiveExamples.keys()) {
+        for (const key of moduleKeys) {
             modules.push({
                 key,
                 name: toolkit.strings.pascalCase(key.replace('/', '-'))

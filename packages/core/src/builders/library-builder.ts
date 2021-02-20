@@ -16,7 +16,7 @@ import { LibComponent } from './library-component';
 export class LibraryBuilder {
     private absLibPath: string;
     private absDestSiteContentComponentsPath: string;
-    private absDestAssetsExamplesSourcePath: string;
+    // private absDestAssetsExamplesSourcePath: string;
     private absDestAssetsExamplesHighlightedPath: string;
     private absDestAssetsOverviewsPath: string;
     private absDestAssetsApiDocsPath: string;
@@ -33,10 +33,10 @@ export class LibraryBuilder {
     constructor(private docgeni: DocgeniContext, public lib: Library) {
         this.absLibPath = this.lib.absRootPath;
         this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
-        this.absDestAssetsExamplesSourcePath = path.resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
-        );
+        // this.absDestAssetsExamplesSourcePath = path.resolve(
+        //     this.docgeni.paths.absSitePath,
+        //     `${ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
+        // );
         this.absDestAssetsExamplesHighlightedPath = path.resolve(
             this.docgeni.paths.absSitePath,
             `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
