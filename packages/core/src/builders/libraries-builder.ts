@@ -110,25 +110,8 @@ export class LibrariesBuilder {
     }
 
     private async emitAllEntries() {
-        const moduleKeys: string[] = [];
-        const liveExampleComponents: Record<string, LiveExample> = {};
-        this.libraryBuilders.forEach(libraryBuilder => {
-            libraryBuilder.components.forEach(component => {
-                moduleKeys.push(component.getModuleKey());
-                component.examples.forEach(example => {
-                    liveExampleComponents[example.key] = {
-                        ...example,
-                        sourceFiles: example.sourceFiles.map(sourceFile => {
-                            return {
-                                name: sourceFile.name,
-                                highlightedPath: sourceFile.highlightedPath
-                            };
-                        })
-                    };
-                    example.key;
-                });
-            });
-        });
+        const { moduleKeys, liveExampleComponents } = this.getAllComponentsModulesAndExamples();
+
         await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
             data: JSON.stringify(liveExampleComponents, null, 4)
         });
@@ -152,5 +135,34 @@ export class LibrariesBuilder {
             modules
         });
         await toolkit.template.generate('content-index.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'index.ts'), {});
+    }
+
+    private getAllComponentsModulesAndExamples(): { moduleKeys: string[]; liveExampleComponents: Record<string, LiveExample> } {
+        const moduleKeys: string[] = [];
+        const liveExampleComponents: Record<string, LiveExample> = {};
+        this.libraryBuilders.forEach(libraryBuilder => {
+            libraryBuilder.components.forEach(component => {
+                // exclude components without examples
+                if (!toolkit.utils.isEmpty(component.examples)) {
+                    moduleKeys.push(component.getModuleKey());
+                    component.examples.forEach(example => {
+                        liveExampleComponents[example.key] = {
+                            ...example,
+                            sourceFiles: example.sourceFiles.map(sourceFile => {
+                                return {
+                                    name: sourceFile.name,
+                                    highlightedPath: sourceFile.highlightedPath
+                                };
+                            })
+                        };
+                        example.key;
+                    });
+                }
+            });
+        });
+        return {
+            moduleKeys,
+            liveExampleComponents
+        };
     }
 }
