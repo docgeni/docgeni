@@ -233,7 +233,8 @@ export class LibComponent {
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
                     api: apiDoc ? true : false,
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
-                    category: this.meta.category
+                    category: this.meta.category,
+                    hidden: this.meta.hidden
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }

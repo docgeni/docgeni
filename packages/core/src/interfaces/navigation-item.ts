@@ -10,6 +10,7 @@ export interface DocItem {
     contentPath?: string;
     content?: string;
     order?: number;
+    hidden?: boolean;
     // 多语言
     locales?: {
         [key: string]: {

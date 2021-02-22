@@ -75,7 +75,7 @@ export class LibraryBuilder {
         const docItems: ComponentDocItem[] = [];
         for (const component of this.componentsMap.values()) {
             const docItem = component.getDocItem(locale);
-            if (docItem) {
+            if (docItem && !docItem.hidden) {
                 if (this.docgeni.config.mode === 'lite') {
                     docItem.path = `${channel.path}/${docItem.path}`;
                 }

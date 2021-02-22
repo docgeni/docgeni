@@ -150,10 +150,14 @@ export class NavsBuilder {
                     channel_path: parentItem ? parentItem.channel_path : fullRoutePath,
                     title: getDocTitle(entryFile && entryFile.meta.title, dirname),
                     subtitle: entryFile && entryFile.meta.subtitle,
+                    hidden: entryFile && entryFile.meta.hidden,
                     items: [],
                     order: entryFile && toolkit.utils.isNumber(entryFile.meta.order) ? entryFile.meta.order : Number.MAX_SAFE_INTEGER
                 };
-                navs.push(navItem);
+                // hide it when hidden is true
+                if (!navItem.hidden) {
+                    navs.push(navItem);
+                }
                 navItem.items = await this.buildDocDirNavs(absDocPath, locale, docItems, navItem, excludeDirs);
             } else {
                 if (path.extname(absDocPath) !== '.md') {
@@ -175,11 +179,15 @@ export class NavsBuilder {
                     channel_path: parentItem ? parentItem.channel_path : '',
                     title: getDocTitle(docFile.meta.title, docFile.name),
                     subtitle: docFile.meta.subtitle,
-                    order: toolkit.utils.isNumber(docFile.meta.order) ? docFile.meta.order : Number.MAX_SAFE_INTEGER
+                    order: toolkit.utils.isNumber(docFile.meta.order) ? docFile.meta.order : Number.MAX_SAFE_INTEGER,
+                    hidden: docFile.meta.hidden
                 };
                 docItem.contentPath = docFile.getRelativeOutputPath();
-                docItems.push(docItem);
-                navs.push(docItem);
+                // hide it when hidden is true
+                if (!docItem.hidden) {
+                    navs.push(docItem);
+                    docItems.push(docItem);
+                }
             }
         }
         navs = ascendingSortByOrder(navs);

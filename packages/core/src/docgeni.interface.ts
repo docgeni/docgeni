@@ -13,18 +13,21 @@ export interface ComponentDocMeta {
     subtitle?: string;
     description?: string;
     order?: number;
+    hidden?: boolean;
 }
 
 export interface CategoryDocMeta {
     title: string;
     order?: number;
     path?: string;
+    hidden?: boolean;
 }
 
 export interface GeneralDocMeta {
     title: string;
     path?: string;
     order?: number;
+    hidden?: boolean;
 }
 
 export type DocMeta = ComponentDocMeta & GeneralDocMeta & HomeDocMeta;
