@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.9](https://github.com/docgeni/docgeni/compare/v0.6.0-next.8...v0.6.0-next.9) (2021-02-22)
+
+
+### Features
+
+* **core:** add hidden support hide some doc nav #INFR-670 ([3e04101](https://github.com/docgeni/docgeni/commit/3e041012fb29d4ad4d2c8ea49796b4f3dcf54e22)), closes [#INFR-670](https://github.com/docgeni/docgeni/issues/INFR-670)
+
+
+
+
+
 # [0.6.0-next.8](https://github.com/docgeni/docgeni/compare/v0.6.0-next.7...v0.6.0-next.8) (2021-02-20)
 
 
