@@ -6,7 +6,7 @@
   "homepage": "https://github.com/docgeni/docgeni#readme",
   "license": "ISC",
   "main": "index.js",
-  "types": "src/index.ts",
+  "types": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -54,6 +54,9 @@
     "@types/tapable": "^1.0.5",
     "@types/through2": "2.0.36",
     "@types/vinyl": "2.0.4",
-    "@types/vinyl-fs": "2.4.11"
+    "@types/vinyl-fs": "2.4.11",
+    "cpx": "^1.5.0",
+    "rimraf": "^3.0.2",
+    "typescript": "4.0.5"
   }
 }

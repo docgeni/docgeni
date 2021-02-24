@@ -6,7 +6,7 @@
   "homepage": "https://github.com/docgeni/docgeni#readme",
   "license": "ISC",
   "main": "index.js",
-  "types": "src/index.ts",
+  "types": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -51,6 +51,9 @@
     "@types/fancy-log": "^1.3.1",
     "@types/minimatch": "^3.0.3",
     "@types/pluralize": "^0.0.29",
-    "@types/shelljs": "^0.8.8"
+    "@types/shelljs": "^0.8.8",
+    "cpx": "^1.5.0",
+    "rimraf": "^3.0.2",
+    "typescript": "4.0.5"
   }
 }
