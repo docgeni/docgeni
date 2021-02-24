@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.10](https://github.com/docgeni/docgeni/compare/v0.6.0-next.9...v0.6.0-next.10) (2021-02-24)
+
+
+### Bug Fixes
+
+* change toolkit and core types to lib.index.d.ts ([d8b7278](https://github.com/docgeni/docgeni/commit/d8b7278ea7779ab8a42c96982e9d20ddb4e50c47))
+
+
+
+
+
 # [0.6.0-next.9](https://github.com/docgeni/docgeni/compare/v0.6.0-next.8...v0.6.0-next.9) (2021-02-22)
 
 **Note:** Version bump only for package @docgeni/toolkit
