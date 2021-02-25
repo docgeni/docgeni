@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.11](https://github.com/docgeni/docgeni/compare/v0.6.0-next.10...v0.6.0-next.11) (2021-02-25)
+
+
+### Bug Fixes
+
+* should be used as a third-party library when NODE_ENV is not prod and src is not exist ([fe18a2e](https://github.com/docgeni/docgeni/commit/fe18a2e2e2d7ab6b4b6a175b7c1078e2c698a598))
+
+
+
+
+
 # [0.6.0-next.10](https://github.com/docgeni/docgeni/compare/v0.6.0-next.9...v0.6.0-next.10) (2021-02-24)
 
 
