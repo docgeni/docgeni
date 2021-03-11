@@ -4,7 +4,7 @@
     "ng-add": {
       "description": "add docgeni",
       "schema": "./ng-add/schema.json",
-      "factory": "./ng-add/index#main"
+      "factory": "./ng-add/index"
     }
   }
 }

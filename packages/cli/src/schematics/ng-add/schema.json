@@ -11,11 +11,32 @@
         "$source": "projectName"
       }
     },
-    "icon": {
-      "type": "boolean",
-      "default": true,
-      "description": "Whether add @tethys/icons.",
-      "x-prompt": "Whether add @tethys/icons?"
+    "mode": {
+      "type": "string",
+      "default": "lite",
+      "description": "Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers",
+      "x-prompt": {
+        "message": "Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers",
+        "type": "list",
+        "items": [
+          {
+            "value": "full",
+            "label": "full"
+          },
+          {
+            "value": "lite",
+            "label": "lite"
+          }
+        ]
+      }
+    },
+    "docsPath": {
+      "type": "string",
+      "default": "docs",
+      "description": "Docs folder",
+      "x-prompt": {
+        "message": "Docs folder"
+      }
     }
   }
 }

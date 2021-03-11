@@ -1,41 +1,57 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-
+// import { DEPENDENCIES } from '../dependencies';
 import { createTestWorkspaceFactory, getJsonFileContent } from '../testing';
 import { addPackageToPackageJson } from '../utils';
 import { VERSION } from '../../version';
+import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 
 describe('ng-add Schematic', () => {
     let tree: Tree;
-    const schematicRunner = new SchematicTestRunner('docgeni', require.resolve('../collection.json'));
+
+    let schematicRunner: SchematicTestRunner;
 
     let workspaceTree: UnitTestTree;
 
     beforeEach(async () => {
+        schematicRunner = new SchematicTestRunner('docgeni', require.resolve('../collection.json'));
         const factory = createTestWorkspaceFactory(schematicRunner);
         await factory.create();
         await factory.addApplication({ name: 'docgeni-test-simple' });
         tree = factory.getTree();
     });
 
-    it('should update package.json', async () => {
+    it('should update package.json devDependencies', async () => {
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
-        const dependencies = packageJson.dependencies;
-        expect(dependencies['@docgeni/cli']).toEqual(VERSION);
+        const devDependencies = packageJson[NodeDependencyType.Dev];
+        expect(devDependencies['@docgeni/template']).toEqual(VERSION);
         expect(schematicRunner.tasks.some(task => task.name === 'node-package')).toBe(true);
     });
-
-    it('should respect version range from CLI ng-add command', async () => {
-        // Simulates the behavior of the CLI `ng add` command. The command inserts the
-        // requested package version into the `package.json` before the actual schematic runs.
-        addPackageToPackageJson(tree, '@docgeni/cli', '^1.0.0');
-
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', {}, tree).toPromise();
+    it('should update package.json command', async () => {
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
-        const dependencies = packageJson.dependencies;
-
-        expect(dependencies['@docgeni/cli']).toBe('^1.0.0');
-        expect(schematicRunner.tasks.some(task => task.name === 'node-package')).toBe(true);
+        expect(packageJson.scripts['start:docs']).toEqual('docgeni serve --port 4600');
+        expect(packageJson.scripts['build:docs']).toEqual('docgeni build --prod');
+    });
+    it('should init .docgenirc.js', async () => {
+        const mode = 'full';
+        const docsPath = 'test-docs';
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', { mode, docsPath }, tree).toPromise();
+        const exist = workspaceTree.exists('.docgenirc.js');
+        expect(exist).toBeTruthy();
+        const config = workspaceTree.read('.docgenirc.js').toString();
+        expect(config).toContain(`$schema`);
+        expect(config).toContain(`@docgeni/cli/cli.schema.json`);
+        expect(config).toContain(`"mode":"${mode}"`);
+        expect(config).toContain(`"docsPath":"${docsPath}"`);
+        const packageJson = getJsonFileContent(workspaceTree, '/package.json');
+        expect(config).toContain(`"title":"${packageJson.name}"`);
+    });
+    it('should create docsPath', async () => {
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree.getDir('docs');
+        expect(workspaceTree.getDir('docs').subfiles.length).toBeTruthy();
+        expect(workspaceTree.exists(`docs/getting-started.md`)).toBeTruthy();
     });
 });
