@@ -26,6 +26,7 @@ describe('ng-add Schematic', () => {
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         const devDependencies = packageJson[NodeDependencyType.Dev];
         expect(devDependencies['@docgeni/template']).toEqual(VERSION);
+        expect(devDependencies['@docgeni/cli']).toEqual(VERSION);
         expect(schematicRunner.tasks.some(task => task.name === 'node-package')).toBe(true);
     });
     it('should update package.json command', async () => {

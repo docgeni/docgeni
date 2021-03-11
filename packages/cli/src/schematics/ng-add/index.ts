@@ -1,6 +1,6 @@
 import { SchematicContext, Tree, chain } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
+import { addPackageJsonDependency, NodeDependencyType, removePackageJsonDependency } from '@schematics/angular/utility/dependencies';
 import { NgAddSchema } from '../types/ng-add-schema';
 import { InitDocgenirc } from './init-docgenirc';
 import { CreateDocs } from './create-docs';
@@ -8,6 +8,7 @@ import { AddCommand } from './add-command';
 import { VERSION } from '../../version';
 function addDependenciesToPackageJson() {
     return (host: Tree, context: SchematicContext) => {
+        ['@docgeni/cli'].forEach(dependency => removePackageJsonDependency(host, dependency));
         [
             {
                 type: NodeDependencyType.Dev,
