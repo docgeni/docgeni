@@ -8,7 +8,7 @@
 A modern, powerful and out of the box documentation generator for Angular components lib and markdown docs.
 </p>
 
-[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-blue)](https://github.com/docgeni/docgeni)
+[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
 [![CircleCI](https://circleci.com/gh/docgeni/docgeni.svg?style=shield)](https://circleci.com/gh/docgeni/docgeni)
 [![Coverage Status][coveralls-image]][coveralls-url]
 [![npm (scoped)](https://img.shields.io/npm/v/@docgeni/cli?style=flat)](https://www.npmjs.com/package/@docgeni/cli)
@@ -56,10 +56,10 @@ Show the world you're using docgeni?
 Add a README badge to show it via: 
 
 ```
-[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-blue)](https://github.com/docgeni/docgeni)
+[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
 ```
 
-[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-blue)](https://github.com/docgeni/docgeni)
+[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
 
 ## 🔗 Links
 - [ngx-planet](https://github.com/worktile/ngx-planet)
