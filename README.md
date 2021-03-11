@@ -16,7 +16,15 @@ A modern, powerful and out of the box documentation generator for Angular compon
 
 [coveralls-image]: https://coveralls.io/repos/github/docgeni/docgeni/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/docgeni/docgeni?branch=master
-## Installation
+
+## ✨ Features
+- 📦 Out of the box, enabling you to quickly open documentation and component development
+- 🏡 Independent angular component preview experience component overview, including examples, API
+- 📋 Extend markdown syntax and import example directly into the document
+- 💻 Multilingual support
+- 🚀 Support `full` and `lite` mode and multiple theme(`default` and `angular`) support
+
+## 📦 Installation
 
 ```bash
 $ npm i @docgeni/cli --save-dev
@@ -40,7 +48,20 @@ Add `docs` folder and add `index.md` file to docs.
 
 run `npm run start:docs` and open `http://127.0.0.1:4600`
 
-## Development
+## README Badge
+Using docgeni ? Add a README badge to show it via: 
+
+```
+[![docgeni](https://img.shields.io/badge/docs%20by-cogeni-blue)](https://github.com/docgeni/docgeni)
+```
+
+[![docgeni](https://img.shields.io/badge/docs%20by-cogeni-blue)](https://github.com/docgeni/docgeni)
+
+## 🔗 Links
+- [ngx-planet](https://github.com/worktile/ngx-planet)
+- [PingCode](https://pingcode.com?utm_source=github-docgeni)
+
+## 💻 Development
 
 ```bash
 yarn   // install dependencies for all packages
