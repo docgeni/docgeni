@@ -13,6 +13,11 @@ function addDependenciesToPackageJson() {
                 type: NodeDependencyType.Dev,
                 name: '@docgeni/template',
                 version: VERSION
+            },
+            {
+                type: NodeDependencyType.Dev,
+                name: '@docgeni/cli',
+                version: VERSION
             }
         ].forEach(dependency => addPackageJsonDependency(host, dependency));
 

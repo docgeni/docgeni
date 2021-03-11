@@ -21,11 +21,11 @@
         "items": [
           {
             "value": "full",
-            "label": "full"
+            "label": "Full [ Detail: https://docgeni.org/configuration/global#mode ]"
           },
           {
             "value": "lite",
-            "label": "lite"
+            "label": "Lite [ Detail: https://docgeni.org/configuration/global#mode ]"
           }
         ]
       }

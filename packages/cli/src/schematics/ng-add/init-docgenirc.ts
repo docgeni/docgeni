@@ -10,11 +10,14 @@ export class InitDocgenirc {
     private docgenirc: Partial<DocgeniConfig> = {};
     constructor(private options: NgAddSchema) {}
     private addProperty<T extends keyof DocgeniConfig>(key: T, value: DocgeniConfig[T]) {
+        if (!value) {
+            return this;
+        }
         this.docgenirc[key] = value;
         return this;
     }
 
-    private readAngularJson(host: Tree) {
+    private buildPropertiesFromAngularJson(host: Tree) {
         const angularJson = getWorkspace(host);
         const libraryProjects: [string, WorkspaceProject<ProjectType.Library>][] = Object.entries(angularJson.projects).filter(
             ([key, value]) => value.projectType === ProjectType.Library
@@ -41,7 +44,7 @@ export class InitDocgenirc {
         this.addProperty('navs', navs as NavigationItem[]);
     }
 
-    private readPackageJson(host: Tree) {
+    private buildPropertiesFromPackageJson(host: Tree) {
         let packageJson: Record<string, any>;
         if (host.exists('package.json')) {
             packageJson = JSON.parse(host.read('package.json').toString());
@@ -51,15 +54,16 @@ export class InitDocgenirc {
         this.addProperty('title', packageJson.name || '');
         this.addProperty('repoUrl', (packageJson.repository && packageJson.repository.url) || '');
     }
+
     run() {
         this.addProperty('$schema', '@docgeni/cli/cli.schema.json');
         this.addProperty('mode', this.options.mode);
         this.addProperty('docsPath', this.options.docsPath);
 
         return (host: Tree, context: SchematicContext) => {
-            this.readPackageJson(host);
-            this.readAngularJson(host);
-            host.create('.docgenirc.js', JSON.stringify(this.docgenirc));
+            this.buildPropertiesFromPackageJson(host);
+            this.buildPropertiesFromAngularJson(host);
+            host.create('.docgenirc.js', JSON.stringify(this.docgenirc, undefined, 2));
             return host;
         };
     }
