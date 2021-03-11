@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 _site
 .tmp
+.nyc_output

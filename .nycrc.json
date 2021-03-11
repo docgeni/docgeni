@@ -1,0 +1,26 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "include": [
+    "packages/cli/src/**/*.ts",
+    "packages/core/src/**/*.ts",
+    "packages/toolkit/src/**/*.ts"
+  ],
+  "exclude":[
+    "packages/core/src/site-template/src/**",
+    "packages/cli/src/schematics/testing/**"
+  ],
+  "require": [
+    "ts-node/register/transpile-only",
+    "source-map-support/register"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary",
+    "html"
+  ],
+  "all": true,
+  "source-map": true,
+  "produce-source-map": true,
+  "exclude-after-remap": false,
+  "cache": false
+}

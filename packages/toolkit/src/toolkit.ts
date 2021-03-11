@@ -25,6 +25,8 @@ export class Toolkit {
 
     static initialize(config: ToolkitConfig) {
         this._config = config;
+        // clear cache
+        this._template = null;
     }
 
     static get template() {

@@ -11,10 +11,10 @@ A modern and powerful documentation generator for Angular components lib and mar
 [![CircleCI](https://circleci.com/gh/docgeni/docgeni.svg?style=shield)](https://circleci.com/gh/docgeni/docgeni)
 [![npm (scoped)](https://img.shields.io/npm/v/@docgeni/cli?style=flat)](https://www.npmjs.com/package/@docgeni/cli)
 [![npm](https://img.shields.io/npm/dm/@docgeni/cli)](https://www.npmjs.com/package/@docgeni/cli)
+[![Coverage Status][coveralls-image]][coveralls-url]
 
-
-[coveralls-image]: https://coveralls.io/repos/github/worktile/ngx-planet/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/worktile/ngx-planet
+[coveralls-image]: https://coveralls.io/repos/github/docgeni/docgeni/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/docgeni/docgeni?branch=master
 ## Installation
 
 ```bash
