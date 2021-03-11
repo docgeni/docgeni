@@ -1,5 +1,4 @@
-import { SchematicContext } from '@angular-devkit/schematics';
-import { Tree } from '@angular-devkit/schematics';
+import { SchematicContext, Tree } from '@angular-devkit/schematics';
 import { parseJsonAst } from '@angular-devkit/core/src/json/parser';
 import { appendPropertyInAstObject, findPropertyInAstObject } from '@schematics/angular/utility/json-utils';
 import { JsonAstObject } from '@angular-devkit/core';
