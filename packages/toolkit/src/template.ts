@@ -16,7 +16,7 @@ export class Template {
     public compile<T>(templatePath: string, data?: T) {
         const absPath = this.getAbsPath(templatePath);
         throwErrorWhenNotExists(absPath);
-        const content = readFileSync(absPath, 'UTF-8');
+        const content = readFileSync(absPath, 'utf-8');
         const template = handlebars.compile(content);
         return template(data);
     }
