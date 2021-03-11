@@ -1,12 +1,9 @@
 module.exports = {
     baseHref: '/',
-    heads: [],
-    mode: 'site',
+    mode: 'full',
     title: 'Docgeni',
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
     docsPath: './docs',
     repoUrl: 'https://github.com/docgeni/docgeni',
-    navs: [
-        null
-    ]
+    navs: [null]
 };
