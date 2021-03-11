@@ -13,5 +13,6 @@ jobs:
                   key: yarn install --frozen-lockfile --cache-folder node_modules
                   paths:
                       - 'node_modules'
+            - run: yarn lint
             - run: yarn test:coverage
             - run: yarn report-coverage

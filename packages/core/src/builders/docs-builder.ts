@@ -117,7 +117,7 @@ export class DocsBuilder {
             watcher.on(eventName, async (filePath: string) => {
                 this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
                 // watch filePath is relative path
-                const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath)
+                const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath);
                 let docFile = this.docFiles.get(absFilePath);
                 if (!docFile) {
                     docFile = this.createDocSourceFile(locale, absFilePath);

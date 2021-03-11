@@ -155,7 +155,6 @@ export class LibrariesBuilder {
                                 };
                             })
                         };
-                        example.key;
                     });
                 }
             });

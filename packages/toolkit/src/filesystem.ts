@@ -97,8 +97,9 @@ export async function ensureWriteFile(filePath: string, data: string, options?: 
     await fsExtra.writeFile(filePath, data);
 }
 
-export async function readFileContent(filePath: string, encoding: string = 'UTF-8') {
-    return await fsExtra.readFile(filePath, encoding);
+export async function readFileContent(filePath: string, encoding: string = 'UTF-8'): Promise<string> {
+    const result = await fsExtra.readFile(filePath, encoding);
+    return result;
 }
 
 export function isStream(stream: any): stream is NodeJS.ReadableStream {

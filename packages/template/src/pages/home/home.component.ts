@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
                 }
             } else {
                 const docItem = navigationService.searchFirstDocItem();
-                if(docItem) {
+                if (docItem) {
                     router.navigateByUrl(docItem.path, {
                         replaceUrl: true
                     });

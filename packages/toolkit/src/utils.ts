@@ -27,7 +27,7 @@ export function isEmpty(value: any): boolean {
 }
 
 export function isUndefinedOrNull(value: any) {
-    return value === undefined || value == null;
+    return value === undefined || value === null;
 }
 
 export function keyBy<T>(value: Array<T>, key: keyof T): { [key: string]: T } {
