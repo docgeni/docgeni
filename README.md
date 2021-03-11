@@ -56,7 +56,7 @@ Show the world you're using docgeni?
 Add a README badge to show it via: 
 
 ```
-[![docgeni](https://img.shields.io/badge/docs%20by-cogeni-blue)](https://github.com/docgeni/docgeni)
+[![docgeni](https://img.shields.io/badge/docs%20by-docgeni-blue)](https://github.com/docgeni/docgeni)
 ```
 
 [![docgeni](https://img.shields.io/badge/docs%20by-docgeni-blue)](https://github.com/docgeni/docgeni)
