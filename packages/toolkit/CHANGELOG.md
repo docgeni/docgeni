@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.12](https://github.com/docgeni/docgeni/compare/v0.6.0-next.11...v0.6.0-next.12) (2021-03-11)
+
+
+### Bug Fixes
+
+* fix test error in circleci ([ff5137f](https://github.com/docgeni/docgeni/commit/ff5137fc735d8afbe8665b6ba5baae0bde05c5f9))
+
+
+
+
+
 # [0.6.0-next.11](https://github.com/docgeni/docgeni/compare/v0.6.0-next.10...v0.6.0-next.11) (2021-02-25)
 
 
