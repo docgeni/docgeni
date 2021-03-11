@@ -5,13 +5,14 @@
   <strong>Docgeni(WIP)</strong>
 </p>
 <p align="center">
-A modern and powerful documentation generator for Angular components lib and markdown docs
+A modern, powerful and out of the box documentation generator for Angular components lib and markdown docs.
 </p>
 
+[![Docgeni](https://img.shields.io/badge/docgeni-welcome-blue)](https://github.com/docgeni/docgeni)
 [![CircleCI](https://circleci.com/gh/docgeni/docgeni.svg?style=shield)](https://circleci.com/gh/docgeni/docgeni)
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![npm (scoped)](https://img.shields.io/npm/v/@docgeni/cli?style=flat)](https://www.npmjs.com/package/@docgeni/cli)
 [![npm](https://img.shields.io/npm/dm/@docgeni/cli)](https://www.npmjs.com/package/@docgeni/cli)
-[![Coverage Status][coveralls-image]][coveralls-url]
 
 [coveralls-image]: https://coveralls.io/repos/github/docgeni/docgeni/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/docgeni/docgeni?branch=master
@@ -29,7 +30,7 @@ Add scripts to package.json as followings:
 {
   "scripts": {
     ...
-    "start:docs": "docgeni serve",
+    "start:docs": "docgeni serve --port 4600",
     "build:docs": "docgeni build"
     ...
   }
