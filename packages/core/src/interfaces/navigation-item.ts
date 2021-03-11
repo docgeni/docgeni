@@ -1,5 +1,3 @@
-import { LiveExample } from './example';
-
 export interface DocItem {
     id: string;
     title: string;

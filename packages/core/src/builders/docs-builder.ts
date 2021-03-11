@@ -112,12 +112,11 @@ export class DocsBuilder {
             interval: 1000,
             ignored: ignoreGlobs
         });
-        this.watchers.push(watcher);
-        ['add', 'change'].forEach(eventName => {
+        this.watchers.push(watcher)[('add', 'change')].forEach(eventName => {
             watcher.on(eventName, async (filePath: string) => {
                 this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
                 // watch filePath is relative path
-                const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath)
+                const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath);
                 let docFile = this.docFiles.get(absFilePath);
                 if (!docFile) {
                     docFile = this.createDocSourceFile(locale, absFilePath);

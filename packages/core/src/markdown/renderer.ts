@@ -3,7 +3,7 @@ import { basename, extname } from 'path';
 import * as Prism from 'prismjs';
 /** Regular expression that matches whitespace. */
 // const whitespaceRegex = /\W+/g;
-const whitespaceRegex = /( |\.|\?)/g
+const whitespaceRegex = /( |\.|\?)/g;
 
 /** Regular expression that matches example comments. */
 const exampleCommentRegex = /<!--\W*example\(([^)]+)\)\W*-->/g;
@@ -76,7 +76,7 @@ export class DocsMarkdownRenderer extends Renderer {
         const lang = (infostring || '').match(/\S*/)[0];
         if (this.options.highlight) {
             const out = this.options.highlight(code, lang) as string;
-            if (out != null && out !== code) {
+            if (out !== null && out !== code) {
                 escaped = true;
                 code = out;
             }
