@@ -1,10 +1,11 @@
-import { SchematicContext, Tree } from '@angular-devkit/schematics';
+import { apply, mergeWith, move, renameTemplateFiles, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { NgAddSchema } from '../types/ng-add-schema';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { ProjectType, WorkspaceProject } from '@schematics/angular/utility/workspace-models';
 import { DocgeniConfig } from '@docgeni/core/src/interfaces/config';
 import { NavigationItem } from '@docgeni/core/src/interfaces/navigation-item';
 import { Library } from '@docgeni/core/src/interfaces/library';
+import { format } from '../rule';
 
 export class InitDocgenirc {
     private docgenirc: Partial<DocgeniConfig> = {};
@@ -53,6 +54,7 @@ export class InitDocgenirc {
         }
         this.addProperty('title', packageJson.name || '');
         this.addProperty('repoUrl', (packageJson.repository && packageJson.repository.url) || '');
+        this.addProperty('description', packageJson.description || '');
     }
 
     run() {
@@ -63,8 +65,19 @@ export class InitDocgenirc {
         return (host: Tree, context: SchematicContext) => {
             this.buildPropertiesFromPackageJson(host);
             this.buildPropertiesFromAngularJson(host);
-            host.create('.docgenirc.js', JSON.stringify(this.docgenirc, undefined, 2));
-            return host;
+
+            return mergeWith(
+                apply(url(`./template/docgenicrc`), [
+                    template({
+                        config: this.docgenirc,
+                        util: {
+                            stringify: JSON.stringify
+                        }
+                    }),
+                    renameTemplateFiles(),
+                    format('.docgenirc.js', 'babel')
+                ])
+            );
         };
     }
 }
