@@ -14,7 +14,7 @@ interface Link {
     /* id of the section*/
     id: string;
 
-    /* header type h3/h4 */
+    /* header type h1/h2/h3/h4 */
     type: string;
 
     /* If the anchor is in view of the page */
@@ -25,6 +25,9 @@ interface Link {
 
     /* top offset px of the anchor */
     top: number;
+
+    /** level of the section */
+    level?: number;
 }
 
 let OFFSET = 60;
@@ -39,11 +42,17 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
     @Input() container: string;
 
     linkSections: LinkSection[] = [];
+
     links: Link[] = [];
 
     rootUrl = this.router.url.split('#')[0];
+
+    public highestLevel = 1;
+
     private scrollContainer: any;
+
     private destroyed = new Subject();
+
     private urlFragment = '';
 
     constructor(
@@ -112,13 +121,16 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
             // remove the 'link' icon name from the inner text
             const name = header.innerText.trim().replace(/^link/, '');
             const { top } = header.getBoundingClientRect();
+            const headerLevel = parseInt(header.tagName[1], 10);
             links.push({
                 name,
                 type: header.tagName.toLowerCase(),
                 top,
                 id: header.id,
-                active: false
+                active: false,
+                level: headerLevel
             });
+            this.highestLevel = headerLevel < this.highestLevel ? headerLevel : this.highestLevel;
         });
         this.linkSections[sectionIndex] = { name: sectionName, links };
         this.links.push(...links);

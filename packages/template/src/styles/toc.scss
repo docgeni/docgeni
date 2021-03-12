@@ -53,6 +53,7 @@
         text-overflow: ellipsis;
         width: 100%;
         overflow: hidden;
+        font-weight: 500;
 
         &::before {
             border-left: 2px solid #dbdbdb;
@@ -64,7 +65,8 @@
         }
 
         &.active {
-            color: $dg-primary;
+            // color: $dg-primary;
+            color: darken($dg-primary, 15%);
             &::before {
                 border-color: $dg-primary;
                 border-width: 2px;
@@ -78,10 +80,22 @@
                 // height: 6px;
             }
         }
-    }
 
-    .dg-level-h4 {
-        margin-left: 12px;
+        &[data-level='1'] {
+            padding-left: 12px;
+        }
+
+        &[data-level='2'] {
+            padding-left: 24px;
+        }
+
+        &[data-level='3'] {
+            padding-left: 36px;
+        }
+
+        &[data-level='4'] {
+            padding-left: 48px;
+        }
     }
 }
 
