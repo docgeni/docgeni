@@ -7,7 +7,7 @@
       *ngFor="let link of linkSection.links; let i = index"
       class="dg-level-{{ link.type }} dg-link"
       [class.active]="link.active"
-      [attr.data-level]="link.level - highestLevel +1"
+      [attr.data-level]="link.level - highestLevel + 1"
     >
       {{ link.name }}
     </a>
