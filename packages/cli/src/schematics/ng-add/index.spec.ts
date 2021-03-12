@@ -44,10 +44,10 @@ describe('ng-add Schematic', () => {
         const config = workspaceTree.read('.docgenirc.js').toString();
         expect(config).toContain(`$schema`);
         expect(config).toContain(`@docgeni/cli/cli.schema.json`);
-        expect(config).toContain(`mode: '${mode}'`);
-        expect(config).toContain(`docsPath: '${docsPath}'`);
+        expect(config).toContain(`mode: "${mode}"`);
+        expect(config).toContain(`docsPath: "${docsPath}"`);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
-        expect(config).toContain(`title: '${packageJson.name}'`);
+        expect(config).toContain(`title: "${packageJson.name}"`);
     });
     it('should create docsPath', async () => {
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
