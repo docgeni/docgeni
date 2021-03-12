@@ -1,6 +1,6 @@
 {
   "name": "docgeni",
-  "version": "0.6.0-next.11",
+  "version": "0.6.0-next.12",
   "scripts": {
     "ng": "ng",
     "start": "yarn run start:docs",
@@ -14,13 +14,12 @@
     "build:core": "yarn workspace @docgeni/core run build",
     "build-deps": "yarn build:toolkit && yarn build:core",
     "build:cli": "yarn workspace @docgeni/cli run build",
-    "test:mocha": "cross-env TS_NODE_PROJECT='./packages/cli/tsconfig.json' NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
+    "// test:mocha": "cross-env TS_NODE_PROJECT='./packages/cli/tsconfig.json' NODE_ENV=test mocha --timeout 999999 packages/**/test/**/*.spec.ts --require ts-node/register/transpile-only",
     "test": "cross-env TS_NODE_PROJECT='./packages/cli/tsconfig.json' NODE_ENV=test node --require ts-node/register/transpile-only ./test/bootstrap.ts",
     "test:coverage": "rimraf ./coverage && rimraf ./nyc_output && nyc yarn test",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "yarn lint:lib",
     "lint:lib": "eslint -c ./.eslintrc.json --ignore-pattern '/packages/core/src/site-template/' \"./packages/?(cli|core|toolkit)/src/**/*.ts\"",
-    "//lint:lib": "eslint -c ./.eslintrc.json \"./packages/?(cli|core|toolkit)/src/!(site-template)/*.ts\"",
     "lint:ng": "ng lint",
     "e2e": "ng e2e",
     "build:docs": "cross-env NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni build",
