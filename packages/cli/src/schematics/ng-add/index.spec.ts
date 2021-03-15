@@ -1,7 +1,7 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 // import { DEPENDENCIES } from '../dependencies';
-import { createTestWorkspaceFactory, getJsonFileContent } from '../testing';
+import { createTestWorkspaceFactory, getJsonFileContent, TestWorkspaceFactory } from '../testing';
 import { addPackageToPackageJson } from '../utils';
 import { VERSION } from '../../version';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
@@ -13,9 +13,11 @@ describe('ng-add Schematic', () => {
 
     let workspaceTree: UnitTestTree;
 
+    let factory: TestWorkspaceFactory;
+
     beforeEach(async () => {
         schematicRunner = new SchematicTestRunner('docgeni', require.resolve('../collection.json'));
-        const factory = createTestWorkspaceFactory(schematicRunner);
+        factory = createTestWorkspaceFactory(schematicRunner);
         await factory.create();
         await factory.addApplication({ name: 'docgeni-test-simple' });
         tree = factory.getTree();
@@ -44,15 +46,24 @@ describe('ng-add Schematic', () => {
         const config = workspaceTree.read('.docgenirc.js').toString();
         expect(config).toContain(`$schema`);
         expect(config).toContain(`@docgeni/cli/cli.schema.json`);
-        expect(config).toContain(`"mode": "${mode}"`);
-        expect(config).toContain(`"docsPath": "${docsPath}"`);
+        expect(config).toContain(`mode: '${mode}'`);
+        expect(config).toContain(`docsPath: '${docsPath}'`);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
-        expect(config).toContain(`"title": "${packageJson.name}"`);
+        expect(config).toContain(`title: '${packageJson.name}'`);
     });
     it('should create docsPath', async () => {
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         workspaceTree.getDir('docs');
         expect(workspaceTree.getDir('docs').subfiles.length).toBeTruthy();
         expect(workspaceTree.exists(`docs/getting-started.md`)).toBeTruthy();
+    });
+    it('should has library', async () => {
+        const libraryName = 'lib-test';
+        await factory.addLibrary({ name: libraryName });
+        tree = factory.getTree();
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        const config = workspaceTree.read('.docgenirc.js').toString();
+        expect(config).toContain(`rootDir: 'projects/${libraryName}/src'`);
+        expect(config).toContain(`lib: '${libraryName}'`);
     });
 });

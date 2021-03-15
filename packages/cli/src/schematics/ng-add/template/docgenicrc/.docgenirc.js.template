@@ -1,0 +1,10 @@
+module.exports = {
+    $schema: '@docgeni/cli/cli.schema.json',
+    mode: '<%= config.mode %>',
+    title: '<%= config.title %>',
+    description: '<%= config.description %>',
+    docsPath: '<%= config.docsPath %>',<% if(config.repoUrl) { %>
+    repoUrl: '<%= config.repoUrl %>',<% } %><% if(config.navs) { %>
+    navs: <%= util.stringify(config.navs,4,4) %>,<% } %><% if(config.libs) { %>
+    libs: <%= util.stringify(config.libs,4,4) %><% } %>
+};

@@ -6,7 +6,7 @@ export class CreateDocs {
     run() {
         return (host: Tree, context: SchematicContext) => {
             return mergeWith(
-                apply(url(`./template`), [
+                apply(url(`./template/docsPath`), [
                     template({
                         docsPath: this.options.docsPath
                     }),
