@@ -5,8 +5,7 @@ import { ProjectType, WorkspaceProject } from '@schematics/angular/utility/works
 import { DocgeniConfig } from '@docgeni/core/src/interfaces/config';
 import { NavigationItem } from '@docgeni/core/src/interfaces/navigation-item';
 import { Library } from '@docgeni/core/src/interfaces/library';
-import { format } from '../rule';
-
+import stringifyObject from 'stringify-object';
 export class InitDocgenirc {
     private docgenirc: Partial<DocgeniConfig> = {};
     constructor(private options: NgAddSchema) {}
@@ -71,11 +70,15 @@ export class InitDocgenirc {
                     template({
                         config: this.docgenirc,
                         util: {
-                            stringify: JSON.stringify
+                            stringify: (content, indent: number, parentIndent) => {
+                                return stringifyObject(content, { indent: ' '.repeat(indent) }).replace(
+                                    /(\r\n|\n\r|\n|\r)/g,
+                                    `$1${' '.repeat(parentIndent)}`
+                                );
+                            }
                         }
                     }),
-                    renameTemplateFiles(),
-                    format('.docgenirc.js', 'babel')
+                    renameTemplateFiles()
                 ])
             );
         };

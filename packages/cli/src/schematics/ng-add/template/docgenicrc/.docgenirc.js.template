@@ -5,6 +5,6 @@ module.exports = {
     description: '<%= config.description %>',
     docsPath: '<%= config.docsPath %>',<% if(config.repoUrl) { %>
     repoUrl: '<%= config.repoUrl %>',<% } %><% if(config.navs) { %>
-    navs: <%= util.stringify(config.navs,undefined,4) %>,<% } %><% if(config.libs) { %>
-    libs: <%= util.stringify(config.libs,undefined,4) %><% } %>
+    navs: <%= util.stringify(config.navs,4,4) %>,<% } %><% if(config.libs) { %>
+    libs: <%= util.stringify(config.libs,4,4) %><% } %>
 };
