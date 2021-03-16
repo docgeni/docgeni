@@ -46,12 +46,20 @@ $dg-component-color: #348fe4;
         }
     }
 
-    .dg-doc-viewer-inner {
+    .dg-doc-viewer-inner{
+        display: flex;
+        flex: auto;
+    }
+
+    .dg-doc-viewer-inner-content {
+        flex: auto;
+        width: 78%;
         max-width: 78%;
     }
 
     .dg-component-viewer {
         display: block;
+        width: 100%;
 
         .dg-component-empty {
             display: block;
@@ -137,14 +145,11 @@ $dg-component-color: #348fe4;
                 }
             }
         }
-
-        .dg-toc {
-            top: 200px;
-        }
     }
 
     @include dg-media-breakpoint-down('md') {
-        .dg-doc-viewer-inner {
+        .dg-doc-viewer-inner-content {
+            width: 100%;
             max-width: 100%;
         }
         .dg-toc {
@@ -154,6 +159,7 @@ $dg-component-color: #348fe4;
 }
 
 .dg-doc-content {
+    flex: 1;
     display: block;
     padding: 20px 0px;
     font-size: 16px;

@@ -1,11 +1,6 @@
 .dg-toc {
-    width: 18%;
-    position: fixed;
-    top: 76px;
-    right: 0;
-    bottom: 12px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    flex: 1;
+    margin: 20px 0 20px 20px;
 
     .dg-toc-container {
         font-size: 13px;
@@ -100,14 +95,17 @@
 }
 
 .dg-mode-lite {
-    .dg-toc {
-        top: 16px;
-    }
     .dg-doc-viewer {
-        .dg-component-viewer {
-            .dg-toc {
-                top: 140px;
-            }
+        .dg-toc .dg-toc-container {
+            top: 20px;
         }
+    }
+}
+
+.dg-mode-full {
+    .dg-doc-viewer {
+        .dg-toc .dg-toc-container{
+            top: 80px;
+        }    
     }
 }
