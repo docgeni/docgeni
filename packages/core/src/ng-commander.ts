@@ -15,7 +15,7 @@ export class AngularCommander {
         if (siteProject) {
             this.docgeni.paths.setSitePaths(siteProject.root, siteProject.sourceRoot);
         } else {
-            const sitePath = path.resolve(this.docgeni.paths.cwd, '_site');
+            const sitePath = path.resolve(this.docgeni.paths.cwd, this.docgeni.config.siteDir);
             await this.createSiteProject(sitePath);
         }
     }
