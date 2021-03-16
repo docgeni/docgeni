@@ -168,11 +168,17 @@ export class NavsBuilder {
                     throw new Error(`Can't find doc file for ${absDocPath}`);
                 }
                 const isEntry = isEntryDoc(docFile.name);
-                if (isEntry) {
+                const isHome = isEntry && !parentItem;
+                if (isEntry && toolkit.utils.isEmpty(docFile.output)) {
                     continue;
                 }
+                if (isHome) {
+                    continue;
+                }
+
                 const currentPath = this.getCurrentRoutePath(toolkit.strings.paramCase(docFile.name), docFile);
-                const fullRoutePath = this.getFullRoutePath(currentPath, parentItem);
+                const fullRoutePath = isEntry ? parentItem.path : this.getFullRoutePath(currentPath, parentItem);
+
                 const docItem: NavigationItem = {
                     id: docFile.name,
                     path: fullRoutePath,
