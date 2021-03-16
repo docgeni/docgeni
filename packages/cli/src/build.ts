@@ -1,6 +1,7 @@
 import { CommandModule } from 'yargs';
 import { Docgeni, DocgeniConfig } from '@docgeni/core';
 import { normalizeCommandArgsForAngular } from './angular-args';
+import { getConfiguration } from './configuration';
 
 export const buildCommand: CommandModule = {
     command: ['build'],
@@ -22,7 +23,12 @@ export const buildCommand: CommandModule = {
                 desc: `skip build site`,
                 boolean: true,
                 default: false
-            });
+            })
+            .option('siteProjectName', {
+                desc: `Site project name`,
+                default: ''
+            })
+            .config(getConfiguration());
 
         return yargs;
     },
