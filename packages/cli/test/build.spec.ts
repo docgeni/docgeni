@@ -1,5 +1,5 @@
 import { shell, toolkit } from '@docgeni/toolkit';
-import { Docgeni } from '@docgeni/core';
+import { DEFAULT_CONFIG, Docgeni, DocgeniConfig } from '@docgeni/core';
 import * as path from 'path';
 import { expect } from 'chai';
 
@@ -11,30 +11,36 @@ describe('docgeni build', () => {
         // shell.exec('ts-node --project ../../../tsconfig.json ../../../bin/docgeni build --skip-site');
         // execSync(`cd ${basicFixturePath} && ts-node --project ../../../tsconfig.json ../../../bin/docgeni build --skip-site`);
         // shell.execSync(`cd ${basicFixturePath} && TS_NODE_PROJECT=../../../tsconfig.json ts-node ../../../bin/docgeni build --skip-site`);
+
+        const config: DocgeniConfig = {
+            $schema: '',
+            baseHref: '/',
+            mode: 'full',
+            title: 'Docgeni',
+            logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
+            docsPath: 'docs',
+            repoUrl: 'https://github.com/docgeni/docgeni',
+            navs: [null],
+            locales: [
+                {
+                    key: 'zh-cn',
+                    name: '中文'
+                }
+            ],
+            defaultLocale: 'zh-cn'
+        };
         const docgeni = new Docgeni({
             cwd: basicFixturePath,
             config: {
-                baseHref: '/',
-                mode: 'full',
-                title: 'Docgeni',
-                logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
-                docsPath: 'docs',
-                repoUrl: 'https://github.com/docgeni/docgeni',
-                navs: [null],
-                locales: [
-                    {
-                        key: 'zh-cn',
-                        name: '中文'
-                    }
-                ],
-                defaultLocale: 'zh-cn'
+                ...config
             },
             cmdArgs: {
                 skipSite: true
             }
         });
         await docgeni.run();
-        const siteSrcPath = path.resolve(basicFixturePath, './_site/src');
+        const expectConfig = { ...DEFAULT_CONFIG, ...config };
+        const siteSrcPath = path.resolve(basicFixturePath, `./${expectConfig.siteDir}/src`);
         const assetsContentPath = path.resolve(siteSrcPath, './assets/content');
         const navigationsFilePath = path.resolve(assetsContentPath, './navigations-zh-cn.json');
         expect(toolkit.fs.pathExistsSync(siteSrcPath)).equals(true);
