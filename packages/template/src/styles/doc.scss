@@ -4,6 +4,8 @@ $dg-table-header-bg-color: $dg-gray-80;
 
 $dg-directive-color: #d81b60;
 $dg-component-color: #348fe4;
+$dg-interface-color: #7cb342;
+$dg-service-color: #8e24aa;
 
 .dg-doc-viewer {
     display: block;
@@ -93,6 +95,14 @@ $dg-component-color: #348fe4;
 
                     &.directive {
                         background-color: rgba($color: $dg-directive-color, $alpha: 0.8);
+                    }
+
+                    &.service {
+                        background-color: rgba($color: $dg-service-color, $alpha: 0.8);
+                    }
+
+                    &.interface, &.class {
+                        background-color: rgba($color: $dg-interface-color, $alpha: 0.8);
                     }
                 }
             }

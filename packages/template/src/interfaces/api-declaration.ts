@@ -6,7 +6,7 @@ export interface PropertyDeclaration {
 }
 
 export interface ApiDeclaration {
-    type: 'directive' | 'component' | 'service';
+    type: 'directive' | 'component' | 'service' | 'interface' | 'class';
     name: string;
     description?: string;
     properties?: Array<PropertyDeclaration>;
