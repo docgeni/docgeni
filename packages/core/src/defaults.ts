@@ -23,3 +23,5 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     ],
     defaultLocale: 'zh-cn'
 };
+
+export const DEFAULT_SITE_NAME = '.docgeni';

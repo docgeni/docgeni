@@ -2,6 +2,7 @@ import { DocgeniContext, SiteProject, AngularCommandOptions } from './docgeni.in
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
+import { DEFAULT_SITE_NAME } from './defaults';
 
 const EXCLUDE_ARGS = ['skipSite'];
 
@@ -15,7 +16,7 @@ export class AngularCommander {
         if (siteProject) {
             this.docgeni.paths.setSitePaths(siteProject.root, siteProject.sourceRoot);
         } else {
-            const sitePath = path.resolve(this.docgeni.paths.cwd, '_site');
+            const sitePath = path.resolve(this.docgeni.paths.cwd, DEFAULT_SITE_NAME);
             await this.createSiteProject(sitePath);
         }
     }
