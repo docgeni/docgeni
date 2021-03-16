@@ -138,12 +138,10 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
 
     /** Gets the scroll offset of the scroll container */
     private getScrollOffset(): number | void {
-        let { top } = this.element.nativeElement.getBoundingClientRect();
-        top = top + OFFSET;
         if (typeof this.scrollContainer.scrollTop !== 'undefined') {
-            return this.scrollContainer.scrollTop + top;
+            return this.scrollContainer.scrollTop + OFFSET;
         } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
-            return this.scrollContainer.pageYOffset + top;
+            return this.scrollContainer.pageYOffset + OFFSET;
         }
     }
 
@@ -157,7 +155,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
         // A link is considered active if the page is scrolled passed the anchor without also
         // being scrolled passed the next link
         const scrollOffset = this.getScrollOffset();
-        return scrollOffset >= currentLink.top && !(nextLink && nextLink.top < scrollOffset);
+        return scrollOffset >= currentLink.top && !(nextLink && nextLink.top <= scrollOffset);
     }
 
     onLinkClick($event: Event, link: Link) {
