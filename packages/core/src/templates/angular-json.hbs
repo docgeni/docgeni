@@ -10,14 +10,14 @@
           "style": "scss"
         }
       },
-      "root": "_site",
+      "root": "{{ root }}",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../dist/site",
+            "outputPath": "{{ outputPath }}",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
