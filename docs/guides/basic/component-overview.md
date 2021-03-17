@@ -1,7 +1,7 @@
 ---
 title: 组件概览
-path: 'overview-docs'
-order: 1
+path: 'component-overview'
+order: 40
 ---
 
 
@@ -31,11 +31,11 @@ order: 1
 │   ├── index.ts
 ```
 
-## 概览文档
+# 概览文档
 
 `doc` 文件夹下存放每个多语言对应的组件文档，会展示在组件的概览中。
 
-## 组件配置
+# 组件配置
 组件自定义配置是存放在默认多语言的FrontMatter中。
 
 ```markdown

@@ -54,24 +54,10 @@ export class NavigationService {
         if (!this.channel || !this.channel.items) {
             return null;
         }
-        let result: DocItem = null;
-        for (const nav of this.channel.items) {
-            if (this.isDocItem(nav)) {
-                if (this.isPathEqual(nav.path, path)) {
-                    result = nav;
-                    break;
-                }
-            } else {
-                const item = nav.items.find(subNav => {
-                    return this.isPathEqual(subNav.path, path);
-                });
-                if (item) {
-                    result = item;
-                    break;
-                }
-            }
-        }
-        return result;
+        const docItem = this.docItems.find(docItem => {
+            return docItem.path === path;
+        });
+        return docItem;
     }
 
     selectDocItem(path: string) {

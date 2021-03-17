@@ -1,5 +1,6 @@
 ---
-title: 组件
+title: 类库
 path: 'components'
 order: 30
+hidden: true
 ---

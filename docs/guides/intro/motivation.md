@@ -12,7 +12,7 @@ hidden: true
 
 [awesome-docgen](https://github.com/docgeni/awesome-docgen) 这个仓储列举出了我们当时调研的一些文档生成工具，[storybook](https://github.com/storybookjs/storybook) 可能是唯一一个支持 Angular 框架的文档生成工具，但是它的展示形态和写法挺繁琐了，最终没有选择使用它。
 
-# 文档工具的分类
+# 文档工具的类别
 - 纯 Markdown 语法的文档：前后端通用，主要展示入门指南，配置说明文档使用，这样的工具有无数个
 - 组件文档：基本和前端框架绑定，展示组件的使用说明，组件的参数，组件的示例（Examples）
 - API文档：类似 Angular 官方的 API，当然大部分组件库是不需要这个功能的

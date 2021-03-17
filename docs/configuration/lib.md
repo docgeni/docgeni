@@ -115,8 +115,8 @@ module.exports = [
 - 类型：`Array<Category>`
 - 默认：`null`
 
-组件库的组件分类，`Docgeni`会在左侧菜单中把相同分类的组件放在一起，便于统一管理和查看。
-包含 `id`、`title`和`locales` 属性，`id`为当前分类的唯一标识，组件概览文档中会使用名为`category`的FrontMatter进行配置，`title`为分类的标题。
+组件库的组件类别，`Docgeni`会在左侧菜单中把相同类别的组件放在一起，便于统一管理和查看。
+包含 `id`、`title`和`locales` 属性，`id`为当前类别的唯一标识，组件概览文档中会使用名为`category`的FrontMatter进行配置，`title`为类别的标题。
 ```json
 [
     {

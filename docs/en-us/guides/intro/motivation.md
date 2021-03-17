@@ -11,7 +11,7 @@ order: 2
 
 [awesome-docgen](https://github.com/why520crazy/awesome-docgen) 这个仓储列举出了我们寻找的文档工具
 
-## 组件文档分类
+## 组件文档类别
 - 纯Markdown语法的文档：主要为 Guide，Configuration 说明文档使用，这样的工具有无数个
 - Angular组件文档：既有组件的使用文档，还有组件参数说明文档，最重要的是需要有使用示例（Examples）
 - 当然对于一些纯服务的模块，可能还需要API文档，类似Angular官方的API，当然大部分组件库是没有这个功能的
