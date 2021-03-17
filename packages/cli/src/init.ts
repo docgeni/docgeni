@@ -1,6 +1,5 @@
 import { CommandModule } from 'yargs';
-import { toolkit } from '@docgeni/toolkit';
-import { spawn } from 'child_process';
+import { main } from '@angular-devkit/schematics-cli/bin/schematics';
 export const initCommand: CommandModule = {
     command: ['init'],
     describe: 'Init config',
@@ -8,25 +7,16 @@ export const initCommand: CommandModule = {
         yargs.option('mode', {
             alias: 'm',
             desc: `Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers`,
-            boolean: false
+            choices: ['lite', 'full']
         });
 
         return yargs;
     },
     handler: async argv => {
-        const child = spawn(
-            `npx`,
-            [`--no-install`, `schematics`, `@docgeni/cli:ng-add`, `--mode`, `${argv.mode}`, `--docsPath`, `${argv.docsPath}`],
-            {
-                stdio: 'inherit',
-                shell: process.platform === 'win32'
-            }
-        );
-        child.on('data', data => {
-            toolkit.print.info(data);
-        });
-        child.on('error', data => {
-            toolkit.print.error(data);
-        });
+        main({ args: [`@docgeni/cli:ng-add`, `--mode`, `${argv.mode}`, `--docsPath`, `${argv.docsPath}`] })
+            .then(exitCode => (process.exitCode = exitCode))
+            .catch(e => {
+                throw e;
+            });
     }
 };

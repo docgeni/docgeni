@@ -131,29 +131,18 @@
     rxjs "6.6.2"
     source-map "0.7.3"
 
-"@angular-devkit/core@11.2.4":
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-11.2.4.tgz#4404b86d8dbdb41a0e3f94cb08ff8604e0c49a2e"
-  integrity sha512-98mGDV4XtKWiQ/2D6yzvOHrnJovXchaAN9AjscAHd2an8Fkiq72d9m2wREpk+2J40NWTDB6J5iesTh3qbi8+CA==
+"@angular-devkit/schematics-cli@^0.1002.3":
+  version "0.1002.3"
+  resolved "https://registry.npmjs.org/@angular-devkit/schematics-cli/-/schematics-cli-0.1002.3.tgz#30b4e305c3b2a8dbd56afcf93797d452ed22666e"
+  integrity sha512-o42mWUGs+3V2GS8wMum1UuG9IaQ1slAMH8pivzJFRjGcchNwfnVnbPkR9KMjYL2JF0qPih8FMc2QWO4n4+8H8w==
   dependencies:
-    ajv "6.12.6"
-    fast-json-stable-stringify "2.1.0"
-    magic-string "0.25.7"
-    rxjs "6.6.3"
-    source-map "0.7.3"
-
-"@angular-devkit/schematics-cli@^0.1102.4":
-  version "0.1102.4"
-  resolved "https://registry.npmjs.org/@angular-devkit/schematics-cli/-/schematics-cli-0.1102.4.tgz#2a08c2e5617b6f8da3c3ffbe9c703ed23bae6087"
-  integrity sha512-ewMli6KdX8MrbUxjP0JQuhUyqH4mJZaUJhPF85WxnaQt0lKk5rXFzMNoQg8BzvPs/TQbwDlLSYNJpTVsSBnNxA==
-  dependencies:
-    "@angular-devkit/core" "11.2.4"
-    "@angular-devkit/schematics" "11.2.4"
-    "@schematics/schematics" "0.1102.4"
-    ansi-colors "4.1.1"
+    "@angular-devkit/core" "10.2.3"
+    "@angular-devkit/schematics" "10.2.3"
+    "@schematics/schematics" "0.1002.3"
     inquirer "7.3.3"
     minimist "1.2.5"
-    symbol-observable "3.0.0"
+    rxjs "6.6.2"
+    symbol-observable "1.2.0"
 
 "@angular-devkit/schematics@10.2.1", "@angular-devkit/schematics@~10.2.1":
   version "10.2.1"
@@ -172,15 +161,6 @@
     "@angular-devkit/core" "10.2.3"
     ora "5.0.0"
     rxjs "6.6.2"
-
-"@angular-devkit/schematics@11.2.4":
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-11.2.4.tgz#ba67ee835ceb210777f1feece86195f28c1b2e96"
-  integrity sha512-M9Ike1TYawOIHzenlZS1ufQbsS+Z11/doj5w/UrU0q2OEKc6U375t5qVGgKo3PLHHS8osb9aW9xYwBfVlKrryQ==
-  dependencies:
-    "@angular-devkit/core" "11.2.4"
-    ora "5.3.0"
-    rxjs "6.6.3"
 
 "@angular/animations@~10.2.4":
   version "10.2.4"
@@ -2356,13 +2336,13 @@
     "@angular-devkit/schematics" "10.2.3"
     jsonc-parser "2.3.0"
 
-"@schematics/schematics@0.1102.4":
-  version "0.1102.4"
-  resolved "https://registry.npmjs.org/@schematics/schematics/-/schematics-0.1102.4.tgz#9877a9bc0ba04adab6616e04fddfefe82d1a317c"
-  integrity sha512-0loUlKf8NNiP4QwTaWw6IB6ylNcTe5cwhopl4uTRRFOfFz3LIyfvl9kLmV376YW6GzDC4Fx4BWKsgL/gnTmokw==
+"@schematics/schematics@0.1002.3":
+  version "0.1002.3"
+  resolved "https://registry.npmjs.org/@schematics/schematics/-/schematics-0.1002.3.tgz#c423ed16baa6473ceaae37aa6107d21c1701581a"
+  integrity sha512-XZCO73SWm1AQEu9r/a0KKp5m8XqOeerodrH+mOOxTy/QgKnyIZ0N8Hx1wkqoPQlIXM5NiKhn8H4LLY7JOLL+yA==
   dependencies:
-    "@angular-devkit/core" "11.2.4"
-    "@angular-devkit/schematics" "11.2.4"
+    "@angular-devkit/core" "10.2.3"
+    "@angular-devkit/schematics" "10.2.3"
 
 "@schematics/update@0.1002.1":
   version "0.1002.1"
@@ -3000,7 +2980,7 @@ ajv@6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@6.12.6, ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4:
+ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.npmjs.org/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
   integrity sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==
@@ -3490,7 +3470,7 @@ base64-arraybuffer@0.1.4:
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.4.tgz#9818c79e059b1355f97e0428a017c838e90ba812"
   integrity sha1-mBjHngWbE1X5fgQooBfIOOkLqBI=
 
-base64-js@^1.0.2, base64-js@^1.3.1:
+base64-js@^1.0.2:
   version "1.5.1"
   resolved "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
@@ -3551,15 +3531,6 @@ bindings@^1.5.0:
   integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
   dependencies:
     file-uri-to-path "1.0.0"
-
-bl@^4.0.3:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz#451535264182bec2fbbc83a62ab98cf11d9f7b3a"
-  integrity sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==
-  dependencies:
-    buffer "^5.5.0"
-    inherits "^2.0.4"
-    readable-stream "^3.4.0"
 
 blob@0.0.5:
   version "0.0.5"
@@ -3783,14 +3754,6 @@ buffer@^4.3.0:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
     isarray "^1.0.0"
-
-buffer@^5.5.0:
-  version "5.7.1"
-  resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
-  integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
-  dependencies:
-    base64-js "^1.3.1"
-    ieee754 "^1.1.13"
 
 builtin-modules@^1.1.1:
   version "1.1.1"
@@ -4241,7 +4204,7 @@ cli-cursor@^3.1.0:
   dependencies:
     restore-cursor "^3.1.0"
 
-cli-spinners@^2.0.0, cli-spinners@^2.4.0, cli-spinners@^2.5.0:
+cli-spinners@^2.0.0, cli-spinners@^2.4.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/cli-spinners/-/cli-spinners-2.5.0.tgz#12763e47251bf951cb75c201dfa58ff1bcb2d047"
   integrity sha512-PC+AmIuK04E6aeSs/pUccSujsTzBhu4HzC2dL+CfJB/Jcc2qTRbEwZQDfIUpt2Xl8BodYBEq8w4fc0kU2I9DjQ==
@@ -7734,7 +7697,7 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
   dependencies:
     postcss "^7.0.14"
 
-ieee754@^1.1.13, ieee754@^1.1.4:
+ieee754@^1.1.4:
   version "1.2.1"
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
@@ -10580,20 +10543,6 @@ ora@5.0.0:
     strip-ansi "^6.0.0"
     wcwidth "^1.0.1"
 
-ora@5.3.0:
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/ora/-/ora-5.3.0.tgz#fb832899d3a1372fe71c8b2c534bbfe74961bb6f"
-  integrity sha512-zAKMgGXUim0Jyd6CXK9lraBnD3H5yPGBPPOkC23a2BG6hsm4Zu6OQSjQuEtV0BHDf4aKHcUFvJiGRrFuW3MG8g==
-  dependencies:
-    bl "^4.0.3"
-    chalk "^4.1.0"
-    cli-cursor "^3.1.0"
-    cli-spinners "^2.5.0"
-    is-interactive "^1.0.0"
-    log-symbols "^4.0.0"
-    strip-ansi "^6.0.0"
-    wcwidth "^1.0.1"
-
 ora@^3.0.0, ora@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/ora/-/ora-3.4.0.tgz#bf0752491059a3ef3ed4c85097531de9fdbcd318"
@@ -12033,7 +11982,7 @@ read@1, read@~1.0.1:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-"readable-stream@2 || 3", readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.4.0, readable-stream@^3.6.0:
+"readable-stream@2 || 3", readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
@@ -12507,7 +12456,7 @@ rxjs@6.6.2:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@6.6.3, rxjs@^6.4.0, rxjs@^6.5.0, rxjs@^6.5.4, rxjs@^6.6.0:
+rxjs@^6.4.0, rxjs@^6.5.0, rxjs@^6.5.4, rxjs@^6.6.0:
   version "6.6.3"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
   integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
@@ -13657,11 +13606,6 @@ symbol-observable@1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
-
-symbol-observable@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-3.0.0.tgz#eea8f6478c651018e059044268375c408c15c533"
-  integrity sha512-6tDOXSHiVjuCaasQSWTmHUWn4PuG7qa3+1WT031yTc/swT7+rLiw3GOrFxaH1E3lLP09dH3bVuVDf2gK5rxG3Q==
 
 table@^5.2.3:
   version "5.4.6"
