@@ -66,4 +66,14 @@ describe('ng-add Schematic', () => {
         expect(config).toContain(`rootDir: 'projects/${libraryName}/src'`);
         expect(config).toContain(`lib: '${libraryName}'`);
     });
+    it('should generate without angular.json', async () => {
+        const libraryName = 'lib-test';
+        await factory.addLibrary({ name: libraryName });
+        factory.removeFile('angular.json');
+        tree = factory.getTree();
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        const config = workspaceTree.read('.docgenirc.js').toString();
+        expect(config).not.toContain(`libs: `);
+        expect(config).not.toContain(`navs: `);
+    });
 });

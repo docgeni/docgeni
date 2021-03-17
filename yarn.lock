@@ -131,6 +131,19 @@
     rxjs "6.6.2"
     source-map "0.7.3"
 
+"@angular-devkit/schematics-cli@^0.1002.3":
+  version "0.1002.3"
+  resolved "https://registry.npmjs.org/@angular-devkit/schematics-cli/-/schematics-cli-0.1002.3.tgz#30b4e305c3b2a8dbd56afcf93797d452ed22666e"
+  integrity sha512-o42mWUGs+3V2GS8wMum1UuG9IaQ1slAMH8pivzJFRjGcchNwfnVnbPkR9KMjYL2JF0qPih8FMc2QWO4n4+8H8w==
+  dependencies:
+    "@angular-devkit/core" "10.2.3"
+    "@angular-devkit/schematics" "10.2.3"
+    "@schematics/schematics" "0.1002.3"
+    inquirer "7.3.3"
+    minimist "1.2.5"
+    rxjs "6.6.2"
+    symbol-observable "1.2.0"
+
 "@angular-devkit/schematics@10.2.1", "@angular-devkit/schematics@~10.2.1":
   version "10.2.1"
   resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-10.2.1.tgz#1d1aaf3875c9ed5eb3ad97af993af39fe9ed10a9"
@@ -2322,6 +2335,14 @@
     "@angular-devkit/core" "10.2.3"
     "@angular-devkit/schematics" "10.2.3"
     jsonc-parser "2.3.0"
+
+"@schematics/schematics@0.1002.3":
+  version "0.1002.3"
+  resolved "https://registry.npmjs.org/@schematics/schematics/-/schematics-0.1002.3.tgz#c423ed16baa6473ceaae37aa6107d21c1701581a"
+  integrity sha512-XZCO73SWm1AQEu9r/a0KKp5m8XqOeerodrH+mOOxTy/QgKnyIZ0N8Hx1wkqoPQlIXM5NiKhn8H4LLY7JOLL+yA==
+  dependencies:
+    "@angular-devkit/core" "10.2.3"
+    "@angular-devkit/schematics" "10.2.3"
 
 "@schematics/update@0.1002.1":
   version "0.1002.1"
@@ -9652,7 +9673,7 @@ minimist-options@^3.0.1:
     arrify "^1.0.1"
     is-plain-obj "^1.1.0"
 
-minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
+minimist@1.2.5, minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
