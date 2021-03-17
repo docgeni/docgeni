@@ -14,10 +14,14 @@ export const initCommand: CommandModule = {
         return yargs;
     },
     handler: async argv => {
-        const child = spawn(`npx`, [`schematics`, `@docgeni/cli:ng-add`, `--mode`, `${argv.mode}`, `--docsPath`, `${argv.docsPath}`], {
-            stdio: 'inherit',
-            shell: process.platform === 'win32'
-        });
+        const child = spawn(
+            `npx`,
+            [`--no-install`, `schematics`, `@docgeni/cli:ng-add`, `--mode`, `${argv.mode}`, `--docsPath`, `${argv.docsPath}`],
+            {
+                stdio: 'inherit',
+                shell: process.platform === 'win32'
+            }
+        );
         child.on('data', data => {
             toolkit.print.info(data);
         });
