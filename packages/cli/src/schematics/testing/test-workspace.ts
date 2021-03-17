@@ -45,6 +45,11 @@ export class TestWorkspaceFactory {
         return this.tree;
     }
 
+    removeFile(filePath: string) {
+        this.hostTree.delete(filePath);
+        return this.tree;
+    }
+
     getTree() {
         return this.tree;
     }

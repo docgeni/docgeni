@@ -40,6 +40,8 @@ export interface DocgeniConfig {
     docsPath: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
+    /** Default .docgeni */
+    siteDir?: string;
     /* Components library folder */
     libs?: Library[];
     /* Output folder */
