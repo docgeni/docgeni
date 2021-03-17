@@ -23,12 +23,35 @@ export class AngularCommander {
     async createSiteProject(sitePath: string): Promise<void> {
         if (!toolkit.fs.existsSync(path.resolve(sitePath, './angular.json'))) {
             await toolkit.fs.copy(path.resolve(__dirname, './site-template'), sitePath);
+            await this.updateSiteAngularJson(sitePath);
         }
         this.siteProject = {
             name: 'site',
             root: sitePath
         };
         this.docgeni.paths.setSitePaths(sitePath);
+    }
+
+    private async updateSiteAngularJson(sitePath: string) {
+        const angularJsonPath = path.resolve(sitePath, './angular.json');
+        const angularJson = toolkit.fs.readJSONSync(angularJsonPath, { encoding: 'UTF-8' });
+        const siteProject = angularJson.projects.site;
+        if (siteProject && siteProject.architect && siteProject.architect.build && siteProject.architect.build.options) {
+            siteProject.architect.build.options.outputPath = this.docgeni.config.output;
+        }
+        await toolkit.fs.writeJSON(
+            path.resolve(sitePath, './angular.json'),
+            {
+                ...angularJson,
+                projects: {
+                    ...angularJson.projects,
+                    site: {
+                        ...siteProject
+                    }
+                }
+            },
+            { spaces: 2 }
+        );
     }
 
     private parseCommandOptionsToArgs(cmdOptions: AngularCommandOptions) {
