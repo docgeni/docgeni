@@ -7,6 +7,7 @@ export const initCommand: CommandModule = {
         yargs.option('mode', {
             alias: 'm',
             desc: `Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers`,
+            default: 'lite',
             choices: ['lite', 'full']
         });
 
