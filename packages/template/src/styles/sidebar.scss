@@ -1,4 +1,6 @@
 .dg-menu {
+    overflow-x: hidden;
+
     .menu-group {
         .group-header {
             .group-title {
@@ -75,6 +77,5 @@
             color: $dg-gray-700;
             padding: 5px 0px;
         }
-
     }
 }
