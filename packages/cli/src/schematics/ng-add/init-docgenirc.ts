@@ -18,6 +18,9 @@ export class InitDocgenirc {
     }
 
     private buildPropertiesFromAngularJson(host: Tree) {
+        if (!host.exists('angular.json') && !host.exists('.angular.json')) {
+            return;
+        }
         const angularJson = getWorkspace(host);
         const libraryProjects: [string, WorkspaceProject<ProjectType.Library>][] = Object.entries(angularJson.projects).filter(
             ([key, value]) => value.projectType === ProjectType.Library
