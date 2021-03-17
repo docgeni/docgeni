@@ -28,7 +28,8 @@ export const buildCommand: CommandModule = {
                 desc: `Site project name`,
                 default: ''
             })
-            .config(getConfiguration());
+            .config(getConfiguration())
+            .pkgConf('docgeni');
 
         return yargs;
     },

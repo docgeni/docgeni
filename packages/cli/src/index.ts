@@ -19,7 +19,6 @@ const argv = yargs
     .wrap(120)
     .version()
     .showHelpOnFail(false)
-    .pkgConf('wpm')
     .help().argv;
 
 const command = argv._[0] as string;
