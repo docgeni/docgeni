@@ -2,6 +2,7 @@ import { DocgeniContext, SiteProject, AngularCommandOptions } from './docgeni.in
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
+import { AngularJsonBuilder } from './builders/angular-json-builder';
 
 const EXCLUDE_ARGS = ['skipSite'];
 
@@ -21,14 +22,23 @@ export class AngularCommander {
     }
 
     async createSiteProject(sitePath: string): Promise<void> {
-        if (!toolkit.fs.existsSync(path.resolve(sitePath, './angular.json'))) {
+        if (!toolkit.fs.existsSync(path.resolve(sitePath, './src'))) {
             await toolkit.fs.copy(path.resolve(__dirname, './site-template'), sitePath);
+            await this.emitAngularJson(sitePath);
         }
         this.siteProject = {
             name: 'site',
             root: sitePath
         };
         this.docgeni.paths.setSitePaths(sitePath);
+    }
+
+    private async emitAngularJson(sitePath: string) {
+        const angularJsonBuilder = new AngularJsonBuilder(this.docgeni);
+        angularJsonBuilder.hooks.buildAngularJsonSucceed.tap('EmitAngularJson', async builder => {
+            await builder.emit();
+        });
+        await angularJsonBuilder.build();
     }
 
     private parseCommandOptionsToArgs(cmdOptions: AngularCommandOptions) {
