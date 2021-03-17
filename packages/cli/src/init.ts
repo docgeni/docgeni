@@ -7,14 +7,20 @@ export const initCommand: CommandModule = {
         yargs.option('mode', {
             alias: 'm',
             desc: `Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers`,
-            default: 'lite',
             choices: ['lite', 'full']
         });
 
         return yargs;
     },
     handler: async argv => {
-        main({ args: [`@docgeni/cli:ng-add`, `--mode`, `${argv.mode}`, `--docsPath`, `${argv.docsPath}`] })
+        const params: string[] = [];
+        if (argv.mode) {
+            params.push('--mode', `${argv.mode}`);
+        }
+        if (argv.docsPath) {
+            params.push(`--docsPath`, `${argv.docsPath}`);
+        }
+        main({ args: [`@docgeni/cli:ng-add`, ...params] })
             .then(exitCode => (process.exitCode = exitCode))
             .catch(e => {
                 throw e;
