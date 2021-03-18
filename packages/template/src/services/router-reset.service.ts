@@ -42,12 +42,13 @@ export class RouterResetService {
 
     resetRoutes() {
         const config = this.router.config;
-        const routes: Routes = [
-            {
+        const routes: Routes = [];
+        if (this.global.config.mode === 'full') {
+            routes.push({
                 path: '',
                 component: HomeComponent
-            }
-        ];
+            });
+        }
         const channelPathToRoutes: Record<string, Route> = {};
         if (this.global.config.mode === 'full') {
             const rootNavs = this.global.navs.filter(nav => {

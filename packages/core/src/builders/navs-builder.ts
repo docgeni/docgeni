@@ -172,12 +172,12 @@ export class NavsBuilder {
                 if (isEntry && toolkit.utils.isEmpty(docFile.output)) {
                     continue;
                 }
-                if (isHome) {
+                if (isHome && this.docgeni.config.mode === 'full') {
                     continue;
                 }
 
-                const currentPath = this.getCurrentRoutePath(toolkit.strings.paramCase(docFile.name), docFile);
-                const fullRoutePath = isEntry ? parentItem.path : this.getFullRoutePath(currentPath, parentItem);
+                const currentPath = this.getCurrentRoutePath(isEntry ? '' : toolkit.strings.paramCase(docFile.name), docFile);
+                const fullRoutePath = isEntry && parentItem ? parentItem.path : this.getFullRoutePath(currentPath, parentItem);
 
                 const docItem: NavigationItem = {
                     id: docFile.name,

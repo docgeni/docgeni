@@ -1,5 +1,6 @@
 ---
 title: Docgeni - 为 Angular 组件开发场景而生的文档工具
+order: 10
 hero:
   title: Docgeni
   description: A modern documentation generator for doc and Angular Lib
@@ -17,20 +18,12 @@ footer: Open-source MIT Licensed | Copyright © 2020-present<br />Powered by sel
 ---
 
  ## 快速上手
-手动创建第一篇文档
 
 ```bash
 // 创建组件开发的目录
 $ mkdir library && cd library
 
-// 安装 Docgeni CLI
-$ npm i @docgeni/cli
-
-// 创建文档
-$ mkdir docs && echo '# Hello Docgeni!' > docs/index.md
-
-// 预览文档
-$ npx @docgeni/cli start
+$ npx @docgeni/cli init
 ```
 
 # 参与贡献
