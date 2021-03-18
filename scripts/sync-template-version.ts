@@ -10,7 +10,7 @@ async function sync() {
         const corePackageJson = await toolkit.fs.readJson(corePackageJsonPath);
         const toVersion = `^${args.version}`;
         corePackageJson.dependencies['@docgeni/template'] = toVersion;
-        corePackageJson.peerDependencies['@docgeni/template'] = toVersion;
+        // corePackageJson.peerDependencies['@docgeni/template'] = toVersion;
         await writeJsonFile(corePackageJsonPath, corePackageJson, {
             detectIndent: true,
             indent: 2
