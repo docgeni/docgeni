@@ -80,6 +80,6 @@ export interface DocgeniOptions {
     watch?: boolean;
     presets?: string[];
     plugins?: string[];
-    config: DocgeniConfig;
-    cmdArgs: AngularCommandOptions;
+    config?: DocgeniConfig;
+    cmdArgs?: AngularCommandOptions;
 }

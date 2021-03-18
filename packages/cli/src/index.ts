@@ -8,8 +8,7 @@ const argv = yargs
     .scriptName('docgeni')
     .usage('Usage: $0 <build|dev|init> [options]')
     .option('docs-dir', {
-        desc: `Docs dir`,
-        default: DEFAULT_CONFIG.docsDir
+        desc: `Docs dir`
     })
     .command(buildCommand)
     .command(serveCommand)

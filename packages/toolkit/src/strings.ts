@@ -47,3 +47,13 @@ export function paramCase(input: string, options?: changeCase.Options) {
 export function isString(value: any): value is string {
     return typeof value === 'string';
 }
+
+export function generateRandomId(length = 32): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
