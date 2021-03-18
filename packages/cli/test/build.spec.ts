@@ -13,7 +13,6 @@ describe('docgeni build', () => {
         // shell.execSync(`cd ${basicFixturePath} && TS_NODE_PROJECT=../../../tsconfig.json ts-node ../../../bin/docgeni build --skip-site`);
 
         const config: DocgeniConfig = {
-            $schema: '',
             baseHref: '/',
             mode: 'full',
             title: 'Docgeni',

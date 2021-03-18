@@ -18,7 +18,6 @@ export interface HomeDocMeta {
 
 export type DocgeniMode = 'full' | 'lite';
 export interface DocgeniConfig {
-    $schema?: string;
     /* Title of documentation, e.g: Docgeni */
     title: string;
     /** Heading of documentation, e.g: Doc Generator, default is same as title */
@@ -49,9 +48,9 @@ export interface DocgeniConfig {
     libs?: Library[];
     /* Navigations for menu and nav */
     navs?: NavigationItem[];
-    /** 覆盖自动生成的导航 */
-    navsCover?: boolean;
-    /* In silent mode, log messages aren't logged in the console */
+    // /** 覆盖自动生成的导航 */
+    // navsCover?: boolean;
+    // /* In silent mode, log messages aren't logged in the console */
     silent?: boolean;
     /** Locales */
     locales?: Locale[];
