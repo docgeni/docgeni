@@ -3,7 +3,7 @@ module.exports = {
     mode: 'full',
     title: 'Docgeni',
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
-    docsPath: './docs',
+    docsDir: 'docs',
     siteProjectName: 'site',
     output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',

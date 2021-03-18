@@ -40,7 +40,7 @@ order: 30
 
 GitHub 仓储地址。
 
-## docsPath
+## docsDir
 - 类型：`string`
 - 默认：`docs`
 

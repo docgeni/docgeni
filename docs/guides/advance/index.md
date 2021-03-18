@@ -1,4 +1,4 @@
 ---
-title: 高级功能
+title: 高级用法
 order: 40
 ---

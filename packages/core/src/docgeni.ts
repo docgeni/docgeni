@@ -55,7 +55,7 @@ export class Docgeni implements DocgeniContext {
             logoUrl: this.config.logoUrl,
             repoUrl: this.config.repoUrl
         };
-        this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsPath, this.config.output);
+        this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.output);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
         this.plugins = options.plugins || [
@@ -138,8 +138,8 @@ export class Docgeni implements DocgeniContext {
     }
 
     private async verifyConfig() {
-        if (this.config.docsPath && !toolkit.fs.existsSync(this.config.docsPath)) {
-            throw new ValidationError(`docs folder(${this.config.docsPath}) has not exists`);
+        if (this.config.docsDir && !toolkit.fs.existsSync(this.config.docsDir)) {
+            throw new ValidationError(`docs folder(${this.config.docsDir}) has not exists`);
         }
     }
 

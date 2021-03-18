@@ -5,7 +5,7 @@ order: 40
 ---
 
 
-`Docgeni`会动态识别每个类库下的子文件夹，每个子文件夹相当于一个组件，每个组件包含对应的文档、API和示例。
+`Docgeni`会动态识别每个类库下的一级子文件夹，每个子文件夹相当于一个组件，每个组件包含对应的文档、API和示例，如需配置某个多级文件夹，请查看 [include](https://docgeni.org/configuration/lib#include) 配置项。
 组件的文件夹结构如下：
 ```
 ├── button
@@ -33,10 +33,10 @@ order: 40
 
 # 概览文档
 
-`doc` 文件夹下存放每个多语言对应的组件文档，会展示在组件的概览中。
+默认`doc`文件夹下存放每个多语言对应的组件文档，会展示在组件的概览中。如需配置，请查看 [docDir](https://docgeni.org/configuration/lib#docDir) 配置项。
 
-# 组件配置
-组件自定义配置是存放在默认多语言的FrontMatter中。
+# 组件配置项
+组件自定义配置项是存放在默认语言文档的`FrontMatter`中。
 
 ```markdown
 ---

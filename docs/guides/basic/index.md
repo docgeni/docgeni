@@ -1,4 +1,4 @@
 ---
-title: 基本使用
+title: 基本用法
 order: 15
 ---

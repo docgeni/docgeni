@@ -62,7 +62,7 @@ export class InitDocgenirc {
     run() {
         this.addProperty('$schema', '@docgeni/cli/cli.schema.json');
         this.addProperty('mode', this.options.mode);
-        this.addProperty('docsPath', this.options.docsPath);
+        this.addProperty('docsDir', this.options.docsDir);
 
         return (host: Tree, context: SchematicContext) => {
             this.buildPropertiesFromPackageJson(host);

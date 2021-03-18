@@ -17,8 +17,8 @@ export const initCommand: CommandModule = {
         if (argv.mode) {
             params.push('--mode', `${argv.mode}`);
         }
-        if (argv.docsPath) {
-            params.push(`--docsPath`, `${argv.docsPath}`);
+        if (argv.docsDir) {
+            params.push(`--docsDir`, `${argv.docsDir}`);
         }
         main({ args: [`@docgeni/cli:ng-add`, ...params] })
             .then(exitCode => (process.exitCode = exitCode))
