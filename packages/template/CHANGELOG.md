@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.13](https://github.com/docgeni/docgeni/compare/v0.6.0-next.12...v0.6.0-next.13) (2021-03-18)
+
+
+### Bug Fixes
+
+* **template:** should hide x scroll for lite mode ([bc50415](https://github.com/docgeni/docgeni/commit/bc50415d8f535da886b32df6b17a15fa388636ed))
+
+
+### Features
+
+* **api:** ApiDeclaration support interface & class ([cb7ec62](https://github.com/docgeni/docgeni/commit/cb7ec623e4f6c3d13f689e3a512f7ff6d90308f5))
+* **core:** support config siteDir ([3f0ea8f](https://github.com/docgeni/docgeni/commit/3f0ea8ffd11de0dfce423c2cd04ab71089437cf8))
+* **template:** show level in table of content ([#91](https://github.com/docgeni/docgeni/issues/91)) ([74baf15](https://github.com/docgeni/docgeni/commit/74baf1524bae37414cae448880428660ddb5917e)), closes [#OSP-12](https://github.com/docgeni/docgeni/issues/OSP-12)
+* **toc:** stick toc in top ([4fb5d06](https://github.com/docgeni/docgeni/commit/4fb5d062e42213d9e3c086622e443f6e336475a3))
+
+
+
+
+
 # [0.6.0-next.12](https://github.com/docgeni/docgeni/compare/v0.6.0-next.11...v0.6.0-next.12) (2021-03-11)
 
 **Note:** Version bump only for package @docgeni/template
