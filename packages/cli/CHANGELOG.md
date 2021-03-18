@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.14](https://github.com/docgeni/docgeni/compare/v0.6.0-next.13...v0.6.0-next.14) (2021-03-18)
+
+
+### Features
+
+* **core:** update docsPath to docsDir and refactor component docs ([f289f8f](https://github.com/docgeni/docgeni/commit/f289f8f69ae9f17e287066c36b912f03009b8e6b))
+
+
+
+
+
 # [0.6.0-next.13](https://github.com/docgeni/docgeni/compare/v0.6.0-next.12...v0.6.0-next.13) (2021-03-18)
 
 
