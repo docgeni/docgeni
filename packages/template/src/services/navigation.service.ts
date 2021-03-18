@@ -42,6 +42,12 @@ export class NavigationService {
         });
     }
 
+    getDocItemByPath(path: string) {
+        return this.docItems.find(docItem => {
+            return docItem.path === path;
+        });
+    }
+
     selectChannelByPath(path: string) {
         const channel = this.navs.find(nav => {
             return nav.path === path;
@@ -54,22 +60,12 @@ export class NavigationService {
         if (!this.channel || !this.channel.items) {
             return null;
         }
-        const docItem = this.docItems.find(docItem => {
-            return docItem.path === path;
-        });
-        return docItem;
+        return this.getDocItemByPath(path);
     }
 
     selectDocItem(path: string) {
-        if (this.config.mode === 'full') {
-            const docItem = this.getDocItemInChannel(path);
-            this.docItem$.next(docItem);
-        } else {
-            const docItem = this.docItems.find(docItem => {
-                return docItem.path === path;
-            });
-            this.docItem$.next(docItem);
-        }
+        const docItem = this.getDocItemByPath(path);
+        this.docItem$.next(docItem);
     }
 
     getChannelFirstDocItem() {

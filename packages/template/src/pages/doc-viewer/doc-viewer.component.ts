@@ -1,15 +1,4 @@
-import {
-    Component,
-    OnInit,
-    NgModuleFactory,
-    Type,
-    ElementRef,
-    Injector,
-    OnDestroy,
-    HostBinding,
-    ChangeDetectionStrategy,
-    ViewChild
-} from '@angular/core';
+import { Component, OnInit, NgModuleFactory, Type, OnDestroy, HostBinding, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalContext, NavigationService } from '../../services/public-api';
@@ -18,13 +7,15 @@ import { takeUntil } from 'rxjs/operators';
 import { DocItem, NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
-
 @Component({
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html'
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
+
+    // 独立展示的页面，不属于任何频道
+    @HostBinding(`class.dg-doc-viewer--single`) isSingle = false;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -50,6 +41,9 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        if (this.route.snapshot.data) {
+            this.isSingle = this.route.snapshot.data.single;
+        }
         this.route.paramMap.subscribe(params => {
             const id = params.get('id');
             // component doc

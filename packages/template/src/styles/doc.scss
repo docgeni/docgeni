@@ -10,6 +10,10 @@ $dg-service-color: #8e24aa;
 .dg-doc-viewer {
     display: block;
 
+    &--single {
+        padding: 30px 50px;
+    }
+
     .dg-doc-header {
         display: flex;
         align-items: center;
@@ -48,7 +52,7 @@ $dg-service-color: #8e24aa;
         }
     }
 
-    .dg-doc-viewer-inner{
+    .dg-doc-viewer-inner {
         display: flex;
         flex: auto;
     }
@@ -101,7 +105,8 @@ $dg-service-color: #8e24aa;
                         background-color: rgba($color: $dg-service-color, $alpha: 0.8);
                     }
 
-                    &.interface, &.class {
+                    &.interface,
+                    &.class {
                         background-color: rgba($color: $dg-interface-color, $alpha: 0.8);
                     }
                 }
