@@ -60,7 +60,6 @@ export class InitDocgenirc {
     }
 
     run() {
-        this.addProperty('$schema', '@docgeni/cli/cli.schema.json');
         this.addProperty('mode', this.options.mode);
         this.addProperty('docsDir', this.options.docsDir);
 

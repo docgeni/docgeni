@@ -46,8 +46,6 @@ describe('ng-add Schematic', () => {
         const exist = workspaceTree.exists('.docgenirc.js');
         expect(exist).toBeTruthy();
         const config = workspaceTree.read('.docgenirc.js').toString();
-        expect(config).toContain(`$schema`);
-        expect(config).toContain(`@docgeni/cli/cli.schema.json`);
         expect(config).toContain(`mode: '${mode}'`);
         expect(config).toContain(`docsDir: '${docsDir}'`);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');

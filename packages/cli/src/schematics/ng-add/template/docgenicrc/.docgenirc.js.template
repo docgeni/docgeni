@@ -1,5 +1,4 @@
 module.exports = {
-    $schema: '@docgeni/cli/cli.schema.json',
     mode: '<%= config.mode %>',
     title: '<%= config.title %>',
     description: '<%= config.description %>',

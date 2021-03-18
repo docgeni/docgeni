@@ -18,7 +18,6 @@ export interface HomeDocMeta {
 
 export type DocgeniMode = 'full' | 'lite';
 export interface DocgeniConfig {
-    $schema: string;
     /* Title of documentation, e.g: Docgeni */
     title: string;
     /** Heading of documentation, e.g: Doc Generator, default is same as title */
