@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.15](https://github.com/docgeni/docgeni/compare/v0.6.0-next.14...v0.6.0-next.15) (2021-03-18)
+
+
+### Bug Fixes
+
+* **template:** add flex auto for dg-doc-viewer--single ([addc61f](https://github.com/docgeni/docgeni/commit/addc61fff06c413132374bce7839d0169dd1affc))
+* **template:** should display page without channel ([39b6b7c](https://github.com/docgeni/docgeni/commit/39b6b7c743ff96f9c9365569dbbc5e86bd886a49))
+
+
+
+
+
 # [0.6.0-next.14](https://github.com/docgeni/docgeni/compare/v0.6.0-next.13...v0.6.0-next.14) (2021-03-18)
 
 
