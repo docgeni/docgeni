@@ -72,15 +72,10 @@ export class RouterResetService {
                     }
                     routes.push(route);
                     channelPathToRoutes[nav.path] = route;
-                } else {
-                    routes.push({
-                        path: nav.path,
-                        component: DocViewerComponent
-                    });
                 }
             });
             this.global.docItems.forEach(docItem => {
-                const route = docItem.importSpecifier
+                const route: Route = docItem.importSpecifier
                     ? {
                           path: docItem.path,
                           component: DocViewerComponent,
@@ -95,6 +90,10 @@ export class RouterResetService {
                 if (channelRoute) {
                     channelRoute.children.push(route);
                 } else if (!docItem.importSpecifier) {
+                    // 独立的页面，不属于任何频道
+                    route.data = {
+                        single: true
+                    };
                     routes.push(route);
                 }
             });
