@@ -7,9 +7,9 @@ import { initCommand } from './init';
 const argv = yargs
     .scriptName('docgeni')
     .usage('Usage: $0 <build|dev|init> [options]')
-    .option('docs-path', {
-        desc: `Docs folder path`,
-        default: DEFAULT_CONFIG.docsPath
+    .option('docs-dir', {
+        desc: `Docs dir`,
+        default: DEFAULT_CONFIG.docsDir
     })
     .command(buildCommand)
     .command(serveCommand)

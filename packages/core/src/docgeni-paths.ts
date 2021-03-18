@@ -16,9 +16,9 @@ export class DocgeniPaths {
     /* site assets content docs absolute path */
     absSiteAssetsContentDocsPath?: string;
 
-    constructor(cwd: string, docsPath: string, outputPath: string) {
+    constructor(cwd: string, docsDir: string, outputPath: string) {
         this.cwd = cwd;
-        this.absDocsPath = this.getAbsPath(docsPath);
+        this.absDocsPath = this.getAbsPath(docsDir);
         this.absOutputPath = this.getAbsPath(outputPath);
     }
 

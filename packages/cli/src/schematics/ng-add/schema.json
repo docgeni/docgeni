@@ -30,12 +30,12 @@
         ]
       }
     },
-    "docsPath": {
+    "docsDir": {
       "type": "string",
       "default": "docs",
-      "description": "Docs folder",
+      "description": "Docs dir, default is 'docs'",
       "x-prompt": {
-        "message": "Docs folder"
+        "message": "Docs dir"
       }
     }
   }

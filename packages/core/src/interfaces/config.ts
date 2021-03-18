@@ -37,16 +37,16 @@ export interface DocgeniConfig {
     logoUrl?: string;
     /* Repo url*/
     repoUrl?: string;
-    /* Docs folder */
-    docsPath: string;
+    /* Docs dir, default is 'docs' */
+    docsDir: string;
+    /** Site default dir .docgeni */
+    siteDir?: string;
+    /* Site output dir, default is .docgeni */
+    output?: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
-    /** Default .docgeni */
-    siteDir?: string;
     /* Components library folder */
     libs?: Library[];
-    /* Output folder */
-    output?: string;
     /* Navigations for menu and nav */
     navs?: NavigationItem[];
     /** 覆盖自动生成的导航 */

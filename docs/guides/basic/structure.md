@@ -1,6 +1,7 @@
 ---
 title: 目录结构
 order: 10
+hidden: true
 ---
 
 # 纯文档项目

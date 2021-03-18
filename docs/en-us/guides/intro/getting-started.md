@@ -39,7 +39,7 @@ $ yarn add @docgeni/cli @docgeni/template -D
 module.exports = {
     mode: 'site',
     title: 'Docgeni',
-    docsPath: './docs',
+    docsDir: './docs',
     output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [

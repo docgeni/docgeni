@@ -1,5 +1,3 @@
-import { LiveExample } from './example';
-
 export interface DocItem {
     id: string;
     title: string;
@@ -10,6 +8,7 @@ export interface DocItem {
     contentPath?: string;
     content?: string;
     order?: number;
+    hidden?: boolean;
     // 多语言
     locales?: {
         [key: string]: {

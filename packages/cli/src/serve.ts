@@ -9,8 +9,8 @@ export const serveCommand: CommandModule = {
     builder: yargs => {
         yargs
             .option('docs-folder', {
-                desc: `Docs folder path`,
-                default: DEFAULT_CONFIG.docsPath
+                desc: `Docs dir`,
+                default: DEFAULT_CONFIG.docsDir
             })
             .option('siteProjectName', {
                 desc: `Site project name`,

@@ -4,14 +4,16 @@ path: 'component-api'
 order: 60
 ---
 
-# 支持格式
-组件目录下的`api`文件夹下存放每个多语言对应的组件API文档，会展示在组件的API中，`Docgeni`会根据配置的`locales`查找`{localeKey}.<json|yaml|yml|js|config.js>`文件，目前支持以下三种格式：
+# API 默认规则
+Docgeni 默认会扫描`api`文件夹下的配置文件，文件名为多语言的`Key`，比如`zh-cn.js`。如需配置，请查看 [apiDir](https://docgeni.org/configuration/lib#apiDir) 配置项。
+
+配置文件命名规则为：`{localeKey}.<json|yaml|yml|js|config.js>`，目前支持以下三种格式：
 - `json`格式，以`.json`后缀命名
 - `yaml`格式，以`.yaml`或者`yml`后缀命名
 - `js`格式，以`.js`或者`.config.js`后缀命名
 
 # API 配置
-不管是哪种格式，组件模块会包含多个组件或者指令，所以API的配置是一个数组，数组中的每一项代表一个组件或者一个指令。
+不管是哪种格式，一个组件模块可能会包含多个组件或者指令，所以API的配置是一个数组，数组中的每一项代表一个组件、一个指令、一个服务或者一个接口等。
 
 JS 格式示例如下：
 ```js
@@ -83,7 +85,7 @@ JSON格式示例如下：
 
 # 参数说明
 
-- `type`: 件的类型，目前支持`directive`和`component`
+- `type`: 件的类型，支持`directive`、`component`、`class`、`interface`
 - `name`: 组件的名称
 - `description`: 组件的描述，支持 Markdown 语法
 - `properties`: 组件的属性列表
