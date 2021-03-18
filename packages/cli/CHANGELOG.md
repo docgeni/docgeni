@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.13](https://github.com/docgeni/docgeni/compare/v0.6.0-next.12...v0.6.0-next.13) (2021-03-18)
+
+
+### Features
+
+* **cli:** add `docgeni init` command ([#94](https://github.com/docgeni/docgeni/issues/94)) ([c3e126b](https://github.com/docgeni/docgeni/commit/c3e126b0a87329df8a52122686a26b4fd8f1b5f6))
+
+
+
+
+
 # [0.6.0-next.12](https://github.com/docgeni/docgeni/compare/v0.6.0-next.11...v0.6.0-next.12) (2021-03-11)
 
 
