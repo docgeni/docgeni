@@ -18,7 +18,7 @@ export interface HomeDocMeta {
 
 export type DocgeniMode = 'full' | 'lite';
 export interface DocgeniConfig {
-    $schema: string;
+    $schema?: string;
     /* Title of documentation, e.g: Docgeni */
     title: string;
     /** Heading of documentation, e.g: Doc Generator, default is same as title */
@@ -41,7 +41,7 @@ export interface DocgeniConfig {
     docsDir: string;
     /** Site default dir .docgeni */
     siteDir?: string;
-    /* Site output dir, default is .docgeni */
+    /* Site output dir, default is dist/docgeni-site */
     output?: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;

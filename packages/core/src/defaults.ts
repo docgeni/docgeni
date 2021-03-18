@@ -4,14 +4,14 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     title: 'Docgeni',
     heading: 'Doc Generator',
     description: '为 Angular 组件开发场景而生的文档工具',
-    mode: 'full',
+    mode: 'lite',
     theme: 'default',
     baseHref: '/',
     heads: [],
     docsDir: 'docs',
     siteDir: '.docgeni',
     silent: false,
-    output: 'dist/.docgeni',
+    output: 'dist/docgeni-site',
     locales: [
         {
             key: 'en-us',
