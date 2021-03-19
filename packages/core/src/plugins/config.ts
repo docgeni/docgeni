@@ -10,7 +10,6 @@ export class ConfigPlugin implements Plugin {
             siteConfig.title = docgeni.config.title;
             siteConfig.description = docgeni.config.description;
             siteConfig.locales = docgeni.config.locales;
-            siteConfig.navs = docgeni.config.navs;
         });
     }
 }

@@ -12,15 +12,15 @@ describe('#config', () => {
             })
             .eq({
                 title: 'Docgeni',
-                heading: 'Doc Generator',
+                // heading: 'Doc Generator',
                 description: '为 Angular 组件开发场景而生的文档工具',
                 mode: 'lite',
                 theme: 'default',
                 baseHref: '/',
-                heads: [],
+                // heads: [],
                 docsDir: 'docs',
                 siteDir: '.docgeni',
-                silent: false,
+                // silent: false,
                 output: 'dist/docgeni-site',
                 locales: [
                     { key: 'en-us', name: 'EN' },

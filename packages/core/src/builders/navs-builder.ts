@@ -89,7 +89,7 @@ export class NavsBuilder {
             docsNavInsertIndex = navs.length;
         }
         this.docsNavInsertIndex = docsNavInsertIndex;
-        this.rootNavs = navs;
+        this.rootNavs = navs as NavigationItem[];
     }
 
     public async buildDocNavs() {

@@ -1,3 +1,6 @@
+/**
+ * @type {import('@docgeni/core').DocgeniConfig}
+ */
 module.exports = {
     mode: '<%= config.mode %>',
     title: '<%= config.title %>',

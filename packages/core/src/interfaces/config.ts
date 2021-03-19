@@ -17,11 +17,28 @@ export interface HomeDocMeta {
 }
 
 export type DocgeniMode = 'full' | 'lite';
+
+export interface DocgeniNavItem {
+    /** Title for nav item */
+    title: string;
+    /** Route path for nav item */
+    path: string;
+    /** Whether is external link */
+    isExternal?: boolean;
+    /** Lib name for libs */
+    lib?: string;
+    /** Locales */
+    locales?: {
+        [key: string]: {
+            title: string;
+        };
+    };
+}
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
     title: string;
     /** Heading of documentation, e.g: Doc Generator, default is same as title */
-    heading?: string;
+    // heading?: string;
     /* Description of documentation */
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
@@ -31,9 +48,11 @@ export interface DocgeniConfig {
     /* Base href of documentation, default is / */
     baseHref?: string;
     /* Heads of documentation*/
-    heads?: [];
+    // heads?: [];
     /* Logo url*/
     logoUrl?: string;
+    /* Favicon url, default is favicon.ico*/
+    favicon?: string;
     /* Repo url*/
     repoUrl?: string;
     /* Docs dir, default is 'docs' */
@@ -44,14 +63,14 @@ export interface DocgeniConfig {
     output?: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
-    /* Components library folder */
+    /* Angular libraries */
     libs?: Library[];
     /* Navigations for menu and nav */
-    navs?: NavigationItem[];
+    navs?: DocgeniNavItem[];
     // /** 覆盖自动生成的导航 */
     // navsCover?: boolean;
     // /* In silent mode, log messages aren't logged in the console */
-    silent?: boolean;
+    // silent?: boolean;
     /** Locales */
     locales?: Locale[];
     /** Default locale */
@@ -80,11 +99,6 @@ export interface DocgeniSiteConfig {
     repoUrl?: string;
     /** Home meta */
     homeMeta?: HomeDocMeta;
-    /* Navigations for menu and nav */
-    navs: NavigationItem[];
-    // navs?: {
-    //     [key: string]: NavigationItem[];
-    // };
     /** Locales */
     locales?: Locale[];
     defaultLocale?: string;
