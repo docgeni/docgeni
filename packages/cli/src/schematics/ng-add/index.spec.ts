@@ -48,6 +48,7 @@ describe('ng-add Schematic', () => {
         const config = workspaceTree.read('.docgenirc.js').toString();
         expect(config).toContain(`mode: '${mode}'`);
         expect(config).toContain(`docsDir: '${docsDir}'`);
+        expect(config).toContain(`@type {import('@docgeni/core').DocgeniConfig}`);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         expect(config).toContain(`title: '${packageJson.name}'`);
     });

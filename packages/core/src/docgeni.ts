@@ -44,12 +44,12 @@ export class Docgeni implements DocgeniContext {
         this.config = this.normalizeConfig(options.config);
         this.siteConfig = {
             title: this.config.title,
-            heading: this.config.heading,
+            // heading: this.config.heading,
             description: this.config.description,
             mode: this.config.mode,
             theme: this.config.theme,
             baseHref: this.config.baseHref,
-            heads: this.config.heads,
+            // heads: this.config.heads,
             locales: this.config.locales,
             defaultLocale: this.config.defaultLocale,
             logoUrl: this.config.logoUrl,
