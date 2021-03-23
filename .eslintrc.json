@@ -101,10 +101,10 @@
         //     }
         // ],
         // "@typescript-eslint/class-name-casing": "error",
-        "@typescript-eslint/consistent-type-definitions": [
-            "error",
-            "interface"
-        ],
+        // "@typescript-eslint/consistent-type-definitions": [
+        //     "error",
+        //     "interface"
+        // ],
         // "@typescript-eslint/interface-name-prefix": "error",
         // "@typescript-eslint/no-inferrable-types": "error",
         "@typescript-eslint/no-misused-new": "error",
