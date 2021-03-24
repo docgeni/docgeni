@@ -7,9 +7,9 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/cdk": ">9.0.0",
-    "@angular/common": ">9.0.0 ",
-    "@angular/core": ">9.0.0",
-    "@angular/router": ">9.0.0"
+    "@angular/cdk": ">=9.0.0",
+    "@angular/common": ">=9.0.0 ",
+    "@angular/core": ">=9.0.0",
+    "@angular/router": ">=9.0.0"
   }
 }
