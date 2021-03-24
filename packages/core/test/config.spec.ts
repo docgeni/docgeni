@@ -19,7 +19,7 @@ describe('#config', () => {
                 baseHref: '/',
                 // heads: [],
                 docsDir: 'docs',
-                siteDir: '.docgeni',
+                siteDir: '.docgeni/site',
                 // silent: false,
                 output: 'dist/docgeni-site',
                 locales: [

@@ -3,10 +3,15 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SyncHook } from 'tapable';
 
+interface AngularJsonData {
+    root?: string;
+    outputPath?: string;
+}
+
 export class AngularJsonBuilder {
     private sitePath: string;
 
-    private angularJson = {};
+    private angularJson: AngularJsonData = {};
 
     public hooks = {
         buildAngularJsonSucceed: new SyncHook<AngularJsonBuilder>(['angularJsonBuilder'])
@@ -19,7 +24,7 @@ export class AngularJsonBuilder {
     public async build() {
         this.angularJson = {
             root: this.docgeni.config.siteDir,
-            outputPath: this.docgeni.config.output
+            outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.output)
         };
         this.hooks.buildAngularJsonSucceed.call(this);
     }

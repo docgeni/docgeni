@@ -17,7 +17,7 @@ describe('#build-angular-json', () => {
                 cwd: basicFixturePath
             },
             config: {
-                siteDir: '.docgeni',
+                siteDir: '.docgeni/site',
                 output: 'dist/docgeni-site'
             }
         } as DocgeniContext;
@@ -25,8 +25,8 @@ describe('#build-angular-json', () => {
         await angularJsonBuilder.build();
         // await angularJsonBuilder.emit();
         expect(angularJsonBuilder['angularJson']).deep.eq({
-            root: '.docgeni',
-            outputPath: 'dist/docgeni-site'
+            root: '.docgeni/site',
+            outputPath: '../../dist/docgeni-site'
         });
     });
 });
