@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.17](https://github.com/docgeni/docgeni/compare/v0.6.0-next.16...v0.6.0-next.17) (2021-03-24)
+
+
+### Bug Fixes
+
+* **template:** update peerDependencies as * ([c1e8c4a](https://github.com/docgeni/docgeni/commit/c1e8c4a2f661d8d2be63ad1f7c3ffb573732d80c))
+
+
+
+
+
 # [0.6.0-next.16](https://github.com/docgeni/docgeni/compare/v0.6.0-next.15...v0.6.0-next.16) (2021-03-24)
 
 
