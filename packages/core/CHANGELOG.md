@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.16](https://github.com/docgeni/docgeni/compare/v0.6.0-next.15...v0.6.0-next.16) (2021-03-24)
+
+
+### Features
+
+* **cli:** add [@type](https://github.com/type) support for js config ([a19542e](https://github.com/docgeni/docgeni/commit/a19542eadbdd17abaed9b67670397efde2def576))
+
+
+
+
+
 # [0.6.0-next.15](https://github.com/docgeni/docgeni/compare/v0.6.0-next.14...v0.6.0-next.15) (2021-03-18)
 
 **Note:** Version bump only for package @docgeni/core
