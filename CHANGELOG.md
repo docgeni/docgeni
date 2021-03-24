@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.16](https://github.com/docgeni/docgeni/compare/v0.6.0-next.15...v0.6.0-next.16) (2021-03-24)
+
+
+### Bug Fixes
+
+* **template:** support 9.0.0 ([9fec5a0](https://github.com/docgeni/docgeni/commit/9fec5a0a74ad480d1facabf12364712ad1bbb772))
+* **template:** update peerDependencies support angular 11 ([4615c9c](https://github.com/docgeni/docgeni/commit/4615c9c738a0680e52ef5e2d599bb602658da724))
+
+
+### Features
+
+* **cli:** add [@type](https://github.com/type) support for js config ([a19542e](https://github.com/docgeni/docgeni/commit/a19542eadbdd17abaed9b67670397efde2def576))
+
+
+
+
+
 # [0.6.0-next.15](https://github.com/docgeni/docgeni/compare/v0.6.0-next.14...v0.6.0-next.15) (2021-03-18)
 
 
