@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.18](https://github.com/docgeni/docgeni/compare/v0.6.0-next.17...v0.6.0-next.18) (2021-03-25)
+
+
+### Bug Fixes
+
+* **core:** update docgeni default siteDir to .docgeni/site ([#110](https://github.com/docgeni/docgeni/issues/110)) ([66352f5](https://github.com/docgeni/docgeni/commit/66352f50ddb0524014c2c226e0f17a65240d2d0c))
+* **template:** should redirect first doc when there are no docs in subfolder's parent folder ([bd708b4](https://github.com/docgeni/docgeni/commit/bd708b4d5b03474a06e470672de9cc8d9e9f0495))
+
+
+### Features
+
+* **core:** support publicDir contains assets,.browserslistrc, index.html,tsconfig.json and styles.scss ([#111](https://github.com/docgeni/docgeni/issues/111)) ([ac43a96](https://github.com/docgeni/docgeni/commit/ac43a96e33ec771e17d5c09815db2831b45cc4e4))
+
+
+
+
+
 # [0.6.0-next.17](https://github.com/docgeni/docgeni/compare/v0.6.0-next.16...v0.6.0-next.17) (2021-03-24)
 
 
