@@ -1,51 +1,11 @@
 import { DocsBuilder } from './builders/docs-builder';
-import { DocgeniConfig, Library, HomeDocMeta } from './interfaces';
+import { DocgeniConfig } from './interfaces';
 import { SyncHook } from 'tapable';
-import { DocType } from './enums';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
 import { DocSourceFile, LibrariesBuilder } from './builders';
-
-export interface ComponentDocMeta {
-    title?: string;
-    name?: string;
-    category?: string;
-    subtitle?: string;
-    description?: string;
-    order?: number;
-    hidden?: boolean;
-}
-
-export interface CategoryDocMeta {
-    title: string;
-    order?: number;
-    path?: string;
-    hidden?: boolean;
-}
-
-export interface GeneralDocMeta {
-    title: string;
-    path?: string;
-    order?: number;
-    hidden?: boolean;
-}
-
-export type DocMeta = ComponentDocMeta & GeneralDocMeta & HomeDocMeta;
-
-export interface SiteProject {
-    name: string;
-    root: string;
-    sourceRoot?: string;
-    custom?: boolean;
-}
-
-export interface LibraryContext {
-    lib: Library;
-}
-
-export interface LibraryComponentContext {
-    name: string;
-}
+import { AngularCommandOptions } from './types';
+import { virtualFs } from '@angular-devkit/core';
 
 export interface DocgeniHooks {
     run: SyncHook;
@@ -65,16 +25,8 @@ export interface DocgeniContext {
     readonly enableIvy: boolean;
     readonly librariesBuilders: LibrariesBuilder;
     readonly docsBuilder: DocsBuilder;
+    readonly fs: virtualFs.Host;
 }
-
-export interface AngularCommandOptions {
-    skipSite?: boolean;
-    port?: string | number;
-    prod?: boolean;
-    deployUrl?: string;
-    baseHref?: string;
-}
-
 export interface DocgeniOptions {
     cwd?: string;
     watch?: boolean;

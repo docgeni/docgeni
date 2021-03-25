@@ -1,16 +1,18 @@
+import { virtualFs, normalize } from '@angular-devkit/core';
+import { NodeJsSyncHost } from '@angular-devkit/core/node';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, DocgeniSiteConfig, NavigationItem, ChannelItem } from './interfaces';
+import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
-import { DocgeniContext, DocgeniHooks, DocgeniOptions, LibraryContext, LibraryComponentContext } from './docgeni.interface';
+import { DocgeniContext, DocgeniHooks, DocgeniOptions } from './docgeni.interface';
 import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import * as semver from 'semver';
-import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
+import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
 
 export class Docgeni implements DocgeniContext {
@@ -22,6 +24,7 @@ export class Docgeni implements DocgeniContext {
     public docsBuilder: DocsBuilder;
     public librariesBuilders: LibrariesBuilder;
     public navsBuilder: NavsBuilder;
+    public fs: virtualFs.Host;
     private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
@@ -58,6 +61,7 @@ export class Docgeni implements DocgeniContext {
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.output);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
+        this.fs = new virtualFs.ScopedHost(new NodeJsSyncHost(), normalize(this.paths.cwd));
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
@@ -77,7 +81,10 @@ export class Docgeni implements DocgeniContext {
             }
             this.enableIvy = detector.ngVersion ? semver.gte(detector.ngVersion, '9.0.0') : true;
             this.ngCommander = new AngularCommander(this);
-            await this.ngCommander.initialize(detector.siteProject);
+            const siteBuilder = new SiteBuilder(this);
+            const siteProject = await siteBuilder.build(detector.siteProject);
+            await this.ngCommander.initialize(siteProject);
+
             this.hooks.run.call();
 
             this.librariesBuilders = new LibrariesBuilder(this);

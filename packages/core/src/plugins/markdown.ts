@@ -1,5 +1,5 @@
 import { Plugin } from './plugin';
-import { DocgeniContext, DocMeta } from '../docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import { Markdown } from '../markdown';
 import { DocType } from '../enums';
 import { toolkit } from '@docgeni/toolkit';

@@ -1,6 +1,6 @@
 import { toolkit, fs } from '@docgeni/toolkit';
 import * as path from 'path';
-import { DocMeta } from '../docgeni.interface';
+import { DocMeta } from '../types';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 

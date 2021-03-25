@@ -20,6 +20,7 @@ describe('#config', () => {
                 // heads: [],
                 docsDir: 'docs',
                 siteDir: '.docgeni/site',
+                publicDir: '.docgeni/public',
                 // silent: false,
                 output: 'dist/docgeni-site',
                 locales: [
@@ -34,16 +35,14 @@ describe('#config', () => {
     it('should get correct config when input custom config', () => {
         const customConfig: DocgeniConfig = {
             title: toolkit.strings.generateRandomId(),
-            heading: toolkit.strings.generateRandomId(),
             description: toolkit.strings.generateRandomId(),
             mode: 'full',
             theme: 'angular',
             baseHref: '/',
-            heads: [],
             docsDir: toolkit.strings.generateRandomId(),
             siteDir: toolkit.strings.generateRandomId(),
-            silent: false,
             output: `dist/${toolkit.strings.generateRandomId()}`,
+            publicDir: `.docgeni/${toolkit.strings.generateRandomId()}`,
             locales: [
                 { key: 'en-us', name: 'EN' },
                 { key: 'zh-cn', name: '中文' },
