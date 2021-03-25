@@ -71,19 +71,14 @@ export class NavigationService {
     getChannelFirstDocItem() {
         let docItem: DocItem;
         if (this.channel && this.channel.items) {
-            const category = this.channel.items[0];
-            if (category && this.isCategoryItem(category)) {
-                docItem = category.items[0];
-            } else {
-                docItem = category as DocItem;
-            }
+            return this.searchFirstDocItem(this.channel.items as NavigationItem[]);
         }
         return docItem;
     }
 
-    searchFirstDocItem() {
+    searchFirstDocItem(items: NavigationItem[] = this.navs) {
         let docItem: DocItem;
-        for (const nav of this.navs) {
+        for (const nav of items) {
             if (this.isDocItem(nav)) {
                 docItem = nav;
             } else {
