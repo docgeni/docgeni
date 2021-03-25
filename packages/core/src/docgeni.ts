@@ -80,10 +80,9 @@ export class Docgeni implements DocgeniContext {
                 throw new ValidationError(`site project name(${this.config.siteProjectName}) is not exists`);
             }
             this.enableIvy = detector.ngVersion ? semver.gte(detector.ngVersion, '9.0.0') : true;
-            this.ngCommander = new AngularCommander(this);
             const siteBuilder = new SiteBuilder(this);
             const siteProject = await siteBuilder.build(detector.siteProject);
-            await this.ngCommander.initialize(siteProject);
+            this.ngCommander = new AngularCommander(this, siteProject);
 
             this.hooks.run.call();
 

@@ -1,17 +1,16 @@
-import { DocgeniContext, SiteProject, AngularCommandOptions } from './docgeni.interface';
+import { DocgeniContext } from './docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
 import { AngularJsonBuilder } from './builders';
+import { AngularCommandOptions, SiteProject } from './types';
 
 const EXCLUDE_ARGS = ['skipSite'];
 
 export class AngularCommander {
     private siteProject: SiteProject;
 
-    constructor(private docgeni: DocgeniContext) {}
-
-    async initialize(siteProject: SiteProject) {
+    constructor(private docgeni: DocgeniContext, siteProject: SiteProject) {
         this.siteProject = siteProject;
     }
 
@@ -46,7 +45,6 @@ export class AngularCommander {
             //     cwd: this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath
             // });
             // const ngCommandPath = this.siteProject.custom ? 'node_modules/@angular/cli/bin/ng' : '../node_modules/@angular/cli/bin/ng';
-            console.log(ngCommandPath, commandCwd);
             const child = spawn(ngCommandPath, commandArgs, {
                 stdio: 'inherit',
                 cwd: commandCwd,
