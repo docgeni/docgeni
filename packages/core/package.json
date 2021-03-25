@@ -28,6 +28,8 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
+    "@angular-devkit/schematics": "~11.2.6",
+    "@angular-devkit/core": "~11.2.6",
     "@docgeni/toolkit": "^0.6.0-next.17",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",

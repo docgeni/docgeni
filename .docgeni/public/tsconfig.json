@@ -17,7 +17,21 @@
     ],
     "types": [
       "node"
-    ]
+    ],
+    "paths": {
+      "@docgeni/template": [
+        "../../packages/template/src/public-api.ts"
+      ],
+      "@docgeni/template/*": [
+        "../../packages/template/src/*"
+      ],
+      "a-lib": [
+        "../../packages/a-lib/public-api.ts"
+      ],
+      "a-lib/*": [
+        "../../packages/a-lib/*"
+      ]
+    }
   },
   "files": [
     "src/main.ts",

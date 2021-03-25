@@ -6,7 +6,7 @@ module.exports = {
     title: 'Docgeni',
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
     docsDir: 'docs',
-    siteProjectName: 'site',
+    // siteProjectName: 'site',
     output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [

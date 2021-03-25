@@ -1,6 +1,7 @@
-import { DocgeniContext, SiteProject } from './docgeni.interface';
+import { DocgeniContext } from './docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
+import { SiteProject } from './types';
 
 export class Detector {
     ngVersion: string;

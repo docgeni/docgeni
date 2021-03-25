@@ -1,4 +1,4 @@
-import { ComponentDocMeta, DocgeniContext } from '../docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration, CategoryItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
@@ -9,6 +9,7 @@ import { Markdown } from '../markdown';
 import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
+import { ComponentDocMeta } from '../types';
 
 export class LibComponent {
     public name: string;

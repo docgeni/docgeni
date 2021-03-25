@@ -2,16 +2,14 @@ import { DocgeniConfig } from './interfaces';
 
 export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     title: 'Docgeni',
-    // heading: 'Doc Generator',
     description: '为 Angular 组件开发场景而生的文档工具',
     mode: 'lite',
     theme: 'default',
     baseHref: '/',
-    // heads: [],
     docsDir: 'docs',
     siteDir: '.docgeni/site',
-    // silent: false,
     output: 'dist/docgeni-site',
+    publicDir: '.docgeni/public',
     locales: [
         {
             key: 'en-us',

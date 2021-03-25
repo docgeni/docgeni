@@ -36,7 +36,7 @@ export interface DocgeniNavItem {
 }
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
-    title: string;
+    title?: string;
     /** Heading of documentation, e.g: Doc Generator, default is same as title */
     // heading?: string;
     /* Description of documentation */
@@ -47,16 +47,16 @@ export interface DocgeniConfig {
     theme?: 'default' | 'angular';
     /* Base href of documentation, default is / */
     baseHref?: string;
-    /* Heads of documentation*/
-    // heads?: [];
     /* Logo url*/
     logoUrl?: string;
     /* Favicon url, default is favicon.ico*/
     favicon?: string;
+    /* Public dir, default is .docgeni/public */
+    publicDir?: string;
     /* Repo url*/
     repoUrl?: string;
     /* Docs dir, default is 'docs' */
-    docsDir: string;
+    docsDir?: string;
     /** Site default dir .docgeni */
     siteDir?: string;
     /* Site output dir, default is dist/docgeni-site */
