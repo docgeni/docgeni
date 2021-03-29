@@ -14,18 +14,18 @@
     "mode": {
       "type": "string",
       "default": "lite",
-      "description": "Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers",
+      "description": "The mode to apply.",
       "x-prompt": {
-        "message": "Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers",
+        "message": "Choose a mode:",
         "type": "list",
         "items": [
           {
             "value": "full",
-            "label": "Full [ Detail: https://docgeni.org/configuration/global#mode ]"
+            "label": "Full: include header's navbar, home page and all"
           },
           {
             "value": "lite",
-            "label": "Lite [ Detail: https://docgeni.org/configuration/global#mode ]"
+            "label": "Lite: does not include navbar and home page"
           }
         ]
       }
@@ -33,9 +33,9 @@
     "docsDir": {
       "type": "string",
       "default": "docs",
-      "description": "Docs dir, default is 'docs'",
+      "description": "The docsDir to apply.",
       "x-prompt": {
-        "message": "Docs dir"
+        "message": "Directory of docs"
       }
     }
   }

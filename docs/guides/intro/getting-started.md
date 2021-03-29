@@ -20,10 +20,10 @@ $ ng add @docgeni/cli
 > 使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`
 
 执行上述命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。
-- 第一步会让用户选择模式: `full`或者`lite`(默认`lite`)
-- 第二步会提示输入文档路径 (默认`docs`)
+- 第一步选择站点模式: `full`或者`lite`(默认`lite`)
+- 第二步提示输入文档目录 (默认`docs`)
 
-<img class="mb-2" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?3" />
+<img class="mb-2" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
 
 初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
 
@@ -53,6 +53,9 @@ $ yarn add @docgeni/cli @docgeni/template -D
 在根目录新建 `.docgenirc.js` 配置文件，拷贝如下配置代码:
 
 ```ts
+/**
+ * @type {import('@docgeni/core').DocgeniConfig}
+ */
 module.exports = {
     mode: 'lite',
     title: 'Docgeni',
