@@ -1,11 +1,11 @@
-import { generateRandomId } from '@docgeni/toolkit/lib/strings';
+import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../src/docgeni.interface';
 import { DocItem } from '../src/interfaces';
 import { NavsBuilder } from './../src/builders/navs-builder';
 import { expect } from 'chai';
 
-function generateDocItem(path = generateRandomId()): DocItem {
-    return { id: path, path: path, title: generateRandomId() };
+function generateDocItem(path = toolkit.strings.generateRandomId()): DocItem {
+    return { id: path, path: path, title: toolkit.strings.generateRandomId() };
 }
 
 describe('#navs-builder', () => {
