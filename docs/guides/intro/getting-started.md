@@ -72,10 +72,10 @@ module.exports = {
 ```
 ## 开始写文档
 
-Docgeni 默认会自动查看`docs`目录下的 Markdown 文件，我们就可以先创建一个最简单的文档。
+Docgeni 默认会自动查看`docs`目录下的 Markdown 文件，我们可以先创建一个最简单的文档。
 
 ```base
-$ mkdir docs && echo '# Hello Docgeni!' > docs/index.md
+$ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
 ```
 
 执行 `npm run start:docs` 运行并打开 `http://127.0.0.1:4600` 地址访问试试

@@ -25,12 +25,12 @@ Docgeni 会自动根据目录结构和 FrontMatter 生成对应的文档导航�
 [awesome-docgen](https://github.com/docgeni/awesome-docgen) 这个仓储列举出了我们当时调研的一些文档生成工具，[storybook](https://github.com/storybookjs/storybook) 可能是唯一一个支持 Angular 框架的文档生成工具，但是它的展示形态和写法挺繁琐了，最终没有选择使用它。
 
 # 文档工具的类别
-
+对于文档工具，有以下三种类型：
 1. 普通文档：纯 Markdown 语法的文档，前后端通用，主要展示入门指南，配置说明文档使用，这样的工具有无数个
 1. 组件文档：基本和前端框架绑定，展示组件的使用说明，组件的参数，组件的示例（Examples）
 1. API文档：类似 Angular 官方的 API，当然大部分组件库是不需要这个功能的
 
-对于 Docgeni 以及类似的组件文档生成工具来说，普通文档和组件文档都是支持的，当然对于一些纯文档的场景，使用 Docgeni 只生成 Markdown 文档也是可以的。
+Docgeni 同时支持普通文档和组件文档的生成，当然对于一些纯文档的场景，使用 Docgeni 只生成 Markdown 普通文档也是可以的。
 
 # 参与贡献
 Docgeni 目前还处于开发中，欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni

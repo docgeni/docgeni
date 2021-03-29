@@ -5,7 +5,7 @@
   <strong>Docgeni</strong>
 </p>
 <p align="center">
-一个现代化，强大且开箱即用的 Angular 组件文档生成器，用于 Angular 组件库和普通的 Markdown 文档。
+一个现代化，强大且开箱即用的 Angular 组件文档生成器，用于 Angular 组件库和普通的 Markdown 文档生成。
 </p>
 
 [![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
@@ -27,7 +27,7 @@
 - 🏡 独立的 Angular 组件预览体验，包含：组件概览，示例，API
 - 📋 对 Markdown 语法进行扩展，在文档中直接导入 Example
 - 💻 多语言支持
-- 🚀 两种模式(`full`和`lite`))以及多种风格((`default`和`angular`)支持
+- 🚀 两种模式(`full`和`lite`)以及多种风格(`default`和`angular`)支持
 
 
 ## 📖 文档
@@ -61,12 +61,12 @@ yarn   // 安装所有依赖
 ```
 
 ```bash
-yarn build-deps   // build all packages
-yarn build:docs   // build docs & lib demo
-yarn start        // build docs, watch docs change and start site project
-yarn start:site   // Ony start site project use ng serve
+yarn start              // 启动站点，监控文档和组件文件夹的修改重新生成站点
+yarn build              // 构建所有的包
+yarn build-deps         // 构建所有底层依赖的包
+yarn build:docs         // 构建文档站点
 
-yarn test         // run test cases
+yarn test               // 执行单元测试
 ```
 
 ## 💼 包

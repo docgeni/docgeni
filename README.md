@@ -2,7 +2,7 @@
   <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png" /></a>
 </p>
 <p align="center">
-  <strong>Docgeni(WIP)</strong>
+  <strong>Docgeni</strong>
 </p>
 <p align="center">
 A modern, powerful and out of the box documentation generator for Angular components lib and markdown docs.
@@ -61,12 +61,12 @@ yarn   // install dependencies for all packages
 ```
 
 ```bash
-yarn build-deps   // build all packages
-yarn build:docs   // build docs & lib demo
-yarn start        // build docs, watch docs change and start site project
-yarn start:site   // Ony start site project use ng serve
+yarn start              // build docs, watch docs change and start site project
+yarn build              // build all packages
+yarn build-deps         // build all deps packages
+yarn build:docs         // build docs & site project
 
-yarn test         // run test cases
+yarn test               // run test cases
 ```
 
 ## 💼 Packages
