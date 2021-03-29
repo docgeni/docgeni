@@ -177,7 +177,7 @@ export class NavsBuilder {
                 }
 
                 const currentPath = this.getCurrentRoutePath(isEntry ? '' : toolkit.strings.paramCase(docFile.name), docFile);
-                const fullRoutePath = isEntry && parentItem ? parentItem.path : this.getFullRoutePath(currentPath, parentItem);
+                const fullRoutePath = this.getFullRoutePath(currentPath, parentItem, isEntry);
 
                 const docItem: NavigationItem = {
                     id: docFile.name,
@@ -213,9 +213,12 @@ export class NavsBuilder {
         }
     }
 
-    private getFullRoutePath(currentPath: string, parentNav?: NavigationItem): string {
+    private getFullRoutePath(currentPath: string, parentNav?: NavigationItem, isEntry?: boolean): string {
         if (parentNav && parentNav.path) {
-            if (!currentPath) {
+            if (isEntry && currentPath === parentNav.path) {
+                return '';
+            }
+            if (!currentPath || isEntry) {
                 return parentNav.path;
             } else {
                 return `${parentNav.path}/${currentPath.toLowerCase()}`;

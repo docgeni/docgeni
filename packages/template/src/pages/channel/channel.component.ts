@@ -30,12 +30,22 @@ export class ChannelComponent implements OnInit {
 
     ngOnInit(): void {
         const path = this.route.snapshot.routeConfig.path;
-        const channel = this.navigationService.selectChannelByPath(path);
-        if (this.router.isActive(path, true)) {
-            const firstDocItem = this.navigationService.getChannelFirstDocItem();
-            if (firstDocItem) {
-                this.router.navigateByUrl(channel.path + '/' + firstDocItem.path, { replaceUrl: true });
-            }
+        this.navigationService.selectChannelByPath(path);
+    }
+}
+
+@Component({
+    selector: 'dg-channel-home',
+    template: ``
+})
+export class ChannelHomeComponent implements OnInit {
+    constructor(private router: Router, public navigationService: NavigationService, public global: GlobalContext) {}
+
+    ngOnInit(): void {
+        const channel = this.navigationService.channel;
+        const firstDocItem = this.navigationService.getChannelFirstDocItem();
+        if (firstDocItem) {
+            this.router.navigateByUrl(channel.path + '/' + firstDocItem.path, { replaceUrl: true });
         }
     }
 }
