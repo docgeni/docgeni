@@ -1,7 +1,7 @@
 import { GlobalContext } from './global-context';
 import { Injectable } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
-import { ChannelComponent } from '../pages/channel/channel.component';
+import { ChannelComponent, ChannelHomeComponent } from '../pages/channel/channel.component';
 import { DocViewerComponent, DocViewerHomeComponent } from '../pages/doc-viewer/doc-viewer.component';
 import { ComponentOverviewComponent } from '../pages/component-viewer/overview/component-overview.component';
 import { ComponentApiComponent, ComponentEmptyComponent, ComponentExamplesComponent } from '../pages/component-viewer';
@@ -50,17 +50,24 @@ export class RouterResetService {
             });
         }
         const channelPathToRoutes: Record<string, Route> = {};
+        const channelPathToHomeRoutes: Record<string, Route> = {};
         if (this.global.config.mode === 'full') {
             const rootNavs = this.global.navs.filter(nav => {
                 return !nav.isExternal;
             });
             rootNavs.forEach(nav => {
                 if (nav.items) {
-                    const route = {
+                    const route: Route = {
                         path: nav.path,
                         component: ChannelComponent,
-                        children: []
+                        children: [
+                            {
+                                path: '',
+                                component: ChannelHomeComponent
+                            }
+                        ]
                     };
+                    channelPathToHomeRoutes[nav.path] = route.children[0];
                     if (nav.lib) {
                         route.children = [
                             {
@@ -88,6 +95,10 @@ export class RouterResetService {
 
                 const channelRoute = channelPathToRoutes[docItem.channel_path];
                 if (channelRoute) {
+                    // remove chanel home when has route path is ''
+                    if (route.path === '' && channelRoute.children.includes(channelPathToHomeRoutes[channelRoute.path])) {
+                        channelRoute.children.splice(0, 1);
+                    }
                     channelRoute.children.push(route);
                 } else if (!docItem.importSpecifier) {
                     // 独立的页面，不属于任何频道
