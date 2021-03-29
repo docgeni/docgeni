@@ -74,8 +74,10 @@ export class SiteBuilder {
         }
         const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
         if (toolkit.fs.existsSync(publicDirPath)) {
-            await toolkit.fs.copy(path.resolve(publicDirPath, `assets`), path.resolve(this.siteProject.sourceRoot, 'assets'));
-
+            const assetsPath = path.resolve(publicDirPath, `assets`);
+            if (toolkit.fs.existsSync(assetsPath)) {
+                await toolkit.fs.copy(assetsPath, path.resolve(this.siteProject.sourceRoot, 'assets'));
+            }
             for (const copyFile of COPY_FILES) {
                 const fromPath = path.resolve(publicDirPath, copyFile.from);
                 if (toolkit.fs.existsSync(fromPath)) {

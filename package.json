@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "yarn run start:docs",
     "start:docs": "cross-env NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
-    "start:site": "ng serve site",
     "build:a-lib": "ng build a-lib",
     "build": "yarn build:deps && yarn build:cli && yarn build:template",
     "build:template": "ng build template && yarn copy-styles",
