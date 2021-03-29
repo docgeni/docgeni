@@ -16,16 +16,17 @@ describe('#site-builder', () => {
         const config: DocgeniConfig = {
             title: 'Docgeni Test',
             siteDir: '.docgeni/site',
-            output: 'dist/docgeni-site',
+            outputDir: 'dist/docgeni-site',
             publicDir: '.docgeni/public'
         };
-        const paths = new DocgeniPaths(basicFixturePath, 'docs', config.output);
+        const paths = new DocgeniPaths(basicFixturePath, 'docs', config.outputDir);
         const ctx = {
             paths: paths,
             config: config
         } as DocgeniContext;
         const siteBuilder = new SiteBuilder(ctx);
         await siteBuilder.build();
+        // TODO: add assertions
         // expect(angularJsonBuilder['angularJson']).deep.eq({
         //     root: '.docgeni/site',
         //     outputPath: '../../dist/docgeni-site'

@@ -12,22 +12,16 @@ describe('#config', () => {
             })
             .eq({
                 title: 'Docgeni',
-                // heading: 'Doc Generator',
                 description: '为 Angular 组件开发场景而生的文档工具',
                 mode: 'lite',
                 theme: 'default',
                 baseHref: '/',
-                // heads: [],
                 docsDir: 'docs',
                 siteDir: '.docgeni/site',
                 publicDir: '.docgeni/public',
-                // silent: false,
-                output: 'dist/docgeni-site',
-                locales: [
-                    { key: 'en-us', name: 'EN' },
-                    { key: 'zh-cn', name: '中文' }
-                ],
-                defaultLocale: 'zh-cn',
+                outputDir: 'dist/docgeni-site',
+                locales: [{ key: 'en-us', name: 'EN' }],
+                defaultLocale: 'en-us',
                 libs: []
             });
     });
@@ -41,7 +35,7 @@ describe('#config', () => {
             baseHref: '/',
             docsDir: toolkit.strings.generateRandomId(),
             siteDir: toolkit.strings.generateRandomId(),
-            output: `dist/${toolkit.strings.generateRandomId()}`,
+            outputDir: `dist/${toolkit.strings.generateRandomId()}`,
             publicDir: `.docgeni/${toolkit.strings.generateRandomId()}`,
             locales: [
                 { key: 'en-us', name: 'EN' },

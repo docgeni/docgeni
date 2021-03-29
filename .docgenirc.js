@@ -7,7 +7,6 @@ module.exports = {
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
     docsDir: 'docs',
     // siteProjectName: 'site',
-    output: 'dist/docs-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,
@@ -64,5 +63,16 @@ module.exports = {
                 }
             ]
         }
-    ]
+    ],
+    locales: [
+        {
+            key: 'en-us',
+            name: 'EN'
+        },
+        {
+            key: 'zh-cn',
+            name: '中文'
+        }
+    ],
+    defaultLocale: 'zh-cn'
 };

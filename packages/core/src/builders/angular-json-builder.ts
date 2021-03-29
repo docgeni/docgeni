@@ -24,7 +24,7 @@ export class AngularJsonBuilder {
     public async build() {
         this.angularJson = {
             root: this.docgeni.config.siteDir,
-            outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.output)
+            outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)
         };
         this.hooks.buildAngularJsonSucceed.call(this);
     }

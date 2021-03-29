@@ -49,8 +49,6 @@ export interface DocgeniConfig {
     baseHref?: string;
     /* Logo url*/
     logoUrl?: string;
-    /* Favicon url, default is favicon.ico*/
-    favicon?: string;
     /* Public dir, default is .docgeni/public */
     publicDir?: string;
     /* Repo url*/
@@ -60,7 +58,7 @@ export interface DocgeniConfig {
     /** Site default dir .docgeni */
     siteDir?: string;
     /* Site output dir, default is dist/docgeni-site */
-    output?: string;
+    outputDir?: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
     /* Angular libraries */

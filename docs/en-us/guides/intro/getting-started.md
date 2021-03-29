@@ -40,7 +40,7 @@ module.exports = {
     mode: 'site',
     title: 'Docgeni',
     docsDir: './docs',
-    output: 'dist/docs-site',
+    outputDir: 'dist/docgeni-site',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,
