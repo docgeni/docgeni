@@ -13,21 +13,25 @@ order: 20
 - `ComponentDocItem`: 组件文档，和 `DocItem` 类似，但是展示的形态和属性不同
 
 如下示例中，`guides`是一个频道`Channel`，`intro`是一个类别`Category`，`getting-started`是一个普通页面文档`DocItem`。
+
 ```json
 ...
 {
   "id": "guides",
   "path": "guides",
+  "channel_path": "guides",
   "title": "指南",
   "items": [
     {
       "id": "intro",
       "path": "guides/intro",
+      "channel_path": "guides",
       "title": "介绍",
       "items": [
         {
           "id": "getting-started",
           "path": "guides/getting-started",
+          "channel_path": "guides/intro",
           "title": "快速开始",
           "contentPath": "/docs/guides/intro/getting-started.html"
         },

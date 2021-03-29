@@ -47,18 +47,16 @@ export class Docgeni implements DocgeniContext {
         this.config = this.normalizeConfig(options.config);
         this.siteConfig = {
             title: this.config.title,
-            // heading: this.config.heading,
             description: this.config.description,
             mode: this.config.mode,
             theme: this.config.theme,
             baseHref: this.config.baseHref,
-            // heads: this.config.heads,
             locales: this.config.locales,
             defaultLocale: this.config.defaultLocale,
             logoUrl: this.config.logoUrl,
             repoUrl: this.config.repoUrl
         };
-        this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.output);
+        this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
         this.fs = new virtualFs.ScopedHost(new NodeJsSyncHost(), normalize(this.paths.cwd));

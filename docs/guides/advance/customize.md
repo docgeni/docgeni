@@ -8,14 +8,13 @@ Docgeni 默认会在`.docgeni/site`目录生成文档站点，这个站点完全
 ```
 .docgeni
 └── site
-    ├── angular.json
-    ├── karma.conf.js
     ├── src
     │   ├── app
-    │   │   ├── content
     │   │   └── app.module.ts
     │   ├── assets
-    │   │   ├── content
+    │   │   ├── favicon.ico
+    │   │   └── images
+    │   │       └── cli-init.png
     │   ├── environments
     │   │   ├── environment.prod.ts
     │   │   └── environment.ts
@@ -24,6 +23,9 @@ Docgeni 默认会在`.docgeni/site`目录生成文档站点，这个站点完全
     │   ├── main.ts
     │   ├── polyfills.ts
     │   └── styles.scss
+    ├── angular.json
+    ├── .browserslistrc
+    ├── karma.conf.js
     └── tsconfig.app.json
 ```
 
@@ -36,6 +38,20 @@ Docgeni 默认会在`.docgeni/site`目录生成文档站点，这个站点完全
 - `.browserslistrc`: 支持的浏览器和版本，具体查看 [browserslist](https://github.com/browserslist/browserslist) 了解更多配置
 - `styles.scss`: 文档站点默认使用`styles.scss`作为入口样式文件，通过覆写`styles.scss`实现一些自定义的样式，需要加上`@import '@docgeni/template/styles/index.scss';`，否则内置的样式将不会加载
 - `tsconfig.json`: 自定义的TS配置文件，可以通过覆写达到高度配置目的，一般用于配置`compilerOptions.paths`便于示例中可以直接使用 `import 'mylib';`
+
+完整的 public 示例如下：
+```
+.docgeni/public
+├── assets
+│   ├── favicon.ico
+│   └── images
+│       └── cli-init.png
+│── favicon.ico
+│── .browserslistrc
+├── index.html
+├── styles.scss
+└── tsconfig.json
+```
 
 # 自定义站点
 如果自定义 public 能力还不足以满足自定义的需求，那么 Docgeni 还支持一个完全自定义站点的模式，意思就是这个文档站点由用户自己创建和控制。

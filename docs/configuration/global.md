@@ -26,11 +26,11 @@ order: 30
 - 类型：`string`
 - 默认：`package.name`
 
-文档的标题，通常是所开发的组件库名。
+文档的标题，通常是所开发的组件库名，比如`Docgeni`。
 
 ## logoUrl
 - 类型：`string`
-- 默认：Docgeni 的 Logo
+- 默认：Docgeni 的 Logo Url
 
 文档 Logo 地址。
 
@@ -44,7 +44,25 @@ GitHub 仓储地址。
 - 类型：`string`
 - 默认：`docs`
 
-Markdown 文档目录地址，Docgeni 会在配置的目录中递归寻找 markdown 文件，生成菜单和文档内容。
+Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markdown 文件，按照一定的规则生成频道、菜单和页面文档。
+
+## siteDir
+- 类型：`string`
+- 默认：`.docgeni/site`
+
+自动生成的站点目录，Docgeni 会把生成的组件示例和文档拷贝到该站点下。
+
+## outputDir
+- 类型：`string`
+- 默认：`dist/docgeni-site`
+
+站点构建输出目录。
+
+## publicDir
+- 类型：`string`
+- 默认：`.docgeni/public`
+
+文档站点的配置目录，Docgeni会把该文件夹下的`index.html`、`favicon.ico`、`styles.scss`、`assets`、`.browserslistrc`和`tsconfig.json`文件拷贝并覆盖站点目录实现自定义配置功能。
 
 ## siteProjectName
 - 类型：`string`
@@ -54,13 +72,13 @@ Angular 自定义站点的项目名称，组件库开发除了默认的文档和
 
 ## defaultLocale
 - 类型：`string`
-- 默认：`zh-cn`
+- 默认：`en-us`
 
 默认多语言。
 
 ## locales
 - 类型：`Array<{key: string, name: string}>`
-- 默认：`[ { key: 'zh-cn', name: '中文' }, { key: 'en-us', name: 'English' } ]`
+- 默认：`[ { key: 'en-us', name: 'English' } ]`
 
 支持的多语言。
 
@@ -88,10 +106,13 @@ module.exports = {
     ...
 }
 ```
+> 这里需要注意的是，`docs`文件夹下自动识别的频道会默认插入到配置的`navs`数组的底部，如果想要控制展示的位置，可以插入一个`null`进行占位，如上示例，自动生成的频道会插入到导航的顶部。
 
 ## libs
 - 类型：`Array<Library>`
 - 默认：`null`
+
+组件类库配置，每个类库的配置查看 [configuration/lib](https://docgeni.org/configuration/lib)
 
 ```ts
 module.exports = {

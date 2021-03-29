@@ -16,10 +16,10 @@ export class DocgeniPaths {
     /* site assets content docs absolute path */
     absSiteAssetsContentDocsPath?: string;
 
-    constructor(cwd: string, docsDir: string, outputPath: string) {
+    constructor(cwd: string, docsDir: string, outputDir: string) {
         this.cwd = cwd;
         this.absDocsPath = this.getAbsPath(docsDir);
-        this.absOutputPath = this.getAbsPath(outputPath);
+        this.absOutputPath = this.getAbsPath(outputDir);
     }
 
     public getAbsPath(absOrRelativePath: string): string {
