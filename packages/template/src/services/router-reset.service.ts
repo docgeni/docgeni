@@ -43,14 +43,13 @@ export class RouterResetService {
     resetRoutes() {
         const config = this.router.config;
         const routes: Routes = [];
-        if (this.global.config.mode === 'full') {
-            routes.push({
-                path: '',
-                component: HomeComponent
-            });
-        }
+        routes.push({
+            path: '',
+            component: HomeComponent
+        });
         const channelPathToRoutes: Record<string, Route> = {};
         const channelPathToHomeRoutes: Record<string, Route> = {};
+        let shouldRemoveHome = false;
         if (this.global.config.mode === 'full') {
             const rootNavs = this.global.navs.filter(nav => {
                 return !nav.isExternal;
@@ -120,8 +119,15 @@ export class RouterResetService {
                           path: docItem.path,
                           component: DocViewerComponent
                       };
+                // remove home when route path is ''
+                if (route.path === '') {
+                    shouldRemoveHome = true;
+                }
                 routes.push(route);
             });
+            if (shouldRemoveHome) {
+                routes.splice(0, 1);
+            }
         }
 
         this.router.resetConfig([...config, ...routes, { path: '**', redirectTo: '' }]);
