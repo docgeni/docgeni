@@ -74,7 +74,7 @@ export class SiteBuilder {
             const packageJson = toolkit.fs.readJsonSync(packageJsonPath);
             return packageJson.name;
         };
-        const paths = this.docgeni.config.libs
+        const paths = (this.docgeni.config.libs || [])
             .map(item => [
                 {
                     key: `${getLibraryName(item.rootDir)}/*`,
