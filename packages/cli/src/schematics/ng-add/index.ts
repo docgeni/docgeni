@@ -6,6 +6,7 @@ import { InitDocgenirc } from './init-docgenirc';
 import { CreateDocs } from './create-docs';
 import { AddCommand } from './add-command';
 import { VERSION } from '../../version';
+import { AddGitignore } from './add-gitignore';
 function addDependenciesToPackageJson() {
     return (host: Tree, context: SchematicContext) => {
         ['@docgeni/cli'].forEach(dependency => removePackageJsonDependency(host, dependency));
@@ -34,7 +35,8 @@ export default function main(options: NgAddSchema) {
             addDependenciesToPackageJson(),
             new InitDocgenirc(options).run(),
             new CreateDocs(options).run(),
-            new AddCommand().run()
+            new AddCommand().run(),
+            new AddGitignore().run()
         ]);
     };
 }

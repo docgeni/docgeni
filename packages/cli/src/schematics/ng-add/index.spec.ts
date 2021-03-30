@@ -80,4 +80,19 @@ describe('ng-add Schematic', () => {
         expect(config).not.toContain(`libs: `);
         expect(config).not.toContain(`navs: `);
     });
+    it('should create .gitignore if not exist', async () => {
+        factory.removeFile('.gitignore');
+        tree = factory.getTree();
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        expect(workspaceTree.exists('.gitignore')).toBeTruthy();
+        const gitignoreContent = workspaceTree.read('.gitignore').toString();
+        expect(gitignoreContent).toContain('.docgeni/site');
+    });
+    it('should has `.docgeni/site` in .gitignore', async () => {
+        tree = factory.getTree();
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        expect(workspaceTree.exists('.gitignore')).toBeTruthy();
+        const gitignoreContent = workspaceTree.read('.gitignore').toString();
+        expect(gitignoreContent).toContain('.docgeni/site');
+    });
 });
