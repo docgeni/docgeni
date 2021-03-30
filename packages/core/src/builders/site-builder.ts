@@ -3,7 +3,7 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { AngularJsonBuilder } from './angular-json-builder';
 import { SiteProject } from '../types';
-
+import Handlebars from 'handlebars';
 interface CopyFile {
     from: string;
     to: string;
@@ -57,6 +57,7 @@ export class SiteBuilder {
         if (!toolkit.fs.existsSync(path.resolve(sitePath, './src'))) {
             await toolkit.fs.copy(path.resolve(__dirname, '../site-template'), sitePath);
             await this.buildAngularJson();
+            await this.addTsconfigPaths();
         }
     }
 
@@ -65,6 +66,39 @@ export class SiteBuilder {
         await toolkit.template.generate('angular-json.hbs', path.resolve(this.siteProject.root, './angular.json'), {
             root: this.docgeni.config.siteDir,
             outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)
+        });
+    }
+    private async addTsconfigPaths() {
+        const getLibraryName = (rootDir: string) => {
+            const packageJsonPath = path.join(this.docgeni.paths.cwd, rootDir, 'package.json');
+            const packageJson = toolkit.fs.readJsonSync(packageJsonPath);
+            return packageJson.name;
+        };
+        const paths = this.docgeni.config.libs
+            .map(item => [
+                {
+                    key: `${getLibraryName(item.rootDir)}/*`,
+                    value: new Handlebars.SafeString(
+                        [`"${path.relative(this.siteProject.root, path.resolve(this.docgeni.paths.cwd, item.rootDir))}/*"`].join(',')
+                    )
+                },
+                {
+                    key: `${getLibraryName(item.rootDir)}`,
+                    value: new Handlebars.SafeString(
+                        [
+                            `"${path.relative(this.siteProject.root, path.resolve(this.docgeni.paths.cwd, item.rootDir))}/index.ts"`,
+                            `"${path.relative(this.siteProject.root, path.resolve(this.docgeni.paths.cwd, item.rootDir))}/public-api.ts"`
+                        ].join(',')
+                    )
+                }
+            ])
+            .reduce((list, item) => {
+                list.push(...item);
+                return list;
+            }, []);
+        await toolkit.fs.ensureFile(path.resolve(this.siteProject.root, './tsconfig.app.json'));
+        await toolkit.template.generate('tsconfig-app-json.hbs', path.resolve(this.siteProject.root, './tsconfig.app.json'), {
+            paths
         });
     }
 
