@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.0](https://github.com/docgeni/docgeni/compare/v0.6.0-next.18...v1.0.0-beta.0) (2021-03-30)
+
+
+### Bug Fixes
+
+* **core:** should build success when public assets dir is not exist and delete site ([#116](https://github.com/docgeni/docgeni/issues/116)) ([1fea06a](https://github.com/docgeni/docgeni/commit/1fea06a81358a8f4f888132b84dbb5e352be4d79))
+* **template:** should redirect to first doc when click channel and current route is under the channel ([#115](https://github.com/docgeni/docgeni/issues/115)) ([6bdf157](https://github.com/docgeni/docgeni/commit/6bdf157e3ebf70d89f045d6e1a498bcb4b03d0bd))
+
+
+### Features
+
+* **core:** update output to outputDir and refactor docs ([8423abb](https://github.com/docgeni/docgeni/commit/8423abbbb81f31cfd042c5e3311449e519a99f8d))
+
+
+
+
+
 # [0.6.0-next.18](https://github.com/docgeni/docgeni/compare/v0.6.0-next.17...v0.6.0-next.18) (2021-03-25)
 
 

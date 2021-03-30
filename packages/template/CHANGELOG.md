@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.0](https://github.com/docgeni/docgeni/compare/v0.6.0-next.18...v1.0.0-beta.0) (2021-03-30)
+
+
+### Bug Fixes
+
+* **template:** remove home route only when there is route path is empty for lite mode ([2e525bb](https://github.com/docgeni/docgeni/commit/2e525bb8b6e4c983da50dd48934ee6510a411f97))
+* **template:** should redirect to first doc when click channel and current route is under the channel ([#115](https://github.com/docgeni/docgeni/issues/115)) ([6bdf157](https://github.com/docgeni/docgeni/commit/6bdf157e3ebf70d89f045d6e1a498bcb4b03d0bd))
+
+
+
+
+
 # [0.6.0-next.18](https://github.com/docgeni/docgeni/compare/v0.6.0-next.17...v0.6.0-next.18) (2021-03-25)
 
 
