@@ -82,7 +82,7 @@ $ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
 
 
 # 组件文档
-Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照[组件概览](https://docgeni.org/guides//basic/component-overview)文档要求编写组件文档和示例，比如：组件根目录下有一个按钮组件，在`button`组件文件夹下创建一个`doc/zh-cn.md`文档，输入如下内容：
+Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照[组件概览](https://docgeni.org/guides//basic/component)文档要求编写组件文档和示例，比如：组件根目录下有一个按钮组件，在`button`组件文件夹下创建一个`doc/zh-cn.md`文档，输入如下内容：
 
 ```
 ---
@@ -96,4 +96,4 @@ title: 按钮
 
 ![Component](https://cdn.pingcode.com/open-sources/docgeni/component-display.png)
 
-关于组件文档更多的配置参考：[组件概览](https://docgeni.org/guides/basic/component-overview)
+关于组件文档更多的配置参考：[组件概览](https://docgeni.org/guides/basic/component)

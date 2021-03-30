@@ -16,10 +16,11 @@ order: 30
 - 类型：`string`
 - 默认：`null`
 
-组件库的名称缩写，Angular 组件库一般都会有一个缩写，比如组件库叫 `ngx-tethys`，一般会起一个缩写的名字`thy`用于选择器、名称前缀。如：`ThyButtonModule`，那么写组件的示例也会使用此缩写，Docgeni 会根据此缩写自动生成示例代码。
+组件库的名称缩写，Angular 组件库一般都会有一个缩写，比如 [Material](https://material.angular.io/components) 组件库简写叫 `mat`，[NG-ZORRO](https://ng.ant.design/components/overview/zh) 组件库的简写叫`nz`，假设我们类库的简写为`thy`, 一般模块和组件都会使用此前缀，如：`ThyButtonModule`，`thyButton`，那么 Docgeni 会根据此缩写自动生成组件唯一标识和示例代码。
 
 ```html
 <thy-button></thy-button>
+<example name="thy-button-basic-example" />
 ```
 
 ## rootDir
@@ -27,15 +28,7 @@ order: 30
 - 类型：`string`
 - 默认：`null`
 
-组件类库的源代码跟路径，`Docgeni` 会自定把配置的根目录下的所有文件夹当作一个组件，自动查找组件下的文档和示例，默认文档存放的文件夹为 `doc`, 示例为 `examples`
-
-
-## exclude
-
-- 类型：`string | Array<string>`
-- 默认：`null`
-
-`Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果很确定某些文件夹不是组件，可以手动设置排除。支持 `glob` 格式。
+组件类库的源代码根路径，`Docgeni` 会扫描此配置的下的文件夹，所有一级文件夹当作一个组件，自动查找组件下的文档、API和示例，默认文档、API、示例存放的目录为 `doc`, `api`和`examples`
 
 ## include
 
@@ -44,8 +37,15 @@ order: 30
 
 `Docgeni` 默认只会扫描 `rootDir` 下的一级文件夹当作组件，如果你的组件库比较特殊，某个深层的文件夹也需要生成组件文档，可以通过 include 单独配置。
 
-如配置：`include: 'common'`, `Docgeni` 会查找 common 文件夹下的所有一级文件夹，按照组件的规则匹配文档和示例。
+如配置：`include: 'common'`, `Docgeni` 会查找 common 文件夹下的所有一级文件夹，按照组件的规则匹配文档、API和示例。
 
+
+## exclude
+
+- 类型：`string | Array<string>`
+- 默认：`null`
+
+`Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除。支持 `glob` 格式。
 
 ## docDir
 
@@ -64,7 +64,7 @@ order: 30
 - 类型：`string`
 - 默认：`api`
 
-组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.json`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 5种后缀，`json`、`yaml`、`js`三种格式，以下以js举例：
+组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.后缀名`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 五种后缀，`json`、`yaml`、`js`三种格式，以下以js举例：
 
 ```js
 module.exports = [
@@ -115,8 +115,8 @@ module.exports = [
 - 类型：`Array<Category>`
 - 默认：`null`
 
-组件库的组件类别，`Docgeni`会在左侧菜单中把相同类别的组件放在一起，便于统一管理和查看。
-包含 `id`、`title`和`locales` 属性，`id`为当前类别的唯一标识，组件概览文档中会使用名为`category`的FrontMatter进行配置，`title`为类别的标题。
+组件类别，`Docgeni`会在左侧菜单中把相同类别的组件放在一起，便于统一管理和查看。
+包含 `id`、`title`和`locales`属性，`id`为当前类别的唯一标识，组件概览文档中会使用名为`category`的 FrontMatter 进行配置，`title` 为类别的标题。
 ```json
 [
     {
