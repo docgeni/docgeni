@@ -31,7 +31,7 @@
     "release": "yarn build && yarn release-only",
     "release-only": "wpm release",
     "pub": "wpm publish",
-    "pub:docs": "yarn build:docs:prod && cpx ./packages/site/package.json ./dist/docgeni-site && yarn pub:docs:git",
+    "pub:docs": "yarn build:docs:prod && cpx ./package.json ./dist/docgeni-site && yarn pub:docs:git",
     "pub:docs:git": "wpm git-publish --source ./dist/docgeni-site --name docgeni-site --organization docgeni",
     "pub:template": "cd dist/template && npm publish --access=public",
     "copy-styles": "cpx \"./packages/template/src/**/*/*.scss\" dist/template",
