@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
 # [1.0.0-beta.0](https://github.com/docgeni/docgeni/compare/v0.6.0-next.18...v1.0.0-beta.0) (2021-03-30)
 
 **Note:** Version bump only for package @docgeni/toolkit

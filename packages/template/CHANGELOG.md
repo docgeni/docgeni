@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
+
+
+### Bug Fixes
+
+* **template:** add timestamp for request navigations json to avoid browser cache old data ([7cf6123](https://github.com/docgeni/docgeni/commit/7cf6123fc76cf92773e6592306c6134b61e52c68))
+* **template:** should redirect fisrt component when click component channel ([#120](https://github.com/docgeni/docgeni/issues/120)) ([abe9736](https://github.com/docgeni/docgeni/commit/abe97362294c62167bbc005e81bd30d4a31c0f94))
+* **template:** should use default language when cache locale is not supported ([b16a188](https://github.com/docgeni/docgeni/commit/b16a1888c8aa4644c5b98409d774942616b67e3a))
+
+
+
+
+
 # [1.0.0-beta.0](https://github.com/docgeni/docgeni/compare/v0.6.0-next.18...v1.0.0-beta.0) (2021-03-30)
 
 

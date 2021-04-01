@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
+
+
+### Features
+
+* **core:** auto add tsconfig paths for create site ([#119](https://github.com/docgeni/docgeni/issues/119)) ([532d1d8](https://github.com/docgeni/docgeni/commit/532d1d8dd8c341773f0d5f3585778c6ad3c1bbb2))
+
+
+
+
+
 # [1.0.0-beta.0](https://github.com/docgeni/docgeni/compare/v0.6.0-next.18...v1.0.0-beta.0) (2021-03-30)
 
 
