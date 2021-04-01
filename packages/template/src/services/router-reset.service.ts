@@ -68,13 +68,11 @@ export class RouterResetService {
                     };
                     channelPathToHomeRoutes[nav.path] = route.children[0];
                     if (nav.lib) {
-                        route.children = [
-                            {
-                                path: ':id',
-                                component: DocViewerComponent,
-                                children: componentChildrenRoutes
-                            }
-                        ];
+                        route.children.push({
+                            path: ':id',
+                            component: DocViewerComponent,
+                            children: componentChildrenRoutes
+                        });
                     }
                     routes.push(route);
                     channelPathToRoutes[nav.path] = route;
