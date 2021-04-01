@@ -28,10 +28,15 @@ export class GlobalContext {
 
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
-        const locale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
+        const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
         const mode = window.localStorage.getItem(DOCGENI_MODE_KEY);
-        if (locale) {
-            this.locale = locale;
+        if (cacheLocale) {
+            const isSupport = config.locales.find(item => {
+                return item.key === cacheLocale;
+            });
+            if (isSupport) {
+                this.locale = cacheLocale;
+            }
         }
         if (mode && ['lite', 'full'].includes(mode)) {
             config.mode = mode as DocgeniMode;
