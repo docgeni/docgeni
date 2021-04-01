@@ -46,7 +46,7 @@ export class GlobalContext {
     initialize() {
         document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
         return new Promise((resolve, reject) => {
-            this.http.get(`assets/content/navigations-${this.locale}.json`).subscribe({
+            this.http.get(`assets/content/navigations-${this.locale}.json?t=${new Date().getTime()}`).subscribe({
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[] }) => {
                     this.navs = response.navs;
                     this.docItems = response.docs;
