@@ -17,7 +17,12 @@
     ],
     "types": [
       "node"
-    ]
+    ],
+    "paths":{
+{{#each paths}}
+      "{{key}}":[{{value}}],
+{{/each}}
+    }
   },
   "files": [
     "src/main.ts",
