@@ -1,0 +1,152 @@
+
+        <h2 id="name" class="docs-header-link">
+          <span header-link="name"></span>
+          name
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>组件库的名称。</p>
+
+        <h2 id="abbrname" class="docs-header-link">
+          <span header-link="abbrname"></span>
+          abbrName
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>组件库的名称缩写，Angular 组件库一般都会有一个缩写，比如 <a target="_blank"href="https://material.angular.io/components">Material</a> 组件库简写叫 <code>mat</code>，<a target="_blank"href="https://ng.ant.design/components/overview/zh">NG-ZORRO</a> 组件库的简写叫<code>nz</code>，假设我们类库的简写为<code>thy</code>, 一般模块和组件都会使用此前缀，如：<code>ThyButtonModule</code>，<code>thyButton</code>，那么 Docgeni 会根据此缩写自动生成组件唯一标识和示例代码。</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>thy-button</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>thy-button</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>example</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>thy-button-basic-example<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
+
+        <h2 id="rootdir" class="docs-header-link">
+          <span header-link="rootdir"></span>
+          rootDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>组件类库的源代码根路径，<code>Docgeni</code> 会扫描此配置的下的文件夹，所有一级文件夹当作一个组件，自动查找组件下的文档、API和示例，默认文档、API、示例存放的目录为 <code>doc</code>, <code>api</code>和<code>examples</code></p>
+
+        <h2 id="include" class="docs-header-link">
+          <span header-link="include"></span>
+          include
+        </h2>
+      <ul>
+<li>类型：<code>string | Array&lt;string&gt;</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p><code>Docgeni</code> 默认只会扫描 <code>rootDir</code> 下的一级文件夹当作组件，如果你的组件库比较特殊，某个深层的文件夹也需要生成组件文档，可以通过 include 单独配置。</p>
+<p>如配置：<code>include: &#39;common&#39;</code>, <code>Docgeni</code> 会查找 common 文件夹下的所有一级文件夹，按照组件的规则匹配文档、API和示例。</p>
+
+        <h2 id="exclude" class="docs-header-link">
+          <span header-link="exclude"></span>
+          exclude
+        </h2>
+      <ul>
+<li>类型：<code>string | Array&lt;string&gt;</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p><code>Docgeni</code> 默认会把 <code>rootDir</code> 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除。支持 <code>glob</code> 格式。</p>
+
+        <h2 id="docdir" class="docs-header-link">
+          <span header-link="docdir"></span>
+          docDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>doc</code></li>
+</ul>
+<p>组件的文档目录，<code>Docgeni</code> 会根据配置的<code>locales</code>查找<code>{localeKey}.md</code>文件，当作组件的文档，会展示在组件的概览中。</p>
+<pre><code>├── doc
+│   ├── zh<span class="token operator">-</span>cn<span class="token punctuation">.</span>md
+│   ├── en<span class="token operator">-</span>us<span class="token punctuation">.</span>md</code></pre>
+        <h2 id="apidir" class="docs-header-link">
+          <span header-link="apidir"></span>
+          apiDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>api</code></li>
+</ul>
+<p>组件的API目录，<code>Docgeni</code>会根据配置的<code>locales</code>查找<code>{localeKey}.后缀名</code>文件，目前支持 <code>.json</code>、<code>.yaml</code>、<code>.yml</code>、<code>.js</code>、<code>.config.js</code> 五种后缀，<code>json</code>、<code>yaml</code>、<code>js</code>三种格式，以下以js举例：</p>
+<pre class="language-js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token string">'directive'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'alibButton'</span><span class="token punctuation">,</span>
+    description<span class="token punctuation">:</span> <span class="token string">'按钮组件，支持 alibButton 指令和 alib-button 组件两种形式'</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// Optional</span>
+    properties<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            name<span class="token punctuation">:</span> <span class="token string">'alibType'</span><span class="token punctuation">,</span>
+            type<span class="token punctuation">:</span> <span class="token string">'string'</span><span class="token punctuation">,</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token string">'primary'</span><span class="token punctuation">,</span>
+            description<span class="token punctuation">:</span> <span class="token string">'按钮的类型，支持 \`primary | info | warning | danger\`'</span> 
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            name<span class="token punctuation">:</span> <span class="token string">'alibSize'</span><span class="token punctuation">,</span>
+            type<span class="token punctuation">:</span> <span class="token string">'string'</span><span class="token punctuation">,</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token string">'null'</span><span class="token punctuation">,</span> 
+            description<span class="token punctuation">:</span> <span class="token string">'按钮的大小，支持 \`sm | md | lg\`'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+
+        <h2 id="examplesdir" class="docs-header-link">
+          <span header-link="examplesdir"></span>
+          examplesDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>examples</code></li>
+</ul>
+<p>组件示例根目录，<code>Docgeni</code> 会把该目录下的每一个一级文件夹当作一个示例。</p>
+<pre><code>├── examples
+│   ├── basic
+│   │   ├── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>html
+│   │   ├── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>scss
+│   │   └── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>ts
+│   ├── advance
+│   │   ├── advance<span class="token punctuation">.</span>component<span class="token punctuation">.</span>html
+│   │   ├── advance<span class="token punctuation">.</span>component<span class="token punctuation">.</span>scss
+│   │   └── advance<span class="token punctuation">.</span>component<span class="token punctuation">.</span>ts</code></pre>
+        <h2 id="categories" class="docs-header-link">
+          <span header-link="categories"></span>
+          categories
+        </h2>
+      <ul>
+<li>类型：<code>Array&lt;Category&gt;</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>组件类别，<code>Docgeni</code>会在左侧菜单中把相同类别的组件放在一起，便于统一管理和查看。
+包含 <code>id</code>、<code>title</code>和<code>locales</code>属性，<code>id</code>为当前类别的唯一标识，组件概览文档中会使用名为<code>category</code>的 FrontMatter 进行配置，<code>title</code> 为类别的标题。</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"alib"</span><span class="token punctuation">,</span>
+        <span class="token property">"rootDir"</span><span class="token operator">:</span> <span class="token string">"./packages/a-lib"</span><span class="token punctuation">,</span>
+        <span class="token property">"categories"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">{</span>
+                <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"general"</span><span class="token punctuation">,</span>
+                <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"通用"</span><span class="token punctuation">,</span>
+                <span class="token property">"locales"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"en-us"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                        <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"General"</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"layout"</span><span class="token punctuation">,</span>
+                <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"布局"</span><span class="token punctuation">,</span>
+                <span class="token property">"locales"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"en-us"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                        <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Layout"</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span></code></pre>

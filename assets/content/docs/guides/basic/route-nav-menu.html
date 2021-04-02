@@ -1,0 +1,157 @@
+
+        <h1 id="基本概念" class="docs-header-link">
+          <span header-link="基本概念"></span>
+          基本概念
+        </h1>
+      <p><code>Docgeni</code> 中，不管是头部的导航，左侧的菜单，还是具体某个页面文档，统一叫 <code>NavigationItem</code>, 存储在一个树形结构中，那么为了更好的理解，我们把这些对象稍微做了一些区分。</p>
+<ul>
+<li><code>Channel</code>: 频道，一级导航，<code>full</code>模式下的头部导航栏，每个频道都会有个独立的路由</li>
+<li><code>Category</code>: 类别，在左侧菜单中会展示成一个分组，没有内容</li>
+<li><code>DocItem</code>: 普通页面文档，属于某个 <code>Channel</code> 或者 <code>Category</code>，有独立的路由和内容</li>
+<li><code>ComponentDocItem</code>: 组件文档，和 <code>DocItem</code> 类似，但是展示的形态和属性不同</li>
+</ul>
+<p>如下示例中，<code>guides</code>是一个频道<code>Channel</code>，<code>intro</code>是一个类别<code>Category</code>，<code>getting-started</code>是一个普通页面文档<code>DocItem</code>。</p>
+<pre class="language-json"><code class="language-json">...
+<span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"guides"</span><span class="token punctuation">,</span>
+  <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"guides"</span><span class="token punctuation">,</span>
+  <span class="token property">"channel_path"</span><span class="token operator">:</span> <span class="token string">"guides"</span><span class="token punctuation">,</span>
+  <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"指南"</span><span class="token punctuation">,</span>
+  <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"intro"</span><span class="token punctuation">,</span>
+      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"guides/intro"</span><span class="token punctuation">,</span>
+      <span class="token property">"channel_path"</span><span class="token operator">:</span> <span class="token string">"guides"</span><span class="token punctuation">,</span>
+      <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"介绍"</span><span class="token punctuation">,</span>
+      <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"getting-started"</span><span class="token punctuation">,</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"guides/getting-started"</span><span class="token punctuation">,</span>
+          <span class="token property">"channel_path"</span><span class="token operator">:</span> <span class="token string">"guides/intro"</span><span class="token punctuation">,</span>
+          <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"快速开始"</span><span class="token punctuation">,</span>
+          <span class="token property">"contentPath"</span><span class="token operator">:</span> <span class="token string">"/docs/guides/intro/getting-started.html"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        ...
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    ...
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h1 id="约定路由和菜单" class="docs-header-link">
+          <span header-link="约定路由和菜单"></span>
+          约定路由和菜单
+        </h1>
+      <p><code>Docgeni</code>会自动根据<code>docs</code>目录结构和 FrontMatter 生成对应的文档导航、菜单和路由。</p>
+<ul>
+<li><code>full</code>模式下一级目录生成频道，也就是头部导航</li>
+<li><code>full</code>模式下非一级目录以及<code>lite</code>模式下的所有目录生成类别，也就是左侧菜单的分组，无路由</li>
+<li>所有<code>.md</code>文件生成一个普通页面文档</li>
+</ul>
+
+        <h2 id="默认路由生成规则" class="docs-header-link">
+          <span header-link="默认路由生成规则"></span>
+          默认路由生成规则
+        </h2>
+      <ul>
+<li>频道取文件夹的命名，并转换成 Param Case 命名，如：<code>GettingStarted</code> =&gt; <code>getting-started</code></li>
+<li>页面文档取文件名，去除<code>.md</code>后缀，并转换成 Param Case 命名，同时会加上所属频道和类别的路由，如：<code>GettingStarted.md</code> =&gt; <code>/guides/intro/getting-started</code></li>
+</ul>
+
+        <h2 id="默认标题生成规则" class="docs-header-link">
+          <span header-link="默认标题生成规则"></span>
+          默认标题生成规则
+        </h2>
+      <ul>
+<li>频道和类别取目录的名称，并转换成标题，如：<code>Guide</code>、<code>Intro</code></li>
+<li>页面文档取文件名，去除<code>.md</code>后缀，并转换成标题，如：<code>Getting Started</code>、<code>Motivation</code></li>
+</ul>
+
+        <h2 id="文件路径示例" class="docs-header-link">
+          <span header-link="文件路径示例"></span>
+          文件路径示例
+        </h2>
+      <p>如下文件路径对应两种模式下生成的导航、类别和页面如下:</p>
+<table>
+<thead>
+<tr>
+<th>文件路径</th>
+<th>full 模式</th>
+<th>lite 模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/docs/index.md</td>
+<td>- 频道: 无 <br > - 类别: 无 <br > - 页面路由: /</td>
+<td>- 频道: 无 <br > - 类别: 无 <br > - 页面路由: /</td>
+</tr>
+<tr>
+<td>/docs/getting-started.md</td>
+<td>- 频道: 无 <br > - 类别: 无 <br > - 页面路由: /getting-started</td>
+<td>- 频道: 无 <br > - 类别: 无 <br > - 页面路由: /getting-started</td>
+</tr>
+<tr>
+<td>/docs/guide/index.md</td>
+<td>- 频道: guide <br > - 类别: 无 <br > - 页面路由: /guide</td>
+<td>- 频道: 无 <br > - 类别: guide <br > - 页面路由: /guide</td>
+</tr>
+<tr>
+<td>/docs/guide/hello.md</td>
+<td>- 频道: guide <br > - 类别: 无 <br > - 页面路由: /guide/hello</td>
+<td>- 频道: 无 <br > - 类别: guide <br > - 页面路由: /guide/hello</td>
+</tr>
+<tr>
+<td>/docs/guide/basic/hello.md</td>
+<td>- 频道: guide <br > - 类别: basic <br > - 页面路由: /guide/basic/hello</td>
+<td>- 频道: 无 <br > - 类别: basic <br > - 页面路由: /guide/basic/hello</td>
+</tr>
+</tbody></table>
+
+        <h1 id="自定义配置" class="docs-header-link">
+          <span header-link="自定义配置"></span>
+          自定义配置
+        </h1>
+      <p>对于普通页面文档，想要自定义路由，设置标题，可以使用名为<code>path</code>和<code>title</code>的<code>FrontMatter</code>进行配置。</p>
+<pre class="language-markdown"><code class="language-markdown"><span class="token hr punctuation">---</span>
+path: getting-stared
+<span class="token title important">title: 快速开始
+<span class="token punctuation">---</span></span></code></pre>
+<p>对于频道和类别来说，配置信息存储在当前文件夹下的<code>index.md</code>，通过修改该文件的<code>FrontMatter</code>进行自定义配置，如果<code>index.md</code>也有内容，则会生成一个标题和所属频道或者类别相同的页面，如果想要单独设置不同的配置，请重新创建一个非<code>index.md</code>页面文件。</p>
+
+        <h1 id="频道的生成" class="docs-header-link">
+          <span header-link="频道的生成"></span>
+          频道的生成
+        </h1>
+      <p><code>Docgeni</code>中的频道只有在<code>full</code>模式下才会存在，有两种形式存在：</p>
+<ul>
+<li>配置文件<code>navs</code>数组中的一级数据</li>
+<li><code>docs</code>文件夹下自动识别的一级文件夹</li>
+</ul>
+<p>这里需要注意的是，<code>docs</code>文件夹下自动识别的频道会默认插入到配置的<code>navs</code>数组的底部，如果想要控制展示的位置，可以插入一个<code>null</code>进行占位，如下面的示例，自动生成的频道会插入到导航的顶部。</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    navs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">null</span><span class="token punctuation">,</span>
+         <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'组件'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'components'</span><span class="token punctuation">,</span>
+            lib<span class="token punctuation">:</span> <span class="token string">'alib'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'GitHub'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+            isExternal<span class="token punctuation">:</span> <span class="token keyword">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h1 id="频道、类别和页面的排序" class="docs-header-link">
+          <span header-link="频道、类别和页面的排序"></span>
+          频道、类别和页面的排序
+        </h1>
+      <p>默认以文件夹和文件的文件名作为排序规则。</p>
+<p>可以使用名为<code>order</code>的<code>FrontMatter</code>进行配置，按照数字大小升序。</p>
+<pre class="language-markdown"><code class="language-markdown"><span class="token hr punctuation">---</span>
+<span class="token title important">order: 10
+<span class="token punctuation">---</span></span></code></pre>

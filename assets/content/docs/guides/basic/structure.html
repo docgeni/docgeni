@@ -1,0 +1,74 @@
+
+        <h1 id="纯文档项目" class="docs-header-link">
+          <span header-link="纯文档项目"></span>
+          纯文档项目
+        </h1>
+      <p>对于一个纯文档的项目(即非 Angular 类库项目)，目录结构如下所示，<code>docs</code>文件夹为 Markdown 文档存储的目录。</p>
+<pre><code><span class="token punctuation">.</span>
+├── docs
+│   ├── en<span class="token operator">-</span>us
+│   │   ├── guides
+│   ├── guides
+│   │   ├── basic
+│   │   │   ├── index<span class="token punctuation">.</span>md
+│   │   │   └── structure<span class="token punctuation">.</span>md
+│   │   ├── advance
+│   │   │   ├── index<span class="token punctuation">.</span>md
+│   │   │   └── locales<span class="token punctuation">.</span>md
+│   └── index<span class="token punctuation">.</span>md
+├── <span class="token punctuation">.</span>docgenirc<span class="token punctuation">.</span>js
+├── package<span class="token punctuation">.</span>json</code></pre>
+        <h1 id="angular-类库项目" class="docs-header-link">
+          <span header-link="angular-类库项目"></span>
+          Angular 类库项目
+        </h1>
+      <p>对于一个 Angular 的类库项目，使用<code>@angular/cli</code>会自动生成一个类库的结构，对于只有一个类库的项目推荐使用下面的目录结构，也就是把组件类库打平放入 <code>src</code> 或者 <code>components</code> 根目录。</p>
+<pre><code><span class="token punctuation">.</span>
+├── docs
+│   ├── <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+├── src
+│   ├── button
+│   │   ├── api
+│   │   │   └── en<span class="token operator">-</span>us<span class="token punctuation">.</span>js
+│   │   │   └── zh<span class="token operator">-</span>cn<span class="token punctuation">.</span>js
+│   │   ├── doc
+│   │   │   ├── en<span class="token operator">-</span>us<span class="token punctuation">.</span>md
+│   │   │   └── zh<span class="token operator">-</span>cn<span class="token punctuation">.</span>md
+│   │   ├── examples
+│   │   │   ├── basic
+│   │   │   │   ├── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>html
+│   │   │   │   ├── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>scss
+│   │   │   │   ├── basic<span class="token punctuation">.</span>component<span class="token punctuation">.</span>ts
+│   │   │   │   └── index<span class="token punctuation">.</span>md
+│   │   │   └── module<span class="token punctuation">.</span>ts
+│   │   ├── button<span class="token punctuation">.</span>component<span class="token punctuation">.</span>ts
+│   │   ├── button<span class="token punctuation">.</span>module<span class="token punctuation">.</span>ts
+│   │   ├── index<span class="token punctuation">.</span>ts
+│   │   └── package<span class="token punctuation">.</span>json
+│   ├── <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+│   ├── ng<span class="token operator">-</span>package<span class="token punctuation">.</span>json
+│   ├── package<span class="token punctuation">.</span>json
+│   ├── public<span class="token operator">-</span>api<span class="token punctuation">.</span>ts
+│   ├── test<span class="token punctuation">.</span>ts
+│   ├── tsconfig<span class="token punctuation">.</span>json
+│   ├── tsconfig<span class="token punctuation">.</span>lib<span class="token punctuation">.</span>json
+│   ├── tsconfig<span class="token punctuation">.</span>lib<span class="token punctuation">.</span>prod<span class="token punctuation">.</span>json
+│   ├── tsconfig<span class="token punctuation">.</span>spec<span class="token punctuation">.</span>json
+│   └── tslint<span class="token punctuation">.</span>json
+├── <span class="token punctuation">.</span>docgenirc<span class="token punctuation">.</span>js
+├── tsconfig<span class="token punctuation">.</span>json
+├── package<span class="token punctuation">.</span>json</code></pre>
+        <h1 id="monorepo-类库项目" class="docs-header-link">
+          <span header-link="monorepo-类库项目"></span>
+          Monorepo 类库项目
+        </h1>
+      <p>如果你的项目中有多个类库，采用 monorepo 的方式组织项目，那么一般建议在 packages 文件夹下按照类库方式组织，每个类库也是建议打平结构。</p>
+<pre><code><span class="token punctuation">.</span>
+├── docs
+│   ├── <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+├── packages
+│   ├── lib1
+│   ├── lib2
+├── <span class="token punctuation">.</span>docgenirc<span class="token punctuation">.</span>js
+├── tsconfig<span class="token punctuation">.</span>json
+├── package<span class="token punctuation">.</span>json</code></pre>

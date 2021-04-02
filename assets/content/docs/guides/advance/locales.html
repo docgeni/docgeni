@@ -1,0 +1,59 @@
+
+        <h1 id="配置多语言" class="docs-header-link">
+          <span header-link="配置多语言"></span>
+          配置多语言
+        </h1>
+      <p>支持的多语言和默认语言通过<code>locales</code>和<code>defaultLocale</code>字段配置。</p>
+<pre><code>{
+  locales<span class="token punctuation">:</span> <span class="token punctuation">[</span> { key<span class="token punctuation">:</span> <span class="token string">'en-us'</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string">'English'</span>}<span class="token punctuation">,</span> { key<span class="token punctuation">:</span> <span class="token string">'zh-cn'</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string">'中文'</span>} <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  defaultLocale<span class="token punctuation">:</span> <span class="token string">'zh-cn'</span>
+}</code></pre>
+        <h1 id="文档的多语言" class="docs-header-link">
+          <span header-link="文档的多语言"></span>
+          文档的多语言
+        </h1>
+      <p><code>docs</code>目录下的所有页面都是默认语言下的页面，如果需要添加其他语言的文档，需要单独创建一个以多语言<code>key</code>为名称的文件夹，比如下面的<code>en-us</code>文件夹下的内容会自动生成为英文的文档，包括频道，类别和页面。</p>
+<pre><code>├── en<span class="token operator">-</span>us
+│   ├── guides
+│   │   ├── index<span class="token punctuation">.</span>md
+│   │   └── intro
+│   │       ├── getting<span class="token operator">-</span>started<span class="token punctuation">.</span>md
+│   │       ├── index<span class="token punctuation">.</span>md
+│   │       └── motivation<span class="token punctuation">.</span>md
+│   └── index<span class="token punctuation">.</span>md</code></pre>
+        <h1 id="配置项的多语言" class="docs-header-link">
+          <span header-link="配置项的多语言"></span>
+          配置项的多语言
+        </h1>
+      <p>所有配置项字段都是默认语言，配置其他的语言需要在<code>locales</code>下新增一个以多语言key为name的属性，配置相关多语言的字段，比如：</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    navs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">null</span><span class="token punctuation">,</span>
+         <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'组件'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'components'</span><span class="token punctuation">,</span>
+            lib<span class="token punctuation">:</span> <span class="token string">'alib'</span><span class="token punctuation">,</span>
+            locales<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+              <span class="token string">'en-us'</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                title<span class="token punctuation">:</span> <span class="token string">'Components'</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h1 id="组件的多语言" class="docs-header-link">
+          <span header-link="组件的多语言"></span>
+          组件的多语言
+        </h1>
+      <p>组件的文档和API默认存储在<code>doc</code>和<code>api</code>目录下，以多语言<code>key</code>命名。</p>
+<pre><code>button
+├── doc
+│   ├── zh<span class="token operator">-</span>cn<span class="token punctuation">.</span>md
+│   ├── en<span class="token operator">-</span>us<span class="token punctuation">.</span>md
+├── api
+│   ├── zh<span class="token operator">-</span>cn<span class="token punctuation">.</span>js
+│   ├── en<span class="token operator">-</span>us<span class="token punctuation">.</span>js</code></pre>

@@ -1,0 +1,112 @@
+
+        <h1 id="环境准备" class="docs-header-link">
+          <span header-link="环境准备"></span>
+          环境准备
+        </h1>
+      <p>确保本地成功安装了 <a target="_blank"href="https://nodejs.org/en/">Node</a> 和 NPM，Node &gt;= 10.0.0。</p>
+<pre><code>$ node <span class="token operator">-</span>v
+v10<span class="token punctuation">.</span><span class="token number">0.0</span></code></pre>
+        <h1 id="脚手架初始化" class="docs-header-link">
+          <span header-link="脚手架初始化"></span>
+          脚手架初始化
+        </h1>
+      <p>切换到已有的项目中，执行如下命令：</p>
+<pre><code>$ npx <span class="token variable">@docgeni</span><span class="token operator">/</span>cli init
+# 或者
+$ ng add <span class="token variable">@docgeni</span><span class="token operator">/</span>cli</code></pre><blockquote>
+<p>使用<code>ng add @docgeni/cli</code>初始化需要全局安装 Angular CLI <code>npm install -g @angular/cli</code></p>
+</blockquote>
+<p>执行上述命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。</p>
+<ul>
+<li>第一步选择站点模式: <code>full</code>或者<code>lite</code>(默认<code>lite</code>)</li>
+<li>第二步提示输入文档目录 (默认<code>docs</code>)</li>
+</ul>
+<img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
+
+<p>初始化后，使用<code>npm run start:docs</code>启动文档站点，浏览器打开<code>http://127.0.0.1:4600</code> 即可访问。</p>
+<p>Lite 模式的预览效果如下：
+<img src="https://cdn.worktile.com/open-sources/docgeni/docgeni-lite-preview.png?2" alt=""></p>
+
+        <h1 id="模板仓储初始化" class="docs-header-link">
+          <span header-link="模板仓储初始化"></span>
+          模板仓储初始化
+        </h1>
+      <p>我们提供了一个内置的 GitHub 模板仓储 <a target="_blank"href="https://github.com/docgeni/docgeni-template">docgeni-template</a>。模板仓储默认使用<code>full</code>模式，且内置了一个<code>alib</code>组件库以及一些初始化配置，进入 <a target="_blank"href="https://github.com/docgeni/docgeni-template">仓储模板首页</a> 点击右上角 &quot;Use this template&quot; 按钮。</p>
+<img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
+
+<p>预览效果如下：
+<img src="https://cdn.worktile.com/open-sources/docgeni/docgeni-template-preview.png?1" alt=""></p>
+
+        <h1 id="手动初始化" class="docs-header-link">
+          <span header-link="手动初始化"></span>
+          手动初始化
+        </h1>
+      
+        <h2 id="安装" class="docs-header-link">
+          <span header-link="安装"></span>
+          安装
+        </h2>
+      <p>新建一个文件夹，或者切换到已有的项目中，执行下面命令安装 Docgeni CLI 和模版：</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">npm</span> i @docgeni/cli @docgeni/template --save-dev
+<span class="token comment" spellcheck="true"># or </span>
+$ yarn add @docgeni/cli @docgeni/template -D</code></pre>
+<p>安装后在<code>package.json</code>文件中添加如下脚本：</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    ...
+    <span class="token property">"start:docs"</span><span class="token operator">:</span> <span class="token string">"docgeni serve --port 4600"</span><span class="token punctuation">,</span>
+    <span class="token property">"build:docs"</span><span class="token operator">:</span> <span class="token string">"docgeni build --prod"</span>
+    ...
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h2 id="配置" class="docs-header-link">
+          <span header-link="配置"></span>
+          配置
+        </h2>
+      <p>在根目录新建 <code>.docgenirc.js</code> 配置文件，拷贝如下配置代码:</p>
+<pre class="language-ts"><code class="language-ts"><span class="token comment" spellcheck="true">/**
+ * @type {import('@docgeni/core').DocgeniConfig}
+ */</span>
+<span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    mode<span class="token punctuation">:</span> <span class="token string">'lite'</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Docgeni'</span><span class="token punctuation">,</span>
+    repoUrl<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+    navs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">null</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'GitHub'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+            isExternal<span class="token punctuation">:</span> <span class="token keyword">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h2 id="开始写文档" class="docs-header-link">
+          <span header-link="开始写文档"></span>
+          开始写文档
+        </h2>
+      <p>Docgeni 默认会扫描<code>docs</code>目录下的 Markdown 文件，我们可以先创建一个最简单的文档。</p>
+<pre class="language-base"><code class="language-base">$ mkdir docs <span class="token operator">&amp;</span><span class="token operator">&amp;</span> echo <span class="token string">'Hello Docgeni!'</span> <span class="token operator">></span> docs<span class="token operator">/</span>getting<span class="token operator">-</span>started<span class="token punctuation">.</span>md</code></pre>
+<p>执行 <code>npm run start:docs</code> 运行并打开 <code>http://127.0.0.1:4600</code> 地址访问试试</p>
+
+        <h2 id="-gitignore-忽略<code>-docgeni/site</code>" class="docs-header-link">
+          <span header-link="-gitignore-忽略<code>-docgeni/site</code>"></span>
+          .gitignore 忽略<code>.docgeni/site</code>
+        </h2>
+      <p>Docgeni 默认会在<code>.docgeni/site</code>文件夹下生成文档站点，为了避免冲突，请把<code>.docgeni/site</code>文件夹添加到 .gitignore 中。</p>
+
+        <h1 id="组件文档" class="docs-header-link">
+          <span header-link="组件文档"></span>
+          组件文档
+        </h1>
+      <p>Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照 <a href="basic/component">组件文档、API和示例</a> 文档要求编写组件文档、API和示例，比如：组件根目录下有一个<code>button</code>组件，在<code>button/doc</code>下创建一个<code>en-us.md</code>文档（注意需要以默认多语言的key命名），输入如下内容：</p>
+<pre><code><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
+title<span class="token punctuation">:</span> 按钮
+subtitle<span class="token punctuation">:</span> Button
+<span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
+
+## 何时使用
+按钮用于开始一个即时操作。</code></pre><p>展示效果如下:</p>
+<p><img src="https://cdn.pingcode.com/open-sources/docgeni/docgeni-lite-component-preview.png" alt="Component"></p>
+<p>关于组件文档更多的配置参考：<a href="guides/basic/component">组件文档、API和示例</a></p>

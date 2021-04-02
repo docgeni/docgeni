@@ -1,0 +1,57 @@
+
+        <h1 id="脚手架初始化(wip)" class="docs-header-link">
+          <span header-link="脚手架初始化(wip)"></span>
+          脚手架初始化(WIP)
+        </h1>
+      <pre><code>$ npx <span class="token variable">@docgeni</span><span class="token operator">/</span>cli create</code></pre>
+        <h1 id="手动初始化" class="docs-header-link">
+          <span header-link="手动初始化"></span>
+          手动初始化
+        </h1>
+      
+        <h2 id="安装" class="docs-header-link">
+          <span header-link="安装"></span>
+          安装
+        </h2>
+      <p>新建一个文件夹，或者在切换到已有的项目中，执行下面命令安装 CLI 工具和模版：</p>
+<pre class="language-bash"><code class="language-bash">$ <span class="token function">npm</span> i @docgeni/cli @docgeni/template --save-dev
+<span class="token comment" spellcheck="true"># or </span>
+$ yarn add @docgeni/cli @docgeni/template -D</code></pre>
+<p>在<code>package.json</code>文件中添加如下脚本：</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    ...
+    <span class="token property">"start:docs"</span><span class="token operator">:</span> <span class="token string">"docgeni serve --port 4600"</span><span class="token punctuation">,</span>
+    <span class="token property">"build:docs"</span><span class="token operator">:</span> <span class="token string">"docgeni build"</span>
+    ...
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h1 id="配置" class="docs-header-link">
+          <span header-link="配置"></span>
+          配置
+        </h1>
+      <p>在根目录新建 <code>.docgenirc.js</code> 配置文件参考如下:</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    mode<span class="token punctuation">:</span> <span class="token string">'site'</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Docgeni'</span><span class="token punctuation">,</span>
+    docsDir<span class="token punctuation">:</span> <span class="token string">'./docs'</span><span class="token punctuation">,</span>
+    outputDir<span class="token punctuation">:</span> <span class="token string">'dist/docgeni-site'</span><span class="token punctuation">,</span>
+    repoUrl<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+    navs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">null</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'GitHub'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+            isExternal<span class="token punctuation">:</span> <span class="token keyword">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h1 id="开始写文档" class="docs-header-link">
+          <span header-link="开始写文档"></span>
+          开始写文档
+        </h1>
+      <p>Docgeni 默认会自动查看<code>docs</code>目录下的 Markdown 文件，我们就可以先来一个最简单的文档。</p>
+<pre class="language-base"><code class="language-base">$ mkdir docs <span class="token operator">&amp;</span><span class="token operator">&amp;</span> echo <span class="token string">'# Hello Docgeni!'</span> <span class="token operator">></span> docs<span class="token operator">/</span>index<span class="token punctuation">.</span>md</code></pre>
+<p>执行 <code>npm run start:docs</code> 运行并打开 <code>http://127.0.0.1:4600</code> 地址访问试试</p>

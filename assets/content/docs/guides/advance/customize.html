@@ -1,0 +1,86 @@
+
+        <h1 id="自定义-public" class="docs-header-link">
+          <span header-link="自定义-public"></span>
+          自定义 public
+        </h1>
+      <p>Docgeni 默认会在<code>.docgeni/site</code>目录生成文档站点，这个站点完全是一个 Angular 的项目，目录结构如下：</p>
+<pre><code><span class="token punctuation">.</span>docgeni
+└── site
+    ├── src
+    │   ├── app
+    │   │   └── app<span class="token punctuation">.</span>module<span class="token punctuation">.</span>ts
+    │   ├── assets
+    │   │   ├── favicon<span class="token punctuation">.</span>ico
+    │   │   └── images
+    │   │       └── cli<span class="token operator">-</span>init<span class="token punctuation">.</span>png
+    │   ├── environments
+    │   │   ├── environment<span class="token punctuation">.</span>prod<span class="token punctuation">.</span>ts
+    │   │   └── environment<span class="token punctuation">.</span>ts
+    │   ├── favicon<span class="token punctuation">.</span>ico
+    │   ├── index<span class="token punctuation">.</span>html
+    │   ├── main<span class="token punctuation">.</span>ts
+    │   ├── polyfills<span class="token punctuation">.</span>ts
+    │   └── styles<span class="token punctuation">.</span>scss
+    ├── angular<span class="token punctuation">.</span>json
+    ├── <span class="token punctuation">.</span>browserslistrc
+    ├── karma<span class="token punctuation">.</span>conf<span class="token punctuation">.</span>js
+    └── tsconfig<span class="token punctuation">.</span>app<span class="token punctuation">.</span>json</code></pre><p>对于文档站点来说，常常需要一些配置，比如：<code>favicon.ico</code>、<code>assets</code>、<code>styles</code>、<code>scripts</code>等等。</p>
+<p>那么在 Docgeni 中，并没有像其他文档站点生成工具一样提供很多参数配置，但它提供了一种全新的文件覆盖方式，提供灵活且强大的自定义能力，<code>publicDir</code>文件夹下的一些内置文件和文件夹会拷贝到站点下覆盖默认文件，<code>publicDir</code>默认目录是<code>.docgeni/public</code>，以下是自定义的文件和文件夹说明：</p>
+<ul>
+<li><code>index.html</code>: 站点的入口 HTML 文件，可以通过修改 HTML 实现任何元素的配置，比如 <code>title</code>、<code>favicon.ico</code>、<code>heads</code>、<code>styles</code>、<code>scripts</code>，需要保证 body 下有<code>&lt;dg-root&gt;&lt;/dg-root&gt;</code>节点供文档渲染</li>
+<li><code>assets</code>: 站点的资源文件，可直接在文档中通过 <code>assets/path/to.png</code>访问，避免使用 <code>content</code> 关键字，Docgeni 生成的资源文件会存储在<code>assets/content</code>目录下</li>
+<li><code>.browserslistrc</code>: 支持的浏览器和版本，具体查看 <a target="_blank"href="https://github.com/browserslist/browserslist">browserslist</a> 了解更多配置</li>
+<li><code>styles.scss</code>: 文档站点默认使用<code>styles.scss</code>作为入口样式文件，通过覆写<code>styles.scss</code>实现一些自定义的样式，需要加上<code>@import &#39;@docgeni/template/styles/index.scss&#39;;</code>，否则内置的样式将不会加载</li>
+<li><code>tsconfig.json</code>: 自定义的TS配置文件，可以通过覆写达到高度配置目的，一般用于配置<code>compilerOptions.paths</code>便于示例中可以直接使用 <code>import &#39;mylib&#39;;</code></li>
+</ul>
+<p>完整的 public 示例如下：</p>
+<pre><code><span class="token punctuation">.</span>docgeni<span class="token operator">/</span>public
+├── assets
+│   ├── favicon<span class="token punctuation">.</span>ico
+│   └── images
+│       └── cli<span class="token operator">-</span>init<span class="token punctuation">.</span>png
+│── favicon<span class="token punctuation">.</span>ico
+│── <span class="token punctuation">.</span>browserslistrc
+├── index<span class="token punctuation">.</span>html
+├── styles<span class="token punctuation">.</span>scss
+└── tsconfig<span class="token punctuation">.</span>json</code></pre>
+        <h1 id="自定义站点" class="docs-header-link">
+          <span header-link="自定义站点"></span>
+          自定义站点
+        </h1>
+      <p>如果自定义 public 能力还不足以满足自定义的需求，那么 Docgeni 还支持一个完全自定义站点的模式，意思就是这个文档站点由用户自己创建和控制。</p>
+
+        <h2 id="第一步" class="docs-header-link">
+          <span header-link="第一步"></span>
+          第一步
+        </h2>
+      <p>可以通过 <code>ng g application site</code> 生成一个ng站点，建议选择 scss，然后修改<code>.docgenirc.js</code>配置文件中的<code>siteProjectName: &#39;site&#39;</code>(site 为 Angular 项目的名称，可以起任何命名)</p>
+
+        <h2 id="第二步" class="docs-header-link">
+          <span header-link="第二步"></span>
+          第二步
+        </h2>
+      <p>去除<code>site/src/app</code>下的组件，修改 <code>app.module.ts</code>，输入如下代码：</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> NgModule <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@angular/core'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RouterModule <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@angular/router'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> BrowserModule <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@angular/platform-browser'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> DocgeniTemplateModule <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@docgeni/template'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> DOCGENI_SITE_PROVIDERS<span class="token punctuation">,</span> RootComponent <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./content/index'</span><span class="token punctuation">;</span>
+
+@<span class="token function">NgModule</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    declarations<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    imports<span class="token punctuation">:</span> <span class="token punctuation">[</span>BrowserModule<span class="token punctuation">,</span> DocgeniTemplateModule<span class="token punctuation">,</span> RouterModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    providers<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token operator">...</span>DOCGENI_SITE_PROVIDERS<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    bootstrap<span class="token punctuation">:</span> <span class="token punctuation">[</span>RootComponent<span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">AppModule</span> <span class="token punctuation">{</span>
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+        <h2 id="第三步" class="docs-header-link">
+          <span header-link="第三步"></span>
+          第三步
+        </h2>
+      <p>Docgeni 默认会生成组件和文档相关的代码和资源文件，分别存储在<code>site/src/app/content</code>和<code>site/src/assets/content</code>文件夹下，为了避免冲突，需要把这两个文件夹加入到<code>.gitignore</code>，在<code>site/src</code>文件夹下新建一个<code>.gitignore</code>文件，并输入如下内容即可：</p>
+<pre><code>app<span class="token operator">/</span>content
+assets<span class="token operator">/</span>content</code></pre><p>最后通过执行 <code>docgeni serve --port 4600</code> 启动站点即可查看。</p>

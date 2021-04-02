@@ -1,0 +1,185 @@
+
+        <h2 id="mode" class="docs-header-link">
+          <span header-link="mode"></span>
+          mode
+        </h2>
+      <ul>
+<li>类型：<code>lite</code>｜<code>full</code></li>
+<li>默认：<code>lite</code></li>
+</ul>
+<p>用于设定文档的展现模式，默认为简易模式（左侧菜单 + 右侧内容），<code>full</code> 为站点模式，包含：首页 + 头部导航 + 左侧菜单 + 右侧内容。</p>
+
+        <h2 id="theme" class="docs-header-link">
+          <span header-link="theme"></span>
+          theme
+        </h2>
+      <ul>
+<li>类型：<code>default</code>｜<code>angular</code></li>
+<li>默认：<code>default</code></li>
+</ul>
+<p>主题设置：</p>
+<ul>
+<li><code>default</code>: 默认主题，导航背景色为白色</li>
+<li><code>angular</code>：<code>Angular</code>官网风格，导航背景色为: <code style="color: #3f51b5">#3f51b5</code></li>
+</ul>
+
+        <h2 id="title" class="docs-header-link">
+          <span header-link="title"></span>
+          title
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>package.name</code></li>
+</ul>
+<p>文档的标题，通常是所开发的组件库名，比如<code>Docgeni</code>。</p>
+
+        <h2 id="logourl" class="docs-header-link">
+          <span header-link="logourl"></span>
+          logoUrl
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：Docgeni 的 Logo Url</li>
+</ul>
+<p>文档 Logo 地址。</p>
+
+        <h2 id="repourl" class="docs-header-link">
+          <span header-link="repourl"></span>
+          repoUrl
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>GitHub 仓储地址。</p>
+
+        <h2 id="docsdir" class="docs-header-link">
+          <span header-link="docsdir"></span>
+          docsDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>docs</code></li>
+</ul>
+<p>Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markdown 文件，按照一定的规则生成频道、菜单和页面文档。</p>
+
+        <h2 id="sitedir" class="docs-header-link">
+          <span header-link="sitedir"></span>
+          siteDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>.docgeni/site</code></li>
+</ul>
+<p>自动生成的站点目录，Docgeni 会把生成的组件示例和文档拷贝到该站点下。</p>
+
+        <h2 id="outputdir" class="docs-header-link">
+          <span header-link="outputdir"></span>
+          outputDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>dist/docgeni-site</code></li>
+</ul>
+<p>站点构建输出目录。</p>
+
+        <h2 id="publicdir" class="docs-header-link">
+          <span header-link="publicdir"></span>
+          publicDir
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>.docgeni/public</code></li>
+</ul>
+<p>文档站点的配置目录，Docgeni会把该文件夹下的<code>index.html</code>、<code>favicon.ico</code>、<code>styles.scss</code>、<code>assets</code>、<code>.browserslistrc</code>和<code>tsconfig.json</code>文件拷贝并覆盖站点目录实现自定义配置功能。</p>
+
+        <h2 id="siteprojectname" class="docs-header-link">
+          <span header-link="siteprojectname"></span>
+          siteProjectName
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>Angular 自定义站点的项目名称，组件库开发除了默认的文档和示例展示功能外，可能还需要做一些自定义的功能，那么可以在仓储中新建一个 site 项目，然后配置此项目的名字，Docgeni 会把生成的文档和示例拷贝到该项目下。</p>
+
+        <h2 id="defaultlocale" class="docs-header-link">
+          <span header-link="defaultlocale"></span>
+          defaultLocale
+        </h2>
+      <ul>
+<li>类型：<code>string</code></li>
+<li>默认：<code>en-us</code></li>
+</ul>
+<p>默认多语言。</p>
+
+        <h2 id="locales" class="docs-header-link">
+          <span header-link="locales"></span>
+          locales
+        </h2>
+      <ul>
+<li>类型：<code>Array&lt;{key: string, name: string}&gt;</code></li>
+<li>默认：<code>[ { key: &#39;en-us&#39;, name: &#39;English&#39; } ]</code></li>
+</ul>
+<p>支持的多语言。</p>
+
+        <h2 id="navs" class="docs-header-link">
+          <span header-link="navs"></span>
+          navs
+        </h2>
+      <ul>
+<li>类型：<code>Array&lt;NavigationItem&gt;</code></li>
+<li>默认：<code>自动生成导航</code></li>
+</ul>
+<p>该配置项用于自定义导航栏和菜单的展示，一般会配置一些外部的链接和类库，如：</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    navs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token keyword">null</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'GitHub'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'https://github.com/docgeni/docgeni'</span><span class="token punctuation">,</span>
+            isExternal<span class="token punctuation">:</span> <span class="token keyword">true</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            title<span class="token punctuation">:</span> <span class="token string">'组件'</span><span class="token punctuation">,</span>
+            path<span class="token punctuation">:</span> <span class="token string">'components'</span><span class="token punctuation">,</span>
+            lib<span class="token punctuation">:</span> <span class="token string">'alib'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span></code></pre>
+<blockquote>
+<p>这里需要注意的是，<code>docs</code>文件夹下自动识别的频道会默认插入到配置的<code>navs</code>数组的底部，如果想要控制展示的位置，可以插入一个<code>null</code>进行占位，如上示例，自动生成的频道会插入到导航的顶部。</p>
+</blockquote>
+
+        <h2 id="libs" class="docs-header-link">
+          <span header-link="libs"></span>
+          libs
+        </h2>
+      <ul>
+<li>类型：<code>Array&lt;Library&gt;</code></li>
+<li>默认：<code>null</code></li>
+</ul>
+<p>组件类库配置，每个类库的配置查看 <a href="configuration/lib">configuration/lib</a></p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">module</span><span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    libs<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            name<span class="token punctuation">:</span> <span class="token string">'alib'</span><span class="token punctuation">,</span>
+            rootDir<span class="token punctuation">:</span> <span class="token string">'./packages/a-lib'</span><span class="token punctuation">,</span>
+            categories<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    id<span class="token punctuation">:</span> <span class="token string">'general'</span><span class="token punctuation">,</span>
+                    title<span class="token punctuation">:</span> <span class="token string">'通用'</span><span class="token punctuation">,</span>
+                    locales<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                        <span class="token string">'en-us'</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                            title<span class="token punctuation">:</span> <span class="token string">'General'</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span></code></pre>

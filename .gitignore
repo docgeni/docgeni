@@ -4,4 +4,4 @@ node_modules
 packages
 dist
 coverage
-docs
+/docs
