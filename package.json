@@ -116,6 +116,14 @@
     "typemoq": "^2.1.0",
     "typescript": "4.0.5"
   },
+  "keywords": [
+    "docgeni",
+    "docgen",
+    "angular docs generator",
+    "docs generator",
+    "documentation generator",
+    "static site generator"
+  ],
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
