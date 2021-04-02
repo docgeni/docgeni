@@ -5,7 +5,7 @@ order: 40
 ---
 
 
-`Docgeni`会动态识别每个类库根目录(`rootDir`)下的一级子文件夹，每个一级子文件夹相当于一个组件，每个组件包含对应的文档、API和示例，如需配置某个多级文件夹，请查看 [include](https://docgeni.org/configuration/lib#include) 配置项。
+`Docgeni`会动态识别每个类库根目录(`rootDir`)下的一级子文件夹，每个一级子文件夹相当于一个组件，每个组件包含对应的文档、API和示例，如需配置某个多级文件夹，请查看 [include](configuration/lib#include) 配置项。
 组件的文件夹结构如下：
 ```
 ├── button
@@ -33,7 +33,7 @@ order: 40
 
 # 概览文档
 
-默认`doc`文件夹下存放每种多语言对应的组件文档，会展示在组件的概览中。如需配置不同目录，请查看 [docDir](https://docgeni.org/configuration/lib#docDir) 配置项。
+默认`doc`文件夹下存放每种多语言对应的组件文档，会展示在组件的概览中。如需配置不同目录，请查看 [docDir](configuration/lib#docDir) 配置项。
 
 ## 组件配置项
 
@@ -56,7 +56,7 @@ order: 1
 对于`category`和`order`是全局配置，不跟随多语言，全局配置项是存放在默认语言文档的`FrontMatter`中。
 
 # 组件示例
-Docgeni 默认会扫描`examples`文件夹下的所有子文件夹，每个子文件夹相当一种类型的示例，Docgeni 会按照约定的命名识别示例组件。如需配置目录，请查看 [examplesDir](https://docgeni.org/configuration/lib#examplesDir) 配置项。
+Docgeni 默认会扫描`examples`文件夹下的所有子文件夹，每个子文件夹相当一种类型的示例，Docgeni 会按照约定的命名识别示例组件。如需配置目录，请查看 [examplesDir](configuration/lib#examplesDir) 配置项。
 
 文件结构如下：
 ```
@@ -164,7 +164,7 @@ export class AlibButtonExamplesModule {}
 
 # 组件 API
 
-Docgeni 默认会扫描`api`文件夹下的配置文件，文件名为多语言的`Key`，比如`zh-cn.js`。如需配置目录，请查看 [apiDir](https://docgeni.org/configuration/lib#apiDir) 配置项。
+Docgeni 默认会扫描`api`文件夹下的配置文件，文件名为多语言的`Key`，比如`zh-cn.js`。如需配置目录，请查看 [apiDir](configuration/lib#apiDir) 配置项。
 
 配置文件命名规则为：`{localeKey}.<json|yaml|yml|js|config.js>`，目前支持以下三种格式：
 - `json`格式，以`.json`后缀命名

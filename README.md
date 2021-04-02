@@ -20,11 +20,11 @@ A modern, powerful and out of the box documentation generator for Angular compon
 [coveralls-image]: https://coveralls.io/repos/github/docgeni/docgeni/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/docgeni/docgeni?branch=master
 
-[中文文档](https://github.com/docgeni/docgeni/blob/master/README.zh-CN.md)
+English | [中文文档](https://github.com/docgeni/docgeni/blob/master/README.zh-CN.md)
 
 ## ✨ Features
 - 📦 Out of the box, let you quickly open the document writing and component development
-- 🏡 Independent angular component preview experience, including: component overview, example, API
+- 🏡 Independent angular component preview experience, including: component overview, examples, and API
 - 📋 Extend the markdown syntax and import examples directly into the document
 - 💻 Multi-language support
 - 🚀 Two modes(`full` and `lite`) and multiple theme(`default` and `angular`)  support
@@ -40,6 +40,36 @@ Get started with Docgeni, learn the fundamentals and explore advanced topics on 
 - [Customize Site](https://docgeni.org/guides/advance/customize)
 - [Multi-language](https://docgeni.org/guides/advance/locales)
 
+## Who are using Docgeni?
+
+<table style="margin-top: 20px;">
+  <tr>
+    <td width="160" align="center" style="padding: 20px">
+      <a target="_blank" href="https://pingcode.com?utm_source=github-docgeni">
+        <img src="https://cdn.worktile.com/static/portal/assets/images/logos/square.png" height="40"/>
+        <br />
+        <strong>PingCode</strong>
+      </a>
+    </td>
+    <td width="160" align="center" style="padding: 20px">
+       <a target="_blank" href="https://worktile.com?utm_source=github-docgeni">
+        <img src="https://cdn.worktile.com/static/charm/assets/images/team_logo.png" height="40"/>
+        <br />
+        <strong>Worktile</strong>
+      </a>
+    </td>
+    <td width="160" align="center"  style="padding: 20px">
+      <a target="_blank" href="https://github.com/worktile/ngx-planet">
+        <img src="https://cdn.worktile.com/open-sources/ngx-tethys/logos/tethys.png" height="40" />
+        <br />
+        <strong>ngx-planet</strong>
+      </a>
+    </td>
+    
+   
+  </tr>
+</table>
+
 ## ☘️ Badge
 Show the world you're using docgeni?
 Add a README badge to show it via: 
@@ -49,10 +79,6 @@ Add a README badge to show it via:
 ```
 
 [![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
-
-## 🔗 Links
-- [ngx-planet](https://github.com/worktile/ngx-planet)
-- [PingCode](https://pingcode.com?utm_source=github-docgeni)
 
 ## 💻 Development
 
