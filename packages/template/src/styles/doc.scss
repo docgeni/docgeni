@@ -182,13 +182,13 @@ $dg-service-color: #8e24aa;
     // white-space: break-spaces;
     h1 {
         font-size: $dg-font-size-xlg;
-        margin: 1rem 0;
+        margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
 
     h2 {
         font-size: $dg-font-size-lg;
-        margin: 1rem 0;
+        margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
 
@@ -199,17 +199,17 @@ $dg-service-color: #8e24aa;
 
     h3 {
         font-size: 18px;
-        margin-bottom: 1rem;
+        margin: 20px 0px 16px 0px;
     }
 
     h4 {
         font-size: 16px;
-        margin-bottom: 1rem;
+        margin: 10px 0px 10px 0px;
     }
 
     h5 {
         font-size: 14px;
-        margin-bottom: 1rem;
+        margin: 10px 0px 10px 0px;
     }
 
     ul,
@@ -245,7 +245,7 @@ $dg-service-color: #8e24aa;
 
     p {
         // color: $gray-700;
-        line-height: 24px;
+        line-height: 26px;
         margin-top: 0;
         margin-bottom: 8px;
     }

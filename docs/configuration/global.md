@@ -112,7 +112,7 @@ module.exports = {
 - 类型：`Array<Library>`
 - 默认：`null`
 
-组件类库配置，每个类库的配置查看 [configuration/lib](https://docgeni.org/configuration/lib)
+组件类库配置，每个类库的配置查看 [configuration/lib](configuration/lib)
 
 ```ts
 module.exports = {

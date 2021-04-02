@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: 快速上手
 path: 'getting-started'
 order: 30
 ---
@@ -23,9 +23,20 @@ $ ng add @docgeni/cli
 - 第一步选择站点模式: `full`或者`lite`(默认`lite`)
 - 第二步提示输入文档目录 (默认`docs`)
 
-<img class="mb-2" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
+<img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
 
 初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
+
+Lite 模式的预览效果如下：
+![](https://cdn.worktile.com/open-sources/docgeni/docgeni-lite-preview.png?2)
+
+# 模板仓储初始化
+我们提供了一个内置的 GitHub 模板仓储 [docgeni-template](https://github.com/docgeni/docgeni-template)。模板仓储默认使用`full`模式，且内置了一个`alib`组件库以及一些初始化配置，进入 [仓储模板首页](https://github.com/docgeni/docgeni-template) 点击右上角 "Use this template" 按钮。
+
+<img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
+
+预览效果如下：
+![](https://cdn.worktile.com/open-sources/docgeni/docgeni-template-preview.png?1)
 
 # 手动初始化
 ## 安装
@@ -44,7 +55,7 @@ $ yarn add @docgeni/cli @docgeni/template -D
   "scripts": {
     ...
     "start:docs": "docgeni serve --port 4600",
-    "build:docs": "docgeni build"
+    "build:docs": "docgeni build --prod"
     ...
   }
 }
@@ -72,7 +83,7 @@ module.exports = {
 ```
 ## 开始写文档
 
-Docgeni 默认会自动查看`docs`目录下的 Markdown 文件，我们可以先创建一个最简单的文档。
+Docgeni 默认会扫描`docs`目录下的 Markdown 文件，我们可以先创建一个最简单的文档。
 
 ```base
 $ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
@@ -80,13 +91,17 @@ $ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
 
 执行 `npm run start:docs` 运行并打开 `http://127.0.0.1:4600` 地址访问试试
 
+## .gitignore 忽略`.docgeni/site`
+Docgeni 默认会在`.docgeni/site`文件夹下生成文档站点，为了避免冲突，请把`.docgeni/site`文件夹添加到 .gitignore 中。
+
 
 # 组件文档
-Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照[组件概览](https://docgeni.org/guides//basic/component)文档要求编写组件文档和示例，比如：组件根目录下有一个按钮组件，在`button`组件文件夹下创建一个`doc/zh-cn.md`文档，输入如下内容：
+Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照 [组件文档、API和示例](basic/component) 文档要求编写组件文档、API和示例，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的key命名），输入如下内容：
 
 ```
 ---
 title: 按钮
+subtitle: Button
 ---
 
 ## 何时使用
@@ -94,6 +109,6 @@ title: 按钮
 ```
 展示效果如下:
 
-![Component](https://cdn.pingcode.com/open-sources/docgeni/component-display.png)
+![Component](https://cdn.pingcode.com/open-sources/docgeni/docgeni-lite-component-preview.png)
 
-关于组件文档更多的配置参考：[组件概览](https://docgeni.org/guides/basic/component)
+关于组件文档更多的配置参考：[组件文档、API和示例](guides/basic/component)

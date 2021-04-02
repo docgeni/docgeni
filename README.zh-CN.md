@@ -20,7 +20,7 @@
 [coveralls-image]: https://coveralls.io/repos/github/docgeni/docgeni/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/docgeni/docgeni?branch=master
 
-[English](https://github.com/docgeni/docgeni/blob/master/README.md)
+[English](https://github.com/docgeni/docgeni/blob/master/README.md) | 中文文档
 
 ## ✨ Features
 - 📦 开箱即用，让你快速开启文档编写和组件开发
@@ -41,6 +41,37 @@
 - [自定义站点](https://docgeni.org/guides/advance/customize)
 - [多语言](https://docgeni.org/guides/advance/locales)
 
+## 谁在使用 Docgeni?
+
+<table>
+
+  <tr>
+    <td width="240" align="center">
+      <a target="_blank" href="https://pingcode.com?utm_source=github-docgeni">
+        <img src="https://cdn.pingcode.com/static/pc-charm/assets/images/logo.png?v=2.40.0" height="40"/>
+        <br />
+        <strong>PingCode</strong>
+      </a>
+    </td>
+    <td width="240" align="center">
+       <a target="_blank" href="https://worktile.com?utm_source=github-docgeni">
+        <img src="https://cdn.worktile.com/static/charm/assets/images/logo-default.png" height="40"/>
+        <br />
+        <strong>Worktile</strong>
+      </a>
+    </td>
+    <td width="240" align="center">
+      <a target="_blank" href="https://github.com/worktile/ngx-planet">
+        <img src="https://cdn.worktile.com/open-sources/ngx-tethys/logos/tethys.png" height="40" />
+        <br />
+        <strong>ngx-planet</strong>
+      </a>
+    </td>
+    
+   
+  </tr>
+</table>
+
 ## ☘️ 徽章
 展示使用 docgeni 的徽章，可以添加如下的语法到 README 中：
 
@@ -49,10 +80,6 @@
 ```
 
 [![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
-
-## 🔗 链接
-- [ngx-planet](https://github.com/worktile/ngx-planet)
-- [PingCode](https://pingcode.com?utm_source=github-docgeni)
 
 ## 💻 开发
 
