@@ -1,0 +1,7 @@
+.docgeni
+node_modules
+.nyc_output
+packages
+dist
+coverage
+docs

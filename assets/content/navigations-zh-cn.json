@@ -1,0 +1,400 @@
+{
+  "navs": [
+    {
+      "id": "guides",
+      "path": "guides",
+      "channel_path": "guides",
+      "title": "指南",
+      "items": [
+        {
+          "id": "guides/intro",
+          "path": "guides/intro",
+          "channel_path": "guides",
+          "title": "介绍",
+          "items": [
+            {
+              "id": "index",
+              "path": "intro",
+              "channel_path": "guides",
+              "title": "介绍",
+              "order": 10,
+              "contentPath": "docs/guides/intro/index.html"
+            },
+            {
+              "id": "getting-started",
+              "path": "intro/getting-started",
+              "channel_path": "guides",
+              "title": "快速上手",
+              "order": 30,
+              "contentPath": "docs/guides/intro/getting-started.html"
+            }
+          ],
+          "order": 10
+        },
+        {
+          "id": "guides/basic",
+          "path": "guides/basic",
+          "channel_path": "guides",
+          "title": "基本用法",
+          "items": [
+            {
+              "id": "route-nav-menu",
+              "path": "basic/route-nav-menu",
+              "channel_path": "guides",
+              "title": "路由导航菜单",
+              "order": 20,
+              "contentPath": "docs/guides/basic/route-nav-menu.html"
+            },
+            {
+              "id": "lib-nav",
+              "path": "basic/lib-nav",
+              "channel_path": "guides",
+              "title": "类库导航和菜单",
+              "order": 30,
+              "contentPath": "docs/guides/basic/lib-nav.html"
+            },
+            {
+              "id": "component",
+              "path": "basic/component",
+              "channel_path": "guides",
+              "title": "组件文档、API和示例",
+              "order": 40,
+              "contentPath": "docs/guides/basic/component.html"
+            }
+          ],
+          "order": 15
+        },
+        {
+          "id": "guides/advance",
+          "path": "guides/advance",
+          "channel_path": "guides",
+          "title": "高级用法",
+          "items": [
+            {
+              "id": "customize",
+              "path": "advance/customize",
+              "channel_path": "guides",
+              "title": "自定义站点",
+              "order": 20,
+              "contentPath": "docs/guides/advance/customize.html"
+            },
+            {
+              "id": "locales",
+              "path": "advance/locales",
+              "channel_path": "guides",
+              "title": "多语言",
+              "order": 100,
+              "contentPath": "docs/guides/advance/locales.html"
+            }
+          ],
+          "order": 40
+        },
+        {
+          "id": "faq",
+          "path": "faq",
+          "channel_path": "guides",
+          "title": "常见问题",
+          "order": 9007199254740991,
+          "contentPath": "docs/guides/faq.html"
+        }
+      ],
+      "order": 20
+    },
+    {
+      "id": "configuration",
+      "path": "configuration",
+      "channel_path": "configuration",
+      "title": "配置",
+      "items": [
+        {
+          "id": "global",
+          "path": "global",
+          "channel_path": "configuration",
+          "title": "全局配置",
+          "order": 30,
+          "contentPath": "docs/configuration/global.html"
+        },
+        {
+          "id": "lib",
+          "path": "lib",
+          "channel_path": "configuration",
+          "title": "类库配置",
+          "order": 30,
+          "contentPath": "docs/configuration/lib.html"
+        },
+        {
+          "id": "front-matter",
+          "path": "front-matter",
+          "channel_path": "configuration",
+          "title": "Front Matter",
+          "order": 40,
+          "contentPath": "docs/configuration/front-matter.html"
+        }
+      ],
+      "order": 30
+    },
+    {
+      "title": "组件",
+      "path": "components",
+      "lib": "alib",
+      "items": [
+        {
+          "id": "general",
+          "title": "通用",
+          "items": [
+            {
+              "id": "button",
+              "title": "Button",
+              "subtitle": "按钮",
+              "path": "button",
+              "importSpecifier": "alib/button",
+              "examples": [
+                "alib-button-basic-example",
+                "alib-button-advance-title-example",
+                "alib-button-advance-example"
+              ],
+              "overview": true,
+              "api": true,
+              "order": 1,
+              "category": "general"
+            },
+            {
+              "id": "foo",
+              "title": "Foo",
+              "subtitle": "测试",
+              "path": "foo",
+              "importSpecifier": "alib/foo",
+              "examples": [
+                "alib-foo-advance-example",
+                "alib-foo-basic-example"
+              ],
+              "overview": true,
+              "api": false,
+              "order": 2,
+              "category": "general"
+            }
+          ]
+        },
+        {
+          "id": "layout",
+          "title": "布局",
+          "items": [
+            {
+              "id": "layout",
+              "title": "Layout",
+              "subtitle": "布局",
+              "path": "layout",
+              "importSpecifier": "alib/layout",
+              "examples": [
+                "alib-layout-advance-example",
+                "alib-layout-basic-example"
+              ],
+              "overview": true,
+              "api": false,
+              "order": 1,
+              "category": "layout"
+            }
+          ]
+        },
+        {
+          "id": "zoo",
+          "title": "Zoo",
+          "subtitle": "",
+          "path": "zoo",
+          "importSpecifier": "alib/zoo",
+          "examples": [
+            "alib-zoo-basic-example"
+          ],
+          "overview": true,
+          "api": false,
+          "order": 9007199254740991
+        },
+        {
+          "id": "bar",
+          "title": "Bar",
+          "subtitle": "",
+          "path": "bar",
+          "importSpecifier": "alib/bar",
+          "examples": [
+            "alib-bar-basic-example"
+          ],
+          "overview": false,
+          "api": true,
+          "order": 9007199254740991
+        }
+      ]
+    },
+    {
+      "title": "GitHub",
+      "path": "https://github.com/docgeni/docgeni",
+      "isExternal": true
+    },
+    {
+      "title": "更新日志",
+      "path": "https://github.com/docgeni/docgeni/blob/master/CHANGELOG.md",
+      "isExternal": true
+    }
+  ],
+  "docs": [
+    {
+      "id": "front-matter",
+      "path": "front-matter",
+      "channel_path": "configuration",
+      "title": "Front Matter",
+      "order": 40,
+      "contentPath": "docs/configuration/front-matter.html"
+    },
+    {
+      "id": "global",
+      "path": "global",
+      "channel_path": "configuration",
+      "title": "全局配置",
+      "order": 30,
+      "contentPath": "docs/configuration/global.html"
+    },
+    {
+      "id": "lib",
+      "path": "lib",
+      "channel_path": "configuration",
+      "title": "类库配置",
+      "order": 30,
+      "contentPath": "docs/configuration/lib.html"
+    },
+    {
+      "id": "customize",
+      "path": "advance/customize",
+      "channel_path": "guides",
+      "title": "自定义站点",
+      "order": 20,
+      "contentPath": "docs/guides/advance/customize.html"
+    },
+    {
+      "id": "locales",
+      "path": "advance/locales",
+      "channel_path": "guides",
+      "title": "多语言",
+      "order": 100,
+      "contentPath": "docs/guides/advance/locales.html"
+    },
+    {
+      "id": "component",
+      "path": "basic/component",
+      "channel_path": "guides",
+      "title": "组件文档、API和示例",
+      "order": 40,
+      "contentPath": "docs/guides/basic/component.html"
+    },
+    {
+      "id": "lib-nav",
+      "path": "basic/lib-nav",
+      "channel_path": "guides",
+      "title": "类库导航和菜单",
+      "order": 30,
+      "contentPath": "docs/guides/basic/lib-nav.html"
+    },
+    {
+      "id": "route-nav-menu",
+      "path": "basic/route-nav-menu",
+      "channel_path": "guides",
+      "title": "路由导航菜单",
+      "order": 20,
+      "contentPath": "docs/guides/basic/route-nav-menu.html"
+    },
+    {
+      "id": "faq",
+      "path": "faq",
+      "channel_path": "guides",
+      "title": "常见问题",
+      "order": 9007199254740991,
+      "contentPath": "docs/guides/faq.html"
+    },
+    {
+      "id": "getting-started",
+      "path": "intro/getting-started",
+      "channel_path": "guides",
+      "title": "快速上手",
+      "order": 30,
+      "contentPath": "docs/guides/intro/getting-started.html"
+    },
+    {
+      "id": "index",
+      "path": "intro",
+      "channel_path": "guides",
+      "title": "介绍",
+      "order": 10,
+      "contentPath": "docs/guides/intro/index.html"
+    },
+    {
+      "id": "zoo",
+      "title": "Zoo",
+      "subtitle": "",
+      "path": "zoo",
+      "importSpecifier": "alib/zoo",
+      "examples": [
+        "alib-zoo-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 9007199254740991
+    },
+    {
+      "id": "bar",
+      "title": "Bar",
+      "subtitle": "",
+      "path": "bar",
+      "importSpecifier": "alib/bar",
+      "examples": [
+        "alib-bar-basic-example"
+      ],
+      "overview": false,
+      "api": true,
+      "order": 9007199254740991
+    },
+    {
+      "id": "button",
+      "title": "Button",
+      "subtitle": "按钮",
+      "path": "button",
+      "importSpecifier": "alib/button",
+      "examples": [
+        "alib-button-basic-example",
+        "alib-button-advance-title-example",
+        "alib-button-advance-example"
+      ],
+      "overview": true,
+      "api": true,
+      "order": 1,
+      "category": "general"
+    },
+    {
+      "id": "foo",
+      "title": "Foo",
+      "subtitle": "测试",
+      "path": "foo",
+      "importSpecifier": "alib/foo",
+      "examples": [
+        "alib-foo-advance-example",
+        "alib-foo-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 2,
+      "category": "general"
+    },
+    {
+      "id": "layout",
+      "title": "Layout",
+      "subtitle": "布局",
+      "path": "layout",
+      "importSpecifier": "alib/layout",
+      "examples": [
+        "alib-layout-advance-example",
+        "alib-layout-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 1,
+      "category": "layout"
+    }
+  ]
+}

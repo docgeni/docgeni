@@ -1,0 +1,1 @@
+[{"type":"directive","name":"alibBar","properties":[{"name":"alibType","type":"string","default":"null","description":"<p>类型</p>\n"},{"name":"alibSize","type":"string","description":"<p>大小</p>\n"}],"description":""},{"type":"component","name":"alib-bar-divider","description":"<p>分割线</p>\n","properties":[]}]

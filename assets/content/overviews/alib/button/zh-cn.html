@@ -1,0 +1,34 @@
+
+        <h2 id="定义" class="docs-header-link">
+          <span header-link="定义"></span>
+          定义
+        </h2>
+      <blockquote>
+<p>按钮用于开始一个即时操作。</p>
+</blockquote>
+
+        <h2 id="何时使用" class="docs-header-link">
+          <span header-link="何时使用"></span>
+          何时使用
+        </h2>
+      <p>标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。</p>
+<p>在 ALib 示例组件中，我们有四种按钮。</p>
+<ul>
+<li>主按钮：用于主行动点，一个操作区域只能有一个主按钮。</li>
+<li>默认按钮：用于没有主次之分的一组行动点。</li>
+<li>虚线按钮：常用于添加操作。</li>
+<li>链接按钮：用于次要或外链的行动点。</li>
+</ul>
+<p>以及四种状态属性与上面配合使用。</p>
+<ol>
+<li>危险：删除/移动/修改权限等危险操作，一般需要二次确认。</li>
+<li>幽灵：用于背景色比较复杂的地方，常用在首页/产品页等展示场景。</li>
+<li>禁用：行动点不可用的时候，一般需要文案解释。</li>
+<li>加载中：用于异步操作等待反馈的时候，也可以避免多次提交。</li>
+</ol>
+<!--example()-->
+
+<p>直接使用<code>alibButton</code>指令在原有的按钮元素上扩展：</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">alibButton</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span></code></pre>
+<p>直接使用<code>alib-button</code>组件：</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>alib-button</span> <span class="token attr-name">alibType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>alib-button</span><span class="token punctuation">></span></span></code></pre>

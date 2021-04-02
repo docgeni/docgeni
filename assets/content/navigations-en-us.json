@@ -1,0 +1,245 @@
+{
+  "navs": [
+    {
+      "id": "guides",
+      "path": "guides",
+      "channel_path": "guides",
+      "title": "Guides",
+      "items": [
+        {
+          "id": "guides",
+          "path": "guides",
+          "channel_path": "guides",
+          "title": "Introduce",
+          "items": [
+            {
+              "id": "index",
+              "path": "guides",
+              "channel_path": "guides",
+              "title": "Introduce",
+              "order": 1,
+              "contentPath": "docs/en-us/guides/intro/index.html"
+            },
+            {
+              "id": "motivation",
+              "path": "motivation",
+              "channel_path": "guides",
+              "title": "Motivation",
+              "order": 2,
+              "contentPath": "docs/en-us/guides/intro/motivation.html"
+            },
+            {
+              "id": "getting-started",
+              "path": "getting-started",
+              "channel_path": "guides",
+              "title": "Getting Started",
+              "order": 3,
+              "contentPath": "docs/en-us/guides/intro/getting-started.html"
+            }
+          ],
+          "order": 1
+        }
+      ],
+      "order": 1
+    },
+    {
+      "title": "Components",
+      "path": "components",
+      "lib": "alib",
+      "items": [
+        {
+          "id": "general",
+          "title": "General",
+          "items": [
+            {
+              "id": "button",
+              "title": "Button",
+              "subtitle": "",
+              "path": "button",
+              "importSpecifier": "alib/button",
+              "examples": [
+                "alib-button-basic-example",
+                "alib-button-advance-title-example",
+                "alib-button-advance-example"
+              ],
+              "overview": true,
+              "api": true,
+              "order": 1,
+              "category": "general"
+            },
+            {
+              "id": "foo",
+              "title": "Foo",
+              "subtitle": "测试",
+              "path": "foo",
+              "importSpecifier": "alib/foo",
+              "examples": [
+                "alib-foo-advance-example",
+                "alib-foo-basic-example"
+              ],
+              "overview": true,
+              "api": false,
+              "order": 2,
+              "category": "general"
+            }
+          ]
+        },
+        {
+          "id": "layout",
+          "title": "Layout",
+          "items": [
+            {
+              "id": "layout",
+              "title": "Layout",
+              "subtitle": "布局",
+              "path": "layout",
+              "importSpecifier": "alib/layout",
+              "examples": [
+                "alib-layout-advance-example",
+                "alib-layout-basic-example"
+              ],
+              "overview": true,
+              "api": false,
+              "order": 1,
+              "category": "layout"
+            }
+          ]
+        },
+        {
+          "id": "zoo",
+          "title": "Zoo",
+          "subtitle": "",
+          "path": "zoo",
+          "importSpecifier": "alib/zoo",
+          "examples": [
+            "alib-zoo-basic-example"
+          ],
+          "overview": true,
+          "api": false,
+          "order": 9007199254740991
+        },
+        {
+          "id": "bar",
+          "title": "Bar",
+          "subtitle": "",
+          "path": "bar",
+          "importSpecifier": "alib/bar",
+          "examples": [
+            "alib-bar-basic-example"
+          ],
+          "overview": false,
+          "api": true,
+          "order": 9007199254740991
+        }
+      ]
+    },
+    {
+      "title": "GitHub",
+      "path": "https://github.com/docgeni/docgeni",
+      "isExternal": true
+    },
+    {
+      "title": "Changelog",
+      "path": "https://github.com/docgeni/docgeni/blob/master/CHANGELOG.md",
+      "isExternal": true
+    }
+  ],
+  "docs": [
+    {
+      "id": "getting-started",
+      "path": "getting-started",
+      "channel_path": "guides",
+      "title": "Getting Started",
+      "order": 3,
+      "contentPath": "docs/en-us/guides/intro/getting-started.html"
+    },
+    {
+      "id": "index",
+      "path": "guides",
+      "channel_path": "guides",
+      "title": "Introduce",
+      "order": 1,
+      "contentPath": "docs/en-us/guides/intro/index.html"
+    },
+    {
+      "id": "motivation",
+      "path": "motivation",
+      "channel_path": "guides",
+      "title": "Motivation",
+      "order": 2,
+      "contentPath": "docs/en-us/guides/intro/motivation.html"
+    },
+    {
+      "id": "zoo",
+      "title": "Zoo",
+      "subtitle": "",
+      "path": "zoo",
+      "importSpecifier": "alib/zoo",
+      "examples": [
+        "alib-zoo-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 9007199254740991
+    },
+    {
+      "id": "bar",
+      "title": "Bar",
+      "subtitle": "",
+      "path": "bar",
+      "importSpecifier": "alib/bar",
+      "examples": [
+        "alib-bar-basic-example"
+      ],
+      "overview": false,
+      "api": true,
+      "order": 9007199254740991
+    },
+    {
+      "id": "button",
+      "title": "Button",
+      "subtitle": "",
+      "path": "button",
+      "importSpecifier": "alib/button",
+      "examples": [
+        "alib-button-basic-example",
+        "alib-button-advance-title-example",
+        "alib-button-advance-example"
+      ],
+      "overview": true,
+      "api": true,
+      "order": 1,
+      "category": "general"
+    },
+    {
+      "id": "foo",
+      "title": "Foo",
+      "subtitle": "测试",
+      "path": "foo",
+      "importSpecifier": "alib/foo",
+      "examples": [
+        "alib-foo-advance-example",
+        "alib-foo-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 2,
+      "category": "general"
+    },
+    {
+      "id": "layout",
+      "title": "Layout",
+      "subtitle": "布局",
+      "path": "layout",
+      "importSpecifier": "alib/layout",
+      "examples": [
+        "alib-layout-advance-example",
+        "alib-layout-basic-example"
+      ],
+      "overview": true,
+      "api": false,
+      "order": 1,
+      "category": "layout"
+    }
+  ]
+}

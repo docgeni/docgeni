@@ -1,0 +1,31 @@
+
+        <h2 id="definition" class="docs-header-link">
+          <span header-link="definition"></span>
+          Definition
+        </h2>
+      <blockquote>
+<p>Button to start an immediate operation.</p>
+</blockquote>
+
+        <h2 id="when-to-use" class="docs-header-link">
+          <span header-link="when-to-use"></span>
+          When to use
+        </h2>
+      <p>A set of operation commands are marked (or encapsulated) to respond to the user&#39;s click behavior and trigger the corresponding business logic.</p>
+<p>In the Alib sample component, we have four buttons</p>
+<ul>
+<li>Main button: used for moving point of main line. There can only be one main button in an operation area.</li>
+<li>Default button: used for a group of action points without priority.</li>
+<li>Dotted button: commonly used for adding operations.</li>
+<li>Link button: used for secondary or external chain action point.</li>
+</ul>
+<p>And four state attributes are used with the above.</p>
+<ul>
+<li>Danger: delete / move / modify authority and other dangerous operations, generally need to be confirmed twice.</li>
+<li>Ghost: it is used in places with complex background color, and is often used in the home page / product page and other display scenes.</li>
+<li>Disable: when the action point is not available, copywriting is generally required.</li>
+<li>Loading: used for asynchronous operations waiting for feedback, multiple submissions can also be avoided.</li>
+</ul>
+<p>Directly use the <code>alibButton</code> instruction to expand on the original button element:</p>
+<pre><code><span class="token operator">&lt;</span>button alibButton<span class="token operator">=</span><span class="token string">"primary"</span><span class="token operator">></span>Button<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span></code></pre><p>Directly use the <code>alib-button</code> component tag:</p>
+<pre><code><span class="token operator">&lt;</span>alib<span class="token operator">-</span>button alibType<span class="token operator">=</span><span class="token string">"primary"</span><span class="token operator">></span>Button<span class="token operator">&lt;</span><span class="token operator">/</span>alib<span class="token operator">-</span>button<span class="token operator">></span></code></pre>
