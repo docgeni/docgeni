@@ -7,10 +7,14 @@
     <div class="dg-doc-viewer-inner">
       <div class="dg-doc-viewer-inner-content">
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
-        <dg-content-viewer [url]="docItem.contentPath | dgAssetsContentPath" (contentRendered)="updateTableOfContents(docItem.title, $event)">
+        <dg-content-viewer
+          [url]="docItem.contentPath | dgAssetsContentPath"
+          (contentRendered)="updateTableOfContents(docItem.title, $event)"
+        >
         </dg-content-viewer>
       </div>
       <dg-toc #toc></dg-toc>
     </div>
   </ng-template>
+  <dg-footer></dg-footer>
 </ng-container>

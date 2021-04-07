@@ -26,19 +26,11 @@
     }
 }
 
-.dg-footer {
-    display: block;
-    margin: 72px 0 -32px;
-    padding-top: 24px;
-    border-top: 1px solid #ebedf1;
-    text-align: center;
-}
-
 .dg-layout {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex: auto;
-    height: 0;
+    // height: 0;
     .dg-sidebar {
         flex: 0 0 auto;
         width: 300px;

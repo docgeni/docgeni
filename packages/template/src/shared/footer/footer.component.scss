@@ -1,3 +1,10 @@
 .dg-footer {
-
+    display: block;
+    padding: 20px;
+    border-top: 1px solid $dg-gray-200;
+    text-align: center;
+    color: $dg-gray-700;
+    a {
+        color: $dg-gray-700;
+    }
 }
