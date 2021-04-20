@@ -9,7 +9,6 @@ import { VERSION } from '../../version';
 import { AddGitignore } from './add-gitignore';
 function addDependenciesToPackageJson() {
     return (host: Tree, context: SchematicContext) => {
-        ['@docgeni/cli'].forEach(dependency => removePackageJsonDependency(host, dependency));
         [
             {
                 type: NodeDependencyType.Dev,
