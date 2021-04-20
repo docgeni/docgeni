@@ -1,7 +1,6 @@
 import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { AngularJsonBuilder } from './angular-json-builder';
 import { SiteProject } from '../types';
 import Handlebars from 'handlebars';
 interface CopyFile {
