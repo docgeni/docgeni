@@ -2,7 +2,6 @@ import { DocgeniContext } from './docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
-import { AngularJsonBuilder } from './builders';
 import { AngularCommandOptions, SiteProject } from './types';
 
 const EXCLUDE_ARGS = ['skipSite'];
