@@ -18,6 +18,7 @@ describe('docgeni build', () => {
             title: 'Docgeni',
             logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
             docsDir: 'docs',
+            siteDir: '_site',
             repoUrl: 'https://github.com/docgeni/docgeni',
             navs: [null],
             locales: [
