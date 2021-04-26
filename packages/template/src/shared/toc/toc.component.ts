@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
-import { DOCUMENT, ViewportScroller } from '@angular/common';
+import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
+import { DOCUMENT, LocationStrategy, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
 
     links: Link[] = [];
 
-    rootUrl = this.router.url.split('#')[0];
+    rootUrl = this.locationStrategy.path(false);
 
     public highestLevel = 1;
 
@@ -58,17 +58,17 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private element: ElementRef,
         @Inject(DOCUMENT) private document: any,
         private viewportScroller: ViewportScroller,
-        global: GlobalContext
+        global: GlobalContext,
+        private locationStrategy: LocationStrategy
     ) {
         if (global.config.mode === 'lite') {
             OFFSET = 10;
         }
         this.router.events.pipe(takeUntil(this.destroyed)).subscribe(event => {
             if (event instanceof NavigationEnd) {
-                const rootUrl = router.url.split('#')[0];
+                const rootUrl = this.locationStrategy.path(false);
                 if (rootUrl !== this.rootUrl) {
                     this.rootUrl = rootUrl;
                 }
