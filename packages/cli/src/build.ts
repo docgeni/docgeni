@@ -2,18 +2,16 @@ import { CommandModule } from 'yargs';
 import { Docgeni, DocgeniConfig } from '@docgeni/core';
 import { normalizeCommandArgsForAngular } from './angular-args';
 import { getConfiguration } from './configuration';
-
+import * as fs from 'fs';
+import * as path from 'path';
+import { yargsOptionsGenerate } from './util/yargs-options-generate';
+import { Option } from '@angular/cli/models/interface';
+const ngBuildOptions: Option[] = JSON.parse(fs.readFileSync(path.resolve(__dirname, './ng-build-options.json')).toString());
 export const buildCommand: CommandModule = {
     command: ['build'],
     describe: 'Build documentation site',
     builder: yargs => {
-        yargs
-            .option('watch', {
-                alias: 'w',
-                desc: `Watch`,
-                boolean: true,
-                default: false
-            })
+        yargsOptionsGenerate(yargs, ngBuildOptions)
             .option('prod', {
                 desc: `Production`,
                 boolean: true,
@@ -38,7 +36,7 @@ export const buildCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: argv.watch,
             config,
-            cmdArgs: normalizeCommandArgsForAngular(config)
+            cmdArgs: normalizeCommandArgsForAngular(config, ngBuildOptions)
         });
         docgeni.run();
     }
