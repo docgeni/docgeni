@@ -47,7 +47,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
 
     rootUrl = this.locationStrategy.path(false);
 
-    public highestLevel = 1;
+    public highestLevel;
 
     private scrollContainer: any;
 
@@ -130,7 +130,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
                 active: false,
                 level: headerLevel
             });
-            this.highestLevel = headerLevel < this.highestLevel ? headerLevel : this.highestLevel;
+            this.highestLevel = this.highestLevel && headerLevel > this.highestLevel ? this.highestLevel : headerLevel;
         });
         this.linkSections[sectionIndex] = { name: sectionName, links };
         this.links.push(...links);
