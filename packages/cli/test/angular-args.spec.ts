@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import { normalizeCommandArgsForAngular } from '../src/angular-args';
-
+import * as path from 'path';
+import * as fs from 'fs';
+const options = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/ng-build-options.json')).toString());
 describe('angular-args', () => {
     it('should get undefined when normalize empty object', () => {
-        const result = normalizeCommandArgsForAngular({});
+        const result = normalizeCommandArgsForAngular({}, options);
         expect(result).deep.eq({
             port: undefined,
             prod: undefined,
@@ -21,7 +23,7 @@ describe('angular-args', () => {
             baseHref: '/docgeni/',
             skipSite: true
         };
-        const result = normalizeCommandArgsForAngular(args);
+        const result = normalizeCommandArgsForAngular(args, options);
         expect(result).deep.eq({
             port: args.port,
             prod: args.prod,
@@ -36,7 +38,7 @@ describe('angular-args', () => {
             port1: 4700,
             prod1: true
         };
-        const result = normalizeCommandArgsForAngular(args);
+        const result = normalizeCommandArgsForAngular(args, options);
         expect(result).deep.eq({
             port: undefined,
             prod: undefined,

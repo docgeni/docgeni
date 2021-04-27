@@ -4,10 +4,13 @@ import { Option } from '@angular/cli/models/interface';
 export function normalizeCommandArgsForAngular(args: any, list: Option[]): AngularCommandOptions {
     return Object.keys(args)
         .filter(key => getOptionFromName(key, list))
-        .reduce((pre, cur: string) => {
-            pre[cur] = args[cur];
-            return pre;
-        }, {});
+        .reduce(
+            (pre, cur: string) => {
+                pre[cur] = args[cur];
+                return pre;
+            },
+            { port: args.port, prod: args.prod, deployUrl: args.deployUrl, baseHref: args.baseHref, skipSite: args.skipSite }
+        );
 }
 
 function getOptionFromName(name: string, options) {
