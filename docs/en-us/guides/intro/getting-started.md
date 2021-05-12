@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 path: 'getting-started'
-order: 3
+order: 30
 ---
 
 # 脚手架初始化(WIP)
