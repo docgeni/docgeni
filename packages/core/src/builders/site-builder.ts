@@ -3,6 +3,7 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from '../types';
 import Handlebars from 'handlebars';
+import * as chokidar from 'chokidar';
 interface CopyFile {
     from: string;
     to: string;
@@ -39,6 +40,7 @@ export class SiteBuilder {
         } else {
             await this.createSiteProject();
             await this.syncPublic();
+            this.watchPublic();
         }
         return this.siteProject;
     }
@@ -105,6 +107,7 @@ export class SiteBuilder {
         if (!this.docgeni.config.publicDir) {
             return;
         }
+
         const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
         if (toolkit.fs.existsSync(publicDirPath)) {
             const assetsPath = path.resolve(publicDirPath, `assets`);
@@ -118,5 +121,30 @@ export class SiteBuilder {
                 }
             }
         }
+    }
+
+    private watchPublic() {
+        const watchedPaths: string[] = [];
+        const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
+        if (toolkit.fs.existsSync(publicDirPath)) {
+            const assetsPath = path.resolve(publicDirPath, `assets`);
+            if (toolkit.fs.existsSync(assetsPath)) {
+                watchedPaths.push(assetsPath);
+            }
+
+            for (const copyFile of COPY_FILES) {
+                const fromPath = path.resolve(publicDirPath, copyFile.from);
+                if (toolkit.fs.existsSync(fromPath)) {
+                    watchedPaths.push(fromPath);
+                }
+            }
+        }
+
+        const watcher = chokidar.watch(watchedPaths, { ignoreInitial: true, interval: 1000 });
+        ['add', 'change'].forEach(eventName => {
+            watcher.on(eventName, async (event, filePath) => {
+                await this.syncPublic();
+            });
+        });
     }
 }
