@@ -5,125 +5,16 @@
   "description": "JSON Schema for `docgeni` config",
   "type": "object",
   "definitions": {
-    "DocItem": {
-      "required": [
-        "id",
-        "title",
-        "path"
-      ],
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "subtitle": {
-          "type": "string"
-        },
-        "summary": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "channel_path": {
-          "type": "string"
-        },
-        "contentPath": {
-          "type": "string"
-        },
-        "content": {
-          "type": "string"
-        },
-        "order": {
-          "type": "number"
-        },
-        "hidden": {
-          "type": "boolean"
-        },
-        "locales": {
-          "type": "object",
-          "description": "多语言",
-          "patternProperties": {
-            "^.*$": {
-              "type": "object",
-              "required": [
-                "title"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "ComponentDocItem": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/DocItem"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "examples": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "importSpecifier": {
-              "type": "string"
-            },
-            "overview": {
-              "type": "boolean"
-            },
-            "api": {
-              "type": "boolean"
-            },
-            "category": {
-              "type": "boolean"
-            }
-          }
-        }
-      ]
-    },
     "CategoryItem": {
       "required": [
         "title"
       ],
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "title": {
           "type": "string"
         },
         "subtitle": {
           "type": "string"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "#/definitions/DocItem"
-              },
-              {
-                "$ref": "#/definitions/ComponentDocItem"
-              }
-            ]
-          }
         },
         "locales": {
           "type": "object",
