@@ -139,10 +139,6 @@
         },
         "examplesDir": {
           "type": "string"
-        },
-        "absRootPath": {
-          "type": "string",
-          "description": "绝对路径"
         }
       },
       "required": [
