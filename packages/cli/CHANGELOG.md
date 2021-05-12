@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.2](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-12)
+
+
+### Features
+
+* **cli:** docgeni serve/build support ng serve/build command args ([#131](https://github.com/docgeni/docgeni/issues/131)) ([0fcfb48](https://github.com/docgeni/docgeni/commit/0fcfb489cbaea6cce79ba6387c26a167203efefa))
+
+
+
+
+
 # [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
 
 
