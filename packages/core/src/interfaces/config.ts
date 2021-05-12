@@ -1,4 +1,4 @@
-import { Library } from './library';
+import { Library, LibraryConfig } from './library';
 import { NavigationItem } from './navigation-item';
 import { Locale } from './locale';
 export interface HomeDocMeta {
@@ -37,8 +37,6 @@ export interface DocgeniNavItem {
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
     title?: string;
-    /** Heading of documentation, e.g: Doc Generator, default is same as title */
-    // heading?: string;
     /* Description of documentation */
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
@@ -62,13 +60,9 @@ export interface DocgeniConfig {
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
     /* Angular libraries */
-    libs?: Library[];
+    libs?: LibraryConfig[];
     /* Navigations for menu and nav */
     navs?: DocgeniNavItem[];
-    // /** 覆盖自动生成的导航 */
-    // navsCover?: boolean;
-    // /* In silent mode, log messages aren't logged in the console */
-    // silent?: boolean;
     /** Locales */
     locales?: Locale[];
     /** Default locale */
@@ -99,5 +93,6 @@ export interface DocgeniSiteConfig {
     homeMeta?: HomeDocMeta;
     /** Locales */
     locales?: Locale[];
+    /** Default locale */
     defaultLocale?: string;
 }
