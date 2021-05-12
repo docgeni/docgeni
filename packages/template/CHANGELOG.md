@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.2](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-12)
+
+
+### Bug Fixes
+
+* **template:** fix toc href when has baseHref ([0121ae9](https://github.com/docgeni/docgeni/commit/0121ae9a809afc85eb3fc6fcfc769a6948f94404))
+* **template:** set data-level according to highestLevel ([ecc5583](https://github.com/docgeni/docgeni/commit/ecc5583a164ac65f6ccb1730591e4ecee3e0e32c))
+
+
+
+
+
 # [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
 
 
