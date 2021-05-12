@@ -1,4 +1,4 @@
-import { Library, LibraryConfig } from './library';
+import { DocgeniLibrary } from './library';
 import { NavigationItem } from './navigation-item';
 import { Locale } from './locale';
 export interface HomeDocMeta {
@@ -60,7 +60,7 @@ export interface DocgeniConfig {
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
     /* Angular libraries */
-    libs?: LibraryConfig[];
+    libs?: DocgeniLibrary[];
     /* Navigations for menu and nav */
     navs?: DocgeniNavItem[];
     /** Locales */
