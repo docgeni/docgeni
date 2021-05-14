@@ -1,15 +1,231 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "https://github.com/docgeni/docgeni/blob/master/packages/cli/ng-package.schema.json",
+  "id": "DocgeniConfig",
   "title": "DocgeniConfig",
   "description": "JSON Schema for `docgeni` config",
   "type": "object",
+  "definitions": {
+    "DocgeniNavItem": {
+      "type": "object",
+      "required": [
+        "title",
+        "path"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title for nav item"
+        },
+        "path": {
+          "type": "string",
+          "description": "Route path for nav item"
+        },
+        "isExternal": {
+          "type": "boolean",
+          "description": "Whether is external link"
+        },
+        "lib": {
+          "type": "string",
+          "description": "Lib name for libs"
+        },
+        "locales": {
+          "type": "object",
+          "description": "Locales",
+          "patternProperties": {
+            "^.*$": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Locale": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "DocgeniLibrary": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "abbrName": {
+          "type": "string"
+        },
+        "rootDir": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "locales": {
+                "type": "object",
+                "patternProperties": {
+                  "^.*$": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "include": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "exclude": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "docDir": {
+          "type": "string"
+        },
+        "apiDir": {
+          "type": "string"
+        },
+        "examplesDir": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "rootDir"
+      ]
+    }
+  },
   "properties": {
     "$schema": {
       "type": "string"
     },
-    "output": {
-      "type": "string"
+    "title:": {
+      "type": "string",
+      "description": "Title of documentation, e.g: Docgeni"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of documentation"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "full",
+        "lite"
+      ],
+      "description": "Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "default",
+        "angular"
+      ],
+      "description": "Theme, angular navbar style and default style"
+    },
+    "baseHref": {
+      "type": "string",
+      "description": "Base href of documentation, default is /"
+    },
+    "logoUrl": {
+      "type": "string",
+      "description": "Logo url"
+    },
+    "publicDir": {
+      "type": "string",
+      "description": "Public dir, default is .docgeni/public"
+    },
+    "repoUrl": {
+      "type": "string",
+      "description": "Repo url"
+    },
+    "docsDir": {
+      "type": "string",
+      "description": "Docs dir, default is 'docs'"
+    },
+    "siteDir": {
+      "type": "string",
+      "description": "Site default dir .docgeni"
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Site output dir, default is dist/docgeni-site"
+    },
+    "siteProjectName": {
+      "type": "string",
+      "description": "Angular demo site name in angular.json"
+    },
+    "libs": {
+      "type": "array",
+      "description": "Angular libraries",
+      "items": {
+        "$ref": "#/definitions/DocgeniLibrary"
+      }
+    },
+    "navs": {
+      "type": "array",
+      "description": "Navigations for menu and nav",
+      "items": {
+        "$ref": "#/definitions/DocgeniNavItem"
+      }
+    },
+    "locales": {
+      "type": "array",
+      "description": "Locales",
+      "items": {
+        "$ref": "#/definitions/Locale"
+      }
+    },
+    "defaultLocale": {
+      "type": "string",
+      "description": "Default locale"
     }
   }
 }
