@@ -5,35 +5,6 @@
   "description": "JSON Schema for `docgeni` config",
   "type": "object",
   "definitions": {
-    "CategoryItem": {
-      "required": [
-        "title"
-      ],
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "subtitle": {
-          "type": "string"
-        },
-        "locales": {
-          "type": "object",
-          "patternProperties": {
-            "^.*$": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "subtitle": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "DocgeniNavItem": {
       "type": "object",
       "required": [
@@ -87,7 +58,7 @@
         }
       }
     },
-    "Library": {
+    "DocgeniLibrary": {
       "type": "object",
       "properties": {
         "name": {
@@ -102,7 +73,31 @@
         "categories": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/CategoryItem"
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "locales": {
+                "type": "object",
+                "patternProperties": {
+                  "^.*$": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "include": {
@@ -211,7 +206,7 @@
       "type": "array",
       "description": "Angular libraries",
       "items": {
-        "$ref": "#/definitions/Library"
+        "$ref": "#/definitions/DocgeniLibrary"
       }
     },
     "navs": {
