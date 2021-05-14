@@ -1,7 +1,7 @@
 ---
 title: Introduce
 path: ''
-order: 1
+order: 10
 ---
 
 # What is Docgeni？

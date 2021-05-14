@@ -1,12 +1,12 @@
-import { Component, OnInit, NgModuleFactory, Type, OnDestroy, HostBinding, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalContext, NavigationService } from '../../services/public-api';
-import { Subject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DocItem, NavigationItem } from '../../interfaces/public-api';
+import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
+import { GlobalContext, NavigationService } from '../../services/public-api';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
+
 @Component({
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html'

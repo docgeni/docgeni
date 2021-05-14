@@ -1,4 +1,4 @@
-import { Library } from './library';
+import { DocgeniLibrary } from './library';
 import { NavigationItem } from './navigation-item';
 import { Locale } from './locale';
 export interface HomeDocMeta {
@@ -17,11 +17,26 @@ export interface HomeDocMeta {
 }
 
 export type DocgeniMode = 'full' | 'lite';
+
+export interface DocgeniNavItem {
+    /** Title for nav item */
+    title: string;
+    /** Route path for nav item */
+    path: string;
+    /** Whether is external link */
+    isExternal?: boolean;
+    /** Lib name for libs */
+    lib?: string;
+    /** Locales */
+    locales?: {
+        [key: string]: {
+            title: string;
+        };
+    };
+}
 export interface DocgeniConfig {
     /* Title of documentation, e.g: Docgeni */
-    title: string;
-    /** Heading of documentation, e.g: Doc Generator, default is same as title */
-    heading?: string;
+    title?: string;
     /* Description of documentation */
     description?: string;
     /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
@@ -30,28 +45,24 @@ export interface DocgeniConfig {
     theme?: 'default' | 'angular';
     /* Base href of documentation, default is / */
     baseHref?: string;
-    /* Heads of documentation*/
-    heads?: [];
     /* Logo url*/
     logoUrl?: string;
+    /* Public dir, default is .docgeni/public */
+    publicDir?: string;
     /* Repo url*/
     repoUrl?: string;
     /* Docs dir, default is 'docs' */
-    docsDir: string;
+    docsDir?: string;
     /** Site default dir .docgeni */
     siteDir?: string;
-    /* Site output dir, default is .docgeni */
-    output?: string;
+    /* Site output dir, default is dist/docgeni-site */
+    outputDir?: string;
     /* Angular demo site name in angular.json */
     siteProjectName?: string;
-    /* Components library folder */
-    libs?: Library[];
+    /* Angular libraries */
+    libs?: DocgeniLibrary[];
     /* Navigations for menu and nav */
-    navs?: NavigationItem[];
-    /** 覆盖自动生成的导航 */
-    navsCover?: boolean;
-    /* In silent mode, log messages aren't logged in the console */
-    silent?: boolean;
+    navs?: DocgeniNavItem[];
     /** Locales */
     locales?: Locale[];
     /** Default locale */
@@ -80,12 +91,8 @@ export interface DocgeniSiteConfig {
     repoUrl?: string;
     /** Home meta */
     homeMeta?: HomeDocMeta;
-    /* Navigations for menu and nav */
-    navs: NavigationItem[];
-    // navs?: {
-    //     [key: string]: NavigationItem[];
-    // };
     /** Locales */
     locales?: Locale[];
+    /** Default locale */
     defaultLocale?: string;
 }
