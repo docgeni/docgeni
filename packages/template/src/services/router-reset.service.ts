@@ -90,7 +90,7 @@ export class RouterResetService {
                           component: DocViewerComponent
                       };
 
-                const channelRoute = channelPathToRoutes[docItem.channel_path];
+                const channelRoute = channelPathToRoutes[docItem.channelPath];
                 if (channelRoute) {
                     // remove chanel home when has route path is ''
                     if (route.path === '' && channelRoute.children.includes(channelPathToHomeRoutes[channelRoute.path])) {

@@ -43,24 +43,21 @@ export class NavigationService {
     }
 
     getDocItemByPath(path: string) {
-        return this.docItems.find(docItem => {
-            return docItem.path === path;
-        });
+        if (this.channel) {
+            return this.docItems.find(docItem => {
+                return docItem.path === path && docItem.channelPath === this.channel.path;
+            });
+        } else {
+            return this.docItems.find(docItem => {
+                return docItem.path === path;
+            });
+        }
     }
 
     selectChannelByPath(path: string) {
-        const channel = this.navs.find(nav => {
-            return nav.path === path;
-        });
+        const channel = this.getChannel(path);
         this.channel$.next(channel);
         return channel;
-    }
-
-    getDocItemInChannel(path: string): DocItem {
-        if (!this.channel || !this.channel.items) {
-            return null;
-        }
-        return this.getDocItemByPath(path);
     }
 
     selectDocItem(path: string) {
