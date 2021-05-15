@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.3](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-05-15)
+
+
+### Bug Fixes
+
+* **core:** should export configurable properties for lib ([b504b1d](https://github.com/docgeni/docgeni/commit/b504b1dda971cc41db67f8a74fe4bce8130253bd))
+* **template:** remove footer ([b52a4c1](https://github.com/docgeni/docgeni/commit/b52a4c1546fa604fe54630acc396cf8f41b68e1c))
+* **template:** should get corrent content when there are two same paths in different channels #OSP-99 ([#144](https://github.com/docgeni/docgeni/issues/144)) ([597d060](https://github.com/docgeni/docgeni/commit/597d0600d7ba1545bb51081e6653b2a7f8809b5d)), closes [#OSP-99](https://github.com/docgeni/docgeni/issues/OSP-99)
+
+
+
+
+
 # [1.0.0-beta.2](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-12)
 
 
