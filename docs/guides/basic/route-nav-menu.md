@@ -19,19 +19,16 @@ order: 20
 {
   "id": "guides",
   "path": "guides",
-  "channel_path": "guides",
   "title": "指南",
   "items": [
     {
       "id": "intro",
       "path": "guides/intro",
-      "channel_path": "guides",
       "title": "介绍",
       "items": [
         {
           "id": "getting-started",
           "path": "guides/getting-started",
-          "channel_path": "guides/intro",
           "title": "快速开始",
           "contentPath": "/docs/guides/intro/getting-started.html"
         },
