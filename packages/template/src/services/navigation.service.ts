@@ -44,9 +44,16 @@ export class NavigationService {
 
     getDocItemByPath(path: string) {
         if (this.channel) {
-            return this.docItems.find(docItem => {
-                return docItem.path === path && docItem.channelPath === this.channel.path;
-            });
+            // 类库频道
+            if (this.channel.lib) {
+                return this.docItems.find(docItem => {
+                    return docItem.path === path && !!docItem.importSpecifier;
+                });
+            } else {
+                return this.docItems.find(docItem => {
+                    return docItem.path === path && docItem.channelPath === this.channel.path;
+                });
+            }
         } else {
             return this.docItems.find(docItem => {
                 return docItem.path === path;
