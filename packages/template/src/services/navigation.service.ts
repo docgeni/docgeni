@@ -30,7 +30,7 @@ export class NavigationService {
         return this.global.docItems;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private global: GlobalContext) {}
+    constructor(private global: GlobalContext) {}
 
     getChannels(): ChannelItem[] {
         return this.navs as ChannelItem[];
@@ -114,16 +114,8 @@ export class NavigationService {
         this.showSidebar = !this.showSidebar;
     }
 
-    private isPathEqual(path1: string, path2: string) {
-        if (!path1 && !path2) {
-            return true;
-        } else {
-            return path1 === path2;
-        }
-    }
-
     private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {
-        return category['items'];
+        return (category as any).items;
     }
 
     private isDocItem(item: any): item is DocItem {

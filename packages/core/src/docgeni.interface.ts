@@ -1,3 +1,4 @@
+import { DocgeniHost } from './docgeni-host';
 import { DocsBuilder } from './builders/docs-builder';
 import { DocgeniConfig } from './interfaces';
 import { SyncHook } from 'tapable';
@@ -26,6 +27,7 @@ export interface DocgeniContext {
     readonly librariesBuilders: LibrariesBuilder;
     readonly docsBuilder: DocsBuilder;
     readonly fs: virtualFs.Host;
+    readonly host: DocgeniHost;
 }
 export interface DocgeniOptions {
     cwd?: string;
@@ -34,4 +36,5 @@ export interface DocgeniOptions {
     plugins?: string[];
     config?: DocgeniConfig;
     cmdArgs?: AngularCommandOptions;
+    host?: DocgeniHost;
 }
