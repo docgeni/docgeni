@@ -28,7 +28,7 @@ export class GlobalContext {
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
         const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
-        const mode = window.localStorage.getItem(DOCGENI_MODE_KEY);
+        const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (cacheLocale) {
             const isSupport = config.locales.find(item => {
                 return item.key === cacheLocale;
@@ -37,9 +37,10 @@ export class GlobalContext {
                 this.locale = cacheLocale;
             }
         }
-        if (mode && ['lite', 'full'].includes(mode)) {
-            config.mode = mode as DocgeniMode;
+        if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
+            config.mode = cacheMode as DocgeniMode;
         }
+        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
     }
 
     setLocale(locale: string) {
@@ -47,10 +48,13 @@ export class GlobalContext {
         window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
     }
 
+    getNowTimestamp() {
+        return new Date().getTime();
+    }
+
     initialize() {
-        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
         return new Promise((resolve, reject) => {
-            this.http.get(`assets/content/navigations-${this.locale}.json?t=${new Date().getTime()}`).subscribe({
+            this.http.get(`assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`).subscribe({
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[] }) => {
                     this.navs = response.navs;
                     this.docItems = response.docs;
