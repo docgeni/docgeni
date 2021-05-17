@@ -60,7 +60,7 @@ export function isEntryDoc(name: string) {
 
 export function highlight(sourceCode: string, lang: string) {
     const language = Prism.languages[lang] || Prism.languages.autoit;
-    return Prism.highlight(sourceCode, language);
+    return `<div>${Prism.highlight(sourceCode, language)}</div>`;
 }
 
 export function ascendingSortByOrder<T extends { order?: number }>(items: T[]) {
