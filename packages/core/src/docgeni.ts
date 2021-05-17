@@ -1,3 +1,4 @@
+import { createDocgeniHost, DocgeniHost } from './docgeni-host';
 import { virtualFs, normalize } from '@angular-devkit/core';
 import { NodeJsSyncHost } from '@angular-devkit/core/node';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
@@ -11,7 +12,6 @@ import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
-import * as semver from 'semver';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
 
@@ -25,6 +25,7 @@ export class Docgeni implements DocgeniContext {
     public librariesBuilders: LibrariesBuilder;
     public navsBuilder: NavsBuilder;
     public fs: virtualFs.Host;
+    public host: DocgeniHost;
     private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
@@ -60,6 +61,7 @@ export class Docgeni implements DocgeniContext {
         this.watch = options.watch || false;
         this.presets = options.presets || [];
         this.fs = new virtualFs.ScopedHost(new NodeJsSyncHost(), normalize(this.paths.cwd));
+        this.host = options.host || createDocgeniHost(this.fs);
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
@@ -74,10 +76,7 @@ export class Docgeni implements DocgeniContext {
             await this.verifyConfig();
             const detector = new Detector(this);
             await detector.detect();
-            if (this.config.siteProjectName && !detector.siteProject) {
-                throw new ValidationError(`site project name(${this.config.siteProjectName}) is not exists`);
-            }
-            this.enableIvy = detector.ngVersion ? semver.gte(detector.ngVersion, '9.0.0') : true;
+            this.enableIvy = detector.enableIvy;
             const siteBuilder = new SiteBuilder(this);
             const siteProject = await siteBuilder.build(detector.siteProject);
             this.ngCommander = new AngularCommander(this, siteProject);
@@ -126,6 +125,7 @@ export class Docgeni implements DocgeniContext {
             } else {
                 this.logger.error(error);
             }
+            throw error;
             process.exit(0);
         }
     }
@@ -141,16 +141,44 @@ export class Docgeni implements DocgeniContext {
         });
     }
 
-    private async verifyConfig() {
-        if (this.config.docsDir && !toolkit.fs.existsSync(this.config.docsDir)) {
-            throw new ValidationError(`docs folder(${this.config.docsDir}) has not exists`);
+    public async verifyConfig() {
+        if (!['full', 'lite'].includes(this.config.mode)) {
+            throw new ValidationError(`mode must be full or lite, current is ${this.config.mode}`);
+        }
+
+        if (this.config.docsDir && !(await this.host.pathExists(this.config.docsDir))) {
+            throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists`);
+        }
+
+        const defaultLocaleObj = this.config.locales.find(item => {
+            return item.key === this.config.defaultLocale;
+        });
+        if (!defaultLocaleObj) {
+            throw new ValidationError(`default locale(${this.config.defaultLocale}) is not in locales`);
         }
     }
 
     private normalizeConfig(inputConfig: DocgeniConfig) {
         const config = { ...DEFAULT_CONFIG, ...inputConfig };
+        config.defaultLocale = config.defaultLocale || DEFAULT_CONFIG.defaultLocale;
+        config.mode = config.mode || DEFAULT_CONFIG.mode;
+        config.theme = config.theme || DEFAULT_CONFIG.theme;
+
+        // set locales from defaultLocale
+        if (!config.locales || toolkit.utils.isEmpty(config.locales)) {
+            config.locales = [
+                {
+                    name: config.defaultLocale,
+                    key: config.defaultLocale
+                }
+            ];
+        }
         if (!config.libs) {
             config.libs = [];
+        }
+
+        if (!config.navs) {
+            config.navs = [];
         }
         return config;
     }
