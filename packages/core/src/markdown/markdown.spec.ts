@@ -1,5 +1,5 @@
 import { Markdown } from './markdown';
-fdescribe('markdown', () => {
+describe('markdown', () => {
     const data = ['```bash', 'ng add alib', '```'].join('\n');
     it('run', () => {
         const result = Markdown.toHTML(data);
