@@ -82,7 +82,8 @@ export class LibComponent {
                     base: this.docgeni.paths.cwd,
                     path: absDocPath,
                     type: DocType.component,
-                    locale: locale.key
+                    locale: locale.key,
+                    event: 'add'
                 });
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;

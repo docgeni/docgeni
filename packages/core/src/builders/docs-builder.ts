@@ -1,6 +1,6 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocSourceFile } from './doc-file';
+import { DocSourceFile, DocSourceFileOptions } from './doc-file';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Locale } from '../interfaces';
@@ -99,7 +99,7 @@ export class DocsBuilder {
         });
         // build all doc files
         for (const filepath of allFiles) {
-            const docFile = this.createDocSourceFile(locale, filepath);
+            const docFile = this.createDocSourceFile(locale, filepath, 'add');
             this.docFiles.set(docFile.path, docFile);
             await this.buildDoc(docFile);
         }
@@ -113,15 +113,21 @@ export class DocsBuilder {
             ignored: ignoreGlobs
         });
         this.watchers.push(watcher);
-        ['add', 'change'].forEach(eventName => {
+        ['add', 'change', 'unlink'].forEach(eventName => {
             watcher.on(eventName, async (filePath: string) => {
                 this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
                 // watch filePath is relative path
                 const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath);
-                let docFile = this.docFiles.get(absFilePath);
-                if (!docFile) {
-                    docFile = this.createDocSourceFile(locale, absFilePath);
-                    this.docFiles.set(docFile.path, docFile);
+                let docFile: DocSourceFile;
+                if (eventName === 'unlink') {
+                    this.docFiles.delete(absFilePath);
+                    docFile = this.createDocSourceFile(locale, absFilePath, eventName);
+                } else {
+                    docFile = this.docFiles.get(absFilePath);
+                    if (!docFile) {
+                        docFile = this.createDocSourceFile(locale, absFilePath, eventName as any);
+                        this.docFiles.set(docFile.path, docFile);
+                    }
                 }
                 await this.buildDoc(docFile);
                 this.hooks.buildDocsSucceed.call(this);
@@ -129,12 +135,13 @@ export class DocsBuilder {
         });
     }
 
-    private createDocSourceFile(locale: Locale, absFilePath: string) {
+    private createDocSourceFile(locale: Locale, absFilePath: string, event: DocSourceFileOptions['event']) {
         return new DocSourceFile({
             locale: locale.key,
             cwd: this.docgeni.paths.cwd,
             base: this.docgeni.paths.cwd,
-            path: absFilePath
+            path: absFilePath,
+            event
         });
     }
 }

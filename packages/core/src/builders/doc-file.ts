@@ -5,6 +5,7 @@ import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 
 export interface DocSourceFileOptions {
+    event: 'add' | 'change' | 'unlink';
     cwd: string;
     base: string;
     path: string;
@@ -23,6 +24,7 @@ export class DocSourceFile {
     public meta?: DocMeta;
     public output: string;
     public outputPath?: string;
+    public event: DocSourceFileOptions['event'];
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -70,6 +72,7 @@ export class DocSourceFile {
         this.path = options.path;
         this.locale = options.locale;
         this.type = options.type || DocType.general;
+        this.event = options.event;
     }
 
     private async read(): Promise<string> {
@@ -78,6 +81,9 @@ export class DocSourceFile {
     }
 
     public async build() {
+        if (this.event === 'unlink') {
+            return;
+        }
         this.emitted = false;
         const content = await this.read();
         const result = Markdown.parse<DocMeta>(content);
@@ -86,10 +92,15 @@ export class DocSourceFile {
     }
 
     public async emit(destRootPath: string) {
+        const outputPath = this.getOutputPath(destRootPath);
+        if (this.event === 'unlink') {
+            toolkit.fs.removeSync(outputPath);
+            this.emitted = true;
+            return;
+        }
         if (this.emitted) {
             return;
         }
-        const outputPath = this.getOutputPath(destRootPath);
         await toolkit.fs.ensureWriteFile(outputPath, this.output);
         this.emitted = true;
     }
