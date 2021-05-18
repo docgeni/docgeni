@@ -4,14 +4,14 @@
 module.exports = {
     mode: 'full',
     title: 'Full Mode',
-    description: '',
+    description: 'A documentation generator for Angular',
     docsDir: 'docs',
     navs: [
         null,
         {
             title: '组件',
             path: 'components',
-            lib: 'lib',
+            lib: 'alib',
             locales: {
                 'en-us': {
                     title: 'Components'
@@ -26,8 +26,8 @@ module.exports = {
     ],
     libs: [
         {
-            name: 'lib',
-            rootDir: './src/examples',
+            name: 'alib',
+            rootDir: './src',
             exclude: '',
             categories: [
                 {
@@ -50,5 +50,16 @@ module.exports = {
                 }
             ]
         }
-    ]
+    ],
+    locales: [
+        {
+            key: 'zh-cn',
+            name: 'ZH-CN'
+        },
+        {
+            key: 'en-us',
+            name: 'EN'
+        }
+    ],
+    defaultLocale: 'en-us'
 };

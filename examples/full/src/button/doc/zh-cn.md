@@ -1,5 +1,4 @@
 ---
-category: general
 title: 按钮
 subtitle: Button
 order: 2
