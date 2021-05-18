@@ -3,6 +3,7 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from '../types';
 import Handlebars from 'handlebars';
+import { ValidationError } from '../errors';
 interface CopyFile {
     from: string;
     to: string;
@@ -71,6 +72,9 @@ export class SiteBuilder {
     private async addTsconfigPaths() {
         const getLibraryName = (rootDir: string) => {
             const packageJsonPath = path.join(this.docgeni.paths.cwd, rootDir, 'package.json');
+            if (!toolkit.fs.existsSync(packageJsonPath)) {
+                throw new ValidationError(`no package.json found in ${path.join(this.docgeni.paths.cwd, rootDir)}`);
+            }
             const packageJson = toolkit.fs.readJsonSync(packageJsonPath);
             return packageJson.name;
         };
