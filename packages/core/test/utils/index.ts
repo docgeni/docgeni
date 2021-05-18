@@ -13,9 +13,9 @@ export async function expectThrowAsync(method: any, errorMessage: string | Error
     if (toolkit.utils.isString(errorMessage)) {
         expect(error).to.be.an('Error');
         if (errorMessage) {
-            expect(error.message).to.equal(errorMessage);
+            expect(error.message).to.equal(errorMessage, `${error.stack}`);
         }
     } else {
-        expect(error.message).to.equal(errorMessage.message);
+        expect(error.message).to.equal(errorMessage.message, `${error.stack}`);
     }
 }

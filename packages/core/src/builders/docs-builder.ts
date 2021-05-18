@@ -1,10 +1,10 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocSourceFile } from './doc-file';
-import * as path from 'path';
+import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Locale } from '../interfaces';
-import * as chokidar from 'chokidar';
+import chokidar from 'chokidar';
 
 export class DocsBuilder {
     private docFiles = new Map<string, DocSourceFile>();
@@ -49,6 +49,10 @@ export class DocsBuilder {
         this.watchers = [];
         delete this.docFiles;
         this.docFiles = new Map<string, DocSourceFile>();
+    }
+
+    public getDocs(): DocSourceFile[] {
+        return Array.from(this.docFiles.values());
     }
 
     public watch() {

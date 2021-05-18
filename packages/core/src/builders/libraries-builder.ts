@@ -1,5 +1,6 @@
+import { ValidationError } from './../errors/validation-error';
 import { DocgeniContext } from '../docgeni.interface';
-import { Library, LiveExample } from '../interfaces';
+import { DocgeniLibrary, Library, LiveExample } from '../interfaces';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
@@ -7,6 +8,7 @@ import { LibraryBuilder } from './library-builder';
 import { DEFAULT_COMPONENT_API_DIR, DEFAULT_COMPONENT_DOC_DIR, DEFAULT_COMPONENT_EXAMPLES_DIR } from '../constants';
 import * as chokidar from 'chokidar';
 import { LibComponent } from './library-component';
+import { normalizeLibConfig } from './normalize';
 
 export class LibrariesBuilder {
     private libraryBuilders: LibraryBuilder[];
@@ -28,12 +30,55 @@ export class LibrariesBuilder {
         buildLibrariesSucceed: new SyncHook<LibrariesBuilder>(['librariesBuilder'])
     };
 
-    constructor(private docgeni: DocgeniContext) {
-        this.absDestSiteContentPath = docgeni.paths.absSiteContentPath;
-        this.libraryBuilders = this.config.libs.map(lib => {
-            this.normalizeLibConfig(lib);
-            return new LibraryBuilder(docgeni, lib);
+    constructor(private docgeni: DocgeniContext) {}
+
+    /**
+     * Initialize libs, normalize and validate lib config
+     */
+    public async initialize() {
+        this.absDestSiteContentPath = this.docgeni.paths.absSiteContentPath;
+        const normalizedConfigs = this.config.libs.map(lib => {
+            const result = normalizeLibConfig(lib);
+            result.absRootPath = path.resolve(this.docgeni.paths.cwd, result.rootDir);
+            return result;
         });
+        for (const normalizedConfig of normalizedConfigs) {
+            await this.verifyLibConfig(normalizedConfig);
+        }
+        this.libraryBuilders = normalizedConfigs.map(normalizedConfig => {
+            return new LibraryBuilder(this.docgeni, normalizedConfig);
+        });
+    }
+
+    private async verifyLibConfig(lib: DocgeniLibrary): Promise<void> {
+        if (!lib.name) {
+            throw new ValidationError(`lib's name is required`);
+        }
+        if (!lib.rootDir) {
+            throw new ValidationError(`${lib.name} lib's rootDir is required`);
+        }
+
+        const allCategoriesIds: string[] = [];
+        for (const category of lib.categories) {
+            if (!category.id) {
+                throw new ValidationError(`${lib.name} lib's category id is required`);
+            }
+            if (!category.title) {
+                throw new ValidationError(`${lib.name} lib's category title is required`);
+            }
+            allCategoriesIds.push(category.id);
+        }
+
+        const duplicateId = allCategoriesIds.find((item, index) => {
+            return allCategoriesIds.indexOf(item) !== index;
+        });
+        if (duplicateId) {
+            throw new ValidationError(`${lib.name} lib's category id(${duplicateId}) duplicate`);
+        }
+        const rootDirExists = await this.docgeni.host.pathExists(lib.rootDir);
+        if (!rootDirExists) {
+            throw new ValidationError(`${lib.name} lib's rootDir(${lib.rootDir}) has not exists`);
+        }
     }
 
     public async build() {
@@ -100,13 +145,6 @@ export class LibrariesBuilder {
                 this.hooks.buildLibrariesSucceed.call(this);
             }
         });
-    }
-
-    private normalizeLibConfig(lib: Library): void {
-        lib.docDir = lib.docDir || DEFAULT_COMPONENT_DOC_DIR;
-        lib.apiDir = lib.apiDir || DEFAULT_COMPONENT_API_DIR;
-        lib.examplesDir = lib.examplesDir || DEFAULT_COMPONENT_EXAMPLES_DIR;
-        lib.absRootPath = path.resolve(this.docgeni.paths.cwd, lib.rootDir);
     }
 
     private async emitAllEntries() {

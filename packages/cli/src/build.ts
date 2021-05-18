@@ -38,6 +38,6 @@ export const buildCommand: CommandModule = {
             config,
             cmdArgs: normalizeCommandArgsForAngular(config, ngBuildOptions)
         });
-        docgeni.run();
+        await docgeni.run();
     }
 };
