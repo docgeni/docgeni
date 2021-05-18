@@ -135,6 +135,7 @@ export class SiteBuilder {
     async watchPublic() {
         if (this.docgeni.watch) {
             const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
+
             if (await this.docgeni.host.pathExists(publicDirPath)) {
                 const assetsPath = resolve(normalize(this.docgeni.config.publicDir), normalize('assets'));
                 if (toolkit.fs.existsSync(assetsPath)) {
@@ -147,7 +148,7 @@ export class SiteBuilder {
                                     relative(normalize(publicDirPath), normalize(value.path))
                                 );
                                 if (value.type === virtualFs.HostWatchEventType.Deleted) {
-                                    this.docgeni.host.delete(publicFilePath).subscribe();
+                                    this.docgeni.host.delete(publicFilePath);
                                 } else {
                                     this.docgeni.host.copy(value.path, publicFilePath);
                                 }
@@ -166,7 +167,7 @@ export class SiteBuilder {
                             switchMap((value: virtualFs.HostWatchEvent) => {
                                 const publicFilePath = resolve(normalize(this.docgeni.config.siteDir), normalize(copyFile.to));
                                 if (value.type === virtualFs.HostWatchEventType.Deleted) {
-                                    this.docgeni.host.delete(publicFilePath).subscribe();
+                                    this.docgeni.host.delete(publicFilePath);
                                 } else {
                                     this.docgeni.host.copy(value.path, publicFilePath);
                                 }

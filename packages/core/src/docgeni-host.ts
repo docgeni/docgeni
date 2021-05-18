@@ -10,7 +10,7 @@ export interface DocgeniHost {
     isFile(path: string): Promise<boolean>;
     watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent>;
     copy(src: string, dest: string): Promise<void>;
-    delete(path: string): Observable<void>;
+    delete(path: string): Promise<void>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -49,8 +49,8 @@ export class DocgeniHostImpl implements DocgeniHost {
         return toolkit.fs.copy(src, dest);
     }
 
-    delete(path: string): Observable<void> {
-        return this.host.delete(normalize(path));
+    delete(path: string): Promise<void> {
+        return this.host.delete(normalize(path)).toPromise();
     }
 }
 
