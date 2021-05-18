@@ -3,7 +3,9 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from '../types';
 import Handlebars from 'handlebars';
-import * as chokidar from 'chokidar';
+import { normalize, relative, resolve, virtualFs } from '@angular-devkit/core';
+import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 interface CopyFile {
     from: string;
     to: string;
@@ -124,28 +126,52 @@ export class SiteBuilder {
         }
     }
 
-    private watchPublic() {
-        const watchedPaths: string[] = [];
-        const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
-        if (toolkit.fs.existsSync(publicDirPath)) {
-            const assetsPath = path.resolve(publicDirPath, `assets`);
-            if (toolkit.fs.existsSync(assetsPath)) {
-                watchedPaths.push(assetsPath);
-            }
+    async watchPublic() {
+        if (this.docgeni.watch) {
+            const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
+            if (await this.docgeni.host.pathExists(publicDirPath)) {
+                const assetsPath = resolve(normalize(this.docgeni.config.publicDir), normalize('assets'));
+                if (toolkit.fs.existsSync(assetsPath)) {
+                    this.docgeni.host
+                        .watch(normalize(assetsPath))
+                        .pipe(
+                            switchMap((value: virtualFs.HostWatchEvent) => {
+                                const publicFilePath = resolve(
+                                    normalize(this.siteProject.sourceRoot),
+                                    relative(normalize(publicDirPath), normalize(value.path))
+                                );
+                                if (value.type === virtualFs.HostWatchEventType.Deleted) {
+                                    this.docgeni.host.delete(publicFilePath).subscribe();
+                                } else {
+                                    this.docgeni.host.copy(value.path, publicFilePath);
+                                }
+                                return of(value);
+                            })
+                        )
+                        .subscribe();
+                }
 
-            for (const copyFile of COPY_FILES) {
-                const fromPath = path.resolve(publicDirPath, copyFile.from);
-                if (toolkit.fs.existsSync(fromPath)) {
-                    watchedPaths.push(fromPath);
+                for (const copyFile of COPY_FILES) {
+                    const fromPath = resolve(normalize(this.docgeni.config.publicDir), normalize(copyFile.from));
+
+                    console.log(copyFile.from);
+                    console.log(fromPath);
+                    this.docgeni.host
+                        .watch(normalize(fromPath))
+                        .pipe(
+                            switchMap((value: virtualFs.HostWatchEvent) => {
+                                const publicFilePath = resolve(normalize(this.docgeni.config.siteDir), normalize(copyFile.to));
+                                if (value.type === virtualFs.HostWatchEventType.Deleted) {
+                                    this.docgeni.host.delete(publicFilePath).subscribe();
+                                } else {
+                                    this.docgeni.host.copy(value.path, publicFilePath);
+                                }
+                                return of(value);
+                            })
+                        )
+                        .subscribe();
                 }
             }
         }
-
-        const watcher = chokidar.watch(watchedPaths, { ignoreInitial: true, interval: 1000 });
-        ['add', 'change'].forEach(eventName => {
-            watcher.on(eventName, async (event, filePath) => {
-                await this.syncPublic();
-            });
-        });
     }
 }

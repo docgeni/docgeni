@@ -1,5 +1,6 @@
 import { toolkit } from '@docgeni/toolkit';
 import { normalize, virtualFs } from '@angular-devkit/core';
+import { Observable } from 'rxjs';
 
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
@@ -7,8 +8,9 @@ export interface DocgeniHost {
     pathExists(path: string): Promise<boolean>;
     isDirectory(path: string): Promise<boolean>;
     isFile(path: string): Promise<boolean>;
-    watch(path: string, options?: virtualFs.HostWatchOptions): Promise<virtualFs.HostWatchEvent>;
+    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent>;
     copy(src: string, dest: string): Promise<void>;
+    delete(path: string): Observable<void>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -35,8 +37,8 @@ export class DocgeniHostImpl implements DocgeniHost {
         return this.host.isFile(normalize(path)).toPromise();
     }
 
-    async watch(path: string, options?: virtualFs.HostWatchOptions): Promise<virtualFs.HostWatchEvent> {
-        return this.host.watch(normalize(path), options).toPromise();
+    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent> {
+        return this.host.watch(normalize(path), options);
     }
 
     async stat(path: string) {
@@ -45,6 +47,10 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async copy(src: string, dest: string): Promise<void> {
         return toolkit.fs.copy(src, dest);
+    }
+
+    delete(path: string): Observable<void> {
+        return this.host.delete(normalize(path));
     }
 }
 
