@@ -64,12 +64,22 @@ export class LibraryBuilder {
     }
 
     public generateLocaleNavs(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
-        const channel: ChannelItem = rootNavs.find(nav => {
+        let channel: ChannelItem = rootNavs.find(nav => {
             return nav.lib === this.lib.name;
         });
         const categories: CategoryItem[] = JSON.parse(JSON.stringify(this.localeCategoriesMap[locale]));
         if (channel) {
             channel.items = categories;
+        } else {
+            // can't find channel from navs in config, generate a channel
+            channel = {
+                id: this.lib.name,
+                lib: this.lib.name,
+                path: this.lib.name,
+                title: toolkit.strings.titleCase(this.lib.name),
+                items: categories
+            };
+            // rootNavs.push(channel as NavigationItem);
         }
         const categoriesMap = toolkit.utils.keyBy(categories, 'id');
         const docItems: ComponentDocItem[] = [];

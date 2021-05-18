@@ -30,7 +30,7 @@ export class NavigationService {
         return this.global.docItems;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private global: GlobalContext) {}
+    constructor(private global: GlobalContext) {}
 
     getChannels(): ChannelItem[] {
         return this.navs as ChannelItem[];
@@ -43,24 +43,28 @@ export class NavigationService {
     }
 
     getDocItemByPath(path: string) {
-        return this.docItems.find(docItem => {
-            return docItem.path === path;
-        });
+        if (this.channel) {
+            // 类库频道
+            if (this.channel.lib) {
+                return this.docItems.find(docItem => {
+                    return docItem.path === path && !!docItem.importSpecifier;
+                });
+            } else {
+                return this.docItems.find(docItem => {
+                    return docItem.path === path && docItem.channelPath === this.channel.path;
+                });
+            }
+        } else {
+            return this.docItems.find(docItem => {
+                return docItem.path === path;
+            });
+        }
     }
 
     selectChannelByPath(path: string) {
-        const channel = this.navs.find(nav => {
-            return nav.path === path;
-        });
+        const channel = this.getChannel(path);
         this.channel$.next(channel);
         return channel;
-    }
-
-    getDocItemInChannel(path: string): DocItem {
-        if (!this.channel || !this.channel.items) {
-            return null;
-        }
-        return this.getDocItemByPath(path);
     }
 
     selectDocItem(path: string) {
@@ -110,16 +114,8 @@ export class NavigationService {
         this.showSidebar = !this.showSidebar;
     }
 
-    private isPathEqual(path1: string, path2: string) {
-        if (!path1 && !path2) {
-            return true;
-        } else {
-            return path1 === path2;
-        }
-    }
-
     private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {
-        return category['items'];
+        return (category as any).items;
     }
 
     private isDocItem(item: any): item is DocItem {

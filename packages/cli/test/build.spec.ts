@@ -51,19 +51,19 @@ describe('docgeni build', () => {
                 {
                     id: 'guide',
                     path: 'guide',
-                    channel_path: 'guide',
+                    channelPath: 'guide',
                     title: 'Guide',
                     items: [
                         {
                             id: 'guide/intro',
                             path: 'guide/intro',
-                            channel_path: 'guide',
+                            channelPath: 'guide',
                             title: 'Intro',
                             items: [
                                 {
                                     id: 'intro2',
                                     path: 'intro/intro2',
-                                    channel_path: 'guide',
+                                    channelPath: 'guide',
                                     title: 'Intro 2',
                                     order: 1,
                                     contentPath: 'docs/guide/intro/intro2.html'
@@ -71,7 +71,7 @@ describe('docgeni build', () => {
                                 {
                                     id: 'intro1',
                                     path: 'intro/intro1',
-                                    channel_path: 'guide',
+                                    channelPath: 'guide',
                                     title: 'Intro 1',
                                     order: 2,
                                     contentPath: 'docs/guide/intro/intro1.html'
@@ -82,7 +82,7 @@ describe('docgeni build', () => {
                         {
                             id: 'getting-started',
                             path: 'getting-started',
-                            channel_path: 'guide',
+                            channelPath: 'guide',
                             title: '快速开始',
                             order: 2,
                             contentPath: 'docs/guide/getting-started.html'
@@ -90,7 +90,7 @@ describe('docgeni build', () => {
                         {
                             id: 'installation',
                             path: 'installation',
-                            channel_path: 'guide',
+                            channelPath: 'guide',
                             title: '安装',
                             order: 2,
                             contentPath: 'docs/guide/installation.html'
@@ -103,7 +103,7 @@ describe('docgeni build', () => {
                 {
                     id: 'getting-started',
                     path: 'getting-started',
-                    channel_path: 'guide',
+                    channelPath: 'guide',
                     title: '快速开始',
                     order: 2,
                     contentPath: 'docs/guide/getting-started.html'
@@ -111,7 +111,7 @@ describe('docgeni build', () => {
                 {
                     id: 'installation',
                     path: 'installation',
-                    channel_path: 'guide',
+                    channelPath: 'guide',
                     title: '安装',
                     order: 2,
                     contentPath: 'docs/guide/installation.html'
@@ -119,7 +119,7 @@ describe('docgeni build', () => {
                 {
                     id: 'intro1',
                     path: 'intro/intro1',
-                    channel_path: 'guide',
+                    channelPath: 'guide',
                     title: 'Intro 1',
                     order: 2,
                     contentPath: 'docs/guide/intro/intro1.html'
@@ -127,7 +127,7 @@ describe('docgeni build', () => {
                 {
                     id: 'intro2',
                     path: 'intro/intro2',
-                    channel_path: 'guide',
+                    channelPath: 'guide',
                     title: 'Intro 2',
                     order: 1,
                     contentPath: 'docs/guide/intro/intro2.html'

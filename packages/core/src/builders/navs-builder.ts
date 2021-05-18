@@ -117,8 +117,8 @@ export class NavsBuilder {
 
                 if (this.docgeni.config.mode === 'full') {
                     docItems.forEach(docItem => {
-                        if (docItem.channel_path) {
-                            docItem.path = docItem.path.replace(docItem.channel_path + '/', '');
+                        if (docItem.channelPath) {
+                            docItem.path = docItem.path.replace(docItem.channelPath + '/', '');
                         }
                     });
                 }
@@ -147,7 +147,7 @@ export class NavsBuilder {
                 const navItem: NavigationItem = {
                     id: fullRoutePath,
                     path: fullRoutePath,
-                    channel_path: parentItem ? parentItem.channel_path : fullRoutePath,
+                    channelPath: parentItem ? parentItem.channelPath : fullRoutePath,
                     title: getDocTitle(entryFile && entryFile.meta.title, dirname),
                     subtitle: entryFile && entryFile.meta.subtitle,
                     hidden: entryFile && entryFile.meta.hidden,
@@ -182,7 +182,7 @@ export class NavsBuilder {
                 const docItem: NavigationItem = {
                     id: docFile.name,
                     path: fullRoutePath,
-                    channel_path: parentItem ? parentItem.channel_path : '',
+                    channelPath: parentItem ? parentItem.channelPath : '',
                     title: getDocTitle(docFile.meta.title, docFile.name),
                     subtitle: docFile.meta.subtitle,
                     order: toolkit.utils.isNumber(docFile.meta.order) ? docFile.meta.order : Number.MAX_SAFE_INTEGER,

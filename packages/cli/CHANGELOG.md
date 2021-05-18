@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.3](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-05-15)
+
+
+### Bug Fixes
+
+* **template:** should get corrent content when there are two same paths in different channels #OSP-99 ([#144](https://github.com/docgeni/docgeni/issues/144)) ([597d060](https://github.com/docgeni/docgeni/commit/597d0600d7ba1545bb51081e6653b2a7f8809b5d)), closes [#OSP-99](https://github.com/docgeni/docgeni/issues/OSP-99)
+
+
+### Features
+
+* **cli:** json-schema ([#138](https://github.com/docgeni/docgeni/issues/138)) ([dce686a](https://github.com/docgeni/docgeni/commit/dce686a215d3ebbcccf973c4aace58e6774fc5bb))
+
+
+
+
+
+# [1.0.0-beta.2](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-12)
+
+
+### Features
+
+* **cli:** docgeni serve/build support ng serve/build command args ([#131](https://github.com/docgeni/docgeni/issues/131)) ([0fcfb48](https://github.com/docgeni/docgeni/commit/0fcfb489cbaea6cce79ba6387c26a167203efefa))
+
+
+
+
+
 # [1.0.0-beta.1](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-04-01)
 
 

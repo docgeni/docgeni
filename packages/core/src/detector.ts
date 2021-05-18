@@ -2,11 +2,15 @@ import { DocgeniContext } from './docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from './types';
+import { ValidationError } from './errors';
+import semver from 'semver';
 
 export class Detector {
     ngVersion: string;
 
     siteProject: SiteProject;
+
+    enableIvy: boolean;
 
     constructor(private docgeni: DocgeniContext) {}
 
@@ -32,6 +36,12 @@ export class Detector {
                     this.siteProject = siteProject;
                 }
             }
+        }
+
+        this.enableIvy = this.ngVersion ? semver.gte(this.ngVersion, '9.0.0') : true;
+
+        if (this.docgeni.config.siteProjectName && !this.siteProject) {
+            throw new ValidationError(`site project name(${this.docgeni.config.siteProjectName}) is not exists`);
         }
     }
 }

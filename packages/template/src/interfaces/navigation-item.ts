@@ -1,10 +1,10 @@
 export interface DocItem {
     id: string;
     title: string;
-    subtitle: string;
+    subtitle?: string;
     summary?: string;
     path: string;
-    channel_path?: string;
+    channelPath?: string;
     contentPath?: string;
     content?: string;
     order?: number;

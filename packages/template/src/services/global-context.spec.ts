@@ -1,0 +1,154 @@
+import { DocgeniSiteConfig } from './../interfaces/config';
+import { CONFIG_TOKEN, GlobalContext } from './global-context';
+import { createServiceFactory, createHttpFactory, SpectatorHttp, HttpMethod } from '@ngneat/spectator';
+
+describe('GlobalContext', () => {
+    let spectator: SpectatorHttp<GlobalContext>;
+    const createService = createHttpFactory({
+        service: GlobalContext,
+        providers: [
+            {
+                provide: CONFIG_TOKEN,
+                useValue: {
+                    defaultLocale: 'zh-cn'
+                }
+            }
+        ],
+        entryComponents: [],
+        mocks: []
+    });
+
+    beforeEach(() => {
+        spectator = createService();
+    });
+
+    it('should create success', () => {
+        expect(spectator.service).toBeTruthy();
+    });
+
+    describe('local', () => {
+        it(`should set locale from defaultLocale in site config`, () => {
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn'
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.locale).toBe('zh-cn');
+        });
+
+        it(`should set locale from cache`, () => {
+            window.localStorage.setItem('docgeni-locale', 'en-us');
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    locales: [
+                        { key: 'zh-cn', name: '中文' },
+                        { key: 'en-us', name: '英文' }
+                    ]
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.locale).toBe('en-us');
+            window.localStorage.setItem('docgeni-locale', '');
+        });
+
+        it(`should use default locale when cache locale is not in locales`, () => {
+            window.localStorage.setItem('docgeni-locale', 'en-us');
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    locales: [{ key: 'zh-cn', name: '中文' }]
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.locale).toBe('zh-cn');
+            window.localStorage.setItem('docgeni-locale', '');
+        });
+    });
+
+    describe('mode', () => {
+        it(`should set mode from site config`, () => {
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    mode: 'full'
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.config.mode).toBe('full');
+            expect(document.documentElement.classList.contains(`dg-mode-full`));
+        });
+
+        it(`should set mode from cache`, () => {
+            window.localStorage.setItem('docgeni-mode', 'lite');
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    mode: 'full'
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.config.mode).toBe('lite');
+            expect(document.documentElement.classList.contains(`dg-mode-lite`));
+            window.localStorage.clear();
+        });
+    });
+
+    it('should get now timestamp success', () => {
+        const beforeTimestamp = new Date().getTime();
+        const expectedTimestamp = spectator.service.getNowTimestamp();
+        const afterTimestamp = new Date().getTime();
+        expect(expectedTimestamp >= beforeTimestamp).toBeTruthy();
+        expect(expectedTimestamp <= afterTimestamp).toBeTruthy();
+    });
+
+    it('should get navigations success', () => {
+        const mockNowTimestamp = new Date().getTime();
+        const getNowTimestampSyp = spyOn(spectator.service, 'getNowTimestamp');
+        getNowTimestampSyp.and.returnValue(mockNowTimestamp);
+        spectator.service.initialize().then(result => {});
+        const req = spectator.expectOne(`assets/content/navigations-zh-cn.json?t=${mockNowTimestamp}`, HttpMethod.GET);
+
+        const data = {
+            navs: [
+                {
+                    id: 'guide',
+                    path: 'guide',
+                    title: 'Guide',
+                    items: [
+                        {
+                            id: 'guides/intro',
+                            path: 'guides/intro',
+                            channelPath: 'guides',
+                            title: '介绍',
+                            items: [
+                                {
+                                    id: 'index',
+                                    path: 'intro',
+                                    channelPath: 'guides',
+                                    title: '介绍',
+                                    order: 10,
+                                    contentPath: 'docs/guides/intro/index.html'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            docs: [
+                {
+                    id: 'index',
+                    path: 'intro',
+                    channelPath: 'guides',
+                    title: '介绍',
+                    order: 10,
+                    contentPath: 'docs/guides/intro/index.html'
+                }
+            ]
+        };
+        req.flush(data);
+        expect(spectator.service.navs).toEqual(data.navs);
+        expect(spectator.service.docItems).toEqual(data.docs);
+    });
+});

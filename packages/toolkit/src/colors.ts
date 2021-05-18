@@ -1,5 +1,4 @@
-import * as chalk from 'chalk';
-
+import chalk from 'chalk';
 export class Colors {
     red(...text: unknown[]): string {
         return chalk.red(...text);

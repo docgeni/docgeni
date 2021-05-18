@@ -69,6 +69,7 @@ export class SiteBuilder {
             outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)
         });
     }
+
     private async addTsconfigPaths() {
         const getLibraryName = (rootDir: string) => {
             const packageJsonPath = path.join(this.docgeni.paths.cwd, rootDir, 'package.json');

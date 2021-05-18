@@ -47,6 +47,7 @@ describe('angular-args', () => {
             skipSite: undefined
         });
     });
+
     it('should support ng args', () => {
         const args = {
             verbose: true,
@@ -63,12 +64,12 @@ describe('angular-args', () => {
             aot: true
         });
     });
+
     it('should match with camelize', () => {
         const args = {
             'cross-origin': true
         };
         const result = normalizeCommandArgsForAngular(args, options);
-        console.log(result);
         expect(result).deep.eq({
             port: undefined,
             prod: undefined,

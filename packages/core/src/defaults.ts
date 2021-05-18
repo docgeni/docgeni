@@ -10,11 +10,6 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     siteDir: '.docgeni/site',
     outputDir: 'dist/docgeni-site',
     publicDir: '.docgeni/public',
-    locales: [
-        {
-            key: 'en-us',
-            name: 'EN'
-        }
-    ],
+    locales: [],
     defaultLocale: 'en-us'
 };
