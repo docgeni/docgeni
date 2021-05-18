@@ -42,33 +42,29 @@
 - [多语言](https://docgeni.org/guides/advance/locales)
 
 ## 谁在使用 Docgeni?
-
-<table>
-
+<table style="margin-top: 20px;">
   <tr>
-    <td width="240" align="center">
+    <td width="160" align="center" style="padding: 20px">
       <a target="_blank" href="https://pingcode.com?utm_source=github-docgeni">
-        <img src="https://cdn.pingcode.com/static/pc-charm/assets/images/logo.png?v=2.40.0" height="40"/>
+        <img src="https://cdn.worktile.com/static/portal/assets/images/logos/square.png" height="40"/>
         <br />
         <strong>PingCode</strong>
       </a>
     </td>
-    <td width="240" align="center">
+    <td width="160" align="center" style="padding: 20px">
        <a target="_blank" href="https://worktile.com?utm_source=github-docgeni">
-        <img src="https://cdn.worktile.com/static/charm/assets/images/logo-default.png" height="40"/>
+        <img src="https://cdn.worktile.com/static/charm/assets/images/team_logo.png" height="40"/>
         <br />
         <strong>Worktile</strong>
       </a>
     </td>
-    <td width="240" align="center">
+    <td width="160" align="center"  style="padding: 20px">
       <a target="_blank" href="https://github.com/worktile/ngx-planet">
         <img src="https://cdn.worktile.com/open-sources/ngx-tethys/logos/tethys.png" height="40" />
         <br />
         <strong>ngx-planet</strong>
       </a>
-    </td>
-    
-   
+    </td> 
   </tr>
 </table>
 

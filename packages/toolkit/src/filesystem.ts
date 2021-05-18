@@ -1,5 +1,5 @@
-import * as fsExtra from 'fs-extra';
-import * as nodePath from 'path';
+import fsExtra from 'fs-extra';
+import nodePath from 'path';
 import { WriteStream, ReadStream } from 'fs';
 import { matchGlob } from './utils';
 import glob from 'glob';

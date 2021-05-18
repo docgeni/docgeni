@@ -6,6 +6,7 @@ import Handlebars from 'handlebars';
 import { normalize, relative, resolve, virtualFs } from '@angular-devkit/core';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { ValidationError } from '../errors';
 interface CopyFile {
     from: string;
     to: string;
@@ -73,21 +74,26 @@ export class SiteBuilder {
     }
 
     private async addTsconfigPaths() {
-        const getLibraryName = (rootDir: string) => {
+        const getLibraryName = (rootDir: string, libName: string) => {
             const packageJsonPath = path.join(this.docgeni.paths.cwd, rootDir, 'package.json');
+            if (!toolkit.fs.existsSync(packageJsonPath)) {
+                throw new ValidationError(
+                    `Can't find package.json in ${libName} lib's rootDir(${rootDir}), please check the configuration of rootDir`
+                );
+            }
             const packageJson = toolkit.fs.readJsonSync(packageJsonPath);
             return packageJson.name;
         };
         const paths = (this.docgeni.config.libs || [])
             .map(item => [
                 {
-                    key: `${getLibraryName(item.rootDir)}/*`,
+                    key: `${getLibraryName(item.rootDir, item.name)}/*`,
                     value: new Handlebars.SafeString(
                         [`"${path.relative(this.siteProject.root, path.resolve(this.docgeni.paths.cwd, item.rootDir))}/*"`].join(',')
                     )
                 },
                 {
-                    key: `${getLibraryName(item.rootDir)}`,
+                    key: `${getLibraryName(item.rootDir, item.name)}`,
                     value: new Handlebars.SafeString(
                         [
                             `"${path.relative(this.siteProject.root, path.resolve(this.docgeni.paths.cwd, item.rootDir))}/index.ts"`,

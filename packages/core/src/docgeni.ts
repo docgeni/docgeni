@@ -4,7 +4,7 @@ import { NodeJsAsyncHost } from '@angular-devkit/core/node';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
-import * as path from 'path';
+import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
 import { DocgeniContext, DocgeniHooks, DocgeniOptions } from './docgeni.interface';
@@ -85,6 +85,7 @@ export class Docgeni implements DocgeniContext {
             this.hooks.run.call();
 
             this.librariesBuilders = new LibrariesBuilder(this);
+            await this.librariesBuilders.initialize();
             this.docsBuilder = new DocsBuilder(this);
             this.navsBuilder = new NavsBuilder(this);
 
@@ -99,7 +100,9 @@ export class Docgeni implements DocgeniContext {
 
             this.docsBuilder.hooks.buildDocsSucceed.tap('EmitDocs', async docsBuilder => {
                 await docsBuilder.emit();
+                this.logger.succuss(`Docs: emit successfully, total: ${docsBuilder.getDocs().length}`);
             });
+            this.logger.info('Start building docs');
             await this.docsBuilder.build();
 
             this.librariesBuilders.hooks.buildLibrariesSucceed.tap('EmitLibs', async librariesBuilders => {
@@ -122,11 +125,10 @@ export class Docgeni implements DocgeniContext {
             }
         } catch (error) {
             if (error instanceof ValidationError) {
-                this.logger.error(error.message);
+                this.logger.error(`Validate Error: ${error.message}`);
             } else {
-                this.logger.error(error);
+                throw error;
             }
-            throw error;
             process.exit(0);
         }
     }

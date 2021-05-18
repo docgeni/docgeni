@@ -1,6 +1,7 @@
 import { timestamp } from './timestamp';
-import * as path from 'path';
+import path from 'path';
 import minimatch from 'minimatch';
+import _ from 'lodash';
 
 export function isString(value: any): value is string {
     return typeof value === 'string';
@@ -63,6 +64,22 @@ export function matchGlob(target: string, pattern: string | string[], options?: 
 
 export function coerceArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
+}
+
+export function random(lower: number = 0, upper: number = 1, floating: boolean = false): number {
+    return _.random(lower, upper, floating);
+}
+
+export function sample<T>(collection: T[]): T {
+    return _.sample(collection);
+}
+
+export function uniq<T>(collection: _.List<T>): T[] {
+    return _.uniq(collection);
+}
+
+export function some<T>(collection: _.List<T>, predicate: _.ListIterateeCustom<T, boolean>): boolean {
+    return _.some(collection, predicate);
 }
 
 export { timestamp };

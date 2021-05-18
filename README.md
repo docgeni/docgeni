@@ -64,9 +64,7 @@ Get started with Docgeni, learn the fundamentals and explore advanced topics on 
         <br />
         <strong>ngx-planet</strong>
       </a>
-    </td>
-    
-   
+    </td> 
   </tr>
 </table>
 

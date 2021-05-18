@@ -35,6 +35,6 @@ export const serveCommand: CommandModule = {
             config,
             cmdArgs: normalizeCommandArgsForAngular(config, ngServeOptions)
         });
-        docgeni.run();
+        await docgeni.run();
     }
 };
