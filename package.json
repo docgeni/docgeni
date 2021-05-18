@@ -37,7 +37,8 @@
     "pub:docs:git": "wpm git-publish --source ./dist/docgeni-site --name docgeni-site --organization docgeni",
     "pub:template": "cd dist/template && npm publish --access=public",
     "copy-styles": "cpx \"./packages/template/src/**/*/*.scss\" dist/template",
-    "pretty": "pretty-quick --staged"
+    "pretty": "pretty-quick --staged",
+    "install-examples": "cd examples/full && yarn"
   },
   "private": true,
   "workspaces": [
