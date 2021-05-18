@@ -37,8 +37,8 @@ export class InitDocgenirc {
             });
             libs.push({
                 name: projectName,
-                rootDir: config.sourceRoot,
-                include: [],
+                rootDir: config.root,
+                include: ['src', 'src/lib'],
                 exclude: '',
                 categories: []
             });
