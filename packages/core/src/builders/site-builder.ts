@@ -154,8 +154,6 @@ export class SiteBuilder {
                 for (const copyFile of COPY_FILES) {
                     const fromPath = resolve(normalize(this.docgeni.config.publicDir), normalize(copyFile.from));
 
-                    console.log(copyFile.from);
-                    console.log(fromPath);
                     this.docgeni.host
                         .watch(normalize(fromPath))
                         .pipe(
