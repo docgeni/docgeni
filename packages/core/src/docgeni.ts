@@ -1,6 +1,6 @@
 import { createDocgeniHost, DocgeniHost } from './docgeni-host';
 import { virtualFs, normalize } from '@angular-devkit/core';
-import { NodeJsSyncHost } from '@angular-devkit/core/node';
+import { NodeJsAsyncHost } from '@angular-devkit/core/node';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
@@ -14,6 +14,7 @@ import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
+import { DocgeniScopedHost } from './docgeni-scoped';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -60,7 +61,7 @@ export class Docgeni implements DocgeniContext {
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
-        this.fs = new virtualFs.ScopedHost(new NodeJsSyncHost(), normalize(this.paths.cwd));
+        this.fs = new DocgeniScopedHost(new NodeJsAsyncHost(), normalize(this.paths.cwd));
         this.host = options.host || createDocgeniHost(this.fs);
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
