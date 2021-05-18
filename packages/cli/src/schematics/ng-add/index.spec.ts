@@ -66,7 +66,7 @@ describe('ng-add Schematic', () => {
         tree = factory.getTree();
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         const config = workspaceTree.read('.docgenirc.js').toString();
-        expect(config).toContain(`rootDir: 'projects/${libraryName}/src'`);
+        expect(config).toContain(`rootDir: 'projects/${libraryName}'`);
         expect(config).toContain(`lib: '${libraryName}'`);
     });
 
