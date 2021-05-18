@@ -184,12 +184,13 @@ describe('#config', () => {
         it('should throw error when doc dir has not exists', async () => {
             const notFoundPath = 'not-found/path';
             expectThrowAsync(async () => {
-                await new Docgeni({
+                const docgeni = new Docgeni({
                     config: {
                         docsDir: notFoundPath
                     },
                     host: docgeniHost
-                }).verifyConfig();
+                });
+                await docgeni.verifyConfig();
             }, `docs dir(${notFoundPath}) has not exists`);
             docgeniHost.writeFile(`${notFoundPath}/index.md`, 'content');
             await new Docgeni({
@@ -200,19 +201,19 @@ describe('#config', () => {
             }).verifyConfig();
         });
 
-        it('should throw error when siteProject is not found', async () => {
-            const notFoundProject = 'not-found-project-name';
+        // it('should throw error when siteProject is not found', async () => {
+        //     const notFoundProject = 'not-found-project-name';
 
-            await expectThrowAsync(async () => {
-                const docgeni = new Docgeni({
-                    config: {
-                        siteProjectName: notFoundProject
-                    },
-                    host: docgeniHost
-                });
-                await docgeni.run();
-            }, `site project name(${notFoundProject}) is not exists`);
-        });
+        //     await expectThrowAsync(async () => {
+        //         const docgeni = new Docgeni({
+        //             config: {
+        //                 siteProjectName: notFoundProject
+        //             },
+        //             host: docgeniHost
+        //         });
+        //         await docgeni.run();
+        //     }, `site project name(${notFoundProject}) is not exists`);
+        // });
 
         it('should throw error when mode is not match', async () => {
             await expectThrowAsync(async () => {
