@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.4](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-05-18)
+
+
+### Bug Fixes
+
+* **core:** generate tsconfig paths exception throw if no package.json found ([8812e7d](https://github.com/docgeni/docgeni/commit/8812e7d82acfadcdefd218711fb984e0e10b2b17))
+* **core:** markdown highlight for bash ng and others ([#147](https://github.com/docgeni/docgeni/issues/147)) ([f75a1b4](https://github.com/docgeni/docgeni/commit/f75a1b4f4659c15f4038af2834c446440506f91c))
+* **template:** shoule find component doc by path and importSpecifier ([1efe281](https://github.com/docgeni/docgeni/commit/1efe2810a34fe8673809d1978cda10f4c95169bd))
+
+
+### Features
+
+* **core:** normalize and verify lib config, and add test #OSP-95 ([3759aa2](https://github.com/docgeni/docgeni/commit/3759aa28106f268aa686585b5ce7f5a6dfe3cb71)), closes [#OSP-95](https://github.com/docgeni/docgeni/issues/OSP-95)
+* **core:** normalize config for navs, locales and verify configs #OSP-95 ([b46fabd](https://github.com/docgeni/docgeni/commit/b46fabd40c3306f0c8b1b3189170c7c20f252234)), closes [#OSP-95](https://github.com/docgeni/docgeni/issues/OSP-95)
+* **core:** watch public files ([#141](https://github.com/docgeni/docgeni/issues/141)) ([c7c7c31](https://github.com/docgeni/docgeni/commit/c7c7c31466c91fbf8d459087a0e2edecbdb87f09))
+
+
+
+
+
 # [1.0.0-beta.3](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-05-15)
 
 

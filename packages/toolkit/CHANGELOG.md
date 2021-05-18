@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.4](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-05-18)
+
+
+### Features
+
+* **core:** normalize and verify lib config, and add test #OSP-95 ([3759aa2](https://github.com/docgeni/docgeni/commit/3759aa28106f268aa686585b5ce7f5a6dfe3cb71)), closes [#OSP-95](https://github.com/docgeni/docgeni/issues/OSP-95)
+
+
+
+
+
 # [1.0.0-beta.3](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-05-15)
 
 **Note:** Version bump only for package @docgeni/toolkit
