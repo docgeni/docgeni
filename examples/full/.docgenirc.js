@@ -2,7 +2,7 @@
  * @type {import('@docgeni/core').DocgeniConfig}
  */
 module.exports = {
-    mode: 'lite',
+    mode: 'full',
     title: 'Full Mode',
     description: 'A documentation generator for Angular',
     docsDir: 'docs',

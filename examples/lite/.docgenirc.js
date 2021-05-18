@@ -4,7 +4,7 @@
 module.exports = {
     mode: 'lite',
     title: 'Lite Mode',
-    description: '',
+    description: 'A documentation generator for Angular',
     docsDir: 'docs',
     navs: [
         null,
