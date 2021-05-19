@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.6](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-05-19)
+
+
+### Bug Fixes
+
+* **template:** fit responsive for nav and sidebar ([#158](https://github.com/docgeni/docgeni/issues/158)) ([ff4956f](https://github.com/docgeni/docgeni/commit/ff4956f15c180e2c14f09315f1468349b4c875a1))
+
+
+
+
+
 # [1.0.0-beta.5](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-05-19)
 
 **Note:** Version bump only for package @docgeni/template
