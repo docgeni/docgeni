@@ -15,7 +15,7 @@ order: 10
 - 🏡 Independent angular component preview experience, including:component overview, examples, and API
 - 📋 Extend the markdown syntax and import examples directly into the document
 - 💻 Multi-language support
-- 🚀 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`) support
+- 🎨 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`) support
 - 🚀 Powerful customization site ability (HTML, Browser support, Assets ...)
 
 # Motivation
