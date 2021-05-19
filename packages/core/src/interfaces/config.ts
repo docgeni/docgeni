@@ -19,15 +19,15 @@ export interface HomeDocMeta {
 export type DocgeniMode = 'full' | 'lite';
 
 export interface DocgeniNavItem {
-    /** Title for nav item */
+    /** Title for nav item **/
     title: string;
-    /** Route path for nav item */
+    /** Route path for nav item **/
     path: string;
-    /** Whether is external link */
+    /** Whether is external link **/
     isExternal?: boolean;
-    /** Lib name for libs */
+    /** Lib name for libs **/
     lib?: string;
-    /** Locales */
+    /** Locales **/
     locales?: {
         [key: string]: {
             title: string;
@@ -35,64 +35,64 @@ export interface DocgeniNavItem {
     };
 }
 export interface DocgeniConfig {
-    /* Title of documentation, e.g: Docgeni */
+    /** Title of documentation, e.g: Docgeni **/
     title?: string;
-    /* Description of documentation */
+    /** Description of documentation **/
     description?: string;
-    /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
+    /** Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers **/
     mode?: DocgeniMode;
-    /** Theme, angular navbar style and default style */
+    /** Theme, angular navbar style and default style **/
     theme?: 'default' | 'angular';
-    /* Base href of documentation, default is / */
+    /** Base href of documentation, default is / **/
     baseHref?: string;
-    /* Logo url*/
+    /** Logo url*/
     logoUrl?: string;
-    /* Public dir, default is .docgeni/public */
+    /** Public dir, default is .docgeni/public **/
     publicDir?: string;
-    /* Repo url*/
+    /** Repo url*/
     repoUrl?: string;
-    /* Docs dir, default is 'docs' */
+    /** Docs dir, default is 'docs' **/
     docsDir?: string;
-    /** Site default dir .docgeni */
+    /** Site default dir .docgeni **/
     siteDir?: string;
-    /* Site output dir, default is dist/docgeni-site */
+    /** Site output dir, default is dist/docgeni-site **/
     outputDir?: string;
-    /* Angular demo site name in angular.json */
+    /** Angular demo site name in angular.json **/
     siteProjectName?: string;
-    /* Angular libraries */
+    /** Angular libraries **/
     libs?: DocgeniLibrary[];
-    /* Navigations for menu and nav */
+    /** Navigations for menu and nav **/
     navs?: DocgeniNavItem[];
-    /** Locales */
+    /** Locales **/
     locales?: Locale[];
-    /** Default locale */
+    /** Default locale **/
     defaultLocale?: string;
 }
 
 // For Angular Template
 export interface DocgeniSiteConfig {
-    /* Title of documentation, e.g: Docgeni */
+    /** Title of documentation, e.g: Docgeni **/
     title: string;
-    /** Heading of documentation, e.g: Doc Generator, default is same as title */
+    /** Heading of documentation, e.g: Doc Generator, default is same as title **/
     heading?: string;
-    /* Description of documentation */
+    /** Description of documentation **/
     description?: string;
-    /* Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers */
+    /** Mode of documentation, full mode contains nav, home page, lite mode only contains menu and doc viewers **/
     mode?: 'full' | 'lite';
-    /** Theme, angular navbar style and default style */
+    /** Theme, angular navbar style and default style **/
     theme?: 'default' | 'angular';
-    /* Base href of documentation, default is / */
+    /** Base href of documentation, default is / **/
     baseHref?: string;
-    /* Heads of documentation*/
+    /** Heads of documentation*/
     heads?: [];
-    /* Logo url*/
+    /** Logo url*/
     logoUrl?: string;
-    /* Repo url*/
+    /** Repo url*/
     repoUrl?: string;
-    /** Home meta */
+    /** Home meta **/
     homeMeta?: HomeDocMeta;
-    /** Locales */
+    /** Locales **/
     locales?: Locale[];
-    /** Default locale */
+    /** Default locale **/
     defaultLocale?: string;
 }
