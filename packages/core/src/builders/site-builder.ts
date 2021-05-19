@@ -57,12 +57,9 @@ export class SiteBuilder {
         };
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
-
-        if (!toolkit.fs.existsSync(path.resolve(sitePath, './src'))) {
-            await toolkit.fs.copy(path.resolve(__dirname, '../site-template'), sitePath);
-            await this.buildAngularJson();
-            await this.addTsconfigPaths();
-        }
+        await toolkit.fs.copy(path.resolve(__dirname, '../site-template'), sitePath, { overwrite: true });
+        await this.buildAngularJson();
+        await this.addTsconfigPaths();
     }
 
     private async buildAngularJson() {
