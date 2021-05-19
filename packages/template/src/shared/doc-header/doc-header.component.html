@@ -2,7 +2,7 @@
   class="sidebar-toggler"
   href="javascript:;"
   (click)="toggleSidebar()"
-  *ngIf="(global.config.mode | dgIsFull) && navigationService.channel"
+  *ngIf="(global.config.mode | dgIsFull) && navigationService.channel || (global.config.mode | dgIsLite)"
   ><dg-icon iconName="list"></dg-icon
 ></a>
 <span class="title">{{ title }}</span>

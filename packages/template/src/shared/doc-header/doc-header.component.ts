@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, HostBinding, ChangeDetectionStrategy, Input, OnDestroy } from '@angular/core';
 import { GlobalContext, NavigationService } from '../../services/public-api';
 
 @Component({
@@ -6,7 +6,7 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
     templateUrl: './doc-header.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DocHeaderComponent implements OnInit {
+export class DocHeaderComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-header`) isHeader = true;
 
     @Input() title: string;
@@ -19,5 +19,9 @@ export class DocHeaderComponent implements OnInit {
 
     toggleSidebar() {
         this.navigationService.toggleSidebar();
+    }
+
+    ngOnDestroy() {
+        this.navigationService.resetShowSidebar();
     }
 }

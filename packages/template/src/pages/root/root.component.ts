@@ -49,7 +49,7 @@ export class RootComponent {
     @HostBinding(`class.dg-layout`) isLayout = true;
 
     @HostBinding(`class.dg-sidebar-show`) get showSidebar() {
-        return this.navigationService.channel && this.navigationService.showSidebar;
+        return this.navigationService.showSidebar;
     }
 
     constructor(public global: GlobalContext, public navigationService: NavigationService) {}

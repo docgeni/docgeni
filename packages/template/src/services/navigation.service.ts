@@ -118,6 +118,10 @@ export class NavigationService {
         this.showSidebar = !this.showSidebar;
     }
 
+    resetShowSidebar() {
+        this.showSidebar = false;
+    }
+
     private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {
         return (category as any).items;
     }
