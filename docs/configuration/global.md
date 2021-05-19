@@ -50,7 +50,7 @@ Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markd
 - 类型：`string`
 - 默认：`.docgeni/site`
 
-自动生成的站点目录，Docgeni 会把生成的组件示例和文档拷贝到该站点下，当`siteProjectName`设置后以自定义站点的所在目录，此配置无效。
+自动生成的站点目录，Docgeni 会把生成的组件示例和文档拷贝到该站点下，当`siteProjectName`设置后以自定义站点的所在目录为主，此配置无效。
 
 ## outputDir
 - 类型：`string`
