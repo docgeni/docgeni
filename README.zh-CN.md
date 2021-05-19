@@ -22,13 +22,13 @@
 
 [English](https://github.com/docgeni/docgeni/blob/master/README.md) | 中文文档
 
-## ✨ Features
+## ✨ 特性
 - 📦 开箱即用，让你快速开启文档编写和组件开发
 - 🏡 独立的 Angular 组件预览体验，包含：组件概览，示例，API
 - 📋 对 Markdown 语法进行扩展，在文档中直接导入 Example
 - 💻 多语言支持
-- 🚀 两种模式(`full`和`lite`)以及多种风格(`default`和`angular`)支持
-
+- 🎨 两种模式(`full`和`lite`)以及多种风格(`default`和`angular`)支持
+- 🚀 强大的自定义能力
 
 ## 📖 文档
 开始使用 Docgeni，可以去官网学习基础知识并搜索高级功能。

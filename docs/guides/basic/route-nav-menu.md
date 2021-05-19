@@ -47,7 +47,7 @@ order: 20
 - 所有`.md`文件生成一个普通页面文档
 
 ## 默认路由生成规则
-- 频道取文件夹的命名，并转换成 Param Case 命名，如：`GettingStarted` => `getting-started`
+- 频道取文件夹名，并转换成 Param Case 命名，如：`GettingStarted` => `getting-started`
 - 页面文档取文件名，去除`.md`后缀，并转换成 Param Case 命名，同时会加上所属频道和类别的路由，如：`GettingStarted.md` => `/guides/intro/getting-started`
 
 ## 默认标题生成规则
@@ -112,5 +112,8 @@ module.exports = {
 order: 10
 ---
 ```
+
+# 更多配置
+更多配置参考 [Front Matter](configuration/front-matter)
 
 
