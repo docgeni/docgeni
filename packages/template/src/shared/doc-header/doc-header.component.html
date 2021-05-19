@@ -1,3 +1,9 @@
-<a class="sidebar-toggler" href="javascript:;" (click)="toggleSidebar()"><dg-icon iconName="list"></dg-icon></a>
-<span class="title">{{title}}</span>
-<span class="subtitle" *ngIf="subtitle">{{subtitle}}</span>
+<a
+  class="sidebar-toggler"
+  href="javascript:;"
+  (click)="toggleSidebar()"
+  *ngIf="(global.config.mode | dgIsFull) && navigationService.channel"
+  ><dg-icon iconName="list"></dg-icon
+></a>
+<span class="title">{{ title }}</span>
+<span class="subtitle" *ngIf="subtitle">{{ subtitle }}</span>

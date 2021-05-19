@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, ChangeDetectionStrategy, Input } from '@angular/core';
-import { NavigationService } from '../../services/public-api';
+import { GlobalContext, NavigationService } from '../../services/public-api';
 
 @Component({
     selector: 'dg-doc-header',
@@ -13,7 +13,7 @@ export class DocHeaderComponent implements OnInit {
 
     @Input() subtitle: string;
 
-    constructor(private navigationService: NavigationService) {}
+    constructor(public navigationService: NavigationService, public global: GlobalContext) {}
 
     ngOnInit(): void {}
 
