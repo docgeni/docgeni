@@ -121,12 +121,15 @@ export class LibraryBuilder {
         const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
         for (const include of includes) {
             const includeAbsPath = path.resolve(this.absLibPath, include);
-            const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
-            subDirs.forEach(dir => {
-                const absComponentPath = path.resolve(includeAbsPath, dir);
-                const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
-                this.componentsMap.set(absComponentPath, component);
-            });
+            const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
+            if (dirExists) {
+                const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
+                subDirs.forEach(dir => {
+                    const absComponentPath = path.resolve(includeAbsPath, dir);
+                    const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
+                    this.componentsMap.set(absComponentPath, component);
+                });
+            }
         }
 
         // 排除 includes, include 一般用于某个文件夹所有的子文件夹都是独立的组件，那么如果这个文件夹处理类库的根目录，大多数场景是需要排除的
