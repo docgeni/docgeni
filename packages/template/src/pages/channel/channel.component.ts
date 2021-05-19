@@ -10,10 +10,6 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
 export class ChannelComponent implements OnInit {
     @HostBinding(`class.dg-layout`) isLayout = true;
 
-    @HostBinding(`class.dg-sidebar-show`) get showSidebar() {
-        return this.navigationService.showSidebar;
-    }
-
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 

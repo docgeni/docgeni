@@ -48,11 +48,9 @@ export class RootComponent {
 
     @HostBinding(`class.dg-layout`) isLayout = true;
 
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService
-    ) {
+    @HostBinding(`class.dg-sidebar-show`) get showSidebar() {
+        return this.navigationService.showSidebar;
     }
 
-
+    constructor(public global: GlobalContext, public navigationService: NavigationService) {}
 }
