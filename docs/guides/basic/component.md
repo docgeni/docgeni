@@ -77,9 +77,37 @@ Docgeni 默认会扫描`examples`文件夹下的所有子文件夹，每个子�
 - 默认示例名取文件夹的名称，并以 - 分割多个单词，示例入口组件文件命名规则为`示例名.component.ts` 如：`basic.component.ts`
 - 对应组件的默认命名规则为`类库缩写+组件名+示例名+ExampleComponent` 如：`AlibButtonBasicExampleComponent`
 
+## 引用配置
+Docgeni 运行时会把`examples`下的所有示例文件拷贝到站点下启动，在组件示例中不能采用相对路径引入组件模块，建议直接通过包路径引用，同时需要在 tsconfig.json 配置 paths 指向类库源代码路径，这样可以直接复制示例代码使用，比如：组件库叫`alib`，采用如下的方式配置和引入组件：
+```ts
+// button/examples/module.ts
+import { AlibButtonModule } from 'alib/button';
+
+@NgModule({
+    declarations: [AlibButtonBasicExampleComponent],
+    imports: [CommonModule, AlibButtonModule, FormsModule],
+    entryComponents: [],
+    exports: [AlibButtonBasicExampleComponent],
+    providers: []
+})
+export class AlibButtonExamplesModule {}
+```
+
+```json
+// tsconfig.json
+ {
+   "paths": {
+      "alib": [
+        "packages/alib/public-api.ts"
+      ],
+      "alib/*": [
+        "packages/alib/*"
+      ]
+ }
+```
 
 ## 在文档中使用示例
-`Docgeni`会给每个示例生成一个唯一的 Key, 命名规则为：`类库缩写-组件名-示例名-example`，如：`alib-button-basic-example`
+`Docgeni`为每个示例生成一个唯一的 Key, 命名规则为：`类库缩写-组件名-示例名-example`，如：`alib-button-basic-example`
 
 那么不管是在普通的页面文档还是在组件的概览文档中，都可以按照下面的语法在 Markdown 中引入某个示例，`name`为示例的唯一标识。
 

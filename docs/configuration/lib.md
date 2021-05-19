@@ -14,7 +14,7 @@ order: 30
 ## abbrName
 
 - 类型：`string`
-- 默认：`null`
+- 默认：`{name}`
 
 组件库的名称缩写，Angular 组件库一般都会有一个缩写，比如 [Material](https://material.angular.io/components) 组件库简写叫 `mat`，[NG-ZORRO](https://ng.ant.design/components/overview/zh) 组件库的简写叫`nz`，假设我们类库的简写为`thy`, 一般模块和组件都会使用此前缀，如：`ThyButtonModule`，`thyButton`，那么 Docgeni 会根据此缩写自动生成组件唯一标识和示例代码。
 
@@ -28,24 +28,25 @@ order: 30
 - 类型：`string`
 - 默认：`null`
 
-组件类库的源代码根路径，`Docgeni` 会扫描此配置的下的文件夹，所有一级文件夹当作一个组件，自动查找组件下的文档、API和示例，默认文档、API、示例存放的目录为 `doc`, `api`和`examples`
+组件类库的根路径，确保类库的`package.json`在此目录，`Docgeni` 会扫描此配置的下的文件夹，所有一级文件夹当作一个组件，自动查找组件下的文档、API和示例，默认文档、API、示例存放的目录为 `doc`, `api`和`examples`
 
 ## include
 
 - 类型：`string | Array<string>`
-- 默认：`null`
+- 默认：`[]`
 
 `Docgeni` 默认只会扫描 `rootDir` 下的一级文件夹当作组件，如果你的组件库比较特殊，某个深层的文件夹也需要生成组件文档，可以通过 include 单独配置。
 
 如配置：`include: 'common'`, `Docgeni` 会查找 common 文件夹下的所有一级文件夹，按照组件的规则匹配文档、API和示例。
 
+> 我们建议组件库`rootDir`文件夹直接存放组件即可，但是 Angular CLI 生成的类库项目会带有`src/lib`目录结构，如果希望采用此目录结构，需要配置 `include: ['src', 'src/lib']`，`rootDir`保持和`package.json`同级。
 
 ## exclude
 
 - 类型：`string | Array<string>`
-- 默认：`null`
+- 默认：`[]`
 
-`Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除。支持 `glob` 格式。
+`Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除，支持 `glob` 格式。
 
 ## docDir
 

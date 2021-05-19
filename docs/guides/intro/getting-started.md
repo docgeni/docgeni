@@ -12,16 +12,21 @@ v10.0.0
 
 # 脚手架初始化
 切换到已有的项目中，执行如下命令：
-```
+
+```bash
 $ npx @docgeni/cli init
+# 或者 
+$ docgeni init 
 # 或者
 $ ng add @docgeni/cli
 ```
-> 使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`
 
-执行上述命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。
-- 第一步选择站点模式: `full`或者`lite`(默认`lite`)
-- 第二步提示输入文档目录 (默认`docs`)
+>使用`docgeni init`初始化需要全局安装 @docgeni/cli `npm install -g @docgeni/cli`<br>
+使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`
+
+执行上述任意一个命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。
+- 第一步选择文档站点模式: `full`或者`lite`(默认`lite`)
+- 第二步输入文档目录 (默认`docs`)
 
 <img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
 
@@ -44,7 +49,7 @@ Lite 模式的预览效果如下：
 
 ```bash
 $ npm i @docgeni/cli @docgeni/template --save-dev
-# or 
+# 或者
 $ yarn add @docgeni/cli @docgeni/template -D
 ```
 
@@ -96,7 +101,7 @@ Docgeni 默认会在`.docgeni/site`文件夹下生成文档站点，为了避免
 
 
 # 组件文档
-Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照 [组件文档、API和示例](basic/component) 文档要求编写组件文档、API和示例，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的key命名），输入如下内容：
+Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照 [组件文档、API和示例](basic/component) 文档要求编写组件文档、API和示例，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的Key命名），输入如下内容：
 
 ```
 ---
