@@ -8,14 +8,15 @@ order: 10
 
 `Docgeni` is a document generator for angular component lib development scenarios, which supports the generation of component documents and markdown documents.
 
-Docgeni will automatically generate the corresponding document navigation, menu and route according to the directory structure and FrontMatter, and it also supports the configured route to meet the custom requirements. In addition, in order to facilitate the development of component and display component example, Docgeni supports the import of example in markdown syntax.
+`Docgeni` will automatically generate the corresponding document navigation, menu and route according to the directory structure and FrontMatter, and it also supports the configuration of first-level navigation and route to meet the custom requirements. In addition, in order to facilitate the development of component and display component example, Docgeni supports the import of example in markdown syntax.
 
 # Features
 - 📦 Out of the box, let you quickly open the document writing and component development
 - 🏡 Independent angular component preview experience, including:component overview, examples, and API
 - 📋 Extend the markdown syntax and import examples directly into the document
 - 💻 Multi-language support
-- 🚀 Two modes and multiple themes support
+- 🎨 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`) support
+- 🚀 Powerful customization site ability (HTML, Browser support, Assets ...)
 
 # Motivation
 In 2018, [Worktile](https://worktile.com/?utm_source=docgeni) started to build our own component library using Angular, and after 2-3 years our component library already has 50+ components. So for component library development, documentation and examples is a very important part. At the beginning, we wrote a Demo site directly in the repository as documentation and examples display  like other component libraries. Whenever a new component is added, the sample module, sample component and so on which corresponding to this component need to be added to the example. It is very cumbersome to write component examples and documents. At the same time, we started to build a business component library in 2019, which means that I have to write the same basic function of the example again, which is particularly troublesome. In addition, the previous documentation site is very unprofessional, so we  began to look for a tool for Angular component development to generate documentation and component examples.
