@@ -27,7 +27,8 @@ English | [中文文档](https://github.com/docgeni/docgeni/blob/master/README.z
 - 🏡 Independent angular component preview experience, including: component overview, examples, and API
 - 📋 Extend the markdown syntax and import examples directly into the document
 - 💻 Multi-language support
-- 🚀 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`)  support
+- 🎨 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`)  support
+- 🚀 Powerful customization site ability (HTML, Browser support, Assets ...)
 
 ## 📖 Documentation
 Get started with Docgeni, learn the fundamentals and explore advanced topics on our documentation website.
