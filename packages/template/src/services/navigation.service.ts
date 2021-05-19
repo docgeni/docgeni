@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem, DocgeniSiteConfig } from '../interfaces/public-api';
-import { CONFIG_TOKEN, GlobalContext } from './global-context';
+import { GlobalContext } from './global-context';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
