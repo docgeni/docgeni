@@ -67,6 +67,10 @@ export class NavigationService {
         return channel;
     }
 
+    clearChannel() {
+        this.channel$.next(null);
+    }
+
     selectDocItem(path: string) {
         const docItem = this.getDocItemByPath(path);
         this.docItem$.next(docItem);
