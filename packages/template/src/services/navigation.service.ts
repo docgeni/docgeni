@@ -67,6 +67,10 @@ export class NavigationService {
         return channel;
     }
 
+    clearChannel() {
+        this.channel$.next(null);
+    }
+
     selectDocItem(path: string) {
         const docItem = this.getDocItemByPath(path);
         this.docItem$.next(docItem);
@@ -112,6 +116,10 @@ export class NavigationService {
 
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
+    }
+
+    resetShowSidebar() {
+        this.showSidebar = false;
     }
 
     private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {
