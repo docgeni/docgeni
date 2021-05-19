@@ -12,16 +12,20 @@ v10.0.0
 
 # Scaffold initialization
 Switch to the existing project and run the following command:
+
 ```bash
 $ npx @docgeni/cli init
 # or 
+$ docgeni init 
+# or 
 $ ng add @docgeni/cli
 ```
-> Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`
+> Initialization with `docgeni init` requires global installation of @docgeni/cli `npm install -g @docgeni/cli`<br>
+  Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`
 
-After executing the above command, the initial configuration of docgeni will be automatically completed, including generating configuration files, NPM startup scripts, and default documents ,etc.
-- The first step is to select the site mode: `full` or `lite` (default `lite`)
-- The second step is to prompt for the document directory (default `docs`)
+After executing any of the above command, the initial configuration of docgeni will be automatically completed, including generating configuration files, NPM startup scripts, and default documents ,etc.
+- The first step is to select the document site mode: `full` or `lite` (default `lite`)
+- The second step is to enter the document directory (default `docs`)
 
 <img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
 
@@ -94,7 +98,7 @@ By default, Docgeni will generate documentation sites in the `.docgeni/site` fol
 
 
 # Component documentation
-Docgeni initial scaffold will automatically detect and add the libraries in the current Angular project. If the components of the library have not been written with documentation and examples, they will not be displayed. You can write component documentation,API,and examples according to the rules of the [Overview & API & Examples](basic/component). For example: there is a `button` component under the component root directory,create an `en-us.md` document(Attention to be named after the default multi-language key) under the `button/doc` and enter the following:
+Docgeni initial scaffold will automatically detect and add the libraries in the current Angular project. If the components of the library have not been written with documentation and examples, they will not be displayed. You can write component documentation,API,and examples according to the rules of the [Overview & API & Examples](basic/component). For example: there is a `button` component under the component root directory,create an `en-us.md` document(Attention to be named after the default multi-language Key) under the `button/doc` and enter the following:
 
 ```
 ---
