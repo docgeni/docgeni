@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-beta.7](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-05-19)
+
+
+### Bug Fixes
+
+* **cli:** remove <12 in peerDependencies for support ng 12 ([4e75e52](https://github.com/docgeni/docgeni/commit/4e75e52ffe20e2d26762683b00ef263168f493f3))
+
+
+
+
+
 # [1.0.0-beta.6](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-05-19)
 
 **Note:** Version bump only for package @docgeni/cli
