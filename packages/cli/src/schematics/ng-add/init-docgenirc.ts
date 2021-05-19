@@ -30,7 +30,7 @@ export class InitDocgenirc {
         const libs: Partial<Library>[] = [];
         libraryProjects.forEach(([projectName, config]) => {
             navs.push({
-                title: '组件',
+                title: 'Components',
                 path: 'components',
                 lib: projectName,
                 locales: {}
@@ -39,7 +39,6 @@ export class InitDocgenirc {
                 name: projectName,
                 rootDir: config.root,
                 include: ['src', 'src/lib'],
-                exclude: '',
                 categories: []
             });
         });
