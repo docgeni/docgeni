@@ -10,7 +10,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@docgeni/cli": "1.0.0-beta.5",
-    "@docgeni/template": "1.0.0-beta.5"
+    "@docgeni/cli": "1.0.0",
+    "@docgeni/template": "1.0.0"
   }
 }
