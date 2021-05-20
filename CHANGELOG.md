@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.7...v1.0.0) (2021-05-20)
+
+
+### Bug Fixes
+
+* **template:** temp hide external icon for example viewer ([7dcfa11](https://github.com/docgeni/docgeni/commit/7dcfa11cf51a8bd4fb963b4c4aa0305c6fb9acd6))
+
+
+
+
+
 # [1.0.0-beta.7](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-05-19)
 
 
