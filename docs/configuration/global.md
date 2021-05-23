@@ -80,7 +80,7 @@ Angular 自定义站点的项目名称，组件库开发除了默认的文档和
 - 类型：`Array<{key: string, name: string}>`
 - 默认：`[]`
 
-支持的多语言，如果不需要支持多种语言，无序配置，会只生成 `defaultLocale` 的语言。
+支持的多语言，如果不需要支持多种语言，无需配置，会只生成 `defaultLocale` 的语言。
 
 ## navs
 - 类型：`Array<NavigationItem>`

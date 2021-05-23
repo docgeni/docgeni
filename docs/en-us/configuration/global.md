@@ -6,87 +6,85 @@ order: 30
 
 ## mode
 
-- 类型：`lite`｜`full`
-- 默认：`lite`
+- Type: `lite`｜`full`
+- Default: `lite`
 
-用于设定文档的展现模式，默认为简易模式（左侧菜单 + 右侧内容），`full` 为站点模式，包含：首页 + 头部导航 + 左侧菜单 + 右侧内容。
+It's used to set the document display mode. The default is lite mode(left menu + right content), `full` is site mode, including: homepage + head nav + left menu + right content.
 
 ## theme
 
-- 类型：`default`｜`angular`
-- 默认：`default`
+- Type: `default`｜`angular`
+- Default: `default`
 
-主题设置：
-- `default`: 默认主题，导航背景色为白色
-- `angular`：`Angular`官网风格，导航背景色为: <code style="color: #3f51b5">#3f51b5</code>
-
+Theme settings:
+- `default`: default theme, navigation background color is white
+- `angular`：`Angular` official website style, default navigation background color is: <code style="color: #3f51b5">#3f51b5</code>, SCSS color variables can be modified to change the navigation background color
 
 ## title
 
-- 类型：`string`
-- 默认：`package.name`
+- Type: `string`
+- Default: `package.name`
 
-文档的标题，通常是所开发的组件库名，比如`Docgeni`。
+The title of the document. Usually the name of the component library, such as `Docgeni`.
 
 ## logoUrl
-- 类型：`string`
-- 默认：Docgeni 的 Logo Url
+- Type: `string`
+- Default: the Logo Url of Docgeni
 
-文档 Logo 地址。
+Logo URL of the library.
 
 ## repoUrl
-- 类型：`string`
-- 默认：`null`
+- Type: `string`
+- Default: `null`
 
-GitHub 仓储地址。
+Github repository URL of the library.
 
 ## docsDir
-- 类型：`string`
-- 默认：`docs`
+- Type: `string`
+- Default: `docs`
 
-Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markdown 文件，按照一定的规则生成频道、菜单和页面文档。
+Markdown document directory URL, Docgeni will scan the folders and Markdown files in this directory, and generate channels, menus and page documents according to certain rules.
 
 ## siteDir
-- 类型：`string`
-- 默认：`.docgeni/site`
+- Type: `string`
+- Default: `.docgeni/site`
 
-自动生成的站点目录，Docgeni 会把生成的组件示例和文档拷贝到该站点下。
+Automatically generated site directory. Docgeni will copy the generated component examples and documents to the site. After `siteProjectName` is set, the directory of the custom site is the main one. This configuration is invalid.
 
 ## outputDir
-- 类型：`string`
-- 默认：`dist/docgeni-site`
+- Type: `string`
+- Default: `dist/docgeni-site`
 
-站点构建输出目录。
+The output directory of site construction. When the `siteProjectName` is set, the output directory of the custom site is the main one. This configuration is invalid.
 
 ## publicDir
-- 类型：`string`
-- 默认：`.docgeni/public`
+- Type: `string`
+- Default: `.docgeni/public`
 
-文档站点的配置目录，Docgeni会把该文件夹下的`index.html`、`favicon.ico`、`styles.scss`、`assets`、`.browserslistrc`和`tsconfig.json`文件拷贝并覆盖站点目录实现自定义配置功能。
+The configuration directory of the document site, Docgeni will copy the `index.html`, `favicon.ico`, `styles.scss`, `assets`, `.browserslistrc` and `tsconfig.json` files in the folder and overwrite the site directory to implement custom configuration features. For more configuration, please refer to [Customize Site](/guides/advance/customize).
 
 ## siteProjectName
-- 类型：`string`
-- 默认：`null`
+- Type: `string`
+- Default: `null`
 
-Angular 自定义站点的项目名称，组件库开发除了默认的文档和示例展示功能外，可能还需要做一些自定义的功能，那么可以在仓储中新建一个 site 项目，然后配置此项目的名字，Docgeni 会把生成的文档和示例拷贝到该项目下。
-
+The project name of Angular custom site. In addition to the default documentation and examples to presentation features, component library development may also need to do some custom features. You can create a new site project in the repository, and then configure the name of the project, Docgeni will copy the generated documents and examples to the project.
 ## defaultLocale
-- 类型：`string`
-- 默认：`en-us`
+- Type: `string`
+- Default: `en-us`
 
-默认多语言。
+Default multi-language.
 
 ## locales
-- 类型：`Array<{key: string, name: string}>`
-- 默认：`[ { key: 'en-us', name: 'English' } ]`
+- Type: `Array<{key: string, name: string}>`
+- Default: `[]`
 
-支持的多语言。
+Supported multi-language, if you don't need to support multiple languages, no configuration, only the `defaultLocale` language will be generated.
 
 ## navs
-- 类型：`Array<NavigationItem>`
-- 默认：`自动生成导航`
+- Type: `Array<NavigationItem>`
+- Default: `[]`
 
-该配置项用于自定义导航栏和菜单的展示，一般会配置一些外部的链接和类库，如：
+This configuration item is used to customize the display of the navigation bar and menu, and generally configure some external links and library channels, such as:
 ```ts
 module.exports = {
     ...
@@ -106,13 +104,13 @@ module.exports = {
     ...
 }
 ```
-> 这里需要注意的是，`docs`文件夹下自动识别的频道会默认插入到配置的`navs`数组的底部，如果想要控制展示的位置，可以插入一个`null`进行占位，如上示例，自动生成的频道会插入到导航的顶部。
+> Here are some things to note, the automatically recognized channel under the `docs` folder will be inserted at the bottom of the configured `navs` array by default. If you want to control the display position, you can insert a `null` as a placeholder. As the above example, the automatically generated channel will be inserted to the top navigation.
 
 ## libs
-- 类型：`Array<Library>`
-- 默认：`null`
+- Type: `Array<DocgeniLibrary>`
+- Default: `[]`
 
-组件类库配置，每个类库的配置查看 [configuration/lib](configuration/lib)
+Component library configuration, see [configuration/lib](configuration/lib) for the configuration of each library.
 
 ```ts
 module.exports = {
