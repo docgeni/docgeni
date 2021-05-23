@@ -65,7 +65,7 @@ order: 30
 - 类型：`string`
 - 默认：`api`
 
-组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.后缀名`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 五种后缀，`json`、`yaml`、`js`三种格式，以下以js举例：
+组件的API目录，`Docgeni`会根据配置的`locales`查找`{localeKey}.后缀名`文件，目前支持 `.json`、`.yaml`、`.yml`、`.js`、`.config.js` 五种后缀，`json`、`yaml`、`js`三种格式，以下以`js`举例：
 
 ```js
 module.exports = [
@@ -78,13 +78,13 @@ module.exports = [
             name: 'alibType',
             type: 'string',
             default: 'primary',
-            description: '按钮的类型，支持 \`primary | info | warning | danger\`' 
+            description: '按钮的类型，支持 primary | info | warning | danger' 
         },
         {
             name: 'alibSize',
             type: 'string',
             default: 'null', 
-            description: '按钮的大小，支持 \`sm | md | lg\`'
+            description: '按钮的大小，支持 sm | md | lg'
         }
     ]
   }
