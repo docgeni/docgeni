@@ -5,45 +5,45 @@ order: 40
 
 ## title
 
-- 类型：`string`
-- 默认：`文件夹名，文件名`
+- Type: `string`
+- Default: `folder name, file name`
 
-频道、类别、页面或者组件的标题，默认会使用`titleCase`命名转换文件夹名或者文件名。
+The title of the channel, category, page or component, will use `titleCase` nomenclature to convert the folder name or file name by default.
 
 ## subtitle
 
-- 类型：`string`
-- 默认：`null`
+- Type: `string`
+- Default: `null`
 
-频道、类别、页面或者组件的子标题，会显示在标题后面。
+The subtitle of the channel, category, page or component, will be displayed behind the title. 
 
 ## order
 
-- 类型：`number`
-- 默认：`null`
+- Type: `number`
+- Default: `null`
 
-频道、类别、页面或者组件的排序，按照数字升序。
+The sorting of channels, categories, pages or components, is in ascending order of numbers.
 
 ## path
-- 类型：`string`
-- 默认：`文件夹名、文件名`
+- Type: `string`
+- Default: `folder name, file name`
 
-频道、页面的路由，默认会使用`paramCase`命名转换文件夹名或者文件名。
+The routing of the channel or page, will use `paramCase` nomenclature to convert the folder name or file name by default, the actual access route of the document will bring the path of the category and channel.
 
 ## hidden
-- 类型：`boolean`
-- 默认：`false`
+- Type: `boolean`
+- Default: `false`
 
-是否隐藏当前频道、类别、组件或者页面，一般用于草稿中的文档。
+Whether to hide the current channel, category, component or page, generally used for documents in drafts.
 
 ## name
-- 类型：`string`
-- 默认：`文件夹名`
+- Type: `string`
+- Default: `folder name`
 
-组件的名称，根据此名称生成组件名。
+The name of the component, from which the component name is generated, generally do not need to set.
 
 ## category
-- 类型：`string`
-- 默认：`null`
+- Type: `string`
+- Default: `null`
 
-组件的所属类别。
+The category of the component needs to correspond to the `categories` id attribute of the corresponding library configuration.
