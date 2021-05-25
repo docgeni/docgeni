@@ -180,6 +180,9 @@ $dg-service-color: #8e24aa;
     padding: 20px 0px;
     font-size: 16px;
     // white-space: break-spaces;
+    >:first-child {
+        margin-top: 0;
+    }
     h1 {
         font-size: $dg-font-size-xlg;
         margin: 30px 0px 16px 0px;
@@ -190,11 +193,6 @@ $dg-service-color: #8e24aa;
         font-size: $dg-font-size-lg;
         margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
-    }
-
-    h1:first-child,
-    h2:first-child {
-        margin-top: 0;
     }
 
     h3 {
