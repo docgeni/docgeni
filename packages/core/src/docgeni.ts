@@ -153,7 +153,7 @@ export class Docgeni implements DocgeniContext {
             const absDocsPath = path.resolve(this.paths.cwd, this.config.docsDir);
             const docsDosExists = await this.host.pathExists(absDocsPath);
             if (!docsDosExists) {
-                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists`);
+                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${absDocsPath}`);
             }
         }
 
