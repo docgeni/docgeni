@@ -35,9 +35,7 @@ jobs:
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: ${{ runner.os }}-yarn-
             - run: yarn --frozen-lockfile
-            - name: build and test
-              run: |
-                  yarn lint
-                  yarn test-coverage
-                  yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
-                  yarn report-coverage
+            - run: yarn lint
+            - run: yarn test-coverage
+            - run: yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
+            - run: yarn report-coverage
