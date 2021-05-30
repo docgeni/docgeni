@@ -166,7 +166,8 @@ describe('#config', () => {
 
         it('should throw error when default locale has not in locales', async () => {
             expectThrowAsync(async () => {
-                await new Docgeni({
+                docgeniHost.writeFile(`${process.cwd()}/docs/index.md`, 'content');
+                const docgeni = new Docgeni({
                     config: {
                         locales: [
                             {
@@ -177,7 +178,8 @@ describe('#config', () => {
                         defaultLocale: 'zh-cn'
                     },
                     host: docgeniHost
-                }).verifyConfig();
+                });
+                await docgeni.verifyConfig();
             }, `default locale(zh-cn) is not in locales`);
         });
 
@@ -192,7 +194,7 @@ describe('#config', () => {
                 });
                 await docgeni.verifyConfig();
             }, `docs dir(${notFoundPath}) has not exists`);
-            docgeniHost.writeFile(`${notFoundPath}/index.md`, 'content');
+            docgeniHost.writeFile(`${process.cwd()}/${notFoundPath}/index.md`, 'content');
             await new Docgeni({
                 config: {
                     docsDir: notFoundPath

@@ -149,8 +149,12 @@ export class Docgeni implements DocgeniContext {
             throw new ValidationError(`mode must be full or lite, current is ${this.config.mode}`);
         }
 
-        if (this.config.docsDir && !(await this.host.pathExists(this.config.docsDir))) {
-            throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists`);
+        if (this.config.docsDir) {
+            const absDocsPath = path.resolve(this.paths.cwd, this.config.docsDir);
+            const docsDosExists = await this.host.pathExists(absDocsPath);
+            if (!docsDosExists) {
+                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists`);
+            }
         }
 
         const defaultLocaleObj = this.config.locales.find(item => {
