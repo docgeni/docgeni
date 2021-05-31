@@ -33,18 +33,10 @@ export class AngularCommander {
 
     private async execAngularCommand(command: string, args: Array<string> = []) {
         try {
-            const projectLocalCli = require.resolve('@angular/cli', { paths: [process.cwd()] });
-            const ngCommandPath = projectLocalCli.replace(`/lib/cli/index.js`, `/bin/ng`);
-            // const cli = await Promise.resolve().then(() => require(projectLocalCli));
             const commandArgs = [command, this.siteProject.name, ...args];
             const commandCwd = this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath;
             this.docgeni.logger.info(`Start execute ng ${commandArgs.join(' ')} for site...`);
-            // await cli.default({
-            //     cliArgs: commandArgs,
-            //     cwd: this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath
-            // });
-            // const ngCommandPath = this.siteProject.custom ? 'node_modules/@angular/cli/bin/ng' : '../node_modules/@angular/cli/bin/ng';
-            const child = spawn(ngCommandPath, commandArgs, {
+            const child = spawn('ng', commandArgs, {
                 stdio: 'inherit',
                 cwd: commandCwd,
                 shell: process.platform === 'win32' // 仅在当前运行环境为 Windows 时，才使用 shell
