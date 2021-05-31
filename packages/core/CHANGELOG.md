@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/docgeni/docgeni/compare/v1.0.0...v1.0.1) (2021-05-31)
+
+
+### Bug Fixes
+
+* **core:** fix path in windows ([69d8a25](https://github.com/docgeni/docgeni/commit/69d8a25df14a27bc9f3f987db5500a11e994f4c3))
+* **core:** fix run in windows env ([b9e760f](https://github.com/docgeni/docgeni/commit/b9e760f9e0fbfc5b91fc63f9801974039aa87dbf))
+* **core:** fix test expect ([ba1e5e5](https://github.com/docgeni/docgeni/commit/ba1e5e59d92427fef4c51fc755681ff2d0c014b3))
+* **core:** log full path when docs dir is not exists ([76ae3fc](https://github.com/docgeni/docgeni/commit/76ae3fce75efc1861df780781d557ce79580ecc2))
+* **core:** should use abs docs path to validate exists ([b509149](https://github.com/docgeni/docgeni/commit/b50914993dc09df443247a60b536e865b6e1ebf2))
+* **core:** use getSystemPath translate path for copy ([d558083](https://github.com/docgeni/docgeni/commit/d5580836ddf52a5bd9b56a716a984f9f9a78aa82))
+
+
+
+
+
 # [1.0.0](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.7...v1.0.0) (2021-05-20)
 
 **Note:** Version bump only for package @docgeni/core
