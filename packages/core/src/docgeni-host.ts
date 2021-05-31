@@ -1,5 +1,5 @@
 import { toolkit } from '@docgeni/toolkit';
-import { normalize, PathFragment, virtualFs } from '@angular-devkit/core';
+import { getSystemPath, normalize, PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
 
 export interface DocgeniHost {
@@ -46,7 +46,7 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async copy(src: string, dest: string): Promise<void> {
-        return toolkit.fs.copy(src, dest);
+        return toolkit.fs.copy(getSystemPath(normalize(src)), dest);
     }
 
     async delete(path: string): Promise<void> {
