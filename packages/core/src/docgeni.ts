@@ -14,7 +14,7 @@ import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
-import { DocgeniScopedHost } from './docgeni-scoped';
+import { DocgeniScopedHost } from './fs';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -61,7 +61,7 @@ export class Docgeni implements DocgeniContext {
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
-        this.fs = new DocgeniScopedHost(new NodeJsAsyncHost(), normalize(this.paths.cwd));
+        this.fs = new DocgeniScopedHost(new NodeJsAsyncHost(), this.paths.cwd);
         this.host = options.host || createDocgeniHost(this.fs);
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
