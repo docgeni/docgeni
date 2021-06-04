@@ -49,6 +49,7 @@
         max-height: 100vh;
         margin-left: 300px;
     }
+
     .content-backdrop {
         position: absolute;
         transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -59,6 +60,7 @@
         left: 0;
         right: 0;
     }
+
     @include dg-media-breakpoint-down('md') {
         &.dg-sidebar-show {
             .dg-sidebar {
