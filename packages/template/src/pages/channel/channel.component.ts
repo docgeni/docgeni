@@ -32,12 +32,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.navigationService.clearChannel();
     }
-
-    close() {
-        if (this.navigationService.showSidebar) {
-            this.navigationService.toggleSidebar();
-        }
-    }
 }
 
 @Component({

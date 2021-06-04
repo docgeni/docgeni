@@ -80,6 +80,12 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         }
     }
 
+    close() {
+        if (this.navigationService.showSidebar) {
+            this.navigationService.toggleSidebar();
+        }
+    }
+
     ngOnDestroy() {
         this.destroyed.next();
         this.destroyed.complete();
