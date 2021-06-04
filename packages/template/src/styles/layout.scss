@@ -49,20 +49,34 @@
         max-height: 100vh;
         margin-left: 300px;
     }
-
+    .content-backdrop {
+        position: absolute;
+        transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background-color: transparent;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
     @include dg-media-breakpoint-down('md') {
         &.dg-sidebar-show {
             .dg-sidebar {
                 display: block;
+                left: 0;
+                z-index: 2;
             }
 
-            .dg-doc-viewer {
-                margin-left: 300px;
+            .content-backdrop {
+                background-color: rgba(0, 0, 0, 0.32);
+                z-index: 1;
             }
         }
 
         .dg-sidebar {
-            display: none;
+            transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            left: -300px;
+            background: $dg-gray-100;
         }
 
         .content {
