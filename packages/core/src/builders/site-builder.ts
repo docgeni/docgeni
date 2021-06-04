@@ -66,7 +66,7 @@ export class SiteBuilder {
         await toolkit.fs.ensureFile(path.resolve(this.siteProject.root, './angular.json'));
         await toolkit.template.generate('angular-json.hbs', path.resolve(this.siteProject.root, './angular.json'), {
             root: this.docgeni.config.siteDir,
-            outputPath: path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)
+            outputPath: normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir))
         });
     }
 

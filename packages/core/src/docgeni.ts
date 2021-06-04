@@ -1,6 +1,5 @@
 import { createDocgeniHost, DocgeniHost } from './docgeni-host';
 import { virtualFs, normalize } from '@angular-devkit/core';
-import { NodeJsAsyncHost } from '@angular-devkit/core/node';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
@@ -14,7 +13,7 @@ import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
-import { DocgeniScopedHost } from './docgeni-scoped';
+import { DocgeniNodeJsAsyncHost, DocgeniScopedHost } from './fs';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -61,7 +60,7 @@ export class Docgeni implements DocgeniContext {
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
-        this.fs = new DocgeniScopedHost(new NodeJsAsyncHost(), normalize(this.paths.cwd));
+        this.fs = new DocgeniScopedHost(new DocgeniNodeJsAsyncHost(), this.paths.cwd);
         this.host = options.host || createDocgeniHost(this.fs);
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
@@ -149,8 +148,12 @@ export class Docgeni implements DocgeniContext {
             throw new ValidationError(`mode must be full or lite, current is ${this.config.mode}`);
         }
 
-        if (this.config.docsDir && !(await this.host.pathExists(this.config.docsDir))) {
-            throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists`);
+        if (this.config.docsDir) {
+            const absDocsPath = path.resolve(this.paths.cwd, this.config.docsDir);
+            const docsDosExists = await this.host.pathExists(absDocsPath);
+            if (!docsDosExists) {
+                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${absDocsPath}`);
+            }
         }
 
         const defaultLocaleObj = this.config.locales.find(item => {

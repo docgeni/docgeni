@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/docgeni/docgeni/compare/v1.0.0...v1.0.1) (2021-05-31)
+
+
+### Bug Fixes
+
+* **template:** fix dg-doc-content and dg-examples styles ([4f502be](https://github.com/docgeni/docgeni/commit/4f502be2622004483f5ff7c3c3ad8434140279af))
+
+
+
+
+
 # [1.0.0](https://github.com/docgeni/docgeni/compare/v1.0.0-beta.7...v1.0.0) (2021-05-20)
 
 
