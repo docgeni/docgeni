@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/docgeni/docgeni/compare/v1.0.1...v1.0.2) (2021-06-07)
+
+
+### Bug Fixes
+
+* **core:** remove `include` dirs from `exclude` for scanning lib components  [#179](https://github.com/docgeni/docgeni/issues/179) ([fa02c1e](https://github.com/docgeni/docgeni/commit/fa02c1ea576f438874291878a4efd7bcfe617452))
+* update angular cli analytics default value to `false` [#175](https://github.com/docgeni/docgeni/issues/175) ([a5e9a5a](https://github.com/docgeni/docgeni/commit/a5e9a5adaf5d3426bb3cacaec3931ef15f9ff570))
+
+
+### Features
+
+* **template:** update open mode to `over` from `push` for sidebar ([#173](https://github.com/docgeni/docgeni/issues/173)) ([8996ace](https://github.com/docgeni/docgeni/commit/8996ace1fd91e0b6f27f389f570f6a2998e2549a))
+
+
+
+
+
 ## [1.0.1](https://github.com/docgeni/docgeni/compare/v1.0.0...v1.0.1) (2021-05-31)
 
 
