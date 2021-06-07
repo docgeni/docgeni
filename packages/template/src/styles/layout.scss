@@ -42,7 +42,7 @@
         bottom: 0;
     }
 
-    .content {
+    .dg-content {
         flex: auto;
         padding: 30px 50px;
         // overflow: auto;
@@ -50,7 +50,7 @@
         margin-left: 300px;
     }
 
-    .content-backdrop {
+    .dg-doc-viewer-backdrop {
         position: absolute;
         transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s 0.4s;
         background-color: transparent;
@@ -69,7 +69,7 @@
                 background: $dg-gray-100;
             }
 
-            .content-backdrop {
+            .dg-doc-viewer-backdrop {
                 transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
                 background-color: rgba(0, 0, 0, 0.6);
                 z-index: 1;
@@ -82,7 +82,7 @@
             left: -300px;
         }
 
-        .content {
+        .dg-content {
             margin-left: 0px;
             padding: 0;
         }
