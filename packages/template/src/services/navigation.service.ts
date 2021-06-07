@@ -2,6 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem, DocgeniSiteConfig } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
 import { BehaviorSubject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +32,11 @@ export class NavigationService {
         return this.global.docItems;
     }
 
-    constructor(private global: GlobalContext) {}
+    constructor(private global: GlobalContext, private router: Router) {
+        this.router.events.pipe(filter(item => item instanceof NavigationEnd)).subscribe(() => {
+            this.resetShowSidebar();
+        });
+    }
 
     getChannels(): ChannelItem[] {
         return this.navs as ChannelItem[];
