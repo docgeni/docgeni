@@ -3,7 +3,7 @@ import * as path from 'path';
 import { DocMeta } from '../types';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
-import { normalize } from '@angular-devkit/core';
+import { normalize, relative } from '@angular-devkit/core';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -28,7 +28,7 @@ export class DocSourceFile {
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
     public get relative() {
-        return path.relative(this.base, this.path);
+        return relative(normalize(this.base), normalize(this.path));
     }
     /**
      * @example "docs/guide" when base is cwd and path is /../docs/guide/getting-started.md
@@ -104,7 +104,7 @@ export class DocSourceFile {
     }
 
     public getRelativeOutputPath(ext = '.html') {
-        return normalize(`${this.relativeDirname}/${this.name}${ext}`);
+        return `${this.relativeDirname}/${this.name}${ext}`;
     }
 
     public isEmpty() {
