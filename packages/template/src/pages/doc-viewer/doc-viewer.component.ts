@@ -49,6 +49,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             // component doc
             if (id) {
                 this.navigationService.selectDocItem(id);
+                this.navigationService.resetShowSidebar();
             } else {
                 // doc
                 const path = this.route.snapshot.routeConfig.path;
