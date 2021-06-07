@@ -4,7 +4,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { createTestDocgeniHost, expectThrowAsync } from './utils';
 import { DocgeniHost } from '../src/docgeni-host';
 import path from 'path';
-import { virtualFs, normalize } from '@angular-devkit/core';
+import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
 
 describe('#config', () => {
     let docgeniHost: DocgeniHost;
@@ -185,6 +185,7 @@ describe('#config', () => {
 
         it('should throw error when doc dir has not exists', async () => {
             const notFoundPath = 'not-found/path';
+            const expectFullPath = normalize(`${process.cwd()}/${notFoundPath}`);
             await expectThrowAsync(async () => {
                 const docgeni = new Docgeni({
                     config: {
@@ -193,7 +194,7 @@ describe('#config', () => {
                     host: docgeniHost
                 });
                 await docgeni.verifyConfig();
-            }, `docs dir(${notFoundPath}) has not exists, full path: ${process.cwd()}/${notFoundPath}`);
+            }, `docs dir(${notFoundPath}) has not exists, full path: ${getSystemPath(expectFullPath)}`);
             docgeniHost.writeFile(`${process.cwd()}/${notFoundPath}/index.md`, 'content');
             await new Docgeni({
                 config: {

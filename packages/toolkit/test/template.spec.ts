@@ -1,6 +1,7 @@
 import { toolkit, fs } from '../src';
 import * as path from 'path';
 import { expect } from 'chai';
+import { EOL } from 'os';
 
 describe('#toolkit.template', () => {
     beforeEach(() => {
@@ -13,7 +14,7 @@ describe('#toolkit.template', () => {
         const result = toolkit.template.compile('module.hbs', {
             name: 'First Name'
         });
-        expect(result).eq('This is template First Name\n');
+        expect(result).eq(`This is template First Name${EOL}`);
     });
 
     it('should compile json success', () => {
@@ -42,7 +43,7 @@ describe('#toolkit.template', () => {
             "path": "getting-started"
         }
     ]
-};\n`;
+};${EOL}`;
         expect(result).eq(expected);
     });
 });
