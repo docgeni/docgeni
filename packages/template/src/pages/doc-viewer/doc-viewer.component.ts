@@ -49,6 +49,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             // component doc
             if (id) {
                 this.navigationService.selectDocItem(id);
+                this.navigationService.resetShowSidebar();
             } else {
                 // doc
                 const path = this.route.snapshot.routeConfig.path;
@@ -77,6 +78,12 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         if (this.tableOfContents) {
             this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
             this.tableOfContents.updateScrollPosition();
+        }
+    }
+
+    close() {
+        if (this.navigationService.showSidebar) {
+            this.navigationService.toggleSidebar();
         }
     }
 
