@@ -3,6 +3,7 @@ import * as path from 'path';
 import { DocMeta } from '../types';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
+import { normalize } from '@angular-devkit/core';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -103,7 +104,7 @@ export class DocSourceFile {
     }
 
     public getRelativeOutputPath(ext = '.html') {
-        return `${this.relativeDirname}/${this.name}${ext}`;
+        return normalize(`${this.relativeDirname}/${this.name}${ext}`);
     }
 
     public isEmpty() {
