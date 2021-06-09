@@ -104,14 +104,16 @@
 
 <ng-template #changeLanguageTemplate>
   <div class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="false">
-    <select
-      *ngIf="global.config.locales && global.config.locales.length > 1"
-      class="action-item locales-selector"
-      name="locale"
-      [(ngModel)]="locale"
-      (ngModelChange)="localeModelChange()"
-    >
-      <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
-    </select>
+    <a href="javascript:;" class="item-content">
+      <select
+        *ngIf="global.config.locales && global.config.locales.length > 1"
+        class="action-item dg-locales-selector"
+        name="locale"
+        [(ngModel)]="locale"
+        (ngModelChange)="localeModelChange()"
+      >
+        <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
+      </select>
+    </a>
   </div>
 </ng-template>
