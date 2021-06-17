@@ -2,7 +2,7 @@
  * @type {import('@docgeni/core').DocgeniConfig}
  */
 module.exports = {
-    mode: 'lite',
+    mode: 'full',
     title: 'Docgeni',
     logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
