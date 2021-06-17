@@ -10,11 +10,6 @@ $dg-service-color: #8e24aa;
 .dg-doc-viewer {
     display: block;
 
-    &--single {
-        padding: 30px 50px;
-        flex: auto;
-    }
-
     .dg-doc-header {
         display: flex;
         align-items: center;
@@ -180,7 +175,7 @@ $dg-service-color: #8e24aa;
     padding: 20px 0px;
     font-size: 16px;
     // white-space: break-spaces;
-    >:first-child {
+    > :first-child {
         margin-top: 0;
     }
     h1 {
