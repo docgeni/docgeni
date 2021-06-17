@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/docgeni/docgeni/compare/v1.0.2...v1.0.3) (2021-06-17)
+
+
+### Bug Fixes
+
+* **template:** set position sticky to dg-toc and add dg-scroll-container ([434b244](https://github.com/docgeni/docgeni/commit/434b24479aec91652bc2d647797c58386af0adff))
+
+
+### Features
+
+* **template:** add language switch in lite mode ([#182](https://github.com/docgeni/docgeni/issues/182)) ([5e80d2c](https://github.com/docgeni/docgeni/commit/5e80d2c53b6a764ba00b595e3fed55fb231c64a4))
+
+
+
+
+
 ## [1.0.2](https://github.com/docgeni/docgeni/compare/v1.0.1...v1.0.2) (2021-06-07)
 
 
