@@ -85,7 +85,7 @@
         display: block;
         flex-direction: column;
         transition: opacity 1s;
-        height: 0;
+        height: 0px;
         opacity: 0;
         visibility: hidden;
 
@@ -93,6 +93,9 @@
             visibility: visible;
             height: auto;
             opacity: 1;
+            .dg-example-viewer-sources-content {
+                height: auto;
+            }
         }
 
         .dg-doc-content {
@@ -109,6 +112,7 @@
             background: $dg-gray-100;
             white-space: nowrap;
             margin: 0px;
+            height: 0px;
         }
     }
 }

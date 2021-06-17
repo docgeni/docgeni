@@ -8,11 +8,16 @@
     right: 0;
 }
 
+.dg-scroll-container {
+    overflow: auto;
+}
+
 .dg-layout {
     display: flex;
     flex-direction: column;
     flex: auto;
     // height: 0;
+    // overflow: auto;
     .dg-sidebar {
         flex: 0 0 auto;
         width: 300px;

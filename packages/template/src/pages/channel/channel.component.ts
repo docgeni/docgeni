@@ -9,6 +9,7 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
 })
 export class ChannelComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-layout`) isLayout = true;
+    @HostBinding(`class.dg-scroll-container`) isScrollContainer = true;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;

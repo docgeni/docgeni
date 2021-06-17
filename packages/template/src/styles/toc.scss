@@ -1,18 +1,18 @@
 .dg-toc {
     flex: 1;
     margin: 20px 0 20px 20px;
-
+    position: sticky;
+    top: 20px;
     .dg-toc-container {
         font-size: 13px;
         // Width is container width minus content width
         width: 19%;
-        position: sticky;
-        top: 0;
+        // position: sticky;
+        // top: 0;
         padding-left: 25px;
         box-sizing: border-box;
         display: inline-flex;
         flex-direction: column;
-
         width: 100%;
         padding: 5px 0 10px 10px;
 
@@ -91,21 +91,5 @@
         &[data-level='4'] {
             padding-left: 48px;
         }
-    }
-}
-
-.dg-mode-lite {
-    .dg-doc-viewer {
-        .dg-toc .dg-toc-container {
-            top: 20px;
-        }
-    }
-}
-
-.dg-mode-full {
-    .dg-doc-viewer {
-        .dg-toc .dg-toc-container{
-            top: 80px;
-        }    
     }
 }
