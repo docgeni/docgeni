@@ -103,9 +103,9 @@
 </div>
 
 <ng-template #changeLanguageTemplate>
-  <div class="action-items">
+  <div class="action-items" *ngIf="global.config.locales && global.config.locales.length > 1">
     <div class="action-item">
-      <dg-locales-selector *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
+      <dg-locales-selector></dg-locales-selector>
     </div>
   </div>
 </ng-template>

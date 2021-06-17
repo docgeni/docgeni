@@ -51,7 +51,7 @@
 }
 
 .dg-theme-default {
-    @include dg-locales-selector-theme(inherit, $dg-primary);
+    @include dg-locales-selector-theme(inherit, rgba($color: $dg-body-color, $alpha: 0.8));
 }
 
 .dg-theme-angular {
