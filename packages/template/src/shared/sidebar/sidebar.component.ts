@@ -11,16 +11,7 @@ export class SidebarComponent implements OnInit {
 
     @Input() menus: NavigationItem[];
 
-    locale: string;
+    constructor() {}
 
-    constructor(public global: GlobalContext) {}
-
-    ngOnInit(): void {
-        this.locale = this.global.locale;
-    }
-
-    localeModelChange() {
-        this.global.setLocale(this.locale);
-        location.href = location.href;
-    }
+    ngOnInit(): void {}
 }

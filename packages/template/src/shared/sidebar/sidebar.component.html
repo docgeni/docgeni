@@ -108,22 +108,4 @@
       <dg-locales-selector *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
     </div>
   </div>
-
-  <!-- <div class="menu-item action-items" style="border-top: 1px solid #ddd;" routerLinkActive="active" [routerLinkActiveOptions]="false">
-    <a href="javascript:;" class="item-content">
-      <div class="dg-locales-selector-container">
-        <select
-          *ngIf="global.config.locales && global.config.locales.length > 1"
-          class="action-item dg-locales-selector"
-          name="locale"
-          [(ngModel)]="locale"
-          style="width: 100%;"
-          (ngModelChange)="localeModelChange()"
-        >
-          <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
-        </select>
-        <div class="dg-selector-arrow"></div>
-      </div>
-    </a>
-  </div> -->
 </ng-template>
