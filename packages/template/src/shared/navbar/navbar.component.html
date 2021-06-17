@@ -82,18 +82,10 @@
 </div>
 <div class="spacer"></div>
 <div class="action-items">
-  <!-- <div class="action-item  search-container">
+  <!-- <div class="action-item search-container">
       <input class="search" placeholder="搜索" />
     </div> -->
-  <select
-    *ngIf="global.config.locales && global.config.locales.length > 1"
-    class="action-item locales-selector"
-    name="locale"
-    [(ngModel)]="locale"
-    (ngModelChange)="localeModelChange()"
-  >
-    <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
-  </select>
+  <dg-locales-selector class="action-item" *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
   <a *ngIf="global.config.repoUrl" class="action-item repo-url" href="{{ global.config.repoUrl }}" target="_blank">
     <dg-icon iconName="github"></dg-icon>
   </a>

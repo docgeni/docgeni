@@ -70,6 +70,9 @@
   <ng-container *ngFor="let menu of menus" class="menu-item">
     <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
   </ng-container>
+  <ng-container *ngIf="global.config.mode | dgIsLite">
+    <ng-container *ngTemplateOutlet="changeLanguageTemplate"></ng-container>
+  </ng-container>
 
   <ng-template let-menu #navTemplate>
     <ng-container *ngIf="menu.items; else item">
@@ -98,3 +101,11 @@
     </ng-template>
   </ng-template>
 </div>
+
+<ng-template #changeLanguageTemplate>
+  <div class="action-items" *ngIf="global.config.locales && global.config.locales.length > 1">
+    <div class="action-item">
+      <dg-locales-selector></dg-locales-selector>
+    </div>
+  </div>
+</ng-template>
