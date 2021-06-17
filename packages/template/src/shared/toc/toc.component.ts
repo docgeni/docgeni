@@ -39,7 +39,7 @@ let OFFSET = 60;
 export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestroy {
     @HostBinding(`class.dg-toc`) isToc = true;
 
-    @Input() container: string;
+    @Input() container: string = '.dg-scroll-container';
 
     linkSections: LinkSection[] = [];
 
@@ -47,7 +47,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
 
     rootUrl = this.locationStrategy.path(false);
 
-    public highestLevel;
+    public highestLevel: number;
 
     private scrollContainer: any;
 
@@ -64,7 +64,7 @@ export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestro
         private locationStrategy: LocationStrategy
     ) {
         if (global.config.mode === 'lite') {
-            OFFSET = 10;
+            OFFSET = 0;
         }
         this.router.events.pipe(takeUntil(this.destroyed)).subscribe(event => {
             if (event instanceof NavigationEnd) {
