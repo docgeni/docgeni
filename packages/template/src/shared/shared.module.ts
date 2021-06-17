@@ -16,6 +16,7 @@ import { TableOfContentsComponent } from './toc/toc.component';
 import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
 import { CopierService } from './copier/copier.service';
 import { IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
+import { LocalesSelectorComponent } from './locales-selector/locales-selector.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
         ContentViewerComponent,
         LabelComponent,
         TableOfContentsComponent,
+        LocalesSelectorComponent,
         AssetsContentPathPipe,
         IsComponentDocPipe,
         IsModeLitePipe,

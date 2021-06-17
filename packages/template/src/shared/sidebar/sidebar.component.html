@@ -103,7 +103,13 @@
 </div>
 
 <ng-template #changeLanguageTemplate>
-  <div class="menu-item action-items" style="border-top: 1px solid #ddd;" routerLinkActive="active" [routerLinkActiveOptions]="false">
+  <div class="action-items">
+    <div class="action-item">
+      <dg-locales-selector *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
+    </div>
+  </div>
+
+  <!-- <div class="menu-item action-items" style="border-top: 1px solid #ddd;" routerLinkActive="active" [routerLinkActiveOptions]="false">
     <a href="javascript:;" class="item-content">
       <div class="dg-locales-selector-container">
         <select
@@ -119,5 +125,5 @@
         <div class="dg-selector-arrow"></div>
       </div>
     </a>
-  </div>
+  </div> -->
 </ng-template>

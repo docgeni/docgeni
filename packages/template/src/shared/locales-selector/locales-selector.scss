@@ -1,0 +1,59 @@
+.dg-locales-selector {
+    display: block;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+
+    select {
+        width: 100%;
+        padding: 0 22px 0 0;
+        height: 30px;
+        outline: none;
+        font-size: 14px;
+        appearance: none;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .dg-selector-arrow {
+        width: 9px;
+        height: 9px;
+        border-left: 1px solid $dg-gray-500;
+        border-top: 1px solid $dg-gray-500;
+        transform: rotate(-135deg);
+        position: absolute;
+        top: 50%;
+        right: 2px;
+        margin-top: -8px;
+        right: 2px;
+        z-index: -1;
+    }
+}
+
+@mixin dg-locales-selector-theme($color, $hover-color) {
+    .dg-locales-selector {
+        select {
+            color: $color;
+        }
+        .dg-selector-arrow {
+            border-color: $color;
+        }
+        &:hover {
+            select {
+                color: $hover-color;
+            }
+            .dg-selector-arrow {
+                border-color: $hover-color;
+            }
+        }
+    }
+}
+
+.dg-theme-default {
+    @include dg-locales-selector-theme(inherit, $dg-primary);
+}
+
+.dg-theme-angular {
+    @include dg-locales-selector-theme($dg-white, rgba($color: $dg-white, $alpha: 0.8));
+}
