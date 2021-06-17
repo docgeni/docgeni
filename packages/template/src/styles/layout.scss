@@ -8,24 +8,6 @@
     right: 0;
 }
 
-.dg-mode-lite {
-    .dg-main {
-        top: 0;
-    }
-    .dg-layout {
-        .dg-sidebar {
-            background: $dg-gray-100;
-            top: 0;
-        }
-    }
-    .dg-doc-viewer {
-        flex: auto;
-        padding: 30px 50px;
-        max-height: 100vh;
-        margin-left: 300px;
-    }
-}
-
 .dg-layout {
     display: flex;
     flex-direction: column;
@@ -42,12 +24,16 @@
         bottom: 0;
     }
 
-    .dg-content {
+    .dg-doc-viewer {
         flex: auto;
         padding: 30px 50px;
-        // overflow: auto;
-        max-height: 100vh;
         margin-left: 300px;
+        max-height: 100vh;
+
+        // 单个页面，没有频道，也就没有左侧菜单，间距为 0
+        &--single {
+            margin-left: 0px;
+        }
     }
 
     .dg-doc-viewer-backdrop {
@@ -82,15 +68,27 @@
             left: -300px;
         }
 
-        .dg-content {
-            margin-left: 0px;
-            padding: 0;
-        }
+        // .dg-content {
+        //     margin-left: 0px;
+        //     padding: 0;
+        // }
 
         .dg-doc-viewer {
             margin-left: 0px;
             padding: 20px 15px;
             position: relative;
+        }
+    }
+}
+
+.dg-mode-lite {
+    .dg-main {
+        top: 0;
+    }
+    .dg-layout {
+        .dg-sidebar {
+            background: $dg-gray-100;
+            top: 0;
         }
     }
 }
