@@ -11,7 +11,7 @@ export class SidebarComponent implements OnInit {
 
     @Input() menus: NavigationItem[];
 
-    constructor() {}
+    constructor(public global: GlobalContext) {}
 
     ngOnInit(): void {}
 }
