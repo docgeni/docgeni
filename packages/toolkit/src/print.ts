@@ -76,7 +76,7 @@ export class Print {
         }
     }
 
-    succuss(message: string, ...optionalParams: any[]) {
+    success(message: string, ...optionalParams: any[]) {
         const msg = this.format(Levels.succuss, message, ...optionalParams);
         if (!this.options.silent) {
             console.log(msg);
