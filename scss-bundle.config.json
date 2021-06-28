@@ -1,0 +1,9 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./packages/template/src/styles/index.scss",
+    "rootDir": ".",
+    "outFile": "./dist/template/styles/main.bundle.scss",
+    "ignoreImports": ["~prismjs/.*"],
+    "logLevel": "silent"
+  }
+}
