@@ -1,5 +1,5 @@
 import { DocgeniLibrary } from './../interfaces/library';
-import { createTestDocgeniHost, expectThrowAsync } from '../../test/utils';
+import { createTestDocgeniHost, expectThrowAsync } from '../testing';
 import { DocgeniHost } from '../docgeni-host';
 import { LibrariesBuilder } from './libraries-builder';
 import { DocgeniContext } from '../docgeni.interface';
