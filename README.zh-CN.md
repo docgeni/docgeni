@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom: -20px">
-  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png" /></a>
+  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
 </p>
 <p align="center">
   <strong>Docgeni</strong>
