@@ -1,4 +1,4 @@
-@use "sass:math";
+// @use "sass:math";
 
 // Color contrast
 @function dg-color-yiq($color, $dark: $dg-yiq-text-dark, $light: $dg-yiq-text-light) {
@@ -6,7 +6,8 @@
     $g: green($color);
     $b: blue($color);
 
-    $yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 100);
+    $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 100;
+    // $yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 100);
 
     @if ($yiq >= $dg-yiq-contrasted-threshold) {
         @return $dark;
