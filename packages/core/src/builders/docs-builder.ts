@@ -134,11 +134,14 @@ export class DocsBuilder {
     }
 
     private createDocSourceFile(locale: Locale, absFilePath: string) {
-        return new DocSourceFile({
-            locale: locale.key,
-            cwd: this.docgeni.paths.cwd,
-            base: this.docgeni.paths.cwd,
-            path: absFilePath
-        });
+        return new DocSourceFile(
+            {
+                locale: locale.key,
+                cwd: this.docgeni.paths.cwd,
+                base: this.docgeni.paths.cwd,
+                path: absFilePath
+            },
+            this.docgeni.host
+        );
     }
 }
