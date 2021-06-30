@@ -27,14 +27,15 @@ export class GlobalContext {
 
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
-        const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
+        const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
         const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (cacheLocale) {
-            const isSupport = config.locales.find(item => {
-                return item.key === cacheLocale;
+            const isSupport = config.locales.findIndex(item => {
+                return item.key.toLocaleLowerCase() === cacheLocale.toLocaleLowerCase();
             });
-            if (isSupport) {
-                this.locale = cacheLocale;
+
+            if (isSupport !== -1) {
+                this.locale = config.locales[isSupport].key;
             }
         }
         if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
