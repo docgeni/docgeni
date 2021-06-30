@@ -4,7 +4,7 @@
 module.exports = {
     mode: 'full',
     title: 'Docgeni',
-    // logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
+    logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,
