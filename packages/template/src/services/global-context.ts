@@ -31,7 +31,7 @@ export class GlobalContext {
         const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (cacheLocale) {
             const isSupport = (config.locales || []).findIndex(item => {
-                return item.key.toLocaleLowerCase() === cacheLocale.toLocaleLowerCase();
+                return item.key.toLocaleLowerCase().replace(/_/g, '-') === cacheLocale.toLocaleLowerCase().replace(/_/g, '-');
             });
 
             if (isSupport !== -1) {
