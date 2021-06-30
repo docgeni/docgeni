@@ -1,6 +1,7 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
+import { languageCompare } from '../utils/language-compare';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
@@ -27,14 +28,13 @@ export class GlobalContext {
 
     constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
         this.locale = config.defaultLocale;
-        const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY);
+        const maybeLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
         const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
-        if (cacheLocale) {
-            const isSupport = config.locales.find(item => {
-                return item.key === cacheLocale;
-            });
-            if (isSupport) {
-                this.locale = cacheLocale;
+        if (maybeLocale) {
+            const isSupport = (config.locales || []).findIndex(item => languageCompare(item.key, maybeLocale));
+
+            if (isSupport !== -1) {
+                this.locale = config.locales[isSupport].key;
             }
         }
         if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
