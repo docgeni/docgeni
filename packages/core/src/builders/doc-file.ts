@@ -94,7 +94,6 @@ export class DocSourceFile<TMeta = DocMeta> {
         if (this.emitted) {
             return;
         }
-        await this.clear();
         const outputPath = this.getOutputPath(destRootPath);
         await this.host.writeFile(outputPath, this.output);
         if (this.outputPath && this.outputPath !== outputPath) {

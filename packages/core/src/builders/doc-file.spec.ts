@@ -3,6 +3,7 @@ import { EOL } from 'os';
 import { DocgeniHost } from '../docgeni-host';
 import { createTestDocgeniHost } from '../testing';
 import { DocSourceFile } from './doc-file';
+import path from 'path';
 
 describe('DocSourceFile', () => {
     let root: string;
@@ -86,8 +87,9 @@ describe('DocSourceFile', () => {
         });
 
         it('should get correct outputDir', async () => {
-            const outDir = docSourceFile.getOutputDir('/dest/path');
-            expect(outDir).toEqual(`/dest/path/docs`);
+            const outputRootPath = '/dest/path';
+            const outDir = docSourceFile.getOutputDir(outputRootPath);
+            expect(outDir).toEqual(path.resolve(outputRootPath, 'docs'));
         });
 
         it('should get correct relativeOutputPath', async () => {
@@ -101,13 +103,15 @@ describe('DocSourceFile', () => {
         });
 
         it('should get correct outPath', async () => {
-            const outPath = docSourceFile.getOutputPath('/dest/path');
-            expect(outPath).toEqual(`/dest/path/docs/getting-started.html`);
+            const outputRootPath = '/dest/path';
+            const outPath = docSourceFile.getOutputPath(outputRootPath);
+            expect(outPath).toEqual(path.resolve(outputRootPath, `docs/getting-started.html`));
         });
 
         it(`should get correct outPath when ext = '.htm'`, async () => {
-            const outPath = docSourceFile.getOutputPath('/dest/path', '.htm');
-            expect(outPath).toEqual(`/dest/path/docs/getting-started.htm`);
+            const outputRootPath = '/dest/path';
+            const outPath = docSourceFile.getOutputPath(outputRootPath, '.htm');
+            expect(outPath).toEqual(path.resolve(outputRootPath, `docs/getting-started.htm`));
         });
     });
 
@@ -144,7 +148,7 @@ describe('DocSourceFile', () => {
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
-        const outputFilePath = `/dest/root/docs/getting-started.html`;
+        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         const outputContent = await docgeniHost.readFile(outputFilePath);
         expect(outputContent).toContain(`<p>content</p>`);
@@ -166,7 +170,7 @@ describe('DocSourceFile', () => {
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
-        const outputFilePath = `/dest/root/docs/getting-started.html`;
+        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         await docSourceFile.clear();
         expect(await docgeniHost.pathExists(outputFilePath)).toBeFalsy();
@@ -188,12 +192,12 @@ describe('DocSourceFile', () => {
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
-        const outputFilePath = `/dest/root/docs/getting-started.html`;
+        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root2');
         expect(await docgeniHost.pathExists(outputFilePath)).toBeFalsy();
-        expect(await docgeniHost.pathExists(`/dest/root2/docs/getting-started.html`)).toBeTruthy();
+        expect(await docgeniHost.pathExists(path.resolve(`/dest/root2/docs/getting-started.html`))).toBeTruthy();
     });
 
     it('should get correct isEmpty', async () => {
