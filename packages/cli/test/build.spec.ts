@@ -16,7 +16,7 @@ describe('docgeni build', () => {
             baseHref: '/',
             mode: 'full',
             title: 'Docgeni',
-            logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
+            logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
             docsDir: 'docs',
             repoUrl: 'https://github.com/docgeni/docgeni',
             navs: [null],
