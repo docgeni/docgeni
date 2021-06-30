@@ -65,6 +65,18 @@ describe('GlobalContext', () => {
             expect(globalContext.locale).toBe('zh-cn');
             window.localStorage.setItem('docgeni-locale', '');
         });
+        it(`should use browser locale`, () => {
+            const browserLanguage = window.navigator.language;
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: '',
+                    locales: [{ key: browserLanguage, name: '' }]
+                } as DocgeniSiteConfig,
+                undefined
+            );
+            expect(globalContext.locale).toBe(browserLanguage);
+            window.localStorage.setItem('docgeni-locale', '');
+        });
     });
 
     describe('mode', () => {
