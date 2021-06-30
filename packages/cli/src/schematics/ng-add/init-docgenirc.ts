@@ -2,10 +2,9 @@ import { apply, mergeWith, move, renameTemplateFiles, SchematicContext, template
 import { NgAddSchema } from '../types/ng-add-schema';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { ProjectType, WorkspaceProject } from '@schematics/angular/utility/workspace-models';
-import { DocgeniConfig } from '@docgeni/core/src/interfaces/config';
-import { NavigationItem } from '@docgeni/core/src/interfaces/navigation-item';
-import { Library } from '@docgeni/core/src/interfaces/library';
+import { DocgeniConfig, DocgeniLibrary, DocgeniNavItem } from '@docgeni/core';
 import stringifyObject from 'stringify-object';
+
 export class InitDocgenirc {
     private docgenirc: Partial<DocgeniConfig> = {};
     constructor(private options: NgAddSchema) {}
@@ -25,9 +24,9 @@ export class InitDocgenirc {
         const libraryProjects: [string, WorkspaceProject<ProjectType.Library>][] = Object.entries(angularJson.projects).filter(
             ([key, value]) => value.projectType === ProjectType.Library
         );
-        const navs: Partial<NavigationItem>[] = [null];
+        const navs: Partial<DocgeniNavItem>[] = [null];
 
-        const libs: Partial<Library>[] = [];
+        const libs: Partial<DocgeniLibrary>[] = [];
         libraryProjects.forEach(([projectName, config]) => {
             navs.push({
                 title: 'Components',
@@ -42,8 +41,8 @@ export class InitDocgenirc {
                 categories: []
             });
         });
-        this.addProperty('libs', libs as Library[]);
-        this.addProperty('navs', navs as NavigationItem[]);
+        this.addProperty('libs', libs as DocgeniLibrary[]);
+        this.addProperty('navs', navs as DocgeniNavItem[]);
     }
 
     private buildPropertiesFromPackageJson(host: Tree) {
