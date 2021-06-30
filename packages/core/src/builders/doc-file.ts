@@ -98,7 +98,7 @@ export class DocSourceFile<TMeta = DocMeta> {
         const outputPath = this.getOutputPath(destRootPath);
         await this.host.writeFile(outputPath, this.output);
         if (this.outputPath && this.outputPath !== outputPath) {
-            this.clear();
+            await this.host.delete(this.outputPath);
         }
         this.outputPath = outputPath;
         this.emitted = true;
@@ -107,6 +107,8 @@ export class DocSourceFile<TMeta = DocMeta> {
     public async clear() {
         if (this.outputPath) {
             await this.host.delete(this.outputPath);
+            this.output = '';
+            this.meta = null;
         }
     }
 

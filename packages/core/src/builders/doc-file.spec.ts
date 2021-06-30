@@ -170,9 +170,11 @@ describe('DocSourceFile', () => {
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         await docSourceFile.clear();
         expect(await docgeniHost.pathExists(outputFilePath)).toBeFalsy();
+        expect(docSourceFile.output).toBeFalsy();
+        expect(docSourceFile.meta).toBeFalsy();
     });
 
-    it('should auto clear last file when emit diff output path', async () => {
+    it('should auto delete last file when emit diff output path', async () => {
         const fileAbsPath = `${root}docs/getting-started.md`;
         await docgeniHost.writeFile(fileAbsPath, `content`);
         const docSourceFile = new DocSourceFile(
