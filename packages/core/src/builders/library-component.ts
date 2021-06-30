@@ -77,13 +77,16 @@ export class LibComponent {
             const absDocPath = path.resolve(this.absDocPath, `${locale.key}.md`);
             if (await toolkit.fs.pathExists(absDocPath)) {
                 // const content = await toolkit.fs.readFile(absDocPath, 'UTF-8');
-                const docSourceFile = new DocSourceFile({
-                    cwd: this.docgeni.paths.cwd,
-                    base: this.docgeni.paths.cwd,
-                    path: absDocPath,
-                    type: DocType.component,
-                    locale: locale.key
-                });
+                const docSourceFile = new DocSourceFile(
+                    {
+                        cwd: this.docgeni.paths.cwd,
+                        base: this.docgeni.paths.cwd,
+                        path: absDocPath,
+                        type: DocType.component,
+                        locale: locale.key
+                    },
+                    this.docgeni.host
+                );
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;
                 await this.buildOverview(docSourceFile);
