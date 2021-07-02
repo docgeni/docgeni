@@ -1,71 +1,8 @@
 <div class="dg-sidebar-header" *ngIf="global.config.mode | dgIsLite">
-  <img *ngIf="global.config.logoUrl; else defaultLogo" class="logo" alt="Logo" [src]="global.config.logoUrl" />
+  <dg-logo></dg-logo>
   <a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
   <span class="description" *ngIf="global.config.description">{{ global.config.description }}</span>
 </div>
-<ng-template #defaultLogo>
-  <svg
-    class="logo"
-    id="docgeni-logo"
-    data-name="docgeni-logo"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 82.33 93.11"
-  >
-    <defs>
-      <style>
-        .cls-1 {
-          fill-rule: evenodd;
-          fill: url(#未命名的渐变_90);
-        }
-        .cls-2 {
-          fill: url(#未命名的渐变_107);
-        }
-        .cls-3 {
-          fill: #f75562;
-        }
-      </style>
-      <linearGradient id="未命名的渐变_90" x1="72.21" y1="64.47" x2="0.13" y2="22.86" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#f85d7a" />
-        <stop offset="0" stop-color="#cd7195" />
-        <stop offset="0" stop-color="#a186b1" />
-        <stop offset="0" stop-color="#7b98c9" />
-        <stop offset="0" stop-color="#5ca6dd" />
-        <stop offset="0" stop-color="#44b2ec" />
-        <stop offset="0" stop-color="#32baf7" />
-        <stop offset="0" stop-color="#28befd" />
-        <stop offset="0" stop-color="#25c0ff" />
-        <stop offset="1" stop-color="#0e7aff" />
-      </linearGradient>
-      <linearGradient id="未命名的渐变_107" x1="29.03" y1="46.77" x2="53.05" y2="46.77" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#f85d7a" />
-        <stop offset="0" stop-color="#cd7195" />
-        <stop offset="0" stop-color="#a186b1" />
-        <stop offset="0" stop-color="#7b98c9" />
-        <stop offset="0" stop-color="#5ca6dd" />
-        <stop offset="0" stop-color="#44b2ec" />
-        <stop offset="0" stop-color="#32baf7" />
-        <stop offset="0" stop-color="#28befd" />
-        <stop offset="0" stop-color="#25c0ff" />
-        <stop offset="1" stop-color="#0e7aff" />
-        <stop offset="1" stop-color="#f75562" />
-      </linearGradient>
-    </defs>
-    <title>Logo</title>
-    <polygon
-      class="cls-1"
-      points="40.78 0 0 23.08 0 69.25 41.55 93.11 41.55 70.02 20.01 57.71 20.01 34.63 40.78 23.08 62.33 35.4 62.33 58.48 82.33 46.94 82.33 23.85 40.78 0"
-    />
-    <path
-      class="cls-2"
-      d="M49.64,38.13a6.47,6.47,0,0,1,.6,2.71v3.33a6.52,6.52,0,0,1-6.51,6.51h-7l3.78-7.07H35.31L31.5,50.73h0L29,55.34H40.11a8.86,8.86,0,0,0,.9.07h3.17a8.87,8.87,0,0,0,8.87-8.87V45.11A8.84,8.84,0,0,0,49.64,38.13Z"
-    />
-    <path
-      class="cls-3"
-      d="M48.54,41.13a4.68,4.68,0,0,0-4.61-4.38H30.43A4.61,4.61,0,0,0,35,41.36h11a1.18,1.18,0,0,1,.56.13,2.54,2.54,0,0,1,1.25,1.44A2.52,2.52,0,0,0,48.54,41.13Z"
-    />
-  </svg>
-</ng-template>
 <div class="dg-menu">
   <ng-container *ngFor="let menu of menus" class="menu-item">
     <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
