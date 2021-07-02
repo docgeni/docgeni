@@ -4,6 +4,7 @@
 module.exports = {
     mode: 'full',
     title: 'Docgeni',
+    description: '为 Angular 组件开发场景而生的文档工具',
     logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
