@@ -2,7 +2,7 @@
 title: "FAQ"
 ---
 ## How to deploy to a non-root directory of domain?
-By passing in `base-href` when executing the build command, or  by configuring the `baseHref` attribute in the configuration folder to achieve customization.
+By passing in `base-href` when executing the build command, or by configuring the `baseHref` attribute in the configuration.
 
 `docgeni build --prod --base-href=/xxx/`
 
