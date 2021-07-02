@@ -7,6 +7,7 @@ describe('translate OVERVIEW ans EXAMPLE', () => {
         const translate = new TranslatePipe({ locale: 'zh-cn' } as GlobalContext);
         expect(translate.transform('OVERVIEW')).toEqual('概览');
         expect(translate.transform('EXAMPLE')).toEqual('示例');
+        expect(translate.transform('EXAMPLE_NOT_FOUND')).toEqual('EXAMPLE_NOT_FOUND');
     });
 
     it('should translate correct for en-us', () => {
