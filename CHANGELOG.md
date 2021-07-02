@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
+
+
+### Bug Fixes
+
+* **template:** remove $yiq warning use math.div ([7c68eb3](https://github.com/docgeni/docgeni/commit/7c68eb328fa342b3ceb1975b7c9f05f8c980f3ab))
+* **template:** remove max-height: 100vh for dg-doc-viewer ([97e4944](https://github.com/docgeni/docgeni/commit/97e4944a51d17e8740d79d2ef5da14d35350866d))
+* **template:** replace 1000 to 100 for fix $yiq style ([4ef2a5b](https://github.com/docgeni/docgeni/commit/4ef2a5b4e90bfaa8dcfd5bd66cab2d69a0ca4f51))
+
+
+### Features
+
+* **core:** add clear method to DocSourceFile and refactor it use DocgeniHost [#177](https://github.com/docgeni/docgeni/issues/177) ([#193](https://github.com/docgeni/docgeni/issues/193)) ([4271f4c](https://github.com/docgeni/docgeni/commit/4271f4cf4f69f6dfa660f1d61c0f1a245ff47eb0))
+* **template:** auto switch to browser lang when it supported ([#191](https://github.com/docgeni/docgeni/issues/191)) ([5c72764](https://github.com/docgeni/docgeni/commit/5c7276425e452857a1d0392cacf06bed41356a46))
+* bundle scss and css([#188](https://github.com/docgeni/docgeni/issues/188)) ([cd3206c](https://github.com/docgeni/docgeni/commit/cd3206cfd6b31c87c4d26d7ad1ba49b17050a96d))
+
+
+### Reverts
+
+* revert $yiq use slash from [@use](https://github.com/use) "sass:math"; ([33d0265](https://github.com/docgeni/docgeni/commit/33d0265d914cd63f1a14e07acc9ecae66215d49f))
+
+
+
+
+
 ## [1.0.4](https://github.com/docgeni/docgeni/compare/v1.0.3...v1.0.4) (2021-06-25)
 
 
