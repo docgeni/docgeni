@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/docgeni/docgeni/compare/v1.0.6...v1.0.7) (2021-07-02)
+
+
+### Bug Fixes
+
+* **core:** remove default description, default is empty #OSP-154 ([d00bdc8](https://github.com/docgeni/docgeni/commit/d00bdc8b5d6e7713c893c1ac41199f4d7a7e5689)), closes [#OSP-154](https://github.com/docgeni/docgeni/issues/OSP-154)
+* **template:** set text-decoration: none to dg-tab-link hover fix confict ([04d0a5f](https://github.com/docgeni/docgeni/commit/04d0a5f91a7a5aad24b0c92b44322ce9dbc79eee))
+
+
+### Features
+
+* **template:** support en-us and zh-cn lang for overview and example #OSP-118 ([#198](https://github.com/docgeni/docgeni/issues/198)) ([c69a71a](https://github.com/docgeni/docgeni/commit/c69a71a3b982faa11e03a21917155c3e0c827bad)), closes [#OSP-118](https://github.com/docgeni/docgeni/issues/OSP-118)
+
+
+
+
+
 ## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
 
 
