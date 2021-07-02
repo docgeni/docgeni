@@ -6,7 +6,7 @@ export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
     title: 'Docgeni',
-    description: '为 Angular 组件开发场景而生的文档工具'
+    description: ''
 };
 
 const DOCGENI_LOCALE_KEY = 'docgeni-locale';
