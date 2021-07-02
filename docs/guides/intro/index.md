@@ -34,5 +34,5 @@ order: 10
 Docgeni 同时支持普通文档和组件文档的生成，当然对于一些纯文档的场景，使用 Docgeni 只生成 Markdown 普通文档也是可以的。
 
 # 参与贡献
-Docgeni 目前还处于开发中，欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni
+欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni
 
