@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/docgeni/docgeni/compare/v1.0.5...v1.0.6) (2021-07-02)
+
+
+### Bug Fixes
+
+* use index.scss for site-template ([6b1c45b](https://github.com/docgeni/docgeni/commit/6b1c45b0379f9663746b2e61b11a77131b27fbc7))
+
+
+
+
+
 ## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
 
 
