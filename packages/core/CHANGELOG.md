@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
+
+
+### Features
+
+* **core:** add clear method to DocSourceFile and refactor it use DocgeniHost [#177](https://github.com/docgeni/docgeni/issues/177) ([#193](https://github.com/docgeni/docgeni/issues/193)) ([4271f4c](https://github.com/docgeni/docgeni/commit/4271f4cf4f69f6dfa660f1d61c0f1a245ff47eb0))
+* bundle scss and css([#188](https://github.com/docgeni/docgeni/issues/188)) ([cd3206c](https://github.com/docgeni/docgeni/commit/cd3206cfd6b31c87c4d26d7ad1ba49b17050a96d))
+
+
+
+
+
 ## [1.0.4](https://github.com/docgeni/docgeni/compare/v1.0.3...v1.0.4) (2021-06-25)
 
 **Note:** Version bump only for package @docgeni/core
