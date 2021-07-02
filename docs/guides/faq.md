@@ -3,7 +3,7 @@ title: "常见问题"
 ---
 
 ## 如何部署到域名的非根目录?
-执行 build 命令的时候传入 `base-href` 即可实现自定义，或者在配置文件夹中配置`baseHref`属性。
+执行 build 命令的时候传入 `base-href` 即可实现自定义，或者在配置文件中配置`baseHref`属性。
 
 `docgeni build --prod --base-href=/xxx/`
 
