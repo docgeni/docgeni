@@ -5,11 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 const TRANSLATES = {
     'zh-cn': {
         OVERVIEW: '概览',
-        EXAMPLE: '示例'
+        EXAMPLES: '示例'
     },
     'en-us': {
         OVERVIEW: 'Overview',
-        EXAMPLE: 'Example'
+        EXAMPLES: 'Examples'
     }
 };
 @Pipe({ name: 'dgTranslate' })
