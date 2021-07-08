@@ -2944,10 +2944,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@worktile/pkg-manager@^0.0.1-beta.1":
-  version "0.0.1-beta.1"
-  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.1-beta.1.tgz#d04e57987d3f60d6cf5529b31cd2cc6dd10eacd8"
-  integrity sha512-qL74l64clpX5XC/Y90445dnA7GSmzZwbX7+HcQBQKQGWXtWZsUY/FEDzBAzLIpZMhJHMxSZz1U2sWT7psTGlFQ==
+"@worktile/pkg-manager@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.2.tgz#970ae8f46425e4c6a304913147f943bd82ba689d"
+  integrity sha512-NE2r3naLSNhoWLv8qdUUWH3KhkSRRlXcNOtBP3ExHqyhklFA5e+2XTaBNDG5C3oc2lkdShnTk/bz60M5hABxBw==
   dependencies:
     "@docgeni/toolkit" "^1.0.2"
     "@types/shelljs" "^0.8.8"

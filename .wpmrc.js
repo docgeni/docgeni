@@ -13,7 +13,8 @@ module.exports = {
         }
     ],
     skip: {
-        changelog: true
+        changelog: true,
+        branch: true
     },
     commitAll: true,
     hooks: {
