@@ -4,29 +4,87 @@
     display: block;
 
     .dg-launch {
-        background: $dg-launch-background;
+        overflow: hidden;
         text-align: center;
-        padding-top: 100px;
+        padding-top: 0;
+        height: 400px;
         h1 {
             color: $dg-black;
+            font-size: 77px;
+            letter-spacing: 1.1px;
+            font-weight: 700;
+            margin: 0;
+            padding-top: 80px;
+        }
+        p {
+            font-size: 14px;
+            color: $dg-gray-600;
         }
         .launch-description {
             margin-bottom: 20px;
         }
+        .btn {
+            font-size: 16px;
+            padding: 10px 30px;
+            border-radius: 200px;
+            border: none;
+        }
     }
-
-    .dg-features {
-        padding: 10px 60px;
-        display: flex;
-        .feature {
-            flex: 1 1 0;
-            text-align: center;
+    .dg-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 400px;
+        overflow: hidden;
+        z-index: -1;
+        img {
+            height: 100%;
+            width: 100%;
         }
     }
 
+    .dg-features {
+        padding: 0 20%;
+        display: flex;
+        justify-content: space-between;
+        display: flex;
+        flex-wrap: wrap;
+        img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+        .dg-feature {
+            flex: 0 0 calc(100% / 11 * 9 / 3);
+            text-align: center;
+            padding-top: 94px;
+        }
+        .dg-feature:nth-child(-n + 3) {
+            padding-top: 0;
+        }
+        .dg-feature-title {
+            color: $dg-gray-800;
+            font-size: 16px;
+            padding-bottom: 14px;
+        }
+        .dg-feature-description {
+            color: $dg-gray-600;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    }
+    .dg-extra-content {
+        padding: 0 20%;
+    }
+    .dg-hero,
+    .dg-features,
+    .dg-extra-content {
+        margin-bottom: 100px;
+    }
     @media (min-width: 768px) {
         .dg-launch {
-            padding: 100px 0px;
+            // padding: 100px 0px;
         }
     }
 }

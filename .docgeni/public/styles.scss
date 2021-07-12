@@ -2,3 +2,9 @@
 
 $primary: #3f51b5;
 @import '../../../packages/template/src/styles/index.scss';
+.dg-home {
+    .dg-launch {
+        padding-left: 20%;
+        text-align: unset;
+    }
+}

@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem, DocgeniMode } from '../interfaces/public-api';
+import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
@@ -21,7 +21,7 @@ export class GlobalContext {
     navs: NavigationItem[];
 
     docItems: NavigationItem[];
-
+    homeMeta: HomeDocMeta;
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
@@ -55,7 +55,8 @@ export class GlobalContext {
     initialize() {
         return new Promise((resolve, reject) => {
             this.http.get(`assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`).subscribe({
-                next: (response: { navs: NavigationItem[]; docs: NavigationItem[] }) => {
+                next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
+                    this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
                     this.docItems = response.docs;
                     resolve(response);
