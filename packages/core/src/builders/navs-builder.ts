@@ -138,14 +138,15 @@ export class NavsBuilder {
             if (!docFile) {
                 continue;
             }
-
-            obj[locale.key] = {
-                title: docFile.meta.title,
-                hero: docFile.meta.hero,
-                features: docFile.meta.features,
-                footer: docFile.meta.footer,
-                extra: docFile.output
-            };
+            if (Object.keys(docFile.meta).length || docFile.output) {
+                obj[locale.key] = {
+                    title: docFile.meta.title,
+                    hero: docFile.meta.hero,
+                    features: docFile.meta.features,
+                    footer: docFile.meta.footer,
+                    extra: docFile.output
+                };
+            }
         }
         return obj;
     }
