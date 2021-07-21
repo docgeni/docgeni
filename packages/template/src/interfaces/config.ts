@@ -6,7 +6,9 @@ export interface HomeDocMeta {
     hero: {
         title: string;
         description: string;
-        actions: { text: string; link: string }[];
+        banner: string;
+        actions: { text: string; link: string; btnType: 'outline-primary' | 'primary'; btnShape: 'round' | 'square' }[];
+        backgroundColor?: string;
     };
     features: {
         icon: string;
@@ -14,6 +16,7 @@ export interface HomeDocMeta {
         description: string;
     }[];
     footer: string;
+    extra: string;
 }
 
 export type DocgeniMode = 'full' | 'lite';

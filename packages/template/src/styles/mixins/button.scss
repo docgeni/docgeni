@@ -64,7 +64,13 @@
     }
 }
 
-@mixin dg-button-outline-variant($color, $color-hover: color-yiq($color), $active-background: $color, $active-border: $color) {
+@mixin dg-button-outline-variant(
+    $color,
+    $color-hover: color-yiq($color),
+    $active-background: $color,
+    $active-border: $color,
+    $btn-focus-width: 0px
+) {
     color: $color;
     border-color: $color;
 
@@ -94,11 +100,8 @@
 
         &:focus {
             // Avoid using mixin so we can pass custom focus shadow properly
-            @if $enable-shadows and $btn-active-box-shadow != none {
-                box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($color, 0.5);
-            } @else {
-                box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
-            }
+
+            box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
         }
     }
 }
@@ -110,4 +113,8 @@
     line-height: $line-height;
     // Manually declare to provide an override to the browser default
     @include dg-border-radius($border-radius, 0);
+}
+
+@mixin dg-button-radius-variant($border-radius) {
+    border-radius: $border-radius;
 }
