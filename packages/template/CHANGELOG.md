@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/docgeni/docgeni/compare/v1.0.6...v1.0.7) (2021-07-02)
+
+
+### Bug Fixes
+
+* **core:** remove default description, default is empty #OSP-154 ([d00bdc8](https://github.com/docgeni/docgeni/commit/d00bdc8b5d6e7713c893c1ac41199f4d7a7e5689)), closes [#OSP-154](https://github.com/docgeni/docgeni/issues/OSP-154)
+* **template:** set text-decoration: none to dg-tab-link hover fix confict ([04d0a5f](https://github.com/docgeni/docgeni/commit/04d0a5f91a7a5aad24b0c92b44322ce9dbc79eee))
+
+
+### Features
+
+* **template:** support en-us and zh-cn lang for overview and example #OSP-118 ([#198](https://github.com/docgeni/docgeni/issues/198)) ([c69a71a](https://github.com/docgeni/docgeni/commit/c69a71a3b982faa11e03a21917155c3e0c827bad)), closes [#OSP-118](https://github.com/docgeni/docgeni/issues/OSP-118)
+
+
+
+
+
+## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
+
+
+### Bug Fixes
+
+* **template:** remove $yiq warning use math.div ([7c68eb3](https://github.com/docgeni/docgeni/commit/7c68eb328fa342b3ceb1975b7c9f05f8c980f3ab))
+* **template:** remove max-height: 100vh for dg-doc-viewer ([97e4944](https://github.com/docgeni/docgeni/commit/97e4944a51d17e8740d79d2ef5da14d35350866d))
+* **template:** replace 1000 to 100 for fix $yiq style ([4ef2a5b](https://github.com/docgeni/docgeni/commit/4ef2a5b4e90bfaa8dcfd5bd66cab2d69a0ca4f51))
+
+
+### Features
+
+* **template:** auto switch to browser lang when it supported ([#191](https://github.com/docgeni/docgeni/issues/191)) ([5c72764](https://github.com/docgeni/docgeni/commit/5c7276425e452857a1d0392cacf06bed41356a46))
+
+
+### Reverts
+
+* revert $yiq use slash from [@use](https://github.com/use) "sass:math"; ([33d0265](https://github.com/docgeni/docgeni/commit/33d0265d914cd63f1a14e07acc9ecae66215d49f))
+
+
+
+
+
 ## [1.0.3](https://github.com/docgeni/docgeni/compare/v1.0.2...v1.0.3) (2021-06-17)
 
 

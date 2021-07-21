@@ -1,7 +1,7 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
 import { expect } from 'chai';
 import { toolkit } from '@docgeni/toolkit';
-import { createTestDocgeniHost, expectThrowAsync } from './utils';
+import { createTestDocgeniHost, expectThrowAsync } from '../src/testing';
 import { DocgeniHost } from '../src/docgeni-host';
 import path from 'path';
 import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
@@ -40,7 +40,7 @@ describe('#config', () => {
 
             expect(docgeni.config).deep.eq({
                 title: 'Docgeni',
-                description: '为 Angular 组件开发场景而生的文档工具',
+                description: '',
                 mode: 'lite',
                 theme: 'default',
                 baseHref: '/',

@@ -4,6 +4,7 @@ import { DocMeta } from '../types';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
+import { DocgeniHost } from '../docgeni-host';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -13,17 +14,19 @@ export interface DocSourceFileOptions {
     type?: DocType;
 }
 
-export class DocSourceFile {
+export class DocSourceFile<TMeta = DocMeta> {
     private emitted = false;
+    private host: DocgeniHost;
+    private outputPath?: string;
     public locale: string;
     public cwd: string;
     public base: string;
     public path: string;
     public type: DocType;
     public content: string;
-    public meta?: DocMeta;
+    public meta?: TMeta;
     public output: string;
-    public outputPath?: string;
+
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -60,28 +63,29 @@ export class DocSourceFile {
      */
     public get name() {
         if (!this.path) {
-            throw new Error('No path specified! Can not get stem.');
+            throw new Error('No path specified! can not get name.');
         }
         return path.basename(this.path, this.extname);
     }
 
-    constructor(options: DocSourceFileOptions) {
+    constructor(options: DocSourceFileOptions, host: DocgeniHost) {
         this.cwd = options.cwd;
         this.base = options.base;
         this.path = options.path;
         this.locale = options.locale;
         this.type = options.type || DocType.general;
+        this.host = host;
     }
 
     private async read(): Promise<string> {
-        this.content = await toolkit.fs.readFileContent(this.path, 'utf-8');
+        this.content = await this.host.readFile(this.path);
         return this.content;
     }
 
     public async build() {
         this.emitted = false;
         const content = await this.read();
-        const result = Markdown.parse<DocMeta>(content);
+        const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
         this.output = Markdown.toHTML(result.body);
     }
@@ -91,8 +95,20 @@ export class DocSourceFile {
             return;
         }
         const outputPath = this.getOutputPath(destRootPath);
-        await toolkit.fs.ensureWriteFile(outputPath, this.output);
+        await this.host.writeFile(outputPath, this.output);
+        if (this.outputPath && this.outputPath !== outputPath) {
+            await this.host.delete(this.outputPath);
+        }
+        this.outputPath = outputPath;
         this.emitted = true;
+    }
+
+    public async clear() {
+        if (this.outputPath) {
+            await this.host.delete(this.outputPath);
+            this.output = '';
+            this.meta = null;
+        }
     }
 
     public getOutputDir(outputRootPath: string) {

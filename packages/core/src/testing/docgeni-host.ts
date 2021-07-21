@@ -1,5 +1,5 @@
 import { virtualFs } from '@angular-devkit/core';
-import { DocgeniHostImpl } from './../../src/docgeni-host';
+import { DocgeniHostImpl } from '../docgeni-host';
 
 export function createTestDocgeniHost(host?: virtualFs.Host) {
     return new DocgeniHostImpl(host || new virtualFs.test.TestHost());
