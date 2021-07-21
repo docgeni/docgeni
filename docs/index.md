@@ -3,12 +3,13 @@ title: Docgeni - 为 Angular 组件开发场景而生的文档工具
 order: 10
 hero:
   title: Docgeni
-  description: A modern documentation generator for doc and Angular Lib
+  description: 开箱即用的 Angular 组件文档生成工具
   banner: assets/images/home/banner.png
   backgroundColor:
   actions:
     - text: 快速上手
       link: /guides/intro/getting-started
+      btnShape: round
 features:
   - icon: assets/images/home/feature1.png
     title: 开箱即用

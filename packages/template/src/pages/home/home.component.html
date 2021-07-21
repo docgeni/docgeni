@@ -23,7 +23,8 @@
       </div>
     </div>
   </div>
-
-  <div class="dg-extra-content" [innerHTML]="extraContent"></div>
+  <div class="dg-extra-content" *ngIf="global.homeMeta.extra">
+    <dg-content-viewer [url]="global.homeMeta.extra | dgAssetsContentPath"></dg-content-viewer>
+  </div>
   <dg-footer>{{ global.homeMeta.footer }}</dg-footer>
 </ng-container>

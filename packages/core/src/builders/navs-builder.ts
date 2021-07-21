@@ -21,7 +21,6 @@ export class NavsBuilder {
             homeMeta?: {};
         }
     > = {};
-    private localesHomeMetaMap: Record<string, HomeDocMeta> = {};
     private get docFiles() {
         return this.docgeni.docsBuilder.docs;
     }
@@ -34,7 +33,6 @@ export class NavsBuilder {
         this.localeNavsMap = buildNavsMapForLocales(this.config.locales, this.rootNavs);
         this.docgeni.docsBuilder.hooks.buildDocsSucceed.tap('NavsBuilderDocs', async docsBuilder => {
             this.localesDocsNavsMap = await this.buildDocNavs();
-            this.localesHomeMetaMap = await this.buildHomeMeta();
             this.emitNavs();
         });
         this.docgeni.librariesBuilders.hooks.buildLibrariesSucceed.tap('NavsBuilderLibs', () => {
@@ -42,7 +40,6 @@ export class NavsBuilder {
         });
 
         this.localesDocsNavsMap = await this.buildDocNavs();
-        this.localesHomeMetaMap = await this.buildHomeMeta();
         this.emitNavs();
     }
 
@@ -63,7 +60,7 @@ export class NavsBuilder {
                     {
                         navs: localeNavsMap[locale.key],
                         docs: docItems.concat(componentDocItems),
-                        homeMeta: this.localesHomeMetaMap[locale.key]
+                        homeMeta: this.localesDocsNavsMap[locale.key].homeMeta
                     },
                     null,
                     2
@@ -105,6 +102,7 @@ export class NavsBuilder {
             {
                 navs: NavigationItem[];
                 docItems: DocItem[];
+                homeMeta?: {};
             }
         > = {};
         for (const locale of this.config.locales) {
@@ -113,9 +111,21 @@ export class NavsBuilder {
             if (await toolkit.fs.pathExists(localeDocsPath)) {
                 const docItems: DocItem[] = [];
                 const navs = await this.buildDocDirNavs(localeDocsPath, locale.key, docItems, undefined, isDefaultLocale ? localeKeys : []);
+                const docFile = this.docFiles.get(path.resolve(localeDocsPath, 'index.md'));
+                let obj;
+                if (docFile && !docFile.meta.hidden) {
+                    obj = {
+                        title: docFile.meta.title,
+                        hero: docFile.meta.hero,
+                        features: docFile.meta.features,
+                        footer: docFile.meta.footer,
+                        extra: docFile.getRelativeOutputPath()
+                    };
+                }
                 localesDocsDataMap[locale.key] = {
                     navs,
-                    docItems
+                    docItems,
+                    homeMeta: obj
                 };
 
                 if (this.docgeni.config.mode === 'full') {
@@ -128,27 +138,6 @@ export class NavsBuilder {
             }
         }
         return localesDocsDataMap;
-    }
-    private async buildHomeMeta() {
-        const obj: Record<string, HomeDocMeta> = {};
-        for (const locale of this.config.locales) {
-            const localeDocsPath = this.getLocaleDocsPath(locale);
-            const absDocPath = path.resolve(localeDocsPath, 'index.md');
-            const docFile = this.docFiles.get(absDocPath);
-            if (!docFile) {
-                continue;
-            }
-            if (Object.keys(docFile.meta).length || docFile.output) {
-                obj[locale.key] = {
-                    title: docFile.meta.title,
-                    hero: docFile.meta.hero,
-                    features: docFile.meta.features,
-                    footer: docFile.meta.footer,
-                    extra: docFile.output
-                };
-            }
-        }
-        return obj;
     }
     private async buildDocDirNavs(
         dirPath: string,

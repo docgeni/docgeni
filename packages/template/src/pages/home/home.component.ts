@@ -3,7 +3,7 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
 import { HomeDocMeta } from '@docgeni/template/interfaces';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
     selector: 'dg-home',
@@ -13,13 +13,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;
     hasHome = false;
-    extraContent: SafeHtml;
     constructor(
         public global: GlobalContext,
         router: Router,
         navigationService: NavigationService,
         pageTitle: PageTitleService,
-        private domeSan: DomSanitizer
+        private mediaMatcher: MediaMatcher
     ) {
         if (!global.homeMeta) {
             if (global.config.mode === 'full') {
@@ -41,11 +40,14 @@ export class HomeComponent implements OnInit {
         }
         pageTitle.title = 'Home';
         this.hasHome = true;
-        this.extraContent = this.domeSan.bypassSecurityTrustHtml(global.homeMeta.extra);
     }
 
     ngOnInit(): void {}
     btnClass(item: HomeDocMeta['hero']['actions'][0]) {
-        return ['dg-btn-lg', `dg-btn-${item.btnType || 'primary'}`, `dg-btn-${item.btnShape || 'round'}`];
+        let btnSize = 'dg-btn-xlg';
+        if (this.mediaMatcher.matchMedia('(max-width: 768px)').matches) {
+            btnSize = 'dg-btn-md';
+        }
+        return [btnSize, `dg-btn-${item.btnType || 'primary'}`, `dg-btn-${item.btnShape || ''}`];
     }
 }

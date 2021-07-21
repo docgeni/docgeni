@@ -132,7 +132,8 @@ describe('docgeni build', () => {
                     order: 1,
                     contentPath: 'docs/guide/intro/intro2.html'
                 }
-            ]
+            ],
+            homeMeta: { extra: 'docs/index.html' }
         };
         await expect(JSON.parse(navigations)).toEqual(
             expectedNavigations,

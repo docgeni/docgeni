@@ -44,8 +44,14 @@ fieldset:disabled a.btn {
 //
 
 @each $color, $value in $dg-theme-colors {
-    .dg-btn-#{$color} {
+    .dg-btn.dg-btn-outline-#{$color} {
+        @include dg-button-outline-variant($value, white);
+    }
+    .dg-btn.dg-btn-#{$color} {
         @include dg-button-variant($value, $value);
+        &:hover {
+            box-shadow: 0 2px 5px 1px rgba($value, 0.6);
+        }
     }
 }
 
@@ -93,6 +99,19 @@ fieldset:disabled a.btn {
 //     @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
 // }
 
+.dg-btn-xsm {
+    @include dg-button-size(
+        $dg-btn-padding-y-xsm,
+        $dg-btn-padding-x-xsm,
+        $dg-btn-font-size-xsm,
+        $dg-btn-line-height-xsm,
+        $dg-btn-border-radius-xsm
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-xsm;
+    }
+}
+
 .dg-btn-sm {
     @include dg-button-size(
         $dg-btn-padding-y-sm,
@@ -103,6 +122,45 @@ fieldset:disabled a.btn {
     );
     .dg-icon {
         font-size: $dg-btn-font-size-sm;
+    }
+}
+
+.dg-btn-md {
+    @include dg-button-size(
+        $dg-btn-padding-y-md,
+        $dg-btn-padding-x-md,
+        $dg-btn-font-size-md,
+        $dg-btn-line-height-md,
+        $dg-btn-border-radius-md
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-md;
+    }
+}
+
+.dg-btn-lg {
+    @include dg-button-size(
+        $dg-btn-padding-y-lg,
+        $dg-btn-padding-x-lg,
+        $dg-btn-font-size-lg,
+        $dg-btn-line-height-lg,
+        $dg-btn-border-radius-lg
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-lg;
+    }
+}
+
+.dg-btn-xlg {
+    @include dg-button-size(
+        $dg-btn-padding-y-xlg,
+        $dg-btn-padding-x-xlg,
+        $dg-btn-font-size-xlg,
+        $dg-btn-line-height-xlg,
+        $dg-btn-border-radius-xlg
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-xlg;
     }
 }
 
@@ -128,34 +186,7 @@ input[type='button'] {
         width: 100%;
     }
 }
-.dg-btn.dg-btn-primary {
-    background-color: $dg-primary;
-    color: #fff;
-    &:hover {
-        background-color: $dg-primary;
-        color: #fff;
-    }
-}
 
-.dg-btn.dg-btn-outline-primary {
-    border: 1px solid $dg-primary;
-    color: $dg-primary;
-    &:hover {
-        border: 1px solid $dg-primary;
-        color: $dg-primary;
-    }
-}
-@mixin btn-square-radius($border-radius) {
-    border-radius: $border-radius;
-}
-.dg-btn.dg-btn-square {
-    @include btn-square-radius(0px);
-}
 .dg-btn.dg-btn-round {
-    @include btn-square-radius(8888px);
-}
-.dg-btn.dg-btn-lg {
-    padding: 10px 31px;
-    font-size: 16px;
-    line-height: 1.375;
+    @include dg-button-radius-variant(8888px);
 }
