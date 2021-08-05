@@ -3,33 +3,33 @@ title: Route Navigation & Menu
 order: 20
 ---
 
-# 基本概念
+# Basic concepts
 
-`Docgeni` 中，不管是头部的导航，左侧的菜单，还是具体某个页面文档，统一叫 `NavigationItem`, 存储在一个树形结构中，那么为了更好的理解，我们把这些对象稍微做了一些区分。
+In `Docgeni`, whether it is the head navigation, the left menu, or a specific page document, unified called `NavigationItem` and stored in a tree structure. For a better understanding, we have made a slight distinction between these objects.
 
-- `Channel`: 频道，一级导航，`full`模式下的头部导航栏，每个频道都会有个独立的路由
-- `Category`: 类别，在左侧菜单中会展示成一个分组，没有内容
-- `DocItem`: 普通页面文档，属于某个 `Channel` 或者 `Category`，有独立的路由和内容
-- `ComponentDocItem`: 组件文档，和 `DocItem` 类似，但是展示的形态和属性不同
+- `Channel`: First-level navigation, head navigation bar in `full` mode, each channel will have an independent routing
+- `Category`: In the left menu, it will be displayed as a group, no content
+- `DocItem`: Common page document, belonging to a `Channel` or `Category`, with independent routing and content
+- `ComponentDocItem`: Component document, similar to `DocItem`, but show different form and properties
 
-如下示例中，`guides`是一个频道`Channel`，`intro`是一个类别`Category`，`getting-started`是一个普通页面文档`DocItem`。
+The example below, `guides` is a `Channel`, `intro` is a `Category`, and `getting-started` is a common page document `DocItem`.
 
 ```json
 ...
 {
   "id": "guides",
   "path": "guides",
-  "title": "指南",
+  "title": "Guides",
   "items": [
     {
       "id": "intro",
       "path": "guides/intro",
-      "title": "介绍",
+      "title": "Intro",
       "items": [
         {
           "id": "getting-started",
           "path": "guides/getting-started",
-          "title": "快速开始",
+          "title": "Getting Started",
           "contentPath": "/docs/guides/intro/getting-started.html"
         },
         ...
@@ -40,56 +40,56 @@ order: 20
 }
 ```
 
-# 约定路由和菜单
-`Docgeni`会自动根据`docs`目录结构和 FrontMatter 生成对应的文档导航、菜单和路由。
-- `full`模式下一级目录生成频道，也就是头部导航
-- `full`模式下非一级目录以及`lite`模式下的所有目录生成类别，也就是左侧菜单的分组，无路由
-- 所有`.md`文件生成一个普通页面文档
+# Conventional routing and menu
+`Docgeni` will automatically generate corresponding document navigation, menus and routes based on the `docs` directory structure and FrontMatter.
+- The first-level directories generate channels in `full` mode, which is the head navigation
+- Non-first-level directories in `full` mode and all directories in `lite` mode generate categories,  which is the grouping of the left menu, without routing
+- All `.md` files generate their own common page document
 
-## 默认路由生成规则
-- 频道取文件夹的命名，并转换成 Param Case 命名，如：`GettingStarted` => `getting-started`
-- 页面文档取文件名，去除`.md`后缀，并转换成 Param Case 命名，同时会加上所属频道和类别的路由，如：`GettingStarted.md` => `/guides/intro/getting-started`
+## Default route generation rules
+- The channel takes the folder name and converts it to Param Case name, such as: `GettingStarted` => `getting-started`
+- Take the file name of the page document, remove the `.md` suffix, convert it to Param Case name, then add the route of the channel and category to which it belongs, such as: `GettingStarted.md` => `/guides/intro/getting-started`
 
-## 默认标题生成规则
-- 频道和类别取目录的名称，并转换成标题，如：`Guide`、`Intro`
-- 页面文档取文件名，去除`.md`后缀，并转换成标题，如：`Getting Started`、`Motivation`
+## Default title generation rules
+- Channels and categories take the name of the directory and convert it to a title, such as: `Guide`, `Intro`
+- The page document takes the file name, removes the `.md` suffix, then converts it to a title, such as: `Getting Started`, `Motivation`
 
-## 文件路径示例
-如下文件路径对应两种模式下生成的导航、类别和页面如下:
+## File path example
+The file paths correspond to the navigation, categories and pages generated in the two modes as follows:
 
-文件路径| full 模式 | lite 模式 
+file path| full mode | lite mode 
 ---| --- | --- 
-/docs/index.md| - 频道: 无 <br > - 类别: 无 <br > - 页面路由: / | - 频道: 无 <br > - 类别: 无 <br > - 页面路由: /
-/docs/getting-started.md| - 频道: 无 <br > - 类别: 无 <br > - 页面路由: /getting-started | - 频道: 无 <br > - 类别: 无 <br > - 页面路由: /getting-started
-/docs/guide/index.md| - 频道: guide <br > - 类别: 无 <br > - 页面路由: /guide | - 频道: 无 <br > - 类别: guide <br > - 页面路由: /guide
-/docs/guide/hello.md| - 频道: guide <br > - 类别: 无 <br > - 页面路由: /guide/hello | - 频道: 无 <br > - 类别: guide <br > - 页面路由: /guide/hello
-/docs/guide/basic/hello.md| - 频道: guide <br > - 类别: basic <br > - 页面路由: /guide/basic/hello | - 频道: 无 <br > - 类别: basic <br > - 页面路由: /guide/basic/hello
+/docs/index.md| - Channel: none <br > - Category: none <br > - Page routing: / | - Channel: none <br > - Category: none <br > - Page routing: /
+/docs/getting-started.md| - Channel: none <br > - Category: none <br > - Page routing: /getting-started | - Channel: none <br > - Category: none <br > - Page routing: /getting-started
+/docs/guide/index.md| - Channel: guide <br > - Category: none <br > - Page routing: /guide | - Channel: none <br > - Category: guide <br > - Page routing: /guide
+/docs/guide/hello.md| - Channel: guide <br > - Category: none <br > - Page routing: /guide/hello | - Channel: none <br > - Category: guide <br > - Page routing: /guide/hello
+/docs/guide/basic/hello.md| - Channel: guide <br > - Category: basic <br > - Page routing: /guide/basic/hello | - Channel: none <br > - Category: basic <br > - Page routing: /guide/basic/hello
 
 
-# 自定义配置
-对于普通页面文档，想要自定义路由，设置标题，可以使用名为`path`和`title`的`FrontMatter`进行配置。
+# Customize configuration
+For common page documents, if you want to customize the route and set the title, you can use the `FrontMatter` named `path` and `title` to configure.
 ```markdown
 ---
 path: getting-stared
-title: 快速开始
+title: Getting Started
 ---
 ```
 
-对于频道和类别来说，配置信息存储在当前文件夹下的`index.md`，通过修改该文件的`FrontMatter`进行自定义配置，如果`index.md`也有内容，则会生成一个标题和所属频道或者类别相同的页面，如果想要单独设置不同的配置，请重新创建一个非`index.md`页面文件。
+For channels and categories, the configuration information is stored in the `index.md` under the current folder. Customize the configuration by modifying the `FrontMatter` of the file. If the `index.md` also has content, a page which title is the same as its channel or category will be generated, if you want to set different configurations separately, please re-create a non-`index.md` page file.
 
-# 频道的生成
-`Docgeni`中的频道只有在`full`模式下才会存在，有两种形式存在：
-- 配置文件`navs`数组中的一级数据
-- `docs`文件夹下自动识别的一级文件夹
+# Channel generation
+Channels only exist in `full` mode in `Docgeni`, and there are two forms:
+- The first-level data in the configuration file `navs` array
+- The first-level folder automatically identified under the `docs` folder
 
-这里需要注意的是，`docs`文件夹下自动识别的频道会默认插入到配置的`navs`数组的底部，如果想要控制展示的位置，可以插入一个`null`进行占位，如下面的示例，自动生成的频道会插入到导航的顶部。
+It should be noted here that the automatically recognized channel under the `docs` folder will be inserted at the bottom of the configured `navs` array by default. If you want to control the display position, you can insert a `null` as a placeholder, as shown below example, the automatically generated channel will be inserted at the top of the navigation.
 ```ts
 module.exports = {
     ...
     navs: [
         null,
          {
-            title: '组件',
+            title: 'Components',
             path: 'components',
             lib: 'alib'
         },
@@ -103,14 +103,17 @@ module.exports = {
 }
 ```
 
-# 频道、类别和页面的排序
-默认以文件夹和文件的文件名作为排序规则。
+# Sorting of channels, categories and pages
+The file names of folders and files are used as sorting rules by default.
 
-可以使用名为`order`的`FrontMatter`进行配置，按照数字大小升序。
+It can be configured by `FrontMatter` named `order`, in ascending order of number.
 ```markdown
 ---
 order: 10
 ---
 ```
+
+# More configuration
+For more configuration, please refer to [Front Matter](configuration/front-matter)
 
 
