@@ -1,15 +1,15 @@
 ---
-title: Libraries Navigation & Menu
+title: Library Navigation & Menu
 order: 30
 ---
 
-组件文档的展现形式如下，包含概览、示例和API，同时左侧菜单展示所属类别，在`full`模式下属于某个频道。
+The component documentation is presented as follows, including overview, examples, and API. At the same time, the left menu shows its category, which belongs to a channel in `full` mode.
 
 ![Lib Component](https://cdn.pingcode.com/open-sources/docgeni/lib-component.png)
 
-# 类库导航
-类库通常就是`Angular`的组件库，`Docgeni`会把组件的文档和普通的页面文档严格区分开，展示形式也会有很大的不同。
-对于类库文档来说，所属频道必须要手动通过 `navs` 配置：
+# Library navigation
+The library is usually the component library of `Angular`. `Docgeni` will strictly distinguish the document of the component from the common page document, and the presentation form will be very different.
+For library documents, the channel must be manually configured through `navs`:
 
 ```ts
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     navs: [
         null,
          {
-            title: '组件',
+            title: 'Components',
             path: 'components',
             lib: 'alib'
         }
@@ -32,10 +32,10 @@ module.exports = {
 }
 ```
 
-# 类库配置
-`Docgeni` 可以同时支持多个类库，比如 Angular 官方的[Material](https://material.angular.io/)其实就是包含 `CDK` 和`Components`两个类库的，所以多类库的配置存放在`libs`数组中。
+# Library configuration
+`Docgeni` can support multiple libraries at the same time. For example, the official Angular [Material](https://material.angular.io/) actually contains two libraries `CDK` and `Components`, so the configuration of the multiple libraries is stored in the `libs` array.
 
-`Docgeni`会自动扫描该类库的`rootDir`，根目录下的每个文件夹识别成一个组件模块，每个组件会生成一个组件文档，更多配置查看[类库配置](http://docgeni.org/configuration/lib)
+`Docgeni` will automatically scan the `rootDir` of the library configuration. Each folder in the root directory is identified as a component module, and each component module will generate a component document. For more configuration, please refer to [Lab Configuration](configuration/lib).
 
 ```json
 ...
@@ -46,8 +46,8 @@ module.exports = {
 }
 ```
 
-# 组件的类别
-对于组件库来说，如果有很多组件，需要一个类别把这些组件区分开，每个类别展示成一个菜单，普通页面文档来说是通过文件夹区分类别，对于组件库来说按照文件夹区分不是一个好的选择，所以`Docgeni`提供了自定义配置的方式配置类别，每个类别会设置一个唯一的 id 作为类别的 key，在对应的组件文档中通过设置名为`category`的`FrontMatter`配置上类别的id即可。
+# Component category
+For the component library, the category which displayed as a menu is needed to distinguish components if there are many components. Common page documents are classified by folders, but it is not a good choice for component libraries to distinguish by folders. `Docgeni` provides a custom way to configure categories, you should configure the id of the category by setting the `FrontMatter` named `category` in the corresponding component document.
 
 ```json
 ...
@@ -57,12 +57,20 @@ module.exports = {
     categories: [
       {
         id: 'general',
-        title: '通用'
+        title: 'General'
       },
       {
         id: 'layout',
-        title: '布局'
+        title: 'Layout'
       }
   ]
 }
+```
+
+Component overview document `/../../button/doc/en-us.md`
+```md
+---
+category: general
+title: Button
+---
 ```

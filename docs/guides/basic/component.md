@@ -241,7 +241,7 @@ YAML 格式示例如下：
         default: primary
       - name: alibSize
         type: string
-        description: '按钮的大小，支持 \`sm | md | lg\`'alib-button 时，只能使用该参数控制类型
+        description: 按钮的大小，支持 `sm | md | lg`
         default: md
 ```
 
@@ -272,7 +272,7 @@ JSON格式示例如下：
 
 ## 参数说明
 
-- `type`: 件的类型，支持`directive`、`component`、`class`、`interface`
+- `type`: 组件的类型，支持`directive`、`component`、`class`、`interface`
 - `name`: 组件的名称
 - `description`: 组件的描述，支持 Markdown 语法
 - `properties`: 组件的属性列表
