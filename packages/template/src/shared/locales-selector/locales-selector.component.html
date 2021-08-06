@@ -1,0 +1,9 @@
+<select
+  *ngIf="global.config.locales && global.config.locales.length > 1"
+  name="locale"
+  [(ngModel)]="locale"
+  (ngModelChange)="localeModelChange()"
+>
+  <option *ngFor="let locale of global.config.locales" [value]="locale.key">{{ locale.name }}</option>
+</select>
+<div class="dg-selector-arrow"></div>

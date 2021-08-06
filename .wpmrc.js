@@ -1,5 +1,5 @@
 module.exports = {
-    defaultBranch: 'master',
+    allowBranch: ['master', 'v1.0.*'],
     bumpFiles: [
         'package.json',
         './packages/site/package.json',
@@ -13,7 +13,8 @@ module.exports = {
         }
     ],
     skip: {
-        changelog: true
+        changelog: true,
+        branch: true
     },
     commitAll: true,
     hooks: {

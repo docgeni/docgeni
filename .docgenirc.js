@@ -4,7 +4,8 @@
 module.exports = {
     mode: 'full',
     title: 'Docgeni',
-    logoUrl: 'https://cdn.worktile.com/open-sources/docgeni/logos/docgeni.png',
+    description: '为 Angular 组件开发场景而生的文档工具',
+    logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
     navs: [
         null,

@@ -8,22 +8,8 @@
     right: 0;
 }
 
-.dg-mode-lite {
-    .dg-main {
-        top: 0;
-    }
-    .dg-layout {
-        .dg-sidebar {
-            background: $dg-gray-100;
-            top: 0;
-        }
-    }
-    .dg-doc-viewer {
-        flex: auto;
-        padding: 30px 50px;
-        max-height: 100vh;
-        margin-left: 300px;
-    }
+.dg-scroll-container {
+    overflow: auto;
 }
 
 .dg-layout {
@@ -31,6 +17,7 @@
     flex-direction: column;
     flex: auto;
     // height: 0;
+    // overflow: auto;
     .dg-sidebar {
         flex: 0 0 auto;
         width: 300px;
@@ -42,37 +29,71 @@
         bottom: 0;
     }
 
-    .content {
+    .dg-doc-viewer {
         flex: auto;
         padding: 30px 50px;
-        // overflow: auto;
-        max-height: 100vh;
         margin-left: 300px;
+        // max-height: 100vh;
+
+        // 单个页面，没有频道，也就没有左侧菜单，间距为 0
+        &--single {
+            margin-left: 0px;
+        }
+    }
+
+    .dg-doc-viewer-backdrop {
+        position: absolute;
+        transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s 0.4s;
+        background-color: transparent;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 
     @include dg-media-breakpoint-down('md') {
         &.dg-sidebar-show {
             .dg-sidebar {
                 display: block;
+                left: 0;
+                background: $dg-gray-100;
             }
 
-            .dg-doc-viewer {
-                margin-left: 300px;
+            .dg-doc-viewer-backdrop {
+                transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 1;
             }
         }
 
         .dg-sidebar {
-            display: none;
+            z-index: 2;
+            transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s;
+            left: -300px;
         }
 
-        .content {
-            margin-left: 0px;
-            padding: 0;
-        }
+        // .dg-content {
+        //     margin-left: 0px;
+        //     padding: 0;
+        // }
 
         .dg-doc-viewer {
             margin-left: 0px;
             padding: 20px 15px;
+            position: relative;
+        }
+    }
+}
+
+.dg-mode-lite {
+    .dg-main {
+        top: 0;
+    }
+    .dg-layout {
+        .dg-sidebar {
+            background: $dg-gray-100;
+            top: 0;
         }
     }
 }

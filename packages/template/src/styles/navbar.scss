@@ -10,7 +10,13 @@
     justify-content: space-between;
     font-size: $dg-font-size-md;
     z-index: 100;
-
+    .nav.nav-spacer {
+        display: flex;
+        visibility: hidden;
+        width: 0;
+        margin: 0;
+        flex: 0 0 auto;
+    }
     .navbar-brand {
         display: inline-flex;
         align-items: center;
@@ -61,18 +67,6 @@
             .dg-icon {
                 font-size: 32px;
             }
-        }
-
-        .locales-selector {
-            padding: 0.374rem 10px;
-            width: 70px;
-            height: 32px;
-            outline: none;
-            appearance: none;
-            // border: 1px solid $gray-400;
-            // &:hover {
-            //     border-color: $primary;
-            // }
         }
 
         .search-container {
@@ -179,13 +173,6 @@
                     color: $dg-primary;
                     background: rgba($dg-primary, 0.12);
                 }
-            }
-        }
-
-        .locales-selector {
-            border: 1px solid $dg-gray-400;
-            &:hover {
-                border-color: $dg-primary;
             }
         }
     }

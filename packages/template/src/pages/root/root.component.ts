@@ -48,6 +48,8 @@ export class RootComponent {
 
     @HostBinding(`class.dg-layout`) isLayout = true;
 
+    @HostBinding(`class.dg-scroll-container`) isScrollContainer = this.global.config.mode === 'lite';
+
     @HostBinding(`class.dg-sidebar-show`) get showSidebar() {
         return this.navigationService.showSidebar;
     }

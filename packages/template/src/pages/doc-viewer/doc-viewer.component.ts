@@ -17,6 +17,8 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     // 独立展示的页面，不属于任何频道
     @HostBinding(`class.dg-doc-viewer--single`) isSingle = false;
 
+    // @HostBinding(`class.dg-scroll-container`) isScrollContainer = this.global.config.mode === 'lite';
+
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 
@@ -49,6 +51,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             // component doc
             if (id) {
                 this.navigationService.selectDocItem(id);
+                this.navigationService.resetShowSidebar();
             } else {
                 // doc
                 const path = this.route.snapshot.routeConfig.path;
@@ -77,6 +80,12 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         if (this.tableOfContents) {
             this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
             this.tableOfContents.updateScrollPosition();
+        }
+    }
+
+    close() {
+        if (this.navigationService.showSidebar) {
+            this.navigationService.toggleSidebar();
         }
     }
 

@@ -17,8 +17,9 @@ export class DocHeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {}
 
-    toggleSidebar() {
+    toggleSidebar(event: Event) {
         this.navigationService.toggleSidebar();
+        event.stopPropagation();
     }
 
     ngOnDestroy() {

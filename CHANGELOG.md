@@ -3,6 +3,103 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/docgeni/docgeni/compare/v1.0.6...v1.0.7) (2021-07-02)
+
+
+### Bug Fixes
+
+* **core:** remove default description, default is empty #OSP-154 ([d00bdc8](https://github.com/docgeni/docgeni/commit/d00bdc8b5d6e7713c893c1ac41199f4d7a7e5689)), closes [#OSP-154](https://github.com/docgeni/docgeni/issues/OSP-154)
+* **template:** set text-decoration: none to dg-tab-link hover fix confict ([04d0a5f](https://github.com/docgeni/docgeni/commit/04d0a5f91a7a5aad24b0c92b44322ce9dbc79eee))
+
+
+### Features
+
+* **template:** support en-us and zh-cn lang for overview and example #OSP-118 ([#198](https://github.com/docgeni/docgeni/issues/198)) ([c69a71a](https://github.com/docgeni/docgeni/commit/c69a71a3b982faa11e03a21917155c3e0c827bad)), closes [#OSP-118](https://github.com/docgeni/docgeni/issues/OSP-118)
+
+
+
+
+
+## [1.0.6](https://github.com/docgeni/docgeni/compare/v1.0.5...v1.0.6) (2021-07-02)
+
+
+### Bug Fixes
+
+* use index.scss for site-template ([6b1c45b](https://github.com/docgeni/docgeni/commit/6b1c45b0379f9663746b2e61b11a77131b27fbc7))
+
+
+
+
+
+## [1.0.5](https://github.com/docgeni/docgeni/compare/v1.0.4...v1.0.5) (2021-07-02)
+
+
+### Bug Fixes
+
+* **template:** remove $yiq warning use math.div ([7c68eb3](https://github.com/docgeni/docgeni/commit/7c68eb328fa342b3ceb1975b7c9f05f8c980f3ab))
+* **template:** remove max-height: 100vh for dg-doc-viewer ([97e4944](https://github.com/docgeni/docgeni/commit/97e4944a51d17e8740d79d2ef5da14d35350866d))
+* **template:** replace 1000 to 100 for fix $yiq style ([4ef2a5b](https://github.com/docgeni/docgeni/commit/4ef2a5b4e90bfaa8dcfd5bd66cab2d69a0ca4f51))
+
+
+### Features
+
+* **core:** add clear method to DocSourceFile and refactor it use DocgeniHost [#177](https://github.com/docgeni/docgeni/issues/177) ([#193](https://github.com/docgeni/docgeni/issues/193)) ([4271f4c](https://github.com/docgeni/docgeni/commit/4271f4cf4f69f6dfa660f1d61c0f1a245ff47eb0))
+* **template:** auto switch to browser lang when it supported ([#191](https://github.com/docgeni/docgeni/issues/191)) ([5c72764](https://github.com/docgeni/docgeni/commit/5c7276425e452857a1d0392cacf06bed41356a46))
+* bundle scss and css([#188](https://github.com/docgeni/docgeni/issues/188)) ([cd3206c](https://github.com/docgeni/docgeni/commit/cd3206cfd6b31c87c4d26d7ad1ba49b17050a96d))
+
+
+### Reverts
+
+* revert $yiq use slash from [@use](https://github.com/use) "sass:math"; ([33d0265](https://github.com/docgeni/docgeni/commit/33d0265d914cd63f1a14e07acc9ecae66215d49f))
+
+
+
+
+
+## [1.0.4](https://github.com/docgeni/docgeni/compare/v1.0.3...v1.0.4) (2021-06-25)
+
+
+### Bug Fixes
+
+* **toolkit:** incorrect succuss to success ([eeaeb7a](https://github.com/docgeni/docgeni/commit/eeaeb7afa2187ef6f9af24487389ca569732306d))
+
+
+
+
+
+## [1.0.3](https://github.com/docgeni/docgeni/compare/v1.0.2...v1.0.3) (2021-06-17)
+
+
+### Bug Fixes
+
+* **template:** set position sticky to dg-toc and add dg-scroll-container ([434b244](https://github.com/docgeni/docgeni/commit/434b24479aec91652bc2d647797c58386af0adff))
+
+
+### Features
+
+* **template:** add language switch in lite mode ([#182](https://github.com/docgeni/docgeni/issues/182)) ([5e80d2c](https://github.com/docgeni/docgeni/commit/5e80d2c53b6a764ba00b595e3fed55fb231c64a4))
+
+
+
+
+
+## [1.0.2](https://github.com/docgeni/docgeni/compare/v1.0.1...v1.0.2) (2021-06-07)
+
+
+### Bug Fixes
+
+* **core:** remove `include` dirs from `exclude` for scanning lib components  [#179](https://github.com/docgeni/docgeni/issues/179) ([fa02c1e](https://github.com/docgeni/docgeni/commit/fa02c1ea576f438874291878a4efd7bcfe617452))
+* update angular cli analytics default value to `false` [#175](https://github.com/docgeni/docgeni/issues/175) ([a5e9a5a](https://github.com/docgeni/docgeni/commit/a5e9a5adaf5d3426bb3cacaec3931ef15f9ff570))
+
+
+### Features
+
+* **template:** update open mode to `over` from `push` for sidebar ([#173](https://github.com/docgeni/docgeni/issues/173)) ([8996ace](https://github.com/docgeni/docgeni/commit/8996ace1fd91e0b6f27f389f570f6a2998e2549a))
+
+
+
+
+
 ## [1.0.1](https://github.com/docgeni/docgeni/compare/v1.0.0...v1.0.1) (2021-05-31)
 
 
