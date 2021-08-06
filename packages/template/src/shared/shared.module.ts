@@ -17,6 +17,8 @@ import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
 import { CopierService } from './copier/copier.service';
 import { IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
 import { LocalesSelectorComponent } from './locales-selector/locales-selector.component';
+import { LogoComponent } from './logo/logo.component';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 @NgModule({
     declarations: [
@@ -31,7 +33,9 @@ import { LocalesSelectorComponent } from './locales-selector/locales-selector.co
         TableOfContentsComponent,
         LocalesSelectorComponent,
         AssetsContentPathPipe,
+        LogoComponent,
         IsComponentDocPipe,
+        TranslatePipe,
         IsModeLitePipe,
         IsModeFullPipe
     ],
@@ -51,8 +55,10 @@ import { LocalesSelectorComponent } from './locales-selector/locales-selector.co
         IconComponent,
         LabelComponent,
         TableOfContentsComponent,
+        LogoComponent,
         AssetsContentPathPipe,
         IsComponentDocPipe,
+        TranslatePipe,
         IsModeLitePipe,
         IsModeFullPipe
     ]

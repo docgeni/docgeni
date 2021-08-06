@@ -40,7 +40,7 @@ describe('#config', () => {
 
             expect(docgeni.config).deep.eq({
                 title: 'Docgeni',
-                description: '为 Angular 组件开发场景而生的文档工具',
+                description: '',
                 mode: 'lite',
                 theme: 'default',
                 baseHref: '/',
