@@ -1,30 +1,34 @@
-<ng-container *ngIf="hasHome">
-  <div class="dg-hero">
-    <div class="dg-launch" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
-      <h1>{{ global.homeMeta.hero.title }}</h1>
-      <p class="text-muted launch-description">{{ global.homeMeta.hero.description }}</p>
-      <a class="dg-btn" [ngClass]="btnClass(item)" [href]="item.link" *ngFor="let item of global.homeMeta.hero.actions">
+<div class="dg-hero">
+  <div class="dg-hero-launch">
+    <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
+    <p class="dg-launch-description">{{ global.homeMeta.hero.description }}</p>
+    <div class="dg-launch-actions">
+      <a
+        class="dg-launch-action dg-btn"
+        [ngClass]="item | dgHeroActionClass"
+        [href]="item.link"
+        *ngFor="let item of global.homeMeta.hero.actions"
+      >
         {{ item.text }}
       </a>
     </div>
-    <div class="dg-banner" *ngIf="global.homeMeta.hero.banner">
-      <img [src]="global.homeMeta.hero.banner" />
-    </div>
   </div>
+  <div class="dg-hero-banner" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
+    <img *ngIf="global.homeMeta.hero.banner" [src]="global.homeMeta.hero.banner" />
+  </div>
+</div>
 
-  <div class="dg-features">
-    <div class="dg-feature" *ngFor="let item of global.homeMeta.features">
-      <img [src]="item.icon" alt="" />
-      <div class="dg-feature-title">
-        {{ item.title }}
-      </div>
-      <div class="dg-feature-description">
-        {{ item.description }}
-      </div>
+<div class="dg-features" *ngIf="global.homeMeta.features && global.homeMeta.features.length > 0">
+  <div class="dg-feature" *ngFor="let item of global.homeMeta.features">
+    <img [src]="item.icon" alt="" />
+    <div class="dg-feature-title">
+      {{ item.title }}
     </div>
+    <div class="dg-feature-description" [innerHTML]="item.description"></div>
   </div>
-  <div class="dg-extra-content" *ngIf="global.homeMeta.extra">
-    <dg-content-viewer [url]="global.homeMeta.extra | dgAssetsContentPath"></dg-content-viewer>
-  </div>
-  <dg-footer>{{ global.homeMeta.footer }}</dg-footer>
-</ng-container>
+</div>
+<div class="dg-extra-content" *ngIf="global.homeMeta.contentPath">
+  <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
+</div>
+
+<dg-footer>{{ global.homeMeta.footer }}</dg-footer>

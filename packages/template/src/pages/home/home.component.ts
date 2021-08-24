@@ -2,8 +2,9 @@ import { Component, OnInit, HostBinding, ChangeDetectionStrategy } from '@angula
 import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
-import { HomeDocMeta } from '@docgeni/template/interfaces';
+import { HeroAction, HomeDocMeta } from '@docgeni/template/interfaces';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
     selector: 'dg-home',
@@ -13,13 +14,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;
     hasHome = false;
-    constructor(
-        public global: GlobalContext,
-        router: Router,
-        navigationService: NavigationService,
-        pageTitle: PageTitleService,
-        private mediaMatcher: MediaMatcher
-    ) {
+    constructor(public global: GlobalContext, router: Router, navigationService: NavigationService, pageTitle: PageTitleService) {
         if (!global.homeMeta) {
             if (global.config.mode === 'full') {
                 const channels = navigationService.getChannels();
@@ -38,16 +33,9 @@ export class HomeComponent implements OnInit {
             }
             return;
         }
-        pageTitle.title = 'Home';
+        pageTitle.title = new TranslatePipe(global).transform('HOME');
         this.hasHome = true;
     }
 
     ngOnInit(): void {}
-    btnClass(item: HomeDocMeta['hero']['actions'][0]) {
-        let btnSize = 'dg-btn-xlg';
-        if (this.mediaMatcher.matchMedia('(max-width: 768px)').matches) {
-            btnSize = 'dg-btn-md';
-        }
-        return [btnSize, `dg-btn-${item.btnType || 'primary'}`, `dg-btn-${item.btnShape || ''}`];
-    }
 }

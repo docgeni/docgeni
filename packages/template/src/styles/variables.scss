@@ -1,4 +1,5 @@
 $dg-primary: #348fe4 !default;
+$dg-primary-light: #246eff;
 $dg-success: #66c060 !default; // 2dbcff
 $dg-info: #2dbcff !default;
 $dg-warning: #ffc442 !default;
@@ -33,6 +34,7 @@ $dg-theme-colors: () !default;
 $dg-theme-colors: map-merge(
     (
         'primary': $dg-primary,
+        'primary-light': $dg-primary-light,
         'success': $dg-success,
         'info': $dg-info,
         'warning': $dg-warning,
@@ -84,9 +86,7 @@ $dg-navbar-background-angular: #3f51b5 !default;
 $dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
-$launch-background: #f5f6f8;
-
-$dg-launch-background: $dg-white !default;
+$dg-hero-background: #dae6f3 !default;
 
 // sidebar
 $dg-sidebar-item-indent: 10px !default;

@@ -3,32 +3,11 @@
 $primary: #3f51b5;
 @import '../../../packages/template/src/styles/index.scss';
 .dg-home {
-    .dg-launch {
-        padding-left: 20%;
-        text-align: unset;
-    }
-    .dg-features {
-        .dg-feature-title {
-            min-height: 50px;
-        }
-    }
-}
-
-@media (max-width: 767px) {
-    .dg-home {
-        .dg-launch {
-            background-color: #dce6f2;
-            padding-left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .dg-banner {
-            img {
-                width: 0;
-                height: 0;
-            }
+    .dg-hero {
+        .dg-hero-launch {
+            align-items: start;
+            padding-left: 20%;
+            text-align: unset;
         }
     }
 }

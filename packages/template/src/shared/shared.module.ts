@@ -20,6 +20,7 @@ import { LocalesSelectorComponent } from './locales-selector/locales-selector.co
 import { LayoutModule } from '@angular/cdk/layout';
 import { LogoComponent } from './logo/logo.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { HeroActionClassPipe } from './pipes/hero.pipe';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { TranslatePipe } from './pipes/translate.pipe';
         IsComponentDocPipe,
         TranslatePipe,
         IsModeLitePipe,
-        IsModeFullPipe
+        IsModeFullPipe,
+        HeroActionClassPipe
     ],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, LayoutModule],
     entryComponents: [ExampleViewerComponent],
@@ -61,7 +63,8 @@ import { TranslatePipe } from './pipes/translate.pipe';
         IsComponentDocPipe,
         TranslatePipe,
         IsModeLitePipe,
-        IsModeFullPipe
+        IsModeFullPipe,
+        HeroActionClassPipe
     ]
 })
 export class DocgeniSharedModule {}

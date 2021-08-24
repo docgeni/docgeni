@@ -3,38 +3,53 @@
 .dg-home {
     display: block;
 
-    .dg-launch {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        h1 {
-            color: $dg-black;
-            letter-spacing: 1.1px;
-            font-weight: 700;
-            margin: 0;
+    .dg-hero {
+        .dg-hero-launch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .dg-launch-title {
+                letter-spacing: 1.1px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            .dg-launch-description {
+                margin-bottom: 20px;
+                font-size: 14px;
+                color: $dg-gray-600;
+            }
+
+            .dg-launch-actions {
+                .dg-launch-action {
+                    margin-right: 10px;
+                }
+            }
         }
-        p {
-            font-size: 14px;
-            color: $dg-gray-600;
+
+        .dg-hero-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+            background: $dg-hero-background;
+
+            img {
+                object-fit: cover;
+            }
         }
-        .launch-description {
-            margin-bottom: 20px;
-        }
-    }
-    .dg-banner {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
-        z-index: -1;
     }
 
     .dg-features {
         display: grid;
+        margin-top: 60px;
+        margin-bottom: 40px;
         img {
             max-width: 80px;
             max-height: 80px;
@@ -60,16 +75,17 @@
     .dg-hero,
     .dg-features,
     .dg-extra-content {
-        margin-bottom: 100px;
+        margin-bottom: 20px;
     }
+
     @media (min-width: 768px) {
-        .dg-launch {
+        .dg-hero-launch {
             height: 400px;
             h1 {
                 font-size: 77px;
             }
         }
-        .dg-banner {
+        .dg-hero-banner {
             height: 400px;
             img {
                 height: 100%;
@@ -79,7 +95,7 @@
         .dg-features {
             padding: 0 20%;
             grid: auto/1fr 1fr 1fr;
-            grid-gap: 100px 50px;
+            grid-gap: 80px 50px;
 
             .dg-feature {
                 flex: 0 0 calc(100% / 11 * 9 / 3);
@@ -90,13 +106,13 @@
         }
     }
     @media (max-width: 767px) {
-        .dg-launch {
+        .dg-hero-launch {
             height: 230px;
             h1 {
                 font-size: 29px;
             }
         }
-        .dg-banner {
+        .dg-hero-banner {
             height: 230px;
             img {
                 height: 100%;

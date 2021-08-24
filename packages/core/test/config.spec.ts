@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { toolkit } from '@docgeni/toolkit';
 import { createTestDocgeniHost, expectThrowAsync } from '../src/testing';
 import { DocgeniHost } from '../src/docgeni-host';
-import path from 'path';
 import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
 
 describe('#config', () => {
