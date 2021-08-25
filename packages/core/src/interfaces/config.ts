@@ -1,12 +1,21 @@
 import { DocgeniLibrary } from './library';
-import { NavigationItem } from './navigation-item';
 import { Locale } from './locale';
+
+export interface HeroAction {
+    text: string;
+    link: string;
+    btnType?: string;
+    btnShape?: 'round' | 'square';
+}
+
 export interface HomeDocMeta {
     title: string;
     hero: {
         title: string;
         description: string;
-        actions: { text: string; link: string }[];
+        banner: string;
+        actions: HeroAction;
+        backgroundColor?: string;
     };
     features: {
         icon: string;
@@ -14,6 +23,7 @@ export interface HomeDocMeta {
         description: string;
     }[];
     footer: string;
+    contentPath: string;
 }
 
 export type DocgeniMode = 'full' | 'lite';
@@ -34,6 +44,7 @@ export interface DocgeniNavItem {
         };
     };
 }
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;

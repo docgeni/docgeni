@@ -1,4 +1,5 @@
 $dg-primary: #348fe4 !default;
+$dg-primary-light: #246eff;
 $dg-success: #66c060 !default; // 2dbcff
 $dg-info: #2dbcff !default;
 $dg-warning: #ffc442 !default;
@@ -33,6 +34,7 @@ $dg-theme-colors: () !default;
 $dg-theme-colors: map-merge(
     (
         'primary': $dg-primary,
+        'primary-light': $dg-primary-light,
         'success': $dg-success,
         'info': $dg-info,
         'warning': $dg-warning,
@@ -76,7 +78,7 @@ $dg-navbar-height: 60px !default;
 
 // default theme
 $dg-navbar-background-default: $dg-white;
-$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0,0,0,.05);
+$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
 $dg-navbar-color-default: $dg-body-color;
 
 // angular theme
@@ -84,11 +86,7 @@ $dg-navbar-background-angular: #3f51b5 !default;
 $dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
-
-$launch-background: #f5f6f8;
-
-$dg-launch-background: $dg-white !default;
-
+$dg-hero-background: #dae6f3 !default;
 
 // sidebar
 $dg-sidebar-item-indent: 10px !default;
@@ -99,14 +97,34 @@ $dg-sidebar-menu-item-space-y: 9px !default;
 $dg-btn-border-width: 1px !default;
 $dg-btn-padding-y: 6px !default;
 $dg-btn-padding-x: 10px !default;
-$dg-btn-font-size: $dg-font-size-base !default;
+$dg-btn-font-size: $dg-font-size-md !default;
 $dg-btn-line-height: $dg-line-height !default;
 $dg-btn-border-radius: 4px !default;
-$dg-btn-padding-y-sm: 2px !default;
+$dg-btn-padding-y-xsm: 0.5px !default;
+$dg-btn-padding-x-xsm: 10px !default;
+$dg-btn-font-size-xsm: $dg-font-size-md !default;
+$dg-btn-line-height-xsm: $dg-line-height !default;
+$dg-btn-border-radius-xsm: 4px !default;
+$dg-btn-padding-y-sm: 2.5px !default;
 $dg-btn-padding-x-sm: 10px !default;
-$dg-btn-font-size-sm: $dg-font-size-base !default;
+$dg-btn-font-size-sm: $dg-font-size-md !default;
 $dg-btn-line-height-sm: $dg-line-height !default;
-$dg-btn-border-radius-sm: 3px !default;
+$dg-btn-border-radius-sm: 4px !default;
+$dg-btn-padding-y-md: 4.5px !default;
+$dg-btn-padding-x-md: 10px !default;
+$dg-btn-font-size-md: $dg-font-size-md !default;
+$dg-btn-line-height-md: $dg-line-height !default;
+$dg-btn-border-radius-md: 4px !default;
+$dg-btn-padding-y-lg: 6.5px !default;
+$dg-btn-padding-x-lg: 10px !default;
+$dg-btn-font-size-lg: $dg-font-size-md !default;
+$dg-btn-line-height-lg: $dg-line-height !default;
+$dg-btn-border-radius-lg: 4px !default;
+$dg-btn-padding-y-xlg: 8.5px !default;
+$dg-btn-padding-x-xlg: 30px !default;
+$dg-btn-font-size-xlg: $dg-font-size-md !default;
+$dg-btn-line-height-xlg: $dg-line-height !default;
+$dg-btn-border-radius-xlg: 4px !default;
 $dg-btn-disabled-opacity: 0.6 !default;
 $dg-btn-box-shadow: none !default;
 // $dg-btn-box-shadow: inset 0 1px 0 rgba($dg-white, 0.15), 0 1px 1px rgba($dg-black, 0.075) !default;
