@@ -2,8 +2,6 @@ import { Component, OnInit, HostBinding, ChangeDetectionStrategy } from '@angula
 import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
-import { HeroAction, HomeDocMeta } from '@docgeni/template/interfaces';
-import { MediaMatcher } from '@angular/cdk/layout';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
