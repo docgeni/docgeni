@@ -18,7 +18,10 @@
     }
 
     .menu-item {
-        padding: 0px $dg-sidebar-menu-item-space-x;
+        padding: 0px $dg-sidebar-menu-item-space-x/2 0 $dg-sidebar-menu-item-space-x;
+        &.active {
+            padding-right: $dg-sidebar-menu-item-space-x/2 - 3px;
+        }
         display: block;
         a {
             color: $dg-gray-800;
@@ -33,9 +36,16 @@
         }
 
         .item-content {
-            display: block;
+            display: flex;
+            align-items: center;
             margin: 0 -1000px;
             padding: $dg-sidebar-menu-item-space-y 1000px;
+            & > .item-content-title {
+                flex: 1 1 0;
+            }
+            & > .item-content-label {
+                flex: 0 0 auto;
+            }
         }
 
         .subtitle {

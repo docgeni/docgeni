@@ -31,7 +31,10 @@
         </a>
         <ng-template #navLink>
           <a class="item-content" [routerLink]="['./' + menu.path]"
-            >{{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{ menu.subtitle }}</span></a
+            ><div class="item-content-title">
+              {{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{ menu.subtitle }}</span>
+            </div>
+            <dg-label *ngIf="menu.label" class="item-content-label" [labelType]="menu.label.color">{{ menu.label.text }}</dg-label></a
           >
         </ng-template>
       </div>
