@@ -1,11 +1,13 @@
 import { DocgeniLibrary } from './library';
 import { Locale } from './locale';
+
 export interface HeroAction {
     text: string;
     link: string;
     btnType?: string;
     btnShape?: 'round' | 'square';
 }
+
 export interface HomeDocMeta {
     title: string;
     hero: {
@@ -42,6 +44,7 @@ export interface DocgeniNavItem {
         };
     };
 }
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;
