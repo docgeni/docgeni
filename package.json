@@ -39,7 +39,7 @@
     "pub:docs": "yarn build:docs:prod && cpx ./package.json ./dist/docgeni-site && yarn pub:docs:git",
     "pub:docs:git": "wpm git-publish --source ./dist/docgeni-site --name docgeni-site --organization docgeni",
     "pub-template": "cd dist/template && npm publish --access=public",
-    "pub-template:next": "cd dist/template && npm publish --access=public --dist-tag next",
+    "pub-template:next": "cd dist/template && npm publish --access=public --tag=next",
     "build-styles": "scss-bundle --config ./scss-bundle.config.json && sass ./packages/template/src/styles/index.scss >> dist/template/styles/index.css",
     "pretty": "pretty-quick --staged",
     "install-examples": "cd examples/full && npm i && cd ../lite && npm i"
