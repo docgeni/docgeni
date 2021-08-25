@@ -1,5 +1,6 @@
 import { normalizeLibConfig } from './normalize';
 import { toolkit } from '@docgeni/toolkit';
+import { DEFAULT_LABEL_CONFIG } from '../constants';
 
 describe('normalize', () => {
     describe('LibConfig', () => {
@@ -14,7 +15,8 @@ describe('normalize', () => {
                 docDir: 'doc',
                 apiDir: 'api',
                 examplesDir: 'examples',
-                categories: []
+                categories: [],
+                labels: DEFAULT_LABEL_CONFIG
             });
         });
 
@@ -38,7 +40,8 @@ describe('normalize', () => {
                             }
                         }
                     }
-                ]
+                ],
+                labels: DEFAULT_LABEL_CONFIG
             };
             const result = normalizeLibConfig(input);
             expect(result).toEqual(input);
