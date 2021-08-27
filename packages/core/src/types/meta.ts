@@ -8,6 +8,7 @@ export interface ComponentDocMeta {
     description?: string;
     order?: number;
     hidden?: boolean;
+    label?: string;
 }
 
 export interface CategoryDocMeta {

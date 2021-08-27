@@ -5,10 +5,12 @@
     display: inline-flex;
     align-items: center;
     color: $dg-white;
-    padding: 2px 10px;
+    padding: 4px 10px;
     border-radius: 4px;
     font-size: $dg-font-size-base;
     margin-bottom: 0px;
+    font-size: $dg-font-size-sm;
+    line-height: 1;
 }
 
 $dg-theme-colors: map-merge(
@@ -22,7 +24,7 @@ $dg-theme-colors: map-merge(
 @each $name, $color in $dg-theme-colors {
     .dg-label-#{$name} {
         background-color: $color;
-        color: color-yiq($color);
+        color: dg-color-yiq($color);
     }
 }
 
