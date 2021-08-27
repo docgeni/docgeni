@@ -25,6 +25,6 @@ export class LabelComponent implements OnInit {
 
     private getBackgroundColor(color: string) {
         const { r, g, b } = colorMetadata(color);
-        return `rgba(${r},${g},${b},0.30)`;
+        return `rgba(${r},${g},${b},0.20)`;
     }
 }

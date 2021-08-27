@@ -30,7 +30,7 @@
         &.active {
             border-right: 3px solid $dg-primary;
             .item-content {
-                background: rgba($dg-primary, 0.1);
+                background: rgba($dg-primary, 0.05);
                 color: $dg-primary;
             }
         }
