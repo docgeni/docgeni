@@ -46,5 +46,32 @@ describe('normalize', () => {
             const result = normalizeLibConfig(input);
             expect(result).toEqual(input);
         });
+
+        it('should normalize lib config success for labels', () => {
+            let result = normalizeLibConfig({
+                name: 'tethys',
+                rootDir: './packages/alib',
+                labels: {
+                    test: { text: 'test-text', color: '#ffffff' }
+                }
+            });
+            expect(result.labels).toEqual({
+                ...DEFAULT_LABEL_CONFIG,
+                ...{
+                    test: { text: 'test-text', color: '#ffffff' }
+                }
+            });
+            result = normalizeLibConfig({
+                name: 'tethys',
+                rootDir: './packages/alib',
+                labels: [{ id: 'test', text: 'test-text', color: '#ffffff' }]
+            });
+            expect(result.labels).toEqual({
+                ...DEFAULT_LABEL_CONFIG,
+                ...{
+                    test: { text: 'test-text', color: '#ffffff' }
+                }
+            });
+        });
     });
 });
