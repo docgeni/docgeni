@@ -45,6 +45,9 @@
             }
             & > .item-content-label {
                 flex: 0 0 auto;
+                background-color: white;
+                display: flex;
+                border-radius: 4px;
             }
         }
 
