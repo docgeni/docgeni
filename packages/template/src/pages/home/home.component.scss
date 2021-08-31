@@ -3,30 +3,133 @@
 .dg-home {
     display: block;
 
-    .dg-launch {
-        background: $dg-launch-background;
-        text-align: center;
-        padding-top: 100px;
-        h1 {
-            color: $dg-black;
+    .dg-hero {
+        .dg-hero-launch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .dg-launch-title {
+                letter-spacing: 1.1px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            .dg-launch-description {
+                margin-bottom: 20px;
+                font-size: 14px;
+                color: $dg-gray-600;
+            }
+
+            .dg-launch-actions {
+                .dg-launch-action {
+                    margin-right: 10px;
+                }
+            }
         }
-        .launch-description {
-            margin-bottom: 20px;
+
+        .dg-hero-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+            background: $dg-hero-background;
+
+            img {
+                object-fit: cover;
+            }
         }
     }
 
     .dg-features {
-        padding: 10px 60px;
-        display: flex;
-        .feature {
-            flex: 1 1 0;
+        display: grid;
+        margin-top: 60px;
+        margin-bottom: 40px;
+        img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+        .dg-feature {
             text-align: center;
+        }
+        .dg-feature:nth-child(-n + 3) {
+            padding-top: 0;
+        }
+        .dg-feature-title {
+            color: $dg-gray-800;
+            font-size: 16px;
+            padding-bottom: 14px;
+        }
+        .dg-feature-description {
+            color: $dg-gray-600;
+            font-size: 16px;
+            line-height: 1.5;
         }
     }
 
+    .dg-hero,
+    .dg-features,
+    .dg-extra-content {
+        margin-bottom: 20px;
+    }
+
     @media (min-width: 768px) {
-        .dg-launch {
-            padding: 100px 0px;
+        .dg-hero-launch {
+            height: 400px;
+            h1 {
+                font-size: 77px;
+            }
+        }
+        .dg-hero-banner {
+            height: 400px;
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+        .dg-features {
+            padding: 0 20%;
+            grid: auto/1fr 1fr 1fr;
+            grid-gap: 80px 50px;
+
+            .dg-feature {
+                flex: 0 0 calc(100% / 11 * 9 / 3);
+            }
+        }
+        .dg-extra-content {
+            padding: 0 20%;
+        }
+    }
+    @media (max-width: 767px) {
+        .dg-hero-launch {
+            height: 230px;
+            h1 {
+                font-size: 29px;
+            }
+        }
+        .dg-hero-banner {
+            height: 230px;
+            img {
+                height: 100%;
+                position: relative;
+            }
+        }
+        .dg-features {
+            padding: 0 30px;
+            grid: auto/1fr 1fr;
+            grid-gap: 50px 25px;
+
+            .dg-feature {
+                flex: 0 0 calc(100% / 11 * 9 / 2);
+            }
+        }
+        .dg-extra-content {
+            padding: 0 30px;
         }
     }
 }

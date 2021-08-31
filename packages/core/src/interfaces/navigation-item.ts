@@ -25,6 +25,7 @@ export interface ComponentDocItem extends DocItem {
     overview?: boolean;
     api?: boolean;
     category?: string;
+    label?: { text: string; color: string };
 }
 
 export interface CategoryItem {

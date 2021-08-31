@@ -35,7 +35,7 @@ module.exports = {
 # 类库配置
 `Docgeni` 可以同时支持多个类库，比如 Angular 官方的 [Material](https://material.angular.io/) 其实就是包含 `CDK` 和`Components`两个类库的，所以多类库的配置存放在`libs`数组中。
 
-`Docgeni`会自动扫描该类库配置的`rootDir`，根目录下的每个文件夹识别成一个组件模块，每个组件模块会生成一个组件文档，更多配置查看 [类库配置](http://docgeni.org/configuration/lib)
+`Docgeni`会自动扫描该类库配置的`rootDir`，根目录下的每个文件夹识别成一个组件模块，每个组件模块会生成一个组件文档，更多配置查看 [类库配置](configuration/lib)。
 
 ```json
 ...

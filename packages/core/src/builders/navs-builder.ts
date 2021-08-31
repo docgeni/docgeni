@@ -1,6 +1,6 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { ChannelItem, ComponentDocItem, DocItem, Locale, NavigationItem } from '../interfaces';
+import { ChannelItem, ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '../interfaces';
 import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
 import * as path from 'path';
@@ -18,10 +18,9 @@ export class NavsBuilder {
         {
             navs: NavigationItem[];
             docItems: DocItem[];
-            homeMeta?: {};
+            homeMeta?: HomeDocMeta;
         }
     > = {};
-
     private get docFiles() {
         return this.docgeni.docsBuilder.docs;
     }
@@ -60,7 +59,8 @@ export class NavsBuilder {
                 JSON.stringify(
                     {
                         navs: localeNavsMap[locale.key],
-                        docs: docItems.concat(componentDocItems)
+                        docs: docItems.concat(componentDocItems),
+                        homeMeta: this.localesDocsNavsMap[locale.key].homeMeta
                     },
                     null,
                     2
@@ -102,6 +102,7 @@ export class NavsBuilder {
             {
                 navs: NavigationItem[];
                 docItems: DocItem[];
+                homeMeta?: HomeDocMeta;
             }
         > = {};
         for (const locale of this.config.locales) {
@@ -109,10 +110,18 @@ export class NavsBuilder {
             const localeDocsPath = this.getLocaleDocsPath(locale);
             if (await toolkit.fs.pathExists(localeDocsPath)) {
                 const docItems: DocItem[] = [];
-                const navs = await this.buildDocDirNavs(localeDocsPath, locale.key, docItems, undefined, isDefaultLocale ? localeKeys : []);
+                const { navs, homeMeta } = await this.buildDocDirNavs(
+                    localeDocsPath,
+                    locale.key,
+                    docItems,
+                    undefined,
+                    isDefaultLocale ? localeKeys : []
+                );
+
                 localesDocsDataMap[locale.key] = {
-                    navs: navs,
-                    docItems: docItems
+                    navs,
+                    docItems,
+                    homeMeta: homeMeta
                 };
 
                 if (this.docgeni.config.mode === 'full') {
@@ -138,6 +147,7 @@ export class NavsBuilder {
             exclude: excludeDirs
         });
         let navs: Array<NavigationItem> = [];
+        let homeMeta: HomeDocMeta;
         for (const dirname of dirsAndFiles) {
             const absDocPath = path.resolve(dirPath, dirname);
             if (toolkit.fs.isDirectory(absDocPath)) {
@@ -158,7 +168,8 @@ export class NavsBuilder {
                 if (!navItem.hidden) {
                     navs.push(navItem);
                 }
-                navItem.items = await this.buildDocDirNavs(absDocPath, locale, docItems, navItem, excludeDirs);
+                const { navs: subNavs } = await this.buildDocDirNavs(absDocPath, locale, docItems, navItem, excludeDirs);
+                navItem.items = subNavs;
             } else {
                 if (path.extname(absDocPath) !== '.md') {
                     continue;
@@ -173,6 +184,8 @@ export class NavsBuilder {
                     continue;
                 }
                 if (isHome && this.docgeni.config.mode === 'full') {
+                    homeMeta = docFile.meta;
+                    homeMeta.contentPath = docFile.getRelativeOutputPath();
                     continue;
                 }
 
@@ -197,7 +210,7 @@ export class NavsBuilder {
             }
         }
         navs = ascendingSortByOrder(navs);
-        return navs;
+        return { navs, homeMeta };
     }
 
     private tryGetEntryFile(dirPath: string) {

@@ -3,9 +3,9 @@ title: Multi-language
 order: 100
 ---
 
-# 配置多语言
+# Configure multi-languages
 
-支持的多语言和默认语言通过`locales`和`defaultLocale`字段配置。
+The supported multi-languages and default languages are configured through the `locales` and `defaultLocale` fields.
 ```
 {
   locales: [ { key: 'en-us', name: 'English'}, { key: 'zh-cn', name: '中文'} ],
@@ -13,9 +13,9 @@ order: 100
 }
 ```
 
-# 文档的多语言
+# Multilingual documentation
 
-`docs`目录下的所有页面都是默认语言下的页面，如果需要添加其他语言的文档，需要单独创建一个以多语言`key`为名称的文件夹，比如下面的`en-us`文件夹下的内容会自动生成为英文的文档，包括频道，类别和页面。
+All pages in the `docs` directory are pages in the default language. If you need to add documents in other languages, you need to create a separate folder named with the multilingual `key`, such as the contents of the following `en-us` folder will be automatically generated into English documents, including channels, categories and pages.
 ```
 ├── en-us
 │   ├── guides
@@ -27,9 +27,9 @@ order: 100
 │   └── index.md
 ```
 
-# 配置项的多语言
+# Multilingual configuration items
 
-所有配置项字段都是默认语言，配置其他的语言需要在`locales`下新增一个以多语言key为name的属性，配置相关多语言的字段，比如：
+All configuration item fields are the default language. You need to add a property with a multi-language key as the name under `locales` to configure other languages and related multi-language fields, such as:
 
 ```ts
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
     navs: [
         null,
          {
-            title: '组件',
+            title: 'Components',
             path: 'components',
             lib: 'alib',
             locales: {
@@ -52,9 +52,9 @@ module.exports = {
 }
 ```
 
-# 组件的多语言
+# Multilingual components
 
-组件的文档和API默认存储在`doc`和`api`目录下，以多语言`key`命名。
+The documentation and API of the component are stored in the `doc` and `api` directories by default, named after the multilingual `key`.
 ```
 button
 ├── doc

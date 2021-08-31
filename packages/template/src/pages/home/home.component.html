@@ -1,21 +1,34 @@
-<ng-container *ngIf="hasHome">
-  <div class="dg-launch">
-    <h1>{{ global.config.title }}</h1>
-    <p class="text-muted launch-description">{{ global.config.description }}</p>
-    <button class="btn btn-primary btn-lg">快速上手</button>
-  </div>
-
-  <div class="dg-features">
-    <div class="feature">
-      功能1
-    </div>
-    <div class="feature">
-      功能2
-    </div>
-    <div class="feature">
-      功能3
+<div class="dg-hero">
+  <div class="dg-hero-launch">
+    <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
+    <p class="dg-launch-description">{{ global.homeMeta.hero.description }}</p>
+    <div class="dg-launch-actions">
+      <a
+        class="dg-launch-action dg-btn"
+        [ngClass]="item | dgHeroActionClass"
+        [href]="item.link"
+        *ngFor="let item of global.homeMeta.hero.actions"
+      >
+        {{ item.text }}
+      </a>
     </div>
   </div>
+  <div class="dg-hero-banner" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
+    <img *ngIf="global.homeMeta.hero.banner" [src]="global.homeMeta.hero.banner" />
+  </div>
+</div>
 
-  <dg-footer></dg-footer>
-</ng-container>
+<div class="dg-features" *ngIf="global.homeMeta.features && global.homeMeta.features.length > 0">
+  <div class="dg-feature" *ngFor="let item of global.homeMeta.features">
+    <img [src]="item.icon" alt="" />
+    <div class="dg-feature-title">
+      {{ item.title }}
+    </div>
+    <div class="dg-feature-description" [innerHTML]="item.description"></div>
+  </div>
+</div>
+<div class="dg-extra-content" *ngIf="global.homeMeta.contentPath">
+  <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
+</div>
+
+<dg-footer>{{ global.homeMeta.footer }}</dg-footer>
