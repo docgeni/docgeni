@@ -7,7 +7,7 @@ import { Component, ElementRef, Input, NgZone } from '@angular/core';
 
 @Component({
     selector: 'my-label',
-    template: 'my-label <div id="dg-content"></div>'
+    template: 'my-label <ng-content></ng-content>'
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
     @Input() type: string;

@@ -19,7 +19,7 @@ describe('#built-in-label', () => {
         it('should display default classes and content', () => {
             expect(spectator.element.classList.contains('dg-label')).toBeTruthy();
             expect(spectator.element.classList.contains('dg-label-primary')).toBeTruthy();
-            expect(spectator.element.innerHTML).toEqual('<div id="dg-content"></div>');
+            expect(spectator.element.innerHTML).toEqual('');
         });
 
         it('should set type success', () => {
@@ -39,8 +39,6 @@ describe('#built-in-label', () => {
         it('should set content success', () => {
             const spectator = createHost(`<label type="primary">Label1</label>`);
             expect(spectator.element.getAttribute('type')).toEqual(`primary`);
-            expect(spectator.element.innerHTML).toEqual(`<div id="dg-content"></div>`);
-            spectator.component.setContentProjection('Label1', createChildNodesByHTML('Label1'));
             spectator.component.setAttribute('type', 'primary');
             expect(spectator.element.innerHTML).toEqual(`Label1`);
             expect(spectator.element.getAttribute('type')).toEqual(`primary`);

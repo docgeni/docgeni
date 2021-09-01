@@ -11,7 +11,8 @@ export class DomPortalOutlet implements PortalOutlet {
         protected outletElement: Element,
         protected componentFactoryResolver: ComponentFactoryResolver,
         protected appRef: ApplicationRef,
-        protected defaultInjector: Injector
+        protected defaultInjector: Injector,
+        protected projectableNodes: any[][]
     ) {}
 
     attach<T>(portal: ComponentPortal<T>) {
@@ -27,7 +28,8 @@ export class DomPortalOutlet implements PortalOutlet {
             componentRef = portal.viewContainerRef.createComponent(
                 componentFactory,
                 portal.viewContainerRef.length,
-                portal.injector || portal.viewContainerRef.injector
+                portal.injector || portal.viewContainerRef.injector,
+                this.projectableNodes
             );
 
             this.setDisposeFn(() => {

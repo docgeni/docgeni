@@ -10,15 +10,6 @@ export abstract class DocgeniBuiltInComponent {
 
     constructor(private elementRef: ElementRef) {}
 
-    setContentProjection(_innerHTML: string, contentNodes: NodeListOf<ChildNode>) {
-        const dgContent = this.hostElement.querySelector('#dg-content');
-        if (dgContent && contentNodes) {
-            contentNodes.forEach((node, index) => {
-                index === 0 ? dgContent.replaceWith(node) : dgContent.after(node);
-            });
-        }
-    }
-
     setAttribute(qualifiedName: string, value: string) {
         this[qualifiedName] = value;
         this.hostElement.setAttribute(qualifiedName, value);

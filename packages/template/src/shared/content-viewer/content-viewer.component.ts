@@ -86,10 +86,9 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     private loadComponents(selector: string, componentClass: Type<unknown>) {
         const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
-            const originalInnerHTML = element.innerHTML;
-            // 清除 innerHTML 结构
-            element.innerHTML = '';
-            const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
+            const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector, [
+                element.childNodes as any
+            ]);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
             const exampleViewerRef = portalHost.attach(examplePortal);
             // 循环设置属性
@@ -106,14 +105,6 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
                         exampleViewerRef.instance[attribute.nodeName] = element.getAttribute(attribute.nodeName);
                     }
                 }
-            }
-            // 设置 setContentProjection 传入 innerHTML 和 childNodes
-            // eslint-disable-next-line dot-notation
-            if (originalInnerHTML && exampleViewerRef.instance['setContentProjection']) {
-                const container = document.createElement('div');
-                container.innerHTML = originalInnerHTML;
-                // eslint-disable-next-line dot-notation
-                exampleViewerRef.instance['setContentProjection'](originalInnerHTML, container.childNodes);
             }
             this.portalHosts.push(portalHost);
         });
