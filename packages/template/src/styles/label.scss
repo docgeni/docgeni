@@ -4,7 +4,7 @@
 .dg-label {
     display: inline-flex;
     align-items: center;
-    color: $dg-white;
+    // color: $dg-white;
     padding: 4px 10px;
     border-radius: 4px;
     font-size: $dg-font-size-base;
@@ -28,18 +28,17 @@ $dg-theme-colors: map-merge(
     }
 }
 
-.dg-label-default {
-    color: $dg-gray-700;
-}
-
-.dg-label-light {
-    color: $dg-gray-700;
-}
-
 @each $name, $color in $dg-theme-colors {
     .dg-label-outline-#{$name} {
         @include label-outline($color);
     }
+}
+
+.dg-label-default,
+.dg-label-light,
+.dg-label-outline-default,
+.dg-label-outline-light {
+    color: $dg-gray-700;
 }
 
 .dg-label-sm {

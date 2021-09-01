@@ -11,3 +11,4 @@ export * from './services/router-reset.service';
 export * from './routes';
 export * from './interfaces/public-api';
 export * from './initializer';
+export { DocgeniBuiltInComponent } from './built-in';

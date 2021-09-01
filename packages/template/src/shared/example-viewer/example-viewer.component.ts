@@ -4,6 +4,7 @@ import { ExampleLoader } from '../../services/example-loader';
 import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
 import { CopierService } from '../copier/copier.service';
 import { GlobalContext } from '../../services/public-api';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 
@@ -24,13 +25,28 @@ const nameOrdersMap = {
     templateUrl: './example-viewer.component.html'
 })
 export class ExampleViewerComponent implements OnInit {
+    private _inline = false;
+
     @HostBinding('class.dg-example-viewer') isExampleViewer = true;
 
-    @Input() exampleName: string;
+    /**
+     * @deprecated please use name
+     */
+    @Input() set exampleName(name: string) {
+        this.name = name;
+    }
+
+    @Input() name: string;
 
     @HostBinding('class.dg-example-viewer-inline')
     @Input()
-    inline: boolean;
+    get inline(): boolean {
+        return this._inline;
+    }
+
+    set inline(value: boolean) {
+        this._inline = coerceBooleanProperty(value);
+    }
 
     @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
 
@@ -64,7 +80,7 @@ export class ExampleViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.exampleLoader.load(this.exampleName).then(result => {
+        this.exampleLoader.load(this.name).then(result => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.exampleComponentType = result.componentType;
             this.example = result.example;
@@ -97,7 +113,7 @@ export class ExampleViewerComponent implements OnInit {
         const text = this.contentViewer.elementRef.nativeElement.textContent;
         this.copier.copyText(text);
         this.copyIcon = 'check';
-
+        /* eslint-disable no-restricted-globals */
         setTimeout(() => {
             this.copyIcon = 'copy';
         }, 2000);

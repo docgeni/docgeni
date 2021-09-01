@@ -11,16 +11,27 @@ import {
     NgZone,
     Output,
     EventEmitter,
-    OnDestroy
+    OnDestroy,
+    Type,
+    EmbeddedViewRef
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { DomPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
 import { Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { take } from 'rxjs/operators';
+import { DomPortalOutlet } from '../../services/dom-portal-outlet';
 
+interface BuiltInComponentDef {
+    selector: string;
+    component: Type<unknown>;
+}
+let builtInComponents: BuiltInComponentDef[];
+export function setBuiltInComponents(components: BuiltInComponentDef[]) {
+    builtInComponents = components;
+}
 @Component({
     selector: 'dg-content-viewer',
     template: 'Loading...'
@@ -58,6 +69,9 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     private updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
+        builtInComponents.forEach(item => {
+            this.loadComponents(item.selector, item.component);
+        });
 
         // Resolving and creating components dynamically in Angular happens synchronously, but since
         // we want to emit the output if the components are actually rendered completely, we wait
@@ -69,21 +83,38 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
         });
     }
 
-    private loadComponents(selector: string, componentClass: any) {
+    private loadComponents(selector: string, componentClass: Type<unknown>) {
         const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
-
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
-            const exampleName = element.getAttribute('name');
-            const inline = element.getAttribute('inline');
+            const originalInnerHTML = element.innerHTML;
+            // 清除 innerHTML 结构
+            element.innerHTML = '';
             const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
             const exampleViewerRef = portalHost.attach(examplePortal);
-            if (exampleName !== null) {
-                const exampleViewer = exampleViewerRef.instance as ExampleViewerComponent;
-                exampleViewer.exampleName = exampleName;
-                exampleViewer.inline = coerceBooleanProperty(inline);
+            // 循环设置属性
+            for (const attributeKey in element.attributes) {
+                if (Object.prototype.hasOwnProperty.call(element.attributes, attributeKey)) {
+                    const attribute = element.attributes[attributeKey];
+                    // eslint-disable-next-line dot-notation
+                    const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'].bind(
+                        exampleViewerRef.instance
+                    );
+                    if (setAttributeFn) {
+                        setAttributeFn(attribute.nodeName, element.getAttribute(attribute.nodeName));
+                    } else {
+                        exampleViewerRef.instance[attribute.nodeName] = element.getAttribute(attribute.nodeName);
+                    }
+                }
             }
-
+            // 设置 setContentProjection 传入 innerHTML 和 childNodes
+            // eslint-disable-next-line dot-notation
+            if (originalInnerHTML && exampleViewerRef.instance['setContentProjection']) {
+                const container = document.createElement('div');
+                container.innerHTML = originalInnerHTML;
+                // eslint-disable-next-line dot-notation
+                exampleViewerRef.instance['setContentProjection'](originalInnerHTML, container.childNodes);
+            }
             this.portalHosts.push(portalHost);
         });
     }
@@ -101,8 +132,7 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver,
         private injector: Injector,
         private viewContainerRef: ViewContainerRef,
-        private ngZone: NgZone,
-        private domSanitizer: DomSanitizer
+        private ngZone: NgZone
     ) {}
 
     ngOnInit(): void {}
