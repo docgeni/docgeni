@@ -34,6 +34,6 @@ export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements On
 }
 
 export default {
-    selector: 'dg-label',
+    selector: 'label',
     component: DocgeniLabelComponent
 };

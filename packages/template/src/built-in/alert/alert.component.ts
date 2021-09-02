@@ -14,6 +14,6 @@ export class DocgeniAlertComponent extends DocgeniBuiltInComponent implements On
 }
 
 export default {
-    selector: 'dg-alert',
+    selector: 'alert',
     component: DocgeniAlertComponent
 };

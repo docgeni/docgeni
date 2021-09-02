@@ -23,15 +23,9 @@ import { Subscription } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { take } from 'rxjs/operators';
 import { DomPortalOutlet } from '../../services/dom-portal-outlet';
+import { BuiltInComponentDef } from '../../built-in/built-in-component';
+import { getBuiltInComponents } from '../../built-in/built-in-components';
 
-interface BuiltInComponentDef {
-    selector: string;
-    component: Type<unknown>;
-}
-let builtInComponents: BuiltInComponentDef[];
-export function setBuiltInComponents(components: BuiltInComponentDef[]) {
-    builtInComponents = components;
-}
 @Component({
     selector: 'dg-content-viewer',
     template: 'Loading...'
@@ -69,7 +63,7 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     private updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
-        builtInComponents.forEach(item => {
+        getBuiltInComponents().forEach(item => {
             this.loadComponents(item.selector, item.component);
         });
 
@@ -96,11 +90,9 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
                 if (Object.prototype.hasOwnProperty.call(element.attributes, attributeKey)) {
                     const attribute = element.attributes[attributeKey];
                     // eslint-disable-next-line dot-notation
-                    const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'].bind(
-                        exampleViewerRef.instance
-                    );
+                    const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'];
                     if (setAttributeFn) {
-                        setAttributeFn(attribute.nodeName, element.getAttribute(attribute.nodeName));
+                        setAttributeFn.call(exampleViewerRef.instance, attribute.nodeName, element.getAttribute(attribute.nodeName));
                     } else {
                         exampleViewerRef.instance[attribute.nodeName] = element.getAttribute(attribute.nodeName);
                     }

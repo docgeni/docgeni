@@ -101,7 +101,7 @@ export class ExampleViewerComponent implements OnInit {
                     const bOrder = nameOrdersMap[b.name] || Number.MAX_SAFE_INTEGER;
                     return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
                 });
-            this.selectedTab = this.exampleTabs[0];
+            // this.selectedTab = this.exampleTabs[0];
         });
     }
 

@@ -7,51 +7,51 @@ order: 50
 除了在文档中使用示例`<example name="{name}" />`组件外，Docgeni 还提供了如下内置组件作为 Markdown 语法的扩展：
 
 ## Label
-使用`dg-label`可以创建一个标签: <dg-label>Hello Docgeni</dg-label>
+使用`label`可以创建一个标签: <label>Hello Docgeni</label>
 
 ```html
-<dg-label>Hello Docgeni</dg-label>
+<label>Hello Docgeni</label>
 ```
 标签提供了如下多种类型：
 
-<dg-label type="primary">Label</dg-label>
-<dg-label type="info">Label</dg-label>
-<dg-label type="default">Label</dg-label>
-<dg-label type="light">Label</dg-label>
-<dg-label type="success">Label</dg-label>
-<dg-label type="warning">Label</dg-label>
-<dg-label type="danger">Label</dg-label>
+<label type="primary">Label</label>
+<label type="info">Label</label>
+<label type="default">Label</label>
+<label type="light">Label</label>
+<label type="success">Label</label>
+<label type="warning">Label</label>
+<label type="danger">Label</label>
 
-<dg-label type="outline-primary">Label</dg-label>
-<dg-label type="outline-info">Label</dg-label>
-<dg-label type="outline-default">Label</dg-label>
-<dg-label type="outline-light">Label</dg-label>
-<dg-label type="outline-success">Label</dg-label>
-<dg-label type="outline-warning">Label</dg-label>
-<dg-label type="outline-danger">Label</dg-label>
+<label type="outline-primary">Label</label>
+<label type="outline-info">Label</label>
+<label type="outline-default">Label</label>
+<label type="outline-light">Label</label>
+<label type="outline-success">Label</label>
+<label type="outline-warning">Label</label>
+<label type="outline-danger">Label</label>
 
 ```html
-<dg-label type="primary">Label</dg-label>
-<dg-label type="info">Label</dg-label>
-<dg-label type="default">Label</dg-label>
-<dg-label type="light">Label</dg-label>
-<dg-label type="success">Label</dg-label>
-<dg-label type="warning">Label</dg-label>
-<dg-label type="danger">Label</dg-label>
+<label type="primary">Label</label>
+<label type="info">Label</label>
+<label type="default">Label</label>
+<label type="light">Label</label>
+<label type="success">Label</label>
+<label type="warning">Label</label>
+<label type="danger">Label</label>
 
-<dg-label type="outline-primary">Label</dg-label>
-<dg-label type="outline-info">Label</dg-label>
-<dg-label type="outline-default">Label</dg-label>
-<dg-label type="outline-light">Label</dg-label>
-<dg-label type="outline-success">Label</dg-label>
-<dg-label type="outline-warning">Label</dg-label>
-<dg-label type="outline-danger">Label</dg-label>
+<label type="outline-primary">Label</label>
+<label type="outline-info">Label</label>
+<label type="outline-default">Label</label>
+<label type="outline-light">Label</label>
+<label type="outline-success">Label</label>
+<label type="outline-warning">Label</label>
+<label type="outline-danger">Label</label>
 ```
 
 ## Alert
-使用`dg-alert`创建一个提示框，type 可选 `warning`、`info`、`success`、`danger`，默认为 `info`。
+使用`alert`创建一个提示框，type 可选 `warning`、`info`、`success`、`danger`，默认为 `info`。
 
-<dg-alert>xxxx</dg-alert>
+<alert>xxxx</alert>
 
 WIP.
 
@@ -61,3 +61,5 @@ WIP.
 
 ## 自定义内置组件
 WIP.
+
+<my-color color="red">Color</my-color>

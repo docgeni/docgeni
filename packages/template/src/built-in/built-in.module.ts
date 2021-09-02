@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocgeniSharedModule } from '../shared/shared.module';
-import { DocgeniLabelComponent } from './label/label.component';
+import { setBuiltInComponents } from './built-in-components';
+import label from './label/label.component';
+import alert from './alert/alert.component';
 
 @NgModule({
-    declarations: [DocgeniLabelComponent],
-    imports: [CommonModule, DocgeniSharedModule],
+    declarations: [label.component, alert.component],
+    imports: [CommonModule],
     exports: [],
     providers: [],
-    entryComponents: [DocgeniLabelComponent]
+    entryComponents: [label.component, alert.component]
 })
-export class DocgeniBuiltInModule {}
+export class DocgeniBuiltInModule {
+    constructor() {}
+}
+
+setBuiltInComponents([label, alert]);

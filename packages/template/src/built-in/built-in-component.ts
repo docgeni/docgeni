@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Injectable } from '@angular/core';
+import { Directive, ElementRef, Type } from '@angular/core';
 
 @Directive()
 export abstract class DocgeniBuiltInComponent {
@@ -8,7 +8,7 @@ export abstract class DocgeniBuiltInComponent {
         return this.elementRef.nativeElement;
     }
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(protected elementRef: ElementRef) {}
 
     setAttribute(qualifiedName: string, value: string) {
         this[qualifiedName] = value;
@@ -43,4 +43,9 @@ export abstract class DocgeniBuiltInComponent {
     removeClass(className: string) {
         this.hostElement.classList.remove(className);
     }
+}
+
+export interface BuiltInComponentDef {
+    selector: string;
+    component: Type<unknown>;
 }

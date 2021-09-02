@@ -1,7 +1,5 @@
 import { createComponentFactory, createHostFactory, Spectator } from '@ngneat/spectator';
 import { DocgeniLabelComponent, DocgeniLabelType } from './label.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 
 describe('#built-in-label', () => {
     describe('basic', () => {
@@ -45,9 +43,3 @@ describe('#built-in-label', () => {
         });
     });
 });
-
-function createChildNodesByHTML(html: string): NodeListOf<ChildNode> {
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    return container.childNodes;
-}

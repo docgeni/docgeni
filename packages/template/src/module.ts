@@ -4,7 +4,6 @@ import { DocgeniPagesModule } from './pages/pages.module';
 import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services/public-api';
 import { HttpClientModule } from '@angular/common/http';
 import { DocgeniBuiltInModule } from './built-in/built-in.module';
-import { setBuiltInComponents } from './shared/content-viewer/content-viewer.component';
 import { BUILT_IN_COMPONENTS } from './built-in';
 
 @NgModule({
@@ -19,7 +18,5 @@ import { BUILT_IN_COMPONENTS } from './built-in';
     ]
 })
 export class DocgeniTemplateModule {
-    constructor() {
-        setBuiltInComponents(BUILT_IN_COMPONENTS);
-    }
+    constructor() {}
 }
