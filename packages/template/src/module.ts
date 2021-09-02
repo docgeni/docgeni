@@ -3,10 +3,12 @@ import { DocgeniSharedModule } from './shared/shared.module';
 import { DocgeniPagesModule } from './pages/pages.module';
 import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services/public-api';
 import { HttpClientModule } from '@angular/common/http';
+import { DocgeniBuiltInModule } from './built-in/built-in.module';
+import { BUILT_IN_COMPONENTS } from './built-in';
 
 @NgModule({
     declarations: [],
-    imports: [DocgeniSharedModule, DocgeniPagesModule, HttpClientModule],
+    imports: [DocgeniSharedModule, DocgeniBuiltInModule, DocgeniPagesModule, HttpClientModule],
     exports: [DocgeniSharedModule, DocgeniPagesModule],
     providers: [
         {
@@ -15,4 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
         }
     ]
 })
-export class DocgeniTemplateModule {}
+export class DocgeniTemplateModule {
+    constructor() {}
+}
