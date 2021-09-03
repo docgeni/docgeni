@@ -19,7 +19,7 @@ export class LibComponent {
     public absDocPath: string;
     public absApiPath: string;
     public examples: LiveExample[];
-
+    private contributionMap: Partial<Record<'api' | 'overview' | 'examples', { lastUpdateTime: number; contributors: string[] }>> = {};
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
@@ -97,6 +97,7 @@ export class LibComponent {
         if (defaultLocaleDoc) {
             this.meta = defaultLocaleDoc.meta;
             this.name = defaultLocaleDoc.meta.name || this.name;
+            this.contributionMap.overview = defaultLocaleDoc.contributionInfo;
         }
     }
 
@@ -107,6 +108,7 @@ export class LibComponent {
     }
 
     private async buildApiDocs(): Promise<void> {
+        const apiDocsFilePathList = [];
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
             const explorer = cosmiconfig(localeKey, {
@@ -121,7 +123,9 @@ export class LibComponent {
                 stopDir: this.absApiPath
             });
             const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
-
+            if (result && result.filepath) {
+                apiDocsFilePathList.push(result.filepath);
+            }
             if (result && result.config && toolkit.utils.isArray(result.config)) {
                 result.config.forEach(item => {
                     item.description = item.description ? Markdown.toHTML(item.description) : '';
@@ -133,6 +137,9 @@ export class LibComponent {
                 this.localeApiDocsMap[localeKey] = result.config;
             }
         }
+        if (apiDocsFilePathList.length) {
+            this.contributionMap.api = this.getFilesContribution(apiDocsFilePathList);
+        }
     }
 
     private async buildExamples(): Promise<void> {
@@ -143,6 +150,7 @@ export class LibComponent {
 
         const dirs = await toolkit.fs.getDirs(this.absExamplesPath);
         const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
+        this.contributionMap.examples = this.getFilesContribution(this.absExamplesPath);
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
 
         for (const exampleName of dirs) {
@@ -182,6 +190,7 @@ export class LibComponent {
             liveExample.sourceFiles = sourceFiles;
             this.examples.push(liveExample);
         }
+        this.getFilesContribution(this.absExamplesPath);
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
         this.exampleEntrySource = toolkit.template.compile('component-examples-entry.hbs', {
             examples: this.examples,
@@ -239,7 +248,8 @@ export class LibComponent {
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
-                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined
+                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
+                    contributionMap: this.contributionMap
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }
@@ -301,5 +311,22 @@ export class LibComponent {
         propertyName: TPropertyKey
     ): ComponentDocMeta[TPropertyKey] {
         return docSourceFile && docSourceFile.meta && docSourceFile.meta[propertyName];
+    }
+    private getFilesContribution(absDirOrFilesPath: string | string[]) {
+        let filePathList: string[];
+        if (typeof absDirOrFilesPath === 'string') {
+            filePathList = toolkit.fs.globSync(path.resolve(absDirOrFilesPath, '**/*'));
+        } else {
+            filePathList = absDirOrFilesPath;
+        }
+        const contributors = toolkit.git.contributors(filePathList);
+        const lastUpdateTime = filePathList.map(filePath => toolkit.git.lastUpdateTime(filePath)).sort((a, b) => b - a)[0];
+        if (contributors.length) {
+            return {
+                contributors,
+                lastUpdateTime
+            };
+        }
+        return undefined;
     }
 }

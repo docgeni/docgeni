@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ComponentDocItem } from '../../interfaces/public-api';
 
 @Component({
@@ -9,15 +10,22 @@ export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
 
     @Input() docItem: ComponentDocItem;
-
-    constructor() {}
+    currentTabName: string;
+    constructor(activatedRoute: ActivatedRoute) {
+        this.currentTabName = activatedRoute.firstChild.snapshot.url[0].path;
+    }
 
     ngOnInit(): void {}
+    changeTab(name: string) {
+        this.currentTabName = name;
+    }
 }
 
 @Component({
     selector: 'dg-component-empty',
-    template: `<p>Current component has not been documented.</p>`
+    template: `
+        <p>Current component has not been documented.</p>
+    `
 })
 export class ComponentEmptyComponent implements OnInit {
     @HostBinding(`class.dg-component-empty`) isDocEmpty = true;

@@ -26,7 +26,7 @@ export class DocSourceFile<TMeta = DocMeta> {
     public content: string;
     public meta?: TMeta;
     public output: string;
-
+    public contributionInfo: { lastUpdateTime: number; contributors: string[] };
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -88,6 +88,7 @@ export class DocSourceFile<TMeta = DocMeta> {
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
         this.output = Markdown.toHTML(result.body);
+        this.contributionInfo = this.getContributionInfo();
     }
 
     public async emit(destRootPath: string) {
@@ -125,5 +126,11 @@ export class DocSourceFile<TMeta = DocMeta> {
 
     public isEmpty() {
         return toolkit.utils.isEmpty(this.content);
+    }
+    private getContributionInfo() {
+        return {
+            lastUpdateTime: toolkit.git.lastUpdateTime(this.path),
+            contributors: toolkit.git.contributors(this.path)
+        };
     }
 }
