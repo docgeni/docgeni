@@ -2,7 +2,7 @@ import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { DocgeniHost } from '../docgeni-host';
 import { toolkit } from '@docgeni/toolkit';
-import { virtualFs } from '@angular-devkit/core';
+import { normalize } from '@angular-devkit/core';
 import { HostWatchEventType } from '../fs/node-host';
 
 export interface ComponentDef {
@@ -118,29 +118,11 @@ export class ComponentsBuilder {
                 const isDirectory = await this.docgeni.host.isDirectory(dirFullPath);
                 if (isDirectory) {
                     const componentBuilder = new ComponentBuilder(this.docgeni.host, dir, dirFullPath, this.componentsDistPath);
-                    toolkit.print.info(`Components: ${dir}, dirFullPath: ${dirFullPath}`);
-                    this.components.set(dirFullPath, componentBuilder);
+                    toolkit.print.info(`Components: ${dir}, dirFullPath: ${normalize(dirFullPath)}`);
+                    this.components.set(normalize(dirFullPath), componentBuilder);
                 }
             }
         }
-
-        // const customLibConfig = normalizeLibConfig({
-        //     name: 'custom',
-        //     abbrName: 'dg',
-        //     rootDir: '.docgeni',
-        //     categories: [],
-        //     examplesDir: 'components'
-        // });
-        // customLibConfig.absRootPath = this.paths.getAbsPath('.docgeni');
-        // const absCustomComponentPath = this.paths.getAbsPath('.docgeni');
-        // const component = new LibComponent(this, customLibConfig, 'custom', absCustomComponentPath);
-        // await component.build();
-        // await component.emit(
-        //     this.paths.absSiteAssetsContentPath + '/custom/docs',
-        //     this.paths.absSiteAssetsContentPath + '/custom/api',
-        //     this.paths.absSiteContentPath + '/components',
-        //     this.paths.absSiteAssetsContentPath + '/custom'
-        // );
     }
 
     async emitEntryFile() {
