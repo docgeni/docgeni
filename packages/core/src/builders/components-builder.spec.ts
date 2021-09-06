@@ -1,15 +1,16 @@
-import { DocgeniHost } from '../docgeni-host';
-import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniContext, createTestDocgeniHost, DEFAULT_TEST_ROOT_PATH } from '../testing';
 import { ComponentsBuilder } from './components-builder';
 import * as path from 'path';
-import { normalize, virtualFs } from '@angular-devkit/core';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
 
 const COMPONENTS_ROOT_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
+
+let linuxOnlyIt: typeof it = it;
+if (process.platform.startsWith('win') || process.platform.startsWith('darwin')) {
+    linuxOnlyIt = xit;
+}
 
 describe('#components-builder', () => {
     let context: DocgeniContext;
@@ -48,7 +49,7 @@ describe('#components-builder', () => {
         let componentsBuilder: ComponentsBuilder;
         let subscription: Subscription;
         beforeEach(async () => {
-            const componentsBuilder = new ComponentsBuilder(context);
+            componentsBuilder = new ComponentsBuilder(context);
             await componentsBuilder.build();
             await componentsBuilder.emit();
             (context as any).watch = true;
@@ -60,14 +61,14 @@ describe('#components-builder', () => {
         });
 
         it('should update file success', async () => {
-            await context.host.writeFile(`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`, 'new content');
+            await context.host.writeFile(path.resolve(COMPONENTS_ROOT_PATH, './hello/hello.component.ts'), 'new content');
             await toolkit.utils.wait(0);
             expect(await context.host.readFile(path.resolve(componentsDistPath, 'hello/hello.component.ts'))).toEqual('new content');
         });
 
         it('should create file success', async () => {
             const newComponentPath = `${COMPONENTS_ROOT_PATH}/hello1`;
-            await context.host.writeFile(`${newComponentPath}/hello1.component.ts`, 'new file');
+            await context.host.writeFile(path.resolve(newComponentPath, 'hello1.component.ts'), 'new file');
 
             await toolkit.utils.wait(0);
             const newFileContent = await context.host.readFile(path.resolve(componentsDistPath, 'hello1/hello1.component.ts'));
@@ -76,15 +77,15 @@ describe('#components-builder', () => {
 
         it('should delete file success', async () => {
             const newComponentPath = `${COMPONENTS_ROOT_PATH}/hello1`;
-            await context.host.writeFile(`${newComponentPath}/hello1.component.ts`, 'new file');
+            await context.host.writeFile(path.resolve(newComponentPath, 'hello1.component.ts'), 'new file');
             await toolkit.utils.wait(0);
-            await context.host.delete(`${newComponentPath}/hello1.component.ts`);
+            await context.host.delete(path.resolve(newComponentPath, 'hello1.component.ts'));
             await toolkit.utils.wait(0);
             expect(await context.host.pathExists(path.resolve(componentsDistPath, 'hello1'))).toBeFalsy();
         });
 
         it('should do nothings when create file is not component', async () => {
-            await context.host.writeFile(`${COMPONENTS_ROOT_PATH}/hello1.component.ts`, 'new file');
+            await context.host.writeFile(path.resolve(COMPONENTS_ROOT_PATH, 'hello1.component.ts'), 'new content');
             await toolkit.utils.wait(0);
             expect(await context.host.pathExists(path.resolve(componentsDistPath, 'hello1.component.ts'))).toBeFalsy();
         });
