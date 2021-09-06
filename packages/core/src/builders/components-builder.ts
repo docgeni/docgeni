@@ -2,7 +2,7 @@ import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { DocgeniHost } from '../docgeni-host';
 import { toolkit } from '@docgeni/toolkit';
-import { normalize } from '@angular-devkit/core';
+import { normalize, relative, resolve } from '@angular-devkit/core';
 import { HostWatchEventType } from '../fs/node-host';
 
 export interface ComponentDef {
@@ -58,9 +58,9 @@ export class ComponentsBuilder {
     }
 
     private getComponentOfFile(fileFullPath: string) {
-        const relativePath = path.relative(this.componentsSourcePath, fileFullPath);
+        const relativePath = relative(normalize(this.componentsSourcePath), normalize(fileFullPath));
         const name = relativePath.substring(0, relativePath.indexOf('/'));
-        const componentPath = name ? path.resolve(this.componentsSourcePath, name) : null;
+        const componentPath = name ? resolve(normalize(this.componentsSourcePath), normalize(name)) : null;
         return {
             name,
             componentPath
