@@ -118,6 +118,7 @@ export class ComponentsBuilder {
                 const isDirectory = await this.docgeni.host.isDirectory(dirFullPath);
                 if (isDirectory) {
                     const componentBuilder = new ComponentBuilder(this.docgeni.host, dir, dirFullPath, this.componentsDistPath);
+                    toolkit.print.info(`Components: ${dir}, dirFullPath: ${dirFullPath}`);
                     this.components.set(dirFullPath, componentBuilder);
                 }
             }
