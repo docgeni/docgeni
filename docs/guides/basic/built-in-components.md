@@ -60,6 +60,44 @@ WIP.
 WIP.
 
 ## 自定义内置组件
-WIP.
+在默认的`.docgeni/components`文件夹下创建自定义内置组件，比如如下结构：
 
+```html
+.docgeni
+└── components
+    ├── color
+    │   ├── color.component.ts    
+    │   ├── color.component.html
+    ├── module.ts
+```
+
+`color` 组件需要默认导出 Markdown 中使用的选择器 selector 和 component，同时需要继承 `DocgeniBuiltInComponent`并传入 ElementRef，如下示例是自定义设置文字颜色组件：
+
+```ts
+import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { DocgeniBuiltInComponent } from '@docgeni/template';
+
+@Component({
+    selector: 'my-color',
+    templateUrl: './color.component.html'
+})
+export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
+    @Input() set color(value: string) {
+        this.hostElement.style.color = value;
+    }
+
+    constructor(elementRef: ElementRef<unknown>) {
+        super(elementRef);
+    }
+}
+
+export default {
+    selector: 'my-color',
+    component: MyColorComponent
+};
+```
+在 Markdown 中编写如下语法：
+```html
 <my-color color="red">Color</my-color>
+```
+展示效果：<my-color color="red">Color</my-color>

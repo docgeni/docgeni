@@ -8,6 +8,7 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     baseHref: '/',
     docsDir: 'docs',
     siteDir: '.docgeni/site',
+    componentsDir: '.docgeni/components',
     outputDir: 'dist/docgeni-site',
     publicDir: '.docgeni/public',
     locales: [],

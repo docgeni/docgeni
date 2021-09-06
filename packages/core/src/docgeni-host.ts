@@ -1,6 +1,8 @@
-import { toolkit } from '@docgeni/toolkit';
-import { getSystemPath, normalize, PathFragment, virtualFs } from '@angular-devkit/core';
+import { getSystemPath, normalize, PathFragment, resolve, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
+import { publish, refCount } from 'rxjs/operators';
+import * as chokidar from 'chokidar';
+import { DocgeniHostWatchOptions } from './fs/node-host';
 
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
@@ -8,9 +10,10 @@ export interface DocgeniHost {
     pathExists(path: string): Promise<boolean>;
     isDirectory(path: string): Promise<boolean>;
     isFile(path: string): Promise<boolean>;
-    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent>;
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent>;
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
+    list(path: string): Promise<PathFragment[]>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -37,7 +40,8 @@ export class DocgeniHostImpl implements DocgeniHost {
         return this.host.isFile(normalize(path)).toPromise();
     }
 
-    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent> {
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent> {
+        options = { persistent: true, ...options };
         return this.host.watch(normalize(path), options);
     }
 
@@ -46,7 +50,15 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async copy(src: string, dest: string): Promise<void> {
-        return toolkit.fs.copy(getSystemPath(normalize(src)), dest);
+        const stat = await this.stat(src);
+        if (stat.isFile()) {
+            await this.writeFile(dest, await this.readFile(src));
+        } else {
+            const result = await this.list(src);
+            for (const item of result) {
+                await this.copy(resolve(normalize(src), item), resolve(normalize(dest), item));
+            }
+        }
     }
 
     async delete(path: string): Promise<void> {
