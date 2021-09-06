@@ -1,5 +1,5 @@
 import { createDocgeniHost, DocgeniHost } from './docgeni-host';
-import { virtualFs, normalize } from '@angular-devkit/core';
+import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
@@ -156,7 +156,7 @@ export class Docgeni implements DocgeniContext {
             const absDocsPath = resolve(this.paths.cwd, this.config.docsDir);
             const docsDosExists = await this.host.pathExists(absDocsPath);
             if (!docsDosExists) {
-                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${absDocsPath}`);
+                throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${getSystemPath(absDocsPath)}`);
             }
         }
 
