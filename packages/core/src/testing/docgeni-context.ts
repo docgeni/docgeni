@@ -1,10 +1,11 @@
 import { toolkit } from '@docgeni/toolkit';
+import { getSystemPath, normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
 
-export const DEFAULT_TEST_ROOT_PATH = '/test/root';
+export const DEFAULT_TEST_ROOT_PATH = getSystemPath(normalize(`/test/root`));
 
 export interface TestDocgeniContextOptions {
     root?: string;
