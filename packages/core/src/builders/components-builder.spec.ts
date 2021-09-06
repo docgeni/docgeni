@@ -42,7 +42,7 @@ describe('#components-builder', () => {
         expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
         const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
-        const expectContent = await toolkit.fs.readFileContent(resolve(__dirname, './components-builder-expect-entry.txt'));
+        const expectContent = await toolkit.fs.readFileContent(systemPath.resolve(__dirname, './components-builder-expect-entry.txt'));
         expect(entryContent).toEqual(expectContent);
     });
 
