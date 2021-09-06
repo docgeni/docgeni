@@ -1,8 +1,7 @@
 import { DocgeniContext } from '../docgeni.interface';
-import * as path from 'path';
 import { DocgeniHost } from '../docgeni-host';
 import { toolkit } from '@docgeni/toolkit';
-import { normalize, relative, resolve } from '@angular-devkit/core';
+import { normalize, relative, resolve } from '../fs';
 import { HostWatchEventType } from '../fs/node-host';
 
 export interface ComponentDef {
@@ -16,8 +15,8 @@ export class ComponentBuilder {
     private emitted = false;
 
     constructor(private docgeniHost: DocgeniHost, public name: string, public fullPath: string, distRootPath: string) {
-        this.entryComponentFullPath = path.resolve(fullPath, `${name}.component.ts`);
-        this.distPath = path.resolve(distRootPath, name);
+        this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
+        this.distPath = resolve(distRootPath, name);
     }
 
     async exists() {
@@ -53,8 +52,8 @@ export class ComponentsBuilder {
     private componentsDistPath: string;
 
     constructor(private docgeni: DocgeniContext) {
-        this.componentsSourcePath = this.docgeni.paths.getAbsPath(this.docgeni.config.componentsDir);
-        this.componentsDistPath = path.resolve(this.docgeni.paths.absSiteContentPath, 'components/custom');
+        this.componentsSourcePath = resolve(this.docgeni.paths.cwd, this.docgeni.config.componentsDir);
+        this.componentsDistPath = resolve(this.docgeni.paths.absSiteContentPath, 'components/custom');
     }
 
     private getComponentOfFile(fileFullPath: string) {
@@ -114,12 +113,11 @@ export class ComponentsBuilder {
         if (await this.isExist()) {
             const allDirs = await this.docgeni.host.list(this.componentsSourcePath);
             for (const dir of allDirs) {
-                const dirFullPath = path.resolve(this.componentsSourcePath, dir);
+                const dirFullPath = resolve(this.componentsSourcePath, dir);
                 const isDirectory = await this.docgeni.host.isDirectory(dirFullPath);
                 if (isDirectory) {
                     const componentBuilder = new ComponentBuilder(this.docgeni.host, dir, dirFullPath, this.componentsDistPath);
-                    toolkit.print.info(`Components: ${dir}, dirFullPath: ${normalize(dirFullPath)}`);
-                    this.components.set(normalize(dirFullPath), componentBuilder);
+                    this.components.set(dirFullPath, componentBuilder);
                 }
             }
         }
@@ -132,7 +130,7 @@ export class ComponentsBuilder {
         const entryContent = toolkit.template.compile('components-entry.hbs', {
             components: componentsData
         });
-        await this.docgeni.host.writeFile(path.resolve(this.componentsDistPath, 'index.ts'), entryContent);
+        await this.docgeni.host.writeFile(resolve(this.componentsDistPath, 'index.ts'), entryContent);
     }
 
     async emit() {
