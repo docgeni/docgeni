@@ -4,6 +4,7 @@ import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
 import { resolve } from '../fs';
+import * as systemPath from 'path';
 
 const COMPONENTS_ROOT_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
 
@@ -27,7 +28,7 @@ describe('#components-builder', () => {
         });
 
         toolkit.initialize({
-            baseDir: resolve(__dirname, '../')
+            baseDir: systemPath.resolve(__dirname, '../')
         });
 
         componentsDistPath = resolve(context.paths.absSiteContentPath, 'components/custom');
