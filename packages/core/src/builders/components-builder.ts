@@ -71,7 +71,7 @@ export class ComponentsBuilder {
         if (!this.docgeni.watch) {
             return;
         }
-        console.log(`start watch components: ${this.componentsSourcePath}`);
+        toolkit.print.info(`Components: start watching ${this.componentsSourcePath}`);
         return this.docgeni.host.watch(this.componentsSourcePath, { ignoreInitial: true, recursive: true }).subscribe(async item => {
             try {
                 const type: HostWatchEventType = item.type as any;
