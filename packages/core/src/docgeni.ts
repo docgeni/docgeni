@@ -13,7 +13,7 @@ import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, LibraryBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
-import { DocgeniNodeJsAsyncHost, DocgeniScopedHost } from './fs';
+import { DocgeniNodeJsAsyncHost, DocgeniScopedHost, resolve } from './fs';
 import { normalizeLibConfig } from './builders/normalize';
 import { LibComponent } from './builders/library-component';
 import { ComponentsBuilder } from './builders/components-builder';
@@ -153,7 +153,7 @@ export class Docgeni implements DocgeniContext {
         }
 
         if (this.config.docsDir) {
-            const absDocsPath = path.resolve(this.paths.cwd, this.config.docsDir);
+            const absDocsPath = resolve(this.paths.cwd, this.config.docsDir);
             const docsDosExists = await this.host.pathExists(absDocsPath);
             if (!docsDosExists) {
                 throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${absDocsPath}`);
