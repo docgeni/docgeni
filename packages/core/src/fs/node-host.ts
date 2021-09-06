@@ -39,21 +39,21 @@ export class DocgeniNodeJsAsyncHost extends NodeJsAsyncHost {
                     obs.next({
                         path: normalize(path),
                         time: new Date(),
-                        type: virtualFs.HostWatchEventType.Changed
+                        type: (HostWatchEventType.Changed as unknown) as virtualFs.HostWatchEventType
                     });
                 })
                 .on('add', path => {
                     obs.next({
                         path: normalize(path),
                         time: new Date(),
-                        type: virtualFs.HostWatchEventType.Created
+                        type: (HostWatchEventType.Created as unknown) as virtualFs.HostWatchEventType
                     });
                 })
                 .on('unlink', path => {
                     obs.next({
                         path: normalize(path),
                         time: new Date(),
-                        type: virtualFs.HostWatchEventType.Deleted
+                        type: (HostWatchEventType.Deleted as unknown) as virtualFs.HostWatchEventType
                     });
                 });
 

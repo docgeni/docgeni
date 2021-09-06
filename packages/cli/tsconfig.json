@@ -9,13 +9,7 @@
   "include": [
     "src"
   ],
-  "exclude": [
-    "node_modules",
-    "test",
-    "lib",
-    "**/*/*.spec.ts",
-    "src/test"
-  ],
+  "exclude": [  ],
   "references": [
     {
       "path": "../toolkit"
