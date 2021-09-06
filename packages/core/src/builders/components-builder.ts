@@ -57,9 +57,9 @@ export class ComponentsBuilder {
     }
 
     private getComponentOfFile(fileFullPath: string) {
-        const relativePath = relative(normalize(this.componentsSourcePath), normalize(fileFullPath));
+        const relativePath = relative(this.componentsSourcePath, normalize(fileFullPath));
         const name = relativePath.substring(0, relativePath.indexOf('/'));
-        const componentPath = name ? resolve(normalize(this.componentsSourcePath), normalize(name)) : null;
+        const componentPath = name ? resolve(this.componentsSourcePath, normalize(name)) : null;
         return {
             name,
             componentPath
