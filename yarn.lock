@@ -131,10 +131,10 @@
     rxjs "6.6.2"
     source-map "0.7.3"
 
-"@angular-devkit/core@11.2.6", "@angular-devkit/core@~11.2.6":
-  version "11.2.6"
-  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-11.2.6.tgz#f90dfcc7204cdc58dfcb9901ce265c5c9c0a5dfa"
-  integrity sha512-3dA0Z6sIIxCDjZS/DucgmIKti7EZ/LgHoHgCO72Q50H5ZXbUSNBz5wGl5hVq2+gzrnFgU/0u40MIs6eptk30ZA==
+"@angular-devkit/core@11.2.14", "@angular-devkit/core@~11.2.14":
+  version "11.2.14"
+  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-11.2.14.tgz#b1658fc5bd5191e0012efb4bec72ad33e2e609e6"
+  integrity sha512-Ad1fHqLxDwhkQgLPqq9i+G65NSOoIHXQx7ILcSPACKurV3XLS1RO9BgP/BDaqHAG+WslUAPbMStaTzzPm+9dNw==
   dependencies:
     ajv "6.12.6"
     fast-json-stable-stringify "2.1.0"
@@ -173,12 +173,12 @@
     ora "5.0.0"
     rxjs "6.6.2"
 
-"@angular-devkit/schematics@~11.2.6":
-  version "11.2.6"
-  resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-11.2.6.tgz#5908daef60af2e5d98fd75ac3fe77c02ab144fa3"
-  integrity sha512-bhi2+5xtVAjtr3bsXKT8pnoBamQrArd/Y20ueA4Od7cd38YT97nzTA1wyHBFG0vWd0HMyg42ZS0aycNBuOebaA==
+"@angular-devkit/schematics@~11.2.14":
+  version "11.2.14"
+  resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-11.2.14.tgz#bb0dbfe35a4a7af7880e776f86015105b58d933d"
+  integrity sha512-Ol6+0qdGKzuVJm5gCtQr47X0OCihTfAxI4h047cHYhPFIGGPSvkG/QeJMZugflgoobi2k/xcYokOu/VAkRtWbQ==
   dependencies:
-    "@angular-devkit/core" "11.2.6"
+    "@angular-devkit/core" "11.2.14"
     ora "5.3.0"
     rxjs "6.6.3"
 
@@ -1328,6 +1328,13 @@
   version "11.0.0"
   resolved "https://registry.npmjs.org/@commitlint/types/-/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha512-VoNqai1vR5anRF5Tuh/+SWDFk7xi7oMwHrHrbm1BprYXjB2RJsWLhUrStMssDxEl5lW/z3EUdg8RvH/IUBccSQ==
+
+"@docgeni/template@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@docgeni/template/-/template-1.0.7.tgz#5ab25ea6a6af4d29b1e585dce8752b031609e9a7"
+  integrity sha512-ONNvGcN85WoUmZtYXsetL78Qv0JOmVo/3gh+ihpFOqwLEP+lo+GDcp2DkZr0GNo3TisRRjHH84YAnetivzMlLg==
+  dependencies:
+    tslib "*"
 
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
@@ -14014,6 +14021,11 @@ tsconfig-paths@^3.9.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@*:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@2.0.1:
   version "2.0.1"

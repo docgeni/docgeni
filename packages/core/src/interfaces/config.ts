@@ -64,8 +64,10 @@ export interface DocgeniConfig {
     repoUrl?: string;
     /** Docs dir, default is 'docs' **/
     docsDir?: string;
-    /** Site default dir .docgeni **/
+    /** Site default dir .docgeni/site **/
     siteDir?: string;
+    /** Site default dir .docgeni/components **/
+    componentsDir?: string;
     /** Site output dir, default is dist/docgeni-site **/
     outputDir?: string;
     /** Angular demo site name in angular.json **/

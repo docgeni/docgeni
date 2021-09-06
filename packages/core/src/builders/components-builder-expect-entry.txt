@@ -1,0 +1,18 @@
+import { NgModule } from "@angular/core";
+import { addBuiltInComponents } from "@docgeni/template";
+import hello from './hello/hello.component';
+
+const COMPONENTS = [
+    hello.component,
+];
+
+@NgModule({
+    declarations: [...COMPONENTS],
+    entryComponents: [...COMPONENTS]
+})
+export class CustomComponentsModule {
+}
+
+addBuiltInComponents([
+    hello,
+]);

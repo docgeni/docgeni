@@ -2,6 +2,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { expect } from 'chai';
 
 export * from './docgeni-host';
+export * from './docgeni-context';
 
 export async function expectThrowAsync(method: any, errorMessage: string | Error) {
     let error = null;

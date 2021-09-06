@@ -134,7 +134,8 @@ export class SiteBuilder {
             const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
 
             if (await this.docgeni.host.pathExists(publicDirPath)) {
-                const assetsPath = resolve(normalize(this.docgeni.config.publicDir), normalize('assets'));
+                const assetsPath = path.resolve(publicDirPath, 'assets');
+                // const assetsPath = resolve(normalize(this.docgeni.config.publicDir), normalize('assets'));
                 if (toolkit.fs.existsSync(assetsPath)) {
                     this.docgeni.host
                         .watch(normalize(assetsPath))

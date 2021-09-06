@@ -8,12 +8,9 @@ import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
 describe('#config', () => {
     let docgeniHost: DocgeniHost;
     beforeEach(() => {
-        const host = new virtualFs.ScopedHost(
-            new virtualFs.test.TestHost({
-                'docs/getting-started.md': 'Getting Started'
-            })
-        );
-        docgeniHost = createTestDocgeniHost(host);
+        docgeniHost = createTestDocgeniHost({
+            'docs/getting-started.md': 'Getting Started'
+        });
     });
 
     describe('normalize', () => {
@@ -45,6 +42,7 @@ describe('#config', () => {
                 baseHref: '/',
                 docsDir: 'docs',
                 siteDir: '.docgeni/site',
+                componentsDir: '.docgeni/components',
                 outputDir: 'dist/docgeni-site',
                 publicDir: '.docgeni/public',
                 locales: [{ name: 'en-us', key: 'en-us' }],
@@ -63,6 +61,7 @@ describe('#config', () => {
                 baseHref: '/',
                 docsDir: toolkit.strings.generateRandomId(),
                 siteDir: toolkit.strings.generateRandomId(),
+                componentsDir: toolkit.strings.generateRandomId(),
                 outputDir: `dist/${toolkit.strings.generateRandomId()}`,
                 publicDir: `.docgeni/${toolkit.strings.generateRandomId()}`,
                 locales: [

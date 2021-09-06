@@ -23,6 +23,14 @@ export class AngularCommander {
             }, []);
     }
 
+    async run(cmdOptions: AngularCommandOptions, watch = false) {
+        if (watch) {
+            await this.serve(cmdOptions);
+        } else {
+            await this.build(cmdOptions);
+        }
+    }
+
     async serve(cmdOptions: AngularCommandOptions): Promise<void> {
         await this.execAngularCommand('serve', this.parseCommandOptionsToArgs(cmdOptions));
     }

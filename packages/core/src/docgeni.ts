@@ -11,9 +11,12 @@ import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
-import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder, SiteBuilder } from './builders';
+import { DocsBuilder, DocSourceFile, LibrariesBuilder, LibraryBuilder, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
 import { DocgeniNodeJsAsyncHost, DocgeniScopedHost } from './fs';
+import { normalizeLibConfig } from './builders/normalize';
+import { LibComponent } from './builders/library-component';
+import { ComponentsBuilder } from './builders/components-builder';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -113,14 +116,15 @@ export class Docgeni implements DocgeniContext {
             this.docsBuilder.watch();
             this.librariesBuilders.watch();
 
+            const componentsBuilder = new ComponentsBuilder(this);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+            componentsBuilder.watch();
+
             await this.generateSiteConfig();
 
             if (!this.options.cmdArgs.skipSite) {
-                if (this.watch) {
-                    await this.ngCommander.serve(this.options.cmdArgs);
-                } else {
-                    await this.ngCommander.build(this.options.cmdArgs);
-                }
+                await this.ngCommander.run(this.options.cmdArgs, this.watch);
             }
         } catch (error) {
             if (error instanceof ValidationError) {

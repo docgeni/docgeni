@@ -1,0 +1,24 @@
+import { NgModule } from "@angular/core";
+import { addBuiltInComponents } from "@docgeni/template";
+{{#each components}}
+import {{name}} from './{{name}}/{{name}}.component';
+{{/each}}
+
+const COMPONENTS = [
+{{#each components}}
+    {{name}}.component,
+{{/each}}
+];
+
+@NgModule({
+    declarations: [...COMPONENTS],
+    entryComponents: [...COMPONENTS]
+})
+export class CustomComponentsModule {
+}
+
+addBuiltInComponents([
+{{#each components}}
+    {{name}},
+{{/each}}
+]);
