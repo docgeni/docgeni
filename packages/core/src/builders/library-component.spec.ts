@@ -63,7 +63,7 @@ describe('#library-component', () => {
         });
     });
 
-    fit('should create lib component success', async () => {
+    it('should create lib component success', async () => {
         const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
         expect(component).toBeTruthy();
         expect(component.absPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
