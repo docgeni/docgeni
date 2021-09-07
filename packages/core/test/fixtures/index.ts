@@ -9,12 +9,13 @@ export interface FixtureResult {
 }
 
 export async function loadFixtureSrc(name: string): Promise<Record<string, string>> {
-    const allDirAndFiles = toolkit.fs.globSync(path.resolve(__dirname, `${name}/src/**`));
+    const basePath = path.resolve(__dirname, `${name}/src`);
+    const allDirAndFiles = toolkit.fs.globSync(path.resolve(basePath, `${name}/**`));
     const files: Record<string, string> = {};
     for (const dirOrFile of allDirAndFiles) {
         if (!toolkit.fs.isDirectory(dirOrFile)) {
-            const basePath = path.resolve(__dirname, `${name}/src`);
             const relativePath = dirOrFile.replace(basePath, '');
+            console.log(`dirOrFile: ${dirOrFile}, basePath: ${basePath}, relativePath: ${relativePath}`);
             files[relativePath] = await toolkit.fs.readFileContent(dirOrFile);
         }
     }
