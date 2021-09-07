@@ -48,7 +48,6 @@ describe('#library-component', () => {
     });
 
     beforeEach(async () => {
-        console.log(fixture.src);
         context = createTestDocgeniContext({
             initialFiles: {
                 [`${buttonDirPath}/doc/zh-cn.md`]: fixture.src['doc/zh-cn.md'],

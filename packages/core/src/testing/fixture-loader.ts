@@ -16,9 +16,6 @@ async function internalLoadFixture(name: string, rootName: 'src' | 'output'): Pr
         if (!toolkit.fs.isDirectory(dirOrFile)) {
             const basePath = resolve(fixturesPath, `./${name}/${rootName}`);
             const relativePath = relative(basePath, dirOrFile);
-            console.log(`dirOrFile: ${dirOrFile}`);
-            console.log(`basePath: ${basePath}`);
-            console.log(`relativePath: ${relativePath}`);
             files[relativePath] = await toolkit.fs.readFileContent(dirOrFile);
         }
     }

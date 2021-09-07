@@ -146,7 +146,6 @@ export class SiteBuilder {
                                     normalize(this.siteProject.sourceRoot),
                                     relative(normalize(publicDirPath), normalize(value.path))
                                 );
-                                console.log(`from: ${value.path} to ${publicFilePath}`);
                                 if (value.type === virtualFs.HostWatchEventType.Deleted) {
                                     return from(this.docgeni.host.delete(publicFilePath));
                                 } else {
