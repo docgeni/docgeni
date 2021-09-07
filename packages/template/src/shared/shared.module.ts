@@ -15,13 +15,13 @@ import { LabelComponent } from './label/label.component';
 import { TableOfContentsComponent } from './toc/toc.component';
 import { AssetsContentPathPipe } from './pipes/assets-content-path.pipe';
 import { CopierService } from './copier/copier.service';
-import { DateAutoFormatPipe, IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
+import { IsModeFullPipe, IsModeLitePipe } from './pipes/mode.pipe';
 import { LocalesSelectorComponent } from './locales-selector/locales-selector.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LogoComponent } from './logo/logo.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { HeroActionClassPipe } from './pipes/hero.pipe';
-import { DocContributionComponent } from './doc-contribution/doc-contribution.component';
+import { DocMetaComponent } from './doc-meta/doc-meta.component';
 
 @NgModule({
     declarations: [
@@ -42,8 +42,7 @@ import { DocContributionComponent } from './doc-contribution/doc-contribution.co
         IsModeLitePipe,
         IsModeFullPipe,
         HeroActionClassPipe,
-        DocContributionComponent,
-        DateAutoFormatPipe
+        DocMetaComponent
     ],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, LayoutModule],
     entryComponents: [ExampleViewerComponent],
@@ -68,8 +67,7 @@ import { DocContributionComponent } from './doc-contribution/doc-contribution.co
         IsModeLitePipe,
         IsModeFullPipe,
         HeroActionClassPipe,
-        DocContributionComponent,
-        DateAutoFormatPipe
+        DocMetaComponent
     ]
 })
 export class DocgeniSharedModule {}

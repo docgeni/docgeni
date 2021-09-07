@@ -5,6 +5,7 @@ import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
 import { DocgeniHost } from '../docgeni-host';
+import { DocgeniConfig } from '../interfaces';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -26,7 +27,7 @@ export class DocSourceFile<TMeta = DocMeta> {
     public content: string;
     public meta?: TMeta;
     public output: string;
-    public contributionInfo: { lastUpdateTime: number; contributors: string[] };
+    public contributionInfo: { lastUpdatedTime: number; contributors: string[] };
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -68,7 +69,7 @@ export class DocSourceFile<TMeta = DocMeta> {
         return path.basename(this.path, this.extname);
     }
 
-    constructor(options: DocSourceFileOptions, host: DocgeniHost) {
+    constructor(options: DocSourceFileOptions, host: DocgeniHost, private docConfig: DocgeniConfig) {
         this.cwd = options.cwd;
         this.base = options.base;
         this.path = options.path;
@@ -129,8 +130,8 @@ export class DocSourceFile<TMeta = DocMeta> {
     }
     private getContributionInfo() {
         return {
-            lastUpdateTime: toolkit.git.lastUpdateTime(this.path),
-            contributors: toolkit.git.contributors(this.path)
+            lastUpdatedTime: toolkit.git.lastUpdatedTime(this.path),
+            contributors: this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined
         };
     }
 }

@@ -12,7 +12,11 @@ export class ComponentViewerComponent implements OnInit {
     @Input() docItem: ComponentDocItem;
     currentTabName: string;
     constructor(activatedRoute: ActivatedRoute) {
-        this.currentTabName = activatedRoute.firstChild.snapshot.url[0].path;
+        if (activatedRoute.firstChild.snapshot.url.length) {
+            this.currentTabName = activatedRoute.firstChild.snapshot.url[0].path;
+        } else {
+            this.currentTabName = 'overview';
+        }
     }
 
     ngOnInit(): void {}

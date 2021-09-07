@@ -1,5 +1,5 @@
 import * as shell from './shell';
-export function lastUpdateTime(filePath: string) {
+export function lastUpdatedTime(filePath: string) {
     return parseInt(shell.execSync(`git log --pretty=format:"%at" -n 1 ${filePath}`, { stdio: 'pipe' }).toString(), 10);
 }
 export function contributors(filePath: string | string[]) {

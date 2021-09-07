@@ -21,7 +21,4 @@
   </div>
 </ng-container>
 <router-outlet></router-outlet>
-<dg-doc-contribution
-  [contributionInfo]="docItem.contributionMap[currentTabName]"
-  *ngIf="docItem && docItem.contributionMap && currentTabName"
-></dg-doc-contribution>
+<dg-doc-meta [meta]="docItem.metaMap[currentTabName]" *ngIf="docItem && docItem.metaMap && currentTabName"></dg-doc-meta>

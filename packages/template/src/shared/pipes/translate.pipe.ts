@@ -6,12 +6,14 @@ const TRANSLATES = {
     'zh-cn': {
         OVERVIEW: '概览',
         EXAMPLES: '示例',
-        HOME: '首页'
+        HOME: '首页',
+        LAST_UPDATED_TIME: '最后更新'
     },
     'en-us': {
         OVERVIEW: 'Overview',
         EXAMPLES: 'Examples',
-        HOME: 'Home'
+        HOME: 'Home',
+        LAST_UPDATED_TIME: 'Last updated'
     }
 };
 @Pipe({ name: 'dgTranslate' })

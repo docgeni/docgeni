@@ -12,7 +12,7 @@
           (contentRendered)="updateTableOfContents(docItem.title, $event)"
         >
         </dg-content-viewer>
-        <dg-doc-contribution [contributionInfo]="docItem.contributionInfo"></dg-doc-contribution>
+        <dg-doc-meta [meta]="docItem.meta"></dg-doc-meta>
       </div>
       <dg-toc #toc></dg-toc>
     </div>

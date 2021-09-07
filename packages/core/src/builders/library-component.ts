@@ -19,7 +19,7 @@ export class LibComponent {
     public absDocPath: string;
     public absApiPath: string;
     public examples: LiveExample[];
-    private contributionMap: Partial<Record<'api' | 'overview' | 'examples', { lastUpdateTime: number; contributors: string[] }>> = {};
+    private metaMap: Partial<Record<'api' | 'overview' | 'examples', { lastUpdatedTime: number; contributors: string[] }>> = {};
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
@@ -85,7 +85,8 @@ export class LibComponent {
                         type: DocType.component,
                         locale: locale.key
                     },
-                    this.docgeni.host
+                    this.docgeni.host,
+                    this.docgeni.config
                 );
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;
@@ -97,7 +98,7 @@ export class LibComponent {
         if (defaultLocaleDoc) {
             this.meta = defaultLocaleDoc.meta;
             this.name = defaultLocaleDoc.meta.name || this.name;
-            this.contributionMap.overview = defaultLocaleDoc.contributionInfo;
+            this.metaMap.overview = defaultLocaleDoc.contributionInfo;
         }
     }
 
@@ -138,7 +139,7 @@ export class LibComponent {
             }
         }
         if (apiDocsFilePathList.length) {
-            this.contributionMap.api = this.getFilesContribution(apiDocsFilePathList);
+            this.metaMap.api = this.getFilesContribution(apiDocsFilePathList);
         }
     }
 
@@ -150,7 +151,7 @@ export class LibComponent {
 
         const dirs = await toolkit.fs.getDirs(this.absExamplesPath);
         const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
-        this.contributionMap.examples = this.getFilesContribution(this.absExamplesPath);
+        this.metaMap.examples = this.getFilesContribution(this.absExamplesPath);
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
 
         for (const exampleName of dirs) {
@@ -249,7 +250,7 @@ export class LibComponent {
                     category: this.meta.category,
                     hidden: this.meta.hidden,
                     label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
-                    contributionMap: this.contributionMap
+                    metaMap: this.metaMap
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }
@@ -320,11 +321,11 @@ export class LibComponent {
             filePathList = absDirOrFilesPath;
         }
         const contributors = toolkit.git.contributors(filePathList);
-        const lastUpdateTime = filePathList.map(filePath => toolkit.git.lastUpdateTime(filePath)).sort((a, b) => b - a)[0];
+        const lastUpdatedTime = filePathList.map(filePath => toolkit.git.lastUpdatedTime(filePath)).sort((a, b) => b - a)[0];
         if (contributors.length) {
             return {
                 contributors,
-                lastUpdateTime
+                lastUpdatedTime
             };
         }
         return undefined;
