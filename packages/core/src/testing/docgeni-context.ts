@@ -5,7 +5,7 @@ import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
 
-export const DEFAULT_TEST_ROOT_PATH = getSystemPath(normalize(`/D/test`));
+export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
 
 export interface TestDocgeniContextOptions {
     root?: string;

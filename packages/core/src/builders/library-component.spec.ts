@@ -8,6 +8,7 @@ import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
 import { FixtureResult, loadFixture } from '../../test/fixtures';
+import { normalize } from '../fs';
 
 describe('#library-component', () => {
     const library = normalizeLibConfig({
@@ -36,7 +37,7 @@ describe('#library-component', () => {
             }
         ]
     });
-    const buttonDirPath = `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`;
+    const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
 
