@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
+import { relative, resolve } from '../fs';
 
 export const fixturesPath = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
@@ -13,9 +14,11 @@ async function internalLoadFixture(name: string, rootName: 'src' | 'output'): Pr
     const files: Record<string, string> = {};
     for (const dirOrFile of allDirAndFiles) {
         if (!toolkit.fs.isDirectory(dirOrFile)) {
-            const basePath = path.resolve(fixturesPath, `./${name}/${rootName}`);
-            const relativePath = dirOrFile.replace(basePath, '');
-            console.log(`dirOrFile: ${dirOrFile}, basePath: ${basePath}, relativePath: ${relativePath}`);
+            const basePath = resolve(fixturesPath, `./${name}/${rootName}`);
+            const relativePath = relative(basePath, dirOrFile);
+            console.log(`dirOrFile: ${dirOrFile}`);
+            console.log(`basePath: ${basePath}`);
+            console.log(`relativePath: ${relativePath}`);
             files[relativePath] = await toolkit.fs.readFileContent(dirOrFile);
         }
     }
