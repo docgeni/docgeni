@@ -1,19 +1,27 @@
-import { getSystemPath, normalize, PathFragment, resolve, virtualFs } from '@angular-devkit/core';
+import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
-import { publish, refCount } from 'rxjs/operators';
-import * as chokidar from 'chokidar';
-import { DocgeniHostWatchOptions } from './fs/node-host';
+import { DocgeniHostWatchOptions, resolve, normalize, VfsHost } from './fs';
+import { toolkit } from '@docgeni/toolkit';
 
+export interface GetDirsOrFilesOptions {
+    /** Include .dot files in normal matches */
+    dot?: boolean;
+    /** Exclude files in normal matches */
+    exclude?: string | string[];
+}
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
     writeFile(path: string, data: string): Promise<void>;
     pathExists(path: string): Promise<boolean>;
+    exists(path: string): Promise<boolean>;
     isDirectory(path: string): Promise<boolean>;
     isFile(path: string): Promise<boolean>;
     watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent>;
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
+    getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
+    getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -29,6 +37,10 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async pathExists(path: string): Promise<boolean> {
+        return this.exists(path);
+    }
+
+    async exists(path: string): Promise<boolean> {
         return this.host.exists(normalize(path)).toPromise();
     }
 
@@ -52,7 +64,8 @@ export class DocgeniHostImpl implements DocgeniHost {
     async copy(src: string, dest: string): Promise<void> {
         const stat = await this.stat(src);
         if (stat.isFile()) {
-            await this.writeFile(dest, await this.readFile(src));
+            const data = await this.host.read(normalize(src)).toPromise();
+            await this.host.write(normalize(dest), data).toPromise();
         } else {
             const result = await this.list(src);
             for (const item of result) {
@@ -67,6 +80,46 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async list(path: string): Promise<PathFragment[]> {
         return this.host.list(normalize(path)).toPromise();
+    }
+
+    async getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
+        options = {
+            dot: false,
+            ...options
+        };
+        const allPaths = await this.list(path);
+        return allPaths.filter(dir => {
+            if (options.exclude && toolkit.utils.matchGlob(dir, options.exclude)) {
+                return false;
+            }
+            if (options.dot) {
+                return true;
+            } else {
+                return !dir.startsWith('.');
+            }
+        });
+    }
+
+    async getDirs(path: string, options: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+        const allPaths = await this.getDirsAndFiles(path, options);
+        const result: PathFragment[] = [];
+        for (const item of allPaths) {
+            if (await this.isDirectory(resolve(path, item))) {
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    async getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+        const allPaths = await this.getDirsAndFiles(path, options);
+        const result: PathFragment[] = [];
+        for (const item of allPaths) {
+            if (await this.isFile(resolve(path, item))) {
+                result.push(item);
+            }
+        }
+        return result;
     }
 }
 

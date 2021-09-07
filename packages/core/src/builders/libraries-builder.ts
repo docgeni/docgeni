@@ -94,6 +94,7 @@ export class LibrariesBuilder {
             this.hooks.buildLibrariesSucceed.call(this);
         } catch (error) {
             this.docgeni.logger.error(error);
+            this.docgeni.logger.error(error.stack);
         } finally {
             this.building = false;
         }
