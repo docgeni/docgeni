@@ -3,9 +3,10 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from '../types';
 import Handlebars from 'handlebars';
-import { normalize, relative, resolve, virtualFs } from '@angular-devkit/core';
-import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { virtualFs } from '@angular-devkit/core';
+import { normalize, relative, resolve } from '../fs';
+import { of, from } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { ValidationError } from '../errors';
 interface CopyFile {
     from: string;
@@ -145,12 +146,16 @@ export class SiteBuilder {
                                     normalize(this.siteProject.sourceRoot),
                                     relative(normalize(publicDirPath), normalize(value.path))
                                 );
+                                console.log(`from: ${value.path} to ${publicFilePath}`);
                                 if (value.type === virtualFs.HostWatchEventType.Deleted) {
-                                    this.docgeni.host.delete(publicFilePath);
+                                    return from(this.docgeni.host.delete(publicFilePath));
                                 } else {
-                                    this.docgeni.host.copy(value.path, publicFilePath);
+                                    return from(this.docgeni.host.copy(value.path, publicFilePath)).pipe(
+                                        map(() => {
+                                            return value;
+                                        })
+                                    );
                                 }
-                                return of(value);
                             })
                         )
                         .subscribe();

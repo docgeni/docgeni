@@ -26,7 +26,18 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         host: createTestDocgeniHost(options.initialFiles),
         config: {
             componentsDir: '.docgeni/components',
-            libs: toolkit.utils.coerceArray(options.libs || [])
+            libs: toolkit.utils.coerceArray(options.libs || []),
+            locales: [
+                {
+                    key: 'zh-cn',
+                    name: 'ZH'
+                },
+                {
+                    key: 'en-us',
+                    name: 'EN'
+                }
+            ],
+            defaultLocale: 'zh-cn'
         },
         watch: false,
         paths: paths,

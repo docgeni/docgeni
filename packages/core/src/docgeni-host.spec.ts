@@ -1,9 +1,8 @@
-import { virtualFs } from '@angular-devkit/core';
+import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { DocgeniHost, DocgeniHostImpl } from './docgeni-host';
 import { createTestDocgeniHost } from './testing';
 
 describe('#docgeni-host', () => {
-    let testHost: virtualFs.test.TestHost;
     let host: DocgeniHost;
 
     beforeEach(() => {
@@ -35,5 +34,25 @@ describe('#docgeni-host', () => {
         expect(await host.readFile('folder100/file1.txt')).toEqual('folder/file1.txt');
         expect(await host.readFile('folder100/file2.txt')).toEqual('folder/file2.txt');
         expect(await host.readFile('folder100/subfolder/file1.txt')).toEqual('folder/subfolder/file1.txt');
+    });
+
+    it('should get dirs success', async () => {
+        const dirs = await host.getDirs('');
+        expect(dirs).toEqual(['folder'] as PathFragment[]);
+    });
+
+    it('should get dirs exclude folder', async () => {
+        const dirs = await host.getDirs('', { exclude: 'folder' });
+        expect(dirs).toEqual([]);
+    });
+
+    it('should get files success', async () => {
+        const dirs = await host.getFiles('');
+        expect(dirs).toEqual(['file1.txt', 'file2.txt'] as PathFragment[]);
+    });
+
+    it('should get files exclude file1.txt', async () => {
+        const dirs = await host.getFiles('', { exclude: 'file1.txt' });
+        expect(dirs).toEqual(['file2.txt'] as PathFragment[]);
     });
 });
