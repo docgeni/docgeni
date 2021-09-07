@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 export * from './docgeni-host';
 export * from './docgeni-context';
+export * from './fixture-loader';
 
 export async function expectThrowAsync(method: any, errorMessage: string | Error) {
     let error = null;

@@ -1,7 +1,7 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig, DocgeniContext, SiteBuilder } from '../src';
 import { expect } from 'chai';
 import { toolkit } from '@docgeni/toolkit';
-import { basicFixturePath } from './fixtures';
+import { basicFixturePath } from '../src/testing';
 import path from 'path';
 import { DocgeniPaths } from '../src/docgeni-paths';
 

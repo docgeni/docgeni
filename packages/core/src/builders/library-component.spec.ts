@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH } from '../testing';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
 import { LibComponent } from './library-component';
 import { normalizeLibConfig } from './normalize';
 import { EOL } from 'os';
@@ -7,7 +7,6 @@ import { toolkit } from '@docgeni/toolkit';
 import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
-import { FixtureResult, loadFixture } from '../../test/fixtures';
 import { normalize } from '../fs';
 
 describe('#library-component', () => {
@@ -48,7 +47,8 @@ describe('#library-component', () => {
         fixture = await loadFixture('lib-button-component-default');
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        console.log(fixture.src);
         context = createTestDocgeniContext({
             initialFiles: {
                 [`${buttonDirPath}/doc/zh-cn.md`]: fixture.src['/doc/zh-cn.md'],
@@ -64,7 +64,7 @@ describe('#library-component', () => {
         });
     });
 
-    it('should create lib component success', async () => {
+    fit('should create lib component success', async () => {
         const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
         expect(component).toBeTruthy();
         expect(component.absPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
