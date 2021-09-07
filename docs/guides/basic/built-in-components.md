@@ -51,9 +51,24 @@ order: 50
 ## Alert
 使用`alert`创建一个提示框，type 可选 `warning`、`info`、`success`、`danger`，默认为 `info`。
 
-<alert>xxxx</alert>
+<alert>Hello Docgeni</alert>
 
-WIP.
+```html
+<alert>Hello Docgeni</alert>
+```
+
+<alert type="warning">Warning</alert>
+<alert type="info">Info</alert>
+<alert type="success">Success</alert>
+<alert type="danger">Danger</alert>
+
+```html
+
+<alert type="warning">Warning</alert>
+<alert type="info">Info</alert>
+<alert type="success">Success</alert>
+<alert type="danger">Danger</alert>
+```
 
 ## Embed
 
