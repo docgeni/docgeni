@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
 export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
@@ -12,8 +12,6 @@ export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
 })
 export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements OnInit {
     private internalType: DocgeniLabelType = 'primary';
-
-    @HostBinding(`class`) classList: string[];
 
     get type(): DocgeniLabelType {
         return this.internalType;
