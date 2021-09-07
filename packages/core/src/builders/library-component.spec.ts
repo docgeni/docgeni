@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH } from '../testing';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
 import { LibComponent } from './library-component';
 import { normalizeLibConfig } from './normalize';
 import { EOL } from 'os';
@@ -7,7 +7,7 @@ import { toolkit } from '@docgeni/toolkit';
 import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
-import { FixtureResult, loadFixture } from '../../test/fixtures';
+import { normalize } from '../fs';
 
 describe('#library-component', () => {
     const library = normalizeLibConfig({
@@ -36,7 +36,7 @@ describe('#library-component', () => {
             }
         ]
     });
-    const buttonDirPath = `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`;
+    const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
 
@@ -47,17 +47,17 @@ describe('#library-component', () => {
         fixture = await loadFixture('lib-button-component-default');
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         context = createTestDocgeniContext({
             initialFiles: {
-                [`${buttonDirPath}/doc/zh-cn.md`]: fixture.src['/doc/zh-cn.md'],
-                [`${buttonDirPath}/doc/en-us.md`]: fixture.src['/doc/en-us.md'],
-                [`${buttonDirPath}/api/zh-cn.js`]: fixture.src['/api/zh-cn.js'],
-                [`${buttonDirPath}/api/en-us.js`]: fixture.src['/api/en-us.js'],
-                [`${buttonDirPath}/examples/module.ts`]: fixture.src['/examples/module.ts'],
-                [`${buttonDirPath}/examples/basic/basic.component.ts`]: fixture.src['/examples/basic/basic.component.ts'],
-                [`${buttonDirPath}/examples/basic/basic.component.html`]: fixture.src['/examples/basic/basic.component.html'],
-                [`${buttonDirPath}/examples/basic/index.md`]: fixture.src['/examples/basic/index.md']
+                [`${buttonDirPath}/doc/zh-cn.md`]: fixture.src['doc/zh-cn.md'],
+                [`${buttonDirPath}/doc/en-us.md`]: fixture.src['doc/en-us.md'],
+                [`${buttonDirPath}/api/zh-cn.js`]: fixture.src['api/zh-cn.js'],
+                [`${buttonDirPath}/api/en-us.js`]: fixture.src['api/en-us.js'],
+                [`${buttonDirPath}/examples/module.ts`]: fixture.src['examples/module.ts'],
+                [`${buttonDirPath}/examples/basic/basic.component.ts`]: fixture.src['examples/basic/basic.component.ts'],
+                [`${buttonDirPath}/examples/basic/basic.component.html`]: fixture.src['examples/basic/basic.component.html'],
+                [`${buttonDirPath}/examples/basic/index.md`]: fixture.src['examples/basic/index.md']
             },
             libs: [library]
         });
@@ -134,12 +134,12 @@ describe('#library-component', () => {
 
         // TODO: Add API Assets
         await expectFiles(context.host, {
-            [`${absDestAssetsOverviewsPath}/button/zh-cn.html`]: fixture.output['/doc/zh-cn.html'],
-            [`${absDestAssetsOverviewsPath}/button/en-us.html`]: fixture.output['/doc/en-us.html'],
-            [`${absDestSiteContentComponentsPath}/button/index.ts`]: fixture.output['/index.ts'],
-            [`${absDestSiteContentComponentsPath}/button/module.ts`]: fixture.output['/module.ts'],
-            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: fixture.output['/basic/basic.component.ts'],
-            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: fixture.output['/basic/basic.component.html']
+            [`${absDestAssetsOverviewsPath}/button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
+            [`${absDestAssetsOverviewsPath}/button/en-us.html`]: fixture.output['doc/en-us.html'],
+            [`${absDestSiteContentComponentsPath}/button/index.ts`]: fixture.output['index.ts'],
+            [`${absDestSiteContentComponentsPath}/button/module.ts`]: fixture.output['module.ts'],
+            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
+            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
         });
     });
 });
