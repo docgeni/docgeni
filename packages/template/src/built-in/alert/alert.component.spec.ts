@@ -36,7 +36,6 @@ describe('#built-in-alert', () => {
 
         it('should set content success', () => {
             const spectator = createHost(`<alert type="info">Alert1</alert>`);
-            console.log(spectator);
             expect(spectator.element.getAttribute('type')).toEqual(`info`);
             spectator.component.setAttribute('type', 'info');
             expect(spectator.element.innerHTML).toEqual(`Alert1`);
