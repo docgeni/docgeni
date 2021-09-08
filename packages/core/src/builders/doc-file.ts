@@ -87,7 +87,9 @@ export class DocSourceFile<TMeta = DocMeta> {
         const content = await this.read();
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
-        this.output = Markdown.toHTML(result.body);
+        this.output = Markdown.toHTML(result.body, {
+            absFilePath: this.path
+        });
     }
 
     public async emit(destRootPath: string) {

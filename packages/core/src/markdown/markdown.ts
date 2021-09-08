@@ -1,8 +1,8 @@
 import marked from 'marked';
-import { DocsMarkdownRenderer } from './renderer';
+import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
-const renderer = new DocsMarkdownRenderer();
 import { highlight } from '../utils';
+import { transformEmbed } from './embed';
 
 export interface MarkdownParseResult<TAttributes = unknown> {
     attributes: TAttributes;
@@ -12,12 +12,14 @@ export interface MarkdownParseResult<TAttributes = unknown> {
 }
 
 export class Markdown {
-    static toHTML(src: string) {
-        return marked(src, {
+    static toHTML(src: string, options?: MarkdownRendererOptions) {
+        const renderer = new DocsMarkdownRenderer(options);
+        const content = marked(transformEmbed(src, options ? options.absFilePath : null), {
             renderer,
             highlight,
             gfm: true
         });
+        return content;
     }
 
     static parse<TAttributes>(content: string): MarkdownParseResult<TAttributes> {
