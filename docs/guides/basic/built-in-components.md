@@ -75,7 +75,12 @@ order: 50
 
 ## Embed
 
-WIP.
+Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的内容：
+```html
+<embed src="./foo.md"></embed>
+```
+展示效果如下：
+<embed src="./foo.md"></embed>
 
 ## 自定义内置组件
 在默认的`.docgeni/components`文件夹下创建自定义内置组件，比如如下结构：

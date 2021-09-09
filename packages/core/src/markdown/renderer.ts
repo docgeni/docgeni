@@ -8,11 +8,20 @@ const whitespaceRegex = /( |\.|\?)/g;
 /** Regular expression that matches example comments. */
 const exampleCommentRegex = /<!--\W*example\(([^)]+)\)\W*-->/g;
 const exampleRegex = /<example\W*name=['"]([^"']+)\W*(inline)?\W*\/>/g;
+
+export type MarkdownRendererOptions = marked.MarkedOptions & {
+    absFilePath?: string;
+};
+
 /**
  * Custom renderer for marked that will be used to transform markdown files to HTML
  * files that can be used in the Angular Material docs.
  */
-export class DocsMarkdownRenderer extends Renderer {
+export class DocsMarkdownRenderer extends Renderer<any> {
+    constructor(options?: MarkdownRendererOptions) {
+        super(options);
+    }
+
     /**
      * Transforms a markdown heading into the corresponding HTML output. In our case, we
      * want to create a header-link for each H3 and H4 heading. This allows users to jump to
@@ -34,11 +43,20 @@ export class DocsMarkdownRenderer extends Renderer {
 
     /** Transforms markdown links into the corresponding HTML output. */
     link(href: string, title: string, text: string) {
-        let output = super.link(href, title, text);
+        let output = super.link.call(this, href, title, text);
         if (href.startsWith('http')) {
-            output = output.replace('<a ', `<a target="_blank"`);
+            output = output.replace('<a ', `<a target="_blank" `);
         }
         return output;
+    }
+
+    paragraph(text: string) {
+        // for custom tag e.g. <label></label> to contains <div>
+        if (text.startsWith('<')) {
+            return '<div class="dg-paragraph">' + text + '</div>\n';
+        } else {
+            return '<p>' + text + '</p>\n';
+        }
     }
 
     /**
@@ -49,12 +67,11 @@ export class DocsMarkdownRenderer extends Renderer {
      *  `<example name="name" inline />` turns into `<example name="name" inline></example>`
      */
     html(html: string) {
-        // html = html.replace(exampleCommentRegex, (_match: string, name: string) => `<div docgeni-docs-example="${name}"></div>`);
         html = html.replace(exampleRegex, (_match: string, name: string, inline: string) => {
             return `<example name="${name}" ${inline || ''}></example>`;
         });
 
-        return super.html(html);
+        return super.html.call(this, html);
     }
 
     /**
