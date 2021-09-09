@@ -6,9 +6,6 @@ export const FIXTURES_PATH = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
 
 export class FixtureResult {
-    get outputPath() {
-        return path.resolve(this.rootPath, 'output');
-    }
     constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
 
     getSrcPath(name: string) {

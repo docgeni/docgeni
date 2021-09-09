@@ -1,11 +1,10 @@
 import { toolkit } from '@docgeni/toolkit';
 import { EOL } from 'os';
 import { loadFixture, FixtureResult } from '../testing/fixture-loader';
-import { transformEmbed } from './embed';
 import { Markdown } from './markdown';
 import path from 'path';
 
-fdescribe('markdown', () => {
+describe('markdown', () => {
     it('should get correct result for base and ng command', () => {
         const data = ['```bash', 'ng add alib', '```'].join('\n');
         const result = Markdown.toHTML(data);
