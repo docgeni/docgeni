@@ -55,11 +55,23 @@ describe('markdown', () => {
 
         it('should transform embed success', () => {
             const output = Markdown.toHTML(fixture.src['hello.md'], { absFilePath: fixture.getSrcPath('hello.md') });
-            const regex = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/;
-            console.log('head1');
+            const regex = /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/;
+            console.log('====head1====');
             console.log('## head1'.match(regex));
-            console.log('head2\n');
-            console.log(`${EOL}## head2`.match(regex));
+            console.log('====head2====');
+            console.log(
+                `## head2
+
+            This is *bar*`.match(regex)
+            );
+            console.log('====bar====');
+            console.log(
+                Markdown.toHTML(`## Bar
+
+            This is *bar*
+            `)
+            );
+            console.log('====bar====');
             // expect(output.trim()).toEqual(fixture.output['hello.html'].trim());
         });
 
