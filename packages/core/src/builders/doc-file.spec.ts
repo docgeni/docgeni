@@ -1,7 +1,6 @@
 import { virtualFs, normalize } from '@angular-devkit/core';
 import { EOL } from 'os';
-import { DocgeniHost } from '../docgeni-host';
-import { createTestDocgeniHost } from '../testing';
+import { DocgeniHost, DocgeniHostImpl } from '../docgeni-host';
 import { DocSourceFile } from './doc-file';
 import path from 'path';
 
@@ -16,7 +15,7 @@ describe('DocSourceFile', () => {
     beforeEach(() => {
         root = '/root/test/';
         testHost = new virtualFs.test.TestHost({});
-        docgeniHost = createTestDocgeniHost(new virtualFs.ScopedHost(testHost, normalize(root)));
+        docgeniHost = new DocgeniHostImpl(new virtualFs.ScopedHost(testHost, normalize(root)));
     });
 
     describe('property', () => {

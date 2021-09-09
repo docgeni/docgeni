@@ -18,7 +18,7 @@ export class Toolkit {
 
     static get config() {
         if (!this._config) {
-            throw new Error(`CliKits has not initialize, please call CliKits.initialize`);
+            throw new Error(`Toolkit has not initialize, please call Toolkit.initialize`);
         }
         return this._config;
     }

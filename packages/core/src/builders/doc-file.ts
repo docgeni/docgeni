@@ -91,6 +91,9 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         const contributionInfo = this.getContributionInfo();
         this.meta.lastUpdatedTime = contributionInfo.lastUpdatedTime;
         this.meta.contributors = contributionInfo.contributors;
+        this.output = Markdown.toHTML(result.body, {
+            absFilePath: this.path
+        });
     }
 
     public async emit(destRootPath: string) {

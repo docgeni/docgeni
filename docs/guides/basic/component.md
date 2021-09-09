@@ -114,15 +114,19 @@ export class AlibButtonExamplesModule {}
 ```html
 <example name="alib-button-basic-example" />
 ```
+
 运行效果：
-<example name="alib-button-basic-example" />
+
+<example name="alib-button-basic-example"></example>
 
 默认的示例是包裹在一个示例容器中，并可以查看示例的源代码，如需要去除包裹的容器，通过`inline`模式引入示例：
 
 ```html
 <example name="alib-button-basic-example" inline />
 ```
+
 运行效果：
+
 <example name="alib-button-basic-example" inline />
 
 ## 示例的配置
