@@ -6,6 +6,7 @@ export * from './module';
 export * from './shared/shared.module';
 export * from './pages/pages.module';
 export * from './services/public-api';
+export * from './built-in/index';
 // It will warn Circular dependence when export from /services/public-api
 export * from './services/router-reset.service';
 export * from './routes';

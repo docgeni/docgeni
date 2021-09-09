@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { setBuiltInComponents } from './built-in-components';
-import label from './label/label.component';
-import alert from './alert/alert.component';
+import { DocgeniLabelComponent } from './label/label.component';
+import { DocgeniAlertComponent } from './alert/alert.component';
+import './loader';
 
 @NgModule({
-    declarations: [label.component, alert.component],
+    declarations: [DocgeniLabelComponent, DocgeniAlertComponent],
     imports: [CommonModule],
     exports: [],
     providers: [],
-    entryComponents: [label.component, alert.component]
+    entryComponents: [DocgeniLabelComponent, DocgeniAlertComponent]
 })
 export class DocgeniBuiltInModule {
     constructor() {}
 }
-
-setBuiltInComponents([label, alert]);

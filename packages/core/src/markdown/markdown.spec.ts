@@ -60,12 +60,12 @@ describe('markdown', () => {
             expect(compatibleNormalize(output).trim()).toEqual(fixture.getOutputContent('hello.html'));
         });
 
-        xit('should throw error when embed ref self', () => {
+        it('should throw error when embed ref self', () => {
             const output = Markdown.toHTML(fixture.src['embed-self.md'], { absFilePath: fixture.getSrcPath('embed-self.md') });
             expect(output).toContain(`<div embed src="./embed-self.md">can't resolve path ./embed-self.md</div>`);
         });
 
-        xit('should throw error when embed ref-not-found.md', () => {
+        it('should throw error when embed ref-not-found.md', () => {
             const output = Markdown.toHTML(fixture.src['not-found.md'], { absFilePath: fixture.getSrcPath('not-found.md') });
             expect(output).toContain(`<div embed src="./ref-not-found.md">can't resolve path ./ref-not-found.md</div>`);
         });
