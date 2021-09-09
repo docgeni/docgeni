@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { relative, resolve } from '../fs';
+import { compatibleNormalize } from '../markdown';
 
 export const FIXTURES_PATH = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
@@ -8,8 +9,13 @@ export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/bas
 export class FixtureResult {
     constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
 
-    getSrcPath(name: string) {
-        return path.resolve(this.rootPath, name ? `src/${name}` : 'src');
+    getSrcPath(relativePath: string) {
+        return path.resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
+    }
+
+    getOutputContent(relativePath: string) {
+        const output = this.output[relativePath];
+        return compatibleNormalize(output).trim();
     }
 }
 

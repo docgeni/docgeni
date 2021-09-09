@@ -2,11 +2,11 @@ import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
 import fm from 'front-matter';
 import { RendererExtension, TokenizerExtension } from 'marked';
+import { compatibleNormalize } from './utils';
 
 export function getEmbedBody(input: string, url: string) {
-    input = input.replace(/\r\n|\r/g, '\n').replace(/\t/g, '    ');
     // TODO: add hash
-    return fm(input).body;
+    return fm(compatibleNormalize(input)).body;
 }
 
 export interface EmbedToken {
