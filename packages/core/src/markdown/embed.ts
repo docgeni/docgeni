@@ -3,9 +3,10 @@ import * as path from 'path';
 import fm from 'front-matter';
 import { RendererExtension, TokenizerExtension } from 'marked';
 
-export interface EmbedNode {
-    origin: string;
-    src: string;
+export function getEmbedBody(input: string, url: string) {
+    input = input.replace(/\r\n|\r/g, '\n').replace(/\t/g, '    ');
+    // TODO: add hash
+    return fm(input).body;
 }
 
 export interface EmbedToken {
@@ -40,17 +41,7 @@ export const embed: TokenizerExtension & RendererExtension = {
             const nodeAbsPath = path.resolve(absDirPath, token.src);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
                 const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
-                const result = fm(content);
-                console.log(`===content===`);
-                console.log(content);
-                console.log(`===content===`);
-                console.log(`===body===`);
-                console.log(result.body);
-                console.log(`===body===`);
-                this.lexer.blockTokens(result.body, token.tokens);
-                console.log(`===token.tokens===`);
-                console.log(token.tokens);
-                console.log(`===token.tokens===`);
+                this.lexer.blockTokens(getEmbedBody(content, token.src), token.tokens);
             } else {
                 token.message = `can't resolve path ${token.src}`;
             }
@@ -58,9 +49,6 @@ export const embed: TokenizerExtension & RendererExtension = {
         }
     },
     renderer(token: EmbedToken) {
-        console.log(`===this.parser.parse(token.tokens)===`);
-        console.log(this.parser.parse(token.tokens));
-        console.log(`===this.parser.parse(token.tokens)===`);
         return `<div embed src="${token.src}">${token.message ? token.message : this.parser.parse(token.tokens)}</div>`;
     }
 };

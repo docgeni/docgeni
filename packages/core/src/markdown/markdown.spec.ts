@@ -47,7 +47,7 @@ describe('markdown', () => {
         });
     });
 
-    fdescribe('embed', () => {
+    describe('embed', () => {
         let fixture: FixtureResult;
 
         beforeAll(async () => {
@@ -56,16 +56,6 @@ describe('markdown', () => {
 
         it('should transform embed success', () => {
             const output = Markdown.toHTML(fixture.src['hello.md'], { absFilePath: fixture.getSrcPath('hello.md') });
-            const barOutput = Markdown.toHTML(fixture.src['bar.md']);
-            console.log(`=====barSrc=====`);
-            console.log(fixture.src['bar.md']);
-            console.log(`=====barSrc=====`);
-            console.log(`=====barOutput=====`);
-            console.log(barOutput);
-            console.log(`=====barOutput=====`);
-            // const content = marked(fixture.src['bar.md'], {
-            //     gfm: true
-            // });
             expect(output.trim()).toEqual(fixture.output['hello.html'].trim());
         });
 
