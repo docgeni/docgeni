@@ -3,6 +3,7 @@ import { EOL } from 'os';
 import { loadFixture, FixtureResult } from '../testing/fixture-loader';
 import { Markdown } from './markdown';
 import path from 'path';
+import marked from 'marked';
 
 describe('markdown', () => {
     it('should get correct result for base and ng command', () => {
@@ -55,24 +56,17 @@ describe('markdown', () => {
 
         it('should transform embed success', () => {
             const output = Markdown.toHTML(fixture.src['hello.md'], { absFilePath: fixture.getSrcPath('hello.md') });
-            const regex = /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/;
-            console.log('====head1====');
-            console.log('## head1'.match(regex));
-            console.log('====head2====');
-            console.log(
-                `## head2
-
-            This is *bar*`.match(regex)
-            );
-            console.log('====bar====');
-            console.log(
-                Markdown.toHTML(`## Bar
-
-            This is *bar*
-            `)
-            );
-            console.log('====bar====');
-            // expect(output.trim()).toEqual(fixture.output['hello.html'].trim());
+            const barOutput = Markdown.toHTML(fixture.src['bar.md']);
+            console.log(`=====barSrc=====`);
+            console.log(fixture.src['bar.md']);
+            console.log(`=====barSrc=====`);
+            console.log(`=====barOutput=====`);
+            console.log(barOutput);
+            console.log(`=====barOutput=====`);
+            // const content = marked(fixture.src['bar.md'], {
+            //     gfm: true
+            // });
+            expect(output.trim()).toEqual(fixture.output['hello.html'].trim());
         });
 
         xit('should throw error when embed ref self', () => {
