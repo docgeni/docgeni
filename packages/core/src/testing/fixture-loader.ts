@@ -6,13 +6,14 @@ export const FIXTURES_PATH = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
 
 export class FixtureResult {
-    get srcPath() {
-        return path.resolve(this.rootPath, 'src');
-    }
     get outputPath() {
         return path.resolve(this.rootPath, 'output');
     }
     constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
+
+    getSrcPath(name: string) {
+        return path.resolve(this.rootPath, name ? `src/${name}` : 'src');
+    }
 }
 
 async function internalLoadFixture(name: string, rootName: 'src' | 'output'): Promise<Record<string, string>> {

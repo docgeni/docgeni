@@ -1,42 +1,52 @@
 import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
-import { relative } from '../fs';
-
-const EMBED_REGEX = /<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/gi;
+import fm from 'front-matter';
+import { RendererExtension, TokenizerExtension } from 'marked';
 
 export interface EmbedNode {
     origin: string;
     src: string;
 }
 
-function getEmbedNodes(input: string) {
-    const regex = /<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/g;
-    const nodes: EmbedNode[] = [];
-    let matches: RegExpExecArray;
-    while ((matches = regex.exec(input))) {
-        nodes.push({
-            origin: matches[0],
-            src: matches[1]
-        });
-    }
-    return nodes;
+export interface EmbedToken {
+    type: 'embed';
+    raw: string;
+    src: string;
+    tokens: [];
+    message?: string;
 }
 
-export function transformEmbed(input: string, absFilePath: string) {
-    const nodes = getEmbedNodes(input);
-    const embedsContentMap: Record<string, string> = {};
-    nodes.forEach(node => {
-        const absDirPath = path.dirname(absFilePath);
-        const nodeAbsPath = path.resolve(absDirPath, node.src);
-        if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
-            const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
-            embedsContentMap[node.src] = transformEmbed(content, nodeAbsPath);
-        } else {
-            embedsContentMap[node.src] = `can't resolve path ${node.src}`;
+export const embed: TokenizerExtension & RendererExtension = {
+    name: 'embed',
+    level: 'block',
+    start(src: string) {
+        return src.match(/<embed/)?.index;
+    },
+    tokenizer(src: string, tokens: any[]) {
+        const rule = /^<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/gi; // Regex for the complete token
+        const match = rule.exec(src);
+        if (match) {
+            const token: EmbedToken = {
+                // Token to generate
+                type: 'embed',
+                raw: match[0],
+                src: match[1].trim(),
+                tokens: []
+            };
+            const absFilePath: string = this.lexer.options.absFilePath;
+            const absDirPath = path.dirname(absFilePath);
+            const nodeAbsPath = path.resolve(absDirPath, token.src);
+            if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
+                const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
+                const result = fm(content);
+                this.lexer.blockTokens(result.body, token.tokens);
+            } else {
+                token.message = `can't resolve path ${token.src}`;
+            }
+            return token;
         }
-    });
-
-    return input.replace(EMBED_REGEX, (_match: string, src: string) => {
-        return embedsContentMap[src];
-    });
-}
+    },
+    renderer(token: EmbedToken) {
+        return `<div embed src="${token.src}">${token.message ? token.message : this.parser.parse(token.tokens)}</div>`;
+    }
+};

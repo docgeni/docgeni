@@ -17,7 +17,7 @@ export type MarkdownRendererOptions = marked.MarkedOptions & {
  * Custom renderer for marked that will be used to transform markdown files to HTML
  * files that can be used in the Angular Material docs.
  */
-export class DocsMarkdownRenderer extends Renderer {
+export class DocsMarkdownRenderer extends Renderer<any> {
     constructor(options?: MarkdownRendererOptions) {
         super(options);
     }
@@ -43,11 +43,20 @@ export class DocsMarkdownRenderer extends Renderer {
 
     /** Transforms markdown links into the corresponding HTML output. */
     link(href: string, title: string, text: string) {
-        let output = super.link(href, title, text);
+        let output = super.link.call(this, href, title, text);
         if (href.startsWith('http')) {
-            output = output.replace('<a ', `<a target="_blank"`);
+            output = output.replace('<a ', `<a target="_blank" `);
         }
         return output;
+    }
+
+    paragraph(text: string) {
+        // for custom tag e.g. <label></label> to contains <div>
+        if (text.startsWith('<')) {
+            return '<div class="dg-paragraph">' + text + '</div>\n';
+        } else {
+            return '<p>' + text + '</p>\n';
+        }
     }
 
     /**
@@ -62,7 +71,7 @@ export class DocsMarkdownRenderer extends Renderer {
             return `<example name="${name}" ${inline || ''}></example>`;
         });
 
-        return super.html(html);
+        return super.html.call(this, html);
     }
 
     /**

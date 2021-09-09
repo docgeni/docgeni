@@ -237,7 +237,8 @@ $dg-service-color: #8e24aa;
         }
     }
 
-    p {
+    p,
+    .dg-paragraph {
         // color: $gray-700;
         line-height: 26px;
         margin-top: 0;

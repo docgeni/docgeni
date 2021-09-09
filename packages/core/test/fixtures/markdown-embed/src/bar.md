@@ -1,3 +1,3 @@
 ## Bar
 
-This is bar
+This is *bar*

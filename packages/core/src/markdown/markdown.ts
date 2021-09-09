@@ -2,7 +2,18 @@ import marked from 'marked';
 import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
 import { highlight } from '../utils';
-import { transformEmbed } from './embed';
+import { embed } from './embed';
+
+marked.use({
+    pedantic: false,
+    gfm: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false,
+    extensions: [embed]
+});
 
 export interface MarkdownParseResult<TAttributes = unknown> {
     attributes: TAttributes;
@@ -13,11 +24,12 @@ export interface MarkdownParseResult<TAttributes = unknown> {
 
 export class Markdown {
     static toHTML(src: string, options?: MarkdownRendererOptions) {
-        const renderer = new DocsMarkdownRenderer(options);
-        const content = marked(transformEmbed(src, options ? options.absFilePath : null), {
+        const renderer = new DocsMarkdownRenderer();
+        const content = marked(src, {
             renderer,
             highlight,
-            gfm: true
+            gfm: true,
+            ...options
         });
         return content;
     }
