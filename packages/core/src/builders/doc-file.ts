@@ -88,8 +88,9 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
         this.output = Markdown.toHTML(result.body);
-        this.meta.lastUpdatedTime = toolkit.git.lastUpdatedTime(this.path) * 1000;
-        this.meta.contributors = this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined;
+        const contributionInfo = this.getContributionInfo();
+        this.meta.lastUpdatedTime = contributionInfo.lastUpdatedTime;
+        this.meta.contributors = contributionInfo.contributors;
     }
 
     public async emit(destRootPath: string) {
@@ -127,5 +128,12 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
 
     public isEmpty() {
         return toolkit.utils.isEmpty(this.content);
+    }
+
+    private getContributionInfo() {
+        return {
+            lastUpdatedTime: toolkit.git.lastUpdatedTime(this.path) * 1000,
+            contributors: this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined
+        };
     }
 }

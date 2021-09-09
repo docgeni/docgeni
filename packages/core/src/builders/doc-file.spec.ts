@@ -9,6 +9,9 @@ describe('DocSourceFile', () => {
     let root: string;
     let testHost: virtualFs.Host;
     let docgeniHost: DocgeniHost;
+    beforeAll(() => {
+        spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
+    });
 
     beforeEach(() => {
         root = '/root/test/';
@@ -131,7 +134,13 @@ describe('DocSourceFile', () => {
         );
         await docSourceFile.build();
         expect(docSourceFile.output).toContain(`<p>getting-started content</p>`);
-        expect(docSourceFile.meta).toEqual({ title: 'Title FrontMatter', order: 10, path: '/custom/path' });
+        expect(docSourceFile.meta).toEqual({
+            title: 'Title FrontMatter',
+            order: 10,
+            path: '/custom/path',
+            lastUpdatedTime: 0,
+            contributors: []
+        });
     });
 
     it('should emit file success', async () => {
