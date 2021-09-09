@@ -1,24 +1,14 @@
 <ng-container *ngIf="docItem">
   <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
   <div class="dg-tab-links">
-    <a
-      *ngIf="docItem.overview"
-      class="dg-tab-link"
-      [routerLink]="['./overview']"
-      routerLinkActive="active"
-      (click)="changeTab('overview')"
-      >{{ 'OVERVIEW' | dgTranslate }}</a
-    >
-    <a
-      *ngIf="docItem.examples.length > 0"
-      class="dg-tab-link"
-      [routerLink]="['./examples']"
-      routerLinkActive="active"
-      (click)="changeTab('examples')"
-      >{{ 'EXAMPLES' | dgTranslate }}</a
-    >
-    <a *ngIf="docItem.api" class="dg-tab-link" [routerLink]="['./api']" routerLinkActive="active" (click)="changeTab('api')">API</a>
+    <a *ngIf="docItem.overview" class="dg-tab-link" [routerLink]="['./overview']" routerLinkActive="active">{{
+      'OVERVIEW' | dgTranslate
+    }}</a>
+    <a *ngIf="docItem.examples.length > 0" class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">{{
+      'EXAMPLES' | dgTranslate
+    }}</a>
+    <a *ngIf="docItem.api" class="dg-tab-link" [routerLink]="['./api']" routerLinkActive="active">API</a>
   </div>
 </ng-container>
 <router-outlet></router-outlet>
-<dg-doc-meta [meta]="docItem.metaMap[currentTabName]" *ngIf="docItem && docItem.metaMap && currentTabName"></dg-doc-meta>
+<dg-doc-meta [meta]="docItem.meta"></dg-doc-meta>

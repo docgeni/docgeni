@@ -26,7 +26,7 @@ export interface ComponentDocItem extends DocItem {
     overview?: boolean;
     api?: boolean;
     category?: string;
-    metaMap?: Partial<Record<'api' | 'overview' | 'examples', { lastUpdatedTime: number; contributors: string[] }>>;
+    meta?: { lastUpdatedTime: number; contributors: string[] };
 }
 
 export interface CategoryItem {

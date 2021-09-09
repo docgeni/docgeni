@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ComponentDocItem } from '../../interfaces/public-api';
 
 @Component({
@@ -10,19 +9,9 @@ export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
 
     @Input() docItem: ComponentDocItem;
-    currentTabName: string;
-    constructor(activatedRoute: ActivatedRoute) {
-        if (activatedRoute.firstChild.snapshot.url.length) {
-            this.currentTabName = activatedRoute.firstChild.snapshot.url[0].path;
-        } else {
-            this.currentTabName = 'overview';
-        }
-    }
+    constructor() {}
 
     ngOnInit(): void {}
-    changeTab(name: string) {
-        this.currentTabName = name;
-    }
 }
 
 @Component({

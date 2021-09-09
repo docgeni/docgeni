@@ -15,7 +15,7 @@ export interface DocSourceFileOptions {
     type?: DocType;
 }
 
-export class DocSourceFile<TMeta = DocMeta> {
+export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     private emitted = false;
     private host: DocgeniHost;
     private outputPath?: string;
@@ -27,7 +27,6 @@ export class DocSourceFile<TMeta = DocMeta> {
     public content: string;
     public meta?: TMeta;
     public output: string;
-    public contributionInfo: { lastUpdatedTime: number; contributors: string[] };
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -89,7 +88,8 @@ export class DocSourceFile<TMeta = DocMeta> {
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
         this.output = Markdown.toHTML(result.body);
-        this.contributionInfo = this.getContributionInfo();
+        this.meta.lastUpdatedTime = toolkit.git.lastUpdatedTime(this.path) * 1000;
+        this.meta.contributors = this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined;
     }
 
     public async emit(destRootPath: string) {
@@ -127,11 +127,5 @@ export class DocSourceFile<TMeta = DocMeta> {
 
     public isEmpty() {
         return toolkit.utils.isEmpty(this.content);
-    }
-    private getContributionInfo() {
-        return {
-            lastUpdatedTime: toolkit.git.lastUpdatedTime(this.path),
-            contributors: this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined
-        };
     }
 }
