@@ -1329,13 +1329,6 @@
   resolved "https://registry.npmjs.org/@commitlint/types/-/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha512-VoNqai1vR5anRF5Tuh/+SWDFk7xi7oMwHrHrbm1BprYXjB2RJsWLhUrStMssDxEl5lW/z3EUdg8RvH/IUBccSQ==
 
-"@docgeni/template@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@docgeni/template/-/template-1.0.7.tgz#5ab25ea6a6af4d29b1e585dce8752b031609e9a7"
-  integrity sha512-ONNvGcN85WoUmZtYXsetL78Qv0JOmVo/3gh+ihpFOqwLEP+lo+GDcp2DkZr0GNo3TisRRjHH84YAnetivzMlLg==
-  dependencies:
-    tslib "*"
-
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
   resolved "https://registry.npmjs.org/@dsherret/to-absolute-glob/-/to-absolute-glob-2.0.2.tgz#1f6475dc8bd974cea07a2daf3864b317b1dd332c"
@@ -2951,10 +2944,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@worktile/pkg-manager@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.2.tgz#970ae8f46425e4c6a304913147f943bd82ba689d"
-  integrity sha512-NE2r3naLSNhoWLv8qdUUWH3KhkSRRlXcNOtBP3ExHqyhklFA5e+2XTaBNDG5C3oc2lkdShnTk/bz60M5hABxBw==
+"@worktile/pkg-manager@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.3.tgz#3504ca3604217ff3cfb51a83ef5f95d069257276"
+  integrity sha512-0AKOeYxU6ocajhufTN9kAoKJtwbk8H6FeBgRqGrhobkNfEsnGuMrPOYBs4cnKy2WYcH/rHssLsJOQ+QEPNf9fg==
   dependencies:
     "@docgeni/toolkit" "^1.0.2"
     "@types/shelljs" "^0.8.8"
@@ -14016,11 +14009,6 @@ tsconfig-paths@^3.9.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
-
-tslib@*:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
-  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@2.0.1:
   version "2.0.1"

@@ -89,7 +89,7 @@
     "@typescript-eslint/eslint-plugin": "4.9.1",
     "@typescript-eslint/experimental-utils": "4.9.1",
     "@typescript-eslint/parser": "4.9.1",
-    "@worktile/pkg-manager": "^0.0.2",
+    "@worktile/pkg-manager": "^0.0.3",
     "chai": "^4.2.0",
     "codelyzer": "^5.1.2",
     "coveralls": "^3.1.0",
