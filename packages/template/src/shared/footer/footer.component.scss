@@ -3,9 +3,14 @@
     padding: 20px;
     border-top: 1px solid $dg-gray-200;
     text-align: center;
-    color: $dg-gray-700;
+    color: $dg-gray-600;
     a {
-        color: $dg-gray-700;
+        color: $dg-gray-600;
+        text-decoration: none;
+        &:hover {
+            color: $dg-gray-700;
+            text-decoration: none;
+        }
     }
 
     .beian {
