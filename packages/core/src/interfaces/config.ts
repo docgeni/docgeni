@@ -22,7 +22,6 @@ export interface HomeDocMeta {
         title: string;
         description: string;
     }[];
-    footer: string;
     contentPath: string;
 }
 
@@ -80,6 +79,8 @@ export interface DocgeniConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** footer content **/
+    footer?: string;
 }
 
 // For Angular Template
@@ -108,4 +109,6 @@ export interface DocgeniSiteConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** footer content **/
+    footer?: string;
 }
