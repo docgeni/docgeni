@@ -2,7 +2,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { GlobalContext } from '../../services/global-context';
 import { FooterComponent } from './footer.component';
 
-describe('#content-viewer', () => {
+describe('#footer', () => {
     let spectator: Spectator<FooterComponent>;
     const createComponent = createComponentFactory({
         component: FooterComponent,
@@ -21,6 +21,7 @@ describe('#content-viewer', () => {
     it('should get correct footer', () => {
         spectator = createComponent();
         expect(spectator.element.classList.contains('dg-footer')).toBeTruthy();
+        expect(spectator.element.classList.contains('dg-hidden')).toBeFalsy();
         expect(spectator.element.textContent).toContain('My Footer Content');
     });
 
