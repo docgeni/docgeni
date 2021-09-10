@@ -23,7 +23,6 @@ export class SourceCodeComponent extends ContentRenderer implements OnInit {
     ngOnInit(): void {}
 
     updateDocument(content: string): void {
-        debugger;
         this.codeContent.nativeElement.innerHTML = content;
     }
 
