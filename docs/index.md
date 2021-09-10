@@ -1,5 +1,5 @@
 ---
-title: Docgeni - 为 Angular 组件开发场景而生的文档工具
+title: 首页
 order: 10
 hero:
   title: Docgeni

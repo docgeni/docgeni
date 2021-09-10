@@ -1,0 +1,6 @@
+<ng-template
+  *ngIf="enableIvy && componentType && exampleModuleFactory"
+  [ngComponentOutlet]="componentType"
+  [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
+></ng-template>
+<ng-template *ngIf="!enableIvy && componentType" [ngComponentOutlet]="componentType"></ng-template>
