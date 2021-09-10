@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as strings from './strings';
 import * as utils from './utils';
 import * as shell from './shell';
-
+import * as git from './git';
 import { Print } from './print';
 
 export interface ToolkitConfig {
@@ -61,5 +61,8 @@ export class Toolkit {
             });
         }
         return this._print;
+    }
+    static get git() {
+        return git;
     }
 }

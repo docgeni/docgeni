@@ -294,3 +294,47 @@ $dg-service-color: #8e24aa;
         }
     }
 }
+.dg-doc-meta {
+    .dg-contributor-avatar-list {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-right: 8px;
+    }
+    .dg-contributor-avatar {
+        box-shadow: 0 0 0 2px white;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+    }
+    .dg-contributor-avatar:nth-child(n):not(:first-child) {
+        margin-left: -8px;
+    }
+    .dg-contributor-avatar:nth-child(1) {
+        order: 3;
+    }
+    .dg-contributor-avatar:nth-child(2) {
+        order: 2;
+    }
+    .dg-contributor-avatar:nth-child(3) {
+        order: 1;
+    }
+    .dg-contributor-other {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9daab6;
+        background-color: #f5f7f9;
+    }
+    .dg-contribution-last-time {
+        color: #9daab6;
+    }
+    .dg-contribution-container {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+    }
+}

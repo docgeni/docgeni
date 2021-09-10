@@ -21,6 +21,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LogoComponent } from './logo/logo.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { HeroActionClassPipe } from './pipes/hero.pipe';
+import { DocMetaComponent } from './doc-meta/doc-meta.component';
 import { CopyComponent } from './copy/copy.component';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { ExampleRendererComponent } from './example-renderer/example-renderer.component';
@@ -45,7 +46,8 @@ const COMPONENTS = [
     TranslatePipe,
     IsModeLitePipe,
     IsModeFullPipe,
-    HeroActionClassPipe
+    HeroActionClassPipe,
+    DocMetaComponent
 ];
 @NgModule({
     declarations: [...COMPONENTS],

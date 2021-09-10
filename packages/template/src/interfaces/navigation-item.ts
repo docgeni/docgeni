@@ -17,6 +17,7 @@ export interface DocItem {
             content?: string;
         };
     };
+    meta?: { lastUpdatedTime: number; contributors: string[] };
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -25,6 +26,7 @@ export interface ComponentDocItem extends DocItem {
     overview?: boolean;
     api?: boolean;
     category?: string;
+    meta?: { lastUpdatedTime: number; contributors: string[] };
     label?: { text: string; color: string };
 }
 

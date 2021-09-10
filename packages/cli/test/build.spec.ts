@@ -135,7 +135,14 @@ describe('docgeni build', () => {
             ],
             homeMeta: { contentPath: 'docs/index.html' }
         };
-        await expect(JSON.parse(navigations)).toEqual(
+        await expect(
+            JSON.parse(navigations, (key, value) => {
+                if (key === 'meta' || key === 'lastUpdatedTime' || key === 'contributors') {
+                    return undefined;
+                }
+                return value;
+            })
+        ).toEqual(
             expectedNavigations,
             `expected is:${EOL} ${JSON.stringify(expectedNavigations, null, 2)}, actual is:${EOL} ${navigations}`
         );

@@ -9,7 +9,6 @@ export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
 
     @Input() docItem: ComponentDocItem;
-
     constructor() {}
 
     ngOnInit(): void {}
@@ -17,7 +16,9 @@ export class ComponentViewerComponent implements OnInit {
 
 @Component({
     selector: 'dg-component-empty',
-    template: `<p>Current component has not been documented.</p>`
+    template: `
+        <p>Current component has not been documented.</p>
+    `
 })
 export class ComponentEmptyComponent implements OnInit {
     @HostBinding(`class.dg-component-empty`) isDocEmpty = true;

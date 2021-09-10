@@ -121,7 +121,7 @@ export class NavsBuilder {
                 localesDocsDataMap[locale.key] = {
                     navs,
                     docItems,
-                    homeMeta: homeMeta
+                    homeMeta
                 };
 
                 if (this.docgeni.config.mode === 'full') {
@@ -202,6 +202,7 @@ export class NavsBuilder {
                     hidden: docFile.meta.hidden
                 };
                 docItem.contentPath = docFile.getRelativeOutputPath();
+                docItem.meta = { lastUpdatedTime: docFile.meta.lastUpdatedTime, contributors: docFile.meta.contributors };
                 // hide it when hidden is true
                 if (!docItem.hidden) {
                     navs.push(docItem);

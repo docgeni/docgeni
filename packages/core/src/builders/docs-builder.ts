@@ -141,7 +141,8 @@ export class DocsBuilder {
                 base: this.docgeni.paths.cwd,
                 path: absFilePath
             },
-            this.docgeni.host
+            this.docgeni.host,
+            this.docgeni.config
         );
     }
 }

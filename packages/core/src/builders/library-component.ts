@@ -20,7 +20,6 @@ export class LibComponent {
     public absDocPath: string;
     public absApiPath: string;
     public examples: LiveExample[];
-
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
@@ -85,7 +84,8 @@ export class LibComponent {
                         type: DocType.component,
                         locale: locale.key
                     },
-                    this.docgeni.host
+                    this.docgeni.host,
+                    this.docgeni.config
                 );
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;
@@ -239,7 +239,11 @@ export class LibComponent {
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
-                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined
+                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
+                    meta: {
+                        lastUpdatedTime: overviewSourceFile.meta.lastUpdatedTime,
+                        contributors: overviewSourceFile.meta.contributors
+                    }
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }
