@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.4](https://github.com/docgeni/docgeni/compare/v1.1.0-next.1...v1.1.0-next.4) (2021-09-10)
+
+
+### Features
+
+* **core:** add doc-contribution ([#212](https://github.com/docgeni/docgeni/issues/212)) ([7f53eb5](https://github.com/docgeni/docgeni/commit/7f53eb5492caf61ab761bd0ffa97f50aba56225f))
+
+
+
+
+
 ## [1.0.4](https://github.com/docgeni/docgeni/compare/v1.0.3...v1.0.4) (2021-06-25)
 
 
