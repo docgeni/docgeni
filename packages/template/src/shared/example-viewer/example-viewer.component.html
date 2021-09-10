@@ -2,20 +2,25 @@
   <div class="dg-example-viewer-header">
     <span class="title">{{ example.title }}</span>
   </div>
-  <div class="dg-example-viewer-body">
-    <ng-template
+  <div
+    class="dg-example-viewer-body"
+    dgExampleRenderer
+    [exampleModuleType]="exampleModuleType"
+    [exampleComponentType]="exampleComponentType"
+  >
+    <!-- <ng-template
       *ngIf="enableIvy && exampleComponentType && exampleModuleFactory"
       [ngComponentOutlet]="exampleComponentType"
       [ngComponentOutletNgModuleFactory]="exampleModuleFactory"
     ></ng-template>
-    <ng-template *ngIf="!enableIvy && exampleComponentType" [ngComponentOutlet]="exampleComponentType"></ng-template>
+    <ng-template *ngIf="!enableIvy && exampleComponentType" [ngComponentOutlet]="exampleComponentType"></ng-template> -->
   </div>
   <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">
   </div> -->
   <div class="dg-example-viewer-actions" title="{{ example.title }}">
     <a class="action-item" href="javascript:;" [dgCopy]="sourceCode?.textContent"></a>
     <a class="action-item" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
-    <!-- <a class="action-item" href="javascript:;"><dg-icon iconName="external"></dg-icon></a> -->
+    <a class="action-item" target="_blank" [href]="'~examples/' + name"><dg-icon iconName="external"></dg-icon></a>
   </div>
   <div class="dg-example-viewer-sources" [ngClass]="{ 'dg-sources-show': showSource }">
     <div class="dg-tab-links">

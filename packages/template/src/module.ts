@@ -4,7 +4,6 @@ import { DocgeniPagesModule } from './pages/pages.module';
 import { CONFIG_TOKEN, DEFAULT_CONFIG } from './services/public-api';
 import { HttpClientModule } from '@angular/common/http';
 import { DocgeniBuiltInModule } from './built-in/built-in.module';
-import { BUILT_IN_COMPONENTS } from './built-in';
 
 @NgModule({
     declarations: [],

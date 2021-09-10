@@ -6,6 +6,8 @@ import { DocViewerComponent, DocViewerHomeComponent } from '../pages/doc-viewer/
 import { ComponentOverviewComponent } from '../pages/component-viewer/overview/component-overview.component';
 import { ComponentApiComponent, ComponentEmptyComponent, ComponentExamplesComponent } from '../pages/component-viewer';
 import { HomeComponent } from '../pages/home/home.component';
+import { ExampleIsolatedViewerComponent } from '../pages/example/example.component';
+import { ActualRootComponent } from '../pages/root/root.component';
 
 const componentChildrenRoutes: Routes = [
     {
@@ -42,11 +44,24 @@ export class RouterResetService {
 
     resetRoutes() {
         const config = this.router.config;
-        const routes: Routes = [];
-        routes.push({
-            path: '',
-            component: HomeComponent
-        });
+        const routes: Routes = [
+            {
+                path: '',
+                component: HomeComponent
+            }
+        ];
+        const rootRoutes: Routes = [
+            {
+                path: '',
+                component: ActualRootComponent,
+                children: routes
+            },
+            {
+                path: '~examples/:name',
+                component: ExampleIsolatedViewerComponent
+            }
+        ];
+
         const channelPathToRoutes: Record<string, Route> = {};
         const channelPathToHomeRoutes: Record<string, Route> = {};
         let shouldRemoveHome = false;
@@ -128,6 +143,6 @@ export class RouterResetService {
             }
         }
 
-        this.router.resetConfig([...config, ...routes, { path: '**', redirectTo: '' }]);
+        this.router.resetConfig([...config, ...rootRoutes, { path: '**', redirectTo: '' }]);
     }
 }

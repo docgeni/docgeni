@@ -1,7 +1,6 @@
-import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
-import { CopierService } from '../copier/copier.service';
 import { GlobalContext } from '../../services/public-api';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -50,7 +49,7 @@ export class ExampleViewerComponent implements OnInit {
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 
-    exampleModuleFactory: NgModuleFactory<any> | null = null;
+    exampleModuleType: Type<any> | null = null;
 
     example: LiveExample;
 
@@ -64,7 +63,7 @@ export class ExampleViewerComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader, private copier: CopierService, private globalContext: GlobalContext) {}
+    constructor(private exampleLoader: ExampleLoader, private globalContext: GlobalContext) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
     // the file name to match the exampleName.component.* that displays main source files.
@@ -76,7 +75,7 @@ export class ExampleViewerComponent implements OnInit {
 
     ngOnInit(): void {
         this.exampleLoader.load(this.name).then(result => {
-            this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
+            this.exampleModuleType = result.moduleType;
             this.exampleComponentType = result.componentType;
             this.example = result.example;
             const rootDir = this.globalContext.getAssetsContentPath(

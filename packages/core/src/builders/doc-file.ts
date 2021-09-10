@@ -87,7 +87,6 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         const content = await this.read();
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
-        this.output = Markdown.toHTML(result.body);
         const contributionInfo = this.getContributionInfo();
         this.meta.lastUpdatedTime = contributionInfo.lastUpdatedTime;
         this.meta.contributors = contributionInfo.contributors;
