@@ -26,6 +26,9 @@
             .dg-launch-actions {
                 .dg-launch-action {
                     margin-right: 10px;
+                    &:hover {
+                        text-decoration: none;
+                    }
                 }
             }
         }
