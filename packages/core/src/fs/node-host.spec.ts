@@ -55,7 +55,7 @@ describe('DocgeniNodeJsAsyncHost', () => {
             .then(() => host.write(normalize('/sub1/file2'), content2).toPromise())
             .then(() => host.delete(normalize('/sub1/file1')).toPromise())
             // eslint-disable-next-line no-restricted-globals
-            .then(() => new Promise(resolve => setTimeout(resolve, 2000)))
+            .then(() => new Promise(resolve => setTimeout(resolve, 3000)))
             .then(() => {
                 expect(allEvents.length).toBe(3);
                 subscription.unsubscribe();
