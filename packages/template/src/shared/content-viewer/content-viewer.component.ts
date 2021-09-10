@@ -25,42 +25,34 @@ import { take } from 'rxjs/operators';
 import { DomPortalOutlet } from '../../services/dom-portal-outlet';
 import { BuiltInComponentDef } from '../../built-in/built-in-component';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
+import { ContentRenderer } from '../content-renderer ';
 
 @Component({
     selector: 'dg-content-viewer',
     template: 'Loading...'
 })
-export class ContentViewerComponent implements OnInit, OnDestroy {
+export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     @HostBinding('class.dg-doc-content') isDocContent = true;
-
-    @Input() set url(value: string) {
-        if (value) {
-            this.fetchDocument(value);
-        }
-    }
 
     @Output() contentRendered = new EventEmitter<HTMLElement>();
 
     private portalHosts: DomPortalOutlet[] = [];
 
-    private documentFetchSubscription: Subscription;
-
-    private fetchDocument(url: string) {
-        // Cancel previous pending request
-        if (this.documentFetchSubscription) {
-            this.documentFetchSubscription.unsubscribe();
-        }
-        this.documentFetchSubscription = this.http.get(url, { responseType: 'text' }).subscribe(
-            response => {
-                this.updateDocument(response);
-            },
-            error => {
-                this.showError(url, error);
-            }
-        );
+    constructor(
+        http: HttpClient,
+        public elementRef: ElementRef<HTMLElement>,
+        private appRef: ApplicationRef,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private injector: Injector,
+        private viewContainerRef: ViewContainerRef,
+        private ngZone: NgZone
+    ) {
+        super(http);
     }
 
-    private updateDocument(content: string) {
+    ngOnInit(): void {}
+
+    updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
         getBuiltInComponents().forEach(item => {
@@ -103,22 +95,10 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     }
 
     /** Show an error that occurred when fetching a document. */
-    private showError(url: string, error: HttpErrorResponse) {
+    showError(url: string, error: HttpErrorResponse) {
         console.log(error);
         this.elementRef.nativeElement.innerText = `Failed to load document: ${url}. Error: ${error.statusText}`;
     }
-
-    constructor(
-        private http: HttpClient,
-        public elementRef: ElementRef<HTMLElement>,
-        private appRef: ApplicationRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private injector: Injector,
-        private viewContainerRef: ViewContainerRef,
-        private ngZone: NgZone
-    ) {}
-
-    ngOnInit(): void {}
 
     private clearLiveExamples() {
         this.portalHosts.forEach(h => h.dispose());
@@ -128,8 +108,6 @@ export class ContentViewerComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.clearLiveExamples();
 
-        if (this.documentFetchSubscription) {
-            this.documentFetchSubscription.unsubscribe();
-        }
+        super.destroy();
     }
 }
