@@ -17,5 +17,9 @@
         position: absolute;
         top: 1em;
         right: 1.1em;
+        color: $dg-gray-500;
+        &:hover {
+            color: $dg-primary;
+        }
     }
 }
