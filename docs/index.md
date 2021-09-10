@@ -27,8 +27,7 @@ features:
     description: 基于 TypeScript 类型定义和注释自动生成组件 API，维护代码和文档始终如一
   - icon: assets/images/home/feature6.png
     title: 多语言支持
-    description: 支持灵活的多语言配置   
-footer: Open-source MIT Licensed | Copyright © 2020-present<br />Powered by self
+    description: 支持灵活的多语言配置
 ---
 
 

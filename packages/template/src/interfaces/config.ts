@@ -64,8 +64,10 @@ export interface DocgeniConfig {
     repoUrl?: string;
     /** Docs dir, default is 'docs' **/
     docsDir?: string;
-    /** Site default dir .docgeni **/
+    /** Site default dir .docgeni/site **/
     siteDir?: string;
+    /** Site default dir .docgeni/components **/
+    componentsDir?: string;
     /** Site output dir, default is dist/docgeni-site **/
     outputDir?: string;
     /** Angular demo site name in angular.json **/
@@ -78,6 +80,8 @@ export interface DocgeniConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** footer content **/
+    footer?: string;
 }
 
 // For Angular Template
@@ -106,4 +110,6 @@ export interface DocgeniSiteConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** footer content **/
+    footer?: string;
 }

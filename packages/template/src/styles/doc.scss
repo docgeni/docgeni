@@ -52,6 +52,7 @@ $dg-service-color: #8e24aa;
         display: flex;
         flex: auto;
         align-items: flex-start;
+        min-height: 100%;
     }
 
     .dg-doc-viewer-inner-content {
@@ -63,6 +64,7 @@ $dg-service-color: #8e24aa;
     .dg-component-viewer {
         display: block;
         width: 100%;
+        min-height: 100%;
 
         .dg-component-empty {
             display: block;

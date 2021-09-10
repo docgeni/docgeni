@@ -58,7 +58,8 @@ export class Docgeni implements DocgeniContext {
             locales: this.config.locales,
             defaultLocale: this.config.defaultLocale,
             logoUrl: this.config.logoUrl,
-            repoUrl: this.config.repoUrl
+            repoUrl: this.config.repoUrl,
+            footer: this.config.footer
         };
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;

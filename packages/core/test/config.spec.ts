@@ -114,7 +114,8 @@ describe('#config', () => {
                         path: 'https://github.com/docgeni/docgeni',
                         isExternal: true
                     }
-                ]
+                ],
+                footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode'
             };
             const docgeni = new Docgeni({
                 config: customConfig

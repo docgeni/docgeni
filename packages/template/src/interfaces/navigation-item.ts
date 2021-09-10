@@ -27,6 +27,7 @@ export interface ComponentDocItem extends DocItem {
     api?: boolean;
     category?: string;
     meta?: { lastUpdatedTime: number; contributors: string[] };
+    label?: { text: string; color: string };
 }
 
 export interface CategoryItem {
