@@ -22,6 +22,7 @@ export class GlobalContext {
 
     docItems: NavigationItem[];
     homeMeta: HomeDocMeta;
+    flattenNavs: NavigationItem[];
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
@@ -59,6 +60,7 @@ export class GlobalContext {
                     this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
                     this.docItems = response.docs;
+                    this.flattenNavs = this.flatNavs(this.navs);
                     resolve(response);
                 },
                 error: error => {
@@ -70,5 +72,19 @@ export class GlobalContext {
 
     getAssetsContentPath(path: string) {
         return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
+    }
+
+    flatNavs(navs: NavigationItem[]) {
+        navs = navs.slice();
+        const list = [];
+        while (navs.length) {
+            const item = navs.shift();
+            if (item.items) {
+                navs.unshift(...item.items);
+            } else {
+                list.push(item);
+            }
+        }
+        return list;
     }
 }

@@ -338,3 +338,62 @@ $dg-service-color: #8e24aa;
         align-items: center;
     }
 }
+.dg-pages-link {
+    display: flex;
+    .dg-page-link {
+        flex: 1 1 0;
+        width: 100%;
+        display: flex;
+        a {
+            padding: 16px;
+            border-radius: 3px;
+            color: $dg-gray-800;
+            border: 1px solid $dg-gray-200;
+            box-shadow: rgb(116 129 141 / 10%) 0px 3px 8px 0px;
+            width: 100%;
+            display: flex;
+            &:hover {
+                color: $dg-primary;
+                border-color: $dg-primary;
+                cursor: pointer;
+            }
+            .dg-page-link-icon {
+                flex: 1 1 0;
+                text-align: left;
+                align-self: center;
+                dg-icon {
+                    font-size: 24px;
+                }
+            }
+        }
+        &:first-child {
+            a {
+                text-align: right;
+            }
+            margin-right: 24px;
+        }
+        &:last-child {
+            a {
+                text-align: left;
+            }
+        }
+        .dg-page-link-label {
+            font-size: 12px;
+            color: $dg-gray-600;
+            font-weight: 400;
+            line-height: 1.625;
+        }
+        .dg-page-link-title {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+    }
+}
+.dg-divider {
+    border: 0;
+    border-top: 1px solid $dg-gray-200;
+    margin-top: 24px;
+    margin-bottom: 0;
+    border-bottom: 24px solid transparent;
+}

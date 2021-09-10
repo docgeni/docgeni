@@ -10,10 +10,9 @@ export class NavigationService {
     channel$ = new BehaviorSubject<ChannelItem>(null);
 
     docItem$ = new BehaviorSubject<NavigationItem>(null);
-
+    docPages$ = new BehaviorSubject<{ pre: NavigationItem; next: NavigationItem }>(null);
     /** Responsive layout, sidebar default is hide */
     showSidebar = false;
-
     get channel() {
         return this.channel$.value;
     }
@@ -24,6 +23,9 @@ export class NavigationService {
 
     get navs() {
         return this.global.navs;
+    }
+    get flattenNavs() {
+        return this.global.flattenNavs;
     }
 
     get docItems() {
@@ -43,22 +45,32 @@ export class NavigationService {
     }
 
     getDocItemByPath(path: string) {
+        let index: number;
         if (this.channel) {
             // 类库频道
             if (this.channel.lib) {
-                return this.docItems.find(docItem => {
+                index = this.flattenNavs.findIndex(docItem => {
                     return docItem.path === path && !!docItem.importSpecifier;
                 });
             } else {
-                return this.docItems.find(docItem => {
+                index = this.flattenNavs.findIndex(docItem => {
                     return docItem.path === path && docItem.channelPath === this.channel.path;
                 });
             }
         } else {
-            return this.docItems.find(docItem => {
+            index = this.flattenNavs.findIndex(docItem => {
                 return docItem.path === path;
             });
         }
+        if (index > -1) {
+            const preDocItem = index ? this.flattenNavs[index - 1] : undefined;
+            const nextDocItem = this.flattenNavs.length - 1 === index ? undefined : this.flattenNavs[index + 1];
+            this.docPages$.next({
+                pre: preDocItem,
+                next: nextDocItem
+            });
+        }
+        return this.flattenNavs[index];
     }
 
     selectChannelByPath(path: string) {
