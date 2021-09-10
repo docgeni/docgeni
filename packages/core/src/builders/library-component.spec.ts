@@ -8,6 +8,7 @@ import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
 import { normalize } from '../fs';
+import { DocSourceFile } from './doc-file';
 
 describe('#library-component', () => {
     const library = normalizeLibConfig({
@@ -39,8 +40,8 @@ describe('#library-component', () => {
     const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
-
     beforeAll(async () => {
+        spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
         toolkit.initialize({
             baseDir: systemPath.resolve(__dirname, '../')
         });
