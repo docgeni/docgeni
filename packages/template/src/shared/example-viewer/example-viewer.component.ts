@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory, ViewChild } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
-import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
 import { CopierService } from '../copier/copier.service';
 import { GlobalContext } from '../../services/public-api';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -48,8 +47,6 @@ export class ExampleViewerComponent implements OnInit {
         this._inline = coerceBooleanProperty(value);
     }
 
-    @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
-
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 
@@ -58,8 +55,6 @@ export class ExampleViewerComponent implements OnInit {
     example: LiveExample;
 
     showSource = false;
-
-    copyIcon = 'copy';
 
     exampleTabs: ExampleTab[] = [];
 
@@ -101,22 +96,12 @@ export class ExampleViewerComponent implements OnInit {
                     const bOrder = nameOrdersMap[b.name] || Number.MAX_SAFE_INTEGER;
                     return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
                 });
-            // this.selectedTab = this.exampleTabs[0];
+            this.selectedTab = this.exampleTabs[0];
         });
     }
 
     selectExampleTab(tab: ExampleTab) {
         this.selectedTab = tab;
-    }
-
-    copy() {
-        const text = this.contentViewer.elementRef.nativeElement.textContent;
-        this.copier.copyText(text);
-        this.copyIcon = 'check';
-        /* eslint-disable no-restricted-globals */
-        setTimeout(() => {
-            this.copyIcon = 'copy';
-        }, 2000);
     }
 
     toggleSource() {

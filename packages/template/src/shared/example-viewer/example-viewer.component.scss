@@ -93,26 +93,14 @@
             visibility: visible;
             height: auto;
             opacity: 1;
+            .dg-source-code,
             .dg-example-viewer-sources-content {
                 height: auto;
             }
         }
 
-        .dg-doc-content {
-            white-space: break-spaces;
-            padding: 10px 0px;
-        }
-
         .dg-tab-links {
             padding: 0px 10px;
-        }
-
-        .dg-example-viewer-sources-content {
-            padding: 10px 20px;
-            background: $dg-gray-100;
-            white-space: nowrap;
-            margin: 0px;
-            height: 0px;
         }
     }
 }

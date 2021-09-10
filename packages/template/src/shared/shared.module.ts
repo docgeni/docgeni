@@ -22,6 +22,8 @@ import { LogoComponent } from './logo/logo.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { HeroActionClassPipe } from './pipes/hero.pipe';
 import { DocMetaComponent } from './doc-meta/doc-meta.component';
+import { CopyComponent } from './copy/copy.component';
+import { SourceCodeComponent } from './source-code/source-code.component';
 
 @NgModule({
     declarations: [
@@ -32,11 +34,13 @@ import { DocMetaComponent } from './doc-meta/doc-meta.component';
         IconComponent,
         DocHeaderComponent,
         ContentViewerComponent,
+        SourceCodeComponent,
         LabelComponent,
         TableOfContentsComponent,
         LocalesSelectorComponent,
         AssetsContentPathPipe,
         LogoComponent,
+        CopyComponent,
         IsComponentDocPipe,
         TranslatePipe,
         IsModeLitePipe,
@@ -57,10 +61,12 @@ import { DocMetaComponent } from './doc-meta/doc-meta.component';
         ExampleViewerComponent,
         DocHeaderComponent,
         ContentViewerComponent,
+        SourceCodeComponent,
         IconComponent,
         LabelComponent,
         TableOfContentsComponent,
         LogoComponent,
+        CopyComponent,
         AssetsContentPathPipe,
         IsComponentDocPipe,
         TranslatePipe,
@@ -81,8 +87,10 @@ export {
     DocHeaderComponent,
     LabelComponent,
     ContentViewerComponent,
+    SourceCodeComponent,
     TableOfContentsComponent,
     CopierService,
+    CopyComponent,
     AssetsContentPathPipe,
     IsModeFullPipe,
     IsModeLitePipe

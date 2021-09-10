@@ -13,7 +13,7 @@
   <!-- <div class="dg-example-viewer-intro" title="{{example.title}}">
   </div> -->
   <div class="dg-example-viewer-actions" title="{{ example.title }}">
-    <a class="action-item" href="javascript:;" (click)="copy()"><dg-icon class="color-primary" [iconName]="copyIcon"></dg-icon></a>
+    <a class="action-item" href="javascript:;" [dgCopy]="sourceCode?.textContent"></a>
     <a class="action-item" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
     <!-- <a class="action-item" href="javascript:;"><dg-icon iconName="external"></dg-icon></a> -->
   </div>
@@ -28,8 +28,6 @@
         >{{ tab.name }}</a
       >
     </div>
-    <pre class="dg-example-viewer-sources-content">
-      <dg-content-viewer #contentViewer [url]="selectedTab?.path"></dg-content-viewer>
-    </pre>
+    <pre #sourceCode dgSourceCode [url]="selectedTab?.path"></pre>
   </div>
 </div>
