@@ -73,7 +73,7 @@ export class LibraryBuilder {
             await component.build();
             this.hooks.buildComponentSucceed.call(component);
         }
-        this.docgeni.logger.succuss(`Lib: ${this.lib.name} compiled successfully`);
+        this.docgeni.logger.success(`Lib: ${this.lib.name} compiled successfully`);
     }
 
     public generateLocaleNavs(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {

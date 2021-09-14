@@ -9,8 +9,9 @@ const timespan = {
     ss: ['getSeconds', 2],
     ms: ['getMilliseconds', 3]
 };
-
-function timestamp(str: string, date?: Date, utc?: boolean) {
+function timestamp(date?: Date): string;
+function timestamp(str: string, date?: Date, utc?: boolean): string;
+function timestamp(str: string | Date, date?: Date, utc?: boolean): string {
     if (typeof str !== 'string') {
         date = str;
         str = 'YYYY-MM-DD';
