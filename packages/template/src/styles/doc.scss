@@ -356,10 +356,13 @@ $dg-service-color: #8e24aa;
                 color: $dg-primary;
                 border-color: $dg-primary;
                 cursor: pointer;
+                .dg-page-link-icon {
+                    color: $dg-primary;
+                }
             }
             .dg-page-link-icon {
+                color: $dg-gray-500;
                 flex: 1 1 0;
-                text-align: left;
                 align-self: center;
                 dg-icon {
                     font-size: 24px;
@@ -370,13 +373,24 @@ $dg-service-color: #8e24aa;
             a {
                 text-align: right;
             }
-            margin-right: 24px;
-        }
-        &:last-child {
-            a {
+            &:not(:last-child) {
+                margin-right: 24px;
+            }
+            .dg-page-link-icon {
                 text-align: left;
             }
         }
+
+        &:last-child {
+            a {
+                text-align: left;
+                flex-direction: row-reverse;
+            }
+            .dg-page-link-icon {
+                text-align: right;
+            }
+        }
+
         .dg-page-link-label {
             font-size: 12px;
             color: $dg-gray-600;
