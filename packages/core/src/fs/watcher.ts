@@ -14,9 +14,6 @@ export enum HostWatchEventType {
 export class FileSystemWatcher {
     private watcher: FSWatcher;
     private events$ = new Subject<virtualFs.HostWatchEvent>();
-    private aggregatedEvents$ = new Subject<virtualFs.HostWatchEvent[]>();
-    private aggregateTimeout: NodeJS.Timeout;
-    private aggregatedEvents: virtualFs.HostWatchEvent[] = [];
 
     constructor(options: WatchOptions = { persistent: true, ignoreInitial: true }) {
         this.watcher = new FSWatcher(options);
@@ -51,50 +48,28 @@ export class FileSystemWatcher {
     }
 
     aggregated(aggregateInterval: number = 2000): Observable<virtualFs.HostWatchEvent[]> {
-        // return new Observable(subscribe => {
-        //     const aggregatedEvents: virtualFs.HostWatchEvent[] = [];
-        //     let aggregateTimeout: NodeJS.Timeout;
-        //     const subscription = this.events$.subscribe(event => {
-        //         if (aggregateTimeout) {
-        //             // eslint-disable-next-line no-restricted-globals
-        //             clearTimeout(aggregateTimeout);
-        //         }
-        //         aggregatedEvents.push(event);
+        return new Observable(subscribe => {
+            const aggregatedEvents: virtualFs.HostWatchEvent[] = [];
+            let aggregateTimeout: NodeJS.Timeout;
+            const subscription = this.events$.subscribe(event => {
+                if (aggregateTimeout) {
+                    // eslint-disable-next-line no-restricted-globals
+                    clearTimeout(aggregateTimeout);
+                }
+                aggregatedEvents.push(event);
 
-        //         // eslint-disable-next-line no-restricted-globals
-        //         aggregateTimeout = setTimeout(() => {
-        //             subscribe.next(aggregatedEvents);
-        //         }, aggregateInterval);
-        //     });
-        //     return () => subscription.unsubscribe();
-        // });
-        this.events$.subscribe(event => {
-            if (this.aggregateTimeout) {
                 // eslint-disable-next-line no-restricted-globals
-                clearTimeout(this.aggregateTimeout);
-            }
-            this.aggregatedEvents.push(event);
-
-            // eslint-disable-next-line no-restricted-globals
-            this.aggregateTimeout = setTimeout(() => {
-                this.aggregatedEvents$.next(this.aggregatedEvents);
-                this.aggregatedEvents = [];
-                this.aggregateTimeout = null;
-            }, 2000);
+                aggregateTimeout = setTimeout(() => {
+                    subscribe.next(aggregatedEvents);
+                    aggregateTimeout = null;
+                }, aggregateInterval);
+            });
+            return () => subscription.unsubscribe();
         });
-        return this.aggregatedEvents$;
     }
 
     async close() {
-        if (this.aggregateTimeout) {
-            // eslint-disable-next-line no-restricted-globals
-            clearTimeout(this.aggregateTimeout);
-            this.aggregatedEvents$.next(this.aggregatedEvents);
-            this.aggregatedEvents = [];
-            this.aggregateTimeout = null;
-        }
         this.events$.complete();
-        this.aggregatedEvents$.complete();
         this.watcher.removeAllListeners();
         await this.watcher.close();
     }

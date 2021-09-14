@@ -93,11 +93,11 @@ describe('#fs-watcher', () => {
         await host.delete(normalize(file2Path)).toPromise();
         await toolkit.utils.wait(4000);
         expect(allEvents.length).toEqual(3);
-        expect(allEvents[0].path).toEqual(file1Path);
+        expect(allEvents[0].path).toEqual(normalize(file1Path));
         expect(allEvents[0].type).toEqual(HostWatchEventType.Changed);
-        expect(allEvents[1].path).toEqual(file3Path);
+        expect(allEvents[1].path).toEqual(normalize(file3Path));
         expect(allEvents[1].type).toEqual(HostWatchEventType.Created);
-        expect(allEvents[2].path).toEqual(file2Path);
+        expect(allEvents[2].path).toEqual(normalize(file2Path));
         expect(allEvents[2].type).toEqual(HostWatchEventType.Deleted);
         await fsWatcher.close();
     });
