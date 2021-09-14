@@ -62,6 +62,7 @@ export class Toolkit {
         }
         return this._print;
     }
+
     static get git() {
         return git;
     }
