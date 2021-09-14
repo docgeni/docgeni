@@ -103,7 +103,7 @@ export class Docgeni implements DocgeniContext {
 
             this.docsBuilder.hooks.buildDocsSucceed.tap('EmitDocs', async docsBuilder => {
                 await docsBuilder.emit();
-                this.logger.succuss(`Docs: emit successfully, total: ${docsBuilder.getDocs().length}`);
+                this.logger.success(`Docs: emit successfully, total: ${docsBuilder.getDocs().length}`);
             });
             this.logger.info('Start building docs');
             await this.docsBuilder.build();

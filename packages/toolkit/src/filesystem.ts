@@ -49,13 +49,6 @@ export async function getDirs(path: string, options?: GetDirsOrFilesOptions) {
     });
 }
 
-export async function getFiles(path: string, options?: GetDirsOrFilesOptions) {
-    const dirs = await getDirsAndFiles(path, options);
-    return dirs.filter(dir => {
-        return !isDirectory(nodePath.resolve(path, dir));
-    });
-}
-
 export function globSync(pattern: string, options?: GetDirsOrFilesOptions & { root?: string }) {
     options = {
         ...DEFAULT_OPTIONS,
@@ -73,45 +66,40 @@ export function globSync(pattern: string, options?: GetDirsOrFilesOptions & { ro
     });
 }
 
-export async function pathsExists(paths: string[]) {
-    const result = [];
-    let hasExists = false;
-    let existsCount = 0;
-    for (const path of paths) {
-        const pathExists = await fsExtra.pathExists(path);
-        if (pathExists) {
-            hasExists = true;
-            existsCount++;
-        }
-        result.push(pathExists);
-    }
-    return {
-        result,
-        allExists: existsCount === result.length,
-        hasExists
-    };
-}
-
-export async function ensureWriteFile(filePath: string, data: string, options?: fsExtra.WriteFileOptions | string) {
-    await fsExtra.ensureFile(filePath);
-    await fsExtra.writeFile(filePath, data);
-}
+// export async function pathsExists(paths: string[]) {
+//     const result = [];
+//     let hasExists = false;
+//     let existsCount = 0;
+//     for (const path of paths) {
+//         const pathExists = await fsExtra.pathExists(path);
+//         if (pathExists) {
+//             hasExists = true;
+//             existsCount++;
+//         }
+//         result.push(pathExists);
+//     }
+//     return {
+//         result,
+//         allExists: existsCount === result.length,
+//         hasExists
+//     };
+// }
 
 export async function readFileContent(filePath: string, encoding: string = 'UTF-8'): Promise<string> {
     const result = await fsExtra.readFile(filePath, encoding);
     return result;
 }
 
-export function isStream(stream: any): stream is NodeJS.ReadableStream {
-    if (!stream) {
-        return false;
-    }
+// export function isStream(stream: any): stream is NodeJS.ReadableStream {
+//     if (!stream) {
+//         return false;
+//     }
 
-    if (typeof stream.pipe !== 'function') {
-        return false;
-    }
+//     if (typeof stream.pipe !== 'function') {
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 export * from 'fs-extra';
