@@ -79,7 +79,7 @@ export class GlobalContext {
             const item = navs.shift();
             if (item.items) {
                 navs.unshift(...item.items);
-            } else {
+            } else if (!item.hidden) {
                 list.push(item);
             }
         }
