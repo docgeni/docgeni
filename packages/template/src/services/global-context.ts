@@ -58,7 +58,7 @@ export class GlobalContext {
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
                     this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
-                    this.docItems = response.docs;
+                    this.docItems = this.flatNavs(this.navs);
                     resolve(response);
                 },
                 error: error => {
@@ -70,5 +70,19 @@ export class GlobalContext {
 
     getAssetsContentPath(path: string) {
         return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
+    }
+
+    flatNavs(navs: NavigationItem[]) {
+        navs = navs.slice();
+        const list = [];
+        while (navs.length) {
+            const item = navs.shift();
+            if (item.items) {
+                navs.unshift(...item.items);
+            } else if (!item.hidden) {
+                list.push(item);
+            }
+        }
+        return list;
     }
 }

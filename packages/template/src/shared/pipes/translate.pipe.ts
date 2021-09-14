@@ -7,13 +7,17 @@ const TRANSLATES = {
         OVERVIEW: '概览',
         EXAMPLES: '示例',
         HOME: '首页',
-        LAST_UPDATED_TIME: '最后更新'
+        LAST_UPDATED_TIME: '最后更新',
+        PRE_PAGE: '上一篇',
+        NEXT_PAGE: '下一篇'
     },
     'en-us': {
         OVERVIEW: 'Overview',
         EXAMPLES: 'Examples',
         HOME: 'Home',
-        LAST_UPDATED_TIME: 'Last updated'
+        LAST_UPDATED_TIME: 'Last updated',
+        PRE_PAGE: 'Previous',
+        NEXT_PAGE: 'Next'
     }
 };
 @Pipe({ name: 'dgTranslate' })

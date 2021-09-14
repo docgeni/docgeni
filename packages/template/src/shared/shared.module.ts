@@ -25,6 +25,7 @@ import { DocMetaComponent } from './doc-meta/doc-meta.component';
 import { CopyComponent } from './copy/copy.component';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { ExampleRendererComponent } from './example-renderer/example-renderer.component';
+import { DocPagesLinksComponent } from './doc-pages-links/doc-pages-links.component';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -47,7 +48,8 @@ const COMPONENTS = [
     IsModeLitePipe,
     IsModeFullPipe,
     HeroActionClassPipe,
-    DocMetaComponent
+    DocMetaComponent,
+    DocPagesLinksComponent
 ];
 @NgModule({
     declarations: [...COMPONENTS],

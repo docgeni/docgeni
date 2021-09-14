@@ -67,12 +67,29 @@ const list = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="al
   <path d="M0 1h16v1.2H0V1zm0 6.4h16v1.2H0V7.4zm0 6.4h16V15H0v-1.2z" id="ag合并形状"></path>
 </g>
 </svg>`;
-
+const arrowLeft = `<svg width="1em" height="1em" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>navigation/arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <g id="navigation/arrow-left" stroke="none" stroke-width="1"  fill-rule="evenodd">
+        <path d="M7.4,4.14955232 L4.4383,7.3151 C4.2123,7.5571 3.8323,7.5691 3.5903,7.3431 C3.3483,7.1161 3.3353,6.7371 3.5623,6.4951 L7.53151194,2.2516372 C7.55538364,2.21814642 7.58305703,2.18659454 7.6145,2.1576 C7.8585,1.9336 8.2375,1.9496 8.4615,2.1946 L12.4315,6.5176 C12.6565,6.7616 12.6395,7.1416 12.3955,7.3656 C12.1515,7.5896 11.7725,7.5736 11.5475,7.3296 L8.6,4.11846621 L8.6,13.2666667 C8.6,13.6712222 8.331,14 8,14 C7.668,14 7.4,13.6712222 7.4,13.2666667 L7.4,4.14955232 Z" id="形状结合"  transform="translate(7.995013, 7.999832) rotate(-90.000000) translate(-7.995013, -7.999832) "></path>
+    </g>
+</svg>`;
+const arrowRight = `<svg width="1em" height="1em" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>navigation/arrow-right</title>
+    <desc>Created with Sketch.</desc>
+    <g id="navigation/arrow-right" stroke="none" stroke-width="1"  fill-rule="evenodd">
+        <path d="M7.4,4.14955232 L4.4383,7.3151 C4.2123,7.5571 3.8323,7.5691 3.5903,7.3431 C3.3483,7.1161 3.3353,6.7371 3.5623,6.4951 L7.53151194,2.2516372 C7.55538364,2.21814642 7.58305703,2.18659454 7.6145,2.1576 C7.8585,1.9336 8.2375,1.9496 8.4615,2.1946 L12.4315,6.5176 C12.6565,6.7616 12.6395,7.1416 12.3955,7.3656 C12.1515,7.5896 11.7725,7.5736 11.5475,7.3296 L8.6,4.11846621 L8.6,13.2666667 C8.6,13.6712222 8.331,14 8,14 C7.668,14 7.4,13.6712222 7.4,13.2666667 L7.4,4.14955232 Z" id="形状结合"  transform="translate(7.995013, 7.999832) rotate(90.000000) translate(-7.995013, -7.999832) "></path>
+    </g>
+</svg>`;
 export const BUILTIN_SVGS = {
     github,
     code,
     external,
     copy,
     check,
-    list
+    list,
+    arrowLeft,
+    arrowRight
 };
