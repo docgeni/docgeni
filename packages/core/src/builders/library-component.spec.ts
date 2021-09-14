@@ -45,7 +45,7 @@ describe('#library-component', () => {
         toolkit.initialize({
             baseDir: systemPath.resolve(__dirname, '../')
         });
-        fixture = await loadFixture('lib-button-component-default');
+        fixture = await loadFixture('library-component-button');
     });
 
     beforeEach(async () => {

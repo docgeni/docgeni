@@ -13,9 +13,9 @@ export class FixtureResult {
         return path.resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
     }
 
-    getOutputContent(relativePath: string) {
+    getOutputContent(relativePath: string, needNormalize = false) {
         const output = this.output[relativePath];
-        return compatibleNormalize(output).trim();
+        return needNormalize ? compatibleNormalize(output).trim() : output;
     }
 }
 

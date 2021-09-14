@@ -1,10 +1,11 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, createTestDocgeniHost, DEFAULT_TEST_ROOT_PATH } from '../testing';
+import { createTestDocgeniContext, createTestDocgeniHost, DEFAULT_TEST_ROOT_PATH, loadFixture } from '../testing';
 import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
 import { resolve } from '../fs';
 import * as systemPath from 'path';
+import { compatibleNormalize } from '../markdown';
 
 const COMPONENTS_ROOT_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
 
@@ -42,7 +43,7 @@ describe('#components-builder', () => {
         expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
         const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
-        const expectContent = await toolkit.fs.readFileContent(systemPath.resolve(__dirname, './components-builder-expect-entry.txt'));
+        const expectContent = (await loadFixture('components-builder-default')).getOutputContent('index.ts.template');
         expect(entryContent).toEqual(expectContent);
     });
 
