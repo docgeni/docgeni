@@ -1,22 +1,16 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import {
-    ASSETS_API_DOCS_RELATIVE_PATH,
-    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
-    ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH,
-    ASSETS_OVERVIEWS_RELATIVE_PATH
-} from '../constants';
+import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibComponent } from './library-component';
+import { resolve } from '../fs';
 
 export class LibraryBuilder {
     private absLibPath: string;
     private absDestSiteContentComponentsPath: string;
-    // private absDestAssetsExamplesSourcePath: string;
     private absDestAssetsExamplesHighlightedPath: string;
     private absDestAssetsOverviewsPath: string;
     private absDestAssetsApiDocsPath: string;
@@ -31,29 +25,48 @@ export class LibraryBuilder {
     };
 
     constructor(private docgeni: DocgeniContext, public lib: Library) {
-        this.absLibPath = this.lib.absRootPath;
-        this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
-        // this.absDestAssetsExamplesSourcePath = path.resolve(
-        //     this.docgeni.paths.absSitePath,
-        //     `${ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
-        // );
-        this.absDestAssetsExamplesHighlightedPath = path.resolve(
+        this.absLibPath = resolve(this.docgeni.paths.cwd, lib.rootDir);
+        this.absDestSiteContentComponentsPath = resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
+        this.absDestAssetsExamplesHighlightedPath = resolve(
             this.docgeni.paths.absSitePath,
             `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
         );
-        this.absDestAssetsOverviewsPath = path.resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`
-        );
-        this.absDestAssetsApiDocsPath = path.resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}`);
+        this.absDestAssetsOverviewsPath = resolve(this.docgeni.paths.absSitePath, `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`);
+        this.absDestAssetsApiDocsPath = resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}`);
     }
 
     public get components() {
         return this.componentsMap;
     }
 
+    public async initialize(): Promise<void> {
+        const components: LibComponent[] = [];
+        const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
+        for (const include of includes) {
+            const includeAbsPath = resolve(this.absLibPath, include);
+            const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
+            if (dirExists) {
+                const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: this.lib.exclude });
+                subDirs.forEach(dir => {
+                    const absComponentPath = resolve(includeAbsPath, dir);
+                    const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
+                    this.componentsMap.set(absComponentPath, component);
+                });
+            }
+        }
+
+        // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
+        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
+        const dirs = await this.docgeni.host.getDirs(this.absLibPath, { exclude: [...excludes] });
+        dirs.forEach(dir => {
+            const absComponentPath = resolve(this.absLibPath, dir);
+            const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
+            components.push(component);
+            this.componentsMap.set(absComponentPath, component);
+        });
+    }
+
     public async build(): Promise<void> {
-        await this.createComponents();
         this.buildLocaleCategoriesMap(this.lib.categories);
         for (const component of this.componentsMap.values()) {
             this.hooks.buildComponent.call(component);
@@ -114,33 +127,6 @@ export class LibraryBuilder {
                 this.absDestAssetsExamplesHighlightedPath
             );
         }
-    }
-
-    private async createComponents(): Promise<void> {
-        const components: LibComponent[] = [];
-        const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
-        for (const include of includes) {
-            const includeAbsPath = path.resolve(this.absLibPath, include);
-            const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
-            if (dirExists) {
-                const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
-                subDirs.forEach(dir => {
-                    const absComponentPath = path.resolve(includeAbsPath, dir);
-                    const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
-                    this.componentsMap.set(absComponentPath, component);
-                });
-            }
-        }
-
-        // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
-        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
-        const dirs = await toolkit.fs.getDirs(this.absLibPath, { exclude: [...excludes] });
-        dirs.forEach(dir => {
-            const absComponentPath = path.resolve(this.absLibPath, dir);
-            const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
-            components.push(component);
-            this.componentsMap.set(absComponentPath, component);
-        });
     }
 
     private buildLocaleCategoriesMap(categories: CategoryItem[]): void {

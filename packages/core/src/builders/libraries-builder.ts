@@ -39,7 +39,6 @@ export class LibrariesBuilder {
         this.absDestSiteContentPath = this.docgeni.paths.absSiteContentPath;
         const normalizedConfigs = this.config.libs.map(lib => {
             const result = normalizeLibConfig(lib);
-            result.absRootPath = path.resolve(this.docgeni.paths.cwd, result.rootDir);
             return result;
         });
         for (const normalizedConfig of normalizedConfigs) {
@@ -89,6 +88,7 @@ export class LibrariesBuilder {
         try {
             this.hooks.buildLibraries.call(this);
             for (const libraryBuilder of this.libraryBuilders) {
+                await libraryBuilder.initialize();
                 await libraryBuilder.build();
             }
             this.hooks.buildLibrariesSucceed.call(this);

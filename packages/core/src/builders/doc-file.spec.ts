@@ -3,13 +3,23 @@ import { EOL } from 'os';
 import { DocgeniHost, DocgeniHostImpl } from '../docgeni-host';
 import { DocSourceFile } from './doc-file';
 import path from 'path';
+import { toolkit } from '@docgeni/toolkit';
 
 describe('DocSourceFile', () => {
     let root: string;
     let testHost: virtualFs.Host;
     let docgeniHost: DocgeniHost;
+    let lastUpdatedTimeSpy: jasmine.Spy;
+    let contributorsSpy: jasmine.Spy;
     beforeAll(() => {
-        spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
+        lastUpdatedTimeSpy = spyOn(toolkit.git, 'lastUpdatedTime');
+        lastUpdatedTimeSpy.and.callFake((path: string) => {
+            return 0;
+        });
+        contributorsSpy = spyOn(toolkit.git, 'contributors').and.callFake((filePath: string | string[]) => {
+            return [];
+        });
+        // spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
     });
 
     beforeEach(() => {
@@ -29,7 +39,8 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost
+                docgeniHost,
+                undefined
             );
         });
 
@@ -45,7 +56,8 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost
+                docgeniHost,
+                undefined
             );
             expect(() => {
                 const name = docSourceFile.name;
@@ -84,7 +96,8 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost
+                docgeniHost,
+                undefined
             );
         });
 
@@ -129,7 +142,8 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost
+            docgeniHost,
+            undefined
         );
         await docSourceFile.build();
         expect(docSourceFile.output).toContain(`<p>getting-started content</p>`);
@@ -152,7 +166,8 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost
+            docgeniHost,
+            undefined
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -174,7 +189,8 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost
+            docgeniHost,
+            undefined
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -196,7 +212,8 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost
+            docgeniHost,
+            undefined
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -218,7 +235,8 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost
+            docgeniHost,
+            undefined
         );
         expect(docSourceFile.isEmpty()).toEqual(true);
         await docSourceFile.build();

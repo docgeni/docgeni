@@ -135,7 +135,10 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     private getContributionInfo() {
         return {
             lastUpdatedTime: toolkit.git.lastUpdatedTime(this.path) * 1000,
-            contributors: this.docConfig.repoUrl.startsWith('https://github.com') ? toolkit.git.contributors(this.path) : undefined
+            contributors:
+                this.docConfig && this.docConfig.repoUrl && this.docConfig.repoUrl.startsWith('https://github.com')
+                    ? toolkit.git.contributors(this.path)
+                    : []
         };
     }
 }

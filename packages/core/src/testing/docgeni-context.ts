@@ -42,7 +42,7 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         watch: false,
         paths: paths,
         hooks: null,
-        logger: null,
+        logger: toolkit.print,
         librariesBuilders: null,
         docsBuilder: null,
         fs: null,
