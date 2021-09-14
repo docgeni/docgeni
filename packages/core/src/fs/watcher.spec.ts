@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { FileSystemWatcher, HostWatchEventType } from './watcher';
 import { toolkit } from '@docgeni/toolkit';
 import chokidar from 'chokidar';
+import { linuxAndDarwinIt } from '../testing';
 
 describe('#fs-watcher', () => {
     let root: string;
@@ -21,7 +22,7 @@ describe('#fs-watcher', () => {
         await host.delete(normalize(root)).toPromise();
     });
 
-    it('watch files', async () => {
+    linuxAndDarwinIt('watch files', async () => {
         const fsWatcher = new FileSystemWatcher();
         const content = virtualFs.stringToFileBuffer('new content');
         const file1Path = root + '/sub1/file1.txt';
@@ -46,7 +47,7 @@ describe('#fs-watcher', () => {
         await fsWatcher.close();
     });
 
-    it('watch dir', async () => {
+    linuxAndDarwinIt('watch dir', async () => {
         const fsWatcher = new FileSystemWatcher();
         const content = virtualFs.stringToFileBuffer('hello world');
         const file1Path = root + '/sub1/file1.txt';
@@ -70,7 +71,7 @@ describe('#fs-watcher', () => {
         await fsWatcher.close();
     });
 
-    it('watch aggregated', async () => {
+    linuxAndDarwinIt('watch aggregated', async () => {
         const fsWatcher = new FileSystemWatcher();
         const content = virtualFs.stringToFileBuffer('new content');
         const file1Path = root + '/sub1/file1.txt';

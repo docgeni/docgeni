@@ -28,7 +28,7 @@ describe('DocgeniNodeJsAsyncHost', () => {
         expect(isExists).toBe(true);
     });
 
-    it('watch', async () => {
+    linuxAndDarwinIt('watch', async () => {
         const content = virtualFs.stringToFileBuffer('hello world');
         const content2 = virtualFs.stringToFileBuffer('hello world 2');
         const allEvents: virtualFs.HostWatchEvent[] = [];

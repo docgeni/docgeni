@@ -16,3 +16,4 @@ export class CustomComponentsModule {
 addBuiltInComponents([
     hello,
 ]);
+

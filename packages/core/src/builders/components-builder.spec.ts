@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, createTestDocgeniHost, DEFAULT_TEST_ROOT_PATH } from '../testing';
+import { createTestDocgeniContext, createTestDocgeniHost, DEFAULT_TEST_ROOT_PATH, loadFixture } from '../testing';
 import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
@@ -42,8 +42,8 @@ describe('#components-builder', () => {
         expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
         const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
-        const expectContent = await toolkit.fs.readFileContent(systemPath.resolve(__dirname, './components-builder-expect-entry.txt'));
-        expect(entryContent).toEqual(expectContent);
+        const expectContent = (await loadFixture('components-builder-default')).getOutputContent('index.ts.template');
+        expect(entryContent.trim()).toEqual(expectContent);
     });
 
     describe('watch', () => {
