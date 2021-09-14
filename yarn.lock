@@ -1329,6 +1329,28 @@
   resolved "https://registry.npmjs.org/@commitlint/types/-/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha512-VoNqai1vR5anRF5Tuh/+SWDFk7xi7oMwHrHrbm1BprYXjB2RJsWLhUrStMssDxEl5lW/z3EUdg8RvH/IUBccSQ==
 
+"@docgeni/toolkit@^1.0.2":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@docgeni/toolkit/-/toolkit-1.0.4.tgz#4fb84e1b7a38a52911340436bc82fe6f68145eb0"
+  integrity sha512-KibLLOGuYsTKrYmtMx60ZEOpxNKF4w6HI9pFbCjyLeB1GwDwS9tz5HvXRG10qXIZGsGhkWpLjhFn3GE+ClZGvw==
+  dependencies:
+    camelcase "^6.0.0"
+    chalk "^3.0.0"
+    change-case "^4.1.1"
+    chokidar "^3.3.1"
+    fancy-log "^1.3.3"
+    front-matter "^3.1.0"
+    fs-extra "^9.0.0"
+    glob "^7.1.6"
+    handlebars "^4.7.3"
+    lodash "^4.17.21"
+    minimatch "3.0.4"
+    param-case "^3.0.2"
+    pluralize "^8.0.0"
+    shelljs "0.8.4"
+    time-stamp "^2.2.0"
+    title-case "^3.0.2"
+
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
   resolved "https://registry.npmjs.org/@dsherret/to-absolute-glob/-/to-absolute-glob-2.0.2.tgz#1f6475dc8bd974cea07a2daf3864b317b1dd332c"
@@ -2515,6 +2537,13 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/graceful-fs@*":
+  version "4.1.5"
+  resolved "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.5.tgz#21ffba0d98da4350db64891f92a9e5db3cdb4e15"
+  integrity sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz#4ba8ddb720221f432e443bd5f9117fd22cfd4762"
@@ -2700,6 +2729,15 @@
   dependencies:
     "@types/expect" "^1.20.4"
     "@types/node" "*"
+
+"@types/watchpack@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.npmjs.org/@types/watchpack/-/watchpack-1.1.7.tgz#9e680b223294cdfc10cb5a04da0543a97023cdd7"
+  integrity sha512-2XsUDmKGy5ymzQ48ev61nMimudAiZEH/qEBo9zueKA45F8OXIAD2iwEFZPi+uCHnsxcV5MMnbu+Hkx0CLgfTxw==
+  dependencies:
+    "@types/graceful-fs" "*"
+    "@types/node" "*"
+    chokidar "^2.1.2"
 
 "@types/webpack-sources@^0.1.5":
   version "0.1.8"
@@ -4265,7 +4303,7 @@ chokidar@^1.6.0:
   optionalDependencies:
     fsevents "^1.0.0"
 
-chokidar@^2.1.8:
+chokidar@^2.1.2, chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
   integrity sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==

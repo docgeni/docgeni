@@ -5,61 +5,53 @@ import fs from 'fs';
 import temp from 'temp';
 import { Observable, Subscription } from 'rxjs';
 import { linuxAndDarwinIt, linuxOnlyIt } from '../testing';
+import { toolkit } from '@docgeni/toolkit';
 
 describe('DocgeniNodeJsAsyncHost', () => {
     let root: string;
-    let host: virtualFs.Host<fs.Stats>;
+    let host: DocgeniNodeJsAsyncHost;
 
     beforeEach(() => {
         root = temp.mkdirSync('core-node-spec-');
-        host = new virtualFs.ScopedHost(new DocgeniNodeJsAsyncHost(), normalize(root));
+        host = new DocgeniNodeJsAsyncHost();
     });
 
-    afterEach(done =>
-        host
-            .delete(normalize('/'))
-            .toPromise()
-            .then(done, done.fail)
-    );
+    afterEach(async () => {
+        await host.delete(normalize(root)).toPromise();
+    });
 
     it('should get correct result for exists', async () => {
-        let isExists = await host.exists(normalize('not-found')).toPromise();
+        let isExists = await host.exists(normalize(root + '/not-found')).toPromise();
         expect(isExists).toBe(false);
-        await host.write(normalize('not-found'), virtualFs.stringToFileBuffer('content')).toPromise();
-        isExists = await host.exists(normalize('not-found')).toPromise();
+        await host.write(normalize(root + '/not-found'), virtualFs.stringToFileBuffer('content')).toPromise();
+        isExists = await host.exists(normalize(root + '/not-found')).toPromise();
         expect(isExists).toBe(true);
     });
 
-    linuxAndDarwinIt('watch', done => {
-        let obs: Observable<virtualFs.HostWatchEvent>;
-        let subscription: Subscription;
+    it('watch', async () => {
         const content = virtualFs.stringToFileBuffer('hello world');
         const content2 = virtualFs.stringToFileBuffer('hello world 2');
         const allEvents: virtualFs.HostWatchEvent[] = [];
 
-        Promise.resolve()
-            .then(() => fs.mkdirSync(root + '/sub1'))
-            .then(() => fs.writeFileSync(root + '/sub1/file1', 'hello world'))
-            .then(() => {
-                obs = host.watch(normalize('/sub1'), { recursive: true })!;
-                expect(obs).not.toBeNull();
-                subscription = obs.subscribe(event => {
-                    allEvents.push(event);
-                });
-            })
-            // eslint-disable-next-line no-restricted-globals
-            .then(() => new Promise(resolve => setTimeout(resolve, 10)))
-            // Discard the events registered so far.
-            .then(() => allEvents.splice(0))
-            .then(() => host.write(normalize('/sub1/sub2/file3'), content).toPromise())
-            .then(() => host.write(normalize('/sub1/file2'), content2).toPromise())
-            .then(() => host.delete(normalize('/sub1/file1')).toPromise())
-            // eslint-disable-next-line no-restricted-globals
-            .then(() => new Promise(resolve => setTimeout(resolve, 3000)))
-            .then(() => {
-                expect(allEvents.length).toBe(3);
-                subscription.unsubscribe();
-            })
-            .then(done, done.fail);
+        const file1Path = root + '/sub1/file1.txt';
+        const file2Path = root + '/sub1/file2.txt';
+        const file3Path = root + '/sub1/sub2/file3.txt';
+
+        fs.mkdirSync(root + '/sub1');
+        fs.writeFileSync(file1Path, 'hello world');
+        const obs = host.watch(root + '/sub1', { recursive: true, ignoreInitial: true })!;
+        expect(obs).not.toBeNull();
+        const subscription = obs.subscribe(event => {
+            allEvents.push(event);
+        });
+        await toolkit.utils.wait(10);
+        await host.write(normalize(file3Path), content).toPromise();
+        await toolkit.utils.wait(10);
+        await host.write(normalize(file2Path), content2).toPromise();
+        await toolkit.utils.wait(10);
+        await host.delete(normalize(file1Path)).toPromise();
+        await toolkit.utils.wait(3000);
+        expect(allEvents.length).toBe(3);
+        subscription.unsubscribe();
     });
 });

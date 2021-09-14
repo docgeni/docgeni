@@ -1,8 +1,7 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniHost } from '../docgeni-host';
 import { toolkit } from '@docgeni/toolkit';
-import { normalize, relative, resolve } from '../fs';
-import { HostWatchEventType } from '../fs/node-host';
+import { normalize, relative, resolve, HostWatchEventType } from '../fs';
 
 export interface ComponentDef {
     name: string;
