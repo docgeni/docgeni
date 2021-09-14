@@ -5,6 +5,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
 import { resolve } from '../fs';
 import * as systemPath from 'path';
+import { compatibleNormalize } from '../markdown';
 
 const COMPONENTS_ROOT_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
 
@@ -43,7 +44,7 @@ describe('#components-builder', () => {
         const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
         const expectContent = (await loadFixture('components-builder-default')).getOutputContent('index.ts.template');
-        expect(entryContent.trim()).toEqual(expectContent);
+        expect(entryContent).toEqual(expectContent);
     });
 
     describe('watch', () => {
