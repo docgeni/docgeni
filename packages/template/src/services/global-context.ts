@@ -22,7 +22,6 @@ export class GlobalContext {
 
     docItems: NavigationItem[];
     homeMeta: HomeDocMeta;
-    flattenNavs: NavigationItem[];
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
@@ -59,8 +58,7 @@ export class GlobalContext {
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
                     this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
-                    this.docItems = response.docs;
-                    this.flattenNavs = this.flatNavs(this.navs);
+                    this.docItems = this.flatNavs(this.navs);
                     resolve(response);
                 },
                 error: error => {

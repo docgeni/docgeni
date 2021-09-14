@@ -24,9 +24,6 @@ export class NavigationService {
     get navs() {
         return this.global.navs;
     }
-    get flattenNavs() {
-        return this.global.flattenNavs;
-    }
 
     get docItems() {
         return this.global.docItems;
@@ -49,28 +46,28 @@ export class NavigationService {
         if (this.channel) {
             // 类库频道
             if (this.channel.lib) {
-                index = this.flattenNavs.findIndex(docItem => {
+                index = this.docItems.findIndex(docItem => {
                     return docItem.path === path && !!docItem.importSpecifier;
                 });
             } else {
-                index = this.flattenNavs.findIndex(docItem => {
+                index = this.docItems.findIndex(docItem => {
                     return docItem.path === path && docItem.channelPath === this.channel.path;
                 });
             }
         } else {
-            index = this.flattenNavs.findIndex(docItem => {
+            index = this.docItems.findIndex(docItem => {
                 return docItem.path === path;
             });
         }
         if (index > -1) {
-            const preDocItem = index ? this.flattenNavs[index - 1] : undefined;
-            const nextDocItem = this.flattenNavs.length - 1 === index ? undefined : this.flattenNavs[index + 1];
+            const preDocItem = index ? this.docItems[index - 1] : undefined;
+            const nextDocItem = this.docItems.length - 1 === index ? undefined : this.docItems[index + 1];
             this.docPages$.next({
                 pre: preDocItem,
                 next: nextDocItem
             });
         }
-        return this.flattenNavs[index];
+        return this.docItems[index];
     }
 
     selectChannelByPath(path: string) {

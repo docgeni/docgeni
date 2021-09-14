@@ -12,38 +12,7 @@
           (contentRendered)="updateTableOfContents(docItem.title, $event)"
         >
         </dg-content-viewer>
-        <div *ngIf="docPages$ | async as docPages" class="dg-pages-link">
-          <div class="dg-page-link" *ngIf="docPages.pre && docPages.pre.channelPath">
-            <a [routerLink]="['/' + docPages.pre.channelPath + '/' + docPages.pre.path]">
-              <div class="dg-page-link-icon">
-                <dg-icon iconName="arrowLeft"></dg-icon>
-              </div>
-              <div>
-                <div class="dg-page-link-label">
-                  {{ 'PRE_PAGE' | dgTranslate }}
-                </div>
-                <div class="dg-page-link-title">
-                  {{ docPages.pre.title }}
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="dg-page-link" *ngIf="docPages.next && docPages.next.channelPath">
-            <a [routerLink]="['/' + docPages.next.channelPath + '/' + docPages.next.path]">
-              <div class="dg-page-link-icon">
-                <dg-icon iconName="arrowRight"></dg-icon>
-              </div>
-              <div>
-                <div class="dg-page-link-label">
-                  {{ 'NEXT_PAGE' | dgTranslate }}
-                </div>
-                <div class="dg-page-link-title">
-                  {{ docPages.next.title }}
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
+        <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
         <hr class="dg-divider" />
         <dg-doc-meta [meta]="docItem.meta"></dg-doc-meta>
       </div>
