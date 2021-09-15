@@ -22,6 +22,8 @@ export class GlobalContext {
 
     docItems: NavigationItem[];
     homeMeta: HomeDocMeta;
+    readonly owner: string;
+    readonly repo: string;
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
@@ -41,6 +43,11 @@ export class GlobalContext {
             config.mode = cacheMode as DocgeniMode;
         }
         document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
+        const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
+        if (pattern && pattern.length === 3) {
+            this.owner = pattern[1];
+            this.repo = pattern[2];
+        }
     }
 
     setLocale(locale: string) {

@@ -6,6 +6,7 @@ export interface DocItem {
     path: string;
     channelPath?: string;
     contentPath?: string;
+    originPath?: string;
     content?: string;
     order?: number;
     hidden?: boolean;
@@ -17,7 +18,6 @@ export interface DocItem {
             content?: string;
         };
     };
-    meta?: { lastUpdatedTime: number; contributors: string[] };
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -27,7 +27,6 @@ export interface ComponentDocItem extends DocItem {
     api?: boolean;
     category?: string;
     label?: { text: string; color: string };
-    metaMap?: Record<string, { lastUpdatedTime: number; contributors: string[] }>;
 }
 
 export interface CategoryItem {

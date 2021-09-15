@@ -202,7 +202,7 @@ export class NavsBuilder {
                     hidden: docFile.meta.hidden
                 };
                 docItem.contentPath = docFile.getRelativeOutputPath();
-                docItem.meta = { lastUpdatedTime: docFile.meta.lastUpdatedTime, contributors: docFile.meta.contributors };
+                docItem.originPath = docFile.relative;
                 // hide it when hidden is true
                 if (!docItem.hidden) {
                     navs.push(docItem);

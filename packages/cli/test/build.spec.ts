@@ -66,7 +66,8 @@ describe('docgeni build', () => {
                                     channelPath: 'guide',
                                     title: 'Intro 2',
                                     order: 1,
-                                    contentPath: 'docs/guide/intro/intro2.html'
+                                    contentPath: 'docs/guide/intro/intro2.html',
+                                    originPath: 'docs/guide/intro/intro2.md'
                                 },
                                 {
                                     id: 'intro1',
@@ -74,7 +75,8 @@ describe('docgeni build', () => {
                                     channelPath: 'guide',
                                     title: 'Intro 1',
                                     order: 2,
-                                    contentPath: 'docs/guide/intro/intro1.html'
+                                    contentPath: 'docs/guide/intro/intro1.html',
+                                    originPath: 'docs/guide/intro/intro1.md'
                                 }
                             ],
                             order: 1
@@ -85,7 +87,8 @@ describe('docgeni build', () => {
                             channelPath: 'guide',
                             title: '快速开始',
                             order: 2,
-                            contentPath: 'docs/guide/getting-started.html'
+                            contentPath: 'docs/guide/getting-started.html',
+                            originPath: 'docs/guide/getting-started.md'
                         },
                         {
                             id: 'installation',
@@ -93,7 +96,8 @@ describe('docgeni build', () => {
                             channelPath: 'guide',
                             title: '安装',
                             order: 2,
-                            contentPath: 'docs/guide/installation.html'
+                            contentPath: 'docs/guide/installation.html',
+                            originPath: 'docs/guide/installation.md'
                         }
                     ],
                     order: 1
@@ -106,7 +110,8 @@ describe('docgeni build', () => {
                     channelPath: 'guide',
                     title: '快速开始',
                     order: 2,
-                    contentPath: 'docs/guide/getting-started.html'
+                    contentPath: 'docs/guide/getting-started.html',
+                    originPath: 'docs/guide/getting-started.md'
                 },
                 {
                     id: 'installation',
@@ -114,7 +119,8 @@ describe('docgeni build', () => {
                     channelPath: 'guide',
                     title: '安装',
                     order: 2,
-                    contentPath: 'docs/guide/installation.html'
+                    contentPath: 'docs/guide/installation.html',
+                    originPath: 'docs/guide/installation.md'
                 },
                 {
                     id: 'intro1',
@@ -122,7 +128,8 @@ describe('docgeni build', () => {
                     channelPath: 'guide',
                     title: 'Intro 1',
                     order: 2,
-                    contentPath: 'docs/guide/intro/intro1.html'
+                    contentPath: 'docs/guide/intro/intro1.html',
+                    originPath: 'docs/guide/intro/intro1.md'
                 },
                 {
                     id: 'intro2',
@@ -130,19 +137,15 @@ describe('docgeni build', () => {
                     channelPath: 'guide',
                     title: 'Intro 2',
                     order: 1,
-                    contentPath: 'docs/guide/intro/intro2.html'
+                    contentPath: 'docs/guide/intro/intro2.html',
+                    originPath: 'docs/guide/intro/intro2.md'
                 }
             ],
-            homeMeta: { contentPath: 'docs/index.html' }
+            homeMeta: {
+                contentPath: 'docs/index.html'
+            }
         };
-        await expect(
-            JSON.parse(navigations, (key, value) => {
-                if (key === 'meta' || key === 'lastUpdatedTime' || key === 'contributors') {
-                    return undefined;
-                }
-                return value;
-            })
-        ).toEqual(
+        await expect(JSON.parse(navigations)).toEqual(
             expectedNavigations,
             `expected is:${EOL} ${JSON.stringify(expectedNavigations, null, 2)}, actual is:${EOL} ${navigations}`
         );

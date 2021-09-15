@@ -239,11 +239,7 @@ export class LibComponent {
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
-                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
-                    meta: {
-                        lastUpdatedTime: overviewSourceFile.meta.lastUpdatedTime,
-                        contributors: overviewSourceFile.meta.contributors
-                    }
+                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }
