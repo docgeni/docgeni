@@ -185,6 +185,7 @@ describe('NavigationService', () => {
     });
 
     it('should get doc item by path [intro/getting-started] success', () => {
+        spectator.service.selectChannelByPath('guides');
         const docItem = spectator.service.getDocItemByPath('intro/getting-started');
         expect(docItem).toEqual({
             id: 'getting-started',

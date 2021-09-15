@@ -56,7 +56,7 @@ export class NavigationService {
             }
         } else {
             index = this.docItems.findIndex(docItem => {
-                return docItem.path === path;
+                return docItem.path === path && (this.global.config.mode === 'lite' ? true : !docItem.channelPath);
             });
         }
         if (index > -1) {
