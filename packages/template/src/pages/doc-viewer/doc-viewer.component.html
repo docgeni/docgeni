@@ -14,7 +14,7 @@
         </dg-content-viewer>
         <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
         <hr class="dg-divider" />
-        <dg-doc-meta [meta]="docItem.meta"></dg-doc-meta>
+        <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
       </div>
       <dg-toc #toc></dg-toc>
     </div>

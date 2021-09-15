@@ -41,7 +41,6 @@ describe('#library-component', () => {
     let context: DocgeniContext;
     let fixture: FixtureResult;
     beforeAll(async () => {
-        spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
         toolkit.initialize({
             baseDir: systemPath.resolve(__dirname, '../')
         });

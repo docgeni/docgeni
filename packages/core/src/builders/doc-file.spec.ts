@@ -9,18 +9,6 @@ describe('DocSourceFile', () => {
     let root: string;
     let testHost: virtualFs.Host;
     let docgeniHost: DocgeniHost;
-    let lastUpdatedTimeSpy: jasmine.Spy;
-    let contributorsSpy: jasmine.Spy;
-    beforeAll(() => {
-        lastUpdatedTimeSpy = spyOn(toolkit.git, 'lastUpdatedTime');
-        lastUpdatedTimeSpy.and.callFake((path: string) => {
-            return 0;
-        });
-        contributorsSpy = spyOn(toolkit.git, 'contributors').and.callFake((filePath: string | string[]) => {
-            return [];
-        });
-        // spyOn(DocSourceFile.prototype, 'getContributionInfo' as any).and.returnValue({ lastUpdatedTime: 0, contributors: [] });
-    });
 
     beforeEach(() => {
         root = '/root/test/';
@@ -150,9 +138,7 @@ describe('DocSourceFile', () => {
         expect(docSourceFile.meta).toEqual({
             title: 'Title FrontMatter',
             order: 10,
-            path: '/custom/path',
-            lastUpdatedTime: 0,
-            contributors: []
+            path: '/custom/path'
         });
     });
 

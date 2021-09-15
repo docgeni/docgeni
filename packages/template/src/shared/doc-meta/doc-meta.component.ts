@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, HostBinding } from '@angular/core';
+import { DocItem } from '@docgeni/template/interfaces';
+import { GlobalContext } from '@docgeni/template/services/public-api';
 
 @Component({
     selector: 'dg-doc-meta',
@@ -6,8 +9,21 @@ import { Component, Input, OnInit, HostBinding } from '@angular/core';
 })
 export class DocMetaComponent implements OnInit {
     @HostBinding(`class.dg-doc-meta`) isDocContribution = true;
-    @Input() meta: { lastUpdatedTime: number; contributors: string[] };
-    constructor() {}
+    @Input() docItem: DocItem;
+    lastUpdatedTime: Date;
+    contributors: string[];
+    constructor(private http: HttpClient, private globalContext: GlobalContext) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        if (this.globalContext.owner && this.globalContext.repo) {
+            this.http
+                .get(`https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`, {
+                    params: { path: this.docItem.originPath }
+                })
+                .subscribe((result: { author: { avatar_url: string; login: string }; commit: { author: { date: string } } }[]) => {
+                    this.contributors = Array.from(new Set(result.map(item => item.author.login)));
+                    this.lastUpdatedTime = new Date(result[0].commit.author.date);
+                });
+        }
+    }
 }
