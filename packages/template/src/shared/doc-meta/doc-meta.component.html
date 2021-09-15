@@ -7,7 +7,7 @@
       {{ (meta.contributors | slice: 3).length }}
     </div>
   </div>
-  <div class="dg-contribution-last-time">
+  <div class="dg-contribution-last-time" *ngIf="meta.lastUpdatedTime">
     {{ 'LAST_UPDATED_TIME' | dgTranslate }}
     {{ meta.lastUpdatedTime | date: 'yyyy/MM/dd' }}
   </div>
