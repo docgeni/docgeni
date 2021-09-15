@@ -1,5 +1,5 @@
-import { shell } from '../lib';
-import { contributors, lastUpdatedTime } from '../lib/git';
+import * as shell from './shell';
+import { contributors, lastUpdatedTime } from './git';
 
 describe('git', () => {
     it('should get lastUpdatedTime with name quotation', () => {
