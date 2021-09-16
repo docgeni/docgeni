@@ -6,7 +6,7 @@ import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibComponent } from './library-component';
-import { resolve } from '../fs';
+import { HostWatchEventType, resolve } from '../fs';
 
 export class LibraryBuilder {
     private absLibPath: string;
@@ -18,8 +18,8 @@ export class LibraryBuilder {
     private componentsMap = new Map<string, LibComponent>();
 
     public hooks = {
-        build: new AsyncSeriesHook<LibraryBuilder>(['libraryBuilder']),
-        buildSucceed: new SyncHook<LibraryBuilder>(['libraryBuilder']),
+        build: new SyncHook<LibraryBuilder, LibComponent[]>(['libraryBuilder', 'components']),
+        buildSucceed: new SyncHook<LibraryBuilder, LibComponent[]>(['libraryBuilder', 'components']),
         buildComponent: new SyncHook<LibComponent>(['component']),
         buildComponentSucceed: new SyncHook<LibComponent>(['component'])
     };
@@ -40,6 +40,8 @@ export class LibraryBuilder {
     }
 
     public async initialize(): Promise<void> {
+        this.buildLocaleCategoriesMap(this.lib.categories);
+
         const components: LibComponent[] = [];
         const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
         for (const include of includes) {
@@ -67,13 +69,50 @@ export class LibraryBuilder {
     }
 
     public async build(): Promise<void> {
-        this.buildLocaleCategoriesMap(this.lib.categories);
-        for (const component of this.componentsMap.values()) {
-            this.hooks.buildComponent.call(component);
-            await component.build();
-            this.hooks.buildComponentSucceed.call(component);
-        }
+        await this.buildComponents(Array.from(this.componentsMap.values()));
         this.docgeni.logger.success(`Lib: ${this.lib.name} compiled successfully`);
+    }
+
+    public async emit(): Promise<void> {
+        for (const component of this.componentsMap.values()) {
+            await component.emit(
+                this.absDestAssetsOverviewsPath,
+                this.absDestAssetsApiDocsPath,
+                this.absDestSiteContentComponentsPath,
+                this.absDestAssetsExamplesHighlightedPath
+            );
+        }
+    }
+
+    public watch() {
+        if (!this.docgeni.watch) {
+            return;
+        }
+        const watchedDirs: string[] = [];
+        const componentDirs = [];
+        const dirToComponent: Record<string, LibComponent> = {};
+        for (const [key, component] of this.components) {
+            componentDirs.push(key);
+            dirToComponent[key] = component;
+            watchedDirs.push(component.absDocPath);
+            watchedDirs.push(component.absApiPath);
+            watchedDirs.push(component.absExamplesPath);
+        }
+        this.docgeni.host.watchAggregated(watchedDirs).subscribe(async changes => {
+            this.docgeni.logger.info(`changes: ${JSON.stringify(changes)}`);
+            const changeComponents = new Map<string, LibComponent>();
+            changes.forEach(change => {
+                const componentDir = componentDirs.find(componentDir => {
+                    return change.path.startsWith(componentDir + '/');
+                });
+                if (componentDir && dirToComponent[componentDir]) {
+                    changeComponents.set(componentDir, dirToComponent[componentDir]);
+                }
+            });
+            if (changeComponents.size > 0) {
+                await this.buildComponents(Array.from(changeComponents.values()));
+            }
+        });
     }
 
     public generateLocaleNavs(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
@@ -118,15 +157,18 @@ export class LibraryBuilder {
         return docItems;
     }
 
-    public async emit(): Promise<void> {
-        for (const component of this.componentsMap.values()) {
-            await component.emit(
-                this.absDestAssetsOverviewsPath,
-                this.absDestAssetsApiDocsPath,
-                this.absDestSiteContentComponentsPath,
-                this.absDestAssetsExamplesHighlightedPath
-            );
+    private async buildComponents(components: LibComponent[]) {
+        this.hooks.build.call(this, components);
+        for (const component of components) {
+            await this.buildComponent(component);
         }
+        this.hooks.buildSucceed.call(this, components);
+    }
+
+    private async buildComponent(component: LibComponent) {
+        this.hooks.buildComponent.call(component);
+        await component.build();
+        this.hooks.buildComponentSucceed.call(component);
     }
 
     private buildLocaleCategoriesMap(categories: CategoryItem[]): void {

@@ -39,7 +39,7 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
             ],
             defaultLocale: 'zh-cn'
         },
-        watch: false,
+        watch: true,
         paths: paths,
         hooks: null,
         logger: toolkit.print,

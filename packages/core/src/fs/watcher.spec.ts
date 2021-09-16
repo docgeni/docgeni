@@ -4,7 +4,7 @@ import fs from 'fs';
 import { DocgeniNodeJsAsyncHost } from './node-host';
 import { normalize, resolve } from './path';
 import { Observable } from 'rxjs';
-import { FileSystemWatcher, HostWatchEventType } from './watcher';
+import { FileSystemWatcher, HostWatchEvent, HostWatchEventType } from './watcher';
 import { toolkit } from '@docgeni/toolkit';
 import chokidar from 'chokidar';
 import { linuxAndDarwinIt } from '../testing';
@@ -56,7 +56,7 @@ describe('#fs-watcher', () => {
         fs.mkdirSync(root + '/sub1');
         fs.writeFileSync(file1Path, 'hello world');
 
-        const allEvents: virtualFs.HostWatchEvent[] = [];
+        const allEvents: HostWatchEvent[] = [];
         fsWatcher.watch(root + '/sub1').subscribe(change => {
             allEvents.push(change);
         });
@@ -81,7 +81,7 @@ describe('#fs-watcher', () => {
         fs.writeFileSync(file1Path, 'hello world');
         fs.writeFileSync(file2Path, 'hello world');
 
-        let allEvents: virtualFs.HostWatchEvent[] = [];
+        let allEvents: HostWatchEvent[] = [];
         fsWatcher.watch(root + '/sub1');
         fsWatcher.aggregated(3000).subscribe(value => {
             allEvents = value;
