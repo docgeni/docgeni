@@ -171,7 +171,7 @@ describe('libraries-builder', () => {
                 [resolve(context.paths.absSiteContentPath, 'example-loader.ts')]: fixture.getOutputContent(`example-loader.ts`),
                 [resolve(context.paths.absSiteContentPath, 'component-examples.ts')]: fixture.getOutputContent(`component-examples.ts`)
             };
-            await assertExpectedFiles(context.host, expectedFiles);
+            await assertExpectedFiles(context.host, expectedFiles, true);
         });
 
         it('should watch success', async () => {
