@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 import { FSWatcher, WatchOptions } from 'chokidar';
-import { getSystemPath, virtualFs } from '@angular-devkit/core';
+import { getSystemPath, Path, virtualFs } from '@angular-devkit/core';
 import { normalize } from './path';
 import { toolkit } from '@docgeni/toolkit';
 
@@ -11,9 +11,15 @@ export enum HostWatchEventType {
     Renamed = 3
 }
 
+export interface HostWatchEvent {
+    readonly time: Date;
+    readonly type: HostWatchEventType | virtualFs.HostWatchEventType;
+    readonly path: Path;
+}
+
 export class FileSystemWatcher {
     private watcher: FSWatcher;
-    private events$ = new Subject<virtualFs.HostWatchEvent>();
+    private events$ = new Subject<HostWatchEvent>();
 
     constructor(options: WatchOptions = { persistent: true, ignoreInitial: true }) {
         this.watcher = new FSWatcher(options);
@@ -24,7 +30,7 @@ export class FileSystemWatcher {
         this.events$.next({
             path: normalize(path),
             time: new Date(),
-            type: (type as unknown) as virtualFs.HostWatchEventType
+            type: type
         });
     }
 
@@ -41,15 +47,15 @@ export class FileSystemWatcher {
             });
     }
 
-    watch(paths: string | string[]): Observable<virtualFs.HostWatchEvent> {
+    watch(paths: string | string[]): Observable<HostWatchEvent> {
         // this.watcher.add(paths);
         this.watcher.add(toolkit.utils.coerceArray(paths).map(path => getSystemPath(normalize(path))));
         return this.events$.asObservable();
     }
 
-    aggregated(aggregateInterval: number = 2000): Observable<virtualFs.HostWatchEvent[]> {
+    aggregated(aggregateInterval: number = 500): Observable<HostWatchEvent[]> {
         return new Observable(subscribe => {
-            const aggregatedEvents: virtualFs.HostWatchEvent[] = [];
+            let aggregatedEvents: HostWatchEvent[] = [];
             let aggregateTimeout: NodeJS.Timeout;
             const subscription = this.events$.subscribe(event => {
                 if (aggregateTimeout) {
@@ -61,6 +67,7 @@ export class FileSystemWatcher {
                 // eslint-disable-next-line no-restricted-globals
                 aggregateTimeout = setTimeout(() => {
                     subscribe.next(aggregatedEvents);
+                    aggregatedEvents = [];
                     aggregateTimeout = null;
                 }, aggregateInterval);
             });

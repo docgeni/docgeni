@@ -1,6 +1,6 @@
 import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
-import { DocgeniHostWatchOptions, resolve, normalize, VfsHost } from './fs';
+import { DocgeniHostWatchOptions, resolve, normalize, VfsHost, FileSystemWatcher, HostWatchEvent } from './fs';
 import { toolkit } from '@docgeni/toolkit';
 
 export interface GetDirsOrFilesOptions {
@@ -16,7 +16,8 @@ export interface DocgeniHost {
     exists(path: string): Promise<boolean>;
     isDirectory(path: string): Promise<boolean>;
     isFile(path: string): Promise<boolean>;
-    watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent>;
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent>;
+    watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]>;
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
@@ -52,9 +53,15 @@ export class DocgeniHostImpl implements DocgeniHost {
         return this.host.isFile(normalize(path)).toPromise();
     }
 
-    watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent> {
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent> {
         options = { persistent: true, ...options };
-        return this.host.watch(normalize(path), options);
+        return this.host.watch(normalize(path), options) as Observable<HostWatchEvent>;
+    }
+
+    watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]> {
+        const watcher = new FileSystemWatcher(options);
+        watcher.watch(path);
+        return watcher.aggregated();
     }
 
     async stat(path: string) {

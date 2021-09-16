@@ -1,4 +1,4 @@
 ---
-title: New Basic
+title: Basic
 order: 100
 ---

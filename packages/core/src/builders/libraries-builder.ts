@@ -1,14 +1,12 @@
 import { ValidationError } from './../errors/validation-error';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniLibrary, Library, LiveExample } from '../interfaces';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibraryBuilder } from './library-builder';
-import { DEFAULT_COMPONENT_API_DIR, DEFAULT_COMPONENT_DOC_DIR, DEFAULT_COMPONENT_EXAMPLES_DIR } from '../constants';
-import * as chokidar from 'chokidar';
-import { LibComponent } from './library-component';
 import { normalizeLibConfig } from './normalize';
+import { resolve } from '../fs';
+import { SyncHook } from 'tapable';
+import { LibComponent } from './library-component';
 
 export class LibrariesBuilder {
     private libraryBuilders: LibraryBuilder[];
@@ -26,8 +24,16 @@ export class LibrariesBuilder {
     }
 
     public hooks = {
-        buildLibraries: new SyncHook<LibrariesBuilder>(['librariesBuilder']),
-        buildLibrariesSucceed: new SyncHook<LibrariesBuilder>(['librariesBuilder'])
+        buildLibraries: new SyncHook<LibrariesBuilder, LibraryBuilder[], LibComponent[]>([
+            'librariesBuilder',
+            'libraryBuilders',
+            'components'
+        ]),
+        buildLibrariesSucceed: new SyncHook<LibrariesBuilder, LibraryBuilder[], LibComponent[]>([
+            'librariesBuilder',
+            'libraryBuilders',
+            'components'
+        ])
     };
 
     constructor(private docgeni: DocgeniContext) {}
@@ -86,12 +92,12 @@ export class LibrariesBuilder {
         }
         this.building = true;
         try {
-            this.hooks.buildLibraries.call(this);
+            this.hooks.buildLibraries.call(this, this.libraryBuilders);
             for (const libraryBuilder of this.libraryBuilders) {
                 await libraryBuilder.initialize();
                 await libraryBuilder.build();
             }
-            this.hooks.buildLibrariesSucceed.call(this);
+            this.hooks.buildLibrariesSucceed.call(this, this.libraryBuilders);
         } catch (error) {
             this.docgeni.logger.error(error);
             this.docgeni.logger.error(error.stack);
@@ -118,46 +124,32 @@ export class LibrariesBuilder {
     }
 
     public watch() {
-        if (!this.docgeni.watch) {
-            return;
-        }
-        const watchedDirs: string[] = [];
-        const componentDirs = [];
-        const dirToComponent: Record<string, LibComponent> = {};
-        this.libraries.forEach(libraryBuilder => {
-            for (const [key, component] of libraryBuilder.components) {
-                componentDirs.push(key);
-                dirToComponent[key] = component;
-                watchedDirs.push(component.absDocPath);
-                watchedDirs.push(component.absApiPath);
-                watchedDirs.push(component.absExamplesPath);
-            }
-        });
-
-        const watcher = chokidar.watch(watchedDirs, { ignoreInitial: true, interval: 1000 });
-        watcher.on('all', async (event, filePath) => {
-            // this.docgeni.logger.info(`${event}  ${filePath}`);
-            const componentDir = componentDirs.find(componentDir => {
-                return filePath.includes(componentDir);
+        if (this.docgeni.watch) {
+            this.libraries.forEach(libraryBuilder => {
+                libraryBuilder.watch();
+                libraryBuilder.hooks.build.tap('LibrariesBuilder', (builder, components) => {
+                    this.hooks.buildLibraries.call(this, [builder], components);
+                });
+                libraryBuilder.hooks.buildSucceed.tap('LibrariesBuilder', (builder, components) => {
+                    this.hooks.buildLibrariesSucceed.call(this, [builder], components);
+                });
             });
-            if (componentDir) {
-                const component = dirToComponent[componentDir];
-                await component.build();
-                this.hooks.buildLibrariesSucceed.call(this);
-            }
-        });
+        }
     }
 
     private async emitAllEntries() {
         const { moduleKeys, liveExampleComponents } = this.getAllComponentsModulesAndExamples();
 
-        await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
+        const componentExamplesContent = toolkit.template.compile('component-examples.hbs', {
             data: JSON.stringify(liveExampleComponents, null, 4)
         });
-        await toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
+        await this.docgeni.host.writeFile(resolve(this.absDestSiteContentPath, 'component-examples.ts'), componentExamplesContent);
+
+        const exampleLoaderContent = toolkit.template.compile('example-loader.hbs', {
             moduleKeys,
             enableIvy: this.docgeni.enableIvy
         });
+        await this.docgeni.host.writeFile(resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), exampleLoaderContent);
 
         // generate all modules fallback for below angular 9
         const modules: Array<{
@@ -170,10 +162,13 @@ export class LibrariesBuilder {
                 name: toolkit.strings.pascalCase(key.replace('/', '-'))
             });
         }
-        await toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
+        const exampleModulesContent = toolkit.template.compile('example-modules.hbs', {
             modules
         });
-        await toolkit.template.generate('content-index.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'index.ts'), {});
+        await this.docgeni.host.writeFile(resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), exampleModulesContent);
+
+        const contentIndexContent = toolkit.template.compile('content-index.hbs', {});
+        await this.docgeni.host.writeFile(resolve(this.docgeni.paths.absSiteContentPath, 'index.ts'), contentIndexContent);
     }
 
     private getAllComponentsModulesAndExamples(): { moduleKeys: string[]; liveExampleComponents: Record<string, LiveExample> } {

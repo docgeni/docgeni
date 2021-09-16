@@ -5,7 +5,7 @@ import { FSWatcher, WatchOptions } from 'chokidar';
 import { constants, PathLike, promises as fsPromises } from 'fs';
 import { Observable, from } from 'rxjs';
 import { publish, refCount, tap } from 'rxjs/operators';
-import { FileSystemWatcher } from './watcher';
+import { FileSystemWatcher, HostWatchEvent } from './watcher';
 
 async function exists(path: PathLike): Promise<boolean> {
     try {
@@ -28,6 +28,6 @@ export class DocgeniNodeJsAsyncHost extends NodeJsAsyncHost {
     watch(path: string, options?: DocgeniHostWatchOptions): Observable<virtualFs.HostWatchEvent> {
         options = { persistent: true, recursive: true, ...options };
         const watcher = new FileSystemWatcher(options);
-        return watcher.watch(path);
+        return watcher.watch(path) as Observable<virtualFs.HostWatchEvent>;
     }
 }

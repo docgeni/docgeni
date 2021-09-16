@@ -1,6 +1,6 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { normalize, resolve } from '../fs';
+import { HostWatchEvent, HostWatchEventType, normalize, resolve } from '../fs';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
 import { LibraryBuilder } from './library-builder';
 import { normalizeLibConfig } from './normalize';
@@ -8,6 +8,83 @@ import * as systemPath from 'path';
 import { LibComponent } from './library-component';
 import { ChannelItem, NavigationItem } from '../interfaces';
 import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
+import { Observable, of } from 'rxjs';
+
+class LibraryBuilderSpectator {
+    components: LibComponent[];
+
+    buildComponentCalls: LibComponent[] = [];
+    buildComponentSuccessCalls: LibComponent[] = [];
+
+    buildCalls: { builder: LibraryBuilder; components: LibComponent[] }[] = [];
+    buildSuccessCalls: { builder: LibraryBuilder; components: LibComponent[] }[] = [];
+
+    spyComponentBuilds = new Map<LibComponent, jasmine.Spy<() => Promise<void>>>();
+
+    constructor(private libraryBuilder: LibraryBuilder) {
+        this.components = Array.from(libraryBuilder.components.values());
+        this.components.forEach(component => {
+            const spy = spyOn(component, 'build').and.returnValue(Promise.resolve());
+            this.spyComponentBuilds.set(component, spy);
+        });
+
+        libraryBuilder.hooks.buildComponent.tap('TestBuildComponent', component => {
+            this.buildComponentCalls.push(component);
+        });
+        libraryBuilder.hooks.buildComponentSucceed.tap('TestBuildComponentSuccess', component => {
+            this.buildComponentSuccessCalls.push(component);
+        });
+
+        libraryBuilder.hooks.build.tap('TestBuild', (libBuilder, components) => {
+            this.buildCalls.push({ builder: libBuilder, components: components });
+        });
+        libraryBuilder.hooks.build.tap('TestBuildSuccess', (libBuilder, components) => {
+            this.buildSuccessCalls.push({ builder: libBuilder, components: components });
+        });
+    }
+
+    assertBuildNotCalled() {
+        this.spyComponentBuilds.forEach(spyComponentBuild => {
+            expect(spyComponentBuild).not.toHaveBeenCalled();
+        });
+    }
+
+    assertBuildComponents(components = this.components) {
+        this.assertBuildComponentsHooks(components);
+        this.assertBuildHooks(components);
+        components.forEach(component => {
+            expect(this.spyComponentBuilds.get(component)).toHaveBeenCalled();
+        });
+        this.assertBuildComponentsSuccessHooks(components);
+        this.assertBuildSuccessHooks(components);
+    }
+
+    assertBuildHooks(components: LibComponent[]) {
+        expect(this.buildCalls).toEqual([
+            {
+                builder: this.libraryBuilder,
+                components: components
+            }
+        ]);
+    }
+
+    assertBuildSuccessHooks(components: LibComponent[]) {
+        expect(this.buildSuccessCalls).toEqual([
+            {
+                builder: this.libraryBuilder,
+                components: components
+            }
+        ]);
+    }
+
+    assertBuildComponentsHooks(components: LibComponent[]) {
+        expect(this.buildComponentCalls).toEqual(components);
+    }
+
+    assertBuildComponentsSuccessHooks(components: LibComponent[]) {
+        expect(this.buildComponentSuccessCalls).toEqual(components);
+    }
+}
 
 describe('#library-builder', () => {
     const library = normalizeLibConfig({
@@ -103,27 +180,11 @@ describe('#library-builder', () => {
         expect(libraryBuilder.components.size).toEqual(0);
         await libraryBuilder.initialize();
         expect(libraryBuilder.components.size).toEqual(2);
-        const components = Array.from(libraryBuilder.components.values());
-        const spyComponentBuilds = components.map(component => {
-            return spyOn(component, 'build').and.returnValue(Promise.resolve());
-        });
-        spyComponentBuilds.forEach(spyComponentBuild => {
-            expect(spyComponentBuild).not.toHaveBeenCalled();
-        });
-        const buildComponentHookCalls: LibComponent[] = [];
-        const buildComponentSuccessHookCalls: LibComponent[] = [];
-        libraryBuilder.hooks.buildComponent.tap('TestBuildComponent', component => {
-            buildComponentHookCalls.push(component);
-        });
-        libraryBuilder.hooks.buildComponentSucceed.tap('TestBuildComponentSuccess', component => {
-            buildComponentSuccessHookCalls.push(component);
-        });
+
+        const libraryBuilderSpectator = new LibraryBuilderSpectator(libraryBuilder);
+        libraryBuilderSpectator.assertBuildNotCalled();
         await libraryBuilder.build();
-        spyComponentBuilds.forEach(spyComponentBuild => {
-            expect(spyComponentBuild).toHaveBeenCalled();
-        });
-        expect(buildComponentHookCalls).toEqual(components);
-        expect(buildComponentSuccessHookCalls).toEqual(components);
+        libraryBuilderSpectator.assertBuildComponents();
 
         // eslint-disable-next-line dot-notation
         const localeCategoriesMap = libraryBuilder['localeCategoriesMap'];
@@ -141,9 +202,7 @@ describe('#library-builder', () => {
 
     it('should generate locale navs', async () => {
         const libraryBuilder = new LibraryBuilder(context, library);
-        expect(libraryBuilder.components.size).toEqual(0);
         await libraryBuilder.initialize();
-        expect(libraryBuilder.components.size).toEqual(2);
         const components = Array.from(libraryBuilder.components.values());
         components.map(component => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
@@ -235,6 +294,74 @@ describe('#library-builder', () => {
                 resolve(context.paths.absSiteContentPath, `components/alib`),
                 resolve(context.paths.absSitePath, `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/alib`)
             );
+        });
+    });
+
+    describe('watch', () => {
+        it('should watch components', async () => {
+            const libraryBuilder = new LibraryBuilder(context, library);
+            await libraryBuilder.initialize();
+            const libraryBuilderSpectator = new LibraryBuilderSpectator(libraryBuilder);
+            const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+            watchAggregatedSpy.and.callFake(paths => {
+                expect(paths).toEqual([
+                    `${libDirPath}/button/doc`,
+                    `${libDirPath}/button/api`,
+                    `${libDirPath}/button/examples`,
+                    `${libDirPath}/alert/doc`,
+                    `${libDirPath}/alert/api`,
+                    `${libDirPath}/alert/examples`
+                ]);
+                return of([
+                    {
+                        type: HostWatchEventType.Created,
+                        path: normalize(`${libDirPath}/button/examples/basic/module.ts`),
+                        time: new Date()
+                    },
+                    {
+                        type: HostWatchEventType.Changed,
+                        path: normalize(`${libDirPath}/button/examples/basic/basic.component.ts`),
+                        time: new Date()
+                    }
+                ] as HostWatchEvent[]) as Observable<HostWatchEvent[]>;
+            });
+            expect(watchAggregatedSpy).not.toHaveBeenCalled();
+            libraryBuilder.watch();
+            expect(watchAggregatedSpy).toHaveBeenCalled();
+            await toolkit.utils.wait(0);
+            libraryBuilderSpectator.assertBuildComponents([libraryBuilder.components.get(`${libDirPath}/button`)]);
+        });
+
+        it('should get correct changed component when name prefix is same', async () => {
+            const libraryBuilder = new LibraryBuilder(context, library);
+            context.host.writeFile(`${libDirPath}/button1/doc/zh-cn.md`, 'button1');
+            context.host.writeFile(`${libDirPath}/button1/examples/module.ts`, 'button1');
+
+            await libraryBuilder.initialize();
+            const libraryBuilderSpectator = new LibraryBuilderSpectator(libraryBuilder);
+            const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+            watchAggregatedSpy.and.callFake(paths => {
+                return of([
+                    {
+                        type: HostWatchEventType.Created,
+                        path: normalize(`${libDirPath}/button1/examples/basic/module.ts`),
+                        time: new Date()
+                    }
+                ] as HostWatchEvent[]) as Observable<HostWatchEvent[]>;
+            });
+            libraryBuilder.watch();
+            await toolkit.utils.wait(0);
+            libraryBuilderSpectator.assertBuildComponents([libraryBuilder.components.get(`${libDirPath}/button1`)]);
+        });
+
+        it('should do nothings when watch is false', async () => {
+            const libraryBuilder = new LibraryBuilder(context, library);
+            (context as any).watch = false;
+            await libraryBuilder.initialize();
+            const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+            expect(watchAggregatedSpy).not.toHaveBeenCalled();
+            libraryBuilder.watch();
+            expect(watchAggregatedSpy).not.toHaveBeenCalled();
         });
     });
 });
