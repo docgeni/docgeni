@@ -121,11 +121,13 @@ describe('#library-component', () => {
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
 
-        const siteRoot = getSystemPath(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`);
+        const siteRoot = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`;
         const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
         const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
         await component.emit();
-
+        console.log(`absDestAssetsOverviewsPath: ${component['absDestAssetsOverviewsPath']}`);
+        console.log(`absDestAssetsOverviewsPath1: ${absDestAssetsOverviewsPath}`);
+        console.log(await context.host.list(absDestAssetsOverviewsPath));
         // TODO: Add API Assets
         await expectFiles(context.host, {
             [`${absDestAssetsOverviewsPath}/button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
