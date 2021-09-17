@@ -15,6 +15,7 @@ export interface TestDocgeniContextOptions {
     root?: string;
     initialFiles?: Record<string, string>;
     libs?: DocgeniLibrary[] | DocgeniLibrary;
+    watch?: boolean;
 }
 
 const DEFAULT_OPTIONS = {
@@ -41,9 +42,12 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
                     name: 'EN'
                 }
             ],
+            siteDir: '.docgeni/site',
+            outputDir: 'dist/docgeni-site',
+            publicDir: '.docgeni/public',
             defaultLocale: 'zh-cn'
         },
-        watch: true,
+        watch: options.watch,
         paths: paths,
         hooks: {
             run: new SyncHook([]),

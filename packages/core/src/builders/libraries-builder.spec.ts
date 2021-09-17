@@ -121,7 +121,8 @@ describe('libraries-builder', () => {
                     [`${libDirPath}/button/examples/basic/index.md`]: fixture.src['button/examples/basic/index.md'],
                     [`${libDirPath}/alert/doc/zh-cn.md`]: fixture.src['alert/doc/zh-cn.md'],
                     [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts']
-                }
+                },
+                watch: true
             });
         });
 

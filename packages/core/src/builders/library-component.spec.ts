@@ -59,7 +59,8 @@ describe('#library-component', () => {
                 [`${buttonDirPath}/examples/basic/basic.component.html`]: fixture.src['examples/basic/basic.component.html'],
                 [`${buttonDirPath}/examples/basic/index.md`]: fixture.src['examples/basic/index.md']
             },
-            libs: [library]
+            libs: [library],
+            watch: true
         });
     });
 

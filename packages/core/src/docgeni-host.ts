@@ -70,6 +70,9 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async copy(src: string, dest: string): Promise<void> {
         const stat = await this.stat(src);
+        if (!stat) {
+            throw new Error(`${src} is not exist`);
+        }
         if (stat.isFile()) {
             const data = await this.host.read(normalize(src)).toPromise();
             await this.host.write(normalize(dest), data).toPromise();

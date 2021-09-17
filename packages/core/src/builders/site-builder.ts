@@ -50,15 +50,15 @@ export class SiteBuilder {
     }
 
     private async createSiteProject(): Promise<void> {
-        const sitePath = path.resolve(this.docgeni.paths.cwd, this.docgeni.config.siteDir);
+        const sitePath = resolve(this.docgeni.paths.cwd, this.docgeni.config.siteDir);
         const siteProject: SiteProject = {
             name: 'site',
             root: sitePath,
-            sourceRoot: path.resolve(sitePath, 'src')
+            sourceRoot: resolve(sitePath, 'src')
         };
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
-        await toolkit.fs.copy(path.resolve(__dirname, '../site-template'), sitePath, { overwrite: true });
+        await this.docgeni.host.copy(resolve(__dirname, '../site-template'), sitePath);
         await this.buildAngularJson();
         await this.addTsconfigPaths();
     }

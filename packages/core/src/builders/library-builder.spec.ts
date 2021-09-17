@@ -133,7 +133,8 @@ describe('#library-builder', () => {
                 [`${libDirPath}/alert/doc/zh-cn.md`]: fixture.src['alert/doc/zh-cn.md'],
                 [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts']
             },
-            libs: [library]
+            libs: [library],
+            watch: true
         });
     });
 
