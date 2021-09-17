@@ -7,7 +7,7 @@ import { toolkit } from '@docgeni/toolkit';
 import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
-import { normalize } from '../fs';
+import { getSystemPath, normalize } from '../fs';
 import { DocSourceFile } from './doc-file';
 
 describe('#library-component', () => {
@@ -121,7 +121,7 @@ describe('#library-component', () => {
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
 
-        const siteRoot = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`;
+        const siteRoot = getSystemPath(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`);
         const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
         const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
         await component.emit();

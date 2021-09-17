@@ -4,7 +4,7 @@ import { isTTY } from './is-tty';
 
 export class Spinner {
     private readonly spinner: ora.Ora;
-    private enabled = true;
+    public enabled = true;
     protected startTime: Date;
 
     constructor(text?: string) {
@@ -18,6 +18,9 @@ export class Spinner {
         });
     }
 
+    get text() {
+        return this.spinner.text;
+    }
     set text(text: string) {
         this.spinner.text = text;
     }
