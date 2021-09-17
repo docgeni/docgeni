@@ -104,6 +104,5 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
         } else {
             Object.assign(this.preparedEmitFiles, path);
         }
-        console.log(this.preparedEmitFiles);
     }
 }

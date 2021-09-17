@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { resolve } from './fs';
 
 export class DocgeniPaths {
     /* cwd absolute path, default is project root*/
@@ -23,7 +24,7 @@ export class DocgeniPaths {
     }
 
     public getAbsPath(absOrRelativePath: string): string {
-        return path.resolve(this.cwd, absOrRelativePath);
+        return resolve(this.cwd, absOrRelativePath);
     }
 
     public setSitePaths(siteRootPath: string, siteSourceRootPath?: string): void {

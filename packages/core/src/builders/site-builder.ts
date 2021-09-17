@@ -116,15 +116,15 @@ export class SiteBuilder {
         }
 
         const publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
-        if (toolkit.fs.existsSync(publicDirPath)) {
-            const assetsPath = path.resolve(publicDirPath, `assets`);
-            if (toolkit.fs.existsSync(assetsPath)) {
-                await toolkit.fs.copy(assetsPath, path.resolve(this.siteProject.sourceRoot, 'assets'));
+        if (await this.docgeni.host.pathExists(publicDirPath)) {
+            const assetsPath = resolve(publicDirPath, `assets`);
+            if (await this.docgeni.host.pathExists(assetsPath)) {
+                await this.docgeni.host.copy(assetsPath, resolve(this.siteProject.sourceRoot, 'assets'));
             }
             for (const copyFile of COPY_FILES) {
-                const fromPath = path.resolve(publicDirPath, copyFile.from);
-                if (toolkit.fs.existsSync(fromPath)) {
-                    await toolkit.fs.copy(fromPath, path.resolve(this.siteProject.root, copyFile.to), {});
+                const fromPath = resolve(publicDirPath, copyFile.from);
+                if (await this.docgeni.host.pathExists(fromPath)) {
+                    await this.docgeni.host.copy(fromPath, resolve(this.siteProject.root, copyFile.to));
                 }
             }
         }
