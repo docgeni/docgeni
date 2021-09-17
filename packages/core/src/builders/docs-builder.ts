@@ -1,19 +1,12 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocSourceFile } from './doc-file';
-import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Locale } from '../interfaces';
-import chokidar from 'chokidar';
 import { FileEmitter } from './emitter';
-import { HostWatchEventType, normalize, resolve } from '../fs';
+import { getSystemPath, HostWatchEventType, normalize, resolve } from '../fs';
 
 export class DocsBuilder extends FileEmitter {
     private docFiles = new Map<string, DocSourceFile>();
-
-    private get config() {
-        return this.docgeni.config;
-    }
 
     get size() {
         return this.docFiles.size;
@@ -30,9 +23,7 @@ export class DocsBuilder extends FileEmitter {
     }
 
     public async initialize() {
-        for (const locale of this.config.locales) {
-            await this.initializeDocFiles(locale);
-        }
+        await this.initializeDocFiles();
     }
 
     public async build(docs: DocSourceFile[] = Array.from(this.docFiles.values())) {
@@ -97,45 +88,21 @@ export class DocsBuilder extends FileEmitter {
         return locale ? locale.key : this.docgeni.config.defaultLocale;
     }
 
-    private getLocaleDocsPath(locale: Locale) {
-        const isDefaultLocale = locale.key === this.config.defaultLocale;
-        return isDefaultLocale ? this.docgeni.paths.absDocsPath : path.resolve(this.docgeni.paths.absDocsPath, locale.key);
-    }
-
-    private getIgnoreGlobs(localeKey: string) {
-        return this.getLocaleKeys(localeKey).map(key => {
-            return `**/${key}/**`;
-        });
-    }
-
-    private getLocaleKeys(exclude: string) {
-        return this.config.locales
-            .filter(locale => {
-                return locale.key !== exclude;
-            })
-            .map(locale => {
-                return locale.key;
-            });
-    }
-
     private async buildDoc(docFileBuilder: DocSourceFile) {
         this.docgeni.hooks.docBuild.call(docFileBuilder);
         await docFileBuilder.build();
         this.docgeni.hooks.docBuildSucceed.call(docFileBuilder);
     }
 
-    private async initializeDocFiles(locale: Locale) {
-        const localeDocsPath = this.getLocaleDocsPath(locale);
-        const ignoreGlobs = this.getIgnoreGlobs(locale.key);
-
+    private async initializeDocFiles() {
         const allFiles = toolkit.fs.globSync(`/**/*.md`, {
             dot: true,
-            root: localeDocsPath,
-            exclude: ignoreGlobs
+            root: getSystemPath(this.docgeni.paths.absDocsPath)
         });
         // init all doc files
         for (const filepath of allFiles) {
-            const docFile = this.createDocSourceFile(locale.key, normalize(filepath));
+            const absFilePath = normalize(filepath);
+            const docFile = this.createDocSourceFile(this.getLocaleByAbsPath(absFilePath), absFilePath);
             this.docFiles.set(docFile.path, docFile);
         }
     }
