@@ -68,3 +68,11 @@ export function ascendingSortByOrder<T extends { order?: number }>(items: T[]) {
         return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
     });
 }
+
+export function getSummaryStr(...details: [string]): string {
+    return details
+        .map(detail => {
+            return `...${detail.substr(detail.length - 29)}`;
+        })
+        .join(' ');
+}

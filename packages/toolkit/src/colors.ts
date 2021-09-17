@@ -143,6 +143,10 @@ export class Colors {
     bgWhiteBright(...text: unknown[]) {
         return chalk.bgWhiteBright(...text);
     }
+
+    bold(...text: unknown[]) {
+        return chalk.bold(...text);
+    }
 }
 
 const colors = new Colors();

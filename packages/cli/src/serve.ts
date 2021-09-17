@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { yargsOptionsGenerate } from './util/yargs-options-generate';
 import { Option } from '@angular/cli/models/interface';
+import { VERSION } from './version';
 
 const ngServeOptions: Option[] = JSON.parse(fs.readFileSync(path.resolve(__dirname, './ng-serve-options.json')).toString());
 
@@ -33,7 +34,8 @@ export const serveCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: true,
             config,
-            cmdArgs: normalizeCommandArgsForAngular(config, ngServeOptions)
+            cmdArgs: normalizeCommandArgsForAngular(config, ngServeOptions),
+            version: VERSION
         });
         await docgeni.run();
     }

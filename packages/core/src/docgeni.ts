@@ -11,34 +11,44 @@ import { DEFAULT_CONFIG } from './defaults';
 import { Detector } from './detector';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
-import { DocsBuilder, DocSourceFile, LibrariesBuilder, LibraryBuilder, NavsBuilder, SiteBuilder } from './builders';
+import { DocsBuilder, DocSourceFile, LibrariesBuilder, LibraryBuilderImpl, NavsBuilder, SiteBuilder } from './builders';
 import { AngularCommander } from './ng-commander';
 import { DocgeniNodeJsAsyncHost, DocgeniScopedHost, resolve } from './fs';
-import { normalizeLibConfig } from './builders/normalize';
-import { LibComponent } from './builders/library-component';
 import { ComponentsBuilder } from './builders/components-builder';
+import { DocgeniProgress } from './progress';
+import { DocgeniCompilationImpl } from './compilation';
+import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
     paths: DocgeniPaths;
     config: DocgeniConfig;
-    siteConfig: Partial<DocgeniSiteConfig> = {};
     enableIvy: boolean;
-    public docsBuilder: DocsBuilder;
-    public librariesBuilders: LibrariesBuilder;
-    public navsBuilder: NavsBuilder;
+    public docsBuilder: DocsBuilder = new DocsBuilder(this);
+    public librariesBuilder: LibrariesBuilder = new LibrariesBuilder(this);
+    public navsBuilder: NavsBuilder = new NavsBuilder(this);
     public fs: virtualFs.Host;
     public host: DocgeniHost;
+    public version: string;
     private options: DocgeniOptions;
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
     private ngCommander: AngularCommander;
+    private siteBuilder = new SiteBuilder(this);
+    private progress = new DocgeniProgress(this);
 
     hooks: DocgeniHooks = {
         run: new SyncHook([]),
         docBuild: new SyncHook<DocSourceFile>(['docSourceFile']),
         docBuildSucceed: new SyncHook<DocSourceFile>(['docSourceFile']),
+        docsBuild: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+        docsBuildSucceed: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+        componentBuild: new SyncHook<LibraryComponent>(['component']),
+        componentBuildSucceed: new SyncHook<LibraryComponent>(['component']),
+        libraryBuild: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+        libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+        compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
         emit: new AsyncSeriesHook<void>([])
     };
 
@@ -49,18 +59,6 @@ export class Docgeni implements DocgeniContext {
     constructor(options: DocgeniOptions) {
         this.options = options;
         this.config = this.normalizeConfig(options.config);
-        this.siteConfig = {
-            title: this.config.title,
-            description: this.config.description,
-            mode: this.config.mode,
-            theme: this.config.theme,
-            baseHref: this.config.baseHref,
-            locales: this.config.locales,
-            defaultLocale: this.config.defaultLocale,
-            logoUrl: this.config.logoUrl,
-            repoUrl: this.config.repoUrl,
-            footer: this.config.footer
-        };
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
@@ -71,26 +69,36 @@ export class Docgeni implements DocgeniContext {
             require.resolve('./plugins/config'),
             require.resolve('./plugins/angular')
         ];
+        this.version = options.version;
 
         this.initialize();
     }
 
+    async compile(increment?: CompilationIncrement) {
+        const compilation = this.createCompilation(increment);
+        await compilation.run();
+    }
+
+    private createCompilation(increment?: CompilationIncrement) {
+        const compilation = new DocgeniCompilationImpl(this, increment);
+        this.hooks.compilation.call(compilation);
+        return compilation;
+    }
+
     async run() {
         try {
+            const compilation = this.createCompilation();
+            this.progress.start('Start build docgeni');
+
+            this.progress.text = 'Verify config...';
             await this.verifyConfig();
+            this.progress.text = 'Detect and build site...';
             const detector = new Detector(this);
             await detector.detect();
             this.enableIvy = detector.enableIvy;
-            const siteBuilder = new SiteBuilder(this);
-            const siteProject = await siteBuilder.build(detector.siteProject);
+
+            const siteProject = await this.siteBuilder.build(detector.siteProject);
             this.ngCommander = new AngularCommander(this, siteProject);
-
-            this.hooks.run.call();
-
-            this.librariesBuilders = new LibrariesBuilder(this);
-            await this.librariesBuilders.initialize();
-            this.docsBuilder = new DocsBuilder(this);
-            this.navsBuilder = new NavsBuilder(this);
 
             // clear docs content dist dir
             await toolkit.fs.remove(this.paths.absSiteContentPath);
@@ -101,29 +109,17 @@ export class Docgeni implements DocgeniContext {
             toolkit.fs.ensureDir(this.paths.absSiteContentPath);
             toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
 
-            this.docsBuilder.hooks.buildDocsSucceed.tap('EmitDocs', async docsBuilder => {
-                await docsBuilder.emit();
-                this.logger.success(`Docs: emit successfully, total: ${docsBuilder.getDocs().length}`);
-            });
-            this.logger.info('Start building docs');
-            await this.docsBuilder.build();
+            this.hooks.run.call();
 
-            this.librariesBuilders.hooks.buildLibrariesSucceed.tap('EmitLibs', async librariesBuilders => {
-                await librariesBuilders.emit();
-            });
-            await this.librariesBuilders.build();
-            await this.navsBuilder.run();
+            await compilation.run();
 
-            this.docsBuilder.watch();
-            this.librariesBuilders.watch();
-
+            this.progress.text = 'Build custom components...';
             const componentsBuilder = new ComponentsBuilder(this);
             await componentsBuilder.build();
             await componentsBuilder.emit();
             componentsBuilder.watch();
 
-            await this.generateSiteConfig();
-
+            this.progress.text = 'Run ng command...';
             if (!this.options.cmdArgs.skipSite) {
                 await this.ngCommander.run(this.options.cmdArgs, this.watch);
             }
@@ -146,6 +142,7 @@ export class Docgeni implements DocgeniContext {
         toolkit.initialize({
             baseDir: __dirname
         });
+        this.progress.initialize();
     }
 
     public async verifyConfig() {
@@ -192,13 +189,6 @@ export class Docgeni implements DocgeniContext {
             config.navs = [];
         }
         return config;
-    }
-
-    private async generateSiteConfig() {
-        const outputConfigPath = path.resolve(this.paths.absSiteContentPath, 'config.ts');
-        toolkit.template.generate('config.hbs', outputConfigPath, {
-            siteConfig: JSON.stringify(this.siteConfig, null, 4)
-        });
     }
 
     public getAbsPath(absOrRelativePath: string) {

@@ -21,6 +21,7 @@ export interface DocgeniHost {
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
+    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
 }
@@ -70,6 +71,9 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async copy(src: string, dest: string): Promise<void> {
         const stat = await this.stat(src);
+        if (!stat) {
+            throw new Error(`${src} is not exist`);
+        }
         if (stat.isFile()) {
             const data = await this.host.read(normalize(src)).toPromise();
             await this.host.write(normalize(dest), data).toPromise();
