@@ -34,6 +34,8 @@ export class NavsBuilder {
 
     public async emit() {
         const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localeNavsMap));
+        console.log(this.localesDocsNavsMap);
+        console.log(this.docgeni.config.locales);
         for (const locale of this.docgeni.config.locales) {
             const navsForLocale = this.getLocaleDocsNavs(locale.key);
             const docItems = this.getLocaleDocsItems(locale.key);
@@ -43,7 +45,7 @@ export class NavsBuilder {
                 componentDocItems = componentDocItems.concat(libraryBuilder.generateLocaleNavs(locale.key, localeNavsMap[locale.key]));
             });
 
-            await toolkit.fs.writeFile(
+            await this.docgeni.host.writeFile(
                 `${this.docgeni.paths.absSiteAssetsContentPath}/navigations-${locale.key}.json`,
                 JSON.stringify(
                     {
@@ -56,7 +58,10 @@ export class NavsBuilder {
                 )
             );
         }
-        await toolkit.fs.writeFile(`${this.docgeni.paths.absSiteContentPath}/navigations.json`, JSON.stringify(localeNavsMap, null, 2));
+        await this.docgeni.host.writeFile(
+            `${this.docgeni.paths.absSiteContentPath}/navigations.json`,
+            JSON.stringify(localeNavsMap, null, 2)
+        );
     }
 
     private getLocaleDocsNavs(locale: string) {
@@ -97,7 +102,7 @@ export class NavsBuilder {
         for (const locale of this.config.locales) {
             const isDefaultLocale = locale.key === this.config.defaultLocale;
             const localeDocsPath = this.getLocaleDocsPath(locale);
-            if (await toolkit.fs.pathExists(localeDocsPath)) {
+            if (await this.docgeni.host.pathExists(localeDocsPath)) {
                 const docItems: DocItem[] = [];
                 const { navs, homeMeta } = await this.buildDocDirNavs(
                     localeDocsPath,
@@ -132,14 +137,12 @@ export class NavsBuilder {
         parentItem?: NavigationItem,
         excludeDirs?: string[]
     ) {
-        const dirsAndFiles = await toolkit.fs.getDirsAndFiles(dirPath, {
-            exclude: excludeDirs
-        });
+        const dirsAndFiles = await this.docgeni.host.getDirsAndFiles(dirPath, { exclude: excludeDirs });
         let navs: Array<NavigationItem> = [];
         let homeMeta: HomeDocMeta;
         for (const dirname of dirsAndFiles) {
             const absDocPath = resolve(dirPath, dirname);
-            if (toolkit.fs.isDirectory(absDocPath)) {
+            if (await this.docgeni.host.isDirectory(absDocPath)) {
                 const entryFile = this.tryGetEntryFile(absDocPath);
                 const currentPath = this.getCurrentRoutePath(dirname, entryFile);
                 const fullRoutePath = this.getFullRoutePath(currentPath, parentItem);

@@ -87,12 +87,6 @@ export class DocsBuilder extends FileEmitter {
                     changes: events
                 });
             });
-
-            // for (const locale of this.config.locales) {
-            //     const localeDocsPath = this.getLocaleDocsPath(locale);
-            //     const ignoreGlobs = this.getIgnoreGlobs(locale.key);
-            //     this.watchDocs(locale, localeDocsPath, ignoreGlobs);
-            // }
         }
     }
 
@@ -144,37 +138,6 @@ export class DocsBuilder extends FileEmitter {
             const docFile = this.createDocSourceFile(locale.key, filepath);
             this.docFiles.set(docFile.path, docFile);
         }
-    }
-
-    private watchDocs(locale: Locale, localeDocsPath: string, ignoreGlobs: string | string[]) {
-        // const watcher = chokidar.watch(localeDocsPath, {
-        //     cwd: this.docgeni.paths.cwd,
-        //     ignoreInitial: true,
-        //     interval: 1000,
-        //     ignored: ignoreGlobs
-        // });
-        // this.watchers.push(watcher);
-        // ['add', 'change'].forEach(eventName => {
-        //     watcher.on(eventName, async (filePath: string) => {
-        //         this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
-        //         // watch filePath is relative path
-        //         const absFilePath = resolve(this.docgeni.paths.cwd, filePath);
-        //         let docFile = this.docFiles.get(absFilePath);
-        //         if (!docFile) {
-        //             docFile = this.createDocSourceFile(locale, absFilePath);
-        //             this.docFiles.set(docFile.path, docFile);
-        //         }
-        //         this.docgeni.compile({
-        //             docs: [docFile],
-        //             changes: [
-        //                 path:filePath,
-        //                 type:
-        //             ]
-        //         });
-        //         // await this.buildDoc(docFile);
-        //         // this.docgeni.hooks.docsBuildSucceed.call(this, [docFile]);
-        //     });
-        // });
     }
 
     private createDocSourceFile(locale: string, absFilePath: string) {

@@ -21,6 +21,7 @@ export interface DocgeniHost {
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
+    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
 }
