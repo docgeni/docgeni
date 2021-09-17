@@ -67,7 +67,8 @@ describe('docgeni build', () => {
                                     title: 'Intro 2',
                                     order: 1,
                                     contentPath: 'docs/guide/intro/intro2.html',
-                                    originPath: 'docs/guide/intro/intro2.md'
+                                    originPath: 'docs/guide/intro/intro2.md',
+                                    toc: 'content'
                                 },
                                 {
                                     id: 'intro1',
@@ -76,7 +77,8 @@ describe('docgeni build', () => {
                                     title: 'Intro 1',
                                     order: 2,
                                     contentPath: 'docs/guide/intro/intro1.html',
-                                    originPath: 'docs/guide/intro/intro1.md'
+                                    originPath: 'docs/guide/intro/intro1.md',
+                                    toc: 'content'
                                 }
                             ],
                             order: 1
@@ -88,7 +90,8 @@ describe('docgeni build', () => {
                             title: '快速开始',
                             order: 2,
                             contentPath: 'docs/guide/getting-started.html',
-                            originPath: 'docs/guide/getting-started.md'
+                            originPath: 'docs/guide/getting-started.md',
+                            toc: 'content'
                         },
                         {
                             id: 'installation',
@@ -97,7 +100,8 @@ describe('docgeni build', () => {
                             title: '安装',
                             order: 2,
                             contentPath: 'docs/guide/installation.html',
-                            originPath: 'docs/guide/installation.md'
+                            originPath: 'docs/guide/installation.md',
+                            toc: 'content'
                         }
                     ],
                     order: 1
@@ -111,7 +115,8 @@ describe('docgeni build', () => {
                     title: '快速开始',
                     order: 2,
                     contentPath: 'docs/guide/getting-started.html',
-                    originPath: 'docs/guide/getting-started.md'
+                    originPath: 'docs/guide/getting-started.md',
+                    toc: 'content'
                 },
                 {
                     id: 'installation',
@@ -120,7 +125,8 @@ describe('docgeni build', () => {
                     title: '安装',
                     order: 2,
                     contentPath: 'docs/guide/installation.html',
-                    originPath: 'docs/guide/installation.md'
+                    originPath: 'docs/guide/installation.md',
+                    toc: 'content'
                 },
                 {
                     id: 'intro1',
@@ -129,7 +135,8 @@ describe('docgeni build', () => {
                     title: 'Intro 1',
                     order: 2,
                     contentPath: 'docs/guide/intro/intro1.html',
-                    originPath: 'docs/guide/intro/intro1.md'
+                    originPath: 'docs/guide/intro/intro1.md',
+                    toc: 'content'
                 },
                 {
                     id: 'intro2',
@@ -138,7 +145,8 @@ describe('docgeni build', () => {
                     title: 'Intro 2',
                     order: 1,
                     contentPath: 'docs/guide/intro/intro2.html',
-                    originPath: 'docs/guide/intro/intro2.md'
+                    originPath: 'docs/guide/intro/intro2.md',
+                    toc: 'content'
                 }
             ],
             homeMeta: {

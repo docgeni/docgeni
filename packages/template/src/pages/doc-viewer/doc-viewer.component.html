@@ -5,6 +5,7 @@
 
   <ng-template #general>
     <div class="dg-doc-viewer-inner">
+      <dg-toc #toc *ngIf="docItem.toc === 'menu'" class="dg-toc-left"></dg-toc>
       <div class="dg-doc-viewer-inner-content">
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
         <dg-content-viewer
@@ -16,7 +17,7 @@
         <hr class="dg-divider" />
         <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
       </div>
-      <dg-toc #toc></dg-toc>
+      <dg-toc #toc *ngIf="docItem.toc === 'content'" class="dg-toc-right"></dg-toc>
     </div>
   </ng-template>
   <dg-footer></dg-footer>

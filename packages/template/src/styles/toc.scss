@@ -1,6 +1,19 @@
+.dg-toc.dg-toc-left {
+    margin: 20px 20px 20px 0;
+    padding: 10px 5px 10px 0;
+    .dg-toc-container {
+        padding-right: 25px;
+    }
+}
+.dg-toc.dg-toc-right {
+    margin: 20px 0 20px 20px;
+    padding: 5px 0 10px 10px;
+    .dg-toc-container {
+        padding-left: 25px;
+    }
+}
 .dg-toc {
     flex: 1;
-    margin: 20px 0 20px 20px;
     position: sticky;
     top: 20px;
     .dg-toc-container {
@@ -9,12 +22,10 @@
         width: 19%;
         // position: sticky;
         // top: 0;
-        padding-left: 25px;
         box-sizing: border-box;
         display: inline-flex;
         flex-direction: column;
         width: 100%;
-        padding: 5px 0 10px 10px;
 
         & + .docs-toc-container {
             padding-top: 8px;
@@ -49,7 +60,7 @@
         width: 100%;
         overflow: hidden;
         font-weight: 500;
-
+        box-sizing: border-box;
         &::before {
             border-left: 2px solid #dbdbdb;
             bottom: 0;

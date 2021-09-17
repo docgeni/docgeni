@@ -18,6 +18,7 @@ export interface DocItem {
             content?: string;
         };
     };
+    toc?: 'menu' | 'content' | 'hidden' | false;
 }
 
 export interface ComponentDocItem extends DocItem {

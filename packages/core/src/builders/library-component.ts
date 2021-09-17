@@ -239,7 +239,8 @@ export class LibComponent {
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
-                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined
+                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
+                    toc: this.meta.toc
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }

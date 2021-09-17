@@ -11,6 +11,7 @@ export interface ComponentDocMeta {
     label?: string;
     lastUpdatedTime?: number;
     contributors?: string[];
+    toc?: 'menu' | 'content' | 'hidden' | false;
 }
 
 export interface CategoryDocMeta {
