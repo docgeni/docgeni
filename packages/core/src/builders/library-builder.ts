@@ -12,23 +12,12 @@ import { FileEmitter } from './emitter';
 
 export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private absLibPath: string;
-    private absDestSiteContentComponentsPath: string;
-    private absDestAssetsExamplesHighlightedPath: string;
-    private absDestAssetsOverviewsPath: string;
-    private absDestAssetsApiDocsPath: string;
     private localeCategoriesMap: Record<string, CategoryItem[]> = {};
     private componentsMap = new Map<string, LibraryComponent>();
 
     constructor(private docgeni: DocgeniContext, public lib: Library) {
         super();
         this.absLibPath = resolve(this.docgeni.paths.cwd, lib.rootDir);
-        this.absDestSiteContentComponentsPath = resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
-        this.absDestAssetsExamplesHighlightedPath = resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
-        );
-        this.absDestAssetsOverviewsPath = resolve(this.docgeni.paths.absSitePath, `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`);
-        this.absDestAssetsApiDocsPath = resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}`);
     }
 
     public get components(): Map<string, LibraryComponent> {
