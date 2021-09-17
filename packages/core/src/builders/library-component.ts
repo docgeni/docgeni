@@ -60,7 +60,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     public async build(): Promise<void> {
-        this.emitted = false;
+        this.resetEmitted();
         await this.buildOverviews();
         await this.buildApiDocs();
         await this.buildExamples();

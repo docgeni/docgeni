@@ -49,6 +49,7 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
         if (this.increment) {
             if (this.increment.libraryBuilder && this.increment.libraryComponents) {
                 await this.increment.libraryBuilder.build(this.increment.libraryComponents);
+                this.docgeni.librariesBuilder.resetEmitted();
                 this.emits.componentFiles = await this.docgeni.librariesBuilder.emit();
                 this.emits.components = this.increment.libraryComponents;
             }

@@ -205,7 +205,7 @@ export class NavsBuilder {
 
     private tryGetEntryFile(dirPath: string) {
         const fullPath = DOCS_ENTRY_FILE_NAMES.map(name => {
-            return path.resolve(dirPath, `${name}.md`);
+            return resolve(dirPath, `${name}.md`);
         }).find(path => {
             return this.docgeni.docsBuilder.getDoc(path);
         });
@@ -241,6 +241,6 @@ export class NavsBuilder {
 
     private getLocaleDocsPath(locale: Locale) {
         const isDefaultLocale = locale.key === this.config.defaultLocale;
-        return isDefaultLocale ? this.docgeni.paths.absDocsPath : path.resolve(this.docgeni.paths.absDocsPath, locale.key);
+        return isDefaultLocale ? this.docgeni.paths.absDocsPath : resolve(this.docgeni.paths.absDocsPath, locale.key);
     }
 }

@@ -93,7 +93,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
 
     public async emit(destRootPath: string) {
         if (this.emitted) {
-            return;
+            return {};
         }
         const outputPath = this.getOutputPath(destRootPath);
         await this.host.writeFile(outputPath, this.output);
@@ -102,7 +102,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         }
         this.outputPath = outputPath;
         this.emitted = true;
-        return { outputPath, content: this.output };
+        return { outputPath: outputPath, content: this.output };
     }
 
     public async clear() {

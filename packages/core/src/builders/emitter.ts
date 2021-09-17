@@ -3,7 +3,7 @@ import { EmitFile, EmitFiles } from '../types';
 export abstract class FileEmitter<T = unknown> {
     protected emitted: boolean;
     protected emitFiles: EmitFiles;
-    abstract onEmit(objects?: T[]): Promise<void>;
+    protected abstract onEmit(objects?: T[]): Promise<void>;
 
     async emit(objects?: T[]): Promise<EmitFiles> {
         if (this.emitted) {
@@ -23,7 +23,11 @@ export abstract class FileEmitter<T = unknown> {
         this.emitFiles[path] = file;
     }
 
-    protected async resetEmitted() {
+    public async resetEmitted() {
         this.emitted = false;
+    }
+
+    public getEmitFiles() {
+        return this.emitFiles;
     }
 }

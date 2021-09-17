@@ -62,6 +62,7 @@ export class LibrariesBuilder extends FileEmitter {
             for (const libraryBuilder of this.libraryBuilders) {
                 await libraryBuilder.build();
             }
+            this.resetEmitted();
         } catch (error) {
             this.docgeni.logger.error(error);
             this.docgeni.logger.error(error.stack);
