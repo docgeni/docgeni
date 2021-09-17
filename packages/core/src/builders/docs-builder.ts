@@ -5,40 +5,49 @@ import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Locale } from '../interfaces';
 import chokidar from 'chokidar';
+import { FileEmitter } from './emitter';
 
-export class DocsBuilder {
+export class DocsBuilder extends FileEmitter {
     private docFiles = new Map<string, DocSourceFile>();
 
     private watchers: chokidar.FSWatcher[] = [];
-
-    public hooks = {
-        buildDoc: new SyncHook<DocSourceFile>(['docBuilder']),
-        buildDocSucceed: new SyncHook<DocSourceFile>(['docBuilder']),
-        buildDocs: new AsyncSeriesHook<DocsBuilder>(['docsBuilder']),
-        buildDocsSucceed: new SyncHook<DocsBuilder>(['docsBuilder'])
-    };
 
     private get config() {
         return this.docgeni.config;
     }
 
-    public get docs() {
-        return this.docFiles;
+    get size() {
+        return this.docFiles.size;
     }
 
-    constructor(private docgeni: DocgeniContext) {}
+    constructor(private docgeni: DocgeniContext) {
+        super();
+    }
 
-    public async build() {
+    public async run() {
+        await this.initialize();
+        await this.build();
+        await this.emit();
+    }
+
+    public async initialize() {
         for (const locale of this.config.locales) {
-            await this.buildForLocale(locale);
+            await this.initializeDocFiles(locale);
         }
-
-        this.hooks.buildDocsSucceed.call(this);
     }
 
-    public async emit() {
+    public async build(docs: DocSourceFile[] = Array.from(this.docFiles.values())) {
+        this.docgeni.hooks.docsBuild.call(this, docs);
+        for (const doc of docs) {
+            await this.buildDoc(doc);
+        }
+        this.docgeni.hooks.docsBuildSucceed.call(this, docs);
+    }
+
+    public async onEmit() {
         for (const file of this.docFiles.values()) {
-            await file.emit(this.docgeni.paths.absSiteAssetsContentPath);
+            const { outputPath, content } = await file.emit(this.docgeni.paths.absSiteAssetsContentPath);
+            this.addEmitFile(outputPath, content);
         }
     }
 
@@ -53,6 +62,10 @@ export class DocsBuilder {
 
     public getDocs(): DocSourceFile[] {
         return Array.from(this.docFiles.values());
+    }
+
+    public getDoc(absPath: string) {
+        return this.docFiles.get(absPath);
     }
 
     public watch() {
@@ -87,12 +100,12 @@ export class DocsBuilder {
     }
 
     private async buildDoc(docFileBuilder: DocSourceFile) {
-        this.hooks.buildDoc.call(docFileBuilder);
+        this.docgeni.hooks.docBuild.call(docFileBuilder);
         await docFileBuilder.build();
-        this.hooks.buildDocSucceed.call(docFileBuilder);
+        this.docgeni.hooks.docBuildSucceed.call(docFileBuilder);
     }
 
-    private async buildForLocale(locale: Locale) {
+    private async initializeDocFiles(locale: Locale) {
         const localeDocsPath = this.getLocaleDocsPath(locale);
         const ignoreGlobs = this.getIgnoreGlobs(locale.key);
 
@@ -101,11 +114,10 @@ export class DocsBuilder {
             root: localeDocsPath,
             exclude: ignoreGlobs
         });
-        // build all doc files
+        // init all doc files
         for (const filepath of allFiles) {
             const docFile = this.createDocSourceFile(locale, filepath);
             this.docFiles.set(docFile.path, docFile);
-            await this.buildDoc(docFile);
         }
     }
 
@@ -127,8 +139,11 @@ export class DocsBuilder {
                     docFile = this.createDocSourceFile(locale, absFilePath);
                     this.docFiles.set(docFile.path, docFile);
                 }
-                await this.buildDoc(docFile);
-                this.hooks.buildDocsSucceed.call(this);
+                this.docgeni.compile({
+                    docs: [docFile]
+                });
+                // await this.buildDoc(docFile);
+                // this.docgeni.hooks.docsBuildSucceed.call(this, [docFile]);
             });
         });
     }
@@ -141,8 +156,7 @@ export class DocsBuilder {
                 base: this.docgeni.paths.cwd,
                 path: absFilePath
             },
-            this.docgeni.host,
-            this.docgeni.config
+            this.docgeni.host
         );
     }
 }

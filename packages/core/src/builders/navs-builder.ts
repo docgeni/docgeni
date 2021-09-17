@@ -21,36 +21,24 @@ export class NavsBuilder {
             homeMeta?: HomeDocMeta;
         }
     > = {};
-    private get docFiles() {
-        return this.docgeni.docsBuilder.docs;
-    }
 
-    constructor(private docgeni: DocgeniContext) {
-        this.setRootNavs();
-    }
+    constructor(private docgeni: DocgeniContext) {}
 
     public async run() {
+        this.setRootNavs();
         this.localeNavsMap = buildNavsMapForLocales(this.config.locales, this.rootNavs);
-        this.docgeni.docsBuilder.hooks.buildDocsSucceed.tap('NavsBuilderDocs', async docsBuilder => {
-            this.localesDocsNavsMap = await this.buildDocNavs();
-            this.emitNavs();
-        });
-        this.docgeni.librariesBuilders.hooks.buildLibrariesSucceed.tap('NavsBuilderLibs', () => {
-            this.emitNavs();
-        });
-
-        this.localesDocsNavsMap = await this.buildDocNavs();
-        this.emitNavs();
+        await this.build();
+        await this.emit();
     }
 
-    public async emitNavs() {
+    public async emit() {
         const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localeNavsMap));
         for (const locale of this.docgeni.config.locales) {
             const navsForLocale = this.getLocaleDocsNavs(locale.key);
             const docItems = this.getLocaleDocsItems(locale.key);
             let componentDocItems: ComponentDocItem[] = [];
             localeNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...navsForLocale);
-            this.docgeni.librariesBuilders.libraries.forEach(libraryBuilder => {
+            this.docgeni.librariesBuilder.libraries.forEach(libraryBuilder => {
                 componentDocItems = componentDocItems.concat(libraryBuilder.generateLocaleNavs(locale.key, localeNavsMap[locale.key]));
             });
 
@@ -92,7 +80,7 @@ export class NavsBuilder {
         this.rootNavs = navs as NavigationItem[];
     }
 
-    public async buildDocNavs() {
+    public async build() {
         const localeKeys = this.config.locales.map(locale => {
             return locale.key;
         });
@@ -133,7 +121,7 @@ export class NavsBuilder {
                 }
             }
         }
-        return localesDocsDataMap;
+        this.localesDocsNavsMap = localesDocsDataMap;
     }
 
     private async buildDocDirNavs(
@@ -174,7 +162,7 @@ export class NavsBuilder {
                 if (path.extname(absDocPath) !== '.md') {
                     continue;
                 }
-                const docFile = this.docFiles.get(absDocPath);
+                const docFile = this.docgeni.docsBuilder.getDoc(absDocPath);
                 if (!docFile) {
                     throw new Error(`Can't find doc file for ${absDocPath}`);
                 }
@@ -218,10 +206,10 @@ export class NavsBuilder {
         const fullPath = DOCS_ENTRY_FILE_NAMES.map(name => {
             return path.resolve(dirPath, `${name}.md`);
         }).find(path => {
-            return this.docFiles.get(path);
+            return this.docgeni.docsBuilder.getDoc(path);
         });
         if (fullPath) {
-            return this.docFiles.get(fullPath);
+            return this.docgeni.docsBuilder.getDoc(fullPath);
         } else {
             return undefined;
         }

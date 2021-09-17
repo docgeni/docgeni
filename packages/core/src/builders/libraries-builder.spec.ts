@@ -15,15 +15,13 @@ import { DocgeniPaths } from '../docgeni-paths';
 import { toolkit } from '@docgeni/toolkit';
 import { normalizeLibConfig } from './normalize';
 import { normalize, resolve } from '../fs';
-import { LibraryBuilder } from './library-builder';
 import * as systemPath from 'path';
+import { EmitFiles, LibraryBuilder } from '../types';
 
 class LibrariesBuilderSpectator {
     private spyLibBuilds = new Map<LibraryBuilder, jasmine.Spy<() => Promise<void>>>();
-    private spyLibEmits = new Map<LibraryBuilder, jasmine.Spy<() => Promise<void>>>();
+    private spyLibEmits = new Map<LibraryBuilder, jasmine.Spy<() => Promise<EmitFiles>>>();
     private spyLibWatches = new Map<LibraryBuilder, jasmine.Spy<() => Promise<void>>>();
-    private buildLibrariesCalls: LibraryBuilder[] = [];
-    private buildLibrariesSucceedCalls: LibraryBuilder[] = [];
 
     constructor(private librariesBuilder: LibrariesBuilder) {
         librariesBuilder.libraries.forEach(libraryBuilder => {
@@ -35,7 +33,7 @@ class LibrariesBuilderSpectator {
 
             const emitSpy = spyOn(libraryBuilder, 'emit');
             emitSpy.and.callFake(() => {
-                return Promise.resolve();
+                return Promise.resolve({});
             });
             this.spyLibEmits.set(libraryBuilder, emitSpy);
 
@@ -45,26 +43,12 @@ class LibrariesBuilderSpectator {
             });
             this.spyLibWatches.set(libraryBuilder, watchSpy);
         });
-
-        librariesBuilder.hooks.buildLibraries.tap('TestBuildLibraries', (librariesBuilder, items) => {
-            this.buildLibrariesCalls.push(...items);
-        });
-        librariesBuilder.hooks.buildLibrariesSucceed.tap('TestBuildLibrariesSucceed', (librariesBuilder, items) => {
-            this.buildLibrariesSucceedCalls.push(...items);
-        });
     }
 
     assetBuildLibraries(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
         libs.forEach(lib => {
             expect(this.spyLibBuilds.get(lib)).toHaveBeenCalled();
         });
-        expect(this.buildLibrariesCalls).toEqual(libs);
-        expect(this.buildLibrariesSucceedCalls).toEqual(libs);
-    }
-
-    assetBuildLibrariesCalls(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
-        expect(this.buildLibrariesCalls).toEqual(libs);
-        expect(this.buildLibrariesSucceedCalls).toEqual(libs);
     }
 
     assetEmitLibraries(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
@@ -180,11 +164,7 @@ describe('libraries-builder', () => {
             const librariesBuilderSpectator = new LibrariesBuilderSpectator(librariesBuilder);
             librariesBuilderSpectator.assetWatchLibrariesNotCalled();
             librariesBuilder.watch();
-            const alibBuilder = librariesBuilder.libraries[0];
-            alibBuilder.hooks.build.call(alibBuilder);
-            alibBuilder.hooks.buildSucceed.call(alibBuilder);
             librariesBuilderSpectator.assetWatchLibrariesCalled();
-            librariesBuilderSpectator.assetBuildLibrariesCalls();
         });
     });
 

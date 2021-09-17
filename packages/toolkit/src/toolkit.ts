@@ -57,7 +57,7 @@ export class Toolkit {
     static get print() {
         if (!this._print) {
             this._print = new Print({
-                timePrefix: true
+                timePrefix: false
             });
         }
         return this._print;

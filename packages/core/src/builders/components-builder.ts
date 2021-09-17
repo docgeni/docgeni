@@ -2,6 +2,7 @@ import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniHost } from '../docgeni-host';
 import { toolkit } from '@docgeni/toolkit';
 import { normalize, relative, resolve, HostWatchEventType } from '../fs';
+import { getSummaryStr } from '../utils';
 
 export interface ComponentDef {
     name: string;
@@ -69,11 +70,11 @@ export class ComponentsBuilder {
         if (!this.docgeni.watch) {
             return;
         }
-        toolkit.print.info(`Components: start watching ${this.componentsSourcePath}`);
+        // toolkit.print.info(`Components: start watching ${this.componentsSourcePath}`);
         return this.docgeni.host.watch(this.componentsSourcePath, { ignoreInitial: true, recursive: true }).subscribe(async item => {
             try {
                 const type: HostWatchEventType = item.type as any;
-                toolkit.print.info(`Components: ${item.path}, type: ${HostWatchEventType[item.type]}`);
+                toolkit.print.info(`Components: ${getSummaryStr(item.path)}, type: ${HostWatchEventType[item.type]}`);
                 const { name, componentPath } = this.getComponentOfFile(item.path);
                 if (!name) {
                     return;

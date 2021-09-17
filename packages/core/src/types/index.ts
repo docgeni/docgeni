@@ -3,3 +3,7 @@ export * from './meta';
 export * from './site-project';
 export * from './lib-context';
 export * from './angular-command';
+export * from './library-builder';
+export * from './library-component';
+export * from './compilation';
+export * from './file';

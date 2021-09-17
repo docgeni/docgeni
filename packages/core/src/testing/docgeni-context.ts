@@ -4,6 +4,10 @@ import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
+import { AsyncSeriesHook, SyncHook } from 'tapable';
+import { DocSourceFile } from '../builders/doc-file';
+import { DocsBuilder } from '../builders';
+import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
 
@@ -41,11 +45,28 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         },
         watch: true,
         paths: paths,
-        hooks: null,
+        hooks: {
+            run: new SyncHook([]),
+            docBuild: new SyncHook<DocSourceFile>(['docSourceFile']),
+            docBuildSucceed: new SyncHook<DocSourceFile>(['docSourceFile']),
+            docsBuild: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+            docsBuildSucceed: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+            componentBuild: new SyncHook<LibraryComponent>(['component']),
+            componentBuildSucceed: new SyncHook<LibraryComponent>(['component']),
+            libraryBuild: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+            libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+            compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
+            emit: new AsyncSeriesHook<void>([])
+        },
         logger: toolkit.print,
-        librariesBuilders: null,
+        librariesBuilder: null,
         docsBuilder: null,
+        navsBuilder: null,
         fs: null,
-        enableIvy: null
+        enableIvy: null,
+        compile: () => {
+            return Promise.resolve();
+        },
+        version: '1.0.0'
     };
 }
