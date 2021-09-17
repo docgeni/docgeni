@@ -12,10 +12,13 @@
           (contentRendered)="updateTableOfContents(docItem.title, $event)"
         >
         </dg-content-viewer>
+        <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
+        <hr class="dg-divider" />
+        <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
       </div>
       <dg-toc #toc></dg-toc>
     </div>
   </ng-template>
-  <!-- <dg-footer></dg-footer> -->
+  <dg-footer></dg-footer>
 </ng-container>
 <div class="dg-doc-viewer-backdrop" (click)="close()"></div>

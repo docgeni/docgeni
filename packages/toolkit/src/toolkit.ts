@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as strings from './strings';
 import * as utils from './utils';
 import * as shell from './shell';
-
+import * as git from './git';
 import { Print } from './print';
 
 export interface ToolkitConfig {
@@ -18,7 +18,7 @@ export class Toolkit {
 
     static get config() {
         if (!this._config) {
-            throw new Error(`CliKits has not initialize, please call CliKits.initialize`);
+            throw new Error(`Toolkit has not initialize, please call Toolkit.initialize`);
         }
         return this._config;
     }
@@ -57,9 +57,13 @@ export class Toolkit {
     static get print() {
         if (!this._print) {
             this._print = new Print({
-                timePrefix: true
+                timePrefix: false
             });
         }
         return this._print;
+    }
+
+    static get git() {
+        return git;
     }
 }

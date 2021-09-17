@@ -21,51 +21,41 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LogoComponent } from './logo/logo.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { HeroActionClassPipe } from './pipes/hero.pipe';
+import { DocMetaComponent } from './doc-meta/doc-meta.component';
+import { CopyComponent } from './copy/copy.component';
+import { SourceCodeComponent } from './source-code/source-code.component';
+import { ExampleRendererComponent } from './example-renderer/example-renderer.component';
+import { DocPagesLinksComponent } from './doc-pages-links/doc-pages-links.component';
 
+const COMPONENTS = [
+    NavbarComponent,
+    FooterComponent,
+    SidebarComponent,
+    ExampleViewerComponent,
+    ExampleRendererComponent,
+    IconComponent,
+    DocHeaderComponent,
+    ContentViewerComponent,
+    SourceCodeComponent,
+    LabelComponent,
+    TableOfContentsComponent,
+    LocalesSelectorComponent,
+    AssetsContentPathPipe,
+    LogoComponent,
+    CopyComponent,
+    IsComponentDocPipe,
+    TranslatePipe,
+    IsModeLitePipe,
+    IsModeFullPipe,
+    HeroActionClassPipe,
+    DocMetaComponent,
+    DocPagesLinksComponent
+];
 @NgModule({
-    declarations: [
-        NavbarComponent,
-        FooterComponent,
-        SidebarComponent,
-        ExampleViewerComponent,
-        IconComponent,
-        DocHeaderComponent,
-        ContentViewerComponent,
-        LabelComponent,
-        TableOfContentsComponent,
-        LocalesSelectorComponent,
-        AssetsContentPathPipe,
-        LogoComponent,
-        IsComponentDocPipe,
-        TranslatePipe,
-        IsModeLitePipe,
-        IsModeFullPipe,
-        HeroActionClassPipe
-    ],
+    declarations: [...COMPONENTS],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, LayoutModule],
     entryComponents: [ExampleViewerComponent],
-    exports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        HttpClientModule,
-        NavbarComponent,
-        SidebarComponent,
-        FooterComponent,
-        ExampleViewerComponent,
-        DocHeaderComponent,
-        ContentViewerComponent,
-        IconComponent,
-        LabelComponent,
-        TableOfContentsComponent,
-        LogoComponent,
-        AssetsContentPathPipe,
-        IsComponentDocPipe,
-        TranslatePipe,
-        IsModeLitePipe,
-        IsModeFullPipe,
-        HeroActionClassPipe
-    ]
+    exports: [CommonModule, FormsModule, RouterModule, HttpClientModule, ...COMPONENTS]
 })
 export class DocgeniSharedModule {}
 
@@ -74,12 +64,15 @@ export {
     FooterComponent,
     SidebarComponent,
     ExampleViewerComponent,
+    ExampleRendererComponent,
     IconComponent,
     DocHeaderComponent,
     LabelComponent,
     ContentViewerComponent,
+    SourceCodeComponent,
     TableOfContentsComponent,
     CopierService,
+    CopyComponent,
     AssetsContentPathPipe,
     IsModeFullPipe,
     IsModeLitePipe

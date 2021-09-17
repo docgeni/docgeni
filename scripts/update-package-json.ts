@@ -16,15 +16,15 @@ async function main() {
     await updatePackageJson('template', {
         private: false
     });
-    toolkit.print.succuss(`update dist/template/package.json 's private to false success`);
+    toolkit.print.success(`update dist/template/package.json 's private to false success`);
     // await updatePackageJson('toolkit', {
     //     types: 'lib/index.d.ts'
     // });
-    // toolkit.print.succuss(`update dist/toolkit/package.json 's types to lib/index.d.ts success`);
+    // toolkit.print.success(`update dist/toolkit/package.json 's types to lib/index.d.ts success`);
     // await updatePackageJson('core', {
     //     types: 'lib/index.d.ts'
     // });
-    // toolkit.print.succuss(`update dist/core/package.json 's types to lib/index.d.ts success`);
+    // toolkit.print.success(`update dist/core/package.json 's types to lib/index.d.ts success`);
 }
 
 main();

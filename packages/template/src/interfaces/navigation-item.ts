@@ -6,6 +6,7 @@ export interface DocItem {
     path: string;
     channelPath?: string;
     contentPath?: string;
+    originPath?: string;
     content?: string;
     order?: number;
     hidden?: boolean;
@@ -25,6 +26,7 @@ export interface ComponentDocItem extends DocItem {
     overview?: boolean;
     api?: boolean;
     category?: string;
+    label?: { text: string; color: string };
 }
 
 export interface CategoryItem {

@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { yargsOptionsGenerate } from './util/yargs-options-generate';
 import { Option } from '@angular/cli/models/interface';
+import { VERSION } from './version';
 const ngBuildOptions: Option[] = JSON.parse(fs.readFileSync(path.resolve(__dirname, './ng-build-options.json')).toString());
 export const buildCommand: CommandModule = {
     command: ['build'],
@@ -36,7 +37,8 @@ export const buildCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: argv.watch,
             config,
-            cmdArgs: normalizeCommandArgsForAngular(config, ngBuildOptions)
+            cmdArgs: normalizeCommandArgsForAngular(config, ngBuildOptions),
+            version: VERSION
         });
         await docgeni.run();
     }

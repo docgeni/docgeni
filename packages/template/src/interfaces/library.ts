@@ -5,8 +5,6 @@ import { CategoryItem } from './navigation-item';
  */
 export interface Library extends DocgeniLibrary {
     categories?: CategoryItem[];
-    // 绝对路径
-    absRootPath?: string;
 }
 
 /**
@@ -30,4 +28,5 @@ export interface DocgeniLibrary {
     docDir?: string;
     apiDir?: string;
     examplesDir?: string;
+    labels?: { [id: string]: { text: string; color: string } } | { id: string; text: string; color: string }[];
 }

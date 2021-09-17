@@ -1,52 +1,48 @@
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocSourceFile } from './doc-file';
-import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Locale } from '../interfaces';
-import chokidar from 'chokidar';
+import { FileEmitter } from './emitter';
+import { getSystemPath, HostWatchEventType, normalize, resolve } from '../fs';
 
-export class DocsBuilder {
+export class DocsBuilder extends FileEmitter {
     private docFiles = new Map<string, DocSourceFile>();
 
-    private watchers: chokidar.FSWatcher[] = [];
-
-    public hooks = {
-        buildDoc: new SyncHook<DocSourceFile>(['docBuilder']),
-        buildDocSucceed: new SyncHook<DocSourceFile>(['docBuilder']),
-        buildDocs: new AsyncSeriesHook<DocsBuilder>(['docsBuilder']),
-        buildDocsSucceed: new SyncHook<DocsBuilder>(['docsBuilder'])
-    };
-
-    private get config() {
-        return this.docgeni.config;
+    get size() {
+        return this.docFiles.size;
     }
 
-    public get docs() {
-        return this.docFiles;
+    constructor(private docgeni: DocgeniContext) {
+        super();
     }
 
-    constructor(private docgeni: DocgeniContext) {}
+    public async run() {
+        await this.initialize();
+        await this.build();
+        await this.emit();
+    }
 
-    public async build() {
-        for (const locale of this.config.locales) {
-            await this.buildForLocale(locale);
+    public async initialize() {
+        await this.initializeDocFiles();
+    }
+
+    public async build(docs: DocSourceFile[] = Array.from(this.docFiles.values())) {
+        this.docgeni.hooks.docsBuild.call(this, docs);
+        for (const doc of docs) {
+            await this.buildDoc(doc);
         }
-
-        this.hooks.buildDocsSucceed.call(this);
+        this.docgeni.hooks.docsBuildSucceed.call(this, docs);
+        this.resetEmitted();
     }
 
-    public async emit() {
+    public async onEmit() {
         for (const file of this.docFiles.values()) {
-            await file.emit(this.docgeni.paths.absSiteAssetsContentPath);
+            const { outputPath, content } = await file.emit(this.docgeni.paths.absSiteAssetsContentPath);
+            this.addEmitFile(outputPath, content);
         }
     }
 
     public async clear() {
-        this.watchers.forEach(watcher => {
-            watcher.close();
-        });
-        this.watchers = [];
         delete this.docFiles;
         this.docFiles = new Map<string, DocSourceFile>();
     }
@@ -55,88 +51,66 @@ export class DocsBuilder {
         return Array.from(this.docFiles.values());
     }
 
+    public getDoc(absPath: string) {
+        return this.docFiles.get(absPath);
+    }
+
     public watch() {
         if (this.docgeni.watch) {
-            for (const locale of this.config.locales) {
-                const localeDocsPath = this.getLocaleDocsPath(locale);
-                const ignoreGlobs = this.getIgnoreGlobs(locale.key);
-                this.watchDocs(locale, localeDocsPath, ignoreGlobs);
-            }
+            this.docgeni.host.watchAggregated(this.docgeni.paths.absDocsPath, { ignoreInitial: true }).subscribe(events => {
+                const addDocs = [];
+                events.forEach(event => {
+                    let docFile = this.docFiles.get(event.path);
+                    if (!docFile) {
+                        docFile = this.createDocSourceFile(this.getLocaleByAbsPath(event.path), event.path);
+                        this.docFiles.set(event.path, docFile);
+                    }
+                    if (event.type === HostWatchEventType.Deleted) {
+                        docFile.clear();
+                        this.docFiles.delete(event.path);
+                    }
+                    if (docFile) {
+                        addDocs.push(docFile);
+                    }
+                });
+                this.docgeni.compile({
+                    docs: addDocs,
+                    changes: events
+                });
+            });
         }
     }
 
-    private getLocaleDocsPath(locale: Locale) {
-        const isDefaultLocale = locale.key === this.config.defaultLocale;
-        return isDefaultLocale ? this.docgeni.paths.absDocsPath : path.resolve(this.docgeni.paths.absDocsPath, locale.key);
-    }
-
-    private getIgnoreGlobs(localeKey: string) {
-        return this.getLocaleKeys(localeKey).map(key => {
-            return `**/${key}/**`;
+    private getLocaleByAbsPath(filePath: string) {
+        const locale = this.docgeni.config.locales.find(locale => {
+            return filePath.startsWith(resolve(this.docgeni.paths.absDocsPath, locale.key + '/'));
         });
-    }
-
-    private getLocaleKeys(exclude: string) {
-        return this.config.locales
-            .filter(locale => {
-                return locale.key !== exclude;
-            })
-            .map(locale => {
-                return locale.key;
-            });
+        return locale ? locale.key : this.docgeni.config.defaultLocale;
     }
 
     private async buildDoc(docFileBuilder: DocSourceFile) {
-        this.hooks.buildDoc.call(docFileBuilder);
+        this.docgeni.hooks.docBuild.call(docFileBuilder);
         await docFileBuilder.build();
-        this.hooks.buildDocSucceed.call(docFileBuilder);
+        this.docgeni.hooks.docBuildSucceed.call(docFileBuilder);
     }
 
-    private async buildForLocale(locale: Locale) {
-        const localeDocsPath = this.getLocaleDocsPath(locale);
-        const ignoreGlobs = this.getIgnoreGlobs(locale.key);
-
+    private async initializeDocFiles() {
         const allFiles = toolkit.fs.globSync(`/**/*.md`, {
             dot: true,
-            root: localeDocsPath,
-            exclude: ignoreGlobs
+            root: getSystemPath(this.docgeni.paths.absDocsPath)
         });
-        // build all doc files
+        // init all doc files
         for (const filepath of allFiles) {
-            const docFile = this.createDocSourceFile(locale, filepath);
+            const absFilePath = normalize(filepath);
+            const docFile = this.createDocSourceFile(this.getLocaleByAbsPath(absFilePath), absFilePath);
             this.docFiles.set(docFile.path, docFile);
-            await this.buildDoc(docFile);
         }
     }
 
-    private watchDocs(locale: Locale, localeDocsPath: string, ignoreGlobs: string | string[]) {
-        const watcher = chokidar.watch(localeDocsPath, {
-            cwd: this.docgeni.paths.cwd,
-            ignoreInitial: true,
-            interval: 1000,
-            ignored: ignoreGlobs
-        });
-        this.watchers.push(watcher);
-        ['add', 'change'].forEach(eventName => {
-            watcher.on(eventName, async (filePath: string) => {
-                this.docgeni.logger.info(`${filePath} ${eventName} ${locale.key}`);
-                // watch filePath is relative path
-                const absFilePath = path.resolve(this.docgeni.paths.cwd, filePath);
-                let docFile = this.docFiles.get(absFilePath);
-                if (!docFile) {
-                    docFile = this.createDocSourceFile(locale, absFilePath);
-                    this.docFiles.set(docFile.path, docFile);
-                }
-                await this.buildDoc(docFile);
-                this.hooks.buildDocsSucceed.call(this);
-            });
-        });
-    }
-
-    private createDocSourceFile(locale: Locale, absFilePath: string) {
+    private createDocSourceFile(locale: string, absFilePath: string) {
         return new DocSourceFile(
             {
-                locale: locale.key,
+                locale: locale,
                 cwd: this.docgeni.paths.cwd,
                 base: this.docgeni.paths.cwd,
                 path: absFilePath

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, TemplateRef, HostBinding, ElementRef, Renderer2 } from '@angular/core';
-import { colorMetadata } from '@docgeni/template/utils/color-metadata';
+import { colorMetadata } from '../../utils/color-metadata';
+
 type LabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
 const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
+
 @Component({
     selector: 'dg-label',
     templateUrl: './label.component.html'

@@ -14,7 +14,7 @@ export interface DocSourceFileOptions {
     type?: DocType;
 }
 
-export class DocSourceFile<TMeta = DocMeta> {
+export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     private emitted = false;
     private host: DocgeniHost;
     private outputPath?: string;
@@ -25,8 +25,7 @@ export class DocSourceFile<TMeta = DocMeta> {
     public type: DocType;
     public content: string;
     public meta?: TMeta;
-    public output: string;
-
+    public output: string = '';
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -87,12 +86,14 @@ export class DocSourceFile<TMeta = DocMeta> {
         const content = await this.read();
         const result = Markdown.parse<TMeta>(content);
         this.meta = result.attributes;
-        this.output = Markdown.toHTML(result.body);
+        this.output = Markdown.toHTML(result.body, {
+            absFilePath: this.path
+        });
     }
 
     public async emit(destRootPath: string) {
         if (this.emitted) {
-            return;
+            return {};
         }
         const outputPath = this.getOutputPath(destRootPath);
         await this.host.writeFile(outputPath, this.output);
@@ -101,6 +102,7 @@ export class DocSourceFile<TMeta = DocMeta> {
         }
         this.outputPath = outputPath;
         this.emitted = true;
+        return { outputPath: outputPath, content: this.output };
     }
 
     public async clear() {

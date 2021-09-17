@@ -15,7 +15,7 @@ export enum Levels {
     debug,
     warn,
     error,
-    succuss
+    success
 }
 
 export class Print {
@@ -77,14 +77,7 @@ export class Print {
     }
 
     success(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.succuss, message, ...optionalParams);
-        if (!this.options.silent) {
-            console.log(msg);
-        }
-    }
-
-    succuss(message: string, ...optionalParams: any[]) {
-        const msg = this.format(Levels.succuss, message, ...optionalParams);
+        const msg = this.format(Levels.success, message, ...optionalParams);
         if (!this.options.silent) {
             console.log(msg);
         }
@@ -108,7 +101,7 @@ export class Print {
             case Levels.error:
                 msg = chalk.red(msg);
                 break;
-            case Levels.succuss:
+            case Levels.success:
                 msg = chalk.green(msg);
                 break;
         }

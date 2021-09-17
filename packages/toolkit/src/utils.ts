@@ -82,4 +82,13 @@ export function some<T>(collection: _.List<T>, predicate: _.ListIterateeCustom<T
     return _.some(collection, predicate);
 }
 
+export function wait(milliseconds: number): Promise<void> {
+    return new Promise<void>(resolve => {
+        // eslint-disable-next-line no-restricted-globals
+        setTimeout(() => {
+            return resolve();
+        }, milliseconds);
+    });
+}
+
 export { timestamp };

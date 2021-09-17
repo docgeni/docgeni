@@ -1,6 +1,7 @@
 import { DocgeniSiteConfig } from './../interfaces/config';
 import { CONFIG_TOKEN, GlobalContext } from './global-context';
 import { createServiceFactory, createHttpFactory, SpectatorHttp, HttpMethod } from '@ngneat/spectator';
+import { NavigationItem } from '../interfaces';
 
 describe('GlobalContext', () => {
     let spectator: SpectatorHttp<GlobalContext>;
@@ -162,5 +163,28 @@ describe('GlobalContext', () => {
         req.flush(data);
         expect(spectator.service.navs).toEqual(data.navs);
         expect(spectator.service.docItems).toEqual(data.docs);
+    });
+
+    it('should flatNavs by correct sort', () => {
+        const list: NavigationItem[] = [
+            {
+                id: '',
+                title: '',
+                path: '',
+                items: [{ id: '', title: '', path: '', items: [{ id: '1', title: '', path: '' }] }]
+            },
+            { id: '2', title: '', path: '' },
+            {
+                id: '',
+                title: '',
+                path: '',
+                items: [{ id: '3', title: '', path: '' }]
+            },
+            { id: '', title: '', path: '', items: [{ id: '4', title: '', path: '', hidden: true }] }
+        ];
+        const globalContext = new GlobalContext({} as DocgeniSiteConfig, undefined);
+        const result = globalContext.flatNavs(list);
+        expect(result.length).toBe(3);
+        expect(result.map(item => item.id)).toEqual(['1', '2', '3']);
     });
 });

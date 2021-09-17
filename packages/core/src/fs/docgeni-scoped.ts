@@ -6,11 +6,19 @@ export class DocgeniScopedHost<T extends object> extends virtualFs.ResolverHost<
         super(delegate);
     }
 
+    // protected _resolve(path: Path): Path {
+    //     if (nodePath.isAbsolute(path)) {
+    //         return path;
+    //     } else {
+    //         return nodePath.join(this.root, path) as Path;
+    //     }
+    // }
+
     protected _resolve(path: Path): Path {
-        if (nodePath.isAbsolute(path)) {
+        if (isAbsolute(path)) {
             return path;
         } else {
-            return nodePath.join(this.root, path) as Path;
+            return join(normalize(this.root), path) as Path;
         }
     }
 }

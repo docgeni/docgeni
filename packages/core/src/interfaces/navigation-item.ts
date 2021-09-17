@@ -6,6 +6,7 @@ export interface DocItem {
     path: string;
     channelPath?: string;
     contentPath?: string;
+    originPath?: string;
     content?: string;
     order?: number;
     hidden?: boolean;

@@ -17,8 +17,12 @@
     "enableResourceInlining": true,
     "enableIvy": false
   },
+  "files": [
+    "src/**/&.ts",
+    "src/**/*.d.ts"
+  ],
   "exclude": [
     "src/test.ts",
-    "**/*.spec.ts"
+    "src/**/*.spec.ts"
   ]
 }

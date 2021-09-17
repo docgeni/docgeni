@@ -1,9 +1,8 @@
-import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
-import { ContentViewerComponent } from '../content-viewer/content-viewer.component';
-import { CopierService } from '../copier/copier.service';
 import { GlobalContext } from '../../services/public-api';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 
@@ -24,26 +23,37 @@ const nameOrdersMap = {
     templateUrl: './example-viewer.component.html'
 })
 export class ExampleViewerComponent implements OnInit {
+    private _inline = false;
+
     @HostBinding('class.dg-example-viewer') isExampleViewer = true;
 
-    @Input() exampleName: string;
+    /**
+     * @deprecated please use name
+     */
+    @Input() set exampleName(name: string) {
+        this.name = name;
+    }
+
+    @Input() name: string;
 
     @HostBinding('class.dg-example-viewer-inline')
     @Input()
-    inline: boolean;
+    get inline(): boolean {
+        return this._inline;
+    }
 
-    @ViewChild('contentViewer') contentViewer: ContentViewerComponent;
+    set inline(value: boolean) {
+        this._inline = coerceBooleanProperty(value);
+    }
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 
-    exampleModuleFactory: NgModuleFactory<any> | null = null;
+    exampleModuleType: Type<any> | null = null;
 
     example: LiveExample;
 
     showSource = false;
-
-    copyIcon = 'copy';
 
     exampleTabs: ExampleTab[] = [];
 
@@ -53,7 +63,7 @@ export class ExampleViewerComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader, private copier: CopierService, private globalContext: GlobalContext) {}
+    constructor(private exampleLoader: ExampleLoader, private globalContext: GlobalContext) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
     // the file name to match the exampleName.component.* that displays main source files.
@@ -64,8 +74,8 @@ export class ExampleViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.exampleLoader.load(this.exampleName).then(result => {
-            this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
+        this.exampleLoader.load(this.name).then(result => {
+            this.exampleModuleType = result.moduleType;
             this.exampleComponentType = result.componentType;
             this.example = result.example;
             const rootDir = this.globalContext.getAssetsContentPath(
@@ -91,16 +101,6 @@ export class ExampleViewerComponent implements OnInit {
 
     selectExampleTab(tab: ExampleTab) {
         this.selectedTab = tab;
-    }
-
-    copy() {
-        const text = this.contentViewer.elementRef.nativeElement.textContent;
-        this.copier.copyText(text);
-        this.copyIcon = 'check';
-
-        setTimeout(() => {
-            this.copyIcon = 'copy';
-        }, 2000);
     }
 
     toggleSource() {

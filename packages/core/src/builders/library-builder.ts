@@ -1,66 +1,106 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import {
-    ASSETS_API_DOCS_RELATIVE_PATH,
-    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
-    ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH,
-    ASSETS_OVERVIEWS_RELATIVE_PATH
-} from '../constants';
+import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { AsyncSeriesHook, SyncHook } from 'tapable';
-import { LibComponent } from './library-component';
+import { LibraryComponentImpl } from './library-component';
+import { HostWatchEventType, resolve } from '../fs';
+import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
+import { FileEmitter } from './emitter';
 
-export class LibraryBuilder {
+export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private absLibPath: string;
-    private absDestSiteContentComponentsPath: string;
-    // private absDestAssetsExamplesSourcePath: string;
-    private absDestAssetsExamplesHighlightedPath: string;
-    private absDestAssetsOverviewsPath: string;
-    private absDestAssetsApiDocsPath: string;
     private localeCategoriesMap: Record<string, CategoryItem[]> = {};
-    private componentsMap = new Map<string, LibComponent>();
-
-    public hooks = {
-        build: new AsyncSeriesHook<LibraryBuilder>(['libraryBuilder']),
-        buildSucceed: new SyncHook<LibraryBuilder>(['libraryBuilder']),
-        buildComponent: new SyncHook<LibComponent>(['component']),
-        buildComponentSucceed: new SyncHook<LibComponent>(['component'])
-    };
+    private componentsMap = new Map<string, LibraryComponent>();
 
     constructor(private docgeni: DocgeniContext, public lib: Library) {
-        this.absLibPath = this.lib.absRootPath;
-        this.absDestSiteContentComponentsPath = path.resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}`);
-        // this.absDestAssetsExamplesSourcePath = path.resolve(
-        //     this.docgeni.paths.absSitePath,
-        //     `${ASSETS_EXAMPLES_SOURCE_RELATIVE_PATH}/${this.lib.name}`
-        // );
-        this.absDestAssetsExamplesHighlightedPath = path.resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}`
-        );
-        this.absDestAssetsOverviewsPath = path.resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}`
-        );
-        this.absDestAssetsApiDocsPath = path.resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}`);
+        super();
+        this.absLibPath = resolve(this.docgeni.paths.cwd, lib.rootDir);
     }
 
-    public get components() {
+    public get components(): Map<string, LibraryComponent> {
         return this.componentsMap;
     }
 
-    public async build(): Promise<void> {
-        await this.createComponents();
+    public async initialize(): Promise<void> {
         this.buildLocaleCategoriesMap(this.lib.categories);
-        for (const component of this.componentsMap.values()) {
-            this.hooks.buildComponent.call(component);
-            await component.build();
-            this.hooks.buildComponentSucceed.call(component);
+
+        const components: LibraryComponentImpl[] = [];
+        const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
+        for (const include of includes) {
+            const includeAbsPath = resolve(this.absLibPath, include);
+            const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
+            if (dirExists) {
+                const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: this.lib.exclude });
+                subDirs.forEach(dir => {
+                    const absComponentPath = resolve(includeAbsPath, dir);
+                    const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
+                    this.componentsMap.set(absComponentPath, component);
+                });
+            }
         }
-        this.docgeni.logger.succuss(`Lib: ${this.lib.name} compiled successfully`);
+
+        // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
+        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
+        const dirs = await this.docgeni.host.getDirs(this.absLibPath, { exclude: [...excludes] });
+        dirs.forEach(dir => {
+            const absComponentPath = resolve(this.absLibPath, dir);
+            const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
+            components.push(component);
+            this.componentsMap.set(absComponentPath, component);
+        });
+    }
+
+    public async build(components: LibraryComponent[] = Array.from(this.componentsMap.values())): Promise<void> {
+        this.resetEmitted();
+        this.docgeni.hooks.libraryBuild.call(this, components);
+        for (const component of components) {
+            await this.buildComponent(component);
+        }
+        this.docgeni.hooks.libraryBuildSucceed.call(this, components);
+    }
+
+    public async onEmit(): Promise<void> {
+        for (const component of this.componentsMap.values()) {
+            const componentEmitFiles = await component.emit();
+            this.addEmitFiles(componentEmitFiles);
+        }
+    }
+
+    public watch() {
+        if (!this.docgeni.watch) {
+            return;
+        }
+        const watchedDirs: string[] = [];
+        const componentDirs = [];
+        const dirToComponent: Record<string, LibraryComponent> = {};
+        for (const [key, component] of this.components) {
+            componentDirs.push(key);
+            dirToComponent[key] = component;
+            watchedDirs.push(component.absDocPath);
+            watchedDirs.push(component.absApiPath);
+            watchedDirs.push(component.absExamplesPath);
+        }
+        this.docgeni.host.watchAggregated(watchedDirs).subscribe(async changes => {
+            const changeComponents = new Map<string, LibraryComponent>();
+            changes.forEach(change => {
+                const componentDir = componentDirs.find(componentDir => {
+                    return change.path.startsWith(componentDir + '/');
+                });
+                if (componentDir && dirToComponent[componentDir]) {
+                    changeComponents.set(componentDir, dirToComponent[componentDir]);
+                }
+            });
+            if (changeComponents.size > 0) {
+                this.docgeni.compile({
+                    libraryBuilder: this,
+                    libraryComponents: Array.from(changeComponents.values()),
+                    changes: changes
+                });
+            }
+        });
     }
 
     public generateLocaleNavs(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
@@ -105,42 +145,10 @@ export class LibraryBuilder {
         return docItems;
     }
 
-    public async emit(): Promise<void> {
-        for (const component of this.componentsMap.values()) {
-            await component.emit(
-                this.absDestAssetsOverviewsPath,
-                this.absDestAssetsApiDocsPath,
-                this.absDestSiteContentComponentsPath,
-                this.absDestAssetsExamplesHighlightedPath
-            );
-        }
-    }
-
-    private async createComponents(): Promise<void> {
-        const components: LibComponent[] = [];
-        const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
-        for (const include of includes) {
-            const includeAbsPath = path.resolve(this.absLibPath, include);
-            const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
-            if (dirExists) {
-                const subDirs = await toolkit.fs.getDirs(includeAbsPath, { exclude: this.lib.exclude });
-                subDirs.forEach(dir => {
-                    const absComponentPath = path.resolve(includeAbsPath, dir);
-                    const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
-                    this.componentsMap.set(absComponentPath, component);
-                });
-            }
-        }
-
-        // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
-        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
-        const dirs = await toolkit.fs.getDirs(this.absLibPath, { exclude: [...excludes] });
-        dirs.forEach(dir => {
-            const absComponentPath = path.resolve(this.absLibPath, dir);
-            const component = new LibComponent(this.docgeni, this.lib, dir, absComponentPath);
-            components.push(component);
-            this.componentsMap.set(absComponentPath, component);
-        });
+    private async buildComponent(component: LibraryComponent) {
+        this.docgeni.hooks.componentBuild.call(component);
+        await component.build();
+        this.docgeni.hooks.componentBuildSucceed.call(component);
     }
 
     private buildLocaleCategoriesMap(categories: CategoryItem[]): void {

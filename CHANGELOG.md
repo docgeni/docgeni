@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.4](https://github.com/docgeni/docgeni/compare/v1.1.0-next.1...v1.1.0-next.4) (2021-09-10)
+
+
+### Features
+
+* **core:** add doc-contribution ([#212](https://github.com/docgeni/docgeni/issues/212)) ([7f53eb5](https://github.com/docgeni/docgeni/commit/7f53eb5492caf61ab761bd0ffa97f50aba56225f))
+* **template:** add source-code , copy components and refactor example-viewer use source-code and copy #OSP-181 ([#220](https://github.com/docgeni/docgeni/issues/220)) ([9b5ded4](https://github.com/docgeni/docgeni/commit/9b5ded402c0f7fe5d2b428cd8b5fb0ffe6b4dd6a)), closes [#OSP-181](https://github.com/docgeni/docgeni/issues/OSP-181)
+* **template:** footer support custom ([#222](https://github.com/docgeni/docgeni/issues/222)) ([652a8b1](https://github.com/docgeni/docgeni/commit/652a8b1bac748a66cd8f2430505ced8aa7cbad93))
+* **template:** support open isolated example #OSP-162 ([a700170](https://github.com/docgeni/docgeni/commit/a7001708d4b259fd1f1258a5b6d1fe38aa6d41f9)), closes [#OSP-162](https://github.com/docgeni/docgeni/issues/OSP-162)
+* **template:** update dg-copy default color to $dg-gray-500, hover change to primary ([f33117d](https://github.com/docgeni/docgeni/commit/f33117dbbf3805b0b66af75a43b0f8520a382081))
+
+
+
+
+
 
 
 **Note:** Version bump only for package docgeni

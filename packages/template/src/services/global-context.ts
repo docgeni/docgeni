@@ -22,6 +22,8 @@ export class GlobalContext {
 
     docItems: NavigationItem[];
     homeMeta: HomeDocMeta;
+    readonly owner: string;
+    readonly repo: string;
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
@@ -41,6 +43,11 @@ export class GlobalContext {
             config.mode = cacheMode as DocgeniMode;
         }
         document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
+        const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
+        if (pattern && pattern.length === 3) {
+            this.owner = pattern[1];
+            this.repo = pattern[2];
+        }
     }
 
     setLocale(locale: string) {
@@ -58,7 +65,7 @@ export class GlobalContext {
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
                     this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
-                    this.docItems = response.docs;
+                    this.docItems = this.flatNavs(this.navs);
                     resolve(response);
                 },
                 error: error => {
@@ -70,5 +77,19 @@ export class GlobalContext {
 
     getAssetsContentPath(path: string) {
         return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
+    }
+
+    flatNavs(navs: NavigationItem[]) {
+        navs = navs.slice();
+        const list = [];
+        while (navs.length) {
+            const item = navs.shift();
+            if (item.items) {
+                navs.unshift(...item.items);
+            } else if (!item.hidden) {
+                list.push(item);
+            }
+        }
+        return list;
     }
 }

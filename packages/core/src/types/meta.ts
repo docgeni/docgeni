@@ -9,6 +9,8 @@ export interface ComponentDocMeta {
     order?: number;
     hidden?: boolean;
     label?: string;
+    lastUpdatedTime?: number;
+    contributors?: string[];
 }
 
 export interface CategoryDocMeta {

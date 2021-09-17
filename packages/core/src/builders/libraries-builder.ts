@@ -1,17 +1,15 @@
 import { ValidationError } from './../errors/validation-error';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniLibrary, Library, LiveExample } from '../interfaces';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { AsyncSeriesHook, SyncHook } from 'tapable';
-import { LibraryBuilder } from './library-builder';
-import { DEFAULT_COMPONENT_API_DIR, DEFAULT_COMPONENT_DOC_DIR, DEFAULT_COMPONENT_EXAMPLES_DIR } from '../constants';
-import * as chokidar from 'chokidar';
-import { LibComponent } from './library-component';
+import { LibraryBuilderImpl } from './library-builder';
 import { normalizeLibConfig } from './normalize';
+import { resolve } from '../fs';
+import { EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
+import { FileEmitter } from './emitter';
 
-export class LibrariesBuilder {
-    private libraryBuilders: LibraryBuilder[];
+export class LibrariesBuilder extends FileEmitter {
+    private libraryBuilders: LibraryBuilderImpl[];
     private absDestSiteContentPath: string;
 
     private building = false;
@@ -25,12 +23,15 @@ export class LibrariesBuilder {
         return this.libraryBuilders;
     }
 
-    public hooks = {
-        buildLibraries: new SyncHook<LibrariesBuilder>(['librariesBuilder']),
-        buildLibrariesSucceed: new SyncHook<LibrariesBuilder>(['librariesBuilder'])
-    };
+    constructor(private docgeni: DocgeniContext) {
+        super();
+    }
 
-    constructor(private docgeni: DocgeniContext) {}
+    public async run() {
+        await this.initialize();
+        await this.build();
+        await this.emit();
+    }
 
     /**
      * Initialize libs, normalize and validate lib config
@@ -39,15 +40,61 @@ export class LibrariesBuilder {
         this.absDestSiteContentPath = this.docgeni.paths.absSiteContentPath;
         const normalizedConfigs = this.config.libs.map(lib => {
             const result = normalizeLibConfig(lib);
-            result.absRootPath = path.resolve(this.docgeni.paths.cwd, result.rootDir);
             return result;
         });
         for (const normalizedConfig of normalizedConfigs) {
             await this.verifyLibConfig(normalizedConfig);
         }
         this.libraryBuilders = normalizedConfigs.map(normalizedConfig => {
-            return new LibraryBuilder(this.docgeni, normalizedConfig);
+            return new LibraryBuilderImpl(this.docgeni, normalizedConfig);
         });
+        for (const libraryBuilder of this.libraryBuilders) {
+            await libraryBuilder.initialize();
+        }
+    }
+
+    public async build() {
+        if (this.building) {
+            throw new Error(`LibrariesBuilder is building`);
+        }
+        this.building = true;
+        try {
+            for (const libraryBuilder of this.libraryBuilders) {
+                await libraryBuilder.build();
+            }
+            this.resetEmitted();
+        } catch (error) {
+            this.docgeni.logger.error(error);
+            this.docgeni.logger.error(error.stack);
+        } finally {
+            this.building = false;
+        }
+    }
+
+    public async onEmit() {
+        if (this.emitting) {
+            throw new Error(`LibrariesBuilder is emitting`);
+        }
+        this.emitting = true;
+        try {
+            for (const libraryBuilder of this.libraryBuilders) {
+                const emitFiles = await libraryBuilder.emit();
+                this.addEmitFiles(emitFiles);
+            }
+            await this.emitAllEntries();
+        } catch (error) {
+            this.docgeni.logger.error(error);
+        } finally {
+            this.emitting = false;
+        }
+    }
+
+    public watch() {
+        if (this.docgeni.watch) {
+            this.libraries.forEach(libraryBuilder => {
+                libraryBuilder.watch();
+            });
+        }
     }
 
     private async verifyLibConfig(lib: DocgeniLibrary): Promise<void> {
@@ -81,83 +128,22 @@ export class LibrariesBuilder {
         }
     }
 
-    public async build() {
-        if (this.building) {
-            throw new Error(`LibrariesBuilder is building`);
-        }
-        this.building = true;
-        try {
-            this.hooks.buildLibraries.call(this);
-            for (const libraryBuilder of this.libraryBuilders) {
-                await libraryBuilder.build();
-            }
-            this.hooks.buildLibrariesSucceed.call(this);
-        } catch (error) {
-            this.docgeni.logger.error(error);
-        } finally {
-            this.building = false;
-        }
-    }
-
-    public async emit() {
-        if (this.emitting) {
-            throw new Error(`LibrariesBuilder is emitting`);
-        }
-        this.emitting = true;
-        try {
-            for (const libraryBuilder of this.libraryBuilders) {
-                await libraryBuilder.emit();
-            }
-            await this.emitAllEntries();
-        } catch (error) {
-            this.docgeni.logger.error(error);
-        } finally {
-            this.emitting = false;
-        }
-    }
-
-    public watch() {
-        if (!this.docgeni.watch) {
-            return;
-        }
-        const watchedDirs: string[] = [];
-        const componentDirs = [];
-        const dirToComponent: Record<string, LibComponent> = {};
-        this.libraries.forEach(libraryBuilder => {
-            for (const [key, component] of libraryBuilder.components) {
-                componentDirs.push(key);
-                dirToComponent[key] = component;
-                watchedDirs.push(component.absDocPath);
-                watchedDirs.push(component.absApiPath);
-                watchedDirs.push(component.absExamplesPath);
-            }
-        });
-
-        const watcher = chokidar.watch(watchedDirs, { ignoreInitial: true, interval: 1000 });
-        watcher.on('all', async (event, filePath) => {
-            // this.docgeni.logger.info(`${event}  ${filePath}`);
-            const componentDir = componentDirs.find(componentDir => {
-                return filePath.includes(componentDir);
-            });
-            if (componentDir) {
-                const component = dirToComponent[componentDir];
-                await component.build();
-                this.hooks.buildLibrariesSucceed.call(this);
-            }
-        });
-    }
-
     private async emitAllEntries() {
         const { moduleKeys, liveExampleComponents } = this.getAllComponentsModulesAndExamples();
 
-        await toolkit.template.generate('component-examples.hbs', path.resolve(this.absDestSiteContentPath, 'component-examples.ts'), {
+        const componentExamplesContent = toolkit.template.compile('component-examples.hbs', {
             data: JSON.stringify(liveExampleComponents, null, 4)
         });
-        await toolkit.template.generate('example-loader.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts'), {
+        const componentExamplesPath = resolve(this.absDestSiteContentPath, 'component-examples.ts');
+        await this.docgeni.host.writeFile(componentExamplesPath, componentExamplesContent);
+        this.addEmitFile(componentExamplesPath, componentExamplesContent);
+        const exampleLoaderContent = toolkit.template.compile('example-loader.hbs', {
             moduleKeys,
             enableIvy: this.docgeni.enableIvy
         });
-
+        const exampleLoaderPath = resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts');
+        await this.docgeni.host.writeFile(exampleLoaderPath, exampleLoaderContent);
+        this.addEmitFile(exampleLoaderPath, exampleLoaderContent);
         // generate all modules fallback for below angular 9
         const modules: Array<{
             key: string;
@@ -169,10 +155,17 @@ export class LibrariesBuilder {
                 name: toolkit.strings.pascalCase(key.replace('/', '-'))
             });
         }
-        await toolkit.template.generate('example-modules.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts'), {
+        const exampleModulesContent = toolkit.template.compile('example-modules.hbs', {
             modules
         });
-        await toolkit.template.generate('content-index.hbs', path.resolve(this.docgeni.paths.absSiteContentPath, 'index.ts'), {});
+        const exampleModulesPath = resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts');
+        await this.docgeni.host.writeFile(exampleModulesPath, exampleModulesContent);
+        this.addEmitFile(exampleModulesPath, exampleModulesContent);
+
+        const contentIndexContent = toolkit.template.compile('content-index.hbs', {});
+        const contentIndexPath = resolve(this.docgeni.paths.absSiteContentPath, 'index.ts');
+        await this.docgeni.host.writeFile(contentIndexPath, contentIndexContent);
+        this.addEmitFile(contentIndexPath, contentIndexContent);
     }
 
     private getAllComponentsModulesAndExamples(): { moduleKeys: string[]; liveExampleComponents: Record<string, LiveExample> } {

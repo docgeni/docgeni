@@ -7,7 +7,9 @@
   ],
   "exclude":[
     "packages/core/src/site-template/src/**",
-    "packages/cli/src/schematics/testing/**"
+    "packages/core/src/testing/**",
+    "packages/cli/src/schematics/testing/**",
+    "packages/**/src/**/*.spec.ts"
   ],
   "require": [
     "ts-node/register/transpile-only",

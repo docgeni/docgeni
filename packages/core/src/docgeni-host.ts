@@ -1,16 +1,29 @@
-import { toolkit } from '@docgeni/toolkit';
-import { getSystemPath, normalize, PathFragment, virtualFs } from '@angular-devkit/core';
+import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
+import { DocgeniHostWatchOptions, resolve, normalize, VfsHost, FileSystemWatcher, HostWatchEvent } from './fs';
+import { toolkit } from '@docgeni/toolkit';
 
+export interface GetDirsOrFilesOptions {
+    /** Include .dot files in normal matches */
+    dot?: boolean;
+    /** Exclude files in normal matches */
+    exclude?: string | string[];
+}
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
     writeFile(path: string, data: string): Promise<void>;
     pathExists(path: string): Promise<boolean>;
+    exists(path: string): Promise<boolean>;
     isDirectory(path: string): Promise<boolean>;
     isFile(path: string): Promise<boolean>;
-    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent>;
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent>;
+    watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]>;
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
+    list(path: string): Promise<PathFragment[]>;
+    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
+    getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
+    getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -26,6 +39,10 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async pathExists(path: string): Promise<boolean> {
+        return this.exists(path);
+    }
+
+    async exists(path: string): Promise<boolean> {
         return this.host.exists(normalize(path)).toPromise();
     }
 
@@ -37,8 +54,15 @@ export class DocgeniHostImpl implements DocgeniHost {
         return this.host.isFile(normalize(path)).toPromise();
     }
 
-    watch(path: string, options?: virtualFs.HostWatchOptions): Observable<virtualFs.HostWatchEvent> {
-        return this.host.watch(normalize(path), options);
+    watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent> {
+        options = { persistent: true, ...options };
+        return this.host.watch(normalize(path), options) as Observable<HostWatchEvent>;
+    }
+
+    watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]> {
+        const watcher = new FileSystemWatcher(options);
+        watcher.watch(path);
+        return watcher.aggregated();
     }
 
     async stat(path: string) {
@@ -46,7 +70,19 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async copy(src: string, dest: string): Promise<void> {
-        return toolkit.fs.copy(getSystemPath(normalize(src)), dest);
+        const stat = await this.stat(src);
+        if (!stat) {
+            throw new Error(`${src} is not exist`);
+        }
+        if (stat.isFile()) {
+            const data = await this.host.read(normalize(src)).toPromise();
+            await this.host.write(normalize(dest), data).toPromise();
+        } else {
+            const result = await this.list(src);
+            for (const item of result) {
+                await this.copy(resolve(normalize(src), item), resolve(normalize(dest), item));
+            }
+        }
     }
 
     async delete(path: string): Promise<void> {
@@ -55,6 +91,46 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async list(path: string): Promise<PathFragment[]> {
         return this.host.list(normalize(path)).toPromise();
+    }
+
+    async getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
+        options = {
+            dot: false,
+            ...options
+        };
+        const allPaths = await this.list(path);
+        return allPaths.filter(dir => {
+            if (options.exclude && toolkit.utils.matchGlob(dir, options.exclude)) {
+                return false;
+            }
+            if (options.dot) {
+                return true;
+            } else {
+                return !dir.startsWith('.');
+            }
+        });
+    }
+
+    async getDirs(path: string, options: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+        const allPaths = await this.getDirsAndFiles(path, options);
+        const result: PathFragment[] = [];
+        for (const item of allPaths) {
+            if (await this.isDirectory(resolve(path, item))) {
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    async getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+        const allPaths = await this.getDirsAndFiles(path, options);
+        const result: PathFragment[] = [];
+        for (const item of allPaths) {
+            if (await this.isFile(resolve(path, item))) {
+                result.push(item);
+            }
+        }
+        return result;
     }
 }
 

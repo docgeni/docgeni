@@ -25,6 +25,10 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
     docItem$: Observable<NavigationItem> = this.navigationService.docItem$.asObservable();
+    docPages$: Observable<{
+        pre: NavigationItem;
+        next: NavigationItem;
+    }> = this.navigationService.docPages$.asObservable();
 
     @ViewChild('toc') tableOfContents: TableOfContentsComponent;
 

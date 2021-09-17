@@ -1,9 +1,9 @@
 import { virtualFs, normalize } from '@angular-devkit/core';
 import { EOL } from 'os';
-import { DocgeniHost } from '../docgeni-host';
-import { createTestDocgeniHost } from '../testing';
+import { DocgeniHost, DocgeniHostImpl } from '../docgeni-host';
 import { DocSourceFile } from './doc-file';
 import path from 'path';
+import { toolkit } from '@docgeni/toolkit';
 
 describe('DocSourceFile', () => {
     let root: string;
@@ -13,7 +13,7 @@ describe('DocSourceFile', () => {
     beforeEach(() => {
         root = '/root/test/';
         testHost = new virtualFs.test.TestHost({});
-        docgeniHost = createTestDocgeniHost(new virtualFs.ScopedHost(testHost, normalize(root)));
+        docgeniHost = new DocgeniHostImpl(new virtualFs.ScopedHost(testHost, normalize(root)));
     });
 
     describe('property', () => {
@@ -131,7 +131,11 @@ describe('DocSourceFile', () => {
         );
         await docSourceFile.build();
         expect(docSourceFile.output).toContain(`<p>getting-started content</p>`);
-        expect(docSourceFile.meta).toEqual({ title: 'Title FrontMatter', order: 10, path: '/custom/path' });
+        expect(docSourceFile.meta).toEqual({
+            title: 'Title FrontMatter',
+            order: 10,
+            path: '/custom/path'
+        });
     });
 
     it('should emit file success', async () => {
