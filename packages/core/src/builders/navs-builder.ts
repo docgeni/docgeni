@@ -4,6 +4,7 @@ import { ChannelItem, ComponentDocItem, DocItem, HomeDocMeta, Locale, Navigation
 import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
 import * as path from 'path';
+import { resolve } from '../fs';
 
 export class NavsBuilder {
     private localeNavsMap: Record<string, NavigationItem[]> = {};
@@ -137,7 +138,7 @@ export class NavsBuilder {
         let navs: Array<NavigationItem> = [];
         let homeMeta: HomeDocMeta;
         for (const dirname of dirsAndFiles) {
-            const absDocPath = path.resolve(dirPath, dirname);
+            const absDocPath = resolve(dirPath, dirname);
             if (toolkit.fs.isDirectory(absDocPath)) {
                 const entryFile = this.tryGetEntryFile(absDocPath);
                 const currentPath = this.getCurrentRoutePath(dirname, entryFile);
