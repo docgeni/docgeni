@@ -126,9 +126,7 @@ describe('#library-component', () => {
         const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
         const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
         await component.emit();
-        console.log(`absDestAssetsOverviewsPath: ${(component as any).absDestAssetsOverviewsPath}`);
-        console.log(`absDestAssetsOverviewsPath1: ${absDestAssetsOverviewsPath}`);
-        console.log(await context.host.list(absDestAssetsOverviewsPath));
+
         // TODO: Add API Assets
         await expectFiles(context.host, {
             [`${absDestAssetsOverviewsPath}/button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
