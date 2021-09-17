@@ -6,7 +6,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { Locale } from '../interfaces';
 import chokidar from 'chokidar';
 import { FileEmitter } from './emitter';
-import { HostWatchEventType, resolve } from '../fs';
+import { HostWatchEventType, normalize, resolve } from '../fs';
 
 export class DocsBuilder extends FileEmitter {
     private docFiles = new Map<string, DocSourceFile>();
@@ -135,7 +135,7 @@ export class DocsBuilder extends FileEmitter {
         });
         // init all doc files
         for (const filepath of allFiles) {
-            const docFile = this.createDocSourceFile(locale.key, filepath);
+            const docFile = this.createDocSourceFile(locale.key, normalize(filepath));
             this.docFiles.set(docFile.path, docFile);
         }
     }

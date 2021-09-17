@@ -34,8 +34,6 @@ export class NavsBuilder {
 
     public async emit() {
         const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localeNavsMap));
-        console.log(this.localesDocsNavsMap);
-        console.log(this.docgeni.config.locales);
         for (const locale of this.docgeni.config.locales) {
             const navsForLocale = this.getLocaleDocsNavs(locale.key);
             const docItems = this.getLocaleDocsItems(locale.key);
