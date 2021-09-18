@@ -46,7 +46,7 @@
     "@angular/platform-browser-dynamic": "~10.2.4",
     "@angular/router": "~10.2.4",
     "@docgeni/core": "^1.1.0-next.5",
-    "@docgeni/template": "^1.1.0-next.5",
+    "@docgeni/template": "^1.1.0-next.6",
     "@docgeni/toolkit": "^1.1.0-next.5",
     "@schematics/angular": "^10.0.0",
     "chokidar": "^3.3.1",
