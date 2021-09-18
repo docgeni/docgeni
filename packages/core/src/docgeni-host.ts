@@ -11,6 +11,7 @@ export interface GetDirsOrFilesOptions {
 }
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
+    readJSON<T = object>(path: string): Promise<T>;
     writeFile(path: string, data: string): Promise<void>;
     pathExists(path: string): Promise<boolean>;
     exists(path: string): Promise<boolean>;
@@ -32,6 +33,11 @@ export class DocgeniHostImpl implements DocgeniHost {
     async readFile(path: string): Promise<string> {
         const data = await this.host.read(normalize(path)).toPromise();
         return virtualFs.fileBufferToString(data);
+    }
+
+    async readJSON<T = object>(path: string): Promise<T> {
+        const content = await this.readFile(path);
+        return JSON.parse(content);
     }
 
     async writeFile(path: string, data: string): Promise<void> {

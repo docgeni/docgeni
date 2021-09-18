@@ -2,7 +2,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniLibrary } from '../interfaces';
+import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { DocSourceFile } from '../builders/doc-file';
@@ -62,4 +62,12 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         },
         version: '1.0.0'
     };
+}
+
+export function updateContext(context: DocgeniContext, update: Partial<DocgeniContext>) {
+    Object.assign(context, update);
+}
+
+export function updateContextConfig(context: DocgeniContext, update: Partial<DocgeniConfig> | Record<string, any>) {
+    Object.assign(context.config, update);
 }

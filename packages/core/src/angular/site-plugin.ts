@@ -1,23 +1,18 @@
 import { Plugin } from '../plugins';
 import { DocgeniContext } from '../docgeni.interface';
-import { Detector } from './detector';
 import { SiteBuilder } from './site-builder';
-import { AngularCommander } from './ng-commander';
 import { extractAngularCommandArgs, readNgBuildOptions, readNgServeOptions } from './utils';
 
 const NAME = 'AngularSitePlugin';
 
-export class AngularSitePlugin implements Plugin {
-    ngCommander: AngularCommander;
+export default class AngularSitePlugin implements Plugin {
+    public siteBuilder: SiteBuilder;
 
     apply(context: DocgeniContext): void {
         context.hooks.run.tapPromise(NAME, async () => {
-            const detector = new Detector(context);
-            await detector.detect();
-            const siteBuilder = new SiteBuilder(context);
-            const siteProject = await siteBuilder.build(detector.siteProject);
-            this.ngCommander = new AngularCommander(context, siteProject);
-            context.enableIvy = detector.enableIvy;
+            this.siteBuilder = SiteBuilder.create(context);
+            await this.siteBuilder.build();
+            context.enableIvy = this.siteBuilder.enableIvy;
         });
 
         context.hooks.done.tapPromise(NAME, async () => {
@@ -27,10 +22,8 @@ export class AngularSitePlugin implements Plugin {
                     context.config,
                     context.watch ? readNgServeOptions() : readNgBuildOptions()
                 );
-                this.ngCommander.run(ngCommandArgs, context.watch);
+                await this.siteBuilder.runNgCommand(ngCommandArgs);
             }
         });
     }
 }
-
-module.exports = AngularSitePlugin;

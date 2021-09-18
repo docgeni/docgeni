@@ -19,9 +19,6 @@
       "node"
     ],
     "paths":{
-{{#each paths}}
-      "{{key}}": [{{value}}]{{#unless @last}},{{/unless}}
-{{/each}}
     }
   },
   "files": [

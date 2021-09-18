@@ -89,9 +89,9 @@ export class Docgeni implements DocgeniContext {
 
     async run() {
         try {
-            await this.runAsyncHook(this.hooks.beforeRun);
+            await this.hooks.beforeRun.promise();
             await this.verifyConfig();
-            await this.runAsyncHook(this.hooks.run);
+            await this.hooks.run.promise();
             await this.clearAndEnsureDirs();
             const compilation = this.createCompilation();
             await compilation.run();
@@ -103,7 +103,7 @@ export class Docgeni implements DocgeniContext {
             await componentsBuilder.emit();
             componentsBuilder.watch();
 
-            await this.runAsyncHook(this.hooks.done);
+            await this.hooks.done.promise();
         } catch (error) {
             if (error instanceof ValidationError) {
                 this.logger.error(`Validate Error: ${error.message}`);
@@ -112,14 +112,6 @@ export class Docgeni implements DocgeniContext {
             }
             process.exit(0);
         }
-    }
-
-    private async runAsyncHook<T extends AsyncSeriesHook>(hook: T, ...args: any[]) {
-        return new Promise(resolve => {
-            hook.callAsync(...args, (...result: any[]) => {
-                resolve(result);
-            });
-        });
     }
 
     private async clearAndEnsureDirs() {
@@ -206,7 +198,7 @@ export class Docgeni implements DocgeniContext {
             try {
                 const pluginCtor = require(name);
                 if (pluginCtor) {
-                    this.initialPlugins.push(new pluginCtor());
+                    this.initialPlugins.push(pluginCtor.default ? new pluginCtor.default() : new pluginCtor());
                 } else {
                     throw new Error(`plugin ${name} is not found`);
                 }
