@@ -19,6 +19,6 @@ module.exports = {
     commitAll: true,
     hooks: {
         prepublish: 'yarn run build',
-        prebump: 'yarn sync-template-version --version {{version}} && lerna version {{version}} && git add .'
+        prebump: 'yarn sync-template-version --version {{version}} && git add . && lerna version {{version}}'
     }
 };
