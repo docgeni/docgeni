@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
+
+
+### Bug Fixes
+
+* **template:** update get doc item by path for lite mode ([#229](https://github.com/docgeni/docgeni/issues/229)) ([b2925e0](https://github.com/docgeni/docgeni/commit/b2925e05ef41ad705e7103e5ae9807ce48d36c0d))
+* **toolkit:** git log `names with spaces` error ([#226](https://github.com/docgeni/docgeni/issues/226)) ([056a43c](https://github.com/docgeni/docgeni/commit/056a43c63902fbcb6f747d771e18005fb34c2569))
+
+
+### Features
+
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+
+
+
+
+
 # [1.1.0-next.5](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.5) (2021-09-18)
 
 
