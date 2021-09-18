@@ -200,4 +200,26 @@ describe('#site-plugin', () => {
         await context.hooks.done.promise();
         expect(calledSpawn).toEqual(true);
     });
+
+    it('should exec angular command success when site is custom', async () => {
+        const deployUrl = `/${toolkit.strings.generateRandomId()}/`;
+        updateContextConfig(context, { deployUrl: deployUrl, siteProjectName: 'customSite' });
+        await context.hooks.run.promise();
+
+        let calledSpawn = false;
+        ngSitePlugin.siteBuilder.spawn = function(command: string, commandArgs: string[], options: SpawnOptions) {
+            expect(command).toEqual('ng');
+            expect(commandArgs).toEqual(['build', 'customSite', '--deploy-url', deployUrl]);
+            expect(options).toEqual({
+                stdio: 'inherit',
+                cwd: undefined,
+                shell: process.platform === 'win32'
+            });
+            calledSpawn = true;
+            return new EventEmitter();
+        } as any;
+        expect(calledSpawn).toEqual(false);
+        await context.hooks.done.promise();
+        expect(calledSpawn).toEqual(true);
+    });
 });

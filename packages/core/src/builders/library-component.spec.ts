@@ -125,6 +125,8 @@ describe('#library-component', () => {
         const siteRoot = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`;
         const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
         const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
+        const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
+
         await component.emit();
 
         // TODO: Add API Assets
@@ -136,5 +138,13 @@ describe('#library-component', () => {
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
         });
+        const baseExamples = [
+            `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-ts.html`,
+            `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-html.html`
+        ];
+
+        for (const example of baseExamples) {
+            expect(await context.host.exists(example)).toEqual(true);
+        }
     });
 });

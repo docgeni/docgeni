@@ -46,7 +46,7 @@ describe('#utils', () => {
         it('random', () => {
             const number = random(1, 100);
             expect(number >= 1).toBe(true);
-            expect(number < 100).toBe(true);
+            expect(number <= 100).toBe(true);
         });
     });
 

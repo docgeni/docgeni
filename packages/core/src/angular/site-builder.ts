@@ -205,11 +205,11 @@ export class SiteBuilder {
     private async execAngularCommand(command: string, args: Array<string> = []) {
         try {
             const commandArgs = [command, this.siteProject.name, ...args];
-            const commandCwd = this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath;
+            const commandCwd = this.siteProject.custom ? undefined : getSystemPath(this.docgeni.paths.absSitePath);
             this.docgeni.logger.fancy(`\nStart run ${toolkit.print.colors.blueBright(`ng ${commandArgs.join(' ')}`)} for site...`);
             const child = this.spawn('ng', commandArgs, {
                 stdio: 'inherit',
-                cwd: getSystemPath(commandCwd),
+                cwd: commandCwd,
                 shell: process.platform === 'win32' // 仅在当前运行环境为 Windows 时，才使用 shell
             });
             child.on('data', data => {
