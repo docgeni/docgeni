@@ -1,7 +1,7 @@
 import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { SiteProject } from '../types';
+import { SiteProject } from './types';
 import Handlebars from 'handlebars';
 import { virtualFs } from '@angular-devkit/core';
 import { normalize, relative, resolve } from '../fs';

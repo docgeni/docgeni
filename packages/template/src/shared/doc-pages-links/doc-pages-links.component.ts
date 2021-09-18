@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationItem } from '@docgeni/template';
-import { GlobalContext } from '@docgeni/template/services/public-api';
+import { NavigationItem } from '../../interfaces';
+import { GlobalContext } from '../../services/global-context';
 
 @Component({
     selector: 'dg-doc-pages-links',

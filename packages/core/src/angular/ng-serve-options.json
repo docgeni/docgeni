@@ -1,0 +1,232 @@
+[
+  {
+    "name": "browserTarget",
+    "description": "Target to serve.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "port",
+    "description": "Port to listen on.",
+    "type": "number",
+    "default": 4200,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "host",
+    "description": "Host to listen on.",
+    "type": "string",
+    "default": "localhost",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "proxyConfig",
+    "description": "Proxy configuration file.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "ssl",
+    "description": "Serve using HTTPS.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "sslKey",
+    "description": "SSL key to use for serving HTTPS.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "sslCert",
+    "description": "SSL certificate to use for serving HTTPS.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "open",
+    "description": "Opens the url in default browser.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [
+      "o"
+    ],
+    "hidden": false
+  },
+  {
+    "name": "verbose",
+    "description": "Adds more details to output logging.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "liveReload",
+    "description": "Whether to reload the page on change, using live-reload.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "publicHost",
+    "description": "The URL that the browser client (or live-reload client, if enabled) should use to connect to the development server. Use for a complex dev server setup, such as one with reverse proxies.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "allowedHosts",
+    "description": "List of hosts that are allowed to access the dev server.",
+    "type": "array",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "servePath",
+    "description": "The pathname where the app will be served.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "disableHostCheck",
+    "description": "Don't verify connected clients are part of allowed hosts.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "hmr",
+    "description": "Enable hot module replacement.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "watch",
+    "description": "Rebuild on change.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "hmrWarning",
+    "description": "Show a warning when the --hmr option is enabled.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "servePathDefaultWarning",
+    "description": "Show a warning when deploy-url/base-href use unsupported serve path values.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "optimization",
+    "description": "Enables optimization of the build output.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "userAnalytics": 16
+  },
+  {
+    "name": "aot",
+    "description": "Build using Ahead of Time compilation.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "userAnalytics": 13
+  },
+  {
+    "name": "sourceMap",
+    "description": "Output sourcemaps.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "vendorChunk",
+    "description": "Use a separate bundle containing only vendor libraries.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "commonChunk",
+    "description": "Use a separate bundle containing code used across multiple bundles.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "baseHref",
+    "description": "Base url for the application being built.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "deployUrl",
+    "description": "URL where files will be deployed.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "progress",
+    "description": "Log progress to the console while building.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "poll",
+    "description": "Enable and define the file watching poll time period in milliseconds.",
+    "type": "number",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  }
+]

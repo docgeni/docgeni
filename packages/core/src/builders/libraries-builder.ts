@@ -139,7 +139,7 @@ export class LibrariesBuilder extends FileEmitter {
         this.addEmitFile(componentExamplesPath, componentExamplesContent);
         const exampleLoaderContent = toolkit.template.compile('example-loader.hbs', {
             moduleKeys,
-            enableIvy: this.docgeni.enableIvy
+            enableIvy: this.docgeni.enableIvy || true
         });
         const exampleLoaderPath = resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts');
         await this.docgeni.host.writeFile(exampleLoaderPath, exampleLoaderContent);

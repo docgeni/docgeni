@@ -1,5 +1,5 @@
 import { createDocgeniHost, DocgeniHost } from './docgeni-host';
-import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
+import { virtualFs, getSystemPath } from '@angular-devkit/core';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
@@ -8,11 +8,9 @@ import { toolkit } from '@docgeni/toolkit';
 
 import { DocgeniContext, DocgeniHooks, DocgeniOptions } from './docgeni.interface';
 import { DEFAULT_CONFIG } from './defaults';
-import { Detector } from './detector';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
-import { DocsBuilder, DocSourceFile, LibrariesBuilder, LibraryBuilderImpl, NavsBuilder, SiteBuilder } from './builders';
-import { AngularCommander } from './ng-commander';
+import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
 import { DocgeniNodeJsAsyncHost, DocgeniScopedHost, resolve } from './fs';
 import { ComponentsBuilder } from './builders/components-builder';
 import { DocgeniProgress } from './progress';
@@ -34,23 +32,27 @@ export class Docgeni implements DocgeniContext {
     private presets: string[];
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
-    private ngCommander: AngularCommander;
-    private siteBuilder = new SiteBuilder(this);
     private progress = new DocgeniProgress(this);
 
-    hooks: DocgeniHooks = {
-        run: new SyncHook([]),
-        docBuild: new SyncHook<DocSourceFile>(['docSourceFile']),
-        docBuildSucceed: new SyncHook<DocSourceFile>(['docSourceFile']),
-        docsBuild: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
-        docsBuildSucceed: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
-        componentBuild: new SyncHook<LibraryComponent>(['component']),
-        componentBuildSucceed: new SyncHook<LibraryComponent>(['component']),
-        libraryBuild: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
-        libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
-        compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
-        emit: new AsyncSeriesHook<void>([])
-    };
+    static createHooks(): DocgeniHooks {
+        return {
+            beforeRun: new AsyncSeriesHook([]),
+            run: new AsyncSeriesHook([]),
+            done: new AsyncSeriesHook([]),
+            docBuild: new SyncHook<DocSourceFile>(['docSourceFile']),
+            docBuildSucceed: new SyncHook<DocSourceFile>(['docSourceFile']),
+            docsBuild: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+            docsBuildSucceed: new SyncHook<DocsBuilder, DocSourceFile[]>(['docsBuilder', 'docs']),
+            componentBuild: new SyncHook<LibraryComponent>(['component']),
+            componentBuildSucceed: new SyncHook<LibraryComponent>(['component']),
+            libraryBuild: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+            libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
+            compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
+            emit: new AsyncSeriesHook<void>([])
+        };
+    }
+
+    hooks: DocgeniHooks = Docgeni.createHooks();
 
     get logger() {
         return toolkit.print;
@@ -67,7 +69,7 @@ export class Docgeni implements DocgeniContext {
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
-            require.resolve('./plugins/angular')
+            require.resolve('./angular/site-plugin')
         ];
         this.version = options.version;
 
@@ -87,42 +89,21 @@ export class Docgeni implements DocgeniContext {
 
     async run() {
         try {
-            const compilation = this.createCompilation();
-            this.progress.start('Start build docgeni');
-
-            this.progress.text = 'Verify config...';
+            await this.runAsyncHook(this.hooks.beforeRun);
             await this.verifyConfig();
-            this.progress.text = 'Detect and build site...';
-            const detector = new Detector(this);
-            await detector.detect();
-            this.enableIvy = detector.enableIvy;
-
-            const siteProject = await this.siteBuilder.build(detector.siteProject);
-            this.ngCommander = new AngularCommander(this, siteProject);
-
-            // clear docs content dist dir
-            await toolkit.fs.remove(this.paths.absSiteContentPath);
-            // clear assets content dist dir
-            await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
-
-            // ensure docs content dist dir and assets content dist dir
-            toolkit.fs.ensureDir(this.paths.absSiteContentPath);
-            toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
-
-            this.hooks.run.call();
-
+            await this.runAsyncHook(this.hooks.run);
+            await this.clearAndEnsureDirs();
+            const compilation = this.createCompilation();
             await compilation.run();
 
+            // custom components
             this.progress.text = 'Build custom components...';
             const componentsBuilder = new ComponentsBuilder(this);
             await componentsBuilder.build();
             await componentsBuilder.emit();
             componentsBuilder.watch();
 
-            this.progress.text = 'Run ng command...';
-            if (!this.options.cmdArgs.skipSite) {
-                await this.ngCommander.run(this.options.cmdArgs, this.watch);
-            }
+            await this.runAsyncHook(this.hooks.done);
         } catch (error) {
             if (error instanceof ValidationError) {
                 this.logger.error(`Validate Error: ${error.message}`);
@@ -131,6 +112,24 @@ export class Docgeni implements DocgeniContext {
             }
             process.exit(0);
         }
+    }
+
+    private async runAsyncHook<T extends AsyncSeriesHook>(hook: T, ...args: any[]) {
+        return new Promise(resolve => {
+            hook.callAsync(...args, (...result: any[]) => {
+                resolve(result);
+            });
+        });
+    }
+
+    private async clearAndEnsureDirs() {
+        // clear docs content dist dir
+        await toolkit.fs.remove(this.paths.absSiteContentPath);
+        // clear assets content dist dir
+        await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
+        // ensure docs content dist dir and assets content dist dir
+        toolkit.fs.ensureDir(this.paths.absSiteContentPath);
+        toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
     }
 
     private initialize() {
@@ -204,10 +203,14 @@ export class Docgeni implements DocgeniContext {
 
     private loadPlugins() {
         this.plugins.map(name => {
-            const pluginCtor = require(name);
-            if (pluginCtor) {
-                this.initialPlugins.push(new pluginCtor());
-            } else {
+            try {
+                const pluginCtor = require(name);
+                if (pluginCtor) {
+                    this.initialPlugins.push(new pluginCtor());
+                } else {
+                    throw new Error(`plugin ${name} is not found`);
+                }
+            } catch (error) {
                 throw new Error(`plugin ${name} is not found`);
             }
         });

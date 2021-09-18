@@ -1,8 +1,8 @@
-import { DocgeniContext } from './docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { SiteProject } from './types';
-import { ValidationError } from './errors';
+import { ValidationError } from '../errors';
 import semver from 'semver';
 
 export class Detector {
