@@ -49,7 +49,7 @@ export const embed: TokenizerExtension & RendererExtension = {
             const absDirPath = path.dirname(absFilePath);
             const nodeAbsPath = path.resolve(absDirPath, token.src);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
-                let content = toolkit.fs.readFileSync(nodeAbsPath).toString();
+                const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
                 this.lexer.blockTokens(
                     getEmbedBody(content, [parseInt(rangeMatch[2], 10), parseInt(rangeMatch[4], 10)], token.src),
                     token.tokens
