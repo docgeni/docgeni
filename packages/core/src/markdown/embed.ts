@@ -3,8 +3,16 @@ import * as path from 'path';
 import fm from 'front-matter';
 import { RendererExtension, TokenizerExtension } from 'marked';
 import { compatibleNormalize } from './utils';
-
-export function getEmbedBody(input: string, url: string) {
+const LINE_SEPARATE = /\r\n|\n|\r/;
+export function getEmbedBody(input: string, range: [number, number], url: string) {
+    if (range[0] && range[1]) {
+        input = input
+            .split(LINE_SEPARATE)
+            .slice(range[0] - 1, range[1])
+            .join('\n');
+    } else if (range[0]) {
+        input = input.split(LINE_SEPARATE)[range[0] - 1];
+    }
     // TODO: add hash
     return fm(compatibleNormalize(input)).body;
 }
@@ -42,15 +50,10 @@ export const embed: TokenizerExtension & RendererExtension = {
             const nodeAbsPath = path.resolve(absDirPath, token.src);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
                 let content = toolkit.fs.readFileSync(nodeAbsPath).toString();
-                if (rangeMatch[2] && rangeMatch[4]) {
-                    content = content
-                        .split(/\r\n|\n/)
-                        .slice(parseInt(rangeMatch[2], 10) - 1, parseInt(rangeMatch[4], 10))
-                        .join('\n');
-                } else if (rangeMatch[2]) {
-                    content = content.split(/\r\n|\n/)[parseInt(rangeMatch[2], 10) - 1];
-                }
-                this.lexer.blockTokens(getEmbedBody(content, token.src), token.tokens);
+                this.lexer.blockTokens(
+                    getEmbedBody(content, [parseInt(rangeMatch[2], 10), parseInt(rangeMatch[4], 10)], token.src),
+                    token.tokens
+                );
             } else {
                 token.message = `can't resolve path ${token.src}`;
             }
