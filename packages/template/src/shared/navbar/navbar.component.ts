@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
             docsearch({
                 ...algolia,
                 inputSelector: '#inputSearch',
-                debug: true
+                // debug: true
             });
         }
     }
