@@ -27,20 +27,29 @@ export const embed: TokenizerExtension & RendererExtension = {
         const rule = /^<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/gi; // Regex for the complete token
         const match = rule.exec(src);
         if (match) {
+            const rangeRule = /(#L(\d+)(-L(\d+))?)?$/;
+            const rangeMatch = rangeRule.exec(match[1].trim());
             const token: EmbedToken = {
                 // Token to generate
                 type: 'embed',
                 raw: match[0],
-                src: match[1].trim(),
+                src: match[1].trim().replace(rangeRule, ''),
                 tokens: []
             };
-
             // eslint-disable-next-line dot-notation
             const absFilePath: string = this.lexer.options['absFilePath'];
             const absDirPath = path.dirname(absFilePath);
             const nodeAbsPath = path.resolve(absDirPath, token.src);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
-                const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
+                let content = toolkit.fs.readFileSync(nodeAbsPath).toString();
+                if (rangeMatch[2] && rangeMatch[4]) {
+                    content = content
+                        .split(/\r\n|\n/)
+                        .slice(parseInt(rangeMatch[2], 10) - 1, parseInt(rangeMatch[4], 10))
+                        .join('\n');
+                } else if (rangeMatch[2]) {
+                    content = content.split(/\r\n|\n/)[parseInt(rangeMatch[2], 10) - 1];
+                }
                 this.lexer.blockTokens(getEmbedBody(content, token.src), token.tokens);
             } else {
                 token.message = `can't resolve path ${token.src}`;
