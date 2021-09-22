@@ -1,0 +1,376 @@
+[
+  {
+    "name": "main",
+    "description": "The full path for the main entry point to the app, relative to the current workspace.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "polyfills",
+    "description": "The full path for the polyfills file, relative to the current workspace.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "tsConfig",
+    "description": "The full path for the TypeScript configuration file, relative to the current workspace.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "optimization",
+    "description": "Enables optimization of the build output.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "userAnalytics": 16
+  },
+  {
+    "name": "outputPath",
+    "description": "The full path for the new output directory, relative to the current workspace.\n\nBy default, writes output to a folder named dist/ in the current project.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "resourcesOutputPath",
+    "description": "The path where style resources will be placed, relative to outputPath.",
+    "type": "string",
+    "default": "",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "aot",
+    "description": "Build using Ahead of Time compilation.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "userAnalytics": 13
+  },
+  {
+    "name": "sourceMap",
+    "description": "Output sourcemaps.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "vendorChunk",
+    "description": "Use a separate bundle containing only vendor libraries.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "commonChunk",
+    "description": "Use a separate bundle containing code used across multiple bundles.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "baseHref",
+    "description": "Base url for the application being built.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "deployUrl",
+    "description": "URL where files will be deployed.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "verbose",
+    "description": "Adds more details to output logging.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "progress",
+    "description": "Log progress to the console while building.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "i18nFile",
+    "description": "Localization file to use for i18n.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "deprecated": "Use 'locales' object in the project metadata instead."
+  },
+  {
+    "name": "i18nFormat",
+    "description": "Format of the localization file specified with --i18n-file.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "deprecated": "No longer needed as the format will be determined automatically."
+  },
+  {
+    "name": "i18nLocale",
+    "description": "Locale to use for i18n.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "deprecated": "Use 'localize' instead."
+  },
+  {
+    "name": "i18nMissingTranslation",
+    "description": "How to handle missing translations for i18n.",
+    "type": "string",
+    "default": "warning",
+    "enum": [
+      "warning",
+      "error",
+      "ignore"
+    ],
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "localize",
+    "description": "",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "extractCss",
+    "description": "Extract css from global styles into css files instead of js ones.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "watch",
+    "description": "Run build when files change.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "outputHashing",
+    "description": "Define the output filename cache-busting hashing mode.",
+    "type": "string",
+    "default": "none",
+    "enum": [
+      "none",
+      "all",
+      "media",
+      "bundles"
+    ],
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "poll",
+    "description": "Enable and define the file watching poll time period in milliseconds.",
+    "type": "number",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "deleteOutputPath",
+    "description": "Delete the output path before building.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "preserveSymlinks",
+    "description": "Do not use the real path when resolving modules. If unset then will default to `true` if NodeJS option --preserve-symlinks is set.",
+    "type": "boolean",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "extractLicenses",
+    "description": "Extract all licenses in a separate file.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "showCircularDependencies",
+    "description": "Show circular dependency warnings on builds.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "buildOptimizer",
+    "description": "Enables '@angular-devkit/build-optimizer' optimizations when using the 'aot' option.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "namedChunks",
+    "description": "Use file name for lazy loaded chunks.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "subresourceIntegrity",
+    "description": "Enables the use of subresource integrity validation.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "serviceWorker",
+    "description": "Generates a service worker config for production builds.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "ngswConfigPath",
+    "description": "Path to ngsw-config.json.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "index",
+    "description": "Configures the generation of the application's HTML index.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "statsJson",
+    "description": "Generates a 'stats.json' file which can be analyzed using tools such as 'webpack-bundle-analyzer'.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "forkTypeChecker",
+    "description": "Run the TypeScript type checker in a forked process.",
+    "type": "boolean",
+    "default": true,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "lazyModules",
+    "description": "List of additional NgModule files that will be lazy loaded. Lazy router modules will be discovered automatically.",
+    "type": "array",
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "deprecated": "'SystemJsNgModuleLoader' is deprecated, and this is part of its usage. Use 'import()' syntax instead."
+  },
+  {
+    "name": "rebaseRootRelativeCssUrls",
+    "description": "Change root relative URLs in stylesheets to include base HREF and deploy URL. Use only for compatibility and transition. The behavior of this option is non-standard and will be removed in the next major release.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false,
+    "deprecated": true
+  },
+  {
+    "name": "webWorkerTsConfig",
+    "description": "TypeScript configuration for Web Worker modules.",
+    "type": "string",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "crossOrigin",
+    "description": "Define the crossorigin attribute setting of elements that provide CORS support.",
+    "type": "string",
+    "default": "none",
+    "enum": [
+      "none",
+      "anonymous",
+      "use-credentials"
+    ],
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "experimentalRollupPass",
+    "description": "Concatenate modules with Rollup before bundling them with Webpack.",
+    "type": "boolean",
+    "default": false,
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  },
+  {
+    "name": "allowedCommonJsDependencies",
+    "description": "A list of CommonJS packages that are allowed to be used without a build time warning.",
+    "type": "array",
+    "required": false,
+    "aliases": [],
+    "hidden": false
+  }
+]

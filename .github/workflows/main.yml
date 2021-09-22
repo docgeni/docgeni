@@ -37,4 +37,4 @@ jobs:
             - run: yarn --frozen-lockfile
             - run: yarn test-coverage
             - run: yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
-            - run: yarn report-coverage
+            # - run: yarn report-coverage

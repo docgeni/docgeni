@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
+
+
+### Features
+
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+
+
+
+
+
+# [1.1.0-next.5](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.5) (2021-09-18)
+
+
+### Features
+
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+
+
+
+
+
 # [1.1.0-next.4](https://github.com/docgeni/docgeni/compare/v1.1.0-next.1...v1.1.0-next.4) (2021-09-10)
 
 

@@ -1,4 +1,4 @@
-import { DocgeniContext } from './docgeni.interface';
+import { DocgeniContext } from '../docgeni.interface';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { spawn, exec, execSync } from 'child_process';
@@ -43,7 +43,7 @@ export class AngularCommander {
         try {
             const commandArgs = [command, this.siteProject.name, ...args];
             const commandCwd = this.siteProject.custom ? undefined : this.docgeni.paths.absSitePath;
-            this.docgeni.logger.info(`Start execute ng ${commandArgs.join(' ')} for site...`);
+            this.docgeni.logger.fancy(`\nStart run ${toolkit.print.colors.blueBright(`ng ${commandArgs.join(' ')}`)} for site...`);
             const child = spawn('ng', commandArgs, {
                 stdio: 'inherit',
                 cwd: commandCwd,

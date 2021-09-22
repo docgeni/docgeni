@@ -300,7 +300,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         await this.docgeni.host.writeFile(examplesEntryPath, this.exampleEntrySource);
         for (const example of this.examples) {
             for (const sourceFile of example.sourceFiles) {
-                const absExampleHighlightPath = resolve(this.absDestAssetsExamplesHighlightedPath, `${this.name}/${example.name}`);
+                const absExampleHighlightPath = resolve(this.absDestAssetsExamplesHighlightedPath, `${example.name}`);
                 const destHighlightedSourceFilePath = `${absExampleHighlightPath}/${sourceFile.highlightedPath}`;
                 this.addEmitFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
                 await this.docgeni.host.writeFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
