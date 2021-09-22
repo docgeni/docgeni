@@ -4,3 +4,4 @@ export { DocgeniNavItem, DocgeniConfig, DocgeniSiteConfig, DocgeniLibrary, Local
 export * from './defaults';
 export * from './builders';
 export * from './types';
+export { readNgBuildOptions, readNgServeOptions, NgOption, NgOptionType } from './angular';

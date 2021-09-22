@@ -1,15 +1,17 @@
 import { DocgeniHost } from './docgeni-host';
 import { DocsBuilder } from './builders/docs-builder';
 import { DocgeniConfig } from './interfaces';
-import { SyncHook } from 'tapable';
+import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
 import { DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
-import { AngularCommandOptions, CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
+import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
 import { virtualFs } from '@angular-devkit/core';
 
 export interface DocgeniHooks {
-    run: SyncHook;
+    beforeRun: AsyncSeriesHook;
+    run: AsyncSeriesHook;
+    done: AsyncSeriesHook;
     docBuild: SyncHook<DocSourceFile>;
     docBuildSucceed: SyncHook<DocSourceFile>;
     docsBuild: SyncHook<DocsBuilder, DocSourceFile[]>;
@@ -28,7 +30,7 @@ export interface DocgeniContext {
     readonly paths: DocgeniPaths;
     readonly hooks: DocgeniHooks;
     readonly logger: Print;
-    readonly enableIvy: boolean;
+    enableIvy: boolean;
     readonly librariesBuilder: LibrariesBuilder;
     readonly docsBuilder: DocsBuilder;
     readonly navsBuilder: NavsBuilder;
@@ -43,7 +45,6 @@ export interface DocgeniOptions {
     presets?: string[];
     plugins?: string[];
     config?: DocgeniConfig;
-    cmdArgs?: AngularCommandOptions;
     host?: DocgeniHost;
     version?: string;
 }

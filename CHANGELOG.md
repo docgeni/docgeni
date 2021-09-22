@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
+
+
+### Bug Fixes
+
+* **core:** fix empty path error when exec ng command for custom site and remove redundant name for lib example path ([90d7776](https://github.com/docgeni/docgeni/commit/90d7776e5158b1bb931dec0fa73824a9c735da33))
+* **template:** update get doc item by path for lite mode ([#229](https://github.com/docgeni/docgeni/issues/229)) ([b2925e0](https://github.com/docgeni/docgeni/commit/b2925e05ef41ad705e7103e5ae9807ce48d36c0d))
+* **toolkit:** git log `names with spaces` error ([#226](https://github.com/docgeni/docgeni/issues/226)) ([056a43c](https://github.com/docgeni/docgeni/commit/056a43c63902fbcb6f747d771e18005fb34c2569))
+
+
+### Features
+
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+
+
+
+
+
+# [1.1.0-next.5](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.5) (2021-09-18)
+
+
+### Bug Fixes
+
+* **template:** update get doc item by path for lite mode ([#229](https://github.com/docgeni/docgeni/issues/229)) ([b2925e0](https://github.com/docgeni/docgeni/commit/b2925e05ef41ad705e7103e5ae9807ce48d36c0d))
+* **toolkit:** git log `names with spaces` error ([#226](https://github.com/docgeni/docgeni/issues/226)) ([056a43c](https://github.com/docgeni/docgeni/commit/056a43c63902fbcb6f747d771e18005fb34c2569))
+
+
+### Features
+
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+
+
+
+
+
 # [1.1.0-next.4](https://github.com/docgeni/docgeni/compare/v1.1.0-next.1...v1.1.0-next.4) (2021-09-10)
 
 
