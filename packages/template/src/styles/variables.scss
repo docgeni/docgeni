@@ -53,6 +53,29 @@ $dg-grid-breakpoints: (
     xl: 1200px
 ) !default;
 
+$dg-spacer: 1rem !default;
+$dg-spacers: () !default;
+// // stylelint-disable-next-line scss/dollar-variable-default
+$dg-spacers: map-merge(
+    (
+        0: 0,
+        1: (
+            $dg-spacer * 0.25
+        ),
+        2: (
+            $dg-spacer * 0.5
+        ),
+        3: $dg-spacer,
+        4: (
+            $dg-spacer * 1.5
+        ),
+        5: (
+            $dg-spacer * 3
+        )
+    ),
+    $dg-spacers
+);
+
 $dg-line-height: 1.5715 !default;
 
 $dg-code-bg-color: #f3f5f7 !default;

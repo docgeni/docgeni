@@ -52,7 +52,7 @@ $dg-service-color: #8e24aa;
         display: flex;
         flex: auto;
         align-items: flex-start;
-        min-height: calc(100% - 60px);
+        // min-height: calc(100% - 60px);
     }
 
     .dg-doc-viewer-inner-content {
@@ -294,14 +294,20 @@ $dg-service-color: #8e24aa;
         }
     }
 }
+
 .dg-doc-meta {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 25px 0px;
+
     .dg-contributor-avatar-list {
         display: flex;
         flex-direction: row-reverse;
         margin-right: 8px;
     }
     .dg-contributor-avatar {
-        box-shadow: 0 0 0 2px white;
+        box-shadow: 0 0 0 2px $dg-white;
         width: 30px;
         height: 30px;
         border-radius: 30px;
@@ -326,18 +332,14 @@ $dg-service-color: #8e24aa;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9daab6;
-        background-color: #f5f7f9;
+        color: $dg-gray-500;
+        background-color: $dg-gray-100;
     }
     .dg-contribution-last-time {
-        color: #9daab6;
-    }
-    .dg-contribution-container {
-        display: flex;
-        flex: 0 0 auto;
-        align-items: center;
+        color: $dg-gray-500;
     }
 }
+
 .dg-pages-link {
     display: flex;
     .dg-page-link {
@@ -353,6 +355,7 @@ $dg-service-color: #8e24aa;
             width: 100%;
             display: flex;
             &:hover {
+                text-decoration: none;
                 color: $dg-primary;
                 border-color: $dg-primary;
                 cursor: pointer;
@@ -404,10 +407,9 @@ $dg-service-color: #8e24aa;
         }
     }
 }
+
 .dg-divider {
     border: 0;
     border-top: 1px solid $dg-gray-200;
-    margin-top: 24px;
     margin-bottom: 0;
-    border-bottom: 24px solid transparent;
 }

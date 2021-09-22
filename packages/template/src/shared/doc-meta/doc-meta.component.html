@@ -1,14 +1,12 @@
-<div class="dg-contribution-container">
-  <div class="dg-contributor-avatar-list" *ngIf="contributors">
-    <div *ngFor="let item of contributors | slice: 0:3; let i = index" class="dg-contributor-avatar" [title]="item">
-      <img src="https://avatars.githubusercontent.com/{{ item }}" />
-    </div>
-    <div class="dg-contributor-avatar dg-contributor-other" *ngIf="(contributors | slice: 3).length">
-      {{ (contributors | slice: 3).length }}
-    </div>
+<div class="dg-contributor-avatar-list" *ngIf="contributors">
+  <div *ngFor="let item of contributors | slice: 0:3; let i = index" class="dg-contributor-avatar" [title]="item">
+    <img src="https://avatars.githubusercontent.com/{{ item }}" />
   </div>
-  <div class="dg-contribution-last-time" *ngIf="lastUpdatedTime">
-    {{ 'LAST_UPDATED_TIME' | dgTranslate }}
-    {{ lastUpdatedTime | date: 'yyyy/MM/dd' }}
+  <div class="dg-contributor-avatar dg-contributor-other" *ngIf="(contributors | slice: 3).length">
+    {{ (contributors | slice: 3).length }}
   </div>
+</div>
+<div class="dg-contribution-last-time" *ngIf="lastUpdatedTime">
+  {{ 'LAST_UPDATED_TIME' | dgTranslate }}
+  {{ lastUpdatedTime | date: 'yyyy/MM/dd' }}
 </div>
