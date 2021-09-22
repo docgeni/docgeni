@@ -1,0 +1,22 @@
+{
+  "$schema": "../node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "packages",
+  "projects": {
+    "customSite": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "custom/site",
+      "sourceRoot": "custom/site/src",
+      "prefix": "app"
+    }
+  },
+  "defaultProject": "customSite",
+  "cli": {
+    "analytics": false
+  }
+}

@@ -2,8 +2,13 @@ import { toolkit } from '@docgeni/toolkit';
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniLibrary } from '../interfaces';
+import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
+import { AsyncSeriesHook, SyncHook } from 'tapable';
+import { DocSourceFile } from '../builders/doc-file';
+import { DocsBuilder } from '../builders';
+import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
+import { Docgeni } from '../docgeni';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
 
@@ -11,6 +16,7 @@ export interface TestDocgeniContextOptions {
     root?: string;
     initialFiles?: Record<string, string>;
     libs?: DocgeniLibrary[] | DocgeniLibrary;
+    watch?: boolean;
 }
 
 const DEFAULT_OPTIONS = {
@@ -37,15 +43,31 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
                     name: 'EN'
                 }
             ],
+            siteDir: '.docgeni/site',
+            outputDir: 'dist/docgeni-site',
+            publicDir: '.docgeni/public',
             defaultLocale: 'zh-cn'
         },
-        watch: true,
+        watch: options.watch,
         paths: paths,
-        hooks: null,
+        hooks: Docgeni.createHooks(),
         logger: toolkit.print,
-        librariesBuilders: null,
+        librariesBuilder: null,
         docsBuilder: null,
+        navsBuilder: null,
         fs: null,
-        enableIvy: null
+        enableIvy: true,
+        compile: () => {
+            return Promise.resolve();
+        },
+        version: '1.0.0'
     };
+}
+
+export function updateContext(context: DocgeniContext, update: Partial<DocgeniContext>) {
+    Object.assign(context, update);
+}
+
+export function updateContextConfig(context: DocgeniContext, update: Partial<DocgeniConfig> | Record<string, any>) {
+    Object.assign(context.config, update);
 }

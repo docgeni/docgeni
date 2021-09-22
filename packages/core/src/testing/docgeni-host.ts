@@ -18,3 +18,11 @@ export async function assertExpectedFiles(host: DocgeniHost, expectedFiles: Reco
         }
     }
 }
+
+export async function writeFilesToHost(host: DocgeniHost, files: Record<string, string>) {
+    for (const key in files) {
+        if (Object.prototype.hasOwnProperty.call(files, key)) {
+            await host.writeFile(key, files[key]);
+        }
+    }
+}

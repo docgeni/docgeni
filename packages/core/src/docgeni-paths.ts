@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { resolve } from './fs';
 
 export class DocgeniPaths {
     /* cwd absolute path, default is project root*/
@@ -23,14 +24,14 @@ export class DocgeniPaths {
     }
 
     public getAbsPath(absOrRelativePath: string): string {
-        return path.resolve(this.cwd, absOrRelativePath);
+        return resolve(this.cwd, absOrRelativePath);
     }
 
     public setSitePaths(siteRootPath: string, siteSourceRootPath?: string): void {
         this.absSitePath = this.getAbsPath(siteRootPath);
         const siteSourceRoot = siteSourceRootPath ? this.getAbsPath(siteSourceRootPath) : path.resolve(this.absSitePath, 'src');
-        this.absSiteContentPath = path.resolve(siteSourceRoot, './app/content');
-        this.absSiteAssetsContentPath = path.resolve(siteSourceRoot, './assets/content');
-        this.absSiteAssetsContentDocsPath = path.resolve(this.absSiteAssetsContentPath, './docs');
+        this.absSiteContentPath = resolve(siteSourceRoot, './app/content');
+        this.absSiteAssetsContentPath = resolve(siteSourceRoot, './assets/content');
+        this.absSiteAssetsContentDocsPath = resolve(this.absSiteAssetsContentPath, './docs');
     }
 }

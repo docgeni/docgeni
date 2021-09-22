@@ -1,19 +1,19 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
-import { LibComponent } from './library-component';
+import { LibraryComponentImpl } from './library-component';
 import { normalizeLibConfig } from './normalize';
 import { EOL } from 'os';
 import { toolkit } from '@docgeni/toolkit';
 import * as systemPath from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
-import { normalize } from '../fs';
+import { getSystemPath, normalize } from '../fs';
 import { DocSourceFile } from './doc-file';
 
 describe('#library-component', () => {
     const library = normalizeLibConfig({
         name: 'alib',
-        rootDir: 'a-lib',
+        rootDir: 'alib',
         include: ['common'],
         exclude: '',
         categories: [
@@ -37,7 +37,7 @@ describe('#library-component', () => {
             }
         ]
     });
-    const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+    const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/alib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
     beforeAll(async () => {
@@ -59,14 +59,15 @@ describe('#library-component', () => {
                 [`${buttonDirPath}/examples/basic/basic.component.html`]: fixture.src['examples/basic/basic.component.html'],
                 [`${buttonDirPath}/examples/basic/index.md`]: fixture.src['examples/basic/index.md']
             },
-            libs: [library]
+            libs: [library],
+            watch: true
         });
     });
 
     it('should create lib component success', async () => {
-        const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+        const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         expect(component).toBeTruthy();
-        expect(component.absPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+        expect(component.absPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         expect(component.name).toEqual(`button`);
         expect(component.absDocPath).toEqual(`${buttonDirPath}/doc`);
         expect(component.absApiPath).toEqual(`${buttonDirPath}/api`);
@@ -74,12 +75,12 @@ describe('#library-component', () => {
     });
 
     it('should get correct module key', () => {
-        const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+        const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         expect(component.getModuleKey()).toEqual(`${library.name}/button`);
     });
 
     it('should build lib component success', async () => {
-        const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+        const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         expect(component.getDocItem('zh-cn')).toBeFalsy();
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
@@ -116,21 +117,17 @@ describe('#library-component', () => {
     }
 
     it('should emit lib component success', async () => {
-        const component = new LibComponent(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/a-lib/button`);
+        const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         expect(component.getDocItem('zh-cn')).toBeFalsy();
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
 
-        const absDestAssetsOverviewsPath = `${DEFAULT_TEST_ROOT_PATH}/app/assets/content/overview`;
-        const absDestAssetsApiDocsPath = `${DEFAULT_TEST_ROOT_PATH}/app/assets/content/api`;
-        const absDestSiteContentComponentsPath = `${DEFAULT_TEST_ROOT_PATH}/app/src/components`;
-        const absDestAssetsExamplesHighlightedPath = `${DEFAULT_TEST_ROOT_PATH}/app/assets/content/highlighted`;
-        await component.emit(
-            absDestAssetsOverviewsPath,
-            absDestAssetsApiDocsPath,
-            absDestSiteContentComponentsPath,
-            absDestAssetsExamplesHighlightedPath
-        );
+        const siteRoot = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`;
+        const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
+        const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
+        const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
+
+        await component.emit();
 
         // TODO: Add API Assets
         await expectFiles(context.host, {
@@ -141,5 +138,13 @@ describe('#library-component', () => {
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
         });
+        const baseExamples = [
+            `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-ts.html`,
+            `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-html.html`
+        ];
+
+        for (const example of baseExamples) {
+            expect(await context.host.exists(example)).toEqual(true);
+        }
     });
 });

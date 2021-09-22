@@ -11,6 +11,7 @@ export interface GetDirsOrFilesOptions {
 }
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
+    readJSON<T = object>(path: string): Promise<T>;
     writeFile(path: string, data: string): Promise<void>;
     pathExists(path: string): Promise<boolean>;
     exists(path: string): Promise<boolean>;
@@ -21,6 +22,7 @@ export interface DocgeniHost {
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
+    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
 }
@@ -31,6 +33,11 @@ export class DocgeniHostImpl implements DocgeniHost {
     async readFile(path: string): Promise<string> {
         const data = await this.host.read(normalize(path)).toPromise();
         return virtualFs.fileBufferToString(data);
+    }
+
+    async readJSON<T = object>(path: string): Promise<T> {
+        const content = await this.readFile(path);
+        return JSON.parse(content);
     }
 
     async writeFile(path: string, data: string): Promise<void> {
@@ -70,6 +77,9 @@ export class DocgeniHostImpl implements DocgeniHost {
 
     async copy(src: string, dest: string): Promise<void> {
         const stat = await this.stat(src);
+        if (!stat) {
+            throw new Error(`${src} is not exist`);
+        }
         if (stat.isFile()) {
             const data = await this.host.read(normalize(src)).toPromise();
             await this.host.write(normalize(dest), data).toPromise();

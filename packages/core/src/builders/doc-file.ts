@@ -5,7 +5,6 @@ import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
 import { DocgeniHost } from '../docgeni-host';
-import { DocgeniConfig } from '../interfaces';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -26,7 +25,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     public type: DocType;
     public content: string;
     public meta?: TMeta;
-    public output: string;
+    public output: string = '';
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -68,7 +67,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         return path.basename(this.path, this.extname);
     }
 
-    constructor(options: DocSourceFileOptions, host: DocgeniHost, private docConfig: DocgeniConfig) {
+    constructor(options: DocSourceFileOptions, host: DocgeniHost) {
         this.cwd = options.cwd;
         this.base = options.base;
         this.path = options.path;
@@ -94,7 +93,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
 
     public async emit(destRootPath: string) {
         if (this.emitted) {
-            return;
+            return {};
         }
         const outputPath = this.getOutputPath(destRootPath);
         await this.host.writeFile(outputPath, this.output);
@@ -103,6 +102,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         }
         this.outputPath = outputPath;
         this.emitted = true;
+        return { outputPath: outputPath, content: this.output };
     }
 
     public async clear() {

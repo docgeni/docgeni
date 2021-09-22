@@ -1,17 +1,23 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
-import { EXAMPLE_META_FILE_NAME } from '../constants';
+import {
+    ASSETS_API_DOCS_RELATIVE_PATH,
+    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    ASSETS_OVERVIEWS_RELATIVE_PATH,
+    EXAMPLE_META_FILE_NAME
+} from '../constants';
 import { highlight } from '../utils';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
-import { ComponentDocMeta } from '../types';
+import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
 import { resolve } from '../fs';
+import { FileEmitter } from './emitter';
 
-export class LibComponent {
+export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
     public name: string;
     /** Component Path */
     public absPath: string;
@@ -19,43 +25,52 @@ export class LibComponent {
     public absExamplesPath: string;
     public absDocPath: string;
     public absApiPath: string;
+    private absDestSiteContentComponentsPath: string;
+    private absDestAssetsExamplesHighlightedPath: string;
+    private absDestAssetsOverviewsPath: string;
+    private absDestAssetsApiDocsPath: string;
     public examples: LiveExample[];
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
     private exampleEntrySource: string;
-    private emitted = false;
 
-    constructor(private docgeni: DocgeniContext, private lib: Library, name: string, absPath: string) {
+    constructor(private docgeni: DocgeniContext, public lib: Library, name: string, absPath: string) {
+        super();
         this.name = name;
         this.absPath = absPath;
         this.meta = {};
         this.absExamplesPath = resolve(this.absPath, this.lib.examplesDir);
         this.absDocPath = resolve(this.absPath, this.lib.docDir);
         this.absApiPath = resolve(this.absPath, this.lib.apiDir);
+
+        this.absDestSiteContentComponentsPath = resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}/${this.name}`);
+        this.absDestAssetsExamplesHighlightedPath = resolve(
+            this.docgeni.paths.absSitePath,
+            `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}/${this.name}`
+        );
+        this.absDestAssetsOverviewsPath = resolve(
+            this.docgeni.paths.absSitePath,
+            `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}/${this.name}`
+        );
+        this.absDestAssetsApiDocsPath = resolve(
+            this.docgeni.paths.absSitePath,
+            `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}/${this.name}`
+        );
     }
 
     public async build(): Promise<void> {
-        this.emitted = false;
+        this.resetEmitted();
         await this.buildOverviews();
         await this.buildApiDocs();
         await this.buildExamples();
         await this.buildDocItems();
     }
 
-    public async emit(
-        absDestAssetsOverviewsPath: string,
-        absDestAssetsApiDocsPath: string,
-        absDestSiteContentComponentsPath: string,
-        absDestAssetsExamplesHighlightedPath: string
-    ): Promise<void> {
-        if (this.emitted) {
-            return;
-        }
-        await this.emitOverviews(absDestAssetsOverviewsPath);
-        await this.emitApiDocs(absDestAssetsApiDocsPath);
-        await this.emitExamples(absDestSiteContentComponentsPath, absDestAssetsExamplesHighlightedPath);
-        this.emitted = true;
+    public async onEmit(): Promise<void> {
+        await this.emitOverviews();
+        await this.emitApiDocs();
+        await this.emitExamples();
     }
 
     public getDocItem(locale: string): ComponentDocItem {
@@ -84,8 +99,7 @@ export class LibComponent {
                         type: DocType.component,
                         locale: locale.key
                     },
-                    this.docgeni.host,
-                    this.docgeni.config
+                    this.docgeni.host
                 );
                 docSourceFiles.push(docSourceFile);
                 this.localeOverviewsMap[locale.key] = docSourceFile;
@@ -247,47 +261,49 @@ export class LibComponent {
         });
     }
 
-    private async emitOverviews(absDestAssetsOverviewsPath: string) {
+    private async emitOverviews() {
         const defaultSourceFile = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
-        const destAbsExamplesOverviewPath = resolve(absDestAssetsOverviewsPath, `${this.name}`);
+
         for (const locale of this.docgeni.config.locales) {
             const sourceFile = this.localeOverviewsMap[locale.key] || defaultSourceFile;
             if (sourceFile) {
-                const filePath = resolve(destAbsExamplesOverviewPath, `${locale.key}.html`);
+                const filePath = resolve(this.absDestAssetsOverviewsPath, `${locale.key}.html`);
+                this.addEmitFile(filePath, sourceFile.output);
                 await this.docgeni.host.writeFile(filePath, sourceFile.output);
             }
         }
     }
 
-    private async emitApiDocs(absDestAssetsApiDocsPath: string) {
+    private async emitApiDocs() {
         const defaultApiDoc = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
-        const destAbsApiDocPath = resolve(absDestAssetsApiDocsPath, `${this.name}`);
         for (const locale of this.docgeni.config.locales) {
             const apiDocs = this.localeApiDocsMap[locale.key] || defaultApiDoc;
             if (apiDocs) {
-                const componentApiDocDistPath = resolve(destAbsApiDocPath, `${locale.key}.html`);
-                const componentApiJsonDistPath = resolve(destAbsApiDocPath, `${locale.key}.json`);
+                const componentApiDocDistPath = resolve(this.absDestAssetsApiDocsPath, `${locale.key}.html`);
+                const componentApiJsonDistPath = resolve(this.absDestAssetsApiDocsPath, `${locale.key}.json`);
                 const apiDocContent = toolkit.template.compile('api-doc.hbs', {
                     declarations: apiDocs
                 });
+                this.addEmitFile(componentApiJsonDistPath, JSON.stringify(apiDocs));
                 await this.docgeni.host.writeFile(componentApiDocDistPath, apiDocContent);
                 await this.docgeni.host.writeFile(componentApiJsonDistPath, JSON.stringify(apiDocs));
             }
         }
     }
 
-    private async emitExamples(absDestSiteContentComponentsPath: string, absDestAssetsExamplesHighlightedPath: string) {
+    private async emitExamples() {
         if (!(await this.docgeni.host.pathExists(this.absExamplesPath))) {
             return;
         }
-        const destAbsComponentExamplesPath = resolve(absDestSiteContentComponentsPath, `${this.name}`);
-        const examplesEntryPath = resolve(destAbsComponentExamplesPath, 'index.ts');
-        await this.docgeni.host.copy(this.absExamplesPath, destAbsComponentExamplesPath);
+        const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
+        await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
+        this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
         await this.docgeni.host.writeFile(examplesEntryPath, this.exampleEntrySource);
         for (const example of this.examples) {
             for (const sourceFile of example.sourceFiles) {
-                const absExampleHighlightPath = resolve(absDestAssetsExamplesHighlightedPath, `${this.name}/${example.name}`);
+                const absExampleHighlightPath = resolve(this.absDestAssetsExamplesHighlightedPath, `${example.name}`);
                 const destHighlightedSourceFilePath = `${absExampleHighlightPath}/${sourceFile.highlightedPath}`;
+                this.addEmitFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
                 await this.docgeni.host.writeFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
             }
         }

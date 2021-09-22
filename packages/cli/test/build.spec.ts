@@ -3,7 +3,7 @@ import { DEFAULT_CONFIG, Docgeni, DocgeniConfig } from '@docgeni/core';
 import * as path from 'path';
 import { EOL } from 'os';
 
-describe('docgeni build', () => {
+describe('#cli', () => {
     it('should build success', async () => {
         const basicFixturePath = path.resolve(__dirname, './fixtures/doc-basic');
 
@@ -31,9 +31,7 @@ describe('docgeni build', () => {
         const docgeni = new Docgeni({
             cwd: basicFixturePath,
             config: {
-                ...config
-            },
-            cmdArgs: {
+                ...config,
                 skipSite: true
             }
         });

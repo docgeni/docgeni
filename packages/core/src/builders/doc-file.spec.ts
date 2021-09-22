@@ -27,8 +27,7 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost,
-                undefined
+                docgeniHost
             );
         });
 
@@ -44,8 +43,7 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost,
-                undefined
+                docgeniHost
             );
             expect(() => {
                 const name = docSourceFile.name;
@@ -84,8 +82,7 @@ describe('DocSourceFile', () => {
                     base: root,
                     locale: 'zh-cn'
                 },
-                docgeniHost,
-                undefined
+                docgeniHost
             );
         });
 
@@ -130,8 +127,7 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost,
-            undefined
+            docgeniHost
         );
         await docSourceFile.build();
         expect(docSourceFile.output).toContain(`<p>getting-started content</p>`);
@@ -152,8 +148,7 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost,
-            undefined
+            docgeniHost
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -175,8 +170,7 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost,
-            undefined
+            docgeniHost
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -198,8 +192,7 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost,
-            undefined
+            docgeniHost
         );
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
@@ -221,8 +214,7 @@ describe('DocSourceFile', () => {
                 base: root,
                 locale: 'zh-cn'
             },
-            docgeniHost,
-            undefined
+            docgeniHost
         );
         expect(docSourceFile.isEmpty()).toEqual(true);
         await docSourceFile.build();

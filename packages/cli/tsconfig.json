@@ -9,7 +9,7 @@
   "include": [
     "src"
   ],
-  "exclude": [  ],
+  "exclude": [ "test" ],
   "references": [
     {
       "path": "../toolkit"

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, HostBinding } from '@angular/core';
-import { DocItem } from '@docgeni/template/interfaces';
-import { GlobalContext } from '@docgeni/template/services/public-api';
+import { DocItem } from '../../interfaces';
+import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
 
 @Component({

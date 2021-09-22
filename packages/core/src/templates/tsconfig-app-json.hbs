@@ -20,7 +20,7 @@
     ],
     "paths":{
 {{#each paths}}
-      "{{key}}":[{{value}}],
+      "{{key}}": [{{value}}]{{#unless @last}},{{/unless}}
 {{/each}}
     }
   },

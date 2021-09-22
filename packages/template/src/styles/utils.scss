@@ -1,0 +1,29 @@
+@each $prop, $abbrev in (margin: m, padding: p) {
+    @each $size, $length in $dg-spacers {
+        .dg-#{$abbrev}-#{$size} {
+            #{$prop}: $length !important;
+        }
+        .dg-#{$abbrev}t-#{$size},
+        .dg-#{$abbrev}y-#{$size} {
+            #{$prop}-top: $length !important;
+        }
+        .dg-#{$abbrev}r-#{$size},
+        .dg-#{$abbrev}x-#{$size} {
+            #{$prop}-right: $length !important;
+        }
+        .dg-#{$abbrev}b-#{$size},
+        .dg-#{$abbrev}y-#{$size} {
+            #{$prop}-bottom: $length !important;
+        }
+        .dg-#{$abbrev}l-#{$size},
+        .dg-#{$abbrev}x-#{$size} {
+            #{$prop}-left: $length !important;
+        }
+    }
+}
+
+.dg-divider {
+    border: 0;
+    border-top: 1px solid $dg-gray-200;
+    margin-bottom: 0;
+}
