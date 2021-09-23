@@ -63,13 +63,10 @@
         padding: 6px 0px;
         color: $dg-gray-700;
         line-height: 16px;
-
         text-decoration: none;
         display: block;
         text-overflow: ellipsis;
         width: 100%;
-        overflow: hidden;
-        // font-weight: 500;
         box-sizing: border-box;
 
         &::before {
@@ -82,7 +79,7 @@
         }
 
         &.active {
-            color: darken($dg-primary, 15%);
+            color: darken($dg-primary, 10%);
             &::before {
                 border-color: $dg-primary;
                 border-width: 2px;
@@ -92,7 +89,7 @@
 
     &-menu {
         .dg-toc-container {
-            padding-left: 15px;
+            padding-left: 20px;
         }
         .dg-link {
             position: relative;
@@ -103,8 +100,8 @@
             &.active {
                 &::before {
                     border-width: 0px;
-                    height: 6px;
-                    width: 6px;
+                    height: 5px;
+                    width: 5px;
                     border-radius: 50%;
                     background: $dg-primary;
                     top: 12px;
