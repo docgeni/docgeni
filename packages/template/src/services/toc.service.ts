@@ -120,10 +120,14 @@ export class TocService {
     }
 
     private getScrollOffset(): number | void {
-        if (typeof this.scrollContainer.scrollTop !== 'undefined') {
-            return this.scrollContainer.scrollTop + OFFSET;
-        } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
-            return this.scrollContainer.pageYOffset + OFFSET;
+        if (this.scrollContainer) {
+            if (typeof this.scrollContainer.scrollTop !== 'undefined') {
+                return this.scrollContainer.scrollTop + OFFSET;
+            } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
+                return this.scrollContainer.pageYOffset + OFFSET;
+            }
+        } else {
+            return 0;
         }
     }
 }

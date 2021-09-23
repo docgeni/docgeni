@@ -23,7 +23,6 @@ export interface DocItem {
         };
     };
     toc?: DocItemToc;
-    tocLinks?: HeadingLink[];
 }
 
 export interface ComponentDocItem extends DocItem {
