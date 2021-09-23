@@ -1,6 +1,7 @@
 ---
 title: Front Matter
 order: 40
+toc: menu
 ---
 
 ## title
@@ -47,3 +48,15 @@ The name of the component, from which the component name is generated, generally
 - Default: `null`
 
 The category of the component needs to correspond to the `categories` id attribute of the corresponding library configuration.
+
+## toc <label>1.1.0+</label>
+- Type: `content | menu | hidden | false`
+- Default: `content`
+
+Display mode of table of content, `content` indicates display on the right side of the content area, `menu` indicates that toc will be displayed in the left menu, other values indicate that the toc is not displayed, default is [global toc configuration](/configuration/global#toc)。
+
+## label <label>1.1.0+</label>
+- Type: `string`
+- Default: `null`
+
+Component label, if the component is a new, set it to `new`, if the component has been deprecated, set it to `deprecated`, if the component is an experimental, set it to `experimental`. it can be set to any id configured in the library labels. for the configuration label, refer to: [labels] (configuration/lib#labels).

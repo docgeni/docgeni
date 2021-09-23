@@ -12,7 +12,7 @@ hero:
 features:
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature1.png
     title: 开箱即用
-    description: 根据目录结构自动生成导航和菜单，同时通过命令行工具帮助开发者零成本上手，让你快速开始文档编写和组件开发开发
+    description: 根据目录结构自动生成导航和菜单，同时通过命令行工具帮助开发者零成本上手，让你快速开始文档编写和组件开发
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature2.png
     title: 为 Angular 组件开发而生
     description: 独立的 Angular 组件预览体验，组件概览，示例，API，丰富的 Markdown 扩展，使文档编写起来更简单，支持同时存在多个类库 
@@ -29,7 +29,6 @@ features:
     title: 多语言支持
     description: 支持灵活的多语言配置
 ---
-
 
  ## 快速上手
 

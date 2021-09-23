@@ -1,16 +1,54 @@
 ---
+title: 自定义首页
+order: 30
+---
+
+`mode`为`site`模式包含首页，首页包含三部分内容，分别为：
+- Hero 区域: 展示当前站点的标题和一句话描述以及快速操作链接，同时支持`banner`图设置
+- 功能区域: 展示有哪些特性，每个特性包含名称、描述和图标
+- 内容区域: 和普通的文档一样，展示 Markdown 内容
+
+根目录下的`index.md`为首页的 Markdown 内容，通过首页文档的`FrontMatter`配置 Hero 和特性。
+
+## 首页预览
+
+![](https://cdn.worktile.com/open-sources/docgeni/home-preview.png?1)
+
+
+## Hero
+
+- `title:` 标题
+- `description:` 描述
+- `banner:` 背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
+- `actions:` 快捷按钮列表
+- `actions.text:` 按钮文字
+- `actions.link:` 按钮链接
+- `actions.btnShape:` 按钮形状，可以设置为`round | square`，默认为`square`
+- `actions.btnType:` 按钮类型，可以设置为`primary | primary-light | success | danger`，默认为`primary-light`, 线框按钮需要加前缀 `outline`, 比如 `outline-primary-light`
+
+示例:
+```
+---
 hero:
   title: Docgeni
-  description: Out of the box Angular Component Document Generator
+  description: 开箱即用的 Angular 组件文档生成工具
   banner: https://cdn.pingcode.com/open-sources/docgeni/home/banner.png
   actions:
-    - text: Getting Started
+    - text: 快速上手
       link: /guides/intro/getting-started
-      btnShape: round
-    - text: Design
-      link: /guides/intro
-      btnShape: square
+      btnShape: round,
       btnType: outline-primary-light
+---
+```
+
+## 特性
+- `title:` 特性标题
+- `description:` 特性描述
+- `icon:` 特性图标地址
+
+示例:
+```
+---
 features:
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature1.png
     title: Out of the box
@@ -31,20 +69,4 @@ features:
     title: Multilingual
     description: Support flexible multilingual configuration
 ---
-
-## Getting Started
-
- switch to an existing project, execute the following command:
-
-```bash
-$ npx @docgeni/cli init
-# or 
-$ docgeni init 
-# or
-$ ng add @docgeni/cli
 ```
-run `npm run start:docs` command to start site，open `http://127.0.0.1:4600` visit it by browser.
-
-Click [Getting Started](https://docgeni.org/guides/intro/getting-started) see more.
-## Contributing
-Welcome to contribute together Docgeni: https://github.com/docgeni/docgeni

@@ -33,4 +33,4 @@ For documentation tools, there are three types:
 
 Docgeni supports the generation of common documents and component documents. Of course, for some pure document scenarios, it is also possible to use Docgeni to generate only common Markdown documents.
 # Contributing
-Docgeni is still in development, welcome to all contributions. Docgeni: https://github.com/docgeni/docgeni
+Welcome to contribute together Docgeni: https://github.com/docgeni/docgeni
