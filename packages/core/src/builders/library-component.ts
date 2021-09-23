@@ -254,7 +254,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     category: this.meta.category,
                     hidden: this.meta.hidden,
                     label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
-                    toc: this.meta.toc
+                    toc: toolkit.utils.isUndefinedOrNull(this.meta.toc) ? 'content' : this.meta.toc
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }

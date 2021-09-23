@@ -1,4 +1,2 @@
-<dg-toc #toc *ngIf="componentViewer.docItem.toc === 'menu'" class="dg-toc-left"></dg-toc>
-<dg-content-viewer class="dg-doc-viewer-inner-content" [url]="contentUrl" (contentRendered)="updateTableOfContents($event)">
-</dg-content-viewer>
-<dg-toc #toc *ngIf="componentViewer.docItem.toc === 'content'" class="dg-toc-right"></dg-toc>
+<dg-content-viewer class="dg-doc-viewer-inner-content" [url]="contentUrl"> </dg-content-viewer>
+<dg-toc #toc *ngIf="componentViewer.docItem.toc === 'content'"></dg-toc>

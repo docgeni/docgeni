@@ -1,27 +1,16 @@
-.dg-toc.dg-toc-left {
-    margin: 20px 20px 20px 0;
-    padding: 10px 5px 10px 0;
-    .dg-toc-container {
-        padding-right: 25px;
-    }
-}
-.dg-toc.dg-toc-right {
-    margin: 20px 0 20px 20px;
-    padding: 5px 0 10px 10px;
-    .dg-toc-container {
-        padding-left: 25px;
-    }
-}
 .dg-toc {
     flex: 1;
     position: sticky;
     top: 20px;
+    margin: 20px 0 20px 20px;
+
     .dg-toc-container {
         font-size: 13px;
         // Width is container width minus content width
         width: 19%;
         // position: sticky;
         // top: 0;
+        padding-left: 10px;
         box-sizing: border-box;
         display: inline-flex;
         flex-direction: column;
@@ -38,31 +27,53 @@
         font-size: 13px;
         font-weight: bold;
         text-transform: capitalize;
+    }
 
-        // &::before {
-        //     border-left: 1px solid #dbdbdb;
-        //     bottom: 0;
-        //     content: '';
-        //     left: 0;
-        //     position: absolute;
-        //     top: 0;
-        // }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            list-style: none;
+            position: relative;
+            padding: 0px;
+            &[data-level='1'] {
+                padding-left: 12px;
+            }
+
+            &[data-level='2'] {
+                padding-left: 24px;
+            }
+
+            &[data-level='3'] {
+                padding-left: 36px;
+            }
+
+            &[data-level='4'] {
+                padding-left: 48px;
+            }
+
+            a {
+                color: $dg-gray-700;
+            }
+        }
     }
 
     .dg-link {
-        padding: 6px 12px 6px 12px;
+        padding: 6px 0px;
         color: $dg-gray-700;
         line-height: 16px;
-        position: relative;
+
         text-decoration: none;
         display: block;
         text-overflow: ellipsis;
         width: 100%;
         overflow: hidden;
-        font-weight: 500;
+        // font-weight: 500;
         box-sizing: border-box;
+
         &::before {
-            border-left: 2px solid #dbdbdb;
+            border-left: 2px solid $dg-gray-300;
             bottom: 0;
             content: '';
             left: 0;
@@ -71,36 +82,35 @@
         }
 
         &.active {
-            // color: $dg-primary;
             color: darken($dg-primary, 15%);
             &::before {
                 border-color: $dg-primary;
                 border-width: 2px;
-                // content: '';
-                // border-radius: 50%;
-                // left: -3px;
-                // top: 12px;
-                // background: dg-primary;;
-                // position: absolute;
-                // width: 6px;
-                // height: 6px;
             }
         }
+    }
 
-        &[data-level='1'] {
-            padding-left: 12px;
+    &-menu {
+        .dg-toc-container {
+            padding-left: 15px;
         }
-
-        &[data-level='2'] {
-            padding-left: 24px;
-        }
-
-        &[data-level='3'] {
-            padding-left: 36px;
-        }
-
-        &[data-level='4'] {
-            padding-left: 48px;
+        .dg-link {
+            position: relative;
+            // padding: 6px 6px 6px 6px;
+            &::before {
+                border-width: 0px;
+            }
+            &.active {
+                &::before {
+                    border-width: 0px;
+                    height: 6px;
+                    width: 6px;
+                    border-radius: 50%;
+                    background: $dg-primary;
+                    top: 12px;
+                    left: -10px;
+                }
+            }
         }
     }
 }

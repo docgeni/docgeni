@@ -1,5 +1,6 @@
 import { DocgeniLibrary } from './library';
 import { Locale } from './locale';
+import { DocItemToc } from './navigation-item';
 
 export interface HeroAction {
     text: string;
@@ -81,6 +82,8 @@ export interface DocgeniConfig {
     defaultLocale?: string;
     /** footer content **/
     footer?: string;
+    /** default toc, default is content **/
+    toc?: DocItemToc;
 }
 
 // For Angular Template

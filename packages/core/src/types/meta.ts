@@ -1,4 +1,4 @@
-import { HomeDocMeta } from '../interfaces';
+import { DocItemToc, HeadingLink, HomeDocMeta } from '../interfaces';
 
 export interface ComponentDocMeta {
     title?: string;
@@ -11,7 +11,7 @@ export interface ComponentDocMeta {
     label?: string;
     lastUpdatedTime?: number;
     contributors?: string[];
-    toc?: 'menu' | 'content' | 'hidden' | false;
+    toc?: DocItemToc;
 }
 
 export interface CategoryDocMeta {

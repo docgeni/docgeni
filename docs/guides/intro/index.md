@@ -2,6 +2,7 @@
 title: 介绍
 path: 'intro'
 order: 10
+toc: hidden
 ---
 
 # 什么是 Docgeni？

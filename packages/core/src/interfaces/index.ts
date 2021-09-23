@@ -6,3 +6,4 @@ export * from './locale';
 export * from './module';
 export * from './navigation-item';
 export * from './api-declaration';
+export * from './toc';

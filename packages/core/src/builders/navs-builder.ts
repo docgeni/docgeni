@@ -190,7 +190,7 @@ export class NavsBuilder {
                     subtitle: docFile.meta.subtitle,
                     order: toolkit.utils.isNumber(docFile.meta.order) ? docFile.meta.order : Number.MAX_SAFE_INTEGER,
                     hidden: docFile.meta.hidden,
-                    toc: typeof docFile.meta.toc === 'undefined' ? 'content' : docFile.meta.toc
+                    toc: toolkit.utils.isUndefinedOrNull(docFile.meta.toc) ? this.docgeni.config.toc : docFile.meta.toc
                 };
                 docItem.contentPath = docFile.getRelativeOutputPath();
                 docItem.originPath = docFile.relative;

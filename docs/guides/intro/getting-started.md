@@ -2,6 +2,7 @@
 title: 快速上手
 path: 'getting-started'
 order: 30
+toc: menu
 ---
 # 环境准备
 确保本地成功安装了 [Node](https://nodejs.org/en/) 和 NPM，Node >= 10.0.0。

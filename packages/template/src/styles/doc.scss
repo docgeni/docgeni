@@ -48,6 +48,12 @@ $dg-service-color: #8e24aa;
         }
     }
 
+    &--toc {
+        .dg-doc-viewer-inner-content {
+            max-width: 78%;
+        }
+    }
+
     .dg-doc-viewer-inner {
         display: flex;
         flex: auto;
@@ -58,7 +64,6 @@ $dg-service-color: #8e24aa;
     .dg-doc-viewer-inner-content {
         flex: auto;
         width: 78%;
-        max-width: 78%;
     }
 
     .dg-component-viewer {

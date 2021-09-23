@@ -26,6 +26,7 @@ import { DomPortalOutlet } from '../../services/dom-portal-outlet';
 import { BuiltInComponentDef } from '../../built-in/built-in-component';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
 import { ContentRenderer } from '../content-renderer ';
+import { TocService } from '../../services/toc.service';
 
 @Component({
     selector: 'dg-content-viewer',
@@ -45,7 +46,8 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         private componentFactoryResolver: ComponentFactoryResolver,
         private injector: Injector,
         private viewContainerRef: ViewContainerRef,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private tocService: TocService
     ) {
         super(http);
     }
@@ -65,8 +67,15 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         this.ngZone.onStable.pipe(take(1)).subscribe(() => {
             this.ngZone.run(() => {
                 this.contentRendered.emit(this.elementRef.nativeElement);
+                this.updateTableOfContents(this.elementRef.nativeElement);
             });
         });
+    }
+
+    updateTableOfContents(docViewerContent: HTMLElement) {
+        if (docViewerContent) {
+            this.tocService.generateToc(docViewerContent);
+        }
     }
 
     private loadComponents(selector: string, componentClass: Type<unknown>) {
@@ -108,6 +117,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     ngOnDestroy() {
         this.clearLiveExamples();
 
+        this.tocService.reset();
         super.destroy();
     }
 }
