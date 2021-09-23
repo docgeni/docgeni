@@ -8,11 +8,11 @@ module.exports = {
     logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
     algolia: {
-        appId: 'EQYQQ0VW2G',
-        apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
-        indexName: 'docgeni'
-        // apiKey: '9f7d9d6527ff52ec484e90bb1f256971',
-        // indexName: 'ng_zorro',
+        // appId: 'EQYQQ0VW2G',
+        // apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
+        // indexName: 'docgeni'
+        apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+        indexName: 'docsearch',
     },
     navs: [
         null,

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef, AfterViewInit } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { ChannelItem } from '../../interfaces/public-api';
 import docsearch from 'docsearch.js';
@@ -7,7 +7,7 @@ import docsearch from 'docsearch.js';
     selector: 'dg-navbar',
     templateUrl: './navbar.component.html'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
     @HostBinding('class.dg-navbar') isNavbar = true;
 
     @HostBinding('class.show') showNav = false;
@@ -19,32 +19,14 @@ export class NavbarComponent implements OnInit {
     ngOnInit(): void {
         this.channels = this.navigationService.getChannels();
         this.elementRef.nativeElement.classList.add(this.global.config.theme);
-        this.initAlgolia();
+    }
+
+    ngAfterViewInit() {
+        this.global.initAlgolia('#inputSearch');
     }
 
     toggleNavbar() {
         this.showNav = !this.showNav;
-    }
-
-    initAlgolia() {
-        if (this.global.config.algolia) {
-            const algolia = this.global.config.algolia.appId
-                ? {
-                      appId: this.global.config.algolia.appId,
-                      apiKey: this.global.config.algolia.apiKey,
-                      indexName: this.global.config.algolia.indexName
-                  }
-                : {
-                      apiKey: this.global.config.algolia.apiKey,
-                      indexName: this.global.config.algolia.indexName
-                  };
-
-            docsearch({
-                ...algolia,
-                inputSelector: '#inputSearch',
-                // debug: true
-            });
-        }
     }
 
     search() {}
