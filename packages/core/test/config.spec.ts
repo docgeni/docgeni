@@ -48,7 +48,8 @@ describe('#config', () => {
                 locales: [{ name: 'en-us', key: 'en-us' }],
                 defaultLocale: 'en-us',
                 libs: [],
-                navs: []
+                navs: [],
+                toc: 'content'
             });
         });
 
@@ -115,7 +116,8 @@ describe('#config', () => {
                         isExternal: true
                     }
                 ],
-                footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode'
+                footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode',
+                toc: 'menu'
             };
             const docgeni = new Docgeni({
                 config: customConfig

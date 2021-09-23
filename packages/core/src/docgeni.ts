@@ -162,7 +162,7 @@ export class Docgeni implements DocgeniContext {
         config.defaultLocale = config.defaultLocale || DEFAULT_CONFIG.defaultLocale;
         config.mode = config.mode || DEFAULT_CONFIG.mode;
         config.theme = config.theme || DEFAULT_CONFIG.theme;
-
+        config.toc = config.toc || DEFAULT_CONFIG.toc;
         // set locales from defaultLocale
         if (!config.locales || toolkit.utils.isEmpty(config.locales)) {
             config.locales = [

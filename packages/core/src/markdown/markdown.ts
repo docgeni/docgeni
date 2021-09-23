@@ -3,6 +3,7 @@ import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
 import { highlight } from '../utils';
 import { embed } from './embed';
+import { HeadingLink } from '../interfaces';
 
 marked.use({
     pedantic: false,
@@ -32,6 +33,28 @@ export class Markdown {
             ...options
         });
         return content;
+    }
+
+    static compile<TMate>(
+        src: string,
+        options?: MarkdownRendererOptions
+    ): {
+        html: string;
+        headings?: HeadingLink[];
+        meta: TMate;
+    } {
+        const result = this.parse(src);
+        const renderer = new DocsMarkdownRenderer();
+        const html = marked(result.body, {
+            renderer,
+            highlight,
+            gfm: true,
+            ...options
+        });
+        return {
+            html: html,
+            meta: result.attributes as TMate
+        };
     }
 
     static parse<TAttributes>(content: string): MarkdownParseResult<TAttributes> {

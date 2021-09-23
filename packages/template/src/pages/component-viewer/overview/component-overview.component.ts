@@ -21,11 +21,4 @@ export class ComponentOverviewComponent implements OnInit {
             `overviews/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`
         );
     }
-
-    updateTableOfContents(docViewerContent: HTMLElement, sectionIndex = 0) {
-        if (this.tableOfContents) {
-            this.tableOfContents.addHeaders(this.componentViewer.docItem.title, docViewerContent, sectionIndex);
-            this.tableOfContents.updateScrollPosition();
-        }
-    }
 }

@@ -7,16 +7,12 @@
     <div class="dg-doc-viewer-inner">
       <div class="dg-doc-viewer-inner-content">
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
-        <dg-content-viewer
-          [url]="docItem.contentPath | dgAssetsContentPath"
-          (contentRendered)="updateTableOfContents(docItem.title, $event)"
-        >
-        </dg-content-viewer>
+        <dg-content-viewer [url]="docItem.contentPath | dgAssetsContentPath"> </dg-content-viewer>
         <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
         <hr class="dg-divider dg-mt-4" />
         <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
       </div>
-      <dg-toc #toc></dg-toc>
+      <dg-toc #toc *ngIf="docItem.toc === 'content'"></dg-toc>
     </div>
   </ng-template>
   <dg-footer></dg-footer>

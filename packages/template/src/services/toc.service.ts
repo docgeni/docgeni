@@ -1,0 +1,133 @@
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
+import { fromEvent, Observable, Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { GlobalContext } from './global-context';
+
+export interface TocLink {
+    /* id of the section*/
+    id: string;
+
+    /* header type h1/h2/h3/h4 */
+    type: string;
+
+    /* If the anchor is in view of the page */
+    active: boolean;
+
+    /* name of the anchor */
+    name: string;
+
+    /* top offset px of the anchor */
+    top: number;
+
+    /** level of the section */
+    level?: number;
+
+    element?: HTMLHeadingElement;
+}
+
+let OFFSET = 0;
+
+@Injectable({
+    providedIn: 'root'
+})
+export class TocService {
+    private linksSubject$ = new Subject<TocLink[]>();
+    private activeLinkSubject$ = new Subject<TocLink>();
+    private destroyed$ = new Subject<TocLink[]>();
+    private scrollContainer: HTMLElement & Window;
+    public links: TocLink[];
+    public highestLevel: number;
+    public get links$(): Observable<TocLink[]> {
+        return this.linksSubject$.asObservable();
+    }
+
+    public get activeLink$(): Observable<TocLink> {
+        return this.activeLinkSubject$.asObservable();
+    }
+
+    constructor(@Inject(DOCUMENT) private document: any, global: GlobalContext) {
+        if (global.config.mode === 'lite') {
+            OFFSET = 0;
+        }
+    }
+
+    reset() {
+        this.links = [];
+        this.linksSubject$.next(this.links);
+        this.activeLinkSubject$.next(null);
+        this.highestLevel = 0;
+        this.destroyed$.next();
+        this.destroyed$.complete();
+    }
+
+    generateToc(docViewerContent: HTMLElement, scrollContainer = '.dg-scroll-container') {
+        const headers = Array.from<HTMLHeadingElement>(docViewerContent.querySelectorAll('h1, h2, h3, h4'));
+        const links: TocLink[] = [];
+        headers.forEach(header => {
+            // remove the 'TocLink' icon name from the inner text
+            const name = header.innerText.trim().replace(/^TocLink/, '');
+            const { top } = header.getBoundingClientRect();
+            const headerLevel = parseInt(header.tagName[1], 10);
+            links.push({
+                name,
+                type: header.tagName.toLowerCase(),
+                top,
+                id: header.id,
+                active: false,
+                level: headerLevel,
+                element: header
+            });
+            this.highestLevel = this.highestLevel && headerLevel > this.highestLevel ? this.highestLevel : headerLevel;
+        });
+        this.links = links;
+        this.linksSubject$.next(links);
+        this.initializeScrollContainer(scrollContainer);
+    }
+
+    initializeScrollContainer(scrollContainerSelector: string) {
+        Promise.resolve().then(() => {
+            this.scrollContainer = scrollContainerSelector ? this.document.querySelectorAll(scrollContainerSelector)[0] : window;
+
+            if (this.scrollContainer) {
+                fromEvent(this.scrollContainer, 'scroll')
+                    .pipe(takeUntil(this.destroyed$), debounceTime(10))
+                    .subscribe(() => this.onScroll());
+            }
+            this.onScroll();
+        });
+    }
+
+    onScroll() {
+        const scrollOffset = this.getScrollOffset();
+        let activeItem: TocLink;
+        if (scrollOffset <= OFFSET + 1) {
+            activeItem = this.links[0];
+        } else {
+            this.links.some(link => {
+                if (link.element.offsetTop >= scrollOffset) {
+                    activeItem = link;
+                    return true;
+                }
+                return false;
+            });
+            if (!activeItem) {
+                activeItem = this.links[this.links.length - 1];
+            }
+        }
+
+        this.activeLinkSubject$.next(activeItem || null);
+    }
+
+    private getScrollOffset(): number | void {
+        if (this.scrollContainer) {
+            if (typeof this.scrollContainer.scrollTop !== 'undefined') {
+                return this.scrollContainer.scrollTop + OFFSET;
+            } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
+                return this.scrollContainer.pageYOffset + OFFSET;
+            }
+        } else {
+            return 0;
+        }
+    }
+}
