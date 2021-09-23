@@ -77,8 +77,12 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     }
 
     private async read(): Promise<string> {
-        this.content = await this.host.readFile(this.path);
-        return this.content;
+        try {
+            this.content = await this.host.readFile(this.path);
+            return this.content;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
     public async build() {
