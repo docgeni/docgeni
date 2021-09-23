@@ -2,6 +2,7 @@
 title: Global Configuration
 path: 'global'
 order: 30
+toc: menu
 ---
 
 ## mode
@@ -63,11 +64,31 @@ The output directory of site construction. When the `siteProjectName` is set, th
 
 The configuration directory of the document site, Docgeni will copy the `index.html`, `favicon.ico`, `styles.scss`, `assets`, `.browserslistrc` and `tsconfig.json` files in the folder and overwrite the site directory to implement custom configuration features. For more configuration, please refer to [Customize Site](/guides/advance/customize).
 
+## componentsDir <label>1.1.0+</label>
+- Type: `string`
+- Default: `.docgeni/components`
+
+Storage directory for built-in components, see [Custom Built-in Components](/guides/basic/built-in-components#custom-built-in-components) to add custom built-in components.
+
+
 ## siteProjectName
 - Type: `string`
 - Default: `null`
 
 The project name of Angular custom site. In addition to the default documentation and examples to presentation features, component library development may also need to do some custom features. You can create a new site project in the repository, and then configure the name of the project, Docgeni will copy the generated documents and examples to the project.
+
+## toc <label>1.1.0+</label>
+- Type: `content | menu | false | hidden`
+- Default: `content`
+
+Display mode of table of content, `content` indicates display on the right side of the content area, `menu` indicates that toc will be displayed in the left menu, other values indicate that the toc is not displayed.
+
+## footer <label>1.1.0+</label>
+- Type: `string`
+- Default: `null`
+
+Site footer content, such as:`Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode`, support HTML tags.
+
 ## defaultLocale
 - Type: `string`
 - Default: `en-us`
@@ -96,7 +117,7 @@ module.exports = {
             isExternal: true
         },
         {
-            title: '组件',
+            title: 'Components',
             path: 'components',
             lib: 'alib'
         },

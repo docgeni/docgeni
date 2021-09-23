@@ -1,6 +1,4 @@
-import { HeadingLink } from './toc';
-
-export type DocItemToc = 'menu' | 'content' | 'hidden' | boolean;
+export type DocItemToc = 'menu' | 'content' | 'hidden' | false;
 
 export interface DocItem {
     id: string;

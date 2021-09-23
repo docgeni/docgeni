@@ -18,6 +18,6 @@ export class LocalesSelectorComponent implements OnInit {
 
     localeModelChange() {
         this.global.setLocale(this.locale);
-        location.href = location.href;
+        location.href = location.origin + location.pathname;
     }
 }

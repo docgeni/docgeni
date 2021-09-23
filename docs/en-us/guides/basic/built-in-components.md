@@ -1,18 +1,18 @@
 ---
-title: 内置组件
+title: Built-in Components
 path: 'built-in-components'
 order: 50
 ---
 
-除了在文档中使用示例`<example name="{name}" />`组件外，Docgeni 还提供了如下内置组件作为 Markdown 语法的扩展：
+In addition to using the example `<example name="{name}" />` component in the document, Docgeni also provides the following built-in components as extensions of markdown syntax:
 
 ## Label
-使用`label`可以创建一个标签: <label>Hello Docgeni</label>
+Use 'label' to create a label: <label>Hello Docgeni</label>
 
 ```html
 <label>Hello Docgeni</label>
 ```
-标签提供了如下多种类型：
+The following types of labels are available:
 
 <label type="primary">Label</label>
 <label type="info">Label</label>
@@ -49,7 +49,7 @@ order: 50
 ```
 
 ## Alert
-使用`alert`创建一个提示框，type 可选 `primary`、`info`、`success`、`warning`、`danger`，默认为 `info`。
+Use `alert` to create a alert box. the type can be `primary`, `info`, `success`,`warning`,`danger`, the default type is `info`.
 
 <alert>Hello Docgeni</alert>
 
@@ -75,26 +75,29 @@ order: 50
 
 ## Embed
 
-Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的内容：
+The `embed` component can embed the contents of another markdown document in one markdown document:
+
 ```html
 <embed src="./foo.md"></embed>
 ```
-展示效果如下：
+Preview as below:
 <embed src="./foo.md"></embed>
 
-除了全量引入外还支持指定行号和区间:
+It also supports specifying line numbers and intervals:
+
 ```html
-<!-- 引入 Markdown 文件全部内容 -->
+<!-- Import all contents of markdown file -->
 <embed src="/path/to/some.md"></embed>
 
-<!-- 引入指定行号的 Markdown 文件内容 -->
+<!-- Import the contents of the markdown file with the specified line number -->
 <embed src="/path/to/some.md#L1"></embed>
 
-<!-- 引入指定行号区间的 Markdown 文件部分内容 -->
+<!-- Import some contents of the markdown file in the specified line number range -->
 <embed src="/path/to/some.md#L5-L10"></embed>
 ```
-## 自定义内置组件
-在默认的`.docgeni/components`文件夹下创建自定义内置组件，比如如下结构：
+
+## Custom Built-in Components
+Create custom built-in components in the default dir `.docgeni/components`, such as the following structure:
 
 ```html
 .docgeni
@@ -105,7 +108,7 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
     ├── module.ts
 ```
 
-`color` 组件需要默认导出 Markdown 中使用的选择器 selector 和 component，同时需要继承 `DocgeniBuiltInComponent`并传入 ElementRef，如下示例是自定义设置文字颜色组件：
+The `color` component needs to export the selector used in markdown and component by default, and inherit the `DocgeniBuiltInComponent` and pass it in to elementRef. The following example is the custom text color component:
 
 ```ts
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
@@ -130,8 +133,9 @@ export default {
     component: MyColorComponent
 };
 ```
-在 Markdown 中编写如下语法：
+
+Write the following syntax in markdown:
 ```html
 <my-color color="red">Color</my-color>
 ```
-展示效果：<my-color color="red">Color</my-color>
+Preview: <my-color color="red">Color</my-color>
