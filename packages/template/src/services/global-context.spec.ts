@@ -23,6 +23,10 @@ describe('GlobalContext', () => {
         spectator = createService();
     });
 
+    afterEach(() => {
+        window.localStorage.setItem('docgeni-locale', '');
+    });
+
     it('should create success', () => {
         expect(spectator.service).toBeTruthy();
     });
@@ -53,7 +57,6 @@ describe('GlobalContext', () => {
                 document
             );
             expect(globalContext.locale).toBe('en-us');
-            window.localStorage.setItem('docgeni-locale', '');
         });
 
         it(`should use default locale when cache locale is not in locales`, () => {
@@ -67,7 +70,6 @@ describe('GlobalContext', () => {
                 document
             );
             expect(globalContext.locale).toBe('zh-cn');
-            window.localStorage.setItem('docgeni-locale', '');
         });
 
         it(`should use browser locale`, () => {
@@ -82,7 +84,6 @@ describe('GlobalContext', () => {
                 document
             );
             expect(globalContext.locale).toBe(browserLanguage);
-            window.localStorage.setItem('docgeni-locale', '');
         });
 
         it(`should use url locale`, () => {
@@ -102,7 +103,6 @@ describe('GlobalContext', () => {
                 }
             );
             expect(globalContext.locale).toBe('en-us');
-            window.localStorage.setItem('docgeni-locale', '');
         });
     });
 
