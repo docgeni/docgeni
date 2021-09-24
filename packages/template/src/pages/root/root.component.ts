@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { NavigationService } from './../../services/navigation.service';
 import { Component, HostBinding } from '@angular/core';
 import { GlobalContext } from '../../services/public-api';
@@ -17,7 +17,15 @@ export class ActualRootComponent {
         return this.navigationService.showSidebar;
     }
 
-    constructor(public global: GlobalContext, public navigationService: NavigationService) {}
+    constructor(public global: GlobalContext, public navigationService: NavigationService, route: ActivatedRoute) {
+        // const locale = route.snapshot.paramMap.get('locale');
+        // if (locale && locale !== global.locale) {
+        //     global.setLocale(locale);
+        //     Promise.resolve(() => {
+        //         window.location.href = window.location.host + window.location.pathname;
+        //     });
+        // }
+    }
 }
 
 @Component({

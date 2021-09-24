@@ -27,13 +27,14 @@ describe('GlobalContext', () => {
         expect(spectator.service).toBeTruthy();
     });
 
-    describe('local', () => {
+    describe('locale', () => {
         it(`should set locale from defaultLocale in site config`, () => {
             const globalContext = new GlobalContext(
                 {
                     defaultLocale: 'zh-cn'
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.locale).toBe('zh-cn');
         });
@@ -48,7 +49,8 @@ describe('GlobalContext', () => {
                         { key: 'en-us', name: '英文' }
                     ]
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.locale).toBe('en-us');
             window.localStorage.setItem('docgeni-locale', '');
@@ -61,11 +63,13 @@ describe('GlobalContext', () => {
                     defaultLocale: 'zh-cn',
                     locales: [{ key: 'zh-cn', name: '中文' }]
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.locale).toBe('zh-cn');
             window.localStorage.setItem('docgeni-locale', '');
         });
+
         it(`should use browser locale`, () => {
             const browserLanguage = window.navigator.language;
             const globalContext = new GlobalContext(
@@ -73,10 +77,31 @@ describe('GlobalContext', () => {
                     defaultLocale: '',
                     locales: [{ key: browserLanguage, name: '' }]
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.locale).toBe(browserLanguage);
             window.localStorage.setItem('docgeni-locale', '');
+        });
+
+        it(`should use url locale`, () => {
+            const globalContext = new GlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    locales: [
+                        { key: 'zh-cn', name: '中文' },
+                        { key: 'en-us', name: 'EN' }
+                    ]
+                } as DocgeniSiteConfig,
+                undefined,
+                {
+                    location: {
+                        pathname: '/en-us/hello'
+                    }
+                }
+            );
+            expect(globalContext.locale).toBe('en-us');
+            window.localStorage.clear();
         });
     });
 
@@ -87,7 +112,8 @@ describe('GlobalContext', () => {
                     defaultLocale: 'zh-cn',
                     mode: 'full'
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.config.mode).toBe('full');
             expect(document.documentElement.classList.contains(`dg-mode-full`));
@@ -100,7 +126,8 @@ describe('GlobalContext', () => {
                     defaultLocale: 'zh-cn',
                     mode: 'full'
                 } as DocgeniSiteConfig,
-                undefined
+                undefined,
+                document
             );
             expect(globalContext.config.mode).toBe('lite');
             expect(document.documentElement.classList.contains(`dg-mode-lite`));
@@ -165,7 +192,7 @@ describe('GlobalContext', () => {
         expect(spectator.service.docItems).toEqual(data.docs);
     });
 
-    it('should flatNavs by correct sort', () => {
+    it('should sort doc items success', () => {
         const list: NavigationItem[] = [
             {
                 id: '',
@@ -182,8 +209,8 @@ describe('GlobalContext', () => {
             },
             { id: '', title: '', path: '', items: [{ id: '4', title: '', path: '', hidden: true }] }
         ];
-        const globalContext = new GlobalContext({} as DocgeniSiteConfig, undefined);
-        const result = globalContext.flatNavs(list);
+        const globalContext = new GlobalContext({} as DocgeniSiteConfig, undefined, document);
+        const result = globalContext.sortDocItems(list);
         expect(result.length).toBe(3);
         expect(result.map(item => item.id)).toEqual(['1', '2', '3']);
     });

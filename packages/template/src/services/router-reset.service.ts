@@ -51,6 +51,13 @@ export class RouterResetService {
             }
         ];
         const rootRoutes: Routes = [
+            ...this.global.config.locales.map(locale => {
+                return {
+                    path: locale.key,
+                    component: ActualRootComponent,
+                    children: routes
+                };
+            }),
             {
                 path: '',
                 component: ActualRootComponent,
