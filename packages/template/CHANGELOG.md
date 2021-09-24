@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.7](https://github.com/docgeni/docgeni/compare/v1.1.0-next.6...v1.1.0-next.7) (2021-09-24)
+
+
+### Bug Fixes
+
+* **template:** refresh page with fragment auto scrollToAnchor #OSP-190 ([#243](https://github.com/docgeni/docgeni/issues/243)) ([6ebd0e5](https://github.com/docgeni/docgeni/commit/6ebd0e57307afdb4212cbce00da33b9611da163d)), closes [#OSP-190](https://github.com/docgeni/docgeni/issues/OSP-190)
+
+
+### Features
+
+* **template:** add switch locale by url as /zh-cn/xxx #OSP-86 ([#245](https://github.com/docgeni/docgeni/issues/245)) ([2a0e80c](https://github.com/docgeni/docgeni/commit/2a0e80c4aa5bd041cd0a533fdd721c7f6a243be3)), closes [#OSP-86](https://github.com/docgeni/docgeni/issues/OSP-86)
+* **template:** support content, menu and hidden toc config for doc ([#240](https://github.com/docgeni/docgeni/issues/240)) ([61442ad](https://github.com/docgeni/docgeni/commit/61442ade839b6fe8cd14ff0db7b569414e2840f9))
+
+
+
+
+
 # [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
 
 
