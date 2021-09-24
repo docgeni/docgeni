@@ -32,6 +32,10 @@ describe('GlobalContext', () => {
     });
 
     describe('locale', () => {
+        afterEach(() => {
+            window.localStorage.setItem('docgeni-locale', '');
+        });
+
         it(`should set locale from defaultLocale in site config`, () => {
             const globalContext = new GlobalContext(
                 {
