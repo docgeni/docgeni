@@ -72,6 +72,7 @@ describe('GlobalContext', () => {
 
         it(`should use browser locale`, () => {
             const browserLanguage = window.navigator.language;
+            console.log(`browserLanguage: ${browserLanguage}`);
             const globalContext = new GlobalContext(
                 {
                     defaultLocale: '',
