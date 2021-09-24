@@ -75,7 +75,7 @@ describe('GlobalContext', () => {
             const globalContext = new GlobalContext(
                 {
                     defaultLocale: '',
-                    locales: [{ key: browserLanguage, name: '' }]
+                    locales: [{ key: browserLanguage, name: browserLanguage }]
                 } as DocgeniSiteConfig,
                 undefined,
                 document
@@ -101,7 +101,7 @@ describe('GlobalContext', () => {
                 }
             );
             expect(globalContext.locale).toBe('en-us');
-            window.localStorage.clear();
+            window.localStorage.setItem('docgeni-locale', '');
         });
     });
 
