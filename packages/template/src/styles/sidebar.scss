@@ -2,18 +2,36 @@
     overflow-x: hidden;
 
     .menu-group {
+        cursor: pointer;
         .group-header {
+            display: flex;
+            align-items: center;
             .group-title {
+                flex: 1 1 0;
                 padding: $dg-sidebar-menu-item-space-y 30px;
                 color: $dg-gray-600;
+                padding-right: 0;
+            }
+            .group-arrow {
+                margin-right: 30px;
             }
         }
         .group-body {
             margin-left: $dg-sidebar-item-indent;
+            display: none;
         }
 
         .menu-item {
             margin-left: $dg-sidebar-item-indent;
+        }
+        &.group-group--open {
+            .group-body {
+                display: block;
+            }
+            .group-arrow {
+                transform: rotate(90deg);
+                transition: all 0.15s;
+            }
         }
     }
 
