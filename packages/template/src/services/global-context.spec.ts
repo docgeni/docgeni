@@ -19,15 +19,12 @@ describe('GlobalContext', () => {
         mocks: []
     });
 
-    beforeEach(() => {
-        spectator = createService();
-    });
-
     afterEach(() => {
         window.localStorage.setItem('docgeni-locale', '');
     });
 
     it('should create success', () => {
+        spectator = createService();
         expect(spectator.service).toBeTruthy();
     });
 
@@ -78,7 +75,6 @@ describe('GlobalContext', () => {
 
         it(`should use browser locale`, () => {
             const browserLanguage = window.navigator.language;
-            console.log(`browserLanguage: ${browserLanguage}`);
             const globalContext = new GlobalContext(
                 {
                     defaultLocale: '',
@@ -141,6 +137,7 @@ describe('GlobalContext', () => {
     });
 
     it('should get now timestamp success', () => {
+        spectator = createService();
         const beforeTimestamp = new Date().getTime();
         const expectedTimestamp = spectator.service.getNowTimestamp();
         const afterTimestamp = new Date().getTime();
@@ -149,6 +146,7 @@ describe('GlobalContext', () => {
     });
 
     it('should get navigations success', () => {
+        spectator = createService();
         const mockNowTimestamp = new Date().getTime();
         const getNowTimestampSyp = spyOn(spectator.service, 'getNowTimestamp');
         getNowTimestampSyp.and.returnValue(mockNowTimestamp);

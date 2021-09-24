@@ -35,16 +35,13 @@ export class GlobalContext {
 
     private getLocaleKey() {
         const localeKeyFromUrl = this.getLocalKeyFromUrl();
-        console.log(`localeKeyFromUrl: ${localeKeyFromUrl}`);
         if (localeKeyFromUrl) {
             return localeKeyFromUrl;
         } else {
             const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
-            console.log(`cacheLocale: ${cacheLocale}`);
             const locale = (this.config.locales || []).find(locale => {
                 return languageCompare(locale.key, cacheLocale);
             });
-            console.log(`locale: ${locale ? locale.key : 'none'}`);
             if (locale) {
                 return locale.key;
             } else {
