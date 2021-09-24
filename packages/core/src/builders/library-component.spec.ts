@@ -139,7 +139,7 @@ describe('#library-component', () => {
         }
     });
 
-    fit('should emit lib component with custom name', async () => {
+    it('should emit lib component with custom name', async () => {
         const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
         await context.host.writeFile(`${buttonDirPath}/doc/zh-cn.md`, fixture.src['doc/zh-cn-alias-name.md']);
 
