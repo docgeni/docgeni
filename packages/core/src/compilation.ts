@@ -86,10 +86,11 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
                 const file = this.preparedEmitFiles[path];
                 await this.docgeni.host.writeFile(path, toolkit.utils.isString(file) ? file : file.content);
             }
-            await this.seal();
-            this.hooks.finish.call();
         } catch (error) {
             this.docgeni.logger.error(error);
+        } finally {
+            await this.seal();
+            this.hooks.finish.call();
         }
     }
 

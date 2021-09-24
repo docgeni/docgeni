@@ -1,6 +1,6 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { fromEvent, Observable, Subject } from 'rxjs';
+import { fromEvent, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { GlobalContext } from './global-context';
 
@@ -32,29 +32,32 @@ let OFFSET = 0;
     providedIn: 'root'
 })
 export class TocService {
-    private linksSubject$ = new Subject<TocLink[]>();
-    private activeLinkSubject$ = new Subject<TocLink>();
+    private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
+    private activeLinkSubject$ = new BehaviorSubject<TocLink>(null);
     private destroyed$ = new Subject<TocLink[]>();
     private scrollContainer: HTMLElement & Window;
-    public links: TocLink[];
     public highestLevel: number;
     public get links$(): Observable<TocLink[]> {
         return this.linksSubject$.asObservable();
+    }
+
+    public get links() {
+        return this.linksSubject$.value;
     }
 
     public get activeLink$(): Observable<TocLink> {
         return this.activeLinkSubject$.asObservable();
     }
 
-    constructor(@Inject(DOCUMENT) private document: any, global: GlobalContext) {
+    constructor(@Inject(DOCUMENT) private document: any, global: GlobalContext, private viewportScroller: ViewportScroller) {
         if (global.config.mode === 'lite') {
             OFFSET = 0;
         }
+        this.viewportScroller.setOffset([0, OFFSET]);
     }
 
     reset() {
-        this.links = [];
-        this.linksSubject$.next(this.links);
+        this.linksSubject$.next([]);
         this.activeLinkSubject$.next(null);
         this.highestLevel = 0;
         this.destroyed$.next();
@@ -80,7 +83,6 @@ export class TocService {
             });
             this.highestLevel = this.highestLevel && headerLevel > this.highestLevel ? this.highestLevel : headerLevel;
         });
-        this.links = links;
         this.linksSubject$.next(links);
         this.initializeScrollContainer(scrollContainer);
     }
@@ -117,6 +119,21 @@ export class TocService {
         }
 
         this.activeLinkSubject$.next(activeItem || null);
+    }
+
+    scrollToAnchor(urlFragment: string) {
+        if (this.scrollContainer) {
+            if (this.scrollContainer === this.document.window) {
+                this.viewportScroller.scrollToAnchor(urlFragment);
+            } else {
+                const link = this.links.find(link => {
+                    return link.name === urlFragment;
+                });
+                if (link) {
+                    this.scrollContainer.scrollTop = link.element.offsetTop - 10;
+                }
+            }
+        }
     }
 
     private getScrollOffset(): number | void {

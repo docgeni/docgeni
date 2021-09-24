@@ -12,7 +12,7 @@
         <hr class="dg-divider dg-mt-4" />
         <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
       </div>
-      <dg-toc #toc *ngIf="docItem.toc === 'content'"></dg-toc>
+      <dg-toc *ngIf="hasContentToc"></dg-toc>
     </div>
   </ng-template>
   <dg-footer></dg-footer>
