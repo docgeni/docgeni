@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
 
     @Input() menus: NavigationItem[];
     menuDisplayMap = new Map<NavigationItem, boolean>();
+    readonly initDisplay = true;
     constructor(public global: GlobalContext, private router: Router, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
@@ -26,16 +27,23 @@ export class SidebarComponent implements OnInit {
             return;
         }
         let status = this.menuDisplayMap.get(menu);
-        this.menuDisplayMap.set(menu, !status);
+        this.setMenuOpen(menu, !status);
+    }
+
+    private setMenuOpen(menu: NavigationItem, open: boolean) {
+        this.menuDisplayMap.set(menu, open);
     }
 
     ngOnChanges(): void {
+        if (this.initDisplay) {
+            this.setMenuDisplay(this.menus);
+        }
         this.openToRouter();
     }
 
     private openToRouter() {
         this.findRouter(this.menus).forEach(menu => {
-            this.toggle(menu);
+            this.setMenuOpen(menu, true);
         });
     }
 
@@ -54,5 +62,14 @@ export class SidebarComponent implements OnInit {
             }
         }
         return [];
+    }
+
+    private setMenuDisplay(menus: NavigationItem[]) {
+        for (const menu of menus) {
+            this.menuDisplayMap.set(menu, true);
+            if (menu.items && menu.items.length) {
+                this.setMenuDisplay(menu.items);
+            }
+        }
     }
 }

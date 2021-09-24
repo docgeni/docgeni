@@ -14,11 +14,15 @@
             }
             .group-arrow {
                 margin-right: 30px;
+                transition: all 0.5s;
             }
         }
         .group-body {
             margin-left: $dg-sidebar-item-indent;
-            display: none;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s;
         }
 
         .menu-item {
@@ -26,11 +30,11 @@
         }
         &.group-group--open {
             .group-body {
-                display: block;
+                max-height: 4000px;
+                opacity: 1;
             }
             .group-arrow {
                 transform: rotate(90deg);
-                transition: all 0.15s;
             }
         }
     }
