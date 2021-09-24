@@ -17,13 +17,9 @@ import {
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
-import { Subscription } from 'rxjs';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { take } from 'rxjs/operators';
 import { DomPortalOutlet } from '../../services/dom-portal-outlet';
-import { BuiltInComponentDef } from '../../built-in/built-in-component';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
 import { ContentRenderer } from '../content-renderer ';
 import { TocService } from '../../services/toc.service';

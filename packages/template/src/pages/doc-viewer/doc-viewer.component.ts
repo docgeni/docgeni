@@ -1,6 +1,6 @@
 import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
@@ -19,8 +19,6 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer--single`) isSingle = false;
 
     @HostBinding(`class.dg-doc-viewer--toc`) hasContentToc = false;
-
-    // @HostBinding(`class.dg-scroll-container`) isScrollContainer = this.global.config.mode === 'lite';
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -45,7 +43,8 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private navigationService: NavigationService,
-        private pageTitle: PageTitleService
+        private pageTitle: PageTitleService,
+        private tocService: TocService
     ) {}
 
     ngOnInit(): void {
@@ -73,9 +72,11 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.navigationService.docItem$.pipe(takeUntil(this.destroyed)).subscribe(docItem => {
-            this.hasContentToc = docItem.toc === 'content';
-        });
+        combineLatest([this.navigationService.docItem$, this.tocService.links$])
+            .pipe(takeUntil(this.destroyed))
+            .subscribe(result => {
+                this.hasContentToc = result[0].toc === 'content' && result[1].length > 0;
+            });
     }
 
     close() {

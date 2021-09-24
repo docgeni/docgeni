@@ -53,7 +53,7 @@ toc: menu
 - 类型：`content | menu | hidden | false`
 - 默认：`content`
 
-文档目录显示方式，值为`content`表示在内容区域右侧显示，值为`menu`时会将当前路由的目录展示在左侧菜单中，其他值表示不显示目录，默认为[全局配置](/configuration/global#toc)。
+文档目录显示方式，值为`content`表示在内容区域右侧显示，值为`menu`时会将当前路由的目录展示在左侧菜单中，其他值表示不显示目录，默认为 [全局配置](/configuration/global#toc)。
 
 ## label <label>1.1.0+</label>
 - 类型：`string`

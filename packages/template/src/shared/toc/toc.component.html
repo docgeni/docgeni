@@ -1,7 +1,7 @@
 <div class="dg-toc-container">
   <ul [attr.aria-label]="'Table of Contents'">
     <li
-      *ngFor="let link of tocService.links; let i = index"
+      *ngFor="let link of tocService.links$ | async; let i = index"
       class="dg-level-{{ link.type }}"
       [attr.data-level]="link.level - tocService.highestLevel + 1"
     >
