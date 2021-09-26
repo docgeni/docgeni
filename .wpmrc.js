@@ -14,7 +14,8 @@ module.exports = {
     ],
     skip: {
         changelog: true,
-        branch: true
+        branch: true,
+        commit: true
     },
     commitAll: true,
     hooks: {

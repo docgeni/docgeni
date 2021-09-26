@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
+
+
+### Bug Fixes
+
+* **core:** should generate emitted path use custom name via component doc frontmatter #OSP-193 ([#247](https://github.com/docgeni/docgeni/issues/247)) ([96c123e](https://github.com/docgeni/docgeni/commit/96c123ec7c04dc6ac030253c373738af5c9453c0)), closes [#OSP-193](https://github.com/docgeni/docgeni/issues/OSP-193)
+
+
+
+
+
 # [1.1.0-next.7](https://github.com/docgeni/docgeni/compare/v1.1.0-next.6...v1.1.0-next.7) (2021-09-24)
 
 
