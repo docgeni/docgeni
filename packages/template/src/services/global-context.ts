@@ -108,6 +108,10 @@ export class GlobalContext {
         while (navs.length) {
             const item = navs.shift();
             if (item.items) {
+                item.items.forEach(child => {
+                    child.ancestors = child.ancestors || [];
+                    child.ancestors.push(...(item.ancestors || []), item);
+                });
                 navs.unshift(...item.items);
             } else if (!item.hidden) {
                 list.push(item);

@@ -191,6 +191,9 @@ describe('GlobalContext', () => {
             ]
         };
         req.flush(data);
+        spectator.service.docItems.forEach(docItem => {
+            delete docItem.ancestors;
+        });
         expect(spectator.service.navs).toEqual(data.navs);
         expect(spectator.service.docItems).toEqual(data.docs);
     });
