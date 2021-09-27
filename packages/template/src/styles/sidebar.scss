@@ -29,11 +29,11 @@
             margin-left: $dg-sidebar-item-indent;
         }
         &.group-group--open {
-            .group-body {
+            & > .group-body {
                 max-height: 4000px;
                 opacity: 1;
             }
-            .group-arrow {
+            & > .group-arrow {
                 transform: rotate(90deg);
             }
         }
