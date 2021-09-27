@@ -42,7 +42,7 @@ export class SidebarComponent implements OnInit {
     }
 
     private openToRouter() {
-        this.findRouter(this.menus).forEach(menu => {
+        this.findRouter(this.global.docItems).forEach(menu => {
             this.setMenuOpen(menu, true);
         });
     }
@@ -52,13 +52,7 @@ export class SidebarComponent implements OnInit {
             let urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
             let result = this.router.isActive(urlTree, !menu.examples);
             if (result) {
-                return [menu];
-            }
-            if (menu.items && menu.items.length) {
-                let result = this.findRouter(menu.items);
-                if (result && result.length) {
-                    return [menu, ...result];
-                }
+                return menu.docItemPath;
             }
         }
         return [];

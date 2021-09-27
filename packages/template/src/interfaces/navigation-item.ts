@@ -19,6 +19,8 @@ export interface DocItem {
         };
     };
     toc?: 'menu' | 'content' | 'hidden' | false;
+    /** 文档路径 */
+    docItemPath?: DocItem[];
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -42,6 +44,8 @@ export interface CategoryItem {
         };
     };
     toc?: 'menu' | 'content' | 'hidden' | false;
+    /** 文档路径 */
+    docItemPath?: DocItem[];
 }
 
 export interface ChannelItem {
