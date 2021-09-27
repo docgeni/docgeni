@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { NavigationItem } from '../../interfaces/public-api';
+import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
 import { GlobalContext } from '../../services/global-context';
 
 @Component({
@@ -12,17 +12,17 @@ export class SidebarComponent implements OnInit {
     @HostBinding(`class.dg-sidebar`) isSidebar = true;
 
     @Input() menus: NavigationItem[];
-    menuDisplayMap = new Map<NavigationItem, boolean>();
+    menuDisplayMap = new Map<CategoryItem, boolean>();
     readonly initDisplay = true;
     constructor(public global: GlobalContext, private router: Router, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.router.events.pipe(filter(item => item instanceof NavigationEnd)).subscribe(() => {
-            this.openToRouter();
+            this.updateGroupsCollapseStates();
         });
     }
 
-    toggle(menu: NavigationItem) {
+    toggle(menu: CategoryItem) {
         if (!menu.items || !menu.items.length) {
             return;
         }
@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
         this.setMenuOpen(menu, !status);
     }
 
-    private setMenuOpen(menu: NavigationItem, open: boolean) {
+    private setMenuOpen(menu: CategoryItem, open: boolean) {
         this.menuDisplayMap.set(menu, open);
     }
 
@@ -38,27 +38,25 @@ export class SidebarComponent implements OnInit {
         if (this.initDisplay) {
             this.setMenuDisplay(this.menus);
         }
-        this.openToRouter();
+        this.updateGroupsCollapseStates();
     }
 
-    private openToRouter() {
-        this.findRouter(this.global.docItems).forEach(menu => {
+    private updateGroupsCollapseStates() {
+        let ancestors: CategoryItem[] = [];
+        for (const menu of this.global.docItems) {
+            let urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
+            let result = this.router.isActive(urlTree, !menu.examples);
+            if (result) {
+                ancestors = menu.ancestors;
+                break;
+            }
+        }
+        ancestors.forEach(menu => {
             this.setMenuOpen(menu, true);
         });
     }
 
-    private findRouter(menus: NavigationItem[]): NavigationItem[] {
-        for (const menu of menus) {
-            let urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
-            let result = this.router.isActive(urlTree, !menu.examples);
-            if (result) {
-                return menu.docItemPath;
-            }
-        }
-        return [];
-    }
-
-    private setMenuDisplay(menus: NavigationItem[]) {
+    private setMenuDisplay(menus: CategoryItem[]) {
         for (const menu of menus) {
             this.menuDisplayMap.set(menu, true);
             if (menu.items && menu.items.length) {
