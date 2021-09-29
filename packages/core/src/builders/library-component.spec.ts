@@ -92,7 +92,12 @@ describe('#library-component', () => {
                 path: 'button',
                 importSpecifier: 'alib/button',
                 examples: ['alib-button-basic-example'],
-                overview: true
+                overview: true,
+                originPath: 'alib/button/doc/zh-cn.md',
+                toc: 'content',
+                hidden: false,
+                order: 100,
+                label: { text: 'New', color: '#73D897' }
             })
         );
 
@@ -103,7 +108,11 @@ describe('#library-component', () => {
                 path: 'button',
                 importSpecifier: 'alib/button',
                 examples: ['alib-button-basic-example'],
-                overview: true
+                overview: true,
+                originPath: 'alib/button/doc/en-us.md',
+                toc: 'content',
+                hidden: false,
+                label: { text: 'New', color: '#73D897' }
             })
         );
     });

@@ -22,8 +22,8 @@ $ docgeni init
 $ ng add @docgeni/cli
 ```
 
->使用`docgeni init`初始化需要全局安装 @docgeni/cli `npm install -g @docgeni/cli`<br>
-使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`
+<alert>使用`docgeni init`初始化需要全局安装 @docgeni/cli `npm install -g @docgeni/cli`<br>
+使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`</alert>
 
 执行上述任意一个命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。
 - 第一步选择文档站点模式: `full`或者`lite`(默认`lite`)
