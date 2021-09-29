@@ -29,6 +29,10 @@ describe('GlobalContext', () => {
     });
 
     describe('locale', () => {
+        beforeEach(() => {
+            window.localStorage.setItem('docgeni-locale', '');
+        });
+
         afterEach(() => {
             window.localStorage.setItem('docgeni-locale', '');
         });

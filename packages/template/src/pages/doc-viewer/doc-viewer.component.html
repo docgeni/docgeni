@@ -9,8 +9,7 @@
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
         <dg-content-viewer [url]="docItem.contentPath | dgAssetsContentPath"> </dg-content-viewer>
         <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
-        <hr class="dg-divider dg-mt-4" />
-        <dg-doc-meta [docItem]="docItem"></dg-doc-meta>
+        <dg-doc-meta class="dg-mt-4" [docItem]="docItem"></dg-doc-meta>
       </div>
       <dg-toc *ngIf="hasContentToc"></dg-toc>
     </div>

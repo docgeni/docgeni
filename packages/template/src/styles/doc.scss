@@ -58,7 +58,7 @@ $dg-service-color: #8e24aa;
         display: flex;
         flex: auto;
         align-items: flex-start;
-        // min-height: calc(100% - 60px);
+        min-height: calc(100% - 60px);
     }
 
     .dg-doc-viewer-inner-content {
@@ -306,6 +306,7 @@ $dg-service-color: #8e24aa;
     flex: 0 0 auto;
     align-items: center;
     padding: 25px 0px;
+    border-top: 1px solid $dg-gray-200;
 
     .dg-contributor-avatar-list {
         display: flex;
