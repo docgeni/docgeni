@@ -13,7 +13,7 @@
 
   <ng-template let-menu #navTemplate>
     <ng-container *ngIf="menu.items; else item">
-      <div class="menu-group" *ngIf="menu.items.length > 0" [class.group-group--open]="menuDisplayMap.get(menu)">
+      <div class="menu-group" *ngIf="menu.items.length > 0" [class.menu-group--open]="menuDisplayMap.get(menu)">
         <div class="group-header" (click)="toggle(menu)">
           <div class="group-title" *ngIf="menu.title">
             {{ menu.title }}
