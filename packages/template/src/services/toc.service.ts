@@ -83,14 +83,14 @@ export class TocService {
             });
             this.highestLevel = this.highestLevel && headerLevel > this.highestLevel ? this.highestLevel : headerLevel;
         });
-        this.linksSubject$.next(links);
         this.initializeScrollContainer(scrollContainer);
+        this.linksSubject$.next(links);
     }
 
     initializeScrollContainer(scrollContainerSelector: string) {
-        Promise.resolve().then(() => {
-            this.scrollContainer = scrollContainerSelector ? this.document.querySelectorAll(scrollContainerSelector)[0] : window;
+        this.scrollContainer = scrollContainerSelector ? this.document.querySelectorAll(scrollContainerSelector)[0] : window;
 
+        Promise.resolve().then(() => {
             if (this.scrollContainer) {
                 fromEvent(this.scrollContainer, 'scroll')
                     .pipe(takeUntil(this.destroyed$), debounceTime(10))
@@ -127,7 +127,7 @@ export class TocService {
                 this.viewportScroller.scrollToAnchor(urlFragment);
             } else {
                 const link = this.links.find(link => {
-                    return link.name === urlFragment;
+                    return link.id === urlFragment;
                 });
                 if (link) {
                     this.scrollContainer.scrollTop = link.element.offsetTop - 10;
