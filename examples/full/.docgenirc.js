@@ -61,5 +61,6 @@ module.exports = {
             name: 'EN'
         }
     ],
-    defaultLocale: 'en-us'
+    defaultLocale: 'en-us',
+    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self'
 };
