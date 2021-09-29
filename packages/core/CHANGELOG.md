@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
+
+
+### Bug Fixes
+
+* **template:** add originPath for component doc and display doc-meta only for available doc ([3ee26e2](https://github.com/docgeni/docgeni/commit/3ee26e2e9601424cb700b579bfa3f1d3cf8e203b))
+
+
+
+
+
 # [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
 
 

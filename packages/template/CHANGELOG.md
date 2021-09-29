@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
+
+
+### Bug Fixes
+
+* **template:** add originPath for component doc and display doc-meta only for available doc ([3ee26e2](https://github.com/docgeni/docgeni/commit/3ee26e2e9601424cb700b579bfa3f1d3cf8e203b))
+* **template:** find link use id for scrollToAnchor and init scroll container before set links #OSP-197 ([96fef31](https://github.com/docgeni/docgeni/commit/96fef312c345210ca2b6ba3f2c3912f773e5fd45)), closes [#OSP-197](https://github.com/docgeni/docgeni/issues/OSP-197)
+* **template:** sidebar arrow status ([#248](https://github.com/docgeni/docgeni/issues/248)) ([f31e719](https://github.com/docgeni/docgeni/commit/f31e719928e79b8d7ca47054b4f712ba0b1f46a6))
+
+
+### Features
+
+* **template:** sidebar category support expand and collapse([#244](https://github.com/docgeni/docgeni/issues/244)) ([3538670](https://github.com/docgeni/docgeni/commit/35386705e562761c99494598655d3e2a40dcdc2c))
+
+
+
+
+
 # [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
 
 **Note:** Version bump only for package @docgeni/template
