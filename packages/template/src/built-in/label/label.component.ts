@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
 export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
@@ -8,7 +8,8 @@ export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
     templateUrl: './label.component.html',
     host: {
         class: 'dg-label'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements OnInit {
     private internalType: DocgeniLabelType = 'primary';
