@@ -13,7 +13,8 @@ import {
     EventEmitter,
     OnDestroy,
     Type,
-    EmbeddedViewRef
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ComponentPortal } from '@angular/cdk/portal';
@@ -26,7 +27,8 @@ import { TocService } from '../../services/toc.service';
 
 @Component({
     selector: 'dg-content-viewer',
-    template: 'Loading...'
+    template: 'Loading...',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     @HostBinding('class.dg-doc-content') isDocContent = true;
@@ -43,7 +45,8 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         private injector: Injector,
         private viewContainerRef: ViewContainerRef,
         private ngZone: NgZone,
-        private tocService: TocService
+        private tocService: TocService,
+        private cdr: ChangeDetectorRef
     ) {
         super(http);
     }
@@ -56,6 +59,8 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         getBuiltInComponents().forEach(item => {
             this.loadComponents(item.selector, item.component);
         });
+
+        this.cdr.markForCheck();
 
         // Resolving and creating components dynamically in Angular happens synchronously, but since
         // we want to emit the output if the components are actually rendered completely, we wait
