@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
+
+
+### Bug Fixes
+
+* **core:** add ng command args prod and port ([#252](https://github.com/docgeni/docgeni/issues/252)) ([840bffc](https://github.com/docgeni/docgeni/commit/840bffc1f727fcc6cc03ff9c13527e962f7afecd))
+
+
+
+
+
 # [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
 
 **Note:** Version bump only for package @docgeni/cli

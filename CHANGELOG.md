@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
+
+### Features
+* **template:** sidebar category support expand and collapse([#244](https://github.com/docgeni/docgeni/issues/244)) ([3538670](https://github.com/docgeni/docgeni/commit/35386705e562761c99494598655d3e2a40dcdc2c))
+* **core:** embed support line select ([#238](https://github.com/docgeni/docgeni/issues/238)) ([fdfc34f](https://github.com/docgeni/docgeni/commit/fdfc34f0801caebc8c6f99250e123f7f27ee19fb))
+* **template:** add switch locale by url as /zh-cn/xxx #OSP-86 ([#245](https://github.com/docgeni/docgeni/issues/245)) ([2a0e80c](https://github.com/docgeni/docgeni/commit/2a0e80c4aa5bd041cd0a533fdd721c7f6a243be3)), closes [#OSP-86](https://github.com/docgeni/docgeni/issues/OSP-86)
+* **template:** support content, menu and hidden toc config for doc ([#240](https://github.com/docgeni/docgeni/issues/240)) ([61442ad](https://github.com/docgeni/docgeni/commit/61442ade839b6fe8cd14ff0db7b569414e2840f9))
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+* **core:** add tty progress and compilation feature #OSP-163 ([#232](https://github.com/docgeni/docgeni/issues/232)) ([f635042](https://github.com/docgeni/docgeni/commit/f63504243cafb435117687e2708ed826addbe852)), closes [#OSP-163](https://github.com/docgeni/docgeni/issues/OSP-163)
+* **template:** add page links for pre and next page ([f06a04c](https://github.com/docgeni/docgeni/commit/f06a04c9dc3caebc978e615f0cd7b4457e938712))
+* **template:** doc-meta contributor add title ([8dcb876](https://github.com/docgeni/docgeni/commit/8dcb876afe4c26f7641114909451540a84ac76dc))
+* **core:** add doc-contribution ([#212](https://github.com/docgeni/docgeni/issues/212)) ([7f53eb5](https://github.com/docgeni/docgeni/commit/7f53eb5492caf61ab761bd0ffa97f50aba56225f))
+* **template:** add source-code , copy components and refactor example-viewer use source-code and copy #OSP-181 ([#220](https://github.com/docgeni/docgeni/issues/220)) ([9b5ded4](https://github.com/docgeni/docgeni/commit/9b5ded402c0f7fe5d2b428cd8b5fb0ffe6b4dd6a)), closes [#OSP-181](https://github.com/docgeni/docgeni/issues/OSP-181)
+* **template:** footer support custom ([#222](https://github.com/docgeni/docgeni/issues/222)) ([652a8b1](https://github.com/docgeni/docgeni/commit/652a8b1bac748a66cd8f2430505ced8aa7cbad93))
+* **template:** support open isolated example #OSP-162 ([a700170](https://github.com/docgeni/docgeni/commit/a7001708d4b259fd1f1258a5b6d1fe38aa6d41f9)), closes [#OSP-162](https://github.com/docgeni/docgeni/issues/OSP-162)
+* **template:** update dg-copy default color to $dg-gray-500, hover change to primary ([f33117d](https://github.com/docgeni/docgeni/commit/f33117dbbf3805b0b66af75a43b0f8520a382081))
+* **template:**  add built-in component embed ([517206](https://github.com/docgeni/docgeni/commit/5172061990c3344dd99dcd6ea3b49af2c4e43903))
+* **template:**  add built-in alert ([5454d4c](https://github.com/docgeni/docgeni/commit/5454d4ce1444caa59280b46261d3b8f7371cb9f1))
+* **core:**  add custom components feature ([77c827e](https://github.com/docgeni/docgeni/commit/77c827e2992495669fbcd8b4640f8ffdf0c5030e))
+* **template:** feat(template): add built-in component infrastructure and render them by content-viewer ([3e874e9](https://github.com/docgeni/docgeni/commit/3e874e96228ecebd285df0e627caad6c434147de))
+* **core:** add label for component  ([1ecfbae](https://github.com/docgeni/docgeni/commit/1ecfbae90499927700c3131f4ebea74c664d08cb))
+* **template:** support home page ([e2051f6](https://github.com/docgeni/docgeni/commit/e2051f6f155e7ed0447a927d64c9684f30ecc43c))
+
+
+
+### Bug Fixes
+
+* **core:** add ng command args prod and port ([#252](https://github.com/docgeni/docgeni/issues/252)) ([840bffc](https://github.com/docgeni/docgeni/commit/840bffc1f727fcc6cc03ff9c13527e962f7afecd))
+* **template:** add originPath for component doc and display doc-meta only for available doc ([3ee26e2](https://github.com/docgeni/docgeni/commit/3ee26e2e9601424cb700b579bfa3f1d3cf8e203b))
+* **template:** find link use id for scrollToAnchor and init scroll container before set links #OSP-197 ([96fef31](https://github.com/docgeni/docgeni/commit/96fef312c345210ca2b6ba3f2c3912f773e5fd45)), closes [#OSP-197](https://github.com/docgeni/docgeni/issues/OSP-197)
+* **template:** sidebar arrow status ([#248](https://github.com/docgeni/docgeni/issues/248)) ([f31e719](https://github.com/docgeni/docgeni/commit/f31e719928e79b8d7ca47054b4f712ba0b1f46a6))
+* **core:** should generate emitted path use custom name via component doc frontmatter #OSP-193 ([#247](https://github.com/docgeni/docgeni/issues/247)) ([96c123e](https://github.com/docgeni/docgeni/commit/96c123ec7c04dc6ac030253c373738af5c9453c0)), closes [#OSP-193](https://github.com/docgeni/docgeni/issues/OSP-193)
+* **core:** remove deleted docs from compile parms when delete doc file #OSP-191 ([84cb57e](https://github.com/docgeni/docgeni/commit/84cb57e9d235adcd106965500c245b2bcb967bf5)), closes [#OSP-191](https://github.com/docgeni/docgeni/issues/OSP-191)
+* **template:** refresh page with fragment auto scrollToAnchor #OSP-190 ([#243](https://github.com/docgeni/docgeni/issues/243)) ([6ebd0e5](https://github.com/docgeni/docgeni/commit/6ebd0e57307afdb4212cbce00da33b9611da163d)), closes [#OSP-190](https://github.com/docgeni/docgeni/issues/OSP-190)
+* **core:** fix empty path error when exec ng command for custom site and remove redundant name for lib example path ([90d7776](https://github.com/docgeni/docgeni/commit/90d7776e5158b1bb931dec0fa73824a9c735da33))
+* **template:** update get doc item by path for lite mode ([#229](https://github.com/docgeni/docgeni/issues/229)) ([b2925e0](https://github.com/docgeni/docgeni/commit/b2925e05ef41ad705e7103e5ae9807ce48d36c0d))
+* **toolkit:** git log `names with spaces` error ([#226](https://github.com/docgeni/docgeni/issues/226)) ([056a43c](https://github.com/docgeni/docgeni/commit/056a43c63902fbcb6f747d771e18005fb34c2569))
+* **template:** update get doc item by path for lite mode ([#229](https://github.com/docgeni/docgeni/issues/229)) ([b2925e0](https://github.com/docgeni/docgeni/commit/b2925e05ef41ad705e7103e5ae9807ce48d36c0d))
+* **toolkit:** git log `names with spaces` error ([#226](https://github.com/docgeni/docgeni/issues/226)) ([056a43c](https://github.com/docgeni/docgeni/commit/056a43c63902fbcb6f747d771e18005fb34c2569))
+
+
+
 # [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
 
 
@@ -719,7 +766,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **template:** fix navigations json assets path ([9dcb715](https://github.com/docgeni/docgeni/commit/9dcb715c7ec20505015e081a76802b530396b9e0))
 * **template:** heading font-size change ([098036a](https://github.com/docgeni/docgeni/commit/098036a3d1327779a3414da27d0cd46f9243b620))
-* **template:** replace url when navigate to channel paage from home ([e902f74](https://github.com/docgeni/docgeni/commit/e902f7457378f5b0eb2e8f9a406fbcccbfb55773))
+* **template:** replace url when navigate to channel page from home ([e902f74](https://github.com/docgeni/docgeni/commit/e902f7457378f5b0eb2e8f9a406fbcccbfb55773))
 * **template:** toc active scroll to anchor ([774004e](https://github.com/docgeni/docgeni/commit/774004e7f37dfd55c73c3f414c00874471530851))
 
 
