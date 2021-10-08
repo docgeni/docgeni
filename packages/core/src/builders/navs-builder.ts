@@ -170,7 +170,7 @@ export class NavsBuilder {
                 }
                 const isEntry = isEntryDoc(docFile.name);
                 const isHome = isEntry && !parentItem;
-                if (isEntry && toolkit.utils.isEmpty(docFile.output)) {
+                if (isEntry && !isHome && toolkit.utils.isEmpty(docFile.output)) {
                     continue;
                 }
                 if (isHome && this.docgeni.config.mode === 'full') {
