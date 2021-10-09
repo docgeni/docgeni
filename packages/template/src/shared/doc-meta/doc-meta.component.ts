@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding, OnChanges } from '@angular/core';
 import { DocItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
         class: 'dg-doc-meta'
     }
 })
-export class DocMetaComponent implements OnInit {
+export class DocMetaComponent implements OnChanges {
     @HostBinding(`class.dg-d-none`) hideDocMeta = true;
     @Input() docItem: DocItem;
     lastUpdatedTime: Date;
@@ -19,7 +19,7 @@ export class DocMetaComponent implements OnInit {
 
     constructor(private http: HttpClient, private globalContext: GlobalContext) {}
 
-    ngOnInit() {
+    ngOnChanges(): void {
         if (this.docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
             this.http
                 .get(`https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`, {
@@ -31,6 +31,10 @@ export class DocMetaComponent implements OnInit {
                     this.lastUpdatedTime = new Date(result[0].commit.author.date);
                     this.hideDocMeta = false;
                 });
+        } else {
+            this.contributors = undefined;
+            this.lastUpdatedTime = undefined;
+            this.hideDocMeta = true;
         }
     }
 }
