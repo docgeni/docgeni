@@ -5,6 +5,7 @@ import { ContentViewerComponent } from './content-viewer.component';
 import { DocgeniBuiltInComponent } from '../../built-in/built-in-component';
 import { Component, ElementRef, Input, NgZone } from '@angular/core';
 import { setBuiltInComponents } from '../../built-in/built-in-components';
+import { CONFIG_TOKEN } from '../../services/global-context';
 
 @Component({
     selector: 'my-label',
@@ -30,6 +31,14 @@ describe('#content-viewer', () => {
     const createComponent = createComponentFactory({
         component: ContentViewerComponent,
         imports: [HttpClientTestingModule],
+        providers: [
+            {
+                provide: CONFIG_TOKEN,
+                useValue: {
+                    defaultLocale: 'zh-cn'
+                }
+            }
+        ],
         declarations: [MyLabelComponent]
     });
 

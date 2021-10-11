@@ -1,10 +1,11 @@
 import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
 import { GlobalContext, NavigationService } from '../../services/public-api';
+import { TocService } from '../../services/toc.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 
 @Component({
@@ -17,7 +18,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     // 独立展示的页面，不属于任何频道
     @HostBinding(`class.dg-doc-viewer--single`) isSingle = false;
 
-    // @HostBinding(`class.dg-scroll-container`) isScrollContainer = this.global.config.mode === 'lite';
+    @HostBinding(`class.dg-doc-viewer--toc`) hasContentToc = false;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -43,7 +44,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         private router: Router,
         private navigationService: NavigationService,
         private pageTitle: PageTitleService,
-        private global: GlobalContext
+        private tocService: TocService
     ) {}
 
     ngOnInit(): void {
@@ -71,20 +72,11 @@ export class DocViewerComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.navigationService.docItem$.pipe(takeUntil(this.destroyed)).subscribe(() => {
-            // 100ms timeout is used to allow the page to settle before moving focus for screen readers.
-            // setTimeout(() => this.focusTarget.nativeElement.focus({preventScroll: true}), 100);
-            if (this.tableOfContents) {
-                this.tableOfContents.resetHeaders();
-            }
-        });
-    }
-
-    updateTableOfContents(sectionName: string, docViewerContent: HTMLElement, sectionIndex = 0) {
-        if (this.tableOfContents) {
-            this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
-            this.tableOfContents.updateScrollPosition();
-        }
+        combineLatest([this.navigationService.docItem$, this.tocService.links$])
+            .pipe(takeUntil(this.destroyed))
+            .subscribe(result => {
+                this.hasContentToc = result[0].toc === 'content' && result[1].length > 0;
+            });
     }
 
     close() {

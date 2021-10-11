@@ -35,6 +35,23 @@ export interface NgOption {
     required?: boolean;
 }
 
+const EXTRA_NG_OPTIONS = {
+    prod: {
+        name: 'prod',
+        description: 'Target to build.',
+        type: NgOptionType.Boolean,
+        required: false,
+        aliases: []
+    },
+    port: {
+        name: 'port',
+        description: 'Target to build.',
+        type: NgOptionType.String,
+        required: false,
+        aliases: []
+    }
+};
+
 export function readNgBuildOptions(): NgOption[] {
     return toolkit.fs.readJSONSync(path.resolve(__dirname, './ng-build-options.json'));
 }
@@ -45,6 +62,7 @@ export function readNgServeOptions() {
 
 export function extractAngularCommandArgs(argv: any, options: NgOption[]): Record<string, string> {
     const optionsNameMap = toolkit.utils.keyBy(options, 'name');
+    Object.assign(optionsNameMap, EXTRA_NG_OPTIONS);
     return Object.keys(argv)
         .filter(key => {
             return optionsNameMap[key] || optionsNameMap[toolkit.strings.camelCase(key)];

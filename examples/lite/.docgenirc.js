@@ -13,5 +13,6 @@ module.exports = {
             path: 'https://github.com/docgeni/docgeni',
             isExternal: true
         }
-    ]
+    ],
+    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self'
 };

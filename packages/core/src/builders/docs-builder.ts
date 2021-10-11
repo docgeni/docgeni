@@ -68,9 +68,10 @@ export class DocsBuilder extends FileEmitter {
                     if (event.type === HostWatchEventType.Deleted) {
                         docFile.clear();
                         this.docFiles.delete(event.path);
-                    }
-                    if (docFile) {
-                        addDocs.push(docFile);
+                    } else {
+                        if (docFile) {
+                            addDocs.push(docFile);
+                        }
                     }
                 });
                 this.docgeni.compile({

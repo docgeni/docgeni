@@ -77,18 +77,22 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     }
 
     private async read(): Promise<string> {
-        this.content = await this.host.readFile(this.path);
-        return this.content;
+        try {
+            this.content = await this.host.readFile(this.path);
+            return this.content;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
     public async build() {
         this.emitted = false;
         const content = await this.read();
-        const result = Markdown.parse<TMeta>(content);
-        this.meta = result.attributes;
-        this.output = Markdown.toHTML(result.body, {
+        const result = Markdown.compile<TMeta>(content, {
             absFilePath: this.path
         });
+        this.meta = result.meta;
+        this.output = result.html;
     }
 
     public async emit(destRootPath: string) {

@@ -82,6 +82,17 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
 展示效果如下：
 <embed src="./foo.md"></embed>
 
+除了全量引入外还支持指定行号和区间:
+```html
+<!-- 引入 Markdown 文件全部内容 -->
+<embed src="/path/to/some.md"></embed>
+
+<!-- 引入指定行号的 Markdown 文件内容 -->
+<embed src="/path/to/some.md#L1"></embed>
+
+<!-- 引入指定行号区间的 Markdown 文件部分内容 -->
+<embed src="/path/to/some.md#L5-L10"></embed>
+```
 ## 自定义内置组件
 在默认的`.docgeni/components`文件夹下创建自定义内置组件，比如如下结构：
 

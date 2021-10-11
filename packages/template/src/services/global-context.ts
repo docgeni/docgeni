@@ -2,6 +2,7 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
+import { DOCUMENT } from '@angular/common';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
@@ -22,26 +23,41 @@ export class GlobalContext {
 
     docItems: NavigationItem[];
     homeMeta: HomeDocMeta;
-    readonly owner: string;
-    readonly repo: string;
+    owner: string;
+    repo: string;
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient) {
-        this.locale = config.defaultLocale;
-        const maybeLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
-        const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
-        if (maybeLocale) {
-            const isSupport = (config.locales || []).findIndex(item => languageCompare(item.key, maybeLocale));
+    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient, @Inject(DOCUMENT) private document: any) {
+        this.setup();
+    }
 
-            if (isSupport !== -1) {
-                this.locale = config.locales[isSupport].key;
+    private getLocaleKey() {
+        const localeKeyFromUrl = this.getLocalKeyFromUrl();
+        if (localeKeyFromUrl) {
+            return localeKeyFromUrl;
+        } else {
+            const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
+            const locale = (this.config.locales || []).find(locale => {
+                return languageCompare(locale.key, cacheLocale);
+            });
+            if (locale) {
+                return locale.key;
+            } else {
+                return this.config.defaultLocale;
             }
         }
+    }
+
+    private setup() {
+        this.setLocale(this.getLocaleKey());
+
+        const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
-            config.mode = cacheMode as DocgeniMode;
+            this.config.mode = cacheMode as DocgeniMode;
         }
+
         document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
         const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
         if (pattern && pattern.length === 3) {
@@ -50,7 +66,14 @@ export class GlobalContext {
         }
     }
 
-    setLocale(locale: string) {
+    public getLocalKeyFromUrl() {
+        const localeFromUrl = (this.config.locales || []).find(locale => {
+            return this.document.location.pathname.startsWith(`/${locale.key}`);
+        });
+        return localeFromUrl && localeFromUrl.key;
+    }
+
+    public setLocale(locale: string) {
         this.locale = locale;
         window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
     }
@@ -65,7 +88,7 @@ export class GlobalContext {
                 next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
                     this.homeMeta = response.homeMeta;
                     this.navs = response.navs;
-                    this.docItems = this.flatNavs(this.navs);
+                    this.docItems = this.sortDocItems(this.navs);
                     resolve(response);
                 },
                 error: error => {
@@ -79,12 +102,16 @@ export class GlobalContext {
         return path.startsWith('/') ? `assets/content${path}` : `assets/content/${path}`;
     }
 
-    flatNavs(navs: NavigationItem[]) {
+    sortDocItems(navs: NavigationItem[]) {
         navs = navs.slice();
-        const list = [];
+        const list: NavigationItem[] = [];
         while (navs.length) {
             const item = navs.shift();
             if (item.items) {
+                item.items.forEach(child => {
+                    child.ancestors = child.ancestors || [];
+                    child.ancestors.push(...(item.ancestors || []), item);
+                });
                 navs.unshift(...item.items);
             } else if (!item.hidden) {
                 list.push(item);

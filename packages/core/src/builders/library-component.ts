@@ -25,10 +25,18 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     public absExamplesPath: string;
     public absDocPath: string;
     public absApiPath: string;
-    private absDestSiteContentComponentsPath: string;
-    private absDestAssetsExamplesHighlightedPath: string;
-    private absDestAssetsOverviewsPath: string;
-    private absDestAssetsApiDocsPath: string;
+    private get absDestSiteContentComponentsPath() {
+        return resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}/${this.name}`);
+    }
+    private get absDestAssetsExamplesHighlightedPath() {
+        return resolve(this.docgeni.paths.absSitePath, `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
+    }
+    private get absDestAssetsOverviewsPath() {
+        return resolve(this.docgeni.paths.absSitePath, `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
+    }
+    private get absDestAssetsApiDocsPath() {
+        return resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
+    }
     public examples: LiveExample[];
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
@@ -43,20 +51,6 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         this.absExamplesPath = resolve(this.absPath, this.lib.examplesDir);
         this.absDocPath = resolve(this.absPath, this.lib.docDir);
         this.absApiPath = resolve(this.absPath, this.lib.apiDir);
-
-        this.absDestSiteContentComponentsPath = resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}/${this.name}`);
-        this.absDestAssetsExamplesHighlightedPath = resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH}/${this.lib.name}/${this.name}`
-        );
-        this.absDestAssetsOverviewsPath = resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_OVERVIEWS_RELATIVE_PATH}/${this.lib.name}/${this.name}`
-        );
-        this.absDestAssetsApiDocsPath = resolve(
-            this.docgeni.paths.absSitePath,
-            `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}/${this.name}`
-        );
     }
 
     public async build(): Promise<void> {
@@ -253,7 +247,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
-                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined
+                    label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
+                    originPath: overviewSourceFile && overviewSourceFile.relative,
+                    toc: toolkit.utils.isUndefinedOrNull(this.meta.toc) ? 'content' : this.meta.toc
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }

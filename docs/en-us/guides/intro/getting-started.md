@@ -20,8 +20,8 @@ $ docgeni init
 # or 
 $ ng add @docgeni/cli
 ```
-> Initialization with `docgeni init` requires global installation of @docgeni/cli `npm install -g @docgeni/cli`<br>
-  Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`
+<alert>Initialization with `docgeni init` requires global installation of @docgeni/cli `npm install -g @docgeni/cli`<br>
+  Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`</alert>
 
 After executing any of the above command, the initial configuration of docgeni will be automatically completed, including generating configuration files, NPM startup scripts, and default documents ,etc.
 - The first step is to select the document site mode: `full` or `lite` (default `lite`)

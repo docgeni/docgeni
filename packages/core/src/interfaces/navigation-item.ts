@@ -1,3 +1,5 @@
+export type DocItemToc = 'menu' | 'content' | 'hidden' | false;
+
 export interface DocItem {
     id: string;
     title: string;
@@ -18,6 +20,7 @@ export interface DocItem {
             content?: string;
         };
     };
+    toc?: DocItemToc;
 }
 
 export interface ComponentDocItem extends DocItem {

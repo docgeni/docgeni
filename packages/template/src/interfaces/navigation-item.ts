@@ -18,6 +18,8 @@ export interface DocItem {
             content?: string;
         };
     };
+    toc?: 'menu' | 'content' | 'hidden' | false;
+    ancestors?: CategoryItem[];
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -40,6 +42,8 @@ export interface CategoryItem {
             subtitle?: string;
         };
     };
+    toc?: 'menu' | 'content' | 'hidden' | false;
+    ancestors?: CategoryItem[];
 }
 
 export interface ChannelItem {

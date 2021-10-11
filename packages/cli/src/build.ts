@@ -8,8 +8,7 @@ export const buildCommand: CommandModule = {
     command: ['build'],
     describe: 'Build documentation site',
     builder: yargs => {
-        yargsOptionsGenerate(yargs, readNgBuildOptions());
-        yargs
+        yargsOptionsGenerate(yargs, readNgBuildOptions())
             .option('skip-site', {
                 desc: `skip build site`,
                 boolean: true,

@@ -1,15 +1,29 @@
-<div *ngFor="let linkSection of linkSections" class="dg-toc-container">
-  <!-- <div class="dg-toc-heading">{{ linkSection.name }}</div> -->
-  <nav [attr.aria-label]="linkSection.name + ' Table of Contents'">
-    <a
+<div class="dg-toc-container">
+  <ul [attr.aria-label]="'Table of Contents'">
+    <li
+      *ngFor="let link of tocService.links$ | async; let i = index"
+      class="dg-level-{{ link.type }}"
+      [attr.data-level]="link.level - tocService.highestLevel + 1"
+    >
+      <a
+        class="dg-link"
+        [class.active]="link === activeLink"
+        (click)="onLinkClick($event, link)"
+        [href]="rootUrl + '#' + link.id"
+        [attr.data-level]="link.level - tocService.highestLevel + 1"
+      >
+        {{ link.name }}
+      </a>
+    </li>
+    <!-- <a
       (click)="onLinkClick($event, link)"
       [href]="rootUrl + '#' + link.id"
-      *ngFor="let link of linkSection.links; let i = index"
+      *ngFor="let link of tocService.links; let i = index"
       class="dg-level-{{ link.type }} dg-link"
-      [class.active]="link.active"
-      [attr.data-level]="link.level - highestLevel + 1"
+      [class.active]="link === activeLink"
+      [attr.data-level]="link.level - tocService.highestLevel + 1"
     >
       {{ link.name }}
-    </a>
-  </nav>
+    </a> -->
+  </ul>
 </div>

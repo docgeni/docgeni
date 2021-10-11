@@ -1,6 +1,5 @@
 import { Renderer } from 'marked';
-import { basename, extname } from 'path';
-import * as Prism from 'prismjs';
+import { HeadingLink } from '../interfaces';
 /** Regular expression that matches whitespace. */
 // const whitespaceRegex = /\W+/g;
 const whitespaceRegex = /( |\.|\?)/g;
@@ -18,6 +17,8 @@ export type MarkdownRendererOptions = marked.MarkedOptions & {
  * files that can be used in the Angular Material docs.
  */
 export class DocsMarkdownRenderer extends Renderer<any> {
+    headingLinks: HeadingLink[] = [];
+
     constructor(options?: MarkdownRendererOptions) {
         super(options);
     }
@@ -30,6 +31,12 @@ export class DocsMarkdownRenderer extends Renderer<any> {
     heading(label: string, level: number, raw: string) {
         if (level === 1 || level === 2 || level === 3 || level === 4) {
             const headingId = label.toLowerCase().replace(whitespaceRegex, '-');
+            this.headingLinks.push({
+                id: headingId,
+                name: label,
+                level: level,
+                type: `h${level}`
+            });
             return `
         <h${level} id="${headingId}" class="docs-header-link">
           <span header-link="${headingId}"></span>
@@ -37,7 +44,6 @@ export class DocsMarkdownRenderer extends Renderer<any> {
         </h${level}>
       `;
         }
-
         return `<h${level}>${label}</h${level}>`;
     }
 
