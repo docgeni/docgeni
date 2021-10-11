@@ -78,7 +78,7 @@ module.exports = {
         {
             key: 'zh-cn',
             name: '中文'
-        } 
+        }
     ],
     defaultLocale: 'zh-cn',
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />
