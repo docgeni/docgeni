@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding, ElementRef, AfterViewInit } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { ChannelItem } from '../../interfaces/public-api';
-import docsearch from 'docsearch.js';
 
 @Component({
     selector: 'dg-navbar',

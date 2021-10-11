@@ -140,7 +140,11 @@ export class GlobalContext {
 
             docsearch({
                 ...algolia,
-                inputSelector: searchSelector
+                inputSelector: searchSelector,
+                algoliaOptions: {
+                    hitsPerPage: 5,
+                    facetFilters: [`lang: ${this.locale}`]
+                },
                 // debug: true
             });
         }

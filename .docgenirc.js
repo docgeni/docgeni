@@ -8,11 +8,11 @@ module.exports = {
     logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
     repoUrl: 'https://github.com/docgeni/docgeni',
     algolia: {
-        // appId: 'EQYQQ0VW2G',
-        // apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
-        // indexName: 'docgeni'
-        apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-        indexName: 'docsearch',
+        appId: 'EQYQQ0VW2G',
+        apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
+        indexName: 'docgeni'
+        // apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+        // indexName: 'docsearch',
     },
     navs: [
         null,
@@ -72,13 +72,14 @@ module.exports = {
     ],
     locales: [
         {
-            key: 'en-us',
-            name: 'EN'
-        },
-        {
             key: 'zh-cn',
             name: '中文'
+        },
+        {
+            key: 'en-us',
+            name: 'EN'
         }
+        
     ],
     defaultLocale: 'zh-cn',
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />

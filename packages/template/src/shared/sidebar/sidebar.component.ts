@@ -3,7 +3,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
 import { GlobalContext } from '../../services/global-context';
-import docsearch from 'docsearch.js';
 
 @Component({
     selector: 'dg-sidebar',
