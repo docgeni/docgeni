@@ -2,7 +2,7 @@ import { BuiltInComponentDef } from './built-in-component';
 
 let builtInComponents: BuiltInComponentDef[];
 export function setBuiltInComponents(components: BuiltInComponentDef[]) {
-    builtInComponents = components;
+    builtInComponents = components || [];
 }
 
 export function getBuiltInComponents(): BuiltInComponentDef[] {
@@ -10,5 +10,5 @@ export function getBuiltInComponents(): BuiltInComponentDef[] {
 }
 
 export function addBuiltInComponents(components: BuiltInComponentDef[]) {
-    builtInComponents = builtInComponents.concat(components);
+    builtInComponents = builtInComponents ? builtInComponents.concat(components) : components;
 }

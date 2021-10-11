@@ -13,23 +13,22 @@ import {
     EventEmitter,
     OnDestroy,
     Type,
-    EmbeddedViewRef
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
-import { Subscription } from 'rxjs';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { take } from 'rxjs/operators';
 import { DomPortalOutlet } from '../../services/dom-portal-outlet';
-import { BuiltInComponentDef } from '../../built-in/built-in-component';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
 import { ContentRenderer } from '../content-renderer ';
+import { TocService } from '../../services/toc.service';
 
 @Component({
     selector: 'dg-content-viewer',
-    template: 'Loading...'
+    template: 'Loading...',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     @HostBinding('class.dg-doc-content') isDocContent = true;
@@ -45,7 +44,9 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         private componentFactoryResolver: ComponentFactoryResolver,
         private injector: Injector,
         private viewContainerRef: ViewContainerRef,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private tocService: TocService,
+        private cdr: ChangeDetectorRef
     ) {
         super(http);
     }
@@ -59,14 +60,23 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
             this.loadComponents(item.selector, item.component);
         });
 
+        this.cdr.markForCheck();
+
         // Resolving and creating components dynamically in Angular happens synchronously, but since
         // we want to emit the output if the components are actually rendered completely, we wait
         // until the Angular zone becomes stable.
         this.ngZone.onStable.pipe(take(1)).subscribe(() => {
             this.ngZone.run(() => {
                 this.contentRendered.emit(this.elementRef.nativeElement);
+                this.updateTableOfContents(this.elementRef.nativeElement);
             });
         });
+    }
+
+    updateTableOfContents(docViewerContent: HTMLElement) {
+        if (docViewerContent) {
+            this.tocService.generateToc(docViewerContent);
+        }
     }
 
     private loadComponents(selector: string, componentClass: Type<unknown>) {
@@ -108,6 +118,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     ngOnDestroy() {
         this.clearLiveExamples();
 
+        this.tocService.reset();
         super.destroy();
     }
 }

@@ -16,9 +16,12 @@
 
   <ng-template let-menu #navTemplate>
     <ng-container *ngIf="menu.items; else item">
-      <div class="menu-group" *ngIf="menu.items.length > 0">
-        <div class="group-header">
-          <div class="group-title" *ngIf="menu.title">{{ menu.title }}</div>
+      <div class="menu-group" *ngIf="menu.items.length > 0" [class.menu-group--open]="menuDisplayMap.get(menu)">
+        <div class="group-header" (click)="toggle(menu)">
+          <div class="group-title" *ngIf="menu.title">
+            {{ menu.title }}
+          </div>
+          <div *ngIf="menu.items && menu.items.length" class="group-arrow"><dg-icon [iconName]="'angleRight'"></dg-icon></div>
         </div>
         <div class="group-body">
           <ng-container *ngFor="let menu of menu.items">
@@ -28,9 +31,35 @@
       </div>
     </ng-container>
     <ng-template #item>
-      <div class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !menu.examples }">
-        <a class="item-content" *ngIf="menu.isExternal; else navLink" href="{{ menu.path }}" target="_blank"
-          ><dg-icon iconName="external"></dg-icon> {{ menu.title }}
+      <div class="menu-item" *ngIf="menu.isExternal; else docItemMenu">
+        <a class="item-content" href="{{ menu.path }}" target="_blank"> <dg-icon iconName="external"></dg-icon> {{ menu.title }} </a>
+      </div>
+      <ng-template #docItemMenu>
+        <div
+          class="menu-item"
+          #routerLinkActive="routerLinkActive"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: !menu.examples }"
+        >
+          <a class="item-content" [routerLink]="['./' + menu.path]">
+            <div class="item-content-title">
+              {{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{ menu.subtitle }}</span>
+            </div>
+            <div class="item-content-label">
+              <dg-label *ngIf="menu.label" [labelType]="menu.label.color">{{ menu.label.text }}</dg-label>
+            </div>
+          </a>
+        </div>
+        <dg-toc *ngIf="menu.toc === 'menu' && routerLinkActive.isActive" class="dg-toc-menu"></dg-toc>
+      </ng-template>
+      <!-- <div
+        class="menu-item"
+        #routerLinkActive="routerLinkActive"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: !menu.examples }"
+      >
+        <a class="item-content" *ngIf="menu.isExternal; else navLink" href="{{ menu.path }}" target="_blank">
+          <dg-icon iconName="external"></dg-icon> {{ menu.title }}
         </a>
         <ng-template #navLink>
           <a class="item-content" [routerLink]="['./' + menu.path]"
@@ -41,8 +70,9 @@
               <dg-label *ngIf="menu.label" [labelType]="menu.label.color">{{ menu.label.text }}</dg-label>
             </div>
           </a>
+          <dg-toc *ngIf="menu.toc === 'menu' && routerLinkActive.isActive" class="dg-toc-menu"></dg-toc>
         </ng-template>
-      </div>
+      </div> -->
     </ng-template>
   </ng-template>
 </div>

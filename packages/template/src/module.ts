@@ -8,7 +8,7 @@ import { DocgeniBuiltInModule } from './built-in/built-in.module';
 @NgModule({
     declarations: [],
     imports: [DocgeniSharedModule, DocgeniBuiltInModule, DocgeniPagesModule, HttpClientModule],
-    exports: [DocgeniSharedModule, DocgeniPagesModule],
+    exports: [DocgeniSharedModule, DocgeniPagesModule, DocgeniBuiltInModule],
     providers: [
         {
             provide: CONFIG_TOKEN,

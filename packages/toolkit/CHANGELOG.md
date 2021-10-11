@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [1.1.0-next.7](https://github.com/docgeni/docgeni/compare/v1.1.0-next.6...v1.1.0-next.7) (2021-09-24)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
 # [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
 
 

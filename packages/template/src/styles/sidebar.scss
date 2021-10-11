@@ -2,18 +2,40 @@
     overflow-x: hidden;
 
     .menu-group {
+        cursor: pointer;
         .group-header {
+            display: flex;
+            align-items: center;
             .group-title {
+                flex: 1 1 0;
                 padding: $dg-sidebar-menu-item-space-y 30px;
                 color: $dg-gray-600;
+                padding-right: 0;
+            }
+            .group-arrow {
+                margin-right: 30px;
+                transition: all 0.5s;
             }
         }
         .group-body {
             margin-left: $dg-sidebar-item-indent;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s;
         }
 
         .menu-item {
             margin-left: $dg-sidebar-item-indent;
+        }
+        &.menu-group--open {
+            & > .group-body {
+                max-height: 4000px;
+                opacity: 1;
+            }
+            & > .group-header .group-arrow {
+                transform: rotate(90deg);
+            }
         }
     }
 
@@ -23,15 +45,20 @@
             padding-right: $dg-sidebar-menu-item-space-x/2 - 3px;
         }
         display: block;
-        a {
-            color: $dg-gray-800;
-        }
+        // a {
+        //     color: $dg-gray-800;
+        // }
 
         &.active {
             border-right: 3px solid $dg-primary;
             .item-content {
                 background: rgba($dg-primary, 0.05);
                 color: $dg-primary;
+            }
+            &::after {
+                background-color: $dg-primary;
+                width: 3px;
+                // border-right: 3px solid $dg-primary;
             }
         }
 
@@ -40,12 +67,13 @@
             align-items: center;
             margin: 0 -1000px;
             padding: $dg-sidebar-menu-item-space-y 1000px;
+            color: $dg-gray-800;
             & > .item-content-title {
                 flex: 1 1 0;
             }
             & > .item-content-label {
                 flex: 0 0 auto;
-                background-color: white;
+                background-color: $dg-white;
                 display: flex;
                 border-radius: 4px;
             }
@@ -58,7 +86,7 @@
         }
 
         &:hover {
-            a {
+            .item-content {
                 color: $dg-primary;
                 text-decoration: none;
             }

@@ -92,7 +92,12 @@ describe('#library-component', () => {
                 path: 'button',
                 importSpecifier: 'alib/button',
                 examples: ['alib-button-basic-example'],
-                overview: true
+                overview: true,
+                originPath: 'alib/button/doc/zh-cn.md',
+                toc: 'content',
+                hidden: false,
+                order: 100,
+                label: { text: 'New', color: '#73D897' }
             })
         );
 
@@ -103,18 +108,14 @@ describe('#library-component', () => {
                 path: 'button',
                 importSpecifier: 'alib/button',
                 examples: ['alib-button-basic-example'],
-                overview: true
+                overview: true,
+                originPath: 'alib/button/doc/en-us.md',
+                toc: 'content',
+                hidden: false,
+                label: { text: 'New', color: '#73D897' }
             })
         );
     });
-
-    async function expectFiles(host: DocgeniHost, files: Record<string, string>) {
-        for (const path in files) {
-            expect(await host.exists(path)).toBeTruthy(`${path} is not exists`);
-            const content = await host.readFile(path);
-            expect(content.trim()).toEqual(files[path] ? files[path].trim() : '');
-        }
-    }
 
     it('should emit lib component success', async () => {
         const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
@@ -142,9 +143,50 @@ describe('#library-component', () => {
             `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-ts.html`,
             `${absDestAssetsExamplesHighlightedPath}/button/basic/basic-component-html.html`
         ];
+        for (const example of baseExamples) {
+            expect(await context.host.exists(example)).toEqual(true);
+        }
+    });
 
+    it('should emit lib component with custom name', async () => {
+        const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+        await context.host.writeFile(`${buttonDirPath}/doc/zh-cn.md`, fixture.src['doc/zh-cn-alias-name.md']);
+
+        await component.build();
+
+        const siteRoot = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site/src`;
+        const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
+        const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
+        const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
+
+        await component.emit();
+
+        await expectFiles(context.host, {
+            [`${absDestAssetsOverviewsPath}/alias-button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
+            [`${absDestAssetsOverviewsPath}/alias-button/en-us.html`]: fixture.output['doc/en-us.html'],
+            [`${absDestSiteContentComponentsPath}/alias-button/index.ts`]: replaceButtonToAlias(fixture.output['index.ts']),
+            [`${absDestSiteContentComponentsPath}/alias-button/module.ts`]: fixture.output['module.ts'],
+            [`${absDestSiteContentComponentsPath}/alias-button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
+            [`${absDestSiteContentComponentsPath}/alias-button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
+        });
+        const baseExamples = [
+            `${absDestAssetsExamplesHighlightedPath}/alias-button/basic/basic-component-ts.html`,
+            `${absDestAssetsExamplesHighlightedPath}/alias-button/basic/basic-component-html.html`
+        ];
         for (const example of baseExamples) {
             expect(await context.host.exists(example)).toEqual(true);
         }
     });
 });
+
+async function expectFiles(host: DocgeniHost, files: Record<string, string>) {
+    for (const path in files) {
+        expect(await host.exists(path)).toBeTruthy(`${path} is not exists`);
+        const content = await host.readFile(path);
+        expect(content.trim()).toEqual(files[path] ? files[path].trim() : '', `${path} content is not equal`);
+    }
+}
+
+function replaceButtonToAlias(input: string) {
+    return input.replace(/Button/g, 'AliasButton').replace(/-button/g, '-alias-button');
+}

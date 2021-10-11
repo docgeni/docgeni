@@ -14,11 +14,12 @@ module.exports = {
     ],
     skip: {
         changelog: true,
-        branch: true
+        branch: true,
+        commit: true
     },
     commitAll: true,
     hooks: {
         prepublish: 'yarn run build',
-        postbump: 'yarn sync-template-version --version {{version}} && git add . && lerna version {{version}}'
+        postbump: 'yarn sync-template-version --version {{version}} && lerna version {{version}} && git add .'
     }
 };

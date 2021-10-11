@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { addBuiltInComponents } from "@docgeni/template";
 {{#each components}}
 import {{name}} from './{{name}}/{{name}}.component';
@@ -11,14 +12,20 @@ const COMPONENTS = [
 ];
 
 @NgModule({
+    imports: [
+      CommonModule
+    ],
     declarations: [...COMPONENTS],
     entryComponents: [...COMPONENTS]
 })
 export class CustomComponentsModule {
+  constructor() {
+    addBuiltInComponents([
+      {{#each components}}
+      {{name}},
+      {{/each}}
+    ]);
+  }
 }
 
-addBuiltInComponents([
-{{#each components}}
-    {{name}},
-{{/each}}
-]);
+

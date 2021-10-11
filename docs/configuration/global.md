@@ -2,6 +2,7 @@
 title: 全局配置
 path: 'global'
 order: 30
+toc: menu
 ---
 
 ## mode
@@ -62,13 +63,31 @@ Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markd
 - 类型：`string`
 - 默认：`.docgeni/public`
 
-文档站点的配置目录，Docgeni会把该文件夹下的`index.html`、`favicon.ico`、`styles.scss`、`assets`、`.browserslistrc`和`tsconfig.json`文件拷贝并覆盖站点目录实现自定义配置功能，更多配置参考 [自定义站点](/guides/advance/customize)
+文档站点的配置目录，Docgeni会把该文件夹下的`index.html`、`favicon.ico`、`styles.scss`、`assets`、`.browserslistrc`和`tsconfig.json`文件拷贝并覆盖站点目录实现自定义配置功能，更多配置参考 [自定义站点](/guides/advance/customize)。
+
+## componentsDir <label>1.1.0+</label>
+- 类型：`string`
+- 默认：`.docgeni/components`
+
+内置组件的存储目录，可以参考：[自定义内置组件](/guides/basic/built-in-components#自定义内置组件) 文档添加内置组件。
 
 ## siteProjectName
 - 类型：`string`
 - 默认：`null`
 
-Angular 自定义站点的项目名称，组件库开发除了默认的文档和示例展示功能外，可能还需要做一些自定义的功能，那么可以在仓储中新建一个 site 项目，然后配置此项目的名字，Docgeni 会把生成的文档和示例拷贝到该项目下，自定义站点的更多配置参考 [自定义站点](/guides/advance/customize)
+Angular 自定义站点的项目名称，组件库开发除了默认的文档和示例展示功能外，可能还需要做一些自定义的功能，那么可以在仓储中新建一个 site 项目，然后配置此项目的名字，Docgeni 会把生成的文档和示例拷贝到该项目下，自定义站点的更多配置参考 [自定义站点](/guides/advance/customize)。
+
+## toc <label>1.1.0+</label>
+- 类型：`content | menu | false | hidden`
+- 默认：`content`
+
+文档目录显示方式，值为`content`表示在内容区域右侧显示，值为`menu`时会将当前路由的目录展示在左侧菜单中，其他值表示不显示目录。
+
+## footer <label>1.1.0+</label>
+- 类型：`string`
+- 默认：`null`
+
+文档站点底部内容，可以填写如 `Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode` 等内容，支持 HTML。
 
 ## defaultLocale
 - 类型：`string`

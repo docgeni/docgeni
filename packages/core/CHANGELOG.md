@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
+
+
+### Bug Fixes
+
+* **core:** add ng command args prod and port ([#252](https://github.com/docgeni/docgeni/issues/252)) ([840bffc](https://github.com/docgeni/docgeni/commit/840bffc1f727fcc6cc03ff9c13527e962f7afecd))
+
+
+
+
+
+# [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
+
+
+### Bug Fixes
+
+* **template:** add originPath for component doc and display doc-meta only for available doc ([3ee26e2](https://github.com/docgeni/docgeni/commit/3ee26e2e9601424cb700b579bfa3f1d3cf8e203b))
+
+
+
+
+
+# [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
+
+
+### Bug Fixes
+
+* **core:** should generate emitted path use custom name via component doc frontmatter #OSP-193 ([#247](https://github.com/docgeni/docgeni/issues/247)) ([96c123e](https://github.com/docgeni/docgeni/commit/96c123ec7c04dc6ac030253c373738af5c9453c0)), closes [#OSP-193](https://github.com/docgeni/docgeni/issues/OSP-193)
+
+
+
+
+
+# [1.1.0-next.7](https://github.com/docgeni/docgeni/compare/v1.1.0-next.6...v1.1.0-next.7) (2021-09-24)
+
+
+### Bug Fixes
+
+* **core:** remove deleted docs from compile parms when delete doc file #OSP-191 ([84cb57e](https://github.com/docgeni/docgeni/commit/84cb57e9d235adcd106965500c245b2bcb967bf5)), closes [#OSP-191](https://github.com/docgeni/docgeni/issues/OSP-191)
+* **template:** refresh page with fragment auto scrollToAnchor #OSP-190 ([#243](https://github.com/docgeni/docgeni/issues/243)) ([6ebd0e5](https://github.com/docgeni/docgeni/commit/6ebd0e57307afdb4212cbce00da33b9611da163d)), closes [#OSP-190](https://github.com/docgeni/docgeni/issues/OSP-190)
+
+
+### Features
+
+* **core:** embed support line select ([#238](https://github.com/docgeni/docgeni/issues/238)) ([fdfc34f](https://github.com/docgeni/docgeni/commit/fdfc34f0801caebc8c6f99250e123f7f27ee19fb))
+* **template:** support content, menu and hidden toc config for doc ([#240](https://github.com/docgeni/docgeni/issues/240)) ([61442ad](https://github.com/docgeni/docgeni/commit/61442ade839b6fe8cd14ff0db7b569414e2840f9))
+
+
+
+
+
 # [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
 
 

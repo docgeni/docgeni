@@ -40,13 +40,17 @@ export class ChannelComponent implements OnInit, OnDestroy {
     template: ``
 })
 export class ChannelHomeComponent implements OnInit {
-    constructor(private router: Router, public navigationService: NavigationService, public global: GlobalContext) {}
+    constructor(
+        private router: Router,
+        public navigationService: NavigationService,
+        public global: GlobalContext,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit(): void {
-        const channel = this.navigationService.channel;
         const firstDocItem = this.navigationService.getChannelFirstDocItem();
         if (firstDocItem) {
-            this.router.navigateByUrl(channel.path + '/' + firstDocItem.path, { replaceUrl: true });
+            this.router.navigate(['./' + firstDocItem.path], { replaceUrl: true, relativeTo: this.route });
         }
     }
 }

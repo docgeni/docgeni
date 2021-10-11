@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DocgeniLabelComponent } from './label/label.component';
 import { DocgeniAlertComponent } from './alert/alert.component';
-import './loader';
+import { loadBuiltInComponents } from './loader';
 
 @NgModule({
     declarations: [DocgeniLabelComponent, DocgeniAlertComponent],
@@ -12,5 +12,7 @@ import './loader';
     entryComponents: [DocgeniLabelComponent, DocgeniAlertComponent]
 })
 export class DocgeniBuiltInModule {
-    constructor() {}
+    constructor() {
+        loadBuiltInComponents();
+    }
 }

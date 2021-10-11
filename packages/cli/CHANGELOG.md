@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
+
+
+### Bug Fixes
+
+* **core:** add ng command args prod and port ([#252](https://github.com/docgeni/docgeni/issues/252)) ([840bffc](https://github.com/docgeni/docgeni/commit/840bffc1f727fcc6cc03ff9c13527e962f7afecd))
+
+
+
+
+
+# [1.1.0-next.9](https://github.com/docgeni/docgeni/compare/v1.1.0-next.8...v1.1.0-next.9) (2021-09-29)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [1.1.0-next.8](https://github.com/docgeni/docgeni/compare/v1.1.0-next.7...v1.1.0-next.8) (2021-09-26)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [1.1.0-next.7](https://github.com/docgeni/docgeni/compare/v1.1.0-next.6...v1.1.0-next.7) (2021-09-24)
+
+
+### Features
+
+* **template:** support content, menu and hidden toc config for doc ([#240](https://github.com/docgeni/docgeni/issues/240)) ([61442ad](https://github.com/docgeni/docgeni/commit/61442ade839b6fe8cd14ff0db7b569414e2840f9))
+
+
+
+
+
 # [1.1.0-next.6](https://github.com/docgeni/docgeni/compare/v1.1.0-next.4...v1.1.0-next.6) (2021-09-18)
 
 

@@ -2,6 +2,7 @@
 title: 类库配置
 path: 'lib'
 order: 30
+toc: menu
 ---
 
 ## name
@@ -47,6 +48,19 @@ order: 30
 - 默认：`[]`
 
 `Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除，支持 `glob` 格式。
+
+## labels <label>1.1.0+</label>
+- 类型：`{[id: string]: { text: string; color: string }} | Array<LabelDef>`
+- 默认：`[{ id: 'new', ... }, { id: 'deprecated', ... }, { id: 'experimental', ... }]`
+
+类库配置的标签，默认支持`new`、`deprecated`和`experimental`，通过配置可以覆写或者自定义标签，然后在组件文档中设置对应的 id，默认标签如下所示：
+```json
+{
+  "new": { "text": "New", "color": "#73D897" },
+  "deprecated": { "text": "Deprecated", "color": "#AAAAAA" },
+  "experimental": { "text": "Experimental", "color": "#F6C659" }
+}
+```
 
 ## docDir
 
