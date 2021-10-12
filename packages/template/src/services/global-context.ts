@@ -145,6 +145,14 @@ export class GlobalContext {
                     hitsPerPage: 5,
                     facetFilters: [`lang: ${this.locale}`]
                 },
+                transformData: (hits: any) => {
+                    if (location.href.indexOf(this.locale) < 0) {
+                        hits.forEach((hit: any) => {
+                            hit.url = hit.url.replace(`${this.locale}/`, '');
+                        });
+                    }
+                    return hits;
+                }
                 // debug: true
             });
         }

@@ -7,8 +7,6 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocHeaderComponent implements OnInit, OnDestroy {
-    @HostBinding(`class.dg-doc-header`) isHeader = true;
-
     @Input() title: string;
 
     @Input() subtitle: string;

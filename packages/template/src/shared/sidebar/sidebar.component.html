@@ -4,7 +4,8 @@
   <span class="description" *ngIf="global.config.description">{{ global.config.description }}</span>
 </div>
 <div class="dg-search-container" *ngIf="showSearch">
-  <input class="search" id="sidebarInputSearch" placeholder="搜索" />
+  <dg-icon iconName="search" class="search-icon"></dg-icon>
+  <input class="search" id="sidebarInputSearch" [placeholder]="'SEARCH' | dgTranslate" />
 </div>
 <div class="dg-menu">
   <ng-container *ngFor="let menu of menus" class="menu-item">

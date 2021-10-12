@@ -1,9 +1,12 @@
-<a
-  class="sidebar-toggler"
-  href="javascript:;"
-  (click)="toggleSidebar($event)"
-  *ngIf="((global.config.mode | dgIsFull) && navigationService.channel) || (global.config.mode | dgIsLite)"
-  ><dg-icon iconName="list"></dg-icon
-></a>
-<h1 class="title">{{ title }}</h1>
-<h1 class="subtitle" *ngIf="subtitle">{{ subtitle }}</h1>
+<header class="dg-doc-header">
+  <a
+    class="sidebar-toggler"
+    href="javascript:;"
+    (click)="toggleSidebar($event)"
+    *ngIf="((global.config.mode | dgIsFull) && navigationService.channel) || (global.config.mode | dgIsLite)"
+    ><dg-icon iconName="list"></dg-icon
+  ></a>
+
+  <h1 class="title">{{ title }}</h1>
+  <h1 class="subtitle" *ngIf="subtitle">{{ subtitle }}</h1>
+</header>

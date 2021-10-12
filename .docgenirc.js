@@ -11,8 +11,6 @@ module.exports = {
         appId: 'EQYQQ0VW2G',
         apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
         indexName: 'docgeni'
-        // apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-        // indexName: 'docsearch',
     },
     navs: [
         null,
