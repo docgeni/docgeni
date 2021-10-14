@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/docgeni/docgeni/compare/v1.1.0...v1.1.1) (2021-10-14)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
 # [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
 
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/docgeni/docgeni/compare/v1.1.0...v1.1.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* doc-meta not change ([cad3946](https://github.com/docgeni/docgeni/commit/cad39465fc785be2f35cd0236cc7a7b209201849))
+* **template:** move load built-in components to module constructor and invoke cdr.markForCheck #OSP-200 ([92380fb](https://github.com/docgeni/docgeni/commit/92380fb83625329686d2f7c6d568c9aa1a5f4c15)), closes [#OSP-200](https://github.com/docgeni/docgeni/issues/OSP-200)
+
+
+### Features
+
+* **template:** search docs support algolia #OSP-5 ([#239](https://github.com/docgeni/docgeni/issues/239)) ([79a2912](https://github.com/docgeni/docgeni/commit/79a291232879b85b578cc3fa48802e79507ed073)), closes [#OSP-5](https://github.com/docgeni/docgeni/issues/OSP-5) [#OSP-5](https://github.com/docgeni/docgeni/issues/OSP-5) [#OSP-5](https://github.com/docgeni/docgeni/issues/OSP-5)
+
+
+
+
+
 # [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
 
 **Note:** Version bump only for package @docgeni/template
