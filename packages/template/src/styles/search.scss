@@ -1,0 +1,22 @@
+.dg-search-container {
+    position: relative;
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        z-index: 1;
+        color: $dg-gray-500;
+        pointer-events: none;
+        font-size: $dg-font-size-base;
+    }
+
+    .search {
+        padding: 0.532rem 10px 0.532rem 30px;
+        outline: none;
+        border: 1px solid $dg-gray-200;
+        border-radius: 18px;
+        -webkit-appearance: none;
+    }
+}

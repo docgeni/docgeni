@@ -45,6 +45,14 @@ export interface DocgeniNavItem {
     };
 }
 
+export interface DocgeniAlgoliaConfig {
+    appId?: string;
+
+    apiKey: string;
+
+    indexName: string;
+}
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;
@@ -82,6 +90,8 @@ export interface DocgeniConfig {
     defaultLocale?: string;
     /** footer content **/
     footer?: string;
+    /** algolia config */
+    algolia?: DocgeniAlgoliaConfig;
     /** default toc, default is content **/
     toc?: DocItemToc;
 }
@@ -114,4 +124,6 @@ export interface DocgeniSiteConfig {
     defaultLocale?: string;
     /** footer content **/
     footer?: string;
+    /** algolia config */
+    algolia?: DocgeniAlgoliaConfig;
 }
