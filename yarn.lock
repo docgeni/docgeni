@@ -2965,12 +2965,12 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@worktile/pkg-manager@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.4.tgz#b1a9db7598802db16e18111763895e64ee6e720b"
-  integrity sha512-YFvvnB2OqyTpY1OOE1XaPpkMrRwsTObi5Sv5mxv4nQE9Jc3Yxvzk7vz8DuoAAicCqy95VSH81zt7Jw4Xj8hZ4A==
+"@worktile/pkg-manager@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.5.tgz#e585054519e7aa64000fdc3c7f9f907dd124ed5c"
+  integrity sha512-sy/dsUG4+WnB0Dj6iJjhWd4tQKKGKIW+2pJljDmM2xr3oy0LXKLceyfm5Zvn2ut3GmXmH/Mw/31dSarVwRkdpg==
   dependencies:
-    "@docgeni/toolkit" "^1.0.2"
+    "@docgeni/toolkit" "^1.1.0"
     "@types/shelljs" "^0.8.8"
     cosmiconfig "^7.0.0"
     inquirer "^8.1.1"
