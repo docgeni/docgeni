@@ -8,6 +8,10 @@
     "@angular/common": "*",
     "@angular/core": "*",
     "@angular/router": "*",
-    "tslib": "*"
+    "tslib": "*",
+    "docsearch.js": "*"
+  },
+  "dependencies": {
+    "docsearch.js": "2.6.3"
   }
 }
