@@ -2,11 +2,14 @@
 
 > Cli of Docgeni
 
-## Usage
+## Installation
 
 ```
 npm i @docgeni/cli --save-dev
-or 
+// or 
 yarn add @docgeni/cli -D
 ```
 
+## Getting Started
+
+https://docgeni.org/guides/intro/getting-started
