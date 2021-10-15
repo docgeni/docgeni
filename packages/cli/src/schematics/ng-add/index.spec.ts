@@ -95,6 +95,6 @@ describe('ng-add Schematic', () => {
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         expect(workspaceTree.exists('.gitignore')).toBeTruthy();
         const gitignoreContent = workspaceTree.read('.gitignore').toString();
-        expect(gitignoreContent).toContain('.docgeni/site');
+        expect(gitignoreContent.split('\n').some(item => item === '.docgeni/site')).toBeTruthy();
     });
 });

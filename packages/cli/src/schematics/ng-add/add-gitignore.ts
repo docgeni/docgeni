@@ -11,7 +11,7 @@ export class AddGitignore {
             } else {
                 const content = host.read(fileName).toString();
                 const recorder = host.beginUpdate(fileName);
-                recorder.insertRight(content.length, appendContent);
+                recorder.insertRight(content.length, '\n' + appendContent);
                 host.commitUpdate(recorder);
             }
             return host;
