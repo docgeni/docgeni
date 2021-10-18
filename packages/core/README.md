@@ -4,7 +4,7 @@
 
 ## Usage
 
-```
+```ts
 const { Docgeni } = require('@docgeni/core');
 
 const docgeni = new Docgeni(options);

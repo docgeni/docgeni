@@ -1,10 +1,10 @@
 {
   "name": "@docgeni/toolkit",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Docgeni - Toolkit Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "types": "lib/index.d.ts",
   "publishConfig": {

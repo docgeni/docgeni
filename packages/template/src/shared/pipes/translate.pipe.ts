@@ -9,7 +9,8 @@ const TRANSLATES = {
         HOME: '首页',
         LAST_UPDATED_TIME: '最后更新',
         PRE_PAGE: '上一篇',
-        NEXT_PAGE: '下一篇'
+        NEXT_PAGE: '下一篇',
+        SEARCH: '搜索'
     },
     'en-us': {
         OVERVIEW: 'Overview',
@@ -17,7 +18,8 @@ const TRANSLATES = {
         HOME: 'Home',
         LAST_UPDATED_TIME: 'Last updated',
         PRE_PAGE: 'Previous',
-        NEXT_PAGE: 'Next'
+        NEXT_PAGE: 'Next',
+        SEARCH: 'Search'
     }
 };
 @Pipe({ name: 'dgTranslate' })

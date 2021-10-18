@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/docgeni/docgeni/compare/v1.1.1...v1.1.2) (2021-10-15)
+
+
+### Features
+
+* **cli:** remove angular dependencies from cli #OSP-203 ([9144978](https://github.com/docgeni/docgeni/commit/914497895befb1b4ed4c3c81996024b61f0a1e83)), closes [#OSP-203](https://github.com/docgeni/docgeni/issues/OSP-203)
+
+
+
+
+
 # [1.1.0](https://github.com/docgeni/docgeni/compare/v1.1.0-next.9...v1.1.0) (2021-09-30)
 
 **Note:** Version bump only for package @docgeni/toolkit
