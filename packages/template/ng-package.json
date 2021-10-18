@@ -9,5 +9,8 @@
     "styleIncludePaths": [
       "src/assets/styles"
     ]
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "docsearch.js"
+  ]
 }
