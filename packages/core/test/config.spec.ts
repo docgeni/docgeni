@@ -1,5 +1,4 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
-import { expect } from 'chai';
 import { toolkit } from '@docgeni/toolkit';
 import { createTestDocgeniHost, expectThrowAsync } from '../src/testing';
 import { DocgeniHost } from '../src/docgeni-host';
@@ -16,30 +15,28 @@ describe('#config', () => {
     describe('normalize', () => {
         it('should normalize default config success', async () => {
             const docgeni = new Docgeni({});
-            expect(docgeni.config.defaultLocale).eq(DEFAULT_CONFIG.defaultLocale);
-            expect(docgeni.config.title).eq(DEFAULT_CONFIG.title);
-            expect(docgeni.config.description).eq(DEFAULT_CONFIG.description);
-            expect(docgeni.config.mode).eq(DEFAULT_CONFIG.mode);
-            expect(docgeni.config.theme).eq(DEFAULT_CONFIG.theme);
-            expect(docgeni.config.baseHref).eq(DEFAULT_CONFIG.baseHref);
-            expect(docgeni.config.docsDir).eq(DEFAULT_CONFIG.docsDir);
-            expect(docgeni.config.siteDir).eq(DEFAULT_CONFIG.siteDir);
-            expect(docgeni.config.publicDir).eq(DEFAULT_CONFIG.publicDir);
-            expect(docgeni.config.outputDir).eq(DEFAULT_CONFIG.outputDir);
-            expect(docgeni.config.libs).deep.eq([]);
-            expect(docgeni.config.locales).deep.eq([
+            expect(docgeni.config.defaultLocale).toEqual(DEFAULT_CONFIG.defaultLocale);
+            expect(docgeni.config.title).toEqual(DEFAULT_CONFIG.title);
+            expect(docgeni.config.description).toEqual(DEFAULT_CONFIG.description);
+            expect(docgeni.config.mode).toEqual(DEFAULT_CONFIG.mode);
+            expect(docgeni.config.theme).toEqual(DEFAULT_CONFIG.theme);
+            expect(docgeni.config.docsDir).toEqual(DEFAULT_CONFIG.docsDir);
+            expect(docgeni.config.siteDir).toEqual(DEFAULT_CONFIG.siteDir);
+            expect(docgeni.config.publicDir).toEqual(DEFAULT_CONFIG.publicDir);
+            expect(docgeni.config.outputDir).toEqual(DEFAULT_CONFIG.outputDir);
+            expect(docgeni.config.libs).toEqual([]);
+            expect(docgeni.config.locales).toEqual([
                 {
                     name: DEFAULT_CONFIG.defaultLocale,
                     key: DEFAULT_CONFIG.defaultLocale
                 }
             ]);
 
-            expect(docgeni.config).deep.eq({
+            expect(docgeni.config).toEqual({
                 title: 'Docgeni',
                 description: '',
                 mode: 'lite',
                 theme: 'default',
-                baseHref: '/',
                 docsDir: 'docs',
                 siteDir: '.docgeni/site',
                 componentsDir: '.docgeni/components',
@@ -123,7 +120,7 @@ describe('#config', () => {
                 config: customConfig
             });
 
-            expect(docgeni.config).deep.eq({
+            expect(docgeni.config).toEqual({
                 ...customConfig
             });
         });
@@ -139,7 +136,7 @@ describe('#config', () => {
                     ]
                 }
             });
-            expect(docgeni.config.locales).deep.eq([
+            expect(docgeni.config.locales).toEqual([
                 {
                     key: 'en-us',
                     name: 'EN'

@@ -5,7 +5,6 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     description: '',
     mode: 'lite',
     theme: 'default',
-    baseHref: '/',
     docsDir: 'docs',
     siteDir: '.docgeni/site',
     componentsDir: '.docgeni/components',
