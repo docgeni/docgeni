@@ -2,7 +2,7 @@ import { createDocgeniHost, DocgeniHost } from './docgeni-host';
 import { virtualFs, getSystemPath } from '@angular-devkit/core';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, DocgeniSiteConfig } from './interfaces';
+import { DocgeniConfig, NavigationItem } from './interfaces';
 import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
@@ -48,7 +48,8 @@ export class Docgeni implements DocgeniContext {
             libraryBuild: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
             libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
             compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
-            emit: new AsyncSeriesHook<void>([])
+            emit: new AsyncSeriesHook<void>([]),
+            navsEmitSucceed: new SyncHook<NavsBuilder, Record<string, NavigationItem[]>>(['navsBuilder', 'config'])
         };
     }
 
@@ -69,7 +70,8 @@ export class Docgeni implements DocgeniContext {
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
-            require.resolve('./angular/site-plugin')
+            require.resolve('./angular/site-plugin'),
+            require.resolve('./plugins/sitemap')
         ];
         this.version = options.version;
 

@@ -45,6 +45,10 @@ export interface DocgeniNavItem {
     };
 }
 
+export interface DocgeniSitemapConfig {
+    host?: string;
+}
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;
@@ -82,6 +86,8 @@ export interface DocgeniConfig {
     defaultLocale?: string;
     /** footer content **/
     footer?: string;
+    /** sitemap config */
+    sitemap?: DocgeniSitemapConfig;
 }
 
 // For Angular Template

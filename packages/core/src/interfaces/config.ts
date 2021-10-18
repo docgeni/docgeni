@@ -45,6 +45,10 @@ export interface DocgeniNavItem {
     };
 }
 
+export interface DocgeniSitemapConfig {
+    host?: string;
+}
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;
@@ -84,6 +88,8 @@ export interface DocgeniConfig {
     footer?: string;
     /** default toc, default is content **/
     toc?: DocItemToc;
+    /** sitemap config */
+    sitemap?: DocgeniSitemapConfig;
 }
 
 // For Angular Template
