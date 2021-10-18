@@ -60,6 +60,7 @@ export class NavsBuilder {
             `${this.docgeni.paths.absSiteContentPath}/navigations.json`,
             JSON.stringify(localeNavsMap, null, 2)
         );
+        this.docgeni.hooks.navsEmitSucceed.call(this, localeNavsMap);
     }
 
     private getLocaleDocsNavs(locale: string) {
