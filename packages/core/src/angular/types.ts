@@ -2,7 +2,6 @@ export interface AngularCommandOptions {
     port?: string | number;
     prod?: boolean;
     deployUrl?: string;
-    baseHref?: string;
 }
 
 export interface SiteProject {
