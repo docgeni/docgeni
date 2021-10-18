@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/core",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Docgeni - Core Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -32,6 +32,7 @@
     "@angular-devkit/schematics": "~11.2.14",
     "@docgeni/toolkit": "^1.1.2",
     "@types/text-table": "^0.2.2",
+    "ansi-colors": "^4.1.1",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
     "fancy-log": "^1.3.3",
@@ -47,8 +48,7 @@
     "through2": "^3.0.1",
     "ts-morph": "^7.0.2",
     "vinyl": "^2.2.0",
-    "vinyl-fs": "^3.0.3",
-    "ansi-colors": "^4.1.1"
+    "vinyl-fs": "^3.0.3"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",

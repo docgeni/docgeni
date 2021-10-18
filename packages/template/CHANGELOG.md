@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/docgeni/docgeni/compare/v1.1.2...v1.1.3) (2021-10-18)
+
+
+### Bug Fixes
+
+* **template:** add docsearch.js dependent to @docgeni/template #OSP-205 ([c2bfc66](https://github.com/docgeni/docgeni/commit/c2bfc66159cfb38443acecaae7ab6408b3bd9cf6)), closes [#OSP-205](https://github.com/docgeni/docgeni/issues/OSP-205)
+
+
+
+
+
 ## [1.1.2](https://github.com/docgeni/docgeni/compare/v1.1.1...v1.1.2) (2021-10-15)
 
 **Note:** Version bump only for package @docgeni/template

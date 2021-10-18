@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/docgeni/docgeni/compare/v1.1.2...v1.1.3) (2021-10-18)
+
+
+### Bug Fixes
+
+* **core:** add ansi-colors to dependencies of core #OSP-209 ([9cd9e72](https://github.com/docgeni/docgeni/commit/9cd9e72d4391e5c401aa0311f6f4d443e1f8fff5)), closes [#OSP-209](https://github.com/docgeni/docgeni/issues/OSP-209)
+
+
+
+
+
 ## [1.1.2](https://github.com/docgeni/docgeni/compare/v1.1.1...v1.1.2) (2021-10-15)
 
 
