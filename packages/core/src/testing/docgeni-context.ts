@@ -46,7 +46,10 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
             siteDir: '.docgeni/site',
             outputDir: 'dist/docgeni-site',
             publicDir: '.docgeni/public',
-            defaultLocale: 'zh-cn'
+            defaultLocale: 'zh-cn',
+            sitemap: {
+                host: 'https://test.org'
+            }
         },
         watch: options.watch,
         paths: paths,

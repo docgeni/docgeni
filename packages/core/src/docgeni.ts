@@ -2,7 +2,7 @@ import { createDocgeniHost, DocgeniHost } from './docgeni-host';
 import { virtualFs, getSystemPath } from '@angular-devkit/core';
 import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
-import { DocgeniConfig, NavigationItem } from './interfaces';
+import { DocgeniConfig, DocItem } from './interfaces';
 import path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 
@@ -49,7 +49,7 @@ export class Docgeni implements DocgeniContext {
             libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
             compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
             emit: new AsyncSeriesHook<void>([]),
-            navsEmitSucceed: new SyncHook<NavsBuilder, Record<string, NavigationItem[]>>(['navsBuilder', 'config'])
+            navsEmitSucceed: new SyncHook<NavsBuilder, Record<string, DocItem[]>>(['navsBuilder', 'config'])
         };
     }
 
