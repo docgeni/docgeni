@@ -47,7 +47,8 @@
     "through2": "^3.0.1",
     "ts-morph": "^7.0.2",
     "vinyl": "^2.2.0",
-    "vinyl-fs": "^3.0.3"
+    "vinyl-fs": "^3.0.3",
+    "ansi-colors": "^4.1.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
