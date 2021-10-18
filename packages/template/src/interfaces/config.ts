@@ -62,7 +62,7 @@ export interface DocgeniConfig {
     mode?: DocgeniMode;
     /** Theme, angular navbar style and default style **/
     theme?: 'default' | 'angular';
-    /** Base href of documentation, default is / **/
+    /** Base href of documentation, default null / **/
     baseHref?: string;
     /** Logo url*/
     logoUrl?: string;
