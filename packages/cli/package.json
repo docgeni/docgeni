@@ -31,6 +31,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
+    "@angular-devkit/schematics-cli": "^0.1002.3",
     "@docgeni/core": "^1.1.2",
     "@docgeni/template": "^1.1.2",
     "@docgeni/toolkit": "^1.1.2",

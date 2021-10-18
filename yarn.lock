@@ -155,7 +155,7 @@
     rxjs "6.6.2"
     symbol-observable "1.2.0"
 
-"@angular-devkit/schematics@10.2.1", "@angular-devkit/schematics@~10.2.1":
+"@angular-devkit/schematics@10.2.1":
   version "10.2.1"
   resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-10.2.1.tgz#1d1aaf3875c9ed5eb3ad97af993af39fe9ed10a9"
   integrity sha512-0oMhB1eM7hg5Xf4U7r193zrNTGyxfzl2okBsLJPuVmkb3KCBGQOyHYmU5HjDNadPc5iCFc+Xo2+DSDvXGuLmaA==
@@ -2393,15 +2393,6 @@
   dependencies:
     "@angular-devkit/core" "10.2.1"
     "@angular-devkit/schematics" "10.2.1"
-    jsonc-parser "2.3.0"
-
-"@schematics/angular@^10.0.0":
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/@schematics/angular/-/angular-10.2.3.tgz#a5ea7e9bc17fbfb9b1c5f760f44bc4a7b0b18834"
-  integrity sha512-xcnfH5XMmGcs33VHm2cu0+4g3rkfSD+qpiKFjfg7KGC4lLoOKSED4ZnjzIYwcQ6QN4gTpAvlZKxI8zO7NkKv0A==
-  dependencies:
-    "@angular-devkit/core" "10.2.3"
-    "@angular-devkit/schematics" "10.2.3"
     jsonc-parser "2.3.0"
 
 "@schematics/schematics@0.1002.3":
