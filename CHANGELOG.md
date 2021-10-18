@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
+
+
+### Bug Fixes
+
+* **cli:** add "@schematics/angular" to dependencies ([2574537](https://github.com/docgeni/docgeni/commit/2574537800571cf0b6ac620db225eac7a52aa5ea))
+* **core:** remove default value / for base-href #OSP-210 ([142c349](https://github.com/docgeni/docgeni/commit/142c3493930165e8192c1938f5df4e446fa5d04f)), closes [#OSP-210](https://github.com/docgeni/docgeni/issues/OSP-210)
+
+
+
+
+
 ## [1.1.3](https://github.com/docgeni/docgeni/compare/v1.1.2...v1.1.3) (2021-10-18)
 
 
