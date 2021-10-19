@@ -53,6 +53,10 @@ export interface DocgeniAlgoliaConfig {
     indexName: string;
 }
 
+export interface DocgeniSitemapConfig {
+    host?: string;
+}
+
 export interface DocgeniConfig {
     /** Title of documentation, e.g: Docgeni **/
     title?: string;
@@ -94,6 +98,8 @@ export interface DocgeniConfig {
     algolia?: DocgeniAlgoliaConfig;
     /** default toc, default is content **/
     toc?: DocItemToc;
+    /** sitemap config */
+    sitemap?: DocgeniSitemapConfig;
 }
 
 // For Angular Template

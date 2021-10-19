@@ -1,6 +1,6 @@
 import { DocgeniHost } from './docgeni-host';
 import { DocsBuilder } from './builders/docs-builder';
-import { DocgeniConfig } from './interfaces';
+import { DocgeniConfig, DocItem } from './interfaces';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { Print } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
@@ -20,6 +20,7 @@ export interface DocgeniHooks {
     componentBuildSucceed: SyncHook<LibraryComponent>;
     libraryBuild: SyncHook<LibraryBuilder, LibraryComponent[]>;
     libraryBuildSucceed: SyncHook<LibraryBuilder, LibraryComponent[]>;
+    navsEmitSucceed: SyncHook<NavsBuilder, Record<string, DocItem[]>>;
     compilation: SyncHook<DocgeniCompilation, CompilationIncrement>;
     emit: SyncHook<unknown>;
 }

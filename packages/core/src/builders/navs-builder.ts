@@ -34,9 +34,11 @@ export class NavsBuilder {
 
     public async emit() {
         const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localeNavsMap));
+        const localeDocItemsMap: Record<string, DocItem[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const navsForLocale = this.getLocaleDocsNavs(locale.key);
             const docItems = this.getLocaleDocsItems(locale.key);
+            localeDocItemsMap[locale.key] = docItems;
             let componentDocItems: ComponentDocItem[] = [];
             localeNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...navsForLocale);
             this.docgeni.librariesBuilder.libraries.forEach(libraryBuilder => {
@@ -60,6 +62,7 @@ export class NavsBuilder {
             `${this.docgeni.paths.absSiteContentPath}/navigations.json`,
             JSON.stringify(localeNavsMap, null, 2)
         );
+        this.docgeni.hooks.navsEmitSucceed.call(this, localeDocItemsMap);
     }
 
     private getLocaleDocsNavs(locale: string) {

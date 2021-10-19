@@ -1,0 +1,8 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+      <loc>https://test.org/configuration/front-matter</loc>
+  </url>
+  <url>
+      <loc>https://test.org/en-us/configuration/front-matter</loc>
+  </url>
+</urlset>
