@@ -189,7 +189,7 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/cdk@^10.2.7":
+"@angular/cdk@^10.0.0", "@angular/cdk@^10.2.7":
   version "10.2.7"
   resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-10.2.7.tgz#0ff82eb91b2653ea26909c57a460d4593b44f186"
   integrity sha512-ZQjDfTRTn7JuAKsf3jiIdU2XBaxxGBi/ZWYv5Pb3HCl6B4PISsIE5VWRhkoUogoAB0MiFHpjnWeIqknJEm11YQ==
@@ -2393,6 +2393,15 @@
   dependencies:
     "@angular-devkit/core" "10.2.1"
     "@angular-devkit/schematics" "10.2.1"
+    jsonc-parser "2.3.0"
+
+"@schematics/angular@^10.2.3":
+  version "10.2.3"
+  resolved "https://registry.npmjs.org/@schematics/angular/-/angular-10.2.3.tgz#a5ea7e9bc17fbfb9b1c5f760f44bc4a7b0b18834"
+  integrity sha512-xcnfH5XMmGcs33VHm2cu0+4g3rkfSD+qpiKFjfg7KGC4lLoOKSED4ZnjzIYwcQ6QN4gTpAvlZKxI8zO7NkKv0A==
+  dependencies:
+    "@angular-devkit/core" "10.2.3"
+    "@angular-devkit/schematics" "10.2.3"
     jsonc-parser "2.3.0"
 
 "@schematics/schematics@0.1002.3":

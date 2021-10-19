@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@angular-devkit/schematics-cli": "^0.1002.3",
+    "@angular-devkit/schematics": "~11.2.14",
     "@docgeni/core": "^1.1.4",
     "@docgeni/template": "^1.1.4",
     "@docgeni/toolkit": "^1.1.2",
