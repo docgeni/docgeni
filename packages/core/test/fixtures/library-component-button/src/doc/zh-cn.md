@@ -1,8 +1,5 @@
 ---
-title: New Button
+title: 按钮
 label: new
-order: 100
-hidden: false
-category: layout
 ---
-This is button
+这是一个按钮
