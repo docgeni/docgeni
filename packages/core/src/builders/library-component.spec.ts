@@ -84,7 +84,7 @@ describe('#library-component', () => {
         expect(component.getDocItem('zh-cn')).toBeFalsy();
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
-        const docItem = component.getDocItem('zh-cn');
+        const docItem = component.getDocItem('en-us');
         expect(docItem).toBeTruthy();
         expect(docItem).toEqual(
             jasmine.objectContaining({
@@ -93,7 +93,7 @@ describe('#library-component', () => {
                 importSpecifier: 'alib/button',
                 examples: ['alib-button-basic-example'],
                 overview: true,
-                originPath: 'alib/button/doc/zh-cn.md',
+                originPath: 'alib/button/doc/en-us.md',
                 toc: 'content',
                 hidden: false,
                 order: 100,
@@ -150,7 +150,7 @@ describe('#library-component', () => {
 
     it('should emit lib component with custom name', async () => {
         const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
-        await context.host.writeFile(`${buttonDirPath}/doc/zh-cn.md`, fixture.src['doc/zh-cn-alias-name.md']);
+        await context.host.writeFile(`${buttonDirPath}/doc/en-us.md`, fixture.src['doc/en-us-alias-name.md']);
 
         await component.build();
 

@@ -9,7 +9,7 @@ import { EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 
 export class LibrariesBuilder extends FileEmitter {
-    private libraryBuilders: LibraryBuilderImpl[];
+    private libraryBuilders: LibraryBuilderImpl[] = [];
     private absDestSiteContentPath: string;
 
     private building = false;

@@ -103,6 +103,10 @@ export class NavsBuilder {
         for (const locale of this.config.locales) {
             const isDefaultLocale = locale.key === this.config.defaultLocale;
             const localeDocsPath = this.getLocaleDocsPath(locale);
+            localesDocsDataMap[locale.key] = {
+                navs: [],
+                docItems: []
+            };
             if (await this.docgeni.host.pathExists(localeDocsPath)) {
                 const docItems: DocItem[] = [];
                 const { navs, homeMeta } = await this.buildDocDirNavs(
