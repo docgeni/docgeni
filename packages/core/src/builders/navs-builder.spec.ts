@@ -128,7 +128,7 @@ describe('#navs-builder', () => {
         });
     });
 
-    it('should build success with one local', async () => {
+    it('should build success with one locale', async () => {
         initialFiles = {
             [`${DEFAULT_TEST_ROOT_PATH}/docs/index.md`]: fixture.src['index.md']
         };
