@@ -56,7 +56,7 @@ Docgeni 默认会在`.docgeni/site`目录生成文档站点，这个站点完全
 # 自定义站点
 如果自定义 public 能力还不足以满足自定义的需求，那么 Docgeni 还支持一个完全自定义站点的模式，意思就是这个文档站点由用户自己创建和控制。
 ## 第一步
-可以通过 `ng g application site` 生成一个ng站点，建议选择 scss，然后修改`.docgenirc.js`配置文件中的`siteProjectName: 'site'`(site 为 Angular 项目的名称，可以起任何命名)
+可以通过 `ng g application site` 生成一个 Angular 站点，选择 scss，然后修改`.docgenirc.js`配置文件中的`siteProjectName: 'site'`(site 为 Angular 项目的名称，可以起任何命名)
 
 ## 第二步
 去除`site/src/app`下的组件，修改 `app.module.ts`，输入如下代码：
@@ -85,4 +85,30 @@ Docgeni 默认会生成组件和文档相关的代码和资源文件，分别存
 app/content
 assets/content
 ```
+
+## 第四步
+需要修改生成站点的入口`index.html`和`styles.scss`,`index.html`中的`app-root`修改为`dg-root`，`style.scss`引入`@docgeni/template/styles/index.scss`。
+
+```html
+// index.html
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <title>Docgeni</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  </head>
+  <body>
+    <dg-root></dg-root>
+  </body>
+</html>
+```
+
+```scss
+// styles.scss
+@import '@docgeni/template/styles/index.scss';
+```
+
 最后通过执行 `docgeni serve --port 4600` 启动站点即可查看。

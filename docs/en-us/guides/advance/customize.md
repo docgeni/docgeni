@@ -55,10 +55,10 @@ The complete public example is as follows:
 
 # Customize site
 If the custom public capabilities are not enough to meet the needs of customization, Docgeni also supports a completely customize site mode, which means that the document site is created and controlled by the user.
-## First step
+## Step 1
 An ng site can be generated through `ng g application site`, it is recommended to choose scss, and then modify the `siteProjectName:'site'` in the `.docgenirc.js` configuration file (site is the name of the Angular project, any name can be given)
 
-## Second step
+## Step 2
 Remove the components under `site/src/app`, modify `app.module.ts`, and enter the following code:
 
 ```ts
@@ -78,10 +78,36 @@ export class AppModule {
     constructor() {}
 }
 ```
-## Third step
+## Step 3
 Docgeni will generate component and document-related code and resource files, which are stored in the `site/src/app/content` and `site/src/assets/content` folders by default. In order to avoid conflicts, you need to add these two folders to `.gitignore`, create a new `.gitignore` file under the `site/src` folder, and enter the following code:
 ```
 app/content
 assets/content
 ```
-Finally, you can execute `docgeni serve --port 4600` to view the site.
+
+## Step 4
+We need to modify the entry `index.html` and `styles.scss`,change the `app-root` to `dg-root`in `index.html`，import `@docgeni/template/styles/index.scss` to `style.scss`。
+
+```html
+// index.html
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <title>Docgeni</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  </head>
+  <body>
+    <dg-root></dg-root>
+  </body>
+</html>
+```
+
+```scss
+// styles.scss
+@import '@docgeni/template/styles/index.scss';
+```
+
+Finally, you can execute command `docgeni serve --port 4600` to visit the site.
