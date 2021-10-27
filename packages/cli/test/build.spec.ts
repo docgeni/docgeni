@@ -66,7 +66,8 @@ describe('#cli', () => {
                                     order: 1,
                                     contentPath: 'docs/guide/intro/intro2.html',
                                     originPath: 'docs/guide/intro/intro2.md',
-                                    toc: 'content'
+                                    toc: 'content',
+                                    headings: []
                                 },
                                 {
                                     id: 'intro1',
@@ -76,7 +77,8 @@ describe('#cli', () => {
                                     order: 2,
                                     contentPath: 'docs/guide/intro/intro1.html',
                                     originPath: 'docs/guide/intro/intro1.md',
-                                    toc: 'content'
+                                    toc: 'content',
+                                    headings: []
                                 }
                             ],
                             order: 1
@@ -89,7 +91,8 @@ describe('#cli', () => {
                             order: 2,
                             contentPath: 'docs/guide/getting-started.html',
                             originPath: 'docs/guide/getting-started.md',
-                            toc: 'content'
+                            toc: 'content',
+                            headings: []
                         },
                         {
                             id: 'installation',
@@ -99,7 +102,8 @@ describe('#cli', () => {
                             order: 2,
                             contentPath: 'docs/guide/installation.html',
                             originPath: 'docs/guide/installation.md',
-                            toc: 'content'
+                            toc: 'content',
+                            headings: []
                         }
                     ],
                     order: 1
@@ -114,7 +118,8 @@ describe('#cli', () => {
                     order: 2,
                     contentPath: 'docs/guide/getting-started.html',
                     originPath: 'docs/guide/getting-started.md',
-                    toc: 'content'
+                    toc: 'content',
+                    headings: []
                 },
                 {
                     id: 'installation',
@@ -124,7 +129,8 @@ describe('#cli', () => {
                     order: 2,
                     contentPath: 'docs/guide/installation.html',
                     originPath: 'docs/guide/installation.md',
-                    toc: 'content'
+                    toc: 'content',
+                    headings: []
                 },
                 {
                     id: 'intro1',
@@ -134,7 +140,8 @@ describe('#cli', () => {
                     order: 2,
                     contentPath: 'docs/guide/intro/intro1.html',
                     originPath: 'docs/guide/intro/intro1.md',
-                    toc: 'content'
+                    toc: 'content',
+                    headings: []
                 },
                 {
                     id: 'intro2',
@@ -144,7 +151,8 @@ describe('#cli', () => {
                     order: 1,
                     contentPath: 'docs/guide/intro/intro2.html',
                     originPath: 'docs/guide/intro/intro2.md',
-                    toc: 'content'
+                    toc: 'content',
+                    headings: []
                 }
             ],
             homeMeta: {

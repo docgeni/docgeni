@@ -1,0 +1,25 @@
+<div class="dg-search-container">
+  <dg-icon iconName="search" class="search-icon"></dg-icon>
+  <input
+    class="search"
+    id="inputSearch"
+    [(ngModel)]="searchText"
+    (ngModelChange)="change()"
+    [placeholder]="'SEARCH' | dgTranslate"
+    (blur)="blur()"
+    (focus)="focus()"
+  />
+  <div
+    class="search-results-container"
+    *ngIf="!searchService.hasAlgolia"
+    [class.is-searching]="hasSearchText && isFocus"
+    [class.result-empty]="searchService.result?.length === 0"
+  >
+    <a class="search-result" *ngFor="let result of searchService.result; trackBy: searchService.trackByFn" [href]="result.path">
+      <ng-container *ngIf="result.parent"> {{ result.parent?.title }} &gt; </ng-container> {{ result.title }}
+    </a>
+    <ng-container *ngIf="hasSearchText && searchService.result.length === 0">
+      <dg-icon class="empty-icon" iconName="empty"></dg-icon>
+    </ng-container>
+  </div>
+</div>

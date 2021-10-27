@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { ChannelItem } from '../../interfaces/public-api';
 
@@ -6,7 +6,7 @@ import { ChannelItem } from '../../interfaces/public-api';
     selector: 'dg-navbar',
     templateUrl: './navbar.component.html'
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit {
     @HostBinding('class.dg-navbar') isNavbar = true;
 
     @HostBinding('class.show') showNav = false;
@@ -20,13 +20,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.elementRef.nativeElement.classList.add(this.global.config.theme);
     }
 
-    ngAfterViewInit() {
-        this.global.initAlgolia('#inputSearch');
-    }
-
     toggleNavbar() {
         this.showNav = !this.showNav;
     }
-
-    search() {}
 }
