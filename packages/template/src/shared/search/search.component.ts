@@ -25,18 +25,18 @@ export class SearchComponent implements OnInit, AfterViewInit {
     }
 
     blur() {
-        this.isFocus = false;
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
+            this.isFocus = false;
             this.searchText = '';
             this.hasSearchText = false;
-        });
+        }, 200);
     }
 
     change() {
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
             this.hasSearchText = !!this.searchText?.trim();
-        }, 100);
+        }, 200);
     }
 }

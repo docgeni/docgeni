@@ -213,12 +213,14 @@ describe('#library-builder', () => {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
-                category: 'general'
+                category: 'general',
+                channelPath: 'components'
             },
             alert: {
                 id: `alib/alert`,
                 path: `alert`,
-                title: 'Alert'
+                title: 'Alert',
+                channelPath: 'components'
             }
         };
         components.map(component => {
@@ -238,7 +240,7 @@ describe('#library-builder', () => {
         expect(rootNavs[0].items as unknown).toEqual([
             { id: 'general', title: '通用', items: [componentDocItems.button] },
             { id: 'layout', title: '布局', items: [] },
-            { id: 'alib/alert', path: 'alert', title: 'Alert' }
+            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' }
         ]);
     });
 

@@ -16,7 +16,8 @@
     [class.result-empty]="searchService.result?.length === 0"
   >
     <a class="search-result" *ngFor="let result of searchService.result; trackBy: searchService.trackByFn" [href]="result.path">
-      <ng-container *ngIf="result.parent"> {{ result.parent?.title }} &gt; </ng-container> {{ result.title }}
+      <ng-container *ngIf="result.parent"> {{ result.parent?.title }} &gt; </ng-container>
+      <span [innerHtml]="searchText | highlight: result.title"></span>
     </a>
     <ng-container *ngIf="hasSearchText && searchService.result.length === 0">
       <dg-icon class="empty-icon" iconName="empty"></dg-icon>

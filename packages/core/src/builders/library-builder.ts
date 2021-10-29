@@ -128,6 +128,8 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             if (docItem && !docItem.hidden) {
                 if (this.docgeni.config.mode === 'lite') {
                     docItem.path = `${channel.path}/${docItem.path}`;
+                } else {
+                    docItem.channelPath = channel.path;
                 }
                 if (categoriesMap[docItem.category]) {
                     categoriesMap[docItem.category].items.push(docItem);

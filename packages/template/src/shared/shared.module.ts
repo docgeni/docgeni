@@ -27,6 +27,7 @@ import { SourceCodeComponent } from './source-code/source-code.component';
 import { ExampleRendererComponent } from './example-renderer/example-renderer.component';
 import { DocPagesLinksComponent } from './doc-pages-links/doc-pages-links.component';
 import { SearchComponent } from './search/search.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -51,7 +52,8 @@ const COMPONENTS = [
     HeroActionClassPipe,
     DocMetaComponent,
     DocPagesLinksComponent,
-    SearchComponent
+    SearchComponent,
+    HighlightPipe
 ];
 @NgModule({
     declarations: [...COMPONENTS],
@@ -77,5 +79,6 @@ export {
     CopyComponent,
     AssetsContentPathPipe,
     IsModeFullPipe,
-    IsModeLitePipe
+    IsModeLitePipe,
+    HighlightPipe
 };
