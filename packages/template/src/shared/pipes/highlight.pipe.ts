@@ -22,7 +22,7 @@ export class HighlightPipe implements PipeTransform {
     }
 
     transform(keywords: string, title: string) {
-        keywords = keywords.trim().toLocaleLowerCase();
+        keywords = (keywords || '').trim().toLocaleLowerCase();
         if (keywords && title) {
             const template = this.highlightTitle(keywords, title);
             return this.domSanitizer.bypassSecurityTrustHtml(template);
