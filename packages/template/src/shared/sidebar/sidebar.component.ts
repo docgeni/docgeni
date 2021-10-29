@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
@@ -8,7 +8,7 @@ import { GlobalContext } from '../../services/global-context';
     selector: 'dg-sidebar',
     templateUrl: './sidebar.component.html'
 })
-export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
+export class SidebarComponent implements OnInit, OnChanges {
     @HostBinding(`class.dg-sidebar`) isSidebar = true;
 
     @Input() menus: NavigationItem[];
@@ -17,22 +17,12 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
     readonly initDisplay = true;
 
-    showSearch: boolean;
-
     constructor(public global: GlobalContext, private router: Router, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.router.events.pipe(filter(item => item instanceof NavigationEnd)).subscribe(() => {
             this.updateGroupsCollapseStates();
         });
-
-        this.showSearch = this.global.config.mode === 'lite' && this.global.hasAlgolia;
-    }
-
-    ngAfterViewInit() {
-        if (this.showSearch) {
-            this.global.initAlgolia('#sidebarInputSearch');
-        }
     }
 
     toggle(menu: CategoryItem) {

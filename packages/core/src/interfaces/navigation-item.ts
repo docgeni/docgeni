@@ -1,3 +1,5 @@
+import { HeadingLink } from './toc';
+
 export type DocItemToc = 'menu' | 'content' | 'hidden' | false;
 
 export interface DocItem {
@@ -21,6 +23,7 @@ export interface DocItem {
         };
     };
     toc?: DocItemToc;
+    headings?: HeadingLink[];
 }
 
 export interface ComponentDocItem extends DocItem {

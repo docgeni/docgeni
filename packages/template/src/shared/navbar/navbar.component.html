@@ -19,10 +19,8 @@
 </div>
 <div class="spacer"></div>
 <div class="action-items">
-  <div class="action-item dg-search-container" *ngIf="this.global.hasAlgolia">
-    <dg-icon iconName="search" class="search-icon"></dg-icon>
-    <input class="search" id="inputSearch" [placeholder]="'SEARCH' | dgTranslate" />
-  </div>
+  <dg-search class="action-item" *ngIf="global.config.mode | dgIsFull"></dg-search>
+
   <dg-locales-selector class="action-item" *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
   <a *ngIf="global.config.repoUrl" class="action-item repo-url" href="{{ global.config.repoUrl }}" target="_blank">
     <dg-icon iconName="github"></dg-icon>

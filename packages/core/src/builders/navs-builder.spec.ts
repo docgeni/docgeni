@@ -57,7 +57,8 @@ describe('#navs-builder', () => {
                             title: 'Introduce',
                             order: 10,
                             contentPath: 'docs/guides/intro.html',
-                            originPath: 'docs/guides/intro.md'
+                            originPath: 'docs/guides/intro.md',
+                            headings: []
                         }
                     ],
                     order: 1
@@ -69,7 +70,8 @@ describe('#navs-builder', () => {
                     title: 'Home',
                     order: 10,
                     contentPath: 'docs/index.html',
-                    originPath: 'docs/index.md'
+                    originPath: 'docs/index.md',
+                    headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                 }
             ],
             docs: [
@@ -80,7 +82,8 @@ describe('#navs-builder', () => {
                     title: 'Home',
                     order: 10,
                     contentPath: 'docs/index.html',
-                    originPath: 'docs/index.md'
+                    originPath: 'docs/index.md',
+                    headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                 },
                 {
                     id: 'intro',
@@ -89,7 +92,8 @@ describe('#navs-builder', () => {
                     title: 'Introduce',
                     order: 10,
                     contentPath: 'docs/guides/intro.html',
-                    originPath: 'docs/guides/intro.md'
+                    originPath: 'docs/guides/intro.md',
+                    headings: []
                 }
             ]
         });
@@ -108,7 +112,8 @@ describe('#navs-builder', () => {
                             title: 'Introduce',
                             order: 10,
                             contentPath: 'docs/zh-cn/guides/intro.html',
-                            originPath: 'docs/zh-cn/guides/intro.md'
+                            originPath: 'docs/zh-cn/guides/intro.md',
+                            headings: [],
                         }
                     ],
                     order: 9007199254740991
@@ -122,7 +127,8 @@ describe('#navs-builder', () => {
                     title: 'Introduce',
                     order: 10,
                     contentPath: 'docs/zh-cn/guides/intro.html',
-                    originPath: 'docs/zh-cn/guides/intro.md'
+                    originPath: 'docs/zh-cn/guides/intro.md',
+                    headings: []
                 }
             ]
         });
@@ -153,7 +159,8 @@ describe('#navs-builder', () => {
                     title: 'Home',
                     order: 10,
                     contentPath: 'docs/index.html',
-                    originPath: 'docs/index.md'
+                    originPath: 'docs/index.md',
+                    headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                 }
             ],
             docs: [
@@ -164,7 +171,8 @@ describe('#navs-builder', () => {
                     title: 'Home',
                     order: 10,
                     contentPath: 'docs/index.html',
-                    originPath: 'docs/index.md'
+                    originPath: 'docs/index.md',
+                    headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                 }
             ]
         });
