@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { GlobalContext } from './global-context';
-import docsearch from 'docsearch.js';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
@@ -34,7 +33,7 @@ export class SearchService {
         }
     }
 
-    private initAlgolia(searchSelector: string) {
+    private async initAlgolia(searchSelector: string) {
         const algolia = this.global.config.algolia.appId
             ? {
                   appId: this.global.config.algolia.appId,
@@ -45,6 +44,14 @@ export class SearchService {
                   apiKey: this.global.config.algolia.apiKey,
                   indexName: this.global.config.algolia.indexName
               };
+
+        (window as any).global = window;
+
+        (window as any).process = {
+            env: { DEBUG: undefined }
+        };
+
+        const { default: docsearch } = await import('docsearch.js');
 
         docsearch({
             ...algolia,
