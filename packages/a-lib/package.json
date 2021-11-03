@@ -1,5 +1,5 @@
 {
-  "name": "a-lib",
+  "name": "@docgeni/alib",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.0.0"

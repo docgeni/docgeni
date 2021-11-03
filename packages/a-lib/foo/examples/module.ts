@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlibFooBasicExampleComponent } from './basic/basic.component';
 import { AlibFooAdvanceExampleComponent } from './advance/advance.component';
-import { AlibFooModule } from 'a-lib/foo';
+import { AlibFooModule } from '@docgeni/alib/foo';
 
 @NgModule({
     declarations: [AlibFooBasicExampleComponent, AlibFooAdvanceExampleComponent],
