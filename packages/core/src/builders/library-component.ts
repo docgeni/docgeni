@@ -4,8 +4,10 @@ import { toolkit } from '@docgeni/toolkit';
 import {
     ASSETS_API_DOCS_RELATIVE_PATH,
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    ASSETS_EXAMPLES_SOURCE_BUNDLE_RELATIVE_PATH,
     ASSETS_OVERVIEWS_RELATIVE_PATH,
-    EXAMPLE_META_FILE_NAME
+    EXAMPLE_META_FILE_NAME,
+    SITE_ASSETS_RELATIVE_PATH
 } from '../constants';
 import { highlight } from '../utils';
 import { DocType } from '../enums';
@@ -14,7 +16,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
-import { resolve } from '../fs';
+import { relative, resolve } from '../fs';
 import { FileEmitter } from './emitter';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
@@ -36,6 +38,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
     private get absDestAssetsApiDocsPath() {
         return resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
+    }
+    private get absExamplesSourceBundleDir() {
+        return resolve(this.docgeni.paths.absSitePath, `${ASSETS_EXAMPLES_SOURCE_BUNDLE_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
     }
     public examples: LiveExample[];
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
@@ -152,7 +157,6 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         const dirs = await this.docgeni.host.getDirs(this.absExamplesPath);
         const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
-
         for (const exampleName of dirs) {
             const libAbbrName = this.getLibAbbrName(this.lib);
             const componentKey = `${libAbbrName}-${this.name}-${exampleName}-example`;
@@ -171,7 +175,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 },
                 sourceFiles: [],
                 additionalFiles: [],
-                additionalComponents: []
+                additionalComponents: [],
+                assetsPath: ''
             };
 
             let exampleOrder = Number.MAX_SAFE_INTEGER;
@@ -188,6 +193,13 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             exampleOrderMap.set(liveExample, exampleOrder);
             const sourceFiles = await this.buildExampleHighlighted(absComponentExamplePath);
             liveExample.sourceFiles = sourceFiles;
+            liveExample.assetsPath = resolve(
+                '/assets',
+                relative(
+                    resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH),
+                    resolve(this.absExamplesSourceBundleDir, 'bundle.json')
+                )
+            );
             this.examples.push(liveExample);
         }
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
@@ -292,6 +304,11 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         }
         const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
         await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
+        let bundleConfig = await this.getBundleConfig(this.absExamplesPath, 'src');
+        let bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
+        let content = JSON.stringify(bundleConfig);
+        await this.addEmitFile(bundlePath, content);
+        await this.docgeni.host.writeFile(bundlePath, content);
         this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
         await this.docgeni.host.writeFile(examplesEntryPath, this.exampleEntrySource);
         for (const example of this.examples) {
@@ -313,5 +330,15 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         propertyName: TPropertyKey
     ): ComponentDocMeta[TPropertyKey] {
         return docSourceFile && docSourceFile.meta && docSourceFile.meta[propertyName];
+    }
+
+    private async getBundleConfig(dir: string, prefix: string) {
+        let files = await this.docgeni.host.getAllFiles(dir);
+        let list = [];
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            list.push({ path: resolve(prefix, file), content: await this.docgeni.host.readFile(resolve(dir, file)) });
+        }
+        return { files: list, dependencies: this.docgeni.config?.example?.dependencies || {} };
     }
 }

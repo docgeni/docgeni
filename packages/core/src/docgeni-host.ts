@@ -1,6 +1,6 @@
 import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
-import { DocgeniHostWatchOptions, resolve, normalize, VfsHost, FileSystemWatcher, HostWatchEvent } from './fs';
+import { DocgeniHostWatchOptions, resolve, normalize, VfsHost, FileSystemWatcher, HostWatchEvent, relative } from './fs';
 import { toolkit } from '@docgeni/toolkit';
 
 export interface GetDirsOrFilesOptions {
@@ -25,6 +25,7 @@ export interface DocgeniHost {
     getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
     getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
+    getAllFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -137,6 +138,24 @@ export class DocgeniHostImpl implements DocgeniHost {
             }
         }
         return result;
+    }
+
+    async getAllFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]> {
+        let files: string[] = [];
+        let dirList = [path];
+        while (dirList.length) {
+            let dir = dirList.pop();
+            let list = (await this.getDirsAndFiles(dir, options)).map(item => resolve(dir, item));
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i];
+                if (await this.isDirectory(item)) {
+                    dirList.push(item);
+                } else {
+                    files.push(relative(path, item));
+                }
+            }
+        }
+        return files;
     }
 }
 

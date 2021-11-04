@@ -1,12 +1,17 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
-import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
+import {
+    ASSETS_API_DOCS_RELATIVE_PATH,
+    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    ASSETS_OVERVIEWS_RELATIVE_PATH,
+    SITE_ASSETS_RELATIVE_PATH
+} from '../constants';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibraryComponentImpl } from './library-component';
-import { HostWatchEventType, resolve } from '../fs';
+import { HostWatchEventType, relative, resolve } from '../fs';
 import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 
@@ -67,6 +72,11 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             const componentEmitFiles = await component.emit();
             this.addEmitFiles(componentEmitFiles);
         }
+        let sharedExampleDir = resolve(resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH), 'stack-blitz');
+        let files = await this.getShareStackBlitzFiles(sharedExampleDir);
+        let content = JSON.stringify(files);
+        await this.docgeni.host.writeFile(resolve(sharedExampleDir, 'bundle.json'), content);
+        await this.addEmitFile(resolve(sharedExampleDir, 'bundle.json'), content);
     }
 
     public watch() {
@@ -171,5 +181,18 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             });
         });
         this.localeCategoriesMap = localeCategories;
+    }
+
+    private async getShareStackBlitzFiles(dir: string) {
+        let files = await this.docgeni.host.getAllFiles(dir);
+        let list = [];
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file === 'bundle.json') {
+                continue;
+            }
+            list.push({ path: file, content: await this.docgeni.host.readFile(resolve(dir, file)) });
+        }
+        return list;
     }
 }

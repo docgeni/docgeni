@@ -1,0 +1,3082 @@
+$dg-primary: #348fe4 !default;
+$dg-primary-light: #246eff;
+$dg-success: #66c060 !default; // 2dbcff
+$dg-info: #2dbcff !default;
+$dg-warning: #ffc442 !default;
+$dg-danger: #ff5b57 !default;
+
+$dg-gray-80: #f3f3f3 !default;
+$dg-gray-100: #f6f8fa !default;
+$dg-gray-200: #eee !default;
+$dg-gray-210: #e9e9e9 !default;
+$dg-gray-300: #ddd !default;
+$dg-gray-400: #cacaca !default;
+$dg-gray-500: #aaa !default;
+$dg-gray-600: #888 !default;
+$dg-gray-700: #666 !default;
+$dg-gray-800: #333 !default;
+$dg-body-color: #333 !default;
+$dg-white: #fff !default;
+$dg-black: #000 !default;
+$dg-body-bg: $dg-white !default;
+
+$dg-yiq-contrasted-threshold: 180 !default;
+$dg-yiq-text-dark: $dg-gray-800 !default;
+$dg-yiq-text-light: $dg-white !default;
+$dg-enable-gradients: false !default;
+$dg-enable-shadows: true !default;
+$dg-enable-rounded: true !default;
+
+$dg-border-color: #eee !default;
+$dg-border-radius: 4px !default;
+
+$dg-theme-colors: () !default;
+$dg-theme-colors: map-merge(
+    (
+        'primary': $dg-primary,
+        'primary-light': $dg-primary-light,
+        'success': $dg-success,
+        'info': $dg-info,
+        'warning': $dg-warning,
+        'danger': $dg-danger,
+        'light': $dg-gray-300,
+        'dark': $dg-gray-700
+    ),
+    $dg-theme-colors
+);
+
+$dg-grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+) !default;
+
+$dg-spacer: 1rem !default;
+$dg-spacers: () !default;
+// // stylelint-disable-next-line scss/dollar-variable-default
+$dg-spacers: map-merge(
+    (
+        0: 0,
+        1: (
+            $dg-spacer * 0.25
+        ),
+        2: (
+            $dg-spacer * 0.5
+        ),
+        3: $dg-spacer,
+        4: (
+            $dg-spacer * 1.5
+        ),
+        5: (
+            $dg-spacer * 3
+        )
+    ),
+    $dg-spacers
+);
+
+$dg-line-height: 1.5715 !default;
+
+$dg-code-bg-color: #f3f5f7 !default;
+
+// link
+$dg-link-hover-decoration: none !default;
+
+// font
+// $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+//         'Segoe UI Symbol';
+$dg-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Helvetica Neue, Noto Sans, Noto Sans CJK SC,
+    Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif !default;
+$dg-font-size-base: 0.875rem !default; // 14px
+$dg-font-size-md: 1rem !default; // 16px
+$dg-font-size-lg: 1.25rem !default; // 20px
+$dg-font-size-sm: 0.75rem !default; // 12px
+$dg-font-size-max-lg: 3.25rem !default; // 补充字体大小 52px
+$dg-font-size-xs: 0.625rem !default; // 10px
+$dg-font-size-xlg: 1.5rem !default; // 24px
+
+// navbar
+$dg-navbar-height: 60px !default;
+
+// default theme
+$dg-navbar-background-default: $dg-white;
+$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
+$dg-navbar-color-default: $dg-body-color;
+
+// angular theme
+$dg-navbar-background-angular: #3f51b5 !default;
+$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-color-angular: $dg-white !default;
+
+$dg-hero-background: #dae6f3 !default;
+
+// sidebar
+$dg-sidebar-item-indent: 10px !default;
+$dg-sidebar-menu-item-space-x: 30px !default;
+$dg-sidebar-menu-item-space-y: 9px !default;
+
+// button
+$dg-btn-border-width: 1px !default;
+$dg-btn-padding-y: 6px !default;
+$dg-btn-padding-x: 10px !default;
+$dg-btn-font-size: $dg-font-size-md !default;
+$dg-btn-line-height: $dg-line-height !default;
+$dg-btn-border-radius: 4px !default;
+$dg-btn-padding-y-xsm: 0.5px !default;
+$dg-btn-padding-x-xsm: 10px !default;
+$dg-btn-font-size-xsm: $dg-font-size-md !default;
+$dg-btn-line-height-xsm: $dg-line-height !default;
+$dg-btn-border-radius-xsm: 4px !default;
+$dg-btn-padding-y-sm: 2.5px !default;
+$dg-btn-padding-x-sm: 10px !default;
+$dg-btn-font-size-sm: $dg-font-size-md !default;
+$dg-btn-line-height-sm: $dg-line-height !default;
+$dg-btn-border-radius-sm: 4px !default;
+$dg-btn-padding-y-md: 4.5px !default;
+$dg-btn-padding-x-md: 10px !default;
+$dg-btn-font-size-md: $dg-font-size-md !default;
+$dg-btn-line-height-md: $dg-line-height !default;
+$dg-btn-border-radius-md: 4px !default;
+$dg-btn-padding-y-lg: 6.5px !default;
+$dg-btn-padding-x-lg: 10px !default;
+$dg-btn-font-size-lg: $dg-font-size-md !default;
+$dg-btn-line-height-lg: $dg-line-height !default;
+$dg-btn-border-radius-lg: 4px !default;
+$dg-btn-padding-y-xlg: 8.5px !default;
+$dg-btn-padding-x-xlg: 30px !default;
+$dg-btn-font-size-xlg: $dg-font-size-md !default;
+$dg-btn-line-height-xlg: $dg-line-height !default;
+$dg-btn-border-radius-xlg: 4px !default;
+$dg-btn-disabled-opacity: 0.6 !default;
+$dg-btn-box-shadow: none !default;
+// $dg-btn-box-shadow: inset 0 1px 0 rgba($dg-white, 0.15), 0 1px 1px rgba($dg-black, 0.075) !default;
+$dg-btn-focus-box-shadow: none !default;
+$dg-btn-focus-width: 0.2rem !default;
+
+// @use "sass:math";
+
+// Color contrast
+@function dg-color-yiq($color, $dark: $dg-yiq-text-dark, $light: $dg-yiq-text-light) {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+
+    $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+    // $yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
+
+    @if ($yiq >= $dg-yiq-contrasted-threshold) {
+        @return $dark;
+    } @else {
+        @return $light;
+    }
+}
+
+// Breakpoint viewport sizes and media queries.
+//
+// Breakpoints are defined as a map of (name: minimum width), order from small to large:
+//
+//    (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)
+//
+// The map defined in the `$grid-breakpoints` global variable is used as the `$breakpoints` argument by default.
+
+// Name of the next breakpoint, or null for the last breakpoint.
+//
+//    >> breakpoint-next(sm)
+//    md
+//    >> breakpoint-next(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    md
+//    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
+//    md
+@function dg-breakpoint-next($name, $breakpoints: $dg-grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+    $n: index($breakpoint-names, $name);
+    @return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+// Minimum breakpoint width. Null for the smallest (first) breakpoint.
+//
+//    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    576px
+@function dg-breakpoint-min($name, $breakpoints: $dg-grid-breakpoints) {
+    $min: map-get($breakpoints, $name);
+    @return if($min != 0, $min, null);
+}
+
+// Maximum breakpoint width. Null for the largest (last) breakpoint.
+// The maximum value is calculated as the minimum of the next one less 0.02px
+// to work around the limitations of `min-` and `max-` prefixes and viewports with fractional widths.
+// See https://www.w3.org/TR/mediaqueries-4/#mq-min-max
+// Uses 0.02px rather than 0.01px to work around a current rounding bug in Safari.
+// See https://bugs.webkit.org/show_bug.cgi?id=178261
+//
+//    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    767.98px
+@function dg-breakpoint-max($name, $breakpoints: $dg-grid-breakpoints) {
+    $next: dg-breakpoint-next($name, $breakpoints);
+    @return if($next, dg-breakpoint-min($next, $breakpoints) - 0.02, null);
+}
+
+// Returns a blank string if smallest breakpoint, otherwise returns the name with a dash in front.
+// Useful for making responsive utilities.
+//
+//    >> breakpoint-infix(xs, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    ""  (Returns a blank string)
+//    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    "-sm"
+@function dg-breakpoint-infix($name, $breakpoints: $dg-grid-breakpoints) {
+    @return if(dg-breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+}
+
+// Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
+// Makes the @content apply to the given breakpoint and wider.
+@mixin dg-media-breakpoint-up($name, $breakpoints: $dg-grid-breakpoints) {
+    $min: dg-breakpoint-min($name, $breakpoints);
+    @if $min {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+// Media of at most the maximum breakpoint width. No query for the largest breakpoint.
+// Makes the @content apply to the given breakpoint and narrower.
+@mixin dg-media-breakpoint-down($name, $breakpoints: $dg-grid-breakpoints) {
+    $max: dg-breakpoint-max($name, $breakpoints);
+    @if $max {
+        @media (max-width: $max) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+// Media that spans multiple breakpoint widths.
+// Makes the @content apply between the min and max breakpoints
+@mixin dg-media-breakpoint-between($lower, $upper, $breakpoints: $dg-grid-breakpoints) {
+    $min: dg-breakpoint-min($lower, $breakpoints);
+    $max: dg-breakpoint-max($upper, $breakpoints);
+
+    @if $min != null and $max != null {
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    } @else if $max == null {
+        @include dg-media-breakpoint-up($lower, $breakpoints) {
+            @content;
+        }
+    } @else if $min == null {
+        @include dg-media-breakpoint-down($upper, $breakpoints) {
+            @content;
+        }
+    }
+}
+
+// Media between the breakpoint's minimum and maximum widths.
+// No minimum for the smallest breakpoint, and no maximum for the largest one.
+// Makes the @content apply only to the given breakpoint, not viewports any wider or narrower.
+@mixin dg-media-breakpoint-only($name, $breakpoints: $dg-grid-breakpoints) {
+    $min: breakpoint-min($name, $breakpoints);
+    $max: breakpoint-max($name, $breakpoints);
+
+    @if $min != null and $max != null {
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    } @else if $max == null {
+        @include media-breakpoint-up($name, $breakpoints) {
+            @content;
+        }
+    } @else if $min == null {
+        @include media-breakpoint-down($name, $breakpoints) {
+            @content;
+        }
+    }
+}
+
+// Gradients
+
+@mixin dg-gradient-bg($color) {
+    @if $dg-enable-gradients {
+        background: $color linear-gradient(180deg, mix($dg-body-bg, $color, 15%), $color) repeat-x;
+    } @else {
+        background-color: $color;
+    }
+}
+
+// Horizontal gradient, from left to right
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+@mixin dg-gradient-x($start-color: $gray-700, $end-color: $gray-800, $start-percent: 0%, $end-percent: 100%) {
+    background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
+    background-repeat: repeat-x;
+}
+
+// Vertical gradient, from top to bottom
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+@mixin dg-gradient-y($start-color: $gray-700, $end-color: $gray-800, $start-percent: 0%, $end-percent: 100%) {
+    background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+    background-repeat: repeat-x;
+}
+
+@mixin dg-gradient-directional($start-color: $gray-700, $end-color: $gray-800, $deg: 45deg) {
+    background-image: linear-gradient($deg, $start-color, $end-color);
+    background-repeat: repeat-x;
+}
+
+@mixin dg-gradient-x-three-colors($start-color: $blue, $mid-color: $purple, $color-stop: 50%, $end-color: $red) {
+    background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $end-color);
+    background-repeat: no-repeat;
+}
+
+@mixin dg-gradient-y-three-colors($start-color: $blue, $mid-color: $purple, $color-stop: 50%, $end-color: $red) {
+    background-image: linear-gradient($start-color, $mid-color $color-stop, $end-color);
+    background-repeat: no-repeat;
+}
+
+@mixin dg-gradient-radial($inner-color: $gray-700, $outer-color: $gray-800) {
+    background-image: radial-gradient(circle, $inner-color, $outer-color);
+    background-repeat: no-repeat;
+}
+
+@mixin dg-gradient-striped($color: rgba($white, 0.15), $angle: 45deg) {
+    background-image: linear-gradient(
+        $angle,
+        $color 25%,
+        transparent 25%,
+        transparent 50%,
+        $color 50%,
+        $color 75%,
+        transparent 75%,
+        transparent
+    );
+}
+
+@mixin hover() {
+    &:hover {
+        @content;
+    }
+}
+
+@mixin hover-focus() {
+    &:hover,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin plain-hover-focus() {
+    &,
+    &:hover,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin hover-focus-active() {
+    &:hover,
+    &:focus,
+    &:active {
+        @content;
+    }
+}
+
+@mixin dg-box-shadow($shadow...) {
+    @if $dg-enable-shadows {
+        $result: ();
+
+        @if (length($shadow) == 1) {
+            // We can pass `@include box-shadow(none);`
+            $result: $shadow;
+        } @else {
+            // Filter to avoid invalid properties for example `box-shadow: none, 1px 1px black;`
+            @for $i from 1 through length($shadow) {
+                @if nth($shadow, $i) != 'none' {
+                    $result: append($result, nth($shadow, $i), 'comma');
+                }
+            }
+        }
+        @if (length($result) > 0) {
+            box-shadow: $result;
+        }
+    }
+}
+
+@mixin dg-border-radius($radius: $border-radius, $fallback-border-radius: false) {
+    @if $dg-enable-rounded {
+        border-radius: $radius;
+    } @else if $fallback-border-radius != false {
+        border-radius: $fallback-border-radius;
+    }
+}
+
+@mixin dg-border-top-radius($radius) {
+    @if $dg-enable-rounded {
+        border-top-left-radius: $radius;
+        border-top-right-radius: $radius;
+    }
+}
+
+@mixin dg-border-right-radius($radius) {
+    @if $dg-enable-rounded {
+        border-top-right-radius: $radius;
+        border-bottom-right-radius: $radius;
+    }
+}
+
+@mixin dg-border-bottom-radius($radius) {
+    @if $dg-enable-rounded {
+        border-bottom-right-radius: $radius;
+        border-bottom-left-radius: $radius;
+    }
+}
+
+@mixin dg-border-left-radius($radius) {
+    @if $dg-enable-rounded {
+        border-top-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+    }
+}
+
+@mixin dg-border-top-left-radius($radius) {
+    @if $dg-enable-rounded {
+        border-top-left-radius: $radius;
+    }
+}
+
+@mixin dg-border-top-right-radius($radius) {
+    @if $dg-enable-rounded {
+        border-top-right-radius: $radius;
+    }
+}
+
+@mixin dg-border-bottom-right-radius($radius) {
+    @if $dg-enable-rounded {
+        border-bottom-right-radius: $radius;
+    }
+}
+
+@mixin dg-border-bottom-left-radius($radius) {
+    @if $dg-enable-rounded {
+        border-bottom-left-radius: $radius;
+    }
+}
+
+// Button variants
+@mixin dg-button-variant(
+    $background,
+    $border,
+    $hover-background: darken($background, 7.5%),
+    $hover-border: darken($border, 10%),
+    $active-background: darken($background, 10%),
+    $active-border: darken($border, 12.5%)
+) {
+    color: dg-color-yiq($background);
+    @include dg-gradient-bg($background);
+    border-color: $border;
+    @include dg-box-shadow($dg-btn-box-shadow);
+
+    @include hover() {
+        color: dg-color-yiq($hover-background);
+        @include dg-gradient-bg($hover-background);
+        border-color: $hover-border;
+    }
+
+    &:focus,
+    &.focus {
+        color: dg-color-yiq($hover-background);
+        @include dg-gradient-bg($hover-background);
+        border-color: $hover-border;
+        // Avoid using mixin so we can pass custom focus shadow properly
+        @if $dg-enable-shadows {
+            box-shadow: $dg-btn-box-shadow, 0 0 0 $dg-btn-focus-width rgba(mix(dg-color-yiq($background), $border, 15%), 0.5);
+        } @else {
+            box-shadow: 0 0 0 $dg-btn-focus-width rgba(mix(color-yiq($background), $border, 15%), 0.5);
+        }
+    }
+
+    // Disabled comes first so active can properly restyle
+    &.disabled,
+    &:disabled {
+        color: color-yiq($background);
+        background-color: $background;
+        border-color: $border;
+        // Remove CSS gradients if they're enabled
+        @if $dg-enable-gradients {
+            background-image: none;
+        }
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show > &.dropdown-toggle {
+        color: color-yiq($active-background);
+        background-color: $active-background;
+        // @if $enable-gradients {
+        //     background-image: none; // Remove the gradient for the pressed/active state
+        // }
+        border-color: $active-border;
+
+        // &:focus {
+        //     // Avoid using mixin so we can pass custom focus shadow properly
+        //     @if $enable-shadows and $btn-active-box-shadow != none {
+        //         box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), 0.5);
+        //     } @else {
+        //         box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), 0.5);
+        //     }
+        // }
+    }
+}
+
+@mixin dg-button-outline-variant(
+    $color,
+    $color-hover: color-yiq($color),
+    $active-background: $color,
+    $active-border: $color,
+    $btn-focus-width: 0px
+) {
+    color: $color;
+    border-color: $color;
+
+    @include hover() {
+        color: $color-hover;
+        background-color: $active-background;
+        border-color: $active-border;
+    }
+
+    &:focus,
+    &.focus {
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+    }
+
+    &.disabled,
+    &:disabled {
+        color: $color;
+        background-color: transparent;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show > &.dropdown-toggle {
+        color: color-yiq($active-background);
+        background-color: $active-background;
+        border-color: $active-border;
+
+        &:focus {
+            // Avoid using mixin so we can pass custom focus shadow properly
+
+            box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+        }
+    }
+}
+
+// Button sizes
+@mixin dg-button-size($padding-y, $padding-x, $font-size, $line-height, $border-radius) {
+    padding: $padding-y $padding-x;
+    font-size: $font-size;
+    line-height: $line-height;
+    // Manually declare to provide an override to the browser default
+    @include dg-border-radius($border-radius, 0);
+}
+
+@mixin dg-button-radius-variant($border-radius) {
+    border-radius: $border-radius;
+}
+
+@mixin label-outline($color) {
+    color: $color;
+    background-color: transparent;
+    border: 1px solid $color;
+}
+
+html,
+body {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
+html {
+    -webkit-text-size-adjust: 100%; // 4
+    -ms-text-size-adjust: 100%; // 4
+    -ms-overflow-style: scrollbar; // 5
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // 6
+}
+
+body {
+    font-family: $dg-font-family;
+    font-size: $dg-font-size-base;
+    color: $dg-body-color;
+    line-height: $dg-line-height;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 8px 0;
+}
+
+p {
+    margin: 0;
+}
+
+a,
+a:visited,
+a:hover {
+    color: $dg-primary;
+    text-decoration: $dg-link-hover-decoration;
+}
+
+.dg-hidden {
+    visibility: hidden !important;
+}
+
+.dg-d-none {
+    display: none !important;
+}
+
+.dg-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    // Avoid browsers rendering the focus ring in some cases.
+    outline: 0;
+
+    // Avoid some cases where the browser will still render the native controls (see #9049).
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+    @each $size, $length in $dg-spacers {
+        .dg-#{$abbrev}-#{$size} {
+            #{$prop}: $length !important;
+        }
+        .dg-#{$abbrev}t-#{$size},
+        .dg-#{$abbrev}y-#{$size} {
+            #{$prop}-top: $length !important;
+        }
+        .dg-#{$abbrev}r-#{$size},
+        .dg-#{$abbrev}x-#{$size} {
+            #{$prop}-right: $length !important;
+        }
+        .dg-#{$abbrev}b-#{$size},
+        .dg-#{$abbrev}y-#{$size} {
+            #{$prop}-bottom: $length !important;
+        }
+        .dg-#{$abbrev}l-#{$size},
+        .dg-#{$abbrev}x-#{$size} {
+            #{$prop}-left: $length !important;
+        }
+    }
+}
+
+.dg-divider {
+    border: 0;
+    border-top: 1px solid $dg-gray-200;
+    margin-bottom: 0;
+}
+
+.dg-main {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: $dg-navbar-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.dg-scroll-container {
+    overflow: auto;
+}
+
+.dg-layout {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    // height: 0;
+    // overflow: auto;
+    .dg-sidebar {
+        flex: 0 0 auto;
+        width: 300px;
+        overflow: auto;
+        padding-top: 20px;
+        border-right: 1px solid $dg-gray-300;
+        position: fixed;
+        top: $dg-navbar-height;
+        bottom: 0;
+    }
+
+    .dg-doc-viewer {
+        flex: auto;
+        padding: 30px 50px;
+        margin-left: 300px;
+        // max-height: 100vh;
+
+        // 单个页面，没有频道，也就没有左侧菜单，间距为 0
+        &--single {
+            margin-left: 0px;
+        }
+    }
+
+    .dg-doc-viewer-backdrop {
+        position: absolute;
+        transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s 0.4s;
+        background-color: transparent;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    @include dg-media-breakpoint-down('md') {
+        &.dg-sidebar-show {
+            .dg-sidebar {
+                display: block;
+                left: 0;
+                background: $dg-gray-100;
+            }
+
+            .dg-doc-viewer-backdrop {
+                transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 1;
+            }
+        }
+
+        .dg-sidebar {
+            z-index: 2;
+            transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s;
+            left: -300px;
+        }
+
+        // .dg-content {
+        //     margin-left: 0px;
+        //     padding: 0;
+        // }
+
+        .dg-doc-viewer {
+            margin-left: 0px;
+            padding: 20px 15px;
+            position: relative;
+        }
+    }
+}
+
+.dg-mode-lite {
+    .dg-main {
+        top: 0;
+    }
+    .dg-layout {
+        .dg-sidebar {
+            background: $dg-gray-100;
+            top: 0;
+        }
+    }
+}
+
+.dg-tab-links {
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid $dg-border-color;
+    .dg-tab-link {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 8px 30px;
+        margin-right: 20px;
+        transform: translateY(1px);
+        color: $dg-gray-700;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        // font-family: Roboto,"Helvetica Neue",sans-serif;
+        &:hover,
+        &.active {
+            color: $dg-primary;
+            border-bottom: 2px solid $dg-primary;
+            text-decoration: none;
+        }
+    }
+}
+
+$dg-heading-color: $dg-gray-800;
+$dg-table-border-color: $dg-gray-200;
+$dg-table-header-bg-color: $dg-gray-80;
+
+$dg-directive-color: #d81b60;
+$dg-component-color: #348fe4;
+$dg-interface-color: #7cb342;
+$dg-service-color: #8e24aa;
+
+.dg-doc-viewer {
+    display: block;
+
+    .dg-doc-header {
+        display: flex;
+        align-items: center;
+
+        .sidebar-toggler {
+            display: none;
+            margin-right: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+
+            .dg-icon {
+                font-size: 14px;
+            }
+
+            &:hover {
+                background: $dg-primary;
+                color: $dg-white;
+            }
+        }
+
+        @include dg-media-breakpoint-down('md') {
+            .sidebar-toggler {
+                display: block;
+            }
+        }
+
+        .title {
+            font-size: $dg-font-size-xlg;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin-left: 10px;
+            font-size: $dg-font-size-xlg;
+            color: $dg-gray-700;
+            font-weight: normal;
+        }
+    }
+
+    &--toc {
+        .dg-doc-viewer-inner-content {
+            max-width: 78%;
+        }
+    }
+
+    .dg-doc-viewer-inner {
+        display: flex;
+        flex: auto;
+        align-items: flex-start;
+        min-height: calc(100% - 60px);
+    }
+
+    .dg-doc-viewer-inner-content {
+        flex: auto;
+        width: 78%;
+    }
+
+    .dg-component-viewer {
+        display: block;
+        width: 100%;
+        min-height: calc(100% - 60px);
+
+        .dg-component-empty {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .dg-doc-header {
+            margin-bottom: 10px;
+        }
+
+        .dg-component-api {
+            .dg-api-header {
+                display: flex;
+                align-items: center;
+
+                &:not(:first-child) {
+                    margin-top: 30px;
+                }
+
+                .name {
+                    font-size: $dg-font-size-lg;
+                    font-weight: 500;
+                }
+
+                .type-label {
+                    background-color: rgba($color: $dg-component-color, $alpha: 0.8);
+                    font-size: $dg-font-size-sm;
+                    font-weight: 400;
+                    text-transform: uppercase;
+                    margin-left: 8px;
+
+                    &.directive {
+                        background-color: rgba($color: $dg-directive-color, $alpha: 0.8);
+                    }
+
+                    &.service {
+                        background-color: rgba($color: $dg-service-color, $alpha: 0.8);
+                    }
+
+                    &.interface,
+                    &.class {
+                        background-color: rgba($color: $dg-interface-color, $alpha: 0.8);
+                    }
+                }
+            }
+
+            .dg-api-class-description {
+                color: $dg-gray-700;
+                margin: 6px 0px 6px 0px;
+                font-size: $dg-font-size-base;
+            }
+
+            .dg-api-properties-table {
+                margin-top: 14px;
+                display: table;
+                width: 100%;
+                max-width: 100%;
+
+                .dg-api-properties-header-row {
+                    .dg-api-properties-name-th {
+                        width: 100px;
+                    }
+
+                    .dg-api-properties-type-th {
+                        width: 80px;
+                    }
+
+                    .dg-api-properties-default-th {
+                        width: 100px;
+                    }
+
+                    .dg-api-properties-description-th {
+                        width: auto;
+                    }
+                }
+
+                .dg-api-properties-row {
+                    .dg-api-properties-name-cell {
+                        text-align: left;
+                    }
+
+                    .dg-api-properties-type-cell {
+                        text-align: left;
+                    }
+
+                    .dg-api-properties-default-cell {
+                        text-align: left;
+                    }
+
+                    .dg-api-property-description-cell {
+                    }
+                }
+            }
+        }
+    }
+
+    @include dg-media-breakpoint-down('md') {
+        .dg-doc-viewer-inner-content {
+            width: 100%;
+            max-width: 100%;
+        }
+        .dg-toc {
+            display: none;
+        }
+    }
+}
+
+.dg-doc-content {
+    flex: 1;
+    display: block;
+    padding: 20px 0px;
+    font-size: $dg-font-size-md;
+    // white-space: break-spaces;
+    > :first-child {
+        margin-top: 0;
+    }
+    h1 {
+        font-size: $dg-font-size-xlg;
+        margin: 30px 0px 16px 0px;
+        color: $dg-heading-color;
+    }
+
+    h2 {
+        font-size: $dg-font-size-lg;
+        margin: 30px 0px 16px 0px;
+        color: $dg-heading-color;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin: 20px 0px 16px 0px;
+    }
+
+    h4 {
+        font-size: 16px;
+        margin: 10px 0px 10px 0px;
+    }
+
+    h5 {
+        font-size: 14px;
+        margin: 10px 0px 10px 0px;
+    }
+
+    ul,
+    ol {
+        margin: 10px 0 10px 32px;
+        padding: 0;
+        li {
+            padding: 3px 0px;
+        }
+    }
+
+    code {
+        display: inline-block;
+        padding: 0px 4px;
+        margin: 0px 2px;
+        background: $dg-code-bg-color;
+        border-radius: $dg-border-radius;
+        color: $dg-gray-800;
+    }
+
+    pre {
+        padding: 1em;
+        color: $dg-gray-700;
+        background: $dg-gray-100;
+        border-radius: $dg-border-radius;
+        overflow: auto;
+        code {
+            padding: 0px;
+            // color: $body-color;
+            background: transparent;
+            font-size: $dg-font-size-base;
+        }
+    }
+
+    p,
+    .dg-paragraph {
+        // color: $gray-700;
+        line-height: 26px;
+        margin-top: 0;
+        margin-bottom: 8px;
+
+        code {
+            line-height: 24px;
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    blockquote {
+        margin-left: 0px;
+        border-left: 2px solid $dg-gray-300;
+        color: $dg-gray-600;
+        font-size: 14px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: table;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+        width: 100%;
+        max-width: 100%;
+        font-size: $dg-font-size-base;
+        th,
+        td {
+            border: 1px solid $dg-table-border-color;
+            padding: 8px 14px;
+            p {
+                margin: 0px;
+            }
+        }
+
+        th {
+            background: $dg-table-header-bg-color;
+            text-align: center;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+    }
+}
+
+.dg-doc-meta {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 25px 0px;
+    border-top: 1px solid $dg-gray-200;
+
+    .dg-contributor-avatar-list {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-right: 8px;
+    }
+    .dg-contributor-avatar {
+        box-shadow: 0 0 0 2px $dg-white;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+    }
+    .dg-contributor-avatar:nth-child(n):not(:first-child) {
+        margin-left: -8px;
+    }
+    .dg-contributor-avatar:nth-child(1) {
+        order: 3;
+    }
+    .dg-contributor-avatar:nth-child(2) {
+        order: 2;
+    }
+    .dg-contributor-avatar:nth-child(3) {
+        order: 1;
+    }
+    .dg-contributor-other {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $dg-gray-500;
+        background-color: $dg-gray-100;
+    }
+    .dg-contribution-last-time {
+        color: $dg-gray-500;
+    }
+}
+
+.dg-pages-link {
+    display: flex;
+    .dg-page-link {
+        flex: 1 1 0;
+        width: 100%;
+        display: flex;
+        a {
+            padding: 16px;
+            border-radius: 3px;
+            color: $dg-gray-800;
+            border: 1px solid $dg-gray-200;
+            box-shadow: rgb(116 129 141 / 10%) 0px 3px 8px 0px;
+            width: 100%;
+            display: flex;
+            &:hover {
+                text-decoration: none;
+                color: $dg-primary;
+                border-color: $dg-primary;
+                cursor: pointer;
+                .dg-page-link-icon {
+                    color: $dg-primary;
+                }
+            }
+            .dg-page-link-icon {
+                color: $dg-gray-500;
+                flex: 1 1 0;
+                align-self: center;
+                dg-icon {
+                    font-size: 24px;
+                }
+            }
+        }
+        &:first-child {
+            a {
+                text-align: right;
+            }
+            &:not(:last-child) {
+                margin-right: 24px;
+            }
+            .dg-page-link-icon {
+                text-align: left;
+            }
+        }
+
+        &:last-child {
+            a {
+                text-align: left;
+                flex-direction: row-reverse;
+            }
+            .dg-page-link-icon {
+                text-align: right;
+            }
+        }
+
+        .dg-page-link-label {
+            font-size: 12px;
+            color: $dg-gray-600;
+            font-weight: 400;
+            line-height: 1.625;
+        }
+        .dg-page-link-title {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+    }
+}
+
+.dg-icon {
+    font-size: 1rem;
+    line-height: 0;
+    svg {
+        width: 1em;
+        height: 1em;
+        fill: currentColor;
+        vertical-align: -0.16em;
+        background-repeat: no-repeat;
+    }
+}
+
+// $dg-danger-color: #d81b60;
+// $dg-primary-color: #348fe4;
+
+.dg-label {
+    display: inline-flex;
+    align-items: center;
+    color: $dg-white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: $dg-font-size-base;
+    margin-bottom: 0px;
+    font-size: $dg-font-size-sm;
+    line-height: 1;
+}
+
+$dg-theme-colors: map-merge(
+    (
+        'default': $dg-gray-200,
+        'light': $dg-gray-700
+    ),
+    $dg-theme-colors
+);
+
+@each $name, $color in $dg-theme-colors {
+    .dg-label-#{$name} {
+        background-color: $color;
+        color: dg-color-yiq($color);
+    }
+}
+
+@each $name, $color in $dg-theme-colors {
+    .dg-label-outline-#{$name} {
+        @include label-outline($color);
+    }
+}
+
+.dg-label-default,
+.dg-label-light,
+.dg-label-outline-default,
+.dg-label-outline-light {
+    color: $dg-gray-700;
+}
+
+.dg-label-sm {
+    padding: 2px 8px;
+    font-size: $dg-font-size-sm;
+}
+
+$dg-alert-bg-alpha: 0.05;
+
+.dg-alert {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    border-left: 0px;
+    background: $dg-gray-80;
+    border-radius: 1px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        display: inline-block;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        width: 3px;
+        border-radius: 1px;
+    }
+}
+
+@each $name, $color in $dg-theme-colors {
+    .dg-alert-#{$name} {
+        background-color: rgba($color: $color, $alpha: $dg-alert-bg-alpha);
+        &::after {
+            background: $color;
+        }
+    }
+}
+
+.dg-toc {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+    margin: 20px 0 20px 20px;
+
+    .dg-toc-container {
+        font-size: 13px;
+        // Width is container width minus content width
+        width: 19%;
+        // position: sticky;
+        // top: 0;
+        padding-left: 10px;
+        box-sizing: border-box;
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+
+        & + .docs-toc-container {
+            padding-top: 8px;
+        }
+    }
+
+    .dg-toc-heading {
+        margin: 0;
+        padding: 6px 12px 6px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            list-style: none;
+            position: relative;
+            padding: 0px;
+            &[data-level='1'] {
+                padding-left: 12px;
+            }
+
+            &[data-level='2'] {
+                padding-left: 24px;
+            }
+
+            &[data-level='3'] {
+                padding-left: 36px;
+            }
+
+            &[data-level='4'] {
+                padding-left: 48px;
+            }
+
+            a {
+                color: $dg-gray-700;
+            }
+        }
+    }
+
+    .dg-link {
+        padding: 6px 0px;
+        color: $dg-gray-700;
+        line-height: 16px;
+        text-decoration: none;
+        display: block;
+        text-overflow: ellipsis;
+        width: 100%;
+        box-sizing: border-box;
+
+        &::before {
+            border-left: 2px solid $dg-gray-300;
+            bottom: 0;
+            content: '';
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        &.active {
+            color: darken($dg-primary, 10%);
+            &::before {
+                border-color: $dg-primary;
+                border-width: 2px;
+            }
+        }
+    }
+
+    &-menu {
+        .dg-toc-container {
+            padding-left: 20px;
+        }
+        .dg-link {
+            position: relative;
+            // padding: 6px 6px 6px 6px;
+            &::before {
+                border-width: 0px;
+            }
+            &.active {
+                &::before {
+                    border-width: 0px;
+                    height: 5px;
+                    width: 5px;
+                    border-radius: 50%;
+                    background: $dg-primary;
+                    top: 12px;
+                    left: -10px;
+                }
+            }
+        }
+    }
+}
+
+.dg-btn {
+    display: inline-block;
+    color: $dg-body-color;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: $dg-btn-border-width solid transparent;
+    @include dg-button-size($dg-btn-padding-y, $dg-btn-padding-x, $dg-btn-font-size, $dg-btn-line-height, $dg-btn-border-radius);
+    // @include transition($btn-transition);
+
+    &:focus,
+    &.focus {
+        outline: 0;
+        box-shadow: $dg-btn-focus-box-shadow;
+    }
+
+    // Disabled comes first so active can properly restyle
+    &.disabled,
+    &:disabled {
+        opacity: $dg-btn-disabled-opacity;
+        @include dg-box-shadow(none);
+    }
+
+    // &:not(:disabled):not(.disabled):active,
+    // &:not(:disabled):not(.disabled).active {
+    //     @include dg-box-shadow($dg-btn-active-box-shadow);
+
+    //     &:focus {
+    //         @include box-shadow($dg-btn-focus-box-shadow, $dg-btn-active-box-shadow);
+    //     }
+    // }
+}
+
+// Future-proof disabling of clicks on `<a>` elements
+a.btn.disabled,
+fieldset:disabled a.btn {
+    pointer-events: none;
+}
+
+//
+// Alternate buttons
+//
+
+@each $color, $value in $dg-theme-colors {
+    .dg-btn.dg-btn-outline-#{$color} {
+        @include dg-button-outline-variant($value, white);
+    }
+    .dg-btn.dg-btn-#{$color} {
+        @include dg-button-variant($value, $value);
+        &:hover {
+            box-shadow: 0 2px 5px 1px rgba($value, 0.6);
+        }
+    }
+}
+
+// @each $color, $value in $theme-colors {
+//     .btn-outline-#{$color} {
+//         @include dg-utton-outline-variant($value);
+//     }
+// }
+
+//
+// Link buttons
+//
+
+// Make a button look and behave like a link
+// .btn-link {
+//     font-weight: $font-weight-normal;
+//     color: $link-color;
+//     text-decoration: $link-decoration;
+
+//     @include hover() {
+//         color: $link-hover-color;
+//         text-decoration: $link-hover-decoration;
+//     }
+
+//     &:focus,
+//     &.focus {
+//         text-decoration: $link-hover-decoration;
+//         box-shadow: none;
+//     }
+
+//     &:disabled,
+//     &.disabled {
+//         color: $btn-link-disabled-color;
+//         pointer-events: none;
+//     }
+
+//     // No need for an active state here
+// }
+
+//
+// Button Sizes
+//
+
+// .btn-lg {
+//     @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
+// }
+
+.dg-btn-xsm {
+    @include dg-button-size(
+        $dg-btn-padding-y-xsm,
+        $dg-btn-padding-x-xsm,
+        $dg-btn-font-size-xsm,
+        $dg-btn-line-height-xsm,
+        $dg-btn-border-radius-xsm
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-xsm;
+    }
+}
+
+.dg-btn-sm {
+    @include dg-button-size(
+        $dg-btn-padding-y-sm,
+        $dg-btn-padding-x-sm,
+        $dg-btn-font-size-sm,
+        $dg-btn-line-height-sm,
+        $dg-btn-border-radius-sm
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-sm;
+    }
+}
+
+.dg-btn-md {
+    @include dg-button-size(
+        $dg-btn-padding-y-md,
+        $dg-btn-padding-x-md,
+        $dg-btn-font-size-md,
+        $dg-btn-line-height-md,
+        $dg-btn-border-radius-md
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-md;
+    }
+}
+
+.dg-btn-lg {
+    @include dg-button-size(
+        $dg-btn-padding-y-lg,
+        $dg-btn-padding-x-lg,
+        $dg-btn-font-size-lg,
+        $dg-btn-line-height-lg,
+        $dg-btn-border-radius-lg
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-lg;
+    }
+}
+
+.dg-btn-xlg {
+    @include dg-button-size(
+        $dg-btn-padding-y-xlg,
+        $dg-btn-padding-x-xlg,
+        $dg-btn-font-size-xlg,
+        $dg-btn-line-height-xlg,
+        $dg-btn-border-radius-xlg
+    );
+    .dg-icon {
+        font-size: $dg-btn-font-size-xlg;
+    }
+}
+
+//
+// Block button
+//
+
+// .dg-btn-block {
+//     display: block;
+//     width: 100%;
+
+//     // Vertically space out multiple block buttons
+//     + .btn-block {
+//         margin-top: $dg-btn-block-spacing-y;
+//     }
+// }
+
+// Specificity overrides
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+    &.dg-btn-block {
+        width: 100%;
+    }
+}
+
+.dg-btn.dg-btn-round {
+    @include dg-button-radius-variant(8888px);
+}
+
+.dg-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    // height: $dg-navbar-height;
+    display: flex;
+    align-items: center;
+    padding: 0.719rem 1.25rem;
+    justify-content: space-between;
+    font-size: $dg-font-size-md;
+    z-index: 100;
+    .nav.nav-spacer {
+        display: flex;
+        visibility: hidden;
+        width: 0;
+        margin: 0;
+        flex: 0 0 auto;
+    }
+    .navbar-brand {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        .logo {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .title {
+            font-weight: 600;
+            color: $dg-white;
+        }
+    }
+
+    .navbar-toggler {
+        margin-left: 10px;
+        display: none;
+    }
+
+    .nav {
+        display: flex;
+        a {
+            padding: 6px 18px;
+            margin-right: 8px;
+
+            &.active {
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .spacer {
+        flex: 1;
+    }
+
+    .action-items {
+        display: flex;
+        align-items: center;
+
+        .action-item {
+            margin-left: 20px;
+        }
+
+        .repo-url {
+            .dg-icon {
+                font-size: 32px;
+            }
+        }
+
+        .dg-search-container {
+            .search {
+                width: 200px;
+            }
+        }
+    }
+
+    @include dg-media-breakpoint-down('md') {
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .navbar-toggler {
+            display: block;
+        }
+
+        .spacer,
+        .nav,
+        .action-items {
+            display: none;
+        }
+
+        .nav {
+            flex-direction: column;
+            flex-basis: 100%;
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .action-items {
+            flex-direction: column;
+            align-items: flex-start;
+            .action-item {
+                margin-bottom: 10px;
+            }
+        }
+
+        &.show {
+            .spacer,
+            .nav,
+            .action-items {
+                display: flex;
+            }
+        }
+    }
+}
+
+@mixin dg-navbar-theme($background-color, $box-shadow, $color) {
+    background-color: $background-color;
+    box-shadow: $box-shadow;
+    color: $color;
+
+    .nav {
+        a {
+            color: $color;
+        }
+    }
+    .navbar-brand {
+        .title {
+            color: $color;
+        }
+    }
+
+    .repo-url {
+        color: $color;
+    }
+}
+
+.dg-theme-angular {
+    .dg-navbar {
+        @include dg-navbar-theme($dg-navbar-background-angular, $dg-navbar-box-shadow-angular, $dg-navbar-color-angular);
+
+        .nav {
+            a {
+                &:hover {
+                    color: rgba($color: $dg-white, $alpha: 0.8); // $gray-200;
+                }
+
+                &.active {
+                    background: hsla(0, 0%, 100%, 0.15);
+                }
+            }
+        }
+    }
+}
+
+.dg-theme-default {
+    .dg-navbar {
+        @include dg-navbar-theme($dg-navbar-background-default, $dg-navbar-box-shadow-default, $dg-navbar-color-default);
+
+        .nav {
+            a {
+                &:hover {
+                    color: $dg-primary;
+                }
+
+                &.active {
+                    color: $dg-primary;
+                    background: rgba($dg-primary, 0.12);
+                }
+            }
+        }
+    }
+}
+
+.dg-menu {
+    overflow-x: hidden;
+
+    .menu-group {
+        cursor: pointer;
+        .group-header {
+            display: flex;
+            align-items: center;
+            .group-title {
+                flex: 1 1 0;
+                padding: $dg-sidebar-menu-item-space-y 30px;
+                color: $dg-gray-600;
+                padding-right: 0;
+            }
+            .group-arrow {
+                margin-right: 30px;
+                transition: all 0.5s;
+            }
+        }
+        .group-body {
+            margin-left: $dg-sidebar-item-indent;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s;
+        }
+
+        .menu-item {
+            margin-left: $dg-sidebar-item-indent;
+        }
+        &.menu-group--open {
+            & > .group-body {
+                max-height: 4000px;
+                opacity: 1;
+            }
+            & > .group-header .group-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .menu-item {
+        padding: 0px $dg-sidebar-menu-item-space-x/2 0 $dg-sidebar-menu-item-space-x;
+        &.active {
+            padding-right: $dg-sidebar-menu-item-space-x/2 - 3px;
+        }
+        display: block;
+        // a {
+        //     color: $dg-gray-800;
+        // }
+
+        &.active {
+            border-right: 3px solid $dg-primary;
+            .item-content {
+                background: rgba($dg-primary, 0.05);
+                color: $dg-primary;
+            }
+            &::after {
+                background-color: $dg-primary;
+                width: 3px;
+                // border-right: 3px solid $dg-primary;
+            }
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+            margin: 0 -1000px;
+            padding: $dg-sidebar-menu-item-space-y 1000px;
+            color: $dg-gray-800;
+            & > .item-content-title {
+                flex: 1 1 0;
+            }
+            & > .item-content-label {
+                flex: 0 0 auto;
+                background-color: $dg-white;
+                display: flex;
+                border-radius: 4px;
+            }
+        }
+
+        .subtitle {
+            color: $dg-gray-600;
+            font-size: $dg-font-size-sm;
+            margin-left: 4px;
+        }
+
+        &:hover {
+            .item-content {
+                color: $dg-primary;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.dg-sidebar {
+    .dg-sidebar-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 0px 10px 0px;
+        border-bottom: 1px solid $dg-gray-210;
+
+        .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .title {
+            font-weight: 500;
+            color: $dg-body-color;
+            font-size: $dg-font-size-lg;
+            padding: 5px 0px;
+        }
+
+        .description {
+            color: $dg-gray-700;
+            padding: 5px 10px;
+        }
+    }
+
+    .action-items {
+        border-top: 1px solid $dg-gray-210;
+
+        .action-item {
+            padding: 10px 30px;
+        }
+    }
+
+    .dg-search-container {
+        margin: 10px;
+        .algolia-autocomplete {
+            .ds-dropdown-menu {
+                min-width: 280px;
+            }
+        }
+
+        .search {
+            width: 240px;
+        }
+    }
+}
+
+.dg-search-container {
+    position: relative;
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        z-index: 1;
+        color: $dg-gray-500;
+        pointer-events: none;
+        font-size: $dg-font-size-base;
+    }
+
+    .search {
+        padding: 0.532rem 10px 0.532rem 30px;
+        outline: none;
+        border: 1px solid $dg-gray-200;
+        border-radius: 18px;
+        -webkit-appearance: none;
+    }
+
+    .search-results-container {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 8px 0 0;
+        min-width: 200px;
+        max-width: 400px;
+        max-height: 230px;
+        padding: 6px 0;
+        z-index: 10;
+        background-color: $dg-white;
+        border-radius: 1px;
+        box-shadow: 0 0 24px rgb(0 0 0 / 18%);
+        box-sizing: border-box;
+        overflow-y: auto;
+
+        &.is-searching {
+            display: block;
+        }
+
+        &.result-empty {
+            text-align: center;
+            padding: 40px 0;
+            .empty-icon {
+                svg {
+                    width: 64px;
+                    height: 58px;
+                }
+            }
+        }
+
+        .search-result {
+            display: block;
+            padding: 6px 20px;
+            color: $dg-gray-700;
+            font-size: $dg-font-size-base;
+            text-decoration: none;
+            line-height: $dg-line-height;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $dg-gray-80;
+                color: $dg-primary;
+            }
+            .dg-word-highlight {
+                background-color: rgba($dg-warning, 0.4);
+            }
+        }
+    }
+}
+
+.dg-footer {
+    display: block;
+    padding: 20px;
+    border-top: 1px solid $dg-gray-200;
+    text-align: center;
+    color: $dg-gray-600;
+    a {
+        color: $dg-gray-600;
+        text-decoration: none;
+        &:hover {
+            color: $dg-gray-700;
+            text-decoration: none;
+        }
+    }
+
+    .beian {
+        margin-top: 5px;
+    }
+    .beian-public-security {
+        margin-left: 5px;
+        img {
+            vertical-align: -4px;
+        }
+    }
+}
+
+@mixin top-show-title-variant() {
+    position: relative;
+    margin-top: 6px;
+    &::before {
+        position: absolute;
+        content: attr(title);
+        top: 0;
+        left: 1em;
+        margin-left: -4px;
+        padding: 0 4px;
+        color: $dg-gray-700;
+        font-weight: 500;
+        background-color: $dg-white;
+        transform: translateY(-50%);
+    }
+}
+
+.dg-example-viewer {
+    display: block;
+    padding: 20px 0px;
+
+    &.dg-example-viewer-inline {
+        padding: 10px 0px;
+        .dg-example-viewer-wrapper {
+            border: none;
+            box-shadow: none;
+        }
+
+        .dg-example-viewer-header,
+        .dg-example-viewer-actions {
+            display: none;
+        }
+        .dg-example-viewer-body {
+            padding: 0px;
+        }
+    }
+
+    .dg-example-viewer-wrapper {
+        border: 1px solid $dg-border-color;
+        // box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .dg-example-viewer-header {
+        border-bottom: 1px solid $dg-border-color;
+        padding: 5px 20px;
+        background: $dg-gray-100; // rgba(0, 0, 0, 0.03);
+        color: $dg-gray-700;
+
+        .title {
+            font-size: $dg-font-size-lg;
+            font-weight: bold;
+        }
+    }
+
+    .dg-example-viewer-body {
+        padding: 20px;
+    }
+
+    .dg-example-viewer-intro {
+        border-top: 1px solid $dg-border-color;
+        padding: 20px;
+        @include top-show-title-variant();
+    }
+
+    .dg-example-viewer-actions {
+        border-top: 1px dashed $dg-border-color;
+        padding: 10px;
+        text-align: center;
+        // @include top-show-title-variant();
+        clear: both;
+        .action-item {
+            color: $dg-gray-500;
+            padding: 5px;
+            margin-right: 10px;
+
+            &:hover {
+                color: $dg-primary;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .dg-example-viewer-sources {
+        border-top: 1px solid $dg-border-color;
+        display: block;
+        flex-direction: column;
+        transition: opacity 1s;
+        height: 0px;
+        opacity: 0;
+        visibility: hidden;
+
+        &.dg-sources-show {
+            visibility: visible;
+            height: auto;
+            opacity: 1;
+            .dg-source-code,
+            .dg-example-viewer-sources-content {
+                height: auto;
+            }
+        }
+
+        .dg-tab-links {
+            padding: 0px 10px;
+        }
+    }
+}
+
+.dg-examples {
+    .dg-example-viewer {
+        margin-bottom: 10px;
+    }
+}
+
+.dg-locales-selector {
+    display: block;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+
+    select {
+        width: 100%;
+        padding: 0 22px 0 0;
+        text-align: right;
+        height: 30px;
+        outline: none;
+        font-size: 14px;
+        appearance: none;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .dg-selector-arrow {
+        width: 9px;
+        height: 9px;
+        border-left: 1px solid $dg-gray-500;
+        border-top: 1px solid $dg-gray-500;
+        transform: rotate(-135deg);
+        position: absolute;
+        top: 50%;
+        right: 2px;
+        margin-top: -8px;
+        right: 2px;
+        z-index: -1;
+    }
+}
+
+@mixin dg-locales-selector-theme($color, $hover-color) {
+    .dg-locales-selector {
+        select {
+            color: $color;
+        }
+        .dg-selector-arrow {
+            border-color: $color;
+        }
+        &:hover {
+            select {
+                color: $hover-color;
+            }
+            .dg-selector-arrow {
+                border-color: $hover-color;
+            }
+        }
+    }
+}
+
+.dg-theme-default {
+    @include dg-locales-selector-theme(inherit, rgba($color: $dg-body-color, $alpha: 0.8));
+}
+
+.dg-theme-angular {
+    @include dg-locales-selector-theme($dg-white, rgba($color: $dg-white, $alpha: 0.8));
+}
+
+.dg-copy {
+    cursor: pointer;
+}
+
+.dg-source-code {
+    display: block;
+    padding: 10px 20px;
+    background: $dg-gray-100;
+    white-space: nowrap;
+    margin: 0px;
+    height: 0px;
+    position: relative;
+
+    .dg-source-code-content {
+        white-space: break-spaces;
+        padding: 10px 0px;
+        font-size: $dg-font-size-md;
+    }
+
+    .dg-copy {
+        position: absolute;
+        top: 1em;
+        right: 1.1em;
+        color: $dg-gray-500;
+        &:hover {
+            color: $dg-primary;
+        }
+    }
+}
+
+$dg-primary: #348fe4 !default;
+$dg-primary-light: #246eff;
+$dg-success: #66c060 !default; // 2dbcff
+$dg-info: #2dbcff !default;
+$dg-warning: #ffc442 !default;
+$dg-danger: #ff5b57 !default;
+
+$dg-gray-80: #f3f3f3 !default;
+$dg-gray-100: #f6f8fa !default;
+$dg-gray-200: #eee !default;
+$dg-gray-210: #e9e9e9 !default;
+$dg-gray-300: #ddd !default;
+$dg-gray-400: #cacaca !default;
+$dg-gray-500: #aaa !default;
+$dg-gray-600: #888 !default;
+$dg-gray-700: #666 !default;
+$dg-gray-800: #333 !default;
+$dg-body-color: #333 !default;
+$dg-white: #fff !default;
+$dg-black: #000 !default;
+$dg-body-bg: $dg-white !default;
+
+$dg-yiq-contrasted-threshold: 180 !default;
+$dg-yiq-text-dark: $dg-gray-800 !default;
+$dg-yiq-text-light: $dg-white !default;
+$dg-enable-gradients: false !default;
+$dg-enable-shadows: true !default;
+$dg-enable-rounded: true !default;
+
+$dg-border-color: #eee !default;
+$dg-border-radius: 4px !default;
+
+$dg-theme-colors: () !default;
+$dg-theme-colors: map-merge(
+    (
+        'primary': $dg-primary,
+        'primary-light': $dg-primary-light,
+        'success': $dg-success,
+        'info': $dg-info,
+        'warning': $dg-warning,
+        'danger': $dg-danger,
+        'light': $dg-gray-300,
+        'dark': $dg-gray-700
+    ),
+    $dg-theme-colors
+);
+
+$dg-grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+) !default;
+
+$dg-spacer: 1rem !default;
+$dg-spacers: () !default;
+// // stylelint-disable-next-line scss/dollar-variable-default
+$dg-spacers: map-merge(
+    (
+        0: 0,
+        1: (
+            $dg-spacer * 0.25
+        ),
+        2: (
+            $dg-spacer * 0.5
+        ),
+        3: $dg-spacer,
+        4: (
+            $dg-spacer * 1.5
+        ),
+        5: (
+            $dg-spacer * 3
+        )
+    ),
+    $dg-spacers
+);
+
+$dg-line-height: 1.5715 !default;
+
+$dg-code-bg-color: #f3f5f7 !default;
+
+// link
+$dg-link-hover-decoration: none !default;
+
+// font
+// $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+//         'Segoe UI Symbol';
+$dg-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Helvetica Neue, Noto Sans, Noto Sans CJK SC,
+    Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif !default;
+$dg-font-size-base: 0.875rem !default; // 14px
+$dg-font-size-md: 1rem !default; // 16px
+$dg-font-size-lg: 1.25rem !default; // 20px
+$dg-font-size-sm: 0.75rem !default; // 12px
+$dg-font-size-max-lg: 3.25rem !default; // 补充字体大小 52px
+$dg-font-size-xs: 0.625rem !default; // 10px
+$dg-font-size-xlg: 1.5rem !default; // 24px
+
+// navbar
+$dg-navbar-height: 60px !default;
+
+// default theme
+$dg-navbar-background-default: $dg-white;
+$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
+$dg-navbar-color-default: $dg-body-color;
+
+// angular theme
+$dg-navbar-background-angular: #3f51b5 !default;
+$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-color-angular: $dg-white !default;
+
+$dg-hero-background: #dae6f3 !default;
+
+// sidebar
+$dg-sidebar-item-indent: 10px !default;
+$dg-sidebar-menu-item-space-x: 30px !default;
+$dg-sidebar-menu-item-space-y: 9px !default;
+
+// button
+$dg-btn-border-width: 1px !default;
+$dg-btn-padding-y: 6px !default;
+$dg-btn-padding-x: 10px !default;
+$dg-btn-font-size: $dg-font-size-md !default;
+$dg-btn-line-height: $dg-line-height !default;
+$dg-btn-border-radius: 4px !default;
+$dg-btn-padding-y-xsm: 0.5px !default;
+$dg-btn-padding-x-xsm: 10px !default;
+$dg-btn-font-size-xsm: $dg-font-size-md !default;
+$dg-btn-line-height-xsm: $dg-line-height !default;
+$dg-btn-border-radius-xsm: 4px !default;
+$dg-btn-padding-y-sm: 2.5px !default;
+$dg-btn-padding-x-sm: 10px !default;
+$dg-btn-font-size-sm: $dg-font-size-md !default;
+$dg-btn-line-height-sm: $dg-line-height !default;
+$dg-btn-border-radius-sm: 4px !default;
+$dg-btn-padding-y-md: 4.5px !default;
+$dg-btn-padding-x-md: 10px !default;
+$dg-btn-font-size-md: $dg-font-size-md !default;
+$dg-btn-line-height-md: $dg-line-height !default;
+$dg-btn-border-radius-md: 4px !default;
+$dg-btn-padding-y-lg: 6.5px !default;
+$dg-btn-padding-x-lg: 10px !default;
+$dg-btn-font-size-lg: $dg-font-size-md !default;
+$dg-btn-line-height-lg: $dg-line-height !default;
+$dg-btn-border-radius-lg: 4px !default;
+$dg-btn-padding-y-xlg: 8.5px !default;
+$dg-btn-padding-x-xlg: 30px !default;
+$dg-btn-font-size-xlg: $dg-font-size-md !default;
+$dg-btn-line-height-xlg: $dg-line-height !default;
+$dg-btn-border-radius-xlg: 4px !default;
+$dg-btn-disabled-opacity: 0.6 !default;
+$dg-btn-box-shadow: none !default;
+// $dg-btn-box-shadow: inset 0 1px 0 rgba($dg-white, 0.15), 0 1px 1px rgba($dg-black, 0.075) !default;
+$dg-btn-focus-box-shadow: none !default;
+$dg-btn-focus-width: 0.2rem !default;
+
+.dg-home {
+    display: block;
+
+    .dg-hero {
+        .dg-hero-launch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .dg-launch-title {
+                letter-spacing: 1.1px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            .dg-launch-description {
+                margin-bottom: 20px;
+                font-size: 14px;
+                color: $dg-gray-600;
+            }
+
+            .dg-launch-actions {
+                .dg-launch-action {
+                    margin-right: 10px;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        .dg-hero-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+            background: $dg-hero-background;
+
+            img {
+                object-fit: cover;
+            }
+        }
+    }
+
+    .dg-features {
+        display: grid;
+        margin-top: 60px;
+        margin-bottom: 40px;
+        img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+        .dg-feature {
+            text-align: center;
+        }
+        .dg-feature:nth-child(-n + 3) {
+            padding-top: 0;
+        }
+        .dg-feature-title {
+            color: $dg-gray-800;
+            font-size: 16px;
+            padding-bottom: 14px;
+        }
+        .dg-feature-description {
+            color: $dg-gray-600;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    }
+
+    .dg-hero,
+    .dg-features,
+    .dg-extra-content {
+        margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .dg-hero-launch {
+            height: 400px;
+            h1 {
+                font-size: 77px;
+            }
+        }
+        .dg-hero-banner {
+            height: 400px;
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+        .dg-features {
+            padding: 0 20%;
+            grid: auto/1fr 1fr 1fr;
+            grid-gap: 80px 50px;
+
+            .dg-feature {
+                flex: 0 0 calc(100% / 11 * 9 / 3);
+            }
+        }
+        .dg-extra-content {
+            padding: 0 20%;
+        }
+    }
+    @media (max-width: 767px) {
+        .dg-hero-launch {
+            height: 230px;
+            h1 {
+                font-size: 29px;
+            }
+        }
+        .dg-hero-banner {
+            height: 230px;
+            img {
+                height: 100%;
+                position: relative;
+            }
+        }
+        .dg-features {
+            padding: 0 30px;
+            grid: auto/1fr 1fr;
+            grid-gap: 50px 25px;
+
+            .dg-feature {
+                flex: 0 0 calc(100% / 11 * 9 / 2);
+            }
+        }
+        .dg-extra-content {
+            padding: 0 30px;
+        }
+    }
+}
+
+.dg-component-overview {
+    display: flex;
+    align-items: flex-start;
+}
+
+//
+.searchbox {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 32px !important;
+    white-space: nowrap;
+    box-sizing: border-box;
+    visibility: visible !important;
+}
+.searchbox .algolia-autocomplete {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.searchbox__wrapper {
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: relative;
+}
+.searchbox__input {
+    display: inline-block;
+    box-sizing: border-box;
+    transition: box-shadow 0.4s ease, background 0.4s ease;
+    border: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px #ccc;
+    background: #fff !important;
+    padding: 0 26px 0 32px;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    white-space: normal;
+    font-size: 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.searchbox__input::-webkit-search-cancel-button,
+.searchbox__input::-webkit-search-decoration,
+.searchbox__input::-webkit-search-results-button,
+.searchbox__input::-webkit-search-results-decoration {
+    display: none;
+}
+.searchbox__input:hover {
+    box-shadow: inset 0 0 0 1px #b3b3b3;
+}
+.searchbox__input:active,
+.searchbox__input:focus {
+    outline: 0;
+    box-shadow: inset 0 0 0 1px #aaa;
+    background: #fff;
+}
+.searchbox__input::-webkit-input-placeholder {
+    color: #aaa;
+}
+.searchbox__input:-ms-input-placeholder {
+    color: #aaa;
+}
+.searchbox__input::-ms-input-placeholder {
+    color: #aaa;
+}
+.searchbox__input::placeholder {
+    color: #aaa;
+}
+.searchbox__submit {
+    position: absolute;
+    top: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 16px 0 0 16px;
+    background-color: rgba(69, 142, 225, 0);
+    padding: 0;
+    width: 32px;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    font-size: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    right: inherit;
+    left: 0;
+}
+.searchbox__submit:before {
+    display: inline-block;
+    margin-right: -4px;
+    height: 100%;
+    vertical-align: middle;
+    content: '';
+}
+.searchbox__submit:active,
+.searchbox__submit:hover {
+    cursor: pointer;
+}
+.searchbox__submit:focus {
+    outline: 0;
+}
+.searchbox__submit svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    fill: #6d7e96;
+}
+.searchbox__reset {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    fill: rgba(0, 0, 0, 0.5);
+}
+.searchbox__reset.hide {
+    display: none;
+}
+.searchbox__reset:focus {
+    outline: 0;
+}
+.searchbox__reset svg {
+    display: block;
+    margin: 4px;
+    width: 8px;
+    height: 8px;
+}
+.searchbox__input:valid ~ .searchbox__reset {
+    display: block;
+    -webkit-animation-name: sbx-reset-in;
+    animation-name: sbx-reset-in;
+    -webkit-animation-duration: 0.15s;
+    animation-duration: 0.15s;
+}
+@-webkit-keyframes sbx-reset-in {
+    0% {
+        -webkit-transform: translate3d(-20%, 0, 0);
+        transform: translate3d(-20%, 0, 0);
+        opacity: 0;
+    }
+    to {
+        -webkit-transform: none;
+        transform: none;
+        opacity: 1;
+    }
+}
+@keyframes sbx-reset-in {
+    0% {
+        -webkit-transform: translate3d(-20%, 0, 0);
+        transform: translate3d(-20%, 0, 0);
+        opacity: 0;
+    }
+    to {
+        -webkit-transform: none;
+        transform: none;
+        opacity: 1;
+    }
+}
+.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
+    right: 0 !important;
+    left: inherit !important;
+}
+.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu:before {
+    right: 48px;
+}
+.algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu {
+    left: 0 !important;
+    right: inherit !important;
+}
+.algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu:before {
+    left: 48px;
+}
+.algolia-autocomplete .ds-dropdown-menu {
+    top: -6px;
+    border-radius: 4px;
+    margin: 6px 0 0;
+    padding: 0;
+    text-align: left;
+    height: auto;
+    position: relative;
+    background: transparent;
+    border: none;
+    z-index: 999;
+    max-width: 600px;
+    min-width: 500px;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+}
+.algolia-autocomplete .ds-dropdown-menu:before {
+    display: block;
+    position: absolute;
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    z-index: 1000;
+    top: -7px;
+    border-top: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    border-radius: 2px;
+}
+.algolia-autocomplete .ds-dropdown-menu .ds-suggestions {
+    position: relative;
+    z-index: 1000;
+    margin-top: 8px;
+}
+.algolia-autocomplete .ds-dropdown-menu .ds-suggestions a:hover {
+    text-decoration: none;
+}
+.algolia-autocomplete .ds-dropdown-menu .ds-suggestion {
+    cursor: pointer;
+}
+.algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion.suggestion-layout-simple,
+.algolia-autocomplete
+    .ds-dropdown-menu
+    .ds-suggestion.ds-cursor
+    .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
+    .algolia-docsearch-suggestion--content {
+    background-color: rgba(69, 142, 225, 0.05);
+}
+.algolia-autocomplete .ds-dropdown-menu [class^='ds-dataset-'] {
+    position: relative;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    border-radius: 4px;
+    overflow: auto;
+    padding: 0 8px 8px;
+}
+.algolia-autocomplete .ds-dropdown-menu * {
+    box-sizing: border-box;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion {
+    display: block;
+    position: relative;
+    padding: 0 8px;
+    background: #fff;
+    color: #02060c;
+    overflow: hidden;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--highlight {
+    color: #174d8c;
+    background: rgba(143, 187, 237, 0.1);
+    padding: 0.1em 0.05em;
+}
+.algolia-autocomplete
+    .algolia-docsearch-suggestion--category-header
+    .algolia-docsearch-suggestion--category-header-lvl0
+    .algolia-docsearch-suggestion--highlight,
+.algolia-autocomplete
+    .algolia-docsearch-suggestion--category-header
+    .algolia-docsearch-suggestion--category-header-lvl1
+    .algolia-docsearch-suggestion--highlight,
+.algolia-autocomplete .algolia-docsearch-suggestion--text .algolia-docsearch-suggestion--highlight {
+    padding: 0 0 1px;
+    background: inherit;
+    box-shadow: inset 0 -2px 0 0 rgba(69, 142, 225, 0.8);
+    color: inherit;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--content {
+    display: block;
+    float: right;
+    width: 70%;
+    position: relative;
+    padding: 5.33333px 0 5.33333px 10.66667px;
+    cursor: pointer;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--content:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: #ddd;
+    left: -1px;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--category-header {
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    display: none;
+    margin-top: 8px;
+    padding: 4px 0;
+    font-size: 1em;
+    color: #33363d;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--wrapper {
+    width: 100%;
+    float: left;
+    padding: 8px 0 0;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
+    float: left;
+    width: 30%;
+    text-align: right;
+    position: relative;
+    padding: 5.33333px 10.66667px;
+    color: #a4a7ae;
+    font-size: 0.9em;
+    word-wrap: break-word;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: #ddd;
+    right: 0;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--subcategory-inline {
+    display: none;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--title {
+    margin-bottom: 4px;
+    color: #02060c;
+    font-size: 0.9em;
+    font-weight: 700;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--text {
+    display: block;
+    line-height: 1.2em;
+    font-size: 0.85em;
+    color: #63676d;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--no-results {
+    width: 100%;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion--no-results:before {
+    display: none;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion code {
+    padding: 1px 5px;
+    font-size: 90%;
+    border: none;
+    color: #222;
+    background-color: #ebebeb;
+    border-radius: 3px;
+    font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion code .algolia-docsearch-suggestion--highlight {
+    background: none;
+}
+.algolia-autocomplete .algolia-docsearch-suggestion.algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--category-header,
+.algolia-autocomplete .algolia-docsearch-suggestion.algolia-docsearch-suggestion__secondary {
+    display: block;
+}
+@media (min-width: 768px) {
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
+        display: block;
+    }
+}
+@media (max-width: 768px) {
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
+        display: inline-block;
+        width: auto;
+        float: left;
+        padding: 0;
+        color: #02060c;
+        font-size: 0.9em;
+        font-weight: 700;
+        text-align: left;
+        opacity: 0.5;
+    }
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column:before {
+        display: none;
+    }
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column:after {
+        content: '|';
+    }
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content {
+        display: inline-block;
+        width: auto;
+        text-align: left;
+        float: left;
+        padding: 0;
+    }
+    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content:before {
+        display: none;
+    }
+}
+.algolia-autocomplete .suggestion-layout-simple.algolia-docsearch-suggestion {
+    border-bottom: 1px solid #eee;
+    padding: 8px;
+    margin: 0;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--content {
+    width: 100%;
+    padding: 0;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--content:before {
+    display: none;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--category-header {
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    border: none;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--category-header-lvl0,
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--category-header-lvl1 {
+    opacity: 0.6;
+    font-size: 0.85em;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--category-header-lvl1:before {
+    background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 20 38" xmlns="http://www.w3.org/2000/svg"><path d="M1.49 4.31l14 16.126.002-2.624-14 16.074-1.314 1.51 3.017 2.626 1.313-1.508 14-16.075 1.142-1.313-1.14-1.313-14-16.125L3.2.18.18 2.8l1.31 1.51z" fill-rule="evenodd" fill="%231D3657" /></svg>');
+    content: '';
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--wrapper {
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--duplicate-content,
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--subcategory-inline {
+    display: none !important;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--title {
+    margin: 0;
+    color: #458ee1;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--title:before {
+    content: '#';
+    font-weight: 700;
+    color: #458ee1;
+    display: inline-block;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--text {
+    margin: 4px 0 0;
+    display: block;
+    line-height: 1.4em;
+    padding: 5.33333px 8px;
+    background: #f8f8f8;
+    font-size: 0.85em;
+    opacity: 0.8;
+}
+.algolia-autocomplete .suggestion-layout-simple .algolia-docsearch-suggestion--text .algolia-docsearch-suggestion--highlight {
+    color: #3f4145;
+    font-weight: 700;
+    box-shadow: none;
+}
+.algolia-autocomplete .algolia-docsearch-footer {
+    width: 134px;
+    height: 20px;
+    z-index: 2000;
+    margin-top: 10.66667px;
+    float: right;
+    font-size: 0;
+    line-height: 0;
+}
+.algolia-autocomplete .algolia-docsearch-footer--logo {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='168' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M78.988.938h16.594a2.968 2.968 0 0 1 2.966 2.966V20.5a2.967 2.967 0 0 1-2.966 2.964H78.988a2.967 2.967 0 0 1-2.966-2.964V3.897A2.961 2.961 0 0 1 78.988.938zm41.937 17.866c-4.386.02-4.386-3.54-4.386-4.106l-.007-13.336 2.675-.424v13.254c0 .322 0 2.358 1.718 2.364v2.248zm-10.846-2.18c.821 0 1.43-.047 1.855-.129v-2.719a6.334 6.334 0 0 0-1.574-.199 5.7 5.7 0 0 0-.897.069 2.699 2.699 0 0 0-.814.24c-.24.116-.439.28-.582.491-.15.212-.219.335-.219.656 0 .628.219.991.616 1.23s.938.362 1.615.362zm-.233-9.7c.883 0 1.629.109 2.231.328.602.218 1.088.525 1.444.915.363.396.609.922.76 1.483.157.56.232 1.175.232 1.85v6.874a32.5 32.5 0 0 1-1.868.314c-.834.123-1.772.185-2.813.185-.69 0-1.327-.069-1.895-.198a4.001 4.001 0 0 1-1.471-.636 3.085 3.085 0 0 1-.951-1.134c-.226-.465-.343-1.12-.343-1.803 0-.656.13-1.073.384-1.525a3.24 3.24 0 0 1 1.047-1.106c.445-.287.95-.492 1.532-.615a8.8 8.8 0 0 1 1.82-.185 8.404 8.404 0 0 1 1.972.24v-.438c0-.307-.035-.6-.11-.874a1.88 1.88 0 0 0-.384-.73 1.784 1.784 0 0 0-.724-.493 3.164 3.164 0 0 0-1.143-.205c-.616 0-1.177.075-1.69.164a7.735 7.735 0 0 0-1.26.307l-.321-2.192c.335-.117.834-.233 1.478-.349a10.98 10.98 0 0 1 2.073-.178zm52.842 9.626c.822 0 1.43-.048 1.854-.13V13.7a6.347 6.347 0 0 0-1.574-.199c-.294 0-.595.021-.896.069a2.7 2.7 0 0 0-.814.24 1.46 1.46 0 0 0-.582.491c-.15.212-.218.335-.218.656 0 .628.218.991.615 1.23.404.245.938.362 1.615.362zm-.226-9.694c.883 0 1.629.108 2.231.327.602.219 1.088.526 1.444.915.355.39.609.923.759 1.483a6.8 6.8 0 0 1 .233 1.852v6.873c-.41.088-1.034.19-1.868.314-.834.123-1.772.184-2.813.184-.69 0-1.327-.068-1.895-.198a4.001 4.001 0 0 1-1.471-.635 3.085 3.085 0 0 1-.951-1.134c-.226-.465-.343-1.12-.343-1.804 0-.656.13-1.073.384-1.524.26-.45.608-.82 1.047-1.107.445-.286.95-.491 1.532-.614a8.803 8.803 0 0 1 2.751-.13c.329.034.671.096 1.04.185v-.437a3.3 3.3 0 0 0-.109-.875 1.873 1.873 0 0 0-.384-.731 1.784 1.784 0 0 0-.724-.492 3.165 3.165 0 0 0-1.143-.205c-.616 0-1.177.075-1.69.164a7.75 7.75 0 0 0-1.26.307l-.321-2.193c.335-.116.834-.232 1.478-.348a11.633 11.633 0 0 1 2.073-.177zm-8.034-1.271a1.626 1.626 0 0 1-1.628-1.62c0-.895.725-1.62 1.628-1.62.904 0 1.63.725 1.63 1.62 0 .895-.733 1.62-1.63 1.62zm1.348 13.22h-2.689V7.27l2.69-.423v11.956zm-4.714 0c-4.386.02-4.386-3.54-4.386-4.107l-.008-13.336 2.676-.424v13.254c0 .322 0 2.358 1.718 2.364v2.248zm-8.698-5.903c0-1.156-.253-2.119-.746-2.788-.493-.677-1.183-1.01-2.067-1.01-.882 0-1.574.333-2.065 1.01-.493.676-.733 1.632-.733 2.788 0 1.168.246 1.953.74 2.63.492.683 1.183 1.018 2.066 1.018.882 0 1.574-.342 2.067-1.019.492-.683.738-1.46.738-2.63zm2.737-.007c0 .902-.13 1.584-.397 2.33a5.52 5.52 0 0 1-1.128 1.906 4.986 4.986 0 0 1-1.752 1.223c-.685.286-1.739.45-2.265.45-.528-.006-1.574-.157-2.252-.45a5.096 5.096 0 0 1-1.744-1.223c-.487-.527-.863-1.162-1.137-1.906a6.345 6.345 0 0 1-.41-2.33c0-.902.123-1.77.397-2.508a5.554 5.554 0 0 1 1.15-1.892 5.133 5.133 0 0 1 1.75-1.216c.679-.287 1.425-.423 2.232-.423.808 0 1.553.142 2.237.423a4.88 4.88 0 0 1 1.753 1.216 5.644 5.644 0 0 1 1.135 1.892c.287.738.431 1.606.431 2.508zm-20.138 0c0 1.12.246 2.363.738 2.882.493.52 1.13.78 1.91.78.424 0 .828-.062 1.204-.178.377-.116.677-.253.917-.417V9.33a10.476 10.476 0 0 0-1.766-.226c-.971-.028-1.71.37-2.23 1.004-.513.636-.773 1.75-.773 2.788zm7.438 5.274c0 1.824-.466 3.156-1.404 4.004-.936.846-2.367 1.27-4.296 1.27-.705 0-2.17-.137-3.34-.396l.431-2.118c.98.205 2.272.26 2.95.26 1.074 0 1.84-.219 2.299-.656.459-.437.684-1.086.684-1.948v-.437a8.07 8.07 0 0 1-1.047.397c-.43.13-.93.198-1.492.198-.739 0-1.41-.116-2.018-.349a4.206 4.206 0 0 1-1.567-1.025c-.431-.45-.774-1.017-1.013-1.694-.24-.677-.363-1.885-.363-2.773 0-.834.13-1.88.384-2.577.26-.696.629-1.298 1.129-1.796.493-.498 1.095-.881 1.8-1.162a6.605 6.605 0 0 1 2.428-.457c.87 0 1.67.109 2.45.24.78.129 1.444.265 1.985.415V18.17z' fill='%235468FF'/%3E%3Cpath d='M6.972 6.677v1.627c-.712-.446-1.52-.67-2.425-.67-.585 0-1.045.13-1.38.391a1.24 1.24 0 0 0-.502 1.03c0 .425.164.765.494 1.02.33.256.835.532 1.516.83.447.192.795.356 1.045.495.25.138.537.332.862.582.324.25.563.548.718.894.154.345.23.741.23 1.188 0 .947-.334 1.691-1.004 2.234-.67.542-1.537.814-2.601.814-1.18 0-2.16-.229-2.936-.686v-1.708c.84.628 1.814.942 2.92.942.585 0 1.048-.136 1.388-.407.34-.271.51-.646.51-1.125 0-.287-.1-.55-.302-.79-.203-.24-.42-.42-.655-.542-.234-.123-.585-.29-1.053-.503a61.27 61.27 0 0 1-.582-.271 13.67 13.67 0 0 1-.55-.287 4.275 4.275 0 0 1-.567-.351 6.92 6.92 0 0 1-.455-.4c-.18-.17-.31-.34-.39-.51-.08-.17-.155-.37-.224-.598a2.553 2.553 0 0 1-.104-.742c0-.915.333-1.638.998-2.17.664-.532 1.523-.798 2.576-.798.968 0 1.793.17 2.473.51zm7.468 5.696v-.287c-.022-.607-.187-1.088-.495-1.444-.309-.357-.75-.535-1.324-.535-.532 0-.99.194-1.373.583-.382.388-.622.949-.717 1.683h3.909zm1.005 2.792v1.404c-.596.34-1.383.51-2.362.51-1.255 0-2.255-.377-3-1.132-.744-.755-1.116-1.744-1.116-2.968 0-1.297.34-2.316 1.021-3.055.68-.74 1.548-1.11 2.6-1.11 1.033 0 1.852.323 2.458.966.606.644.91 1.572.91 2.784 0 .33-.033.676-.096 1.038h-5.314c.107.702.405 1.239.894 1.611.49.372 1.106.558 1.85.558.862 0 1.58-.202 2.155-.606zm6.605-1.77h-1.212c-.596 0-1.045.116-1.349.35-.303.234-.454.532-.454.894 0 .372.117.664.35.877.235.213.575.32 1.022.32.51 0 .912-.142 1.204-.424.293-.281.44-.651.44-1.108v-.91zm-4.068-2.554V9.325c.627-.361 1.457-.542 2.489-.542 2.116 0 3.175 1.026 3.175 3.08V17h-1.548v-.957c-.415.68-1.143 1.02-2.186 1.02-.766 0-1.38-.22-1.843-.661-.462-.442-.694-1.003-.694-1.684 0-.776.293-1.38.878-1.81.585-.431 1.404-.647 2.457-.647h1.34V11.8c0-.554-.133-.971-.399-1.253-.266-.282-.707-.423-1.324-.423a4.07 4.07 0 0 0-2.345.718zm9.333-1.93v1.42c.394-1 1.101-1.5 2.123-1.5.148 0 .313.016.494.048v1.531a1.885 1.885 0 0 0-.75-.143c-.542 0-.989.24-1.34.718-.351.479-.527 1.048-.527 1.707V17h-1.563V8.91h1.563zm5.01 4.084c.022.82.272 1.492.75 2.019.479.526 1.15.79 2.01.79.639 0 1.235-.176 1.788-.527v1.404c-.521.319-1.186.479-1.995.479-1.265 0-2.276-.4-3.031-1.197-.755-.798-1.133-1.792-1.133-2.984 0-1.16.38-2.151 1.14-2.975.761-.825 1.79-1.237 3.088-1.237.702 0 1.346.149 1.93.447v1.436a3.242 3.242 0 0 0-1.77-.495c-.84 0-1.513.266-2.019.798-.505.532-.758 1.213-.758 2.042zM40.24 5.72v4.579c.458-1 1.293-1.5 2.505-1.5.787 0 1.42.245 1.899.734.479.49.718 1.17.718 2.042V17h-1.564v-5.106c0-.553-.14-.98-.422-1.284-.282-.303-.652-.455-1.11-.455-.531 0-1.002.202-1.411.606-.41.405-.615 1.022-.615 1.851V17h-1.563V5.72h1.563zm14.966 10.02c.596 0 1.096-.253 1.5-.758.404-.506.606-1.157.606-1.955 0-.915-.202-1.62-.606-2.114-.404-.495-.92-.742-1.548-.742-.553 0-1.05.224-1.491.67-.442.447-.662 1.133-.662 2.058 0 .958.212 1.67.638 2.138.425.469.946.703 1.563.703zM53.004 5.72v4.42c.574-.894 1.388-1.341 2.44-1.341 1.022 0 1.857.383 2.506 1.149.649.766.973 1.781.973 3.047 0 1.138-.309 2.109-.925 2.912-.617.803-1.463 1.205-2.537 1.205-1.075 0-1.894-.447-2.457-1.34V17h-1.58V5.72h1.58zm9.908 11.104l-3.223-7.913h1.739l1.005 2.632 1.26 3.415c.096-.32.48-1.458 1.15-3.415l.909-2.632h1.66l-2.92 7.866c-.777 2.074-1.963 3.11-3.559 3.11a2.92 2.92 0 0 1-.734-.079v-1.34c.17.042.351.064.543.064 1.032 0 1.755-.57 2.17-1.708z' fill='%235D6494'/%3E%3Cpath d='M89.632 5.967v-.772a.978.978 0 0 0-.978-.977h-2.28a.978.978 0 0 0-.978.977v.793c0 .088.082.15.171.13a7.127 7.127 0 0 1 1.984-.28c.65 0 1.295.088 1.917.259.082.02.164-.04.164-.13m-6.248 1.01l-.39-.389a.977.977 0 0 0-1.382 0l-.465.465a.973.973 0 0 0 0 1.38l.383.383c.062.061.15.047.205-.014.226-.307.472-.601.746-.874.281-.28.568-.526.883-.751.068-.042.075-.137.02-.2m4.16 2.453v3.341c0 .096.104.165.192.117l2.97-1.537c.068-.034.089-.117.055-.184a3.695 3.695 0 0 0-3.08-1.866c-.068 0-.136.054-.136.13m0 8.048a4.489 4.489 0 0 1-4.49-4.482 4.488 4.488 0 0 1 4.49-4.482 4.488 4.488 0 0 1 4.489 4.482 4.484 4.484 0 0 1-4.49 4.482m0-10.85a6.363 6.363 0 1 0 0 12.729 6.37 6.37 0 0 0 6.372-6.368 6.358 6.358 0 0 0-6.371-6.36' fill='%23FFF'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100%;
+    overflow: hidden;
+    text-indent: -9000px;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+/*# sourceMappingURL=docsearch.min.css.map */
+.algolia-autocomplete {
+    .ds-dropdown-menu {
+        border: none;
+        box-shadow: 0 0 24px rgba($dg-black, 0.18);
+
+        [class^='ds-dataset-'] {
+            background: $dg-white;
+            border: none;
+            .algolia-docsearch-suggestion {
+                background: $dg-white;
+            }
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .algolia-docsearch-suggestion--title {
+        color: $dg-gray-800;
+    }
+
+    .algolia-docsearch-suggestion--highlight {
+        color: $dg-primary;
+    }
+    .page-wrapper-rtl & {
+        direction: rtl !important;
+    }
+
+    .ds-dropdown-menu
+        .ds-suggestion.ds-cursor
+        .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
+        .algolia-docsearch-suggestion--content {
+        background-color: rgba($dg-primary, 0.05);
+    }
+}

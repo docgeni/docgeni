@@ -83,5 +83,20 @@ module.exports = {
         host: 'https://docgeni.org'
     },
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />
-    <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`
+    <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`,
+    example: {
+        dependencies: {
+            '@angular/animations': '~10.2.4',
+            '@angular/cdk': '^10.2.7',
+            '@angular/common': '~10.2.4',
+            '@angular/compiler': '~10.2.4',
+            '@angular/core': '~10.2.4',
+            '@angular/forms': '~10.2.4',
+            '@angular/platform-browser': '~10.2.4',
+            '@angular/platform-browser-dynamic': '~10.2.4',
+            rxjs: '~6.5.4',
+            'zone.js': '~0.10.2',
+            '@docgeni/alib': '0.0.1'
+        }
+    }
 };
