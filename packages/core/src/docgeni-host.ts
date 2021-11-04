@@ -141,13 +141,12 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 
     async getAllFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]> {
-        let files: string[] = [];
-        let dirList = [path];
+        const files: string[] = [];
+        const dirList = [path];
         while (dirList.length) {
-            let dir = dirList.pop();
-            let list = (await this.getDirsAndFiles(dir, options)).map(item => resolve(dir, item));
-            for (let i = 0; i < list.length; i++) {
-                const item = list[i];
+            const dir = dirList.pop();
+            const list = (await this.getDirsAndFiles(dir, options)).map(item => resolve(dir, item));
+            for (const item of list) {
                 if (await this.isDirectory(item)) {
                     dirList.push(item);
                 } else {

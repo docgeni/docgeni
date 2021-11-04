@@ -304,9 +304,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         }
         const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
         await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
-        let bundleConfig = await this.getBundleConfig(this.absExamplesPath, 'src');
-        let bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
-        let content = JSON.stringify(bundleConfig);
+        const bundleConfig = await this.getBundleConfig(this.absExamplesPath, 'src');
+        const bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
+        const content = JSON.stringify(bundleConfig);
         await this.addEmitFile(bundlePath, content);
         await this.docgeni.host.writeFile(bundlePath, content);
         this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
@@ -333,10 +333,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     private async getBundleConfig(dir: string, prefix: string) {
-        let files = await this.docgeni.host.getAllFiles(dir);
-        let list = [];
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
+        const files = await this.docgeni.host.getAllFiles(dir);
+        const list = [];
+        for (const file of files) {
             list.push({ path: resolve(prefix, file), content: await this.docgeni.host.readFile(resolve(dir, file)) });
         }
         return { files: list, dependencies: this.docgeni.config?.example?.dependencies || {} };

@@ -72,9 +72,9 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             const componentEmitFiles = await component.emit();
             this.addEmitFiles(componentEmitFiles);
         }
-        let sharedExampleDir = resolve(resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH), 'stack-blitz');
-        let files = await this.getShareStackBlitzFiles(sharedExampleDir);
-        let content = JSON.stringify(files);
+        const sharedExampleDir = resolve(resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH), 'stack-blitz');
+        const files = await this.getShareStackBlitzFiles(sharedExampleDir);
+        const content = JSON.stringify(files);
         await this.docgeni.host.writeFile(resolve(sharedExampleDir, 'bundle.json'), content);
         await this.addEmitFile(resolve(sharedExampleDir, 'bundle.json'), content);
     }
@@ -184,10 +184,9 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     }
 
     private async getShareStackBlitzFiles(dir: string) {
-        let files = await this.docgeni.host.getAllFiles(dir);
-        let list = [];
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
+        const files = await this.docgeni.host.getAllFiles(dir);
+        const list = [];
+        for (const file of files) {
             if (file === 'bundle.json') {
                 continue;
             }
