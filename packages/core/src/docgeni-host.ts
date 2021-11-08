@@ -8,6 +8,7 @@ export interface GetDirsOrFilesOptions {
     dot?: boolean;
     /** Exclude files in normal matches */
     exclude?: string | string[];
+    recursively?: boolean;
 }
 export interface DocgeniHost {
     readFile(path: string): Promise<string>;
@@ -22,10 +23,9 @@ export interface DocgeniHost {
     copy(src: string, dest: string): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
-    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
-    getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
-    getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]>;
-    getAllFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
+    getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
+    getDirs(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
+    getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
 }
 
 export class DocgeniHostImpl implements DocgeniHost {
@@ -105,7 +105,19 @@ export class DocgeniHostImpl implements DocgeniHost {
             dot: false,
             ...options
         };
-        const allPaths = await this.list(path);
+        let allPaths = (await this.list(path)) as string[];
+        let subPaths = [];
+        if (options.recursively) {
+            for (let i = 0; i < allPaths.length; i++) {
+                const element = allPaths[i];
+                let isDirectory = await this.isDirectory(resolve(path, element));
+                if (isDirectory) {
+                    let dir = resolve(path, element) as string;
+                    subPaths.push(...(await this.getDirsAndFiles(dir, options)).map(item => resolve(element, item)));
+                }
+            }
+        }
+        allPaths.push(...subPaths);
         return allPaths.filter(dir => {
             if (options.exclude && toolkit.utils.matchGlob(dir, options.exclude)) {
                 return false;
@@ -118,9 +130,9 @@ export class DocgeniHostImpl implements DocgeniHost {
         });
     }
 
-    async getDirs(path: string, options: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+    async getDirs(path: string, options: GetDirsOrFilesOptions): Promise<string[]> {
         const allPaths = await this.getDirsAndFiles(path, options);
-        const result: PathFragment[] = [];
+        const result: string[] = [];
         for (const item of allPaths) {
             if (await this.isDirectory(resolve(path, item))) {
                 result.push(item);
@@ -129,32 +141,15 @@ export class DocgeniHostImpl implements DocgeniHost {
         return result;
     }
 
-    async getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<PathFragment[]> {
+    async getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]> {
         const allPaths = await this.getDirsAndFiles(path, options);
-        const result: PathFragment[] = [];
+        const result: string[] = [];
         for (const item of allPaths) {
             if (await this.isFile(resolve(path, item))) {
                 result.push(item);
             }
         }
         return result;
-    }
-
-    async getAllFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]> {
-        const files: string[] = [];
-        const dirList = [path];
-        while (dirList.length) {
-            const dir = dirList.pop();
-            const list = (await this.getDirsAndFiles(dir, options)).map(item => resolve(dir, item));
-            for (const item of list) {
-                if (await this.isDirectory(item)) {
-                    dirList.push(item);
-                } else {
-                    files.push(relative(path, item));
-                }
-            }
-        }
-        return files;
     }
 }
 

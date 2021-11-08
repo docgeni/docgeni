@@ -72,11 +72,6 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             const componentEmitFiles = await component.emit();
             this.addEmitFiles(componentEmitFiles);
         }
-        const sharedExampleDir = resolve(resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH), 'stack-blitz');
-        const files = await this.getShareStackBlitzFiles(sharedExampleDir);
-        const content = JSON.stringify(files);
-        await this.docgeni.host.writeFile(resolve(sharedExampleDir, 'bundle.json'), content);
-        await this.addEmitFile(resolve(sharedExampleDir, 'bundle.json'), content);
     }
 
     public watch() {
@@ -181,17 +176,5 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             });
         });
         this.localeCategoriesMap = localeCategories;
-    }
-
-    private async getShareStackBlitzFiles(dir: string) {
-        const files = await this.docgeni.host.getAllFiles(dir);
-        const list = [];
-        for (const file of files) {
-            if (file === 'bundle.json') {
-                continue;
-            }
-            list.push({ path: file, content: await this.docgeni.host.readFile(resolve(dir, file)) });
-        }
-        return list;
     }
 }

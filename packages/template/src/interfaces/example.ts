@@ -23,5 +23,4 @@ export interface LiveExample {
     additionalFiles?: string[];
     /** NgModule that declares this example. */
     module: NgModuleInfo;
-    assetsPath: string;
 }

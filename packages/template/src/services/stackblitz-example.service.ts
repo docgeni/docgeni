@@ -30,10 +30,19 @@ export class StackblitzExampleService extends ExampleService {
         form.method = 'post';
         form.action = `https://run.stackblitz.com/api/angular/v1`;
         let entryFiles = this.generateEntryFile(module, component);
-        [...list, ...entryFiles].forEach(item => {
-            form.appendChild(this.createFormInput(`files[${item.path}]`, item.content));
+        let allFiles = [...entryFiles, ...list];
+        let obj = {};
+        allFiles.forEach(item => {
+            obj[`files[${item.path}]`] = item.content;
         });
-        form.appendChild(this.createFormInput(`dependencies`, JSON.stringify(dependencies)));
+        for (const path in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, path)) {
+                const content = obj[path];
+                form.appendChild(this.createFormInput(path, content));
+            }
+        }
+        let packageJsonFile = allFiles.find(item => item.path === 'package.json');
+        form.appendChild(this.createFormInput(`dependencies`, JSON.stringify(JSON.parse(packageJsonFile.content).dependencies)));
         document.body.appendChild(form);
         form.submit();
         document.body.removeChild(form);

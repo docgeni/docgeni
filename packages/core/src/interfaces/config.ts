@@ -100,7 +100,6 @@ export interface DocgeniConfig {
     toc?: DocItemToc;
     /** sitemap config */
     sitemap?: DocgeniSitemapConfig;
-    example?: { dependencies: Record<string, string> };
 }
 
 // For Angular Template

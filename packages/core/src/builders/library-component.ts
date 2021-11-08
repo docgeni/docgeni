@@ -175,8 +175,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 },
                 sourceFiles: [],
                 additionalFiles: [],
-                additionalComponents: [],
-                assetsPath: ''
+                additionalComponents: []
             };
 
             let exampleOrder = Number.MAX_SAFE_INTEGER;
@@ -193,13 +192,6 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             exampleOrderMap.set(liveExample, exampleOrder);
             const sourceFiles = await this.buildExampleHighlighted(absComponentExamplePath);
             liveExample.sourceFiles = sourceFiles;
-            liveExample.assetsPath = resolve(
-                '/assets',
-                relative(
-                    resolve(this.docgeni.paths.absSitePath, SITE_ASSETS_RELATIVE_PATH),
-                    resolve(this.absExamplesSourceBundleDir, 'bundle.json')
-                )
-            );
             this.examples.push(liveExample);
         }
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
@@ -333,11 +325,11 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     private async getBundleConfig(dir: string, prefix: string) {
-        const files = await this.docgeni.host.getAllFiles(dir);
+        const files = await this.docgeni.host.getFiles(dir, { recursively: true });
         const list = [];
         for (const file of files) {
             list.push({ path: resolve(prefix, file), content: await this.docgeni.host.readFile(resolve(dir, file)) });
         }
-        return { files: list, dependencies: this.docgeni.config?.example?.dependencies || {} };
+        return { files: list };
     }
 }

@@ -19,7 +19,6 @@ export const EXAMPLE_COMPONENTS = {
             }
         ],
         "additionalFiles": [],
-        "additionalComponents": [],
-        "assetsPath": "/assets/content/examples-source-bundle/alib/button/bundle.json"
+        "additionalComponents": []
     }
 };
