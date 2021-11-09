@@ -7,6 +7,7 @@ import { CreateDocs } from './create-docs';
 import { AddCommand } from './add-command';
 import { VERSION } from '../../version';
 import { AddGitignore } from './add-gitignore';
+
 function addDependenciesToPackageJson() {
     return (host: Tree, context: SchematicContext) => {
         [
