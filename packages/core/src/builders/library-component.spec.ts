@@ -147,18 +147,17 @@ describe('#library-component', () => {
         for (const example of baseExamples) {
             expect(await context.host.exists(example)).toEqual(true);
         }
-        const aliasBundleJsonFiles: { path: string; content: string }[] = JSON.parse(
-            await context.host.readFile(`${absDestAssetsExamplesBundlePath}/button/bundle.json`)
-        ).files;
+        const aliasBundleJsonFiles: { path: string; content: string }[] = await context.host.readJSON(
+            `${absDestAssetsExamplesBundlePath}/button/bundle.json`
+        );
         await expectFiles(context.host, {
-            [`${absDestSiteContentComponentsPath}/button/module.ts`]: aliasBundleJsonFiles.find(
-                item => item.path === 'src/examples.module.ts'
-            ).content,
+            [`${absDestSiteContentComponentsPath}/button/module.ts`]: aliasBundleJsonFiles.find(item => item.path === 'examples.module.ts')
+                .content,
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: aliasBundleJsonFiles.find(
-                item => item.path === 'src/basic/basic.component.ts'
+                item => item.path === 'basic/basic.component.ts'
             ).content,
             [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: aliasBundleJsonFiles.find(
-                item => item.path === 'src/basic/basic.component.html'
+                item => item.path === 'basic/basic.component.html'
             ).content
         });
     });

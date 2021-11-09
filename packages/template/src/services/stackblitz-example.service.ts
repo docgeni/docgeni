@@ -13,8 +13,7 @@ export class StackblitzExampleService extends ExampleService {
         return input;
     }
     open(
-        list: { path: string; content: string }[],
-        dependencies: Record<string, string>,
+        files: { path: string; content: string }[],
         module: {
             name: string;
             importSpecifier: string;
@@ -29,19 +28,19 @@ export class StackblitzExampleService extends ExampleService {
         form.target = '_blank';
         form.method = 'post';
         form.action = `https://run.stackblitz.com/api/angular/v1`;
-        let entryFiles = this.generateEntryFile(module, component);
-        let allFiles = [...entryFiles, ...list];
-        let obj = {};
+        const entryFiles = this.generateEntryFile(module, component);
+        const allFiles = [...entryFiles, ...files];
+        const filesMap: Record<string, string> = {};
         allFiles.forEach(item => {
-            obj[`files[${item.path}]`] = item.content;
+            filesMap[`files[${item.path}]`] = item.content;
         });
-        for (const path in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, path)) {
-                const content = obj[path];
+        for (const path in filesMap) {
+            if (Object.prototype.hasOwnProperty.call(filesMap, path)) {
+                const content = filesMap[path];
                 form.appendChild(this.createFormInput(path, content));
             }
         }
-        let packageJsonFile = allFiles.find(item => item.path === 'package.json');
+        const packageJsonFile = allFiles.find(item => item.path === 'package.json');
         form.appendChild(this.createFormInput(`dependencies`, JSON.stringify(JSON.parse(packageJsonFile.content).dependencies)));
         document.body.appendChild(form);
         form.submit();

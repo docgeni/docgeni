@@ -47,7 +47,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
     private exampleEntrySource: string;
-    private bundleFileList = [];
+
     constructor(private docgeni: DocgeniContext, public lib: Library, name: string, absPath: string) {
         super();
         this.name = name;
@@ -190,10 +190,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 }
             }
             exampleOrderMap.set(liveExample, exampleOrder);
-            const sourceFiles = await this.buildExampleHighlighted(absComponentExamplePath);
-            sourceFiles.forEach(item => {
-                this.bundleFileList.push({ path: resolve('src', resolve(exampleName, item.name)), content: item.originContent });
-            });
+            const sourceFiles = await this.buildExample(absComponentExamplePath);
             liveExample.sourceFiles = sourceFiles;
             this.examples.push(liveExample);
         }
@@ -202,13 +199,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             examples: this.examples,
             examplesModule: moduleName
         });
-        this.bundleFileList.push({
-            path: 'src/examples.module.ts',
-            content: await this.docgeni.host.readFile(resolve(this.absExamplesPath, 'module.ts'))
-        });
     }
 
-    private async buildExampleHighlighted(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
+    private async buildExample(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
         const files = await this.docgeni.host.getFiles(absComponentExamplePath, {
             exclude: EXAMPLE_META_FILE_NAME
         });
@@ -222,7 +215,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 name: fileName,
                 highlightedPath: destFileName,
                 highlightedContent: highlightedSourceCode,
-                originContent: sourceCode
+                content: sourceCode
             });
         }
 
@@ -304,20 +297,29 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         }
         const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
         await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
-        const bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
-        const content = JSON.stringify({ files: this.bundleFileList });
-        await this.addEmitFile(bundlePath, content);
-        await this.docgeni.host.writeFile(bundlePath, content);
         this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
         await this.docgeni.host.writeFile(examplesEntryPath, this.exampleEntrySource);
+        const allExampleSources: { path: string; content: string }[] = [];
         for (const example of this.examples) {
             for (const sourceFile of example.sourceFiles) {
                 const absExampleHighlightPath = resolve(this.absDestAssetsExamplesHighlightedPath, `${example.name}`);
                 const destHighlightedSourceFilePath = `${absExampleHighlightPath}/${sourceFile.highlightedPath}`;
+                allExampleSources.push({
+                    path: `${example.name}/${sourceFile.name}`,
+                    content: sourceFile.content
+                });
                 this.addEmitFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
                 await this.docgeni.host.writeFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
             }
         }
+        allExampleSources.push({
+            path: 'examples.module.ts',
+            content: await this.docgeni.host.readFile(resolve(this.absExamplesPath, 'module.ts'))
+        });
+        const bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
+        const content = JSON.stringify(allExampleSources);
+        await this.addEmitFile(bundlePath, content);
+        await this.docgeni.host.writeFile(bundlePath, content);
     }
 
     private getLibAbbrName(lib: Library): string {
