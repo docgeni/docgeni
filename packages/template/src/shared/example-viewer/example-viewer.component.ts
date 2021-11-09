@@ -117,18 +117,27 @@ export class ExampleViewerComponent implements OnInit {
 
     openStackBlitz() {
         forkJoin({
-            example: this.http.get(`assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`),
-            share: this.http.get(`assets/stack-blitz/bundle.json`)
+            examplesSources: this.http.get(`assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`),
+            sharedFiles: this.http.get(`assets/stack-blitz/bundle.json`)
         }).subscribe(
-            (result: {
-                example: { dependencies: Record<string, string>; files: { path: string; content: string }[] };
-                share: { path: string; content: string }[];
-            }) => {
-                let { example, share } = result;
-                this.stackblitzExampleService.open([...example.files, ...share], example.dependencies, this.example.module, {
-                    name: this.example.componentName,
-                    selector: this.example.key
-                });
+            (result: { examplesSources: { path: string; content: string }[]; sharedFiles: { path: string; content: string }[] }) => {
+                const { examplesSources, sharedFiles } = result;
+                this.stackblitzExampleService.open(
+                    [
+                        ...examplesSources.map(item => {
+                            return {
+                                ...item,
+                                path: `src/${item.path}`
+                            };
+                        }),
+                        ...sharedFiles
+                    ],
+                    this.example.module,
+                    {
+                        name: this.example.componentName,
+                        selector: this.example.key
+                    }
+                );
             }
         );
     }
