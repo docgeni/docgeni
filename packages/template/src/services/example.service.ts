@@ -15,7 +15,7 @@ export abstract class ExampleService {
             path: `src/app.module.ts`,
             content: `import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ${module.name} } from './module';
+import { ${module.name} } from './examples.module';
 import { AppComponent } from './app.component'
 @NgModule({
     declarations: [AppComponent],

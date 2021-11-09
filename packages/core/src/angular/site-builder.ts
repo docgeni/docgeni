@@ -193,18 +193,15 @@ export class SiteBuilder {
                     } else {
                         distPath = resolve(this.siteProject.sourceRoot, relative(this.publicDirPath, event.path));
                     }
-
-                    const isStackBlitzDir = !relative(resolve(resolve(this.publicDirPath, 'assets'), 'stack-blitz'), event.path).startsWith(
-                        '..'
-                    );
-                    if (isStackBlitzDir) {
-                        this.updateShareExampleBundleJson();
-                    }
                     if (event.type === HostWatchEventType.Deleted) {
                         await this.docgeni.host.delete(distPath);
                     } else {
                         await this.docgeni.host.copy(event.path, distPath);
                     }
+                }
+                const isStackBlitzDir = events.some(event => !relative(resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..'));
+                if (isStackBlitzDir) {
+                    this.updateShareExampleBundleJson();
                 }
             });
         }
@@ -246,9 +243,6 @@ export class SiteBuilder {
             list.push({ path: file, content: await this.docgeni.host.readFile(resolve(sharedExampleDir, file)) });
         }
         const content = JSON.stringify(list);
-        await this.docgeni.host.writeFile(
-            resolve(resolve(resolve(this.siteProject.root, SITE_ASSETS_RELATIVE_PATH), 'stack-blitz'), 'bundle.json'),
-            content
-        );
+        await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), content);
     }
 }

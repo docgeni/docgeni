@@ -1,5 +1,6 @@
 {
-    "dependencies": { "@angular/animations": "~10.2.4",
+    "dependencies": { 
+        "@angular/animations": "~10.2.4",
         "@angular/cdk": "^10.2.7",
         "@angular/common": "~10.2.4",
         "@angular/compiler": "~10.2.4",
@@ -9,5 +10,6 @@
         "@angular/platform-browser-dynamic": "~10.2.4",
         "rxjs": "~6.5.4",
         "zone.js": "~0.10.2",
-        "@docgeni/alib": "0.0.1"}
+        "@docgeni/alib": "0.0.1"
+    }
 }

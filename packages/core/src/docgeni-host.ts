@@ -106,7 +106,7 @@ export class DocgeniHostImpl implements DocgeniHost {
             ...options
         };
         const allPaths = (await this.list(path)) as string[];
-        const subPaths = [];
+        const subPaths: string[] = [];
         if (options.recursively) {
             for (const element of allPaths) {
                 const isDirectory = await this.isDirectory(resolve(path, element));

@@ -47,7 +47,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
     private exampleEntrySource: string;
-
+    private bundleFileList = [];
     constructor(private docgeni: DocgeniContext, public lib: Library, name: string, absPath: string) {
         super();
         this.name = name;
@@ -191,6 +191,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             }
             exampleOrderMap.set(liveExample, exampleOrder);
             const sourceFiles = await this.buildExampleHighlighted(absComponentExamplePath);
+            sourceFiles.forEach(item => {
+                this.bundleFileList.push({ path: resolve('src', resolve(exampleName, item.name)), content: item.originContent });
+            });
             liveExample.sourceFiles = sourceFiles;
             this.examples.push(liveExample);
         }
@@ -198,6 +201,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         this.exampleEntrySource = toolkit.template.compile('component-examples-entry.hbs', {
             examples: this.examples,
             examplesModule: moduleName
+        });
+        this.bundleFileList.push({
+            path: 'src/examples.module.ts',
+            content: await this.docgeni.host.readFile(resolve(this.absExamplesPath, 'module.ts'))
         });
     }
 
@@ -214,7 +221,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             exampleSourceFiles.push({
                 name: fileName,
                 highlightedPath: destFileName,
-                highlightedContent: highlightedSourceCode
+                highlightedContent: highlightedSourceCode,
+                originContent: sourceCode
             });
         }
 
@@ -296,9 +304,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         }
         const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
         await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
-        const bundleConfig = await this.getBundleConfig(this.absExamplesPath, 'src');
         const bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
-        const content = JSON.stringify(bundleConfig);
+        const content = JSON.stringify({ files: this.bundleFileList });
         await this.addEmitFile(bundlePath, content);
         await this.docgeni.host.writeFile(bundlePath, content);
         this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
@@ -322,14 +329,5 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         propertyName: TPropertyKey
     ): ComponentDocMeta[TPropertyKey] {
         return docSourceFile && docSourceFile.meta && docSourceFile.meta[propertyName];
-    }
-
-    private async getBundleConfig(dir: string, prefix: string) {
-        const files = await this.docgeni.host.getFiles(dir, { recursively: true });
-        const list = [];
-        for (const file of files) {
-            list.push({ path: resolve(prefix, file), content: await this.docgeni.host.readFile(resolve(dir, file)) });
-        }
-        return { files: list };
     }
 }
