@@ -9,6 +9,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ValidationError } from '../errors';
 import semver from 'semver';
 import { spawn } from 'child_process';
+import { SITE_ASSETS_RELATIVE_PATH } from '../constants';
 
 interface CopyFile {
     from: string;
@@ -168,6 +169,7 @@ export class SiteBuilder {
                     await this.docgeni.host.copy(fromPath, resolve(this.siteProject.root, copyFile.to));
                 }
             }
+            this.updateShareExampleBundleJson();
         }
     }
 
@@ -191,12 +193,15 @@ export class SiteBuilder {
                     } else {
                         distPath = resolve(this.siteProject.sourceRoot, relative(this.publicDirPath, event.path));
                     }
-
                     if (event.type === HostWatchEventType.Deleted) {
                         await this.docgeni.host.delete(distPath);
                     } else {
                         await this.docgeni.host.copy(event.path, distPath);
                     }
+                }
+                const isStackBlitzDir = events.some(event => !relative(resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..'));
+                if (isStackBlitzDir) {
+                    this.updateShareExampleBundleJson();
                 }
             });
         }
@@ -228,5 +233,16 @@ export class SiteBuilder {
             .reduce((result, key) => {
                 return [...result, `--${key}`, cmdOptions[key]];
             }, []);
+    }
+
+    private async updateShareExampleBundleJson() {
+        const sharedExampleDir = resolve(resolve(this.publicDirPath, 'assets'), 'stack-blitz');
+        const files = await this.docgeni.host.getFiles(sharedExampleDir, { recursively: true });
+        const list = [];
+        for (const file of files) {
+            list.push({ path: file, content: await this.docgeni.host.readFile(resolve(sharedExampleDir, file)) });
+        }
+        const content = JSON.stringify(list);
+        await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), content);
     }
 }

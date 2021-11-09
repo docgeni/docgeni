@@ -127,6 +127,7 @@ describe('#library-component', () => {
         const absDestAssetsOverviewsPath = `${siteRoot}/assets/content/overviews/alib`;
         const absDestSiteContentComponentsPath = `${siteRoot}/app/content/components/alib`;
         const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
+        const absDestAssetsExamplesBundlePath = `${siteRoot}/assets/content/examples-source-bundle/alib`;
 
         await component.emit();
 
@@ -146,6 +147,20 @@ describe('#library-component', () => {
         for (const example of baseExamples) {
             expect(await context.host.exists(example)).toEqual(true);
         }
+        const aliasBundleJsonFiles: { path: string; content: string }[] = JSON.parse(
+            await context.host.readFile(`${absDestAssetsExamplesBundlePath}/button/bundle.json`)
+        ).files;
+        await expectFiles(context.host, {
+            [`${absDestSiteContentComponentsPath}/button/module.ts`]: aliasBundleJsonFiles.find(
+                item => item.path === 'src/examples.module.ts'
+            ).content,
+            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: aliasBundleJsonFiles.find(
+                item => item.path === 'src/basic/basic.component.ts'
+            ).content,
+            [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: aliasBundleJsonFiles.find(
+                item => item.path === 'src/basic/basic.component.html'
+            ).content
+        });
     });
 
     it('should emit lib component with custom name', async () => {

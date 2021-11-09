@@ -9,6 +9,7 @@ export const serveCommand: CommandModule = {
     describe: 'Serve documentation site for development',
     builder: yargs => {
         yargsOptionsGenerate(yargs, readNgServeOptions())
+            .parserConfiguration({ 'dot-notation': false })
             .option('siteProjectName', {
                 desc: `Site project name`,
                 default: ''

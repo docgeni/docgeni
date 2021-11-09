@@ -4,6 +4,7 @@ export interface ExampleSourceFile {
     name: string;
     highlightedPath: string;
     highlightedContent?: string;
+    originContent?: string;
 }
 
 export interface LiveExample {

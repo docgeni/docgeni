@@ -1,12 +1,17 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
-import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
+import {
+    ASSETS_API_DOCS_RELATIVE_PATH,
+    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    ASSETS_OVERVIEWS_RELATIVE_PATH,
+    SITE_ASSETS_RELATIVE_PATH
+} from '../constants';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibraryComponentImpl } from './library-component';
-import { HostWatchEventType, resolve } from '../fs';
+import { HostWatchEventType, relative, resolve } from '../fs';
 import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 
