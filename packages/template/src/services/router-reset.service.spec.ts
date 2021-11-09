@@ -18,7 +18,7 @@ describe('router-reset.service', () => {
                 }
             }
         ],
-        imports: [RouterModule.forRoot([])],
+        imports: [RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })],
         entryComponents: [],
         mocks: []
     });

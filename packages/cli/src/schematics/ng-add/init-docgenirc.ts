@@ -1,6 +1,6 @@
 import { apply, mergeWith, move, renameTemplateFiles, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { NgAddSchema } from '../types/ng-add-schema';
-import { getWorkspace } from '@schematics/angular/utility/config';
+import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { ProjectType, WorkspaceProject } from '@schematics/angular/utility/workspace-models';
 import { DocgeniConfig, DocgeniLibrary, DocgeniNavItem } from '@docgeni/core';
 import stringifyObject from 'stringify-object';
@@ -16,14 +16,14 @@ export class InitDocgenirc {
         return this;
     }
 
-    private buildPropertiesFromAngularJson(host: Tree) {
+    private async buildPropertiesFromAngularJson(host: Tree) {
         if (!host.exists('angular.json') && !host.exists('.angular.json')) {
             return;
         }
-        const angularJson = getWorkspace(host);
-        const libraryProjects: [string, WorkspaceProject<ProjectType.Library>][] = Object.entries(angularJson.projects).filter(
-            ([key, value]) => value.projectType === ProjectType.Library
-        );
+        const workspace = await getWorkspace(host);
+        const libraryProjects = Array.from(workspace.projects.entries()).filter(([key, value]) => {
+            return value.extensions.projectType === ProjectType.Library;
+        });
         const navs: Partial<DocgeniNavItem>[] = [null];
 
         const libs: Partial<DocgeniLibrary>[] = [];
@@ -61,16 +61,16 @@ export class InitDocgenirc {
         this.addProperty('mode', this.options.mode);
         this.addProperty('docsDir', this.options.docsDir);
 
-        return (host: Tree, context: SchematicContext) => {
+        return async (host: Tree, context: SchematicContext) => {
             this.buildPropertiesFromPackageJson(host);
-            this.buildPropertiesFromAngularJson(host);
+            await this.buildPropertiesFromAngularJson(host);
 
             return mergeWith(
                 apply(url(`./template/docgenicrc`), [
                     template({
                         config: this.docgenirc,
                         util: {
-                            stringify: (content, indent: number, parentIndent) => {
+                            stringify: (content: string, indent: number, parentIndent: number) => {
                                 return stringifyObject(content, { indent: ' '.repeat(indent) }).replace(
                                     /(\r\n|\n\r|\n|\r)/g,
                                     `$1${' '.repeat(parentIndent)}`

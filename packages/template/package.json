@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "docsearch.js": "2.6.3",
-    "@angular/cdk": "^10.0.0"
+    "@angular/cdk": "^11.2.13"
   }
 }
