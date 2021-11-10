@@ -104,6 +104,7 @@ describe('#site-plugin', () => {
                 `${PUBLIC_PATH}/assets`,
                 `${PUBLIC_PATH}/styles.scss`,
                 `${PUBLIC_PATH}/index.html`,
+                `${PUBLIC_PATH}/favicon.ico`,
                 `${PUBLIC_PATH}/.browserslistrc`,
                 `${PUBLIC_PATH}/tsconfig.json`
             ]);
