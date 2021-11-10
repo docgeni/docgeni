@@ -26,6 +26,10 @@ const COPY_FILES: CopyFile[] = [
         to: 'src/index.html'
     },
     {
+        from: 'favicon.ico',
+        to: 'src/favicon.ico'
+    },
+    {
         from: '.browserslistrc',
         to: '.browserslistrc'
     },
