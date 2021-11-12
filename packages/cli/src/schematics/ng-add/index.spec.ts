@@ -3,7 +3,7 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 // import { DEPENDENCIES } from '../dependencies';
 import { createTestWorkspaceFactory, getJsonFileContent, TestWorkspaceFactory } from '../testing';
 import { addPackageToPackageJson } from '../utils';
-import { VERSION } from '../../version';
+import { ANGULAR_VERSION, VERSION } from '../../version';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 
 describe('ng-add Schematic', () => {
@@ -27,9 +27,20 @@ describe('ng-add Schematic', () => {
         workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         const devDependencies = packageJson[NodeDependencyType.Dev];
+        expect(devDependencies['@docgei/angular']).toBeFalsy();
         expect(devDependencies['@docgeni/template']).toEqual(VERSION);
         expect(devDependencies['@docgeni/cli']).toEqual(VERSION);
         expect(schematicRunner.tasks.some(task => task.name === 'node-package')).toBe(true);
+    });
+
+    it('should update package.json devDependencies without @angular/core', async () => {
+        let packageJson = JSON.parse(tree.read('/package.json').toString());
+        delete packageJson[NodeDependencyType.Default]['@angular/core'];
+        tree.overwrite('/package.json', JSON.stringify(packageJson));
+        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        packageJson = getJsonFileContent(workspaceTree, '/package.json');
+        const devDependencies = packageJson[NodeDependencyType.Dev];
+        expect(devDependencies['@docgei/angular']).toEqual(ANGULAR_VERSION);
     });
 
     it('should update package.json command', async () => {
