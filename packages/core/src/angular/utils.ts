@@ -36,6 +36,13 @@ export interface NgOption {
 }
 
 const EXTRA_NG_OPTIONS = {
+    configuration: {
+        name: 'configuration',
+        description:
+            'One or more named builder configurations as a comma-separated list as specified in the "configurations" section of angular.json.\nThe builder uses the named configurations to run the given target.\nFor more information, see https://angular.io/guide/workspace-config#alternate-build-configurations.\nSetting this explicitly overrides the "--prod" flag.',
+        type: NgOptionType.String,
+        aliases: ['c']
+    },
     prod: {
         name: 'prod',
         description: 'Target to build.',
