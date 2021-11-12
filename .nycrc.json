@@ -3,7 +3,7 @@
   "include": [
     "packages/cli/src/**/*.ts",
     "packages/core/src/**/*.ts",
-    "packages/ngddoc/src/**/*.ts",
+    "packages/ngdoc/src/**/*.ts",
     "packages/toolkit/src/**/*.ts"
   ],
   "exclude":[
