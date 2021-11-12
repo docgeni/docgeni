@@ -28,7 +28,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/core": "~11.2.14",
+    "@angular-devkit/core": "11.2.14",
     "@docgeni/toolkit": "^1.1.2",
     "@types/text-table": "^0.2.2",
     "ansi-colors": "^4.1.1",

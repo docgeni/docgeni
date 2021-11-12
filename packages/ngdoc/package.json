@@ -1,0 +1,36 @@
+{
+  "name": "@docgeni/ngdoc",
+  "version": "1.1.4",
+  "description": "Docgeni - Ng Doc generate library",
+  "author": "why520crazy <why520crazy@163.com>",
+  "homepage": "https://github.com/docgeni/docgeni#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docgeni/docgeni.git"
+  },
+  "scripts": {
+    "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
+    "build-only": "tsc -b && cpx ./src/templates/**/* ./lib/templates && cpx \"./src/site-template/**\" \"./lib/site-template\"",
+    "build": "yarn clean && yarn build-only",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/docgeni/docgeni/issues"
+  },
+  "dependencies": {
+    "typescript": "4.1.3",
+    "ts-morph": "12.1.0",
+    "@docgeni/toolkit": "^1.1.2"
+  },
+  "devDependencies": {}
+}

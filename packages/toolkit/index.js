@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const env = process.env.NODE_ENV;
+const env = process.env.DOCGENI_ENV;
 
 if (['development', 'test'].includes(env)) {
     if (fs.existsSync(path.resolve(__dirname, './src'))) {
