@@ -23,7 +23,7 @@ describe('#parser', () => {
             {
                 type: 'component',
                 name: 'ButtonComponent',
-                description: 'General Button Component description.\nFor Book',
+                description: 'General Button Component description.',
                 selector: 'thy-button',
                 templateUrl: './button.component.html',
                 template: null,
