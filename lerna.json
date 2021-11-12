@@ -3,7 +3,8 @@
     "packages/toolkit",
     "packages/core",
     "packages/cli",
-    "packages/template"
+    "packages/template",
+    "packages/ngdoc"
   ],
   "command": {
     "version": {

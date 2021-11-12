@@ -82,6 +82,10 @@ module.exports = {
     sitemap: {
         host: 'https://docgeni.org'
     },
+    examples: {
+        rxjs: '1.0.0',
+        'zone.js': '1.1.0'
+    },
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />
     <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`
 };
