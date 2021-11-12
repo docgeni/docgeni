@@ -5,7 +5,6 @@ export type ButtonSize = 'lg' | 'md' | 'sm';
 
 /**
  * General Button Component description.
- * For Book
  *
  * @export
  * @class ButtonComponent
