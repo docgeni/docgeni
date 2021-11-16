@@ -34,7 +34,7 @@
     "@angular-devkit/schematics": "^11.2.15",
     "@angular-devkit/schematics-cli": "^0.11.4",
     "@docgeni/core": "^1.2.0-next.0",
-    "@docgeni/template": "^1.2.0-next.0",
+    "@docgeni/template": "^1.2.0-next.1",
     "@docgeni/toolkit": "^1.2.0-next.0",
     "@schematics/angular": "^11.2.15",
     "chokidar": "^3.3.1",
