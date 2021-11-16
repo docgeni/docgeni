@@ -57,7 +57,7 @@ $dg-service-color: #8e24aa;
 
     .dg-doc-viewer-inner {
         display: flex;
-        flex: auto;
+        flex: 0 0 auto;
         align-items: flex-start;
     }
 
@@ -173,6 +173,9 @@ $dg-service-color: #8e24aa;
         .dg-toc {
             display: none;
         }
+    }
+    .dg-spring {
+        flex: 1 0 30px;
     }
 }
 
