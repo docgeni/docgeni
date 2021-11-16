@@ -13,7 +13,8 @@ export type ButtonSize = 'lg' | 'md' | 'sm';
 @Component({
     selector: 'thy-button',
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss']
+    styleUrls: ['./button.component.scss'],
+    exportAs: 'thyButton'
 })
 export class ButtonComponent implements OnInit {
 
@@ -48,6 +49,6 @@ export class ButtonComponent implements OnInit {
  * @implements {OnInit}
  */
  @Directive({
-    selector: '[thyButtonIco]',
+    selector: '[thyButtonIcon]',
 })
 export class ButtonIconComponent implements OnInit {}
