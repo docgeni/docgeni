@@ -20,7 +20,7 @@
   },
   "scripts": {
     "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
-    "build-only": "tsc -b && cpx ./src/templates/**/* ./lib/templates && cpx \"./src/site-template/**\" \"./lib/site-template\"",
+    "build-only": "tsc -b",
     "build": "yarn clean && yarn build-only",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
