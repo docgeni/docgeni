@@ -8,8 +8,8 @@ $dg-interface-color: #7cb342;
 $dg-service-color: #8e24aa;
 
 .dg-doc-viewer {
-    display: block;
-
+    display: flex;
+    flex-direction: column;
     .dg-doc-header {
         display: flex;
         align-items: center;
@@ -59,7 +59,6 @@ $dg-service-color: #8e24aa;
         display: flex;
         flex: auto;
         align-items: flex-start;
-        min-height: calc(100% - 60px);
     }
 
     .dg-doc-viewer-inner-content {
@@ -70,7 +69,6 @@ $dg-service-color: #8e24aa;
     .dg-component-viewer {
         display: block;
         width: 100%;
-        min-height: calc(100% - 60px);
 
         .dg-component-empty {
             display: block;
