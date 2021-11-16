@@ -1,0 +1,78 @@
+[
+  {
+    "type": "component",
+    "name": "LoadingComponent",
+    "description": "General Loading Component description.",
+    "selector": "thy-loading",
+    "templateUrl": "./loading.component.html",
+    "template": null,
+    "styleUrls": [
+      "./loading.component.scss"
+    ],
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  },
+  {
+    "type": "component",
+    "name": "ButtonComponent",
+    "description": "General Button Component description.",
+    "selector": "thy-button",
+    "templateUrl": "./button.component.html",
+    "template": null,
+    "styleUrls": [
+      "./button.component.scss"
+    ],
+    "styles": null,
+    "exportAs": "thyButton",
+    "properties": [
+      {
+        "kind": "input",
+        "name": "thyType",
+        "type": "\"primary\" | \"info\" | \"success\"",
+        "description": "Button Type",
+        "options": [
+          "primary",
+          "info",
+          "success"
+        ],
+        "default": "primary",
+        "jsDocTags": []
+      },
+      {
+        "kind": "input",
+        "name": "thySize",
+        "type": "ButtonSize",
+        "description": "Button Size",
+        "options": [
+          "lg",
+          "md",
+          "sm"
+        ],
+        "default": null,
+        "jsDocTags": []
+      },
+      {
+        "kind": "output",
+        "name": "thyLoadingEvent",
+        "type": "EventEmitter<boolean>",
+        "description": "Loading Event",
+        "options": null,
+        "default": "new EventEmitter<boolean>()",
+        "jsDocTags": []
+      }
+    ]
+  },
+  {
+    "type": "directive",
+    "name": "ButtonIconComponent",
+    "description": "General Button Icon Directive description.",
+    "selector": "[thyButtonIcon]",
+    "templateUrl": null,
+    "template": null,
+    "styleUrls": null,
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  }
+]

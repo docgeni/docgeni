@@ -1,8 +1,16 @@
 import ts from 'typescript';
 import { toolkit } from '@docgeni/toolkit';
-import { getNgDecorator, getPropertyDecorator } from './parser';
-import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator } from './types';
-import { getDirectiveMeta, getNgDocItemType, getPropertyKind, getPropertyOptions, getPropertyValue, serializeSymbol } from './parser/utils';
+import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgDirectiveMeta } from './types';
+import {
+    getNgDecorator,
+    getPropertyDecorator,
+    getDirectiveMeta,
+    getNgDocItemType,
+    getPropertyKind,
+    getNgPropertyOptions,
+    getPropertyValue,
+    serializeSymbol
+} from './parser';
 
 export interface NgDocParserOptions {}
 
@@ -12,9 +20,17 @@ export interface ParserSourceFileContext {
     checker: ts.TypeChecker;
 }
 
+export interface NgComponentInfo extends NgDirectiveMeta {
+    name: string;
+}
+
 export class NgDocParser {
     static parse(pattern: string) {
         return new NgDocParser().parse(pattern);
+    }
+
+    static getExportsComponents(source: string): NgComponentInfo[] {
+        return new NgDocParser().getExportsComponents(source);
     }
 
     constructor(private options?: NgDocParserOptions) {}
@@ -26,6 +42,7 @@ export class NgDocParser {
         const sourceFiles = program.getSourceFiles().filter(sourceFile => {
             return !sourceFile.isDeclarationFile && typeof sourceFile !== 'undefined';
         });
+
         const docs: NgEntryItemDoc[] = [];
         sourceFiles.forEach(sourceFile => {
             const context: ParserSourceFileContext = {
@@ -62,6 +79,31 @@ export class NgDocParser {
         return docs;
     }
 
+    public getExportsComponents(source: string): NgComponentInfo[] {
+        const sourceFile = ts.createSourceFile('test.ts', source, ts.ScriptTarget.Latest, true);
+
+        const components: NgComponentInfo[] = [];
+        ts.forEachChild(sourceFile, node => {
+            if (ts.isClassDeclaration(node)) {
+                const hasExport = node.modifiers
+                    ? node.modifiers.find(modifier => {
+                          return ts.SyntaxKind.ExportKeyword === modifier.kind;
+                      })
+                    : false;
+                if (hasExport) {
+                    const ngDecorator = getNgDecorator(node);
+                    if (ngDecorator && ngDecorator.name === 'Component') {
+                        components.push({
+                            name: (node as ts.ClassDeclaration)!.name.getText(),
+                            ...getDirectiveMeta(ngDecorator.argumentInfo)
+                        });
+                    }
+                }
+            }
+        });
+        return components;
+    }
+
     private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {}
 
     private parseDirectiveDoc(context: ParserSourceFileContext, type: NgDocItemType, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
@@ -85,15 +127,15 @@ export class NgDocParser {
                 if (symbol && decorator) {
                     const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
                     const description = serializeSymbol(symbol, context.checker);
-                    const options = getPropertyOptions(propertyDeclaration);
+                    const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     properties.push({
                         kind: getPropertyKind(decorator.name),
                         name: description.name,
                         type: description.type,
                         description: description.documentation,
                         options: options,
-                        jsDocTags: symbol.getJsDocTags(),
-                        default: getPropertyValue(propertyDeclaration, description.type)
+                        default: getPropertyValue(propertyDeclaration, description.type),
+                        jsDocTags: symbol.getJsDocTags()
                     });
                 }
             }

@@ -16,3 +16,8 @@ export class Logger {
 
     }
 }
+
+/**
+ * This is ignore service
+ */
+export class IgnoreClass {}
