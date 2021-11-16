@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss']
 })
-export class AlibButtonBasic1ExampleComponent implements OnInit {
+export class AlibButtonBasicExampleComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {}
