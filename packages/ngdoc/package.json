@@ -28,8 +28,9 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/toolkit": "^1.2.0-next.0",
+    "@docgeni/toolkit": "^1.2.0-next.1",
     "ts-morph": "12.1.0",
     "typescript": "4.1.3"
-  }
+  },
+  "gitHead": "19aa63d7b4eeeb804ab66336086a54fecd91e6ed"
 }
