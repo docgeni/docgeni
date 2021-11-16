@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import { ts } from '../typescript';
 import { lineFeedPrinter } from './line-feed-printer';
 import { ArgumentInfo, NgDirectiveMeta, NgDocItemType, NgPropertyKind } from '../types';
 
@@ -63,4 +63,12 @@ export function getTypeNodes(typeNodes: ts.NodeArray<ts.TypeNode>) {
 
         return getNodeText(node);
     });
+}
+
+export function isExported(node: ts.Node) {
+    return node.modifiers
+        ? node.modifiers.find(modifier => {
+              return ts.SyntaxKind.ExportKeyword === modifier.kind;
+          })
+        : false;
 }

@@ -27,3 +27,7 @@ export interface NgDirectiveDoc extends NgDirectiveMeta {
     description?: string;
     properties?: NgPropertyDoc[];
 }
+
+export interface NgComponentInfo extends NgDirectiveMeta {
+    name: string;
+}
