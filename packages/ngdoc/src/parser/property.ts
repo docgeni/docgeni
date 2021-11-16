@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import { ts } from '../typescript';
 import { NgPropertyKind } from '../types';
 import { getNodeText, getTypeNodes, normalizeNodeText } from './utils';
 import { toolkit } from '@docgeni/toolkit';

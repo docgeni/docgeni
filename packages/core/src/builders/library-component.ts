@@ -1,6 +1,7 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
+import { createNgSourceFile } from '@docgeni/ngdoc';
 import {
     ASSETS_API_DOCS_RELATIVE_PATH,
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
@@ -158,40 +159,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
         for (const exampleName of dirs) {
-            const libAbbrName = this.getLibAbbrName(this.lib);
-            const componentKey = `${libAbbrName}-${this.name}-${exampleName}-example`;
-            const componentName = toolkit.strings.pascalCase(`${libAbbrName}-${this.name}-${exampleName}-example-component`);
-            const absComponentExamplePath = resolve(this.absExamplesPath, exampleName);
-            const absComponentExampleDocPath = resolve(absComponentExamplePath, EXAMPLE_META_FILE_NAME);
-
-            const liveExample: LiveExample = {
-                key: componentKey,
-                name: exampleName,
-                title: toolkit.strings.headerCase(exampleName, { delimiter: ' ' }),
-                componentName,
-                module: {
-                    name: moduleName,
-                    importSpecifier: `${this.lib.name}/${this.name}`
-                },
-                sourceFiles: [],
-                additionalFiles: [],
-                additionalComponents: []
-            };
-
-            let exampleOrder = Number.MAX_SAFE_INTEGER;
-            if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
-                const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
-                const exampleFmResult = fm<{ title: string; order: number }>(content);
-                if (exampleFmResult.attributes.title) {
-                    liveExample.title = exampleFmResult.attributes.title;
-                }
-                if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
-                    exampleOrder = exampleFmResult.attributes.order;
-                }
-            }
-            exampleOrderMap.set(liveExample, exampleOrder);
-            const sourceFiles = await this.buildExample(absComponentExamplePath);
-            liveExample.sourceFiles = sourceFiles;
+            const { order, liveExample } = await this.buildExample(exampleName, moduleName);
+            exampleOrderMap.set(liveExample, order);
             this.examples.push(liveExample);
         }
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
@@ -201,7 +170,61 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         });
     }
 
-    private async buildExample(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
+    private async buildExample(exampleName: string, moduleName: string) {
+        const libAbbrName = this.getLibAbbrName(this.lib);
+        const componentKey = `${libAbbrName}-${this.name}-${exampleName}-example`;
+        const defaultComponentName = toolkit.strings.pascalCase(`${libAbbrName}-${this.name}-${exampleName}-example-component`);
+        const absComponentExamplePath = resolve(this.absExamplesPath, exampleName);
+        const absComponentExampleDocPath = resolve(absComponentExamplePath, EXAMPLE_META_FILE_NAME);
+
+        const liveExample: LiveExample = {
+            key: componentKey,
+            name: exampleName,
+            title: toolkit.strings.headerCase(exampleName, { delimiter: ' ' }),
+            componentName: defaultComponentName,
+            module: {
+                name: moduleName,
+                importSpecifier: `${this.lib.name}/${this.name}`
+            },
+            sourceFiles: [],
+            additionalFiles: [],
+            additionalComponents: []
+        };
+
+        // build example source files
+        const exampleSourceFiles = await this.buildExampleSourceFiles(absComponentExamplePath);
+        liveExample.sourceFiles = exampleSourceFiles;
+
+        // try extract component name from example entry ts file
+        const entrySourceFile = exampleSourceFiles.find(sourceFile => {
+            return sourceFile.name === `${exampleName}.component.ts`;
+        });
+        if (entrySourceFile) {
+            const component = createNgSourceFile(entrySourceFile.name, entrySourceFile.content).getExpectExportedComponent(exampleName);
+            if (component) {
+                liveExample.componentName = component.name;
+            }
+        }
+
+        // build order, title from FrontMatter
+        let exampleOrder = Number.MAX_SAFE_INTEGER;
+        if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
+            const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
+            const exampleFmResult = fm<{ title: string; order: number }>(content);
+            if (exampleFmResult.attributes.title) {
+                liveExample.title = exampleFmResult.attributes.title;
+            }
+            if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
+                exampleOrder = exampleFmResult.attributes.order;
+            }
+        }
+        return {
+            order: exampleOrder,
+            liveExample
+        };
+    }
+
+    private async buildExampleSourceFiles(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
         const files = await this.docgeni.host.getFiles(absComponentExamplePath, {
             exclude: EXAMPLE_META_FILE_NAME
         });

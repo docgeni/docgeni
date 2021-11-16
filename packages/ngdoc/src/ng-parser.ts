@@ -1,6 +1,6 @@
-import ts from 'typescript';
+import { ts } from './typescript';
 import { toolkit } from '@docgeni/toolkit';
-import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgDirectiveMeta } from './types';
+import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgDirectiveMeta, NgComponentInfo } from './types';
 import {
     getNgDecorator,
     getPropertyDecorator,
@@ -11,8 +11,11 @@ import {
     getPropertyValue,
     serializeSymbol
 } from './parser';
+import { createNgSourceFile } from './ng-source-file';
 
-export interface NgDocParserOptions {}
+export interface NgDocParserOptions {
+    fileGlobs: string;
+}
 
 export interface ParserSourceFileContext {
     sourceFile: ts.SourceFile;
@@ -20,37 +23,54 @@ export interface ParserSourceFileContext {
     checker: ts.TypeChecker;
 }
 
-export interface NgComponentInfo extends NgDirectiveMeta {
-    name: string;
-}
-
 export class NgDocParser {
     static parse(pattern: string) {
-        return new NgDocParser().parse(pattern);
+        return new NgDocParser({ fileGlobs: pattern }).parse(pattern);
     }
 
-    static getExportsComponents(source: string): NgComponentInfo[] {
-        return new NgDocParser().getExportsComponents(source);
+    static getExportedComponents(sourceText: string): NgComponentInfo[] {
+        return createNgSourceFile(sourceText).getExportedComponents();
     }
+
+    private tsProgram: ts.Program;
 
     constructor(private options?: NgDocParserOptions) {}
 
+    private get program() {
+        if (!this.tsProgram) {
+            const filePaths = toolkit.fs.globSync(this.options.fileGlobs);
+            this.tsProgram = ts.createProgram(filePaths, { types: [] });
+        }
+        return this.tsProgram;
+    }
+
+    public getSourceFiles(fileGlob: string) {
+        const filePaths = toolkit.fs.globSync(fileGlob);
+        const sourceFiles = filePaths
+            .map(filePath => {
+                return this.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
+            })
+            .filter(sourceFile => {
+                return typeof sourceFile !== 'undefined' && !sourceFile.isDeclarationFile;
+            });
+        return sourceFiles;
+    }
+
     public parse(pattern: string) {
-        const filePaths = toolkit.fs.globSync(pattern);
-        const program = ts.createProgram(filePaths, {});
-        const checker = program.getTypeChecker();
-        const sourceFiles = program.getSourceFiles().filter(sourceFile => {
-            return !sourceFile.isDeclarationFile && typeof sourceFile !== 'undefined';
-        });
+        const sourceFiles = this.getSourceFiles(pattern);
+        const checker = this.program.getTypeChecker();
 
         const docs: NgEntryItemDoc[] = [];
         sourceFiles.forEach(sourceFile => {
             const context: ParserSourceFileContext = {
                 sourceFile: sourceFile,
-                program: program,
+                program: this.program,
                 checker: checker
             };
             const moduleSymbol = checker.getSymbolAtLocation(sourceFile);
+            if (!moduleSymbol) {
+                return;
+            }
             const exportSymbols = checker.getExportsOfModule(moduleSymbol);
             exportSymbols.forEach(symbol => {
                 if (symbol.valueDeclaration && ts.isClassDeclaration(symbol.valueDeclaration)) {
@@ -68,8 +88,10 @@ export class NgDocParser {
                                 case 'service':
                                     this.parseServiceDoc(context, symbol, ngDecorator);
                                     break;
+                                case 'pipe':
+                                    break;
                                 default:
-                                    throw new Error(`${type} is not support}`);
+                                    throw new Error(`${type} is not support.`);
                             }
                         }
                     }
@@ -77,31 +99,6 @@ export class NgDocParser {
             });
         });
         return docs;
-    }
-
-    public getExportsComponents(source: string): NgComponentInfo[] {
-        const sourceFile = ts.createSourceFile('test.ts', source, ts.ScriptTarget.Latest, true);
-
-        const components: NgComponentInfo[] = [];
-        ts.forEachChild(sourceFile, node => {
-            if (ts.isClassDeclaration(node)) {
-                const hasExport = node.modifiers
-                    ? node.modifiers.find(modifier => {
-                          return ts.SyntaxKind.ExportKeyword === modifier.kind;
-                      })
-                    : false;
-                if (hasExport) {
-                    const ngDecorator = getNgDecorator(node);
-                    if (ngDecorator && ngDecorator.name === 'Component') {
-                        components.push({
-                            name: (node as ts.ClassDeclaration)!.name.getText(),
-                            ...getDirectiveMeta(ngDecorator.argumentInfo)
-                        });
-                    }
-                }
-            }
-        });
-        return components;
     }
 
     private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {}

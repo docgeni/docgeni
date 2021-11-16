@@ -57,6 +57,8 @@ describe('#library-component', () => {
                 [`${buttonDirPath}/examples/module.ts`]: fixture.src['examples/module.ts'],
                 [`${buttonDirPath}/examples/basic/basic.component.ts`]: fixture.src['examples/basic/basic.component.ts'],
                 [`${buttonDirPath}/examples/basic/basic.component.html`]: fixture.src['examples/basic/basic.component.html'],
+                [`${buttonDirPath}/examples/advance/advance.component.ts`]: fixture.src['examples/advance/advance.component.ts'],
+                [`${buttonDirPath}/examples/advance/advance.component.html`]: fixture.src['examples/advance/advance.component.html'],
                 [`${buttonDirPath}/examples/basic/index.md`]: fixture.src['examples/basic/index.md']
             },
             libs: [library],
@@ -85,13 +87,14 @@ describe('#library-component', () => {
         expect(component.getDocItem('en-us')).toBeFalsy();
         await component.build();
         const docItem = component.getDocItem('en-us');
+
         expect(docItem).toBeTruthy();
         expect(docItem).toEqual(
             jasmine.objectContaining({
                 title: 'New Button',
                 path: 'button',
                 importSpecifier: 'alib/button',
-                examples: ['alib-button-basic-example'],
+                examples: ['alib-button-basic-example', 'alib-button-advance-example'],
                 overview: true,
                 originPath: 'alib/button/doc/en-us.md',
                 toc: 'content',
@@ -100,14 +103,13 @@ describe('#library-component', () => {
                 label: { text: 'New', color: '#73D897' }
             })
         );
-
         const enDocItem = component.getDocItem('en-us');
         expect(enDocItem).toEqual(
             jasmine.objectContaining({
                 title: 'New Button',
                 path: 'button',
                 importSpecifier: 'alib/button',
-                examples: ['alib-button-basic-example'],
+                examples: ['alib-button-basic-example', 'alib-button-advance-example'],
                 overview: true,
                 originPath: 'alib/button/doc/en-us.md',
                 toc: 'content',
@@ -178,7 +180,7 @@ describe('#library-component', () => {
         await expectFiles(context.host, {
             [`${absDestAssetsOverviewsPath}/alias-button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
             [`${absDestAssetsOverviewsPath}/alias-button/en-us.html`]: fixture.output['doc/en-us.html'],
-            [`${absDestSiteContentComponentsPath}/alias-button/index.ts`]: replaceButtonToAlias(fixture.output['index.ts']),
+            [`${absDestSiteContentComponentsPath}/alias-button/index.ts`]: fixture.output['index-alias.ts'],
             [`${absDestSiteContentComponentsPath}/alias-button/module.ts`]: fixture.output['module.ts'],
             [`${absDestSiteContentComponentsPath}/alias-button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
             [`${absDestSiteContentComponentsPath}/alias-button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
@@ -199,8 +201,4 @@ async function expectFiles(host: DocgeniHost, files: Record<string, string>) {
         const content = await host.readFile(path);
         expect(content.trim()).toEqual(files[path] ? files[path].trim() : '', `${path} content is not equal`);
     }
-}
-
-function replaceButtonToAlias(input: string) {
-    return input.replace(/Button/g, 'AliasButton').replace(/-button/g, '-alias-button');
 }
