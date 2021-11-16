@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.0](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.2.0-next.0) (2021-11-16)
+
+
+### Bug Fixes
+
+* **core:** regenerate examples source bundle file when emit and refactor somethings #OSP-223 ([5d0e2bc](https://github.com/docgeni/docgeni/commit/5d0e2bc3ecd1925f56fb283f551399e00bab8836)), closes [#OSP-223](https://github.com/docgeni/docgeni/issues/OSP-223)
+* **core:** should generate navs success when there are no locale docs folder that configured  in locales #OSP-211 ([#268](https://github.com/docgeni/docgeni/issues/268)) ([697a366](https://github.com/docgeni/docgeni/commit/697a366574d9f28f975675dc365f23f11ff13e2f)), closes [#OSP-211](https://github.com/docgeni/docgeni/issues/OSP-211)
+* **template:** add @angular/cdk to dependencies of template and move @angular-devkit/schematics to cli ([#267](https://github.com/docgeni/docgeni/issues/267)) ([c136a0f](https://github.com/docgeni/docgeni/commit/c136a0fa1aa05942c8f3cc0a13ee99304ac36e13))
+* **template:** fix import docsearch error ([#274](https://github.com/docgeni/docgeni/issues/274)) ([9492006](https://github.com/docgeni/docgeni/commit/9492006cfe1636477289bfa75c6ca55803e13c24))
+
+
+### Features
+
+* **core:** use define name in lib example component to generate entry file #OSP-167 ([#288](https://github.com/docgeni/docgeni/issues/288)) ([61de9b8](https://github.com/docgeni/docgeni/commit/61de9b8884bfd18393d488f93f6fb55361877e0a)), closes [#OSP-167](https://github.com/docgeni/docgeni/issues/OSP-167)
+* add serve/build config `configuration` ([#283](https://github.com/docgeni/docgeni/issues/283)) ([80b210e](https://github.com/docgeni/docgeni/commit/80b210e392d00a1861818bb44bd7c5a1fc5db7d2))
+* **core:** generate sitemap by config #OSP-192 ([#263](https://github.com/docgeni/docgeni/issues/263)) ([9ec9300](https://github.com/docgeni/docgeni/commit/9ec930020d534b2c9a30682a7db03076ff973d73)), closes [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192) [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192)
+* **core:** support config favicon.ico ([#282](https://github.com/docgeni/docgeni/issues/282)) ([72c9b11](https://github.com/docgeni/docgeni/commit/72c9b11ac105997206e3311d65f0b1119f6e9b83))
+* **ngdoc:** add @docgeni/ngdoc and init structure #OSP-226 ([#284](https://github.com/docgeni/docgeni/issues/284)) ([0fbc3c5](https://github.com/docgeni/docgeni/commit/0fbc3c5f4715c799c822faacd0328e065965361a)), closes [#OSP-226](https://github.com/docgeni/docgeni/issues/OSP-226)
+* example support stackblitz ([#276](https://github.com/docgeni/docgeni/issues/276)) ([9fe6a9c](https://github.com/docgeni/docgeni/commit/9fe6a9cec86dadce6bd7a472bffa709f5c8831ef))
+* **template:** add builtins search #OSP-202 ([#271](https://github.com/docgeni/docgeni/issues/271)) ([caf7724](https://github.com/docgeni/docgeni/commit/caf7724a098879fb15e79f2effa8db55858d4a89)), closes [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202) [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202)
+
+
+
+
+
 ## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
 
 

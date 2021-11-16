@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.0](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.2.0-next.0) (2021-11-16)
+
+
+### Bug Fixes
+
+* **template:** add @angular/cdk to dependencies of template and move @angular-devkit/schematics to cli ([#267](https://github.com/docgeni/docgeni/issues/267)) ([c136a0f](https://github.com/docgeni/docgeni/commit/c136a0fa1aa05942c8f3cc0a13ee99304ac36e13))
+
+
+### Features
+
+* **cli:** ng-add schematics add `@docgei/angular` dependency ([eca5b5b](https://github.com/docgeni/docgeni/commit/eca5b5b1fc83fd9267f5aec0e8ac8331e652edd0))
+* **ngdoc:** add @docgeni/ngdoc and init structure #OSP-226 ([#284](https://github.com/docgeni/docgeni/issues/284)) ([0fbc3c5](https://github.com/docgeni/docgeni/commit/0fbc3c5f4715c799c822faacd0328e065965361a)), closes [#OSP-226](https://github.com/docgeni/docgeni/issues/OSP-226)
+* example support stackblitz ([#276](https://github.com/docgeni/docgeni/issues/276)) ([9fe6a9c](https://github.com/docgeni/docgeni/commit/9fe6a9cec86dadce6bd7a472bffa709f5c8831ef))
+* **template:** add builtins search #OSP-202 ([#271](https://github.com/docgeni/docgeni/issues/271)) ([caf7724](https://github.com/docgeni/docgeni/commit/caf7724a098879fb15e79f2effa8db55858d4a89)), closes [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202) [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202)
+
+
+
+
+
 ## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
 
 

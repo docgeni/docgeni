@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/template",
-  "version": "1.1.4",
+  "version": "1.2.0-next.0",
   "private": "true",
   "description": "Docgeni - Angular Template Components",
   "peerDependencies": {
@@ -12,7 +12,7 @@
     "tslib": "*"
   },
   "dependencies": {
-    "docsearch.js": "2.6.3",
-    "@angular/cdk": "^11.2.13"
+    "@angular/cdk": "^11.2.13",
+    "docsearch.js": "2.6.3"
   }
 }
