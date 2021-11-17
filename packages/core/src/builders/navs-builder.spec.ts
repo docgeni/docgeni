@@ -29,7 +29,6 @@ for (const dir of ['', 'en-us/']) {
             context = createTestDocgeniContext({
                 initialFiles: initialFiles
             });
-            1;
         });
 
         it('should build success', async () => {
