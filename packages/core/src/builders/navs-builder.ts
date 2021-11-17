@@ -252,7 +252,7 @@ export class NavsBuilder {
     private async getLocaleDocsPath(locale: Locale) {
         const isDefaultLocale = locale.key === this.config.defaultLocale;
         if (isDefaultLocale) {
-            let dir = resolve(this.docgeni.paths.absDocsPath, locale.key);
+            const dir = resolve(this.docgeni.paths.absDocsPath, locale.key);
             if (await this.docgeni.host.pathExists(dir)) {
                 return dir;
             }
