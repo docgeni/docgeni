@@ -102,7 +102,7 @@ export class NavsBuilder {
         > = {};
         for (const locale of this.config.locales) {
             const isDefaultLocale = locale.key === this.config.defaultLocale;
-            const localeDocsPath = this.getLocaleDocsPath(locale);
+            const localeDocsPath = await this.getLocaleDocsPath(locale);
             localesDocsDataMap[locale.key] = {
                 navs: [],
                 docItems: []
@@ -249,12 +249,13 @@ export class NavsBuilder {
         return currentPath;
     }
 
-    private getLocaleDocsPath(locale: Locale) {
+    private async getLocaleDocsPath(locale: Locale) {
         const isDefaultLocale = locale.key === this.config.defaultLocale;
         if (isDefaultLocale) {
             const existDefaultLocalDir = this.config.locales.find(item => item.key === locale.key);
-            if (existDefaultLocalDir) {
-                return resolve(this.docgeni.paths.absDocsPath, locale.key);
+            let dir = resolve(this.docgeni.paths.absDocsPath, existDefaultLocalDir.key);
+            if (await this.docgeni.host.pathExists(dir)) {
+                return dir;
             }
         }
         return isDefaultLocale ? this.docgeni.paths.absDocsPath : resolve(this.docgeni.paths.absDocsPath, locale.key);

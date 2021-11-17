@@ -136,7 +136,7 @@ for (const dir of ['', 'en-us/']) {
 
         it('should build success with one locale', async () => {
             initialFiles = {
-                [`${DEFAULT_TEST_ROOT_PATH}/docs/index.md`]: fixture.src['index.md']
+                [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}index.md`]: fixture.src['index.md']
             };
             spyOn(toolkit.fs, 'globSync').and.callFake((pattern, options) => {
                 expect(pattern).toEqual(`/**/*.md`);
@@ -158,8 +158,8 @@ for (const dir of ['', 'en-us/']) {
                         channelPath: '',
                         title: 'Home',
                         order: 10,
-                        contentPath: 'docs/index.html',
-                        originPath: 'docs/index.md',
+                        contentPath: `docs/${dir}index.html`,
+                        originPath: `docs/${dir}index.md`,
                         headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                     }
                 ],
@@ -170,8 +170,8 @@ for (const dir of ['', 'en-us/']) {
                         channelPath: '',
                         title: 'Home',
                         order: 10,
-                        contentPath: 'docs/index.html',
-                        originPath: 'docs/index.md',
+                        contentPath: `docs/${dir}index.html`,
+                        originPath: `docs/${dir}index.md`,
                         headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
                     }
                 ]
