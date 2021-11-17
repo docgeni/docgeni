@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/cli",
-  "version": "1.2.0-next.1",
+  "version": "1.2.0-next.2",
   "description": "CLI tool for Docgeni",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -33,9 +33,9 @@
   "dependencies": {
     "@angular-devkit/schematics": "^11.2.15",
     "@angular-devkit/schematics-cli": "^0.11.4",
-    "@docgeni/core": "^1.2.0-next.1",
-    "@docgeni/template": "^1.2.0-next.1",
-    "@docgeni/toolkit": "^1.2.0-next.1",
+    "@docgeni/core": "^1.2.0-next.2",
+    "@docgeni/template": "^1.2.0-next.2",
+    "@docgeni/toolkit": "^1.2.0-next.2",
     "@schematics/angular": "^11.2.15",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
