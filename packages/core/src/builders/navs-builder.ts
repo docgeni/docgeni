@@ -251,6 +251,12 @@ export class NavsBuilder {
 
     private getLocaleDocsPath(locale: Locale) {
         const isDefaultLocale = locale.key === this.config.defaultLocale;
+        if (isDefaultLocale) {
+            let existDefaultLocalDir = this.config.locales.find(item => item.key === locale.key);
+            if (existDefaultLocalDir) {
+                return resolve(this.docgeni.paths.absDocsPath, locale.key);
+            }
+        }
         return isDefaultLocale ? this.docgeni.paths.absDocsPath : resolve(this.docgeni.paths.absDocsPath, locale.key);
     }
 }
