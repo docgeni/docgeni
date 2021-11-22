@@ -219,7 +219,7 @@ export class SiteBuilder {
 
     private async watchSiteProject() {
         if (this.docgeni.watch) {
-            let sourceRoot = resolve(this.docgeni.paths.absSitePath, 'src');
+            const sourceRoot = resolve(this.docgeni.paths.absSitePath, 'src');
             const assetsPath = resolve(sourceRoot, 'assets');
             this.docgeni.host.watchAggregated([assetsPath]).subscribe(async events => {
                 const isStackBlitzDir = events.some(
