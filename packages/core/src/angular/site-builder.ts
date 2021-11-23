@@ -61,6 +61,8 @@ export class SiteBuilder {
         await this.detect();
         if (this.siteProject) {
             this.docgeni.paths.setSitePaths(this.siteProject.root, this.siteProject.sourceRoot);
+            await this.syncSiteProject();
+            this.watchSiteProject();
         } else {
             await this.createSiteProject();
             await this.syncPublic();
@@ -173,7 +175,7 @@ export class SiteBuilder {
                     await this.docgeni.host.copy(fromPath, resolve(this.siteProject.root, copyFile.to));
                 }
             }
-            this.updateShareExampleBundleJson();
+            this.updateShareExampleBundleJson(this.publicDirPath);
         }
     }
 
@@ -205,7 +207,24 @@ export class SiteBuilder {
                 }
                 const isStackBlitzDir = events.some(event => !relative(resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..'));
                 if (isStackBlitzDir) {
-                    this.updateShareExampleBundleJson();
+                    this.updateShareExampleBundleJson(this.publicDirPath);
+                }
+            });
+        }
+    }
+
+    private async syncSiteProject() {
+        this.updateShareExampleBundleJson(resolve(this.docgeni.paths.absSitePath, 'src'));
+    }
+
+    private async watchSiteProject() {
+        if (this.docgeni.watch) {
+            const sourceRoot = resolve(this.docgeni.paths.absSitePath, 'src');
+            const assetsPath = resolve(sourceRoot, 'assets');
+            this.docgeni.host.watchAggregated([`${assetsPath}/stack-blitz`]).subscribe(async events => {
+                const isStackBlitzDir = events.some(event => !event.path.endsWith('stack-blitz/bundle.json'));
+                if (isStackBlitzDir) {
+                    this.updateShareExampleBundleJson(sourceRoot);
                 }
             });
         }
@@ -239,14 +258,24 @@ export class SiteBuilder {
             }, []);
     }
 
-    private async updateShareExampleBundleJson() {
-        const sharedExampleDir = resolve(resolve(this.publicDirPath, 'assets'), 'stack-blitz');
+    private async updateShareExampleBundleJson(sitePath: string) {
+        const sharedExampleDir = resolve(resolve(sitePath, 'assets'), 'stack-blitz');
+        if (!(await this.docgeni.host.exists(sharedExampleDir))) {
+            await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), `[]`);
+            return;
+        }
         const files = await this.docgeni.host.getFiles(sharedExampleDir, { recursively: true });
         const list = [];
         for (const file of files) {
+            if (file === 'bundle.json') {
+                continue;
+            }
             list.push({ path: file, content: await this.docgeni.host.readFile(resolve(sharedExampleDir, file)) });
         }
         const content = JSON.stringify(list);
-        await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), content);
+        await this.docgeni.host.writeFile(
+            resolve(this.docgeni.paths.absSitePath, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
+            content
+        );
     }
 }
