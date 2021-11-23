@@ -66,6 +66,37 @@ describe('#site-plugin', () => {
         expect(context.paths.absSiteContentPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/custom/site/src/app/content`);
     });
 
+    it('should watch custom site success', async () => {
+        const sitePath = `${DEFAULT_TEST_ROOT_PATH}/custom/site`;
+        context.config.siteProjectName = 'customSite';
+        const watchAggregated$ = new Subject<HostWatchEvent[]>();
+
+        updateContext(context, { watch: true });
+        const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+        watchAggregatedSpy.and.callFake(files => {
+            expect(files).toEqual([`${sitePath}/src/assets/stack-blitz`]);
+            return watchAggregated$.asObservable();
+        });
+        await context.hooks.run.promise();
+        const text1 = toolkit.strings.generateRandomId();
+        await writeFilesToHost(context.host, {
+            [`${sitePath}/src/assets/stack-blitz/a.txt`]: text1
+        });
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/a.txt`)).toBeTruthy();
+        watchAggregated$.next([
+            {
+                type: HostWatchEventType.Created,
+                path: normalize(`${sitePath}/src/assets/stack-blitz/a.txt`),
+                time: new Date()
+            }
+        ]);
+
+        await toolkit.utils.wait(2000);
+
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/a.txt`)).toBeTruthy();
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/bundle.json`)).toBeTruthy();
+    });
+
     it('should copy public dir success', async () => {
         const text1 = toolkit.strings.generateRandomId();
         const text2 = toolkit.strings.generateRandomId();

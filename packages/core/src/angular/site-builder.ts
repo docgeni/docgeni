@@ -221,12 +221,8 @@ export class SiteBuilder {
         if (this.docgeni.watch) {
             const sourceRoot = resolve(this.docgeni.paths.absSitePath, 'src');
             const assetsPath = resolve(sourceRoot, 'assets');
-            this.docgeni.host.watchAggregated([assetsPath]).subscribe(async events => {
-                const isStackBlitzDir = events.some(
-                    event =>
-                        !relative(resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..') &&
-                        !event.path.endsWith('stack-blitz/bundle.json')
-                );
+            this.docgeni.host.watchAggregated([`${assetsPath}/stack-blitz`]).subscribe(async events => {
+                const isStackBlitzDir = events.some(event => !event.path.endsWith('stack-blitz/bundle.json'));
                 if (isStackBlitzDir) {
                     this.updateShareExampleBundleJson(sourceRoot);
                 }
@@ -277,6 +273,9 @@ export class SiteBuilder {
             list.push({ path: file, content: await this.docgeni.host.readFile(resolve(sharedExampleDir, file)) });
         }
         const content = JSON.stringify(list);
-        await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), content);
+        await this.docgeni.host.writeFile(
+            resolve(this.docgeni.paths.absSitePath, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
+            content
+        );
     }
 }
