@@ -13,6 +13,7 @@ import * as ngAstUtils from '@schematics/angular/utility/ast-utils';
 import { HostTree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { InsertChange } from '@schematics/angular/utility/change';
+import { compatibleNormalize } from '../markdown';
 
 describe('#library-component', () => {
     const library = normalizeLibConfig({
@@ -242,6 +243,9 @@ async function expectFiles(host: DocgeniHost, files: Record<string, string>) {
     for (const path in files) {
         expect(await host.exists(path)).toBeTruthy(`${path} is not exists`);
         const content = await host.readFile(path);
-        expect(content.trim()).toEqual(files[path] ? files[path].trim() : '', `${path} content is not equal`);
+        expect(compatibleNormalize(content.trim())).toEqual(
+            files[path] ? compatibleNormalize(files[path].trim()) : '',
+            `${path} content is not equal`
+        );
     }
 }

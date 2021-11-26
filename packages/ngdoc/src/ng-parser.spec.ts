@@ -107,58 +107,6 @@ describe('#parser', () => {
         project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
         const d11 = project1.getProgram().compilerObject;
         console.timeEnd('tsMorph1');
-
-        // project.getSourceFiles().forEach(sourceFile => {
-        //     // console.log(sourceFile.getExportedDeclarations());
-        //     const classDeclarations = sourceFile.getClasses().filter(item => {
-        //         return item.isExported();
-        //     });
-        //     classDeclarations.forEach(classDeclaration => {
-        //         const ngDecorator = classDeclaration.getDecorators().find(decorator => {
-        //             return ['Component', 'Directive', 'Injectable'].includes(decorator.getName());
-        //         });
-        //         if (ngDecorator) {
-        //             const args = ngDecorator.getArguments();
-        //             console.log(`${ngDecorator.getName()} getArguments: ${args[0] ? args[0].print() : 'none'}`);
-        //             if (args[0] && Node.isObjectLiteralExpression(args[0])) {
-        //                 const properties = args[0].getProperties();
-        //                 const values = properties.map(property => {
-        //                     if (Node.isPropertyAssignment(property)) {
-        //                         return {
-        //                             [property.compilerNode.name.getText()]: property.getInitializer().getText()
-        //                         };
-        //                     }
-        //                 });
-        //                 console.log(values);
-        //             }
-        //             classDeclaration.forEachChild(node => {
-        //                 if (Node.isPropertyDeclaration(node)) {
-        //                     const pDecorator = node.getDecorators().find(decorator => {
-        //                         return ['Input', 'Output'].includes(decorator.getName());
-        //                     });
-        //                     if (pDecorator) {
-        //                         console.log(`isPropertyDeclaration: ${node.getText()}`);
-        //                         const args = pDecorator.getArguments();
-        //                         const unionTypes = node.getType().getUnionTypes();
-        //                         const typeName = project.getTypeChecker().getTypeText(node.getType(), undefined, ts.TypeFormatFlags.None);
-        //                         console.log(
-        //                             `type: ${typeName}, ${unionTypes.map(unionType => {
-        //                                 return unionType.getLiteralValue().toString();
-        //                             })}`
-        //                         );
-        //                     }
-        //                 }
-        //             });
-        //             const typeChecker = project.getTypeChecker();
-        //             const symbol = typeChecker.getSymbolAtLocation(classDeclaration);
-        //             console.log(symbol);
-        //             // const type = typeChecker.getTypeOfSymbolAtLocation(symbol, symbol.getValueDeclaration());
-        //             // console.log(`Text: ${type.getText()}`);
-        //             const comments = classDeclaration.getLeadingCommentRanges();
-        //             console.log(classDeclaration.getJsDocs().map(item => item.getComment()));
-        //         }
-        //     });
-        // });
     });
 
     xit('parse TETHYS', () => {

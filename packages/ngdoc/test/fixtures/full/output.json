@@ -1,20 +1,6 @@
 [
   {
     "type": "component",
-    "name": "LoadingComponent",
-    "description": "General Loading Component description.",
-    "selector": "thy-loading",
-    "templateUrl": "./loading.component.html",
-    "template": null,
-    "styleUrls": [
-      "./loading.component.scss"
-    ],
-    "styles": null,
-    "exportAs": null,
-    "properties": []
-  },
-  {
-    "type": "component",
     "name": "ButtonComponent",
     "description": "General Button Component description.",
     "selector": "thy-button",
@@ -71,6 +57,20 @@
     "templateUrl": null,
     "template": null,
     "styleUrls": null,
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  },
+  {
+    "type": "component",
+    "name": "LoadingComponent",
+    "description": "General Loading Component description.",
+    "selector": "thy-loading",
+    "templateUrl": "./loading.component.html",
+    "template": null,
+    "styleUrls": [
+      "./loading.component.scss"
+    ],
     "styles": null,
     "exportAs": null,
     "properties": []

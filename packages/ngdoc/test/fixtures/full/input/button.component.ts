@@ -5,7 +5,6 @@ export type ButtonSize = 'lg' | 'md' | 'sm';
 
 /**
  * General Button Component description.
- *
  * @export
  * @class ButtonComponent
  * @implements {OnInit}
