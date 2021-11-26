@@ -4,7 +4,7 @@ import { generateComponentExamplesModule } from './examples-module';
 describe('#examples-module', () => {
     const sourceText = `
 import { CommonModule } from '@angular/common';
-import { AppComponent } from './app.component.ts';
+import { AppComponent } from './app.component';
 
 export default {
     imports: [ CommonModule ],
@@ -15,16 +15,28 @@ export default {
     const ngSourceFile = createNgSourceFile('module.ts', sourceText);
 
     function expectOriginalSource(output: string) {
-        expect(output).toMatch(`import { AppComponent } from './app.component.ts';`);
+        expect(output).toMatch(`import { AppComponent } from './app.component';`);
         expect(output).toMatch(`import { CommonModule } from '@angular/common';`);
     }
 
     it('should generate module success with default export', () => {
-        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component.ts' }];
+        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
         const output = generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
         expectOriginalSource(output);
         expect(output).toMatch(`import { NgModule } from '@angular/core';`);
-        expect(output).toMatch(`import { AlibComponent } from './basic.component.ts'`);
+        expect(output).toMatch(`import { AlibComponent } from './basic.component'`);
+        expect(output).toMatch(`export class MyButtonExamplesModule {}`);
+        expect(output).toMatch(/declarations: \[ AppComponent, AlibComponent \]/);
+        expect(output).toMatch(/providers: \[ AppService \]/);
+        expect(output).toMatch(/entryComponents: \[ AlibComponent \]/);
+        expect(output).toMatch(/imports: \[ CommonModule \],/);
+    });
+
+    it('should insert exist import module specifier', () => {
+        const components = [{ name: 'AlibComponent', moduleSpecifier: './app.component' }];
+        const output = generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
+        expect(output).toMatch(`import { NgModule } from '@angular/core';`);
+        expect(output).toMatch(`import { AppComponent, AlibComponent } from './app.component'`);
         expect(output).toMatch(`export class MyButtonExamplesModule {}`);
         expect(output).toMatch(/declarations: \[ AppComponent, AlibComponent \]/);
         expect(output).toMatch(/providers: \[ AppService \]/);
@@ -35,14 +47,14 @@ export default {
     it('should generate module success without default export', () => {
         const sourceText = `
         import { CommonModule } from '@angular/common';
-        import { AppComponent } from './app.component.ts';
+        import { AppComponent } from './app.component';
             `;
         const ngSourceFile = createNgSourceFile('module.ts', sourceText);
-        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component.ts' }];
+        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
         const output = generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
         expectOriginalSource(output);
         expect(output).toMatch(`import { NgModule } from '@angular/core';`);
-        expect(output).toMatch(`import { AlibComponent } from './basic.component.ts'`);
+        expect(output).toMatch(`import { AlibComponent } from './basic.component'`);
         expect(output).toMatch(`export class MyButtonExamplesModule {}`);
         expect(output).toMatch(/declarations: \[ AlibComponent \],/);
         expect(output).toMatch(/providers: \[  \]/);
@@ -52,10 +64,10 @@ export default {
 
     it('should generate module success with empty', () => {
         const ngSourceFile = createNgSourceFile('module.ts', '');
-        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component.ts' }];
+        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
         const output = generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
         expect(output).toMatch(`import { NgModule } from '@angular/core';`);
-        expect(output).toMatch(`import { AlibComponent } from './basic.component.ts'`);
+        expect(output).toMatch(`import { AlibComponent } from './basic.component'`);
         expect(output).toMatch(`export class MyButtonExamplesModule {}`);
         expect(output).toMatch(/declarations: \[ AlibComponent \],/);
         expect(output).toMatch(/providers: \[  \]/);

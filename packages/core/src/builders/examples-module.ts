@@ -53,7 +53,7 @@ export function generateComponentExamplesModule(
                     });
                     addPos = importDeclaration.importClause.namedBindings.getLastToken().pos;
                     if (!hasNamed) {
-                        changes.push(new InsertChange(sourceFile.origin.fileName, addPos, `, ${structure.name} `));
+                        changes.push(new InsertChange(sourceFile.origin.fileName, addPos, `, ${structure.name}`));
                     }
                 }
             } else {
