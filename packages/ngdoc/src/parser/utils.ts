@@ -132,38 +132,38 @@ export function findNodes<T extends ts.Node>(
     return arr;
 }
 
-export function findNode(node: ts.Node, kind: ts.SyntaxKind, text: string): ts.Node | null {
-    if (node.kind === kind && node.getText() === text) {
-        return node;
-    }
+// export function findNode(node: ts.Node, kind: ts.SyntaxKind, text: string): ts.Node | null {
+//     if (node.kind === kind && node.getText() === text) {
+//         return node;
+//     }
 
-    let foundNode: ts.Node | null = null;
-    ts.forEachChild(node, childNode => {
-        foundNode = foundNode || findNode(childNode, kind, text);
-    });
+//     let foundNode: ts.Node | null = null;
+//     ts.forEachChild(node, childNode => {
+//         foundNode = foundNode || findNode(childNode, kind, text);
+//     });
 
-    return foundNode;
-}
+//     return foundNode;
+// }
 
 /**
  * Get all the nodes from a source.
  * @param sourceFile The source file object.
  * @returns {Array<ts.Node>} An array of all the nodes in the source.
  */
-export function getSourceNodes(sourceFile: ts.SourceFile, maxLevel = 1): ts.Node[] {
-    const nodes: ts.Node[] = [sourceFile];
-    const result = [];
+// export function getSourceNodes(sourceFile: ts.SourceFile, maxLevel = 1): ts.Node[] {
+//     const nodes: ts.Node[] = [sourceFile];
+//     const result = [];
 
-    while (nodes.length > 0) {
-        const node = nodes.shift();
+//     while (nodes.length > 0) {
+//         const node = nodes.shift();
 
-        if (node) {
-            result.push(node);
-            if (node.getChildCount(sourceFile) >= 0) {
-                nodes.unshift(...node.getChildren());
-            }
-        }
-    }
+//         if (node) {
+//             result.push(node);
+//             if (node.getChildCount(sourceFile) >= 0) {
+//                 nodes.unshift(...node.getChildren());
+//             }
+//         }
+//     }
 
-    return result;
-}
+//     return result;
+// }

@@ -93,15 +93,6 @@ export class NgSourceFile {
     public getImportDeclarations(): ts.ImportDeclaration[] {
         return findNodes(this.sourceFile, ts.SyntaxKind.ImportDeclaration) as ts.ImportDeclaration[];
     }
-
-    public getImportDeclarationsMap() {
-        const importDeclarations = this.getImportDeclarations();
-        const moduleSpecifiersMap = importDeclarations.reduce<Record<string, ts.ImportDeclaration>>((result, item) => {
-            result[getNodeText(item.moduleSpecifier)] = item;
-            return result;
-        }, {});
-        return moduleSpecifiersMap;
-    }
 }
 
 export function createNgSourceFile(sourceFile: ts.SourceFile): NgSourceFile;

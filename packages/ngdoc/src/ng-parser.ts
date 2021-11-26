@@ -143,9 +143,9 @@ export class NgDocParser {
 
     private createCompilerHost(): ts.CompilerHost {
         const host = ts.createCompilerHost({});
-        host.directoryExists = dirPath => {
-            return dirPath.startsWith(ts.sys.getCurrentDirectory());
-        };
+        // host.directoryExists = dirPath => {
+        //     return dirPath.startsWith(ts.sys.getCurrentDirectory());
+        // };
         host.getDefaultLibFileName = () => '';
         return host;
     }

@@ -1,7 +1,7 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
 import { generateComponentExamplesModule } from './examples-module';
 
-describe('#example-module', () => {
+describe('#examples-module', () => {
     const sourceText = `
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component.ts';
