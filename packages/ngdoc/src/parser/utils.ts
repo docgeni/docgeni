@@ -65,10 +65,105 @@ export function getTypeNodes(typeNodes: ts.NodeArray<ts.TypeNode>) {
     });
 }
 
-export function isExported(node: ts.Node) {
+export function isExported<TNode extends ts.Node>(node: TNode): node is TNode {
     return node.modifiers
-        ? node.modifiers.find(modifier => {
+        ? !!node.modifiers.find(modifier => {
               return ts.SyntaxKind.ExportKeyword === modifier.kind;
           })
         : false;
+}
+
+export function isExportedClassDeclaration(node: ts.Node): node is ts.ClassDeclaration {
+    return ts.isClassDeclaration(node) && isExported(node);
+}
+
+/**
+ * Find all nodes from the AST in the subtree of node of SyntaxKind kind.
+ * @param node
+ * @param kind
+ * @param max The maximum number of items to return.
+ * @param recursive Continue looking for nodes of kind recursive until end
+ * the last child even when node of kind has been found.
+ * @return all nodes of kind, or [] if none is found
+ */
+export function findNodes(node: ts.Node, kind: ts.SyntaxKind, max?: number, recursive?: boolean): ts.Node[];
+/**
+ * Find all nodes from the AST in the subtree that satisfy a type guard.
+ * @param node
+ * @param guard
+ * @param max The maximum number of items to return.
+ * @param recursive Continue looking for nodes of kind recursive until end
+ * the last child even when node of kind has been found.
+ * @return all nodes that satisfy the type guard, or [] if none is found
+ */
+export function findNodes<T extends ts.Node>(node: ts.Node, guard: (node: ts.Node) => node is T, max?: number, recursive?: boolean): T[];
+export function findNodes<T extends ts.Node>(
+    node: ts.Node,
+    kindOrGuard: ts.SyntaxKind | ((node: ts.Node) => node is T),
+    max = Infinity,
+    recursive = false
+): T[] {
+    if (!node || max === 0) {
+        return [];
+    }
+
+    const test = typeof kindOrGuard === 'function' ? kindOrGuard : (node: ts.Node): node is T => node.kind === kindOrGuard;
+
+    const arr: T[] = [];
+    if (test(node)) {
+        arr.push(node);
+        max--;
+    }
+    if (max > 0 && (recursive || !test(node))) {
+        for (const child of node.getChildren()) {
+            findNodes(child, test, max, recursive).forEach(node => {
+                if (max > 0) {
+                    arr.push(node);
+                }
+                max--;
+            });
+
+            if (max <= 0) {
+                break;
+            }
+        }
+    }
+
+    return arr;
+}
+
+export function findNode(node: ts.Node, kind: ts.SyntaxKind, text: string): ts.Node | null {
+    if (node.kind === kind && node.getText() === text) {
+        return node;
+    }
+
+    let foundNode: ts.Node | null = null;
+    ts.forEachChild(node, childNode => {
+        foundNode = foundNode || findNode(childNode, kind, text);
+    });
+
+    return foundNode;
+}
+
+/**
+ * Get all the nodes from a source.
+ * @param sourceFile The source file object.
+ * @returns {Array<ts.Node>} An array of all the nodes in the source.
+ */
+export function getSourceNodes(sourceFile: ts.SourceFile, maxLevel = 1): ts.Node[] {
+    const nodes: ts.Node[] = [sourceFile];
+    const result = [];
+
+    while (nodes.length > 0) {
+        const node = nodes.shift();
+
+        if (node) {
+            result.push(node);
+            if (node.getChildCount(sourceFile) >= 0) {
+                nodes.unshift(...node.getChildren());
+            }
+        }
+    }
+
+    return result;
 }

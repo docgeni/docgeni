@@ -40,7 +40,9 @@ function testAllFixtures() {
                 const input = path.resolve(root, `${dir}/input/*.ts`);
                 const outputPath = path.resolve(root, `${dir}/output.json`);
                 const output = toolkit.fs.readJSONSync(outputPath);
+                // console.time('NgDocParser');
                 const docs = NgDocParser.parse(input);
+                // console.timeEnd('NgDocParser');
                 // console.log(JSON.stringify(docs, null, 2));
                 expect(docs).toEqual(objectContaining(output));
             });
@@ -60,8 +62,37 @@ describe('#parser', () => {
         console.timeEnd('createProgram');
 
         console.time('createProgram1');
-        const program1 = ts.createProgram(filePaths, { skipLibCheck: true, skipDefaultLibCheck: true }, undefined, program);
+        const program1 = ts.createProgram(filePaths, { skipLibCheck: true, skipDefaultLibCheck: true }, undefined);
         console.timeEnd('createProgram1');
+
+        console.time('createProgram2');
+        const options: ts.CompilerOptions = {};
+        const host: ts.CompilerHost = {
+            fileExists: filePath => {
+                return toolkit.fs.pathExistsSync(filePath);
+            },
+            directoryExists: dirPath => dirPath === '/',
+            getCurrentDirectory: () => '/',
+            getDirectories: () => [],
+            getCanonicalFileName: fileName => fileName,
+            getNewLine: () => '\n',
+            getDefaultLibFileName: () => '',
+            getSourceFile: filePath => {
+                const text = toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
+                return ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest);
+            },
+            readFile: filePath => {
+                return toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
+            },
+            useCaseSensitiveFileNames: () => true,
+            writeFile: () => {}
+        };
+        const program2 = ts.createProgram({
+            options,
+            rootNames: filePaths,
+            host: host
+        });
+        console.timeEnd('createProgram2');
 
         console.time('tsMorph');
         const project = new Project({});
@@ -73,11 +104,10 @@ describe('#parser', () => {
         const project1 = new Project({});
         project1.addSourceFilesAtPaths(input);
         const d1 = project1.getProgram().compilerObject; //.getTypeChecker().compilerObject;
-        // project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
+        project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
         const d11 = project1.getProgram().compilerObject;
         console.timeEnd('tsMorph1');
 
-        // console.log(p.getSourceFiles().length);
         // project.getSourceFiles().forEach(sourceFile => {
         //     // console.log(sourceFile.getExportedDeclarations());
         //     const classDeclarations = sourceFile.getClasses().filter(item => {

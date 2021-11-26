@@ -1,7 +1,22 @@
 import { toolkit } from '@docgeni/toolkit';
-import { NgComponentInfo } from './types';
-import { getDirectiveMeta, getNgDecorator, isExported } from './parser';
+import { ArgumentInfo, NgComponentInfo, NgModuleInfo } from './types';
+import {
+    findNodes,
+    getDirectiveMeta,
+    getNgDecorator,
+    getNodeText,
+    getObjectLiteralExpressionProperties,
+    getSourceNodes,
+    isExported,
+    isExportedClassDeclaration
+} from './parser';
 import { ts } from './typescript';
+import { lineFeedPrinter } from './parser/line-feed-printer';
+
+export interface ImportDeclarationStructure {
+    moduleSpecifier?: string;
+    namedImports?: { name: string }[];
+}
 
 export class NgSourceFile {
     private sourceFile: ts.SourceFile;
@@ -22,17 +37,14 @@ export class NgSourceFile {
 
     public getExportedComponents(): NgComponentInfo[] {
         const components: NgComponentInfo[] = [];
-        ts.forEachChild(this.sourceFile, node => {
-            if (ts.isClassDeclaration(node)) {
-                if (isExported(node)) {
-                    const ngDecorator = getNgDecorator(node, ['Component']);
-                    if (ngDecorator) {
-                        components.push({
-                            name: node.name.getText(),
-                            ...getDirectiveMeta(ngDecorator.argumentInfo)
-                        });
-                    }
-                }
+        const classDeclarations = findNodes<ts.ClassDeclaration>(this.sourceFile, isExportedClassDeclaration);
+        classDeclarations.forEach(classDeclaration => {
+            const ngDecorator = getNgDecorator(classDeclaration, ['Component']);
+            if (ngDecorator) {
+                components.push({
+                    name: classDeclaration.name.getText(),
+                    ...getDirectiveMeta(ngDecorator.argumentInfo)
+                });
             }
         });
         return components;
@@ -53,7 +65,43 @@ export class NgSourceFile {
         }
     }
 
-    public getNgModule() {}
+    public getExportedNgModule(): NgModuleInfo {
+        let ngModule: NgModuleInfo = null;
+        ts.forEachChild(this.sourceFile, node => {
+            if (isExportedClassDeclaration(node)) {
+                const ngDecorator = getNgDecorator(node, ['NgModule']);
+                if (ngDecorator) {
+                    ngModule = {
+                        name: node.name.getText()
+                    };
+                }
+            }
+        });
+        return ngModule;
+    }
+
+    public getDefaultExports(): ArgumentInfo {
+        let exports: ArgumentInfo;
+        ts.forEachChild(this.sourceFile, node => {
+            if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
+                exports = getObjectLiteralExpressionProperties(node.expression);
+            }
+        });
+        return exports;
+    }
+
+    public getImportDeclarations(): ts.ImportDeclaration[] {
+        return findNodes(this.sourceFile, ts.SyntaxKind.ImportDeclaration) as ts.ImportDeclaration[];
+    }
+
+    public getImportDeclarationsMap() {
+        const importDeclarations = this.getImportDeclarations();
+        const moduleSpecifiersMap = importDeclarations.reduce<Record<string, ts.ImportDeclaration>>((result, item) => {
+            result[getNodeText(item.moduleSpecifier)] = item;
+            return result;
+        }, {});
+        return moduleSpecifiersMap;
+    }
 }
 
 export function createNgSourceFile(sourceFile: ts.SourceFile): NgSourceFile;
@@ -61,7 +109,7 @@ export function createNgSourceFile(filePath: string, sourceText?: string): NgSou
 export function createNgSourceFile(filePathOrSourceFile?: string | ts.SourceFile, sourceText?: string): NgSourceFile {
     if (toolkit.utils.isString(filePathOrSourceFile)) {
         let finalSourceText = sourceText;
-        if (!sourceText) {
+        if (sourceText === undefined || sourceText === null) {
             finalSourceText = toolkit.fs.readFileSync(filePathOrSourceFile, { encoding: 'utf-8' });
         }
         return new NgSourceFile(filePathOrSourceFile, finalSourceText);
