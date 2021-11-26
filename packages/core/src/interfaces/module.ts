@@ -8,3 +8,9 @@ export interface NgModuleInfo {
      */
     importSpecifier: string;
 }
+
+export interface NgDefaultExportInfo {
+    providers: string;
+    imports: string;
+    declarations: string;
+}

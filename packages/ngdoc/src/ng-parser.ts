@@ -15,6 +15,7 @@ import { createNgSourceFile } from './ng-source-file';
 
 export interface NgDocParserOptions {
     fileGlobs: string;
+    compilerHost?: ts.CompilerHost;
 }
 
 export interface ParserSourceFileContext {
@@ -39,7 +40,7 @@ export class NgDocParser {
     private get program() {
         if (!this.tsProgram) {
             const filePaths = toolkit.fs.globSync(this.options.fileGlobs);
-            this.tsProgram = ts.createProgram(filePaths, { types: [] });
+            this.tsProgram = ts.createProgram(filePaths, { types: [] }, this.options.compilerHost || this.createCompilerHost());
         }
         return this.tsProgram;
     }
@@ -132,11 +133,20 @@ export class NgDocParser {
                         description: description.documentation,
                         options: options,
                         default: getPropertyValue(propertyDeclaration, description.type),
-                        jsDocTags: symbol.getJsDocTags()
+                        jsDocTags: symbol.getJsDocTags() as any
                     });
                 }
             }
         });
         return properties;
+    }
+
+    private createCompilerHost(): ts.CompilerHost {
+        const host = ts.createCompilerHost({});
+        // host.directoryExists = dirPath => {
+        //     return dirPath.startsWith(ts.sys.getCurrentDirectory());
+        // };
+        host.getDefaultLibFileName = () => '';
+        return host;
     }
 }

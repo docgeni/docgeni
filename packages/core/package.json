@@ -29,8 +29,10 @@
   },
   "dependencies": {
     "@angular-devkit/core": "11.2.14",
+    "@angular-devkit/schematics": "^11.2.15",
     "@docgeni/ngdoc": "^1.2.0-next.2",
     "@docgeni/toolkit": "^1.2.0-next.2",
+    "@schematics/angular": "^11.2.15",
     "@types/text-table": "^0.2.2",
     "ansi-colors": "^4.1.1",
     "chokidar": "^3.3.1",

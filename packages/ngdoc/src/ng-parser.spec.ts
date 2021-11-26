@@ -40,7 +40,9 @@ function testAllFixtures() {
                 const input = path.resolve(root, `${dir}/input/*.ts`);
                 const outputPath = path.resolve(root, `${dir}/output.json`);
                 const output = toolkit.fs.readJSONSync(outputPath);
+                // console.time('NgDocParser');
                 const docs = NgDocParser.parse(input);
+                // console.timeEnd('NgDocParser');
                 // console.log(JSON.stringify(docs, null, 2));
                 expect(docs).toEqual(objectContaining(output));
             });
@@ -60,8 +62,37 @@ describe('#parser', () => {
         console.timeEnd('createProgram');
 
         console.time('createProgram1');
-        const program1 = ts.createProgram(filePaths, { skipLibCheck: true, skipDefaultLibCheck: true }, undefined, program);
+        const program1 = ts.createProgram(filePaths, { skipLibCheck: true, skipDefaultLibCheck: true }, undefined);
         console.timeEnd('createProgram1');
+
+        console.time('createProgram2');
+        const options: ts.CompilerOptions = {};
+        const host: ts.CompilerHost = {
+            fileExists: filePath => {
+                return toolkit.fs.pathExistsSync(filePath);
+            },
+            directoryExists: dirPath => dirPath === '/',
+            getCurrentDirectory: () => '/',
+            getDirectories: () => [],
+            getCanonicalFileName: fileName => fileName,
+            getNewLine: () => '\n',
+            getDefaultLibFileName: () => '',
+            getSourceFile: filePath => {
+                const text = toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
+                return ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest);
+            },
+            readFile: filePath => {
+                return toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
+            },
+            useCaseSensitiveFileNames: () => true,
+            writeFile: () => {}
+        };
+        const program2 = ts.createProgram({
+            options,
+            rootNames: filePaths,
+            host: host
+        });
+        console.timeEnd('createProgram2');
 
         console.time('tsMorph');
         const project = new Project({});
@@ -73,62 +104,9 @@ describe('#parser', () => {
         const project1 = new Project({});
         project1.addSourceFilesAtPaths(input);
         const d1 = project1.getProgram().compilerObject; //.getTypeChecker().compilerObject;
-        // project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
+        project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
         const d11 = project1.getProgram().compilerObject;
         console.timeEnd('tsMorph1');
-
-        // console.log(p.getSourceFiles().length);
-        // project.getSourceFiles().forEach(sourceFile => {
-        //     // console.log(sourceFile.getExportedDeclarations());
-        //     const classDeclarations = sourceFile.getClasses().filter(item => {
-        //         return item.isExported();
-        //     });
-        //     classDeclarations.forEach(classDeclaration => {
-        //         const ngDecorator = classDeclaration.getDecorators().find(decorator => {
-        //             return ['Component', 'Directive', 'Injectable'].includes(decorator.getName());
-        //         });
-        //         if (ngDecorator) {
-        //             const args = ngDecorator.getArguments();
-        //             console.log(`${ngDecorator.getName()} getArguments: ${args[0] ? args[0].print() : 'none'}`);
-        //             if (args[0] && Node.isObjectLiteralExpression(args[0])) {
-        //                 const properties = args[0].getProperties();
-        //                 const values = properties.map(property => {
-        //                     if (Node.isPropertyAssignment(property)) {
-        //                         return {
-        //                             [property.compilerNode.name.getText()]: property.getInitializer().getText()
-        //                         };
-        //                     }
-        //                 });
-        //                 console.log(values);
-        //             }
-        //             classDeclaration.forEachChild(node => {
-        //                 if (Node.isPropertyDeclaration(node)) {
-        //                     const pDecorator = node.getDecorators().find(decorator => {
-        //                         return ['Input', 'Output'].includes(decorator.getName());
-        //                     });
-        //                     if (pDecorator) {
-        //                         console.log(`isPropertyDeclaration: ${node.getText()}`);
-        //                         const args = pDecorator.getArguments();
-        //                         const unionTypes = node.getType().getUnionTypes();
-        //                         const typeName = project.getTypeChecker().getTypeText(node.getType(), undefined, ts.TypeFormatFlags.None);
-        //                         console.log(
-        //                             `type: ${typeName}, ${unionTypes.map(unionType => {
-        //                                 return unionType.getLiteralValue().toString();
-        //                             })}`
-        //                         );
-        //                     }
-        //                 }
-        //             });
-        //             const typeChecker = project.getTypeChecker();
-        //             const symbol = typeChecker.getSymbolAtLocation(classDeclaration);
-        //             console.log(symbol);
-        //             // const type = typeChecker.getTypeOfSymbolAtLocation(symbol, symbol.getValueDeclaration());
-        //             // console.log(`Text: ${type.getText()}`);
-        //             const comments = classDeclaration.getLeadingCommentRanges();
-        //             console.log(classDeclaration.getJsDocs().map(item => item.getComment()));
-        //         }
-        //     });
-        // });
     });
 
     xit('parse TETHYS', () => {

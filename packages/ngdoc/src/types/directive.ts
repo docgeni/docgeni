@@ -9,7 +9,7 @@ export interface NgPropertyDoc {
     type?: string | null;
     /** 默认值 */
     default?: string | number | boolean | null | object;
-    jsDocTags?: { name: string; text?: string }[];
+    jsDocTags?: { name?: string; text?: string }[];
 }
 
 export interface NgDirectiveMeta {

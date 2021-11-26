@@ -1,12 +1,8 @@
 import { NgDirectiveMeta } from './directive';
+import { ParsedCallExpressionInfo } from './expression';
 
-export type ArgumentInfo = string | string[] | { [key: string]: ArgumentInfo };
-
-export interface NgParsedDecorator {
-    argumentInfo?: ArgumentInfo[];
-    arguments?: string[];
+export interface NgParsedDecorator extends ParsedCallExpressionInfo {
     isCallExpression: boolean;
-    name: string;
 }
 
 export type NgParsedDirectiveDecorator = NgParsedDecorator & NgDirectiveMeta;
