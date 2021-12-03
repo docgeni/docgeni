@@ -17,7 +17,7 @@ export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit 
     ngOnInit(): void {}
 }
 
-export default {
-    selector: 'my-color',
-    component: MyColorComponent
-};
+// export default {
+//     selector: 'my-color',
+//     component: MyColorComponent
+// };
