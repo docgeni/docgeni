@@ -11,10 +11,10 @@ export default {
 };
 
 @NgModule({
-    imports: [ CommonModule, AlibButtonModule ],
-    providers: [  ],
-    declarations: [ AlibButtonOtherExampleComponent, AlibButtonBasicExampleComponent ],
+    declarations: [ AlibButtonBasicExampleComponent, AlibButtonOtherExampleComponent ],
     entryComponents: [ AlibButtonBasicExampleComponent ],
-    exports: [ AlibButtonOtherExampleComponent, AlibButtonBasicExampleComponent ]
+    providers: [  ],
+    imports: [ CommonModule, AlibButtonModule ],
+    exports: [ AlibButtonBasicExampleComponent, AlibButtonOtherExampleComponent ]
 })
 export class AlibButtonExamplesModule {}
