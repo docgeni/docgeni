@@ -1,9 +1,6 @@
 import { NavigationItem, Locale } from './interfaces';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import * as Prism from 'node-prismjs';
-import { HostTree } from '@angular-devkit/schematics';
-import { applyToUpdateRecorder, Change } from '@schematics/angular/utility/change';
 
 export const DOCS_ENTRY_FILE_NAMES = ['index', 'readme'];
 
@@ -80,14 +77,4 @@ export function getSummaryStr(...details: [string]): string {
             return `...${detail.substr(detail.length - 29)}`;
         })
         .join(' ');
-}
-
-export function applyChanges(filePath: string, originContent: string, changes: Change[]) {
-    const hostTree = new HostTree();
-    hostTree.create(filePath, originContent);
-    const updater = hostTree.beginUpdate(filePath);
-    applyToUpdateRecorder(updater, changes);
-    hostTree.commitUpdate(updater);
-    const fileEntry = hostTree.get(filePath);
-    return fileEntry.content.toString();
 }

@@ -12,7 +12,6 @@ import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
 import { DocgeniNodeJsAsyncHost, DocgeniScopedHost, resolve } from './fs';
-import { ComponentsBuilder } from './builders/components-builder';
 import { DocgeniProgress } from './progress';
 import { DocgeniCompilationImpl } from './compilation';
 import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
@@ -34,6 +33,8 @@ export class Docgeni implements DocgeniContext {
     private initialPlugins: Plugin[] = [];
     private progress = new DocgeniProgress(this);
 
+    hooks: DocgeniHooks = Docgeni.createHooks();
+
     static createHooks(): DocgeniHooks {
         return {
             beforeRun: new AsyncSeriesHook([]),
@@ -53,8 +54,6 @@ export class Docgeni implements DocgeniContext {
         };
     }
 
-    hooks: DocgeniHooks = Docgeni.createHooks();
-
     get logger() {
         return toolkit.print;
     }
@@ -71,7 +70,8 @@ export class Docgeni implements DocgeniContext {
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
             require.resolve('./angular/site-plugin'),
-            require.resolve('./plugins/sitemap')
+            require.resolve('./plugins/sitemap'),
+            require.resolve('./plugins/custom-components')
         ];
         this.version = options.version;
 
@@ -97,13 +97,6 @@ export class Docgeni implements DocgeniContext {
             await this.clearAndEnsureDirs();
             const compilation = this.createCompilation();
             await compilation.run();
-
-            // custom components
-            this.progress.text = 'Build custom components...';
-            const componentsBuilder = new ComponentsBuilder(this);
-            await componentsBuilder.build();
-            await componentsBuilder.emit();
-            componentsBuilder.watch();
 
             await this.hooks.done.promise();
         } catch (error) {

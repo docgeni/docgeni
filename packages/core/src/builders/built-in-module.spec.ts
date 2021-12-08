@@ -1,8 +1,9 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
-import { generateComponentExamplesModule } from './examples-module';
 import * as utils from '../ast-utils';
+import { generateBuiltInComponentsModule } from './built-in-module';
+import { ComponentBuilder } from './component-builder';
 
-describe('#examples-module', () => {
+describe('#built-in-module', () => {
     const sourceText = `
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
@@ -15,8 +16,13 @@ export default {
     `;
     const ngSourceFile = createNgSourceFile('module.ts', sourceText);
 
-    it('should generate module success ', async () => {
-        const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
+    it('should generate module success', async () => {
+        const components = new Map<string, ComponentBuilder>();
+        components.set('./basic.component', {
+            name: 'alib',
+            componentData: { selector: 'a-lib', name: 'AlibComponent' }
+        } as ComponentBuilder);
+
         const getModuleMetaDataSpy = spyOn(utils, 'getModuleMetaData');
         const generateComponentsModuleSpy = spyOn(utils, 'generateComponentsModule');
 
@@ -29,22 +35,26 @@ export default {
         };
         getModuleMetaDataSpy.and.returnValue(Promise.resolve(metaData));
 
-        const componentModuleText = `module Text`;
-        generateComponentsModuleSpy.and.returnValue(Promise.resolve(componentModuleText));
-
         const moduleMetadataArgs = Object.keys(metaData)
             .map(key => {
                 return `${key}: [ ${metaData[key].join(', ')} ]`;
             })
             .join(',\n    ');
+
         const moduleText = `
 @NgModule({
-    ${moduleMetadataArgs}
+${moduleMetadataArgs}
 })
-export class MyButtonExamplesModule {}
+export class CustomComponentsModule {
+constructor() {
+    addBuiltInComponents([
+        { selector: 'a-lib', component: AlibComponent },
+    ]);
+}
+}
 `;
 
-        const output = await generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
+        const output = await generateBuiltInComponentsModule(ngSourceFile, components);
 
         expect(getModuleMetaDataSpy).toHaveBeenCalledTimes(1);
         expect(getModuleMetaDataSpy).toHaveBeenCalledWith(ngSourceFile, {
@@ -56,10 +66,9 @@ export class MyButtonExamplesModule {}
 
         expect(generateComponentsModuleSpy).toHaveBeenCalled();
         expect(generateComponentsModuleSpy).toHaveBeenCalledWith(ngSourceFile, moduleText, [
-            ...components,
-            { name: 'CommonModule', moduleSpecifier: '@angular/common' }
+            { name: 'AlibComponent', moduleSpecifier: './alib/alib.component' },
+            { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+            { name: 'addBuiltInComponents', moduleSpecifier: '@docgeni/template' }
         ]);
-
-        expect(output).toEqual(componentModuleText);
     });
 });
