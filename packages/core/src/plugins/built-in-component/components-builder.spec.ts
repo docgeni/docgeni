@@ -53,7 +53,7 @@ describe('#components-builder', () => {
         expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
         const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
-        const components = componentsBuilder['components'] as Map<string, ComponentBuilder>;
+        const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
         expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
             selector: 'hello',
@@ -71,7 +71,7 @@ describe('#components-builder', () => {
         await componentsBuilder.build();
         await componentsBuilder.emit();
 
-        const components = componentsBuilder['components'] as Map<string, ComponentBuilder>;
+        const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
         expect(components.get(`${COMPONENTS_ROOT_PATH}/color`).componentData).toEqual({
             selector: 'my-color',
