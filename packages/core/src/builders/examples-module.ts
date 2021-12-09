@@ -1,5 +1,5 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
-import { generateComponentsModule, getModuleMetaData } from '../ast-utils';
+import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combineNgModuleMetaData } from '../ast-utils';
 import { NgModuleMetadata } from '../types/module';
 
 export async function generateComponentExamplesModule(
@@ -8,7 +8,8 @@ export async function generateComponentExamplesModule(
     components: { name: string; moduleSpecifier: string }[]
 ) {
     const declarations = components.map(item => item.name);
-    const moduleMetadata: NgModuleMetadata = await getModuleMetaData(sourceFile, {
+    const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
+    const moduleMetadata: NgModuleMetadata = combineNgModuleMetaData(defaultModuleMetadata, {
         imports: ['CommonModule'],
         declarations: [...declarations],
         entryComponents: [...declarations],
@@ -16,9 +17,10 @@ export async function generateComponentExamplesModule(
     });
     const ngModuleText = generateNgModuleText(ngModuleName, moduleMetadata);
 
-    const module = await generateComponentsModule(sourceFile, ngModuleText, [
+    const module = generateComponentsModule(sourceFile, ngModuleText, [
         ...components,
-        { name: 'CommonModule', moduleSpecifier: '@angular/common' }
+        { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+        { name: 'NgModule', moduleSpecifier: '@angular/core' }
     ]);
     return module;
 }

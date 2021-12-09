@@ -1,13 +1,14 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
-import { NgModuleMetadata } from '../types/module';
+import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combineNgModuleMetaData } from '../../ast-utils';
+import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
-import { generateComponentsModule, getModuleMetaData } from '../ast-utils';
 
 export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: Map<string, ComponentBuilder>) {
     const declarations: string[] = Array.from(components.values()).map(item => {
         return item.componentData?.name;
     });
-    const moduleMetadata: NgModuleMetadata = await getModuleMetaData(sourceFile, {
+    const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
+    const moduleMetadata: NgModuleMetadata = combineNgModuleMetaData(defaultModuleMetadata, {
         imports: ['CommonModule'],
         declarations: [...declarations],
         entryComponents: [...declarations],
@@ -22,10 +23,11 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
     componentsData = [
         ...componentsData,
         { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+        { name: 'NgModule', moduleSpecifier: '@angular/core' },
         { name: 'addBuiltInComponents', moduleSpecifier: '@docgeni/template' }
     ];
 
-    const module = await generateComponentsModule(sourceFile, ngModuleText, componentsData);
+    const module = generateComponentsModule(sourceFile, ngModuleText, componentsData);
     return module;
 }
 

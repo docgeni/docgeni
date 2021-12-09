@@ -70,8 +70,8 @@ export class Docgeni implements DocgeniContext {
             require.resolve('./plugins/markdown'),
             require.resolve('./plugins/config'),
             require.resolve('./angular/site-plugin'),
-            require.resolve('./plugins/sitemap'),
-            require.resolve('./plugins/custom-components')
+            require.resolve('./plugins/built-in-component/plugin'),
+            require.resolve('./plugins/sitemap')
         ];
         this.version = options.version;
 
@@ -93,8 +93,8 @@ export class Docgeni implements DocgeniContext {
         try {
             await this.hooks.beforeRun.promise();
             await this.verifyConfig();
-            await this.hooks.run.promise();
             await this.clearAndEnsureDirs();
+            await this.hooks.run.promise();
             const compilation = this.createCompilation();
             await compilation.run();
 

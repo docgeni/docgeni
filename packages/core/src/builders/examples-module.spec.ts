@@ -17,7 +17,8 @@ export default {
 
     it('should generate module success ', async () => {
         const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
-        const getModuleMetaDataSpy = spyOn(utils, 'getModuleMetaData');
+        const getNgModuleMetadataFromDefaultExportSpy = spyOn(utils, 'getNgModuleMetadataFromDefaultExport');
+        const combineNgModuleMetaDataSpy = spyOn(utils, 'combineNgModuleMetaData');
         const generateComponentsModuleSpy = spyOn(utils, 'generateComponentsModule');
 
         const metaData = {
@@ -27,10 +28,14 @@ export default {
             imports: ['CommonModule'],
             exports: ['AlibComponent']
         };
-        getModuleMetaDataSpy.and.returnValue(Promise.resolve(metaData));
+        combineNgModuleMetaDataSpy.and.returnValue(metaData);
+
+        getNgModuleMetadataFromDefaultExportSpy.and.returnValue({
+            declarations: ['AlertComponent']
+        });
 
         const componentModuleText = `module Text`;
-        generateComponentsModuleSpy.and.returnValue(Promise.resolve(componentModuleText));
+        generateComponentsModuleSpy.and.returnValue(componentModuleText);
 
         const moduleMetadataArgs = Object.keys(metaData)
             .map(key => {
@@ -46,18 +51,25 @@ export class MyButtonExamplesModule {}
 
         const output = await generateComponentExamplesModule(ngSourceFile, 'MyButtonExamplesModule', components);
 
-        expect(getModuleMetaDataSpy).toHaveBeenCalledTimes(1);
-        expect(getModuleMetaDataSpy).toHaveBeenCalledWith(ngSourceFile, {
-            imports: ['CommonModule'],
-            declarations: ['AlibComponent'],
-            entryComponents: ['AlibComponent'],
-            exports: ['AlibComponent']
-        });
+        expect(getNgModuleMetadataFromDefaultExportSpy).toHaveBeenCalledTimes(1);
+        expect(getNgModuleMetadataFromDefaultExportSpy).toHaveBeenCalledWith(ngSourceFile);
+
+        expect(combineNgModuleMetaDataSpy).toHaveBeenCalledTimes(1);
+        expect(combineNgModuleMetaDataSpy).toHaveBeenCalledWith(
+            { declarations: ['AlertComponent'] },
+            {
+                imports: ['CommonModule'],
+                declarations: ['AlibComponent'],
+                entryComponents: ['AlibComponent'],
+                exports: ['AlibComponent']
+            }
+        );
 
         expect(generateComponentsModuleSpy).toHaveBeenCalled();
         expect(generateComponentsModuleSpy).toHaveBeenCalledWith(ngSourceFile, moduleText, [
             ...components,
-            { name: 'CommonModule', moduleSpecifier: '@angular/common' }
+            { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+            { name: 'NgModule', moduleSpecifier: '@angular/core' }
         ]);
 
         expect(output).toEqual(componentModuleText);

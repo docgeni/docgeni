@@ -1,6 +1,6 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
-import { DocgeniHost } from '../docgeni-host';
-import { resolve } from '../fs';
+import { DocgeniHost } from '../../docgeni-host';
+import { resolve } from '../../fs';
 
 export class ComponentBuilder {
     public entryComponentFullPath: string;
@@ -18,7 +18,7 @@ export class ComponentBuilder {
         const componentPath = resolve(this.fullPath, `${this.name}.component.ts`);
         const componentText = await this.docgeniHost.readFile(componentPath);
         const componentFile = createNgSourceFile(componentPath, componentText);
-        const exportDefault = componentFile.getDefaultExports();
+        const exportDefault = componentFile.getDefaultExports() as { selector: string; component: string };
 
         if (exportDefault) {
             this.componentData = { selector: exportDefault.selector, name: exportDefault.component };

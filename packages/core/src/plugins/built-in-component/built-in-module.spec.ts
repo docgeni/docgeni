@@ -1,5 +1,5 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
-import * as utils from '../ast-utils';
+import * as utils from '../../ast-utils';
 import { generateBuiltInComponentsModule } from './built-in-module';
 import { ComponentBuilder } from './component-builder';
 
@@ -23,7 +23,8 @@ export default {
             componentData: { selector: 'a-lib', name: 'AlibComponent' }
         } as ComponentBuilder);
 
-        const getModuleMetaDataSpy = spyOn(utils, 'getModuleMetaData');
+        const getNgModuleMetadataFromDefaultExportSpy = spyOn(utils, 'getNgModuleMetadataFromDefaultExport');
+        const combineNgModuleMetaDataSpy = spyOn(utils, 'combineNgModuleMetaData');
         const generateComponentsModuleSpy = spyOn(utils, 'generateComponentsModule');
 
         const metaData = {
@@ -33,7 +34,10 @@ export default {
             imports: ['CommonModule'],
             exports: ['AlibComponent']
         };
-        getModuleMetaDataSpy.and.returnValue(Promise.resolve(metaData));
+        combineNgModuleMetaDataSpy.and.returnValue(metaData);
+        getNgModuleMetadataFromDefaultExportSpy.and.returnValue({
+            declarations: ['AlertComponent']
+        });
 
         const moduleMetadataArgs = Object.keys(metaData)
             .map(key => {
@@ -56,18 +60,25 @@ constructor() {
 
         const output = await generateBuiltInComponentsModule(ngSourceFile, components);
 
-        expect(getModuleMetaDataSpy).toHaveBeenCalledTimes(1);
-        expect(getModuleMetaDataSpy).toHaveBeenCalledWith(ngSourceFile, {
-            imports: ['CommonModule'],
-            declarations: ['AlibComponent'],
-            entryComponents: ['AlibComponent'],
-            exports: ['AlibComponent']
-        });
+        expect(getNgModuleMetadataFromDefaultExportSpy).toHaveBeenCalledTimes(1);
+        expect(getNgModuleMetadataFromDefaultExportSpy).toHaveBeenCalledWith(ngSourceFile);
+
+        expect(combineNgModuleMetaDataSpy).toHaveBeenCalledTimes(1);
+        expect(combineNgModuleMetaDataSpy).toHaveBeenCalledWith(
+            { declarations: ['AlertComponent'] },
+            {
+                imports: ['CommonModule'],
+                declarations: ['AlibComponent'],
+                entryComponents: ['AlibComponent'],
+                exports: ['AlibComponent']
+            }
+        );
 
         expect(generateComponentsModuleSpy).toHaveBeenCalled();
         expect(generateComponentsModuleSpy).toHaveBeenCalledWith(ngSourceFile, moduleText, [
             { name: 'AlibComponent', moduleSpecifier: './alib/alib.component' },
             { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+            { name: 'NgModule', moduleSpecifier: '@angular/core' },
             { name: 'addBuiltInComponents', moduleSpecifier: '@docgeni/template' }
         ]);
     });

@@ -1,9 +1,9 @@
-import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH } from '../testing';
+import { DocgeniContext } from '../../docgeni.interface';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH } from '../../testing';
 import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
-import { resolve } from '../fs';
+import { resolve } from '../../fs';
 import * as systemPath from 'path';
 import * as builtInModule from './built-in-module';
 import { ComponentBuilder } from './component-builder';
@@ -32,7 +32,7 @@ describe('#components-builder', () => {
 
     beforeEach(() => {
         context = createTestDocgeniContext({
-            initialFiles: initialFiles
+            initialFiles
         });
 
         toolkit.initialize({
