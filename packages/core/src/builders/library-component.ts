@@ -184,7 +184,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         if (exportedExamplesModule) {
             examplesModuleName = exportedExamplesModule.name;
         } else {
-            this.examplesModuleSource = generateComponentExamplesModule(
+            this.examplesModuleSource = await generateComponentExamplesModule(
                 exampleModuleSourceFile,
                 examplesModuleName,
                 this.examples.map(item => {

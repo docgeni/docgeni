@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AlibButtonModule } from '@docgeni/alib/button';
 import { AlibButtonOtherExampleComponent } from './basic/other.component';
-import { NgModule } from '@angular/core';
 import { AlibButtonBasicExampleComponent } from './basic/basic.component';
+import { NgModule } from '@angular/core';
 
 export default {
     imports: [CommonModule, AlibButtonModule],
@@ -11,10 +11,10 @@ export default {
 };
 
 @NgModule({
-    imports: [ CommonModule, AlibButtonModule ],
-    providers: [  ],
     declarations: [ AlibButtonOtherExampleComponent, AlibButtonBasicExampleComponent ],
     entryComponents: [ AlibButtonBasicExampleComponent ],
-    exports: [ AlibButtonOtherExampleComponent, AlibButtonBasicExampleComponent ]
+    providers: [  ],
+    imports: [ CommonModule, AlibButtonModule ],
+    exports: [ AlibButtonBasicExampleComponent ]
 })
 export class AlibButtonExamplesModule {}

@@ -6,7 +6,6 @@ import {
     getNgDecorator,
     getNodeText,
     getObjectLiteralExpressionProperties,
-    getSourceNodes,
     isExported,
     isExportedClassDeclaration
 } from './parser';
