@@ -1,3 +1,4 @@
+import { NgDocParser } from '@docgeni/ngdoc';
 import { CategoryItem } from './navigation-item';
 
 /**
@@ -5,6 +6,7 @@ import { CategoryItem } from './navigation-item';
  */
 export interface Library extends DocgeniLibrary {
     categories?: CategoryItem[];
+    ngDocParser?: NgDocParser;
 }
 
 /**
@@ -14,6 +16,7 @@ export interface DocgeniLibrary {
     name: string;
     abbrName?: string;
     rootDir: string;
+    enableAutomaticApi?: boolean;
     categories?: {
         id?: string;
         title: string;

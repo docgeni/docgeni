@@ -1,18 +1,7 @@
-import { NgDocItemType, NgPropertyKind } from './enums';
+import { NgPropertyDoc } from './declarations';
+import { NgDocItemType } from './enums';
 
-export interface NgPropertyDoc {
-    description?: string | null;
-    name?: string;
-    aliasName?: string;
-    options?: (string | number)[] | null;
-    kind?: NgPropertyKind;
-    type?: string | null;
-    /** 默认值 */
-    default?: string | number | boolean | null | object;
-    jsDocTags?: { name?: string; text?: string }[];
-}
-
-export interface NgDirectiveMeta {
+export interface NgDirectiveMetadata {
     selector?: string;
     styleUrls?: string[];
     styles?: string[];
@@ -21,13 +10,13 @@ export interface NgDirectiveMeta {
     exportAs?: string;
 }
 
-export interface NgDirectiveDoc extends NgDirectiveMeta {
+export interface NgDirectiveDoc extends NgDirectiveMetadata {
     type: NgDocItemType;
     name?: string;
     description?: string;
     properties?: NgPropertyDoc[];
 }
 
-export interface NgComponentInfo extends NgDirectiveMeta {
+export interface NgComponentMetadata extends NgDirectiveMetadata {
     name: string;
 }

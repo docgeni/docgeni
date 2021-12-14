@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, Input } from '@angular/core';
 
 @Component({
     selector: 'alib-layout',
@@ -8,6 +8,11 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 })
 export class AlibLayoutComponent implements OnInit {
     @HostBinding(`class.alib-layout`) isLayout = true;
+
+    /**
+     * Direction `vertical`
+     */
+    @Input() thyDirection: 'vertical' | 'horizontal';
 
     constructor() {}
 

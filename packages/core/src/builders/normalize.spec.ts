@@ -16,7 +16,8 @@ describe('normalize', () => {
                 apiDir: 'api',
                 examplesDir: 'examples',
                 categories: [],
-                labels: DEFAULT_LABEL_CONFIG
+                labels: DEFAULT_LABEL_CONFIG,
+                enableAutomaticApi: undefined
             });
         });
 
@@ -41,7 +42,8 @@ describe('normalize', () => {
                         }
                     }
                 ],
-                labels: DEFAULT_LABEL_CONFIG
+                labels: DEFAULT_LABEL_CONFIG,
+                enableAutomaticApi: true
             };
             const result = normalizeLibConfig(input);
             expect(result).toEqual(input);

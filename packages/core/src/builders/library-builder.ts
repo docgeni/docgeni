@@ -1,24 +1,20 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
-import {
-    ASSETS_API_DOCS_RELATIVE_PATH,
-    ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
-    ASSETS_OVERVIEWS_RELATIVE_PATH,
-    SITE_ASSETS_RELATIVE_PATH
-} from '../constants';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
-import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { LibraryComponentImpl } from './library-component';
 import { HostWatchEventType, relative, resolve } from '../fs';
 import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
+import { workspaces } from '@angular-devkit/core';
+import { ts, NgDocParser, createNgParserHost, DefaultNgParserHost } from '@docgeni/ngdoc';
 
 export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private absLibPath: string;
     private localeCategoriesMap: Record<string, CategoryItem[]> = {};
     private componentsMap = new Map<string, LibraryComponent>();
+    private ngDocParser: NgDocParser;
 
     constructor(private docgeni: DocgeniContext, public lib: Library) {
         super();
@@ -56,6 +52,36 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             components.push(component);
             this.componentsMap.set(absComponentPath, component);
         });
+
+        this.watch();
+        await this.initializeNgDocParser();
+    }
+
+    private async initializeNgDocParser() {
+        if (this.lib.enableAutomaticApi) {
+            const tsConfigPath = resolve(this.docgeni.paths.cwd, resolve(this.lib.rootDir, 'tsconfig.lib.json'));
+            if (await this.docgeni.host.exists(tsConfigPath)) {
+                const parserHost = createNgParserHost({
+                    tsConfigPath: tsConfigPath,
+                    watch: this.docgeni.watch,
+                    rootDir: this.docgeni.paths.getAbsPath(this.lib.rootDir),
+                    watcher: (event, filename) => {
+                        const changes: LibraryComponent[] = [];
+                        for (const [key, component] of this.components) {
+                            if (filename.includes(key)) {
+                                changes.push(component);
+                            }
+                        }
+                        this.docgeni.compile({
+                            libraryBuilder: this,
+                            libraryComponents: changes,
+                            changes: []
+                        });
+                    }
+                });
+                this.ngDocParser = this.lib.ngDocParser = new NgDocParser({ ngParserHost: parserHost });
+            }
+        }
     }
 
     public async build(components: LibraryComponent[] = Array.from(this.componentsMap.values())): Promise<void> {

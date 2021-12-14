@@ -19,7 +19,6 @@ import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
 import { relative, resolve } from '../fs';
 import { FileEmitter } from './emitter';
-import * as ts from 'typescript';
 import { generateComponentExamplesModule } from './examples-module';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
@@ -149,6 +148,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     });
                 });
                 this.localeApiDocsMap[localeKey] = result.config;
+            } else {
+                if (this.lib.enableAutomaticApi) {
+                    this.localeApiDocsMap[localeKey] = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+                }
             }
         }
     }
@@ -285,16 +288,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 overviewSourceFile = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
             }
             // Use default locale's data when api locale is not found
-            let apiDoc = this.localeApiDocsMap[locale.key];
-            if (!apiDoc) {
-                apiDoc = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
+            let apiDocs = this.localeApiDocsMap[locale.key];
+            if (!apiDocs) {
+                apiDocs = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
             }
 
             const title = this.getMetaProperty(overviewSourceFile, 'title') || toolkit.strings.titleCase(this.name);
             const subtitle = this.getMetaProperty(overviewSourceFile, 'subtitle') || '';
             const order = this.getMetaProperty(overviewSourceFile, 'order');
 
-            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || apiDoc) {
+            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || (apiDocs && apiDocs.length > 0)) {
                 const componentNav: ComponentDocItem = {
                     id: this.name,
                     title,
@@ -303,7 +306,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
-                    api: apiDoc ? true : false,
+                    api: apiDocs && apiDocs.length > 0 ? true : false,
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,

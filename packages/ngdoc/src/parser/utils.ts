@@ -14,7 +14,7 @@ export function normalizeNodeText(text: string) {
 }
 
 export function getNodeText(node: ts.Node) {
-    return normalizeNodeText(node.getText());
+    return (node as ts.StringLiteral).text ? (node as ts.StringLiteral).text : normalizeNodeText(node.getText());
 }
 
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
@@ -167,3 +167,22 @@ export function findNodes<T extends ts.Node>(
 
 //     return result;
 // }
+
+interface DocTagResult {
+    description?: ts.JSDocTagInfo;
+    default?: ts.JSDocTagInfo;
+    deprecated?: ts.JSDocTagInfo;
+    [key: string]: ts.JSDocTagInfo;
+}
+/**
+ *
+ * @export
+ * @de
+ */
+export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
+    const tags = symbol.getJsDocTags();
+    return tags.reduce((result, item) => {
+        result[item.name] = item;
+        return result;
+    }, {});
+}

@@ -79,7 +79,6 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
                 this.emits.docs = this.docgeni.docsBuilder.getDocs();
 
                 this.docgeni.docsBuilder.watch();
-                this.docgeni.librariesBuilder.watch();
             }
             this.hooks.buildSucceed.call();
             for (const path in this.preparedEmitFiles) {

@@ -13,39 +13,84 @@
     "exportAs": "thyButton",
     "properties": [
       {
-        "kind": "input",
+        "kind": "Input",
         "name": "thyType",
-        "type": "\"primary\" | \"info\" | \"success\"",
-        "description": "Button Type",
-        "options": [
-          "primary",
-          "info",
-          "success"
-        ],
+        "aliasName": "thyTypeAlias",
+        "type": {
+          "name": "\"primary\" | \"info\" | \"success\"",
+          "options": [
+            "primary",
+            "info",
+            "success"
+          ],
+          "kindName": "UnionType"
+        },
+        "description": "Button Type for Description",
         "default": "primary",
-        "jsDocTags": []
+        "tags": {
+          "description": {
+            "name": "description",
+            "text": "Button Type for Description"
+          }
+        }
       },
       {
-        "kind": "input",
+        "kind": "Input",
         "name": "thySize",
-        "type": "ButtonSize",
+        "aliasName": "",
+        "type": {
+          "name": "any",
+          "options": null,
+          "kindName": "TypeReference"
+        },
         "description": "Button Size",
-        "options": [
-          "lg",
-          "md",
-          "sm"
-        ],
-        "default": null,
-        "jsDocTags": []
+        "default": "md",
+        "tags": {
+          "deprecated": {
+            "name": "deprecated"
+          },
+          "default": {
+            "name": "default",
+            "text": "md"
+          }
+        }
       },
       {
-        "kind": "output",
+        "kind": "Input",
+        "name": "thyLoading",
+        "aliasName": "",
+        "type": {
+          "name": "boolean",
+          "options": null
+        },
+        "description": "",
+        "default": null,
+        "tags": {}
+      },
+      {
+        "kind": "Output",
         "name": "thyLoadingEvent",
-        "type": "EventEmitter<boolean>",
+        "aliasName": "",
+        "type": {
+          "name": "EventEmitter<boolean>",
+          "options": null
+        },
         "description": "Loading Event",
-        "options": null,
-        "default": "new EventEmitter<boolean>()",
-        "jsDocTags": []
+        "default": "",
+        "tags": {}
+      },
+      {
+        "kind": "ContentChild",
+        "name": "templateRef",
+        "aliasName": "template",
+        "type": {
+          "name": "TemplateRef<any>",
+          "options": null,
+          "kindName": "TypeReference"
+        },
+        "description": "Template",
+        "default": "",
+        "tags": {}
       }
     ]
   },

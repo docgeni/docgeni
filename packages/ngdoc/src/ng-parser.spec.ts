@@ -1,10 +1,12 @@
 import { NgDocParser } from '../src';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Project, Node, ts } from 'ts-morph';
+import { Project, Node } from 'ts-morph';
+import ts from 'typescript';
 
 const EXCLUDE_DIRS = [];
-const ONLY_TEST_FIXTURE = '';
+const ONLY_TEST_FIXTURE = 'full';
+const ROOT_FIXTURES = path.resolve(__dirname, '../test/fixtures');
 
 function objectContaining<T>(object: T) {
     if (toolkit.utils.isArray(object)) {
@@ -54,8 +56,7 @@ describe('#parser', () => {
     testAllFixtures();
 
     xit('perf compare', () => {
-        const root = path.resolve(__dirname, '../test/fixtures');
-        const input = path.resolve(root, `full/input/*.ts`);
+        const input = path.resolve(ROOT_FIXTURES, `full/input/*.ts`);
         const filePaths = toolkit.fs.globSync(input);
         console.time('createProgram');
         const program = ts.createProgram(filePaths, { skipLibCheck: true, skipDefaultLibCheck: true }, undefined, undefined, []);
@@ -104,7 +105,7 @@ describe('#parser', () => {
         const project1 = new Project({});
         project1.addSourceFilesAtPaths(input);
         const d1 = project1.getProgram().compilerObject; //.getTypeChecker().compilerObject;
-        project1.addSourceFilesAtPaths(path.resolve(root, `property-ref-enum/input/*.ts`));
+        project1.addSourceFilesAtPaths(path.resolve(ROOT_FIXTURES, `property-ref-enum/input/*.ts`));
         const d11 = project1.getProgram().compilerObject;
         console.timeEnd('tsMorph1');
     });
@@ -117,7 +118,7 @@ describe('#parser', () => {
         let total = 0;
         dirs.forEach(dir => {
             if (toolkit.fs.isDirectory(dir)) {
-                const docs = ngDocParser.parse(`${dir}/{*[!spec].ts,!(examples|api|test)/**/*[!spec].ts}`);
+                const docs = NgDocParser.parse(`${dir}/{*[!spec].ts,!(examples|api|test)/**/*[!spec].ts}`);
                 total += docs.length;
             }
         });
