@@ -94,6 +94,7 @@ export class DefaultNgParserHost implements NgParserHost {
 
     private getSourceFile(fileName: string, languageVersion: ts.ScriptTarget, onError?: (message: string) => void) {
         this.readFiles.push(fileName);
+        console.log(`fileName: ${fileName}, rootDir: ${this.options.rootDir}`);
         if (this.options.rootDir && !fileName.startsWith(this.options.rootDir)) {
             return undefined;
         }
