@@ -1,8 +1,9 @@
 import { NgParserHost, createNgParserHost } from './ng-parser-host';
 import path from 'path';
+import { ts } from './typescript';
 
 describe('#ng-parser-host', () => {
-    const fixtureRootDir = path.resolve(__dirname, '../test/fixtures/tsconfig');
+    const fixtureRootDir = path.posix.resolve(__dirname, '../test/fixtures/tsconfig');
 
     it('should create default NgParserHost success', () => {
         const tsConfigPath = path.resolve(fixtureRootDir, './tsconfig.json');
@@ -18,8 +19,9 @@ describe('#ng-parser-host', () => {
     });
 
     fit('should create default NgParserHost with watch', () => {
-        const tsConfigPath = path.resolve(fixtureRootDir, './tsconfig.json');
-        console.log(`fixtureRootDir: ${fixtureRootDir}`);
+        const tsConfigPath = path.posix.resolve(fixtureRootDir, './tsconfig.json');
+        const r = ts.sys.resolvePath('D:\\docgeni/packages\ngdoc\test\fixtures\tsconfig');
+        console.log(`fixtureRootDir: ${fixtureRootDir}, r: ${r}`);
         const parserHost = createNgParserHost({
             tsConfigPath: tsConfigPath,
             watch: true,
