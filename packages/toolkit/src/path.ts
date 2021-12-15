@@ -1,5 +1,4 @@
 export const directorySeparator = '/';
-export const altDirectorySeparator = '\\';
 const backslashRegExp = /\\/g;
 
 export function normalizeSlashes(path: string): string {

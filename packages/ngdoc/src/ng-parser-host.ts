@@ -45,6 +45,7 @@ export class DefaultNgParserHost implements NgParserHost {
 
     private initialize() {
         if (this.options.tsConfigPath) {
+            console.log(`tsConfigPath: ${this.options.tsConfigPath}`);
             const parsedResult = ts.getParsedCommandLineOfConfigFile(this.options.tsConfigPath, undefined, {
                 useCaseSensitiveFileNames: true,
                 fileExists: path => {
@@ -69,6 +70,7 @@ export class DefaultNgParserHost implements NgParserHost {
         }
         if (this.options.rootDir) {
             this.rootDir = toolkit.utils.normalizeSlashes(this.options.rootDir);
+            console.log(`n-rootDir: ${this.rootDir}`);
         }
     }
 
