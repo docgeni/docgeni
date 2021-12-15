@@ -20,6 +20,7 @@ export class DefaultNgParserHost implements NgParserHost {
     private allResolvedModules: ts.ResolvedModule[] = [];
     private moduleWatchersMap = new Map<string, FSWatcher>();
     private readFiles: string[] = [];
+    private rootDir: string;
     public get program() {
         if (!this.tsProgram) {
             this.tsProgram = this.createProgram();
@@ -66,6 +67,9 @@ export class DefaultNgParserHost implements NgParserHost {
             this.rootFileNames = toolkit.fs.globSync(this.options.fileGlobs);
             this.compileOptions = {};
         }
+        if (this.options.rootDir) {
+            this.rootDir = toolkit.utils.normalizeSlashes(this.options.rootDir);
+        }
     }
 
     private watchResolvedModules() {
@@ -94,8 +98,8 @@ export class DefaultNgParserHost implements NgParserHost {
 
     private getSourceFile(fileName: string, languageVersion: ts.ScriptTarget, onError?: (message: string) => void) {
         this.readFiles.push(fileName);
-        console.log(`fileName: ${fileName}, rootDir: ${this.options.rootDir}`);
-        if (this.options.rootDir && !fileName.startsWith(this.options.rootDir)) {
+        console.log(`fileName: ${fileName}, rootDir: ${this.rootDir}`);
+        if (this.rootDir && !fileName.startsWith(this.rootDir)) {
             return undefined;
         }
         const sourceText = ts.sys.readFile(fileName);
@@ -110,7 +114,7 @@ export class DefaultNgParserHost implements NgParserHost {
                 return ts.sys.writeFile(fileName, content);
             },
             getCurrentDirectory: () => {
-                return this.options.rootDir ? this.options.rootDir : ts.sys.getCurrentDirectory();
+                return this.rootDir ? this.rootDir : ts.sys.getCurrentDirectory();
             },
             getDirectories: path => {
                 return ts.sys.getDirectories(path);
