@@ -18,12 +18,8 @@ describe('#ng-parser-host', () => {
         expect(sourceFiles.length > 0).toBeTruthy();
     });
 
-    fit('should create default NgParserHost with watch', () => {
+    it('should create default NgParserHost with watch', () => {
         const tsConfigPath = path.resolve(fixtureRootDir, './tsconfig.json');
-        const r = ts.sys.resolvePath('D:\\docgeni\\packages\\ngdoc\\test\\fixtures\\tsconfig.json');
-        console.log(`fixtureRootDir: ${fixtureRootDir}`);
-        console.log(`resolve: ${ts.sys.resolvePath(fixtureRootDir)}`);
-        console.log(`r: ${r}`);
         const parserHost = createNgParserHost({
             tsConfigPath: tsConfigPath,
             watch: true,
