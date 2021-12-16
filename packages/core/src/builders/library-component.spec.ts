@@ -277,7 +277,13 @@ describe('#library-component', () => {
                     name: 'Button',
                     type: 'component',
                     description: 'This is button zh-cn desc',
-                    properties: []
+                    properties: [
+                        {
+                            name: 'thyType',
+                            type: 'string',
+                            default: 'primary'
+                        }
+                    ]
                 }
             ],
             'en-us': [
@@ -285,7 +291,13 @@ describe('#library-component', () => {
                     name: 'Button',
                     type: 'component',
                     description: 'This is button desc',
-                    properties: []
+                    properties: [
+                        {
+                            name: 'thyType',
+                            type: 'string',
+                            default: 'primary'
+                        }
+                    ]
                 }
             ]
         };
@@ -295,7 +307,6 @@ describe('#library-component', () => {
             context = createTestDocgeniContext({
                 initialFiles: {
                     [`${buttonDirPath}/api/zh-cn.js`]: fixture.src['api/zh-cn.js']
-                    // [`${buttonDirPath}/api/en-us.js`]: fixture.src['api/en-us.js']
                 },
                 libs: [library],
                 watch: true
@@ -324,22 +335,31 @@ describe('#library-component', () => {
             spectator.assertCosmiconfigOptions(buttonDirPath);
             const enApiDocs = component.getApiDocs('en-us');
             const zhApiDocs = component.getApiDocs('zh-cn');
+
             expect(enApiDocs).toEqual([
-                {
+                jasmine.objectContaining({
                     name: 'Button',
                     type: 'component',
-                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
                     properties: []
-                }
+                })
             ]);
+            expect(enApiDocs[0].description).toContain(`This is button desc from ng-doc-parser`);
+
             expect(zhApiDocs).toEqual([
-                {
+                jasmine.objectContaining({
                     name: 'Button',
                     type: 'component',
-                    description: `<p>This is button zh-cn desc</p>${EOL}`,
-                    properties: []
-                }
+                    properties: [
+                        {
+                            name: 'thyType',
+                            type: 'string',
+                            default: 'primary',
+                            description: ''
+                        }
+                    ]
+                })
             ]);
+            expect(zhApiDocs[0].description).toContain(`This is button zh-cn desc`);
         });
 
         it('should build api docs for automatic mode', async () => {
@@ -365,21 +385,22 @@ describe('#library-component', () => {
             const enApiDocs = component.getApiDocs('en-us');
             const zhApiDocs = component.getApiDocs('zh-cn');
             expect(enApiDocs).toEqual([
-                {
+                jasmine.objectContaining({
                     name: 'Button',
                     type: 'component',
-                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
                     properties: []
-                }
+                })
             ]);
+            expect(enApiDocs[0].description).toContain('This is button desc from ng-doc-parser');
+
             expect(zhApiDocs).toEqual([
-                {
+                jasmine.objectContaining({
                     name: 'Button',
                     type: 'component',
-                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
                     properties: []
-                }
+                })
             ]);
+            expect(zhApiDocs[0].description).toContain('This is button desc from ng-doc-parser');
         });
     });
 
