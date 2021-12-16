@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH } from '../../testing';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, writeFilesToHost } from '../../testing';
 import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
 import { Subscription } from 'rxjs';
@@ -26,8 +26,7 @@ describe('#components-builder', () => {
             selector: 'my-color',
             templateUrl: './color.component.html'
         }) export class ColorComponent {};`,
-        [`${COMPONENTS_ROOT_PATH}/color/color.component.html`]: 'color',
-        [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }'
+        [`${COMPONENTS_ROOT_PATH}/color/color.component.html`]: 'color'
     };
 
     beforeEach(() => {
@@ -42,40 +41,65 @@ describe('#components-builder', () => {
         componentsDistPath = resolve(context.paths.absSiteContentPath, 'components/custom');
     });
 
-    it('should build components success', async () => {
-        const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
-        const moduleText = 'module text';
-        builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
-        const componentsBuilder = new ComponentsBuilder(context);
-        await componentsBuilder.build();
-        await componentsBuilder.emit();
-        const helloComponentContent = await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'));
-        expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
-        const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+    describe('basic', () => {
+        it('should build components success', async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
+            const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
+            const moduleText = 'module text';
+            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+            const helloComponentContent = await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'));
+            expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
 
-        const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-        expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
-            selector: 'hello',
-            name: 'HelloComponent'
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
+                selector: 'hello',
+                name: 'HelloComponent'
+            });
+
+            expect(entryContent).toEqual(moduleText);
         });
 
-        expect(entryContent).toEqual(moduleText);
-    });
+        it('should build components success when has`t export default', async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
+            const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
+            const moduleText = 'module text';
+            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
 
-    it('should build components success when has`t export default', async () => {
-        const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
-        const moduleText = 'module text';
-        builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
-        const componentsBuilder = new ComponentsBuilder(context);
-        await componentsBuilder.build();
-        await componentsBuilder.emit();
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-        const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/color`).componentData).toEqual({
+                selector: 'my-color',
+                name: 'ColorComponent'
+            });
+        });
 
-        expect(components.get(`${COMPONENTS_ROOT_PATH}/color`).componentData).toEqual({
-            selector: 'my-color',
-            name: 'ColorComponent'
+        it('should build success when not exist module.ts', async () => {
+            const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
+            const moduleText = 'module text';
+            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+            const helloComponentContent = await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'));
+            expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/hello/hello.component.ts`]);
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
+                selector: 'hello',
+                name: 'HelloComponent'
+            });
+
+            expect(entryContent).toEqual(moduleText);
         });
     });
 
@@ -83,6 +107,7 @@ describe('#components-builder', () => {
         let componentsBuilder: ComponentsBuilder;
         let subscription: Subscription;
         beforeEach(async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
             componentsBuilder = new ComponentsBuilder(context);
             await componentsBuilder.build();
             await componentsBuilder.emit();
