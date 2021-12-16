@@ -16,7 +16,7 @@ export interface DocgeniLibrary {
     name: string;
     abbrName?: string;
     rootDir: string;
-    enableAutomaticApi?: boolean;
+    apiMode?: 'compatible' | 'manual' | 'automatic';
     categories?: {
         id?: string;
         title: string;

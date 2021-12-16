@@ -13,9 +13,8 @@ export class AlibButtonComponent implements OnInit {
     private type: string;
 
     /**
-     * Button Type: 'primary' | 'secondary' | 'danger'
+     * Button Type: `'primary' | 'secondary' | 'danger'`
      * @default primary
-     * @description desc
      */
     @Input() set alibButton(value: string) {
         if (this.type) {

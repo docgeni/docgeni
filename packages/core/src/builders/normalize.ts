@@ -12,7 +12,7 @@ export function normalizeLibConfig(lib: DocgeniLibrary): Library {
         apiDir: lib.apiDir || DEFAULT_COMPONENT_API_DIR,
         examplesDir: lib.examplesDir || DEFAULT_COMPONENT_EXAMPLES_DIR,
         categories: lib.categories || [],
-        enableAutomaticApi: lib.enableAutomaticApi,
+        apiMode: lib.apiMode || 'manual',
         labels: {
             ...DEFAULT_LABEL_CONFIG,
             ...(lib.labels instanceof Array

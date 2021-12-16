@@ -58,7 +58,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     }
 
     private async initializeNgDocParser() {
-        if (this.lib.enableAutomaticApi) {
+        if (this.lib.apiMode !== 'manual') {
             const tsConfigPath = resolve(this.docgeni.paths.cwd, resolve(this.lib.rootDir, 'tsconfig.lib.json'));
             if (await this.docgeni.host.exists(tsConfigPath)) {
                 const parserHost = createNgParserHost({
