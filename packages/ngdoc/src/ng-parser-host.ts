@@ -21,6 +21,11 @@ export class DefaultNgParserHost implements NgParserHost {
     private moduleWatchersMap = new Map<string, FSWatcher>();
     private readFiles: string[] = [];
     private rootDir: string;
+
+    static create(options: DefaultNgParserHostOptions): NgParserHost {
+        return new DefaultNgParserHost(options);
+    }
+
     public get program() {
         if (!this.tsProgram) {
             this.tsProgram = this.createProgram();
@@ -61,8 +66,10 @@ export class DefaultNgParserHost implements NgParserHost {
                 },
                 onUnRecoverableConfigFileDiagnostic: () => {}
             });
-            this.rootFileNames = parsedResult.fileNames;
-            this.compileOptions = parsedResult.options;
+            if (parsedResult) {
+                this.rootFileNames = parsedResult.fileNames;
+                this.compileOptions = parsedResult.options;
+            }
         } else {
             this.rootFileNames = toolkit.fs.globSync(this.options.fileGlobs);
             this.compileOptions = {};

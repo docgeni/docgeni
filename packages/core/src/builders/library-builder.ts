@@ -7,8 +7,7 @@ import { LibraryComponentImpl } from './library-component';
 import { HostWatchEventType, relative, resolve } from '../fs';
 import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
-import { workspaces } from '@angular-devkit/core';
-import { ts, NgDocParser, createNgParserHost, DefaultNgParserHost } from '@docgeni/ngdoc';
+import { ts, NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
 
 export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private absLibPath: string;
@@ -23,6 +22,10 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     public get components(): Map<string, LibraryComponent> {
         return this.componentsMap;
+    }
+
+    public getNgDocParser() {
+        return this.ngDocParser;
     }
 
     public async initialize(): Promise<void> {
@@ -61,7 +64,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
         if (this.lib.apiMode !== 'manual') {
             const tsConfigPath = resolve(this.docgeni.paths.cwd, resolve(this.lib.rootDir, 'tsconfig.lib.json'));
             if (await this.docgeni.host.exists(tsConfigPath)) {
-                const parserHost = createNgParserHost({
+                const parserHost = DefaultNgParserHost.create({
                     tsConfigPath: tsConfigPath,
                     watch: this.docgeni.watch,
                     rootDir: this.docgeni.paths.getAbsPath(this.lib.rootDir),
@@ -79,7 +82,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                         });
                     }
                 });
-                this.ngDocParser = this.lib.ngDocParser = new NgDocParser({ ngParserHost: parserHost });
+                this.ngDocParser = this.lib.ngDocParser = NgDocParser.create({ ngParserHost: parserHost });
             }
         }
     }

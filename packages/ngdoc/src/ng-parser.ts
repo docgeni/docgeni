@@ -31,6 +31,10 @@ export class NgDocParser {
         return new NgDocParser({ fileGlobs: pattern }).parse(pattern);
     }
 
+    static create(options: NgDocParserOptions) {
+        return new NgDocParser(options);
+    }
+
     private ngParserHost: NgParserHost;
 
     constructor(private options: NgDocParserOptions) {
