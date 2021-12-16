@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, writeFilesToHost } from '../testing';
 import { LibraryComponentImpl } from './library-component';
 import { normalizeLibConfig } from './normalize';
 import { toolkit } from '@docgeni/toolkit';
@@ -10,12 +10,15 @@ import { normalize } from '../fs';
 import { compatibleNormalize } from '../markdown';
 import { ApiDeclaration } from '../interfaces';
 import { EOL } from 'os';
+import { NgDocParser } from '@docgeni/ngdoc';
 
 type Explorer = { search: (path: string) => Promise<{ config: ApiDeclaration[] }> };
 export class LibraryComponentSpectator {
     public cosmiconfigOptions: CosmiconfigOptions[] = [];
+    public mockNgDocParser: NgDocParser;
+    public ngDocParseSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy('ng doc parse spy');
 
-    constructor(apiDocsDefinitions: Record<string, ApiDeclaration[]>) {
+    constructor(private component: LibraryComponentImpl, apiDocsDefinitions: Record<string, ApiDeclaration[]>) {
         const cosmiconfigSpy = spyOn(
             (cosmiconfig as unknown) as {
                 call: (_: unknown, moduleName: string, options: CosmiconfigOptions) => Explorer;
@@ -32,6 +35,10 @@ export class LibraryComponentSpectator {
                 }
             } as Explorer;
         });
+
+        this.mockNgDocParser = component.lib.ngDocParser = ({
+            parse: this.ngDocParseSpy
+        } as unknown) as NgDocParser;
     }
 
     assertCosmiconfigOptions(componentDir: string) {
@@ -181,7 +188,7 @@ describe('#library-component', () => {
                     }
                 ]
             };
-            const componentSpectator = new LibraryComponentSpectator(apiDocsDefinitions);
+            const componentSpectator = new LibraryComponentSpectator(component, apiDocsDefinitions);
 
             await component.build();
 
@@ -260,6 +267,119 @@ describe('#library-component', () => {
             for (const example of baseExamples) {
                 expect(await context.host.exists(example)).toEqual(true);
             }
+        });
+    });
+
+    describe('api-docs', () => {
+        const apiDocsDefinitions: Record<string, ApiDeclaration[]> = {
+            'zh-cn': [
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: 'This is button zh-cn desc',
+                    properties: []
+                }
+            ],
+            'en-us': [
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: 'This is button desc',
+                    properties: []
+                }
+            ]
+        };
+
+        beforeEach(async () => {
+            fixture = await loadFixture('library-component-button');
+            context = createTestDocgeniContext({
+                initialFiles: {
+                    [`${buttonDirPath}/api/zh-cn.js`]: fixture.src['api/zh-cn.js']
+                    // [`${buttonDirPath}/api/en-us.js`]: fixture.src['api/en-us.js']
+                },
+                libs: [library],
+                watch: true
+            });
+        });
+
+        it('should build api docs for compatible mode', async () => {
+            library.apiMode = 'compatible';
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            const spectator = new LibraryComponentSpectator(component, {
+                'zh-cn': apiDocsDefinitions['zh-cn']
+            });
+            expect(component.getDocItem('zh-cn')).toBeFalsy();
+            expect(component.getDocItem('en-us')).toBeFalsy();
+
+            const parsedApiDocs = [
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: 'This is button desc from ng-doc-parser',
+                    properties: []
+                }
+            ];
+            spectator.ngDocParseSpy.and.returnValue(parsedApiDocs);
+            await component.build();
+            spectator.assertCosmiconfigOptions(buttonDirPath);
+            const enApiDocs = component.getApiDocs('en-us');
+            const zhApiDocs = component.getApiDocs('zh-cn');
+            expect(enApiDocs).toEqual([
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
+                    properties: []
+                }
+            ]);
+            expect(zhApiDocs).toEqual([
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: `<p>This is button zh-cn desc</p>${EOL}`,
+                    properties: []
+                }
+            ]);
+        });
+
+        it('should build api docs for automatic mode', async () => {
+            library.apiMode = 'automatic';
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            const spectator = new LibraryComponentSpectator(component, {
+                'zh-cn': apiDocsDefinitions['zh-cn'],
+                'en-us': apiDocsDefinitions['en-us']
+            });
+            expect(component.getDocItem('zh-cn')).toBeFalsy();
+            expect(component.getDocItem('en-us')).toBeFalsy();
+
+            const parsedApiDocs = [
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: 'This is button desc from ng-doc-parser',
+                    properties: []
+                }
+            ];
+            spectator.ngDocParseSpy.and.returnValue(parsedApiDocs);
+            await component.build();
+            const enApiDocs = component.getApiDocs('en-us');
+            const zhApiDocs = component.getApiDocs('zh-cn');
+            expect(enApiDocs).toEqual([
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
+                    properties: []
+                }
+            ]);
+            expect(zhApiDocs).toEqual([
+                {
+                    name: 'Button',
+                    type: 'component',
+                    description: `<p>This is button desc from ng-doc-parser</p>${EOL}`,
+                    properties: []
+                }
+            ]);
         });
     });
 

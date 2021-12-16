@@ -76,6 +76,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         await this.emitExamples();
     }
 
+    public getApiDocs(locale: string): ApiDeclaration[] {
+        return this.localeApiDocsMap[locale];
+    }
+
     public getDocItem(locale: string): ComponentDocItem {
         return this.localeDocItemsMap[locale];
     }
