@@ -1,5 +1,5 @@
 import { toolkit } from '@docgeni/toolkit';
-import { ArgumentInfo, NgComponentInfo, NgModuleInfo } from './types';
+import { ArgumentInfo, NgComponentMetadata, NgModuleInfo } from './types';
 import {
     findNodes,
     getDirectiveMeta,
@@ -34,8 +34,8 @@ export class NgSourceFile {
         }
     }
 
-    public getExportedComponents(): NgComponentInfo[] {
-        const components: NgComponentInfo[] = [];
+    public getExportedComponents(): NgComponentMetadata[] {
+        const components: NgComponentMetadata[] = [];
         const classDeclarations = findNodes<ts.ClassDeclaration>(this.sourceFile, isExportedClassDeclaration);
         classDeclarations.forEach(classDeclaration => {
             const ngDecorator = getNgDecorator(classDeclaration, ['Component']);
@@ -49,13 +49,15 @@ export class NgSourceFile {
         return components;
     }
 
-    public getExpectExportedComponent(keywords?: string): NgComponentInfo {
+    public getExpectExportedComponent(keywords?: string): NgComponentMetadata {
         const components = this.getExportedComponents();
         if (components) {
             if (keywords) {
-                return components.find(component => {
-                    return component.name.toLowerCase().includes(keywords.toLowerCase());
+                const normalizedKeywords = toolkit.strings.camelCase(keywords).toLowerCase();
+                const component = components.find(component => {
+                    return component.name.toLowerCase().includes(normalizedKeywords);
                 });
+                return component;
             } else {
                 return components[0];
             }

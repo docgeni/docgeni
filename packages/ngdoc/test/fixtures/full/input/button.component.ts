@@ -1,5 +1,4 @@
-import { Component, Directive, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LoadingComponent } from './loading.component';
+import { Component, Directive, OnInit, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 
 export type ButtonSize = 'lg' | 'md' | 'sm';
 
@@ -18,21 +17,34 @@ export type ButtonSize = 'lg' | 'md' | 'sm';
 export class ButtonComponent implements OnInit {
 
     private type = '';
+    private loading = false;
 
     /**
      * Button Type
+     * @description Button Type for Description
      */
     @Input('thyTypeAlias') thyType: 'primary' | 'info' | 'success' = 'primary';
 
      /**
      * Button Size
+     * @deprecated
+     * @default md
      */
-    @Input() thySize: ButtonSize;
+    @Input() thySize: LoadingComponent;
+
+    @Input() set thyLoading(loading: boolean){
+        this.loading = loading;
+    }
 
     /**
      * Loading Event
      */
     @Output() thyLoadingEvent = new EventEmitter<boolean>();
+
+    /**
+     * Template
+     */
+    @ContentChild('template') templateRef: TemplateRef<any>;
 
     constructor() { }
 

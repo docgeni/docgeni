@@ -1,6 +1,7 @@
 import { normalizeLibConfig } from './normalize';
 import { toolkit } from '@docgeni/toolkit';
 import { DEFAULT_LABEL_CONFIG } from '../constants';
+import { DocgeniLibrary } from '../interfaces';
 
 describe('normalize', () => {
     describe('LibConfig', () => {
@@ -16,12 +17,13 @@ describe('normalize', () => {
                 apiDir: 'api',
                 examplesDir: 'examples',
                 categories: [],
-                labels: DEFAULT_LABEL_CONFIG
+                labels: DEFAULT_LABEL_CONFIG,
+                apiMode: 'manual'
             });
         });
 
         it('should normalize lib config success for all custom inputs', () => {
-            const input = {
+            const input: DocgeniLibrary = {
                 name: toolkit.strings.generateRandomId(),
                 rootDir: toolkit.strings.generateRandomId(),
                 abbrName: toolkit.strings.generateRandomId(),
@@ -41,7 +43,8 @@ describe('normalize', () => {
                         }
                     }
                 ],
-                labels: DEFAULT_LABEL_CONFIG
+                labels: DEFAULT_LABEL_CONFIG,
+                apiMode: 'automatic'
             };
             const result = normalizeLibConfig(input);
             expect(result).toEqual(input);

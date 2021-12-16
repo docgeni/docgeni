@@ -1,21 +1,23 @@
 import { ts } from './typescript';
 import { toolkit } from '@docgeni/toolkit';
-import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgDirectiveMeta, NgComponentInfo } from './types';
+import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator } from './types';
 import {
     getNgDecorator,
-    getPropertyDecorator,
+    getNgPropertyDecorator,
     getDirectiveMeta,
     getNgDocItemType,
     getPropertyKind,
     getNgPropertyOptions,
     getPropertyValue,
-    serializeSymbol
+    serializeSymbol,
+    getDocTagsBySymbol
 } from './parser';
-import { createNgSourceFile } from './ng-source-file';
+import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
 export interface NgDocParserOptions {
-    fileGlobs: string;
-    compilerHost?: ts.CompilerHost;
+    tsConfigPath?: string;
+    fileGlobs?: string;
+    ngParserHost?: NgParserHost;
 }
 
 export interface ParserSourceFileContext {
@@ -29,27 +31,21 @@ export class NgDocParser {
         return new NgDocParser({ fileGlobs: pattern }).parse(pattern);
     }
 
-    static getExportedComponents(sourceText: string): NgComponentInfo[] {
-        return createNgSourceFile(sourceText).getExportedComponents();
+    static create(options: NgDocParserOptions) {
+        return new NgDocParser(options);
     }
 
-    private tsProgram: ts.Program;
+    private ngParserHost: NgParserHost;
 
-    constructor(private options?: NgDocParserOptions) {}
-
-    private get program() {
-        if (!this.tsProgram) {
-            const filePaths = toolkit.fs.globSync(this.options.fileGlobs);
-            this.tsProgram = ts.createProgram(filePaths, { types: [] }, this.options.compilerHost || this.createCompilerHost());
-        }
-        return this.tsProgram;
+    constructor(private options: NgDocParserOptions) {
+        this.ngParserHost = options.ngParserHost ? options.ngParserHost : createNgParserHost(options);
     }
 
     public getSourceFiles(fileGlob: string) {
         const filePaths = toolkit.fs.globSync(fileGlob);
         const sourceFiles = filePaths
             .map(filePath => {
-                return this.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
+                return this.ngParserHost.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
             })
             .filter(sourceFile => {
                 return typeof sourceFile !== 'undefined' && !sourceFile.isDeclarationFile;
@@ -57,15 +53,16 @@ export class NgDocParser {
         return sourceFiles;
     }
 
-    public parse(pattern: string) {
-        const sourceFiles = this.getSourceFiles(pattern);
-        const checker = this.program.getTypeChecker();
+    public parse(fileGlobs: string): NgEntryItemDoc[] {
+        const sourceFiles = this.getSourceFiles(fileGlobs);
+        const checker = this.ngParserHost.program.getTypeChecker();
 
         const docs: NgEntryItemDoc[] = [];
+        const parsedSymbols = new Map<ts.Symbol, boolean>();
         sourceFiles.forEach(sourceFile => {
             const context: ParserSourceFileContext = {
                 sourceFile: sourceFile,
-                program: this.program,
+                program: this.ngParserHost.program,
                 checker: checker
             };
             const moduleSymbol = checker.getSymbolAtLocation(sourceFile);
@@ -74,13 +71,16 @@ export class NgDocParser {
             }
             const exportSymbols = checker.getExportsOfModule(moduleSymbol);
             exportSymbols.forEach(symbol => {
+                if (parsedSymbols.get(symbol)) {
+                    return;
+                }
+                parsedSymbols.set(symbol, true);
                 if (symbol.valueDeclaration && ts.isClassDeclaration(symbol.valueDeclaration)) {
                     const ngDecorator = getNgDecorator(symbol.valueDeclaration);
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
-                        const tags = symbol.getJsDocTags();
-                        const isPrivate = tags.find(tag => tag.name === 'private');
-                        if (!isPrivate) {
+                        const tags = getDocTagsBySymbol(symbol) as { private: ts.JSDocTagInfo };
+                        if (!tags.private) {
                             switch (type) {
                                 case 'component':
                                 case 'directive':
@@ -119,34 +119,45 @@ export class NgDocParser {
     private parseDirectiveProperties(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
         const properties: NgPropertyDoc[] = [];
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
-            if (ts.isPropertyDeclaration(node)) {
+            if (ts.isPropertyDeclaration(node) || ts.isSetAccessor(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
-                const decorator = getPropertyDecorator(node);
+                const decorator = getNgPropertyDecorator(node);
                 if (symbol && decorator) {
                     const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
-                    const description = serializeSymbol(symbol, context.checker);
+                    const symbolDescription = serializeSymbol(symbol, context.checker);
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
-                    properties.push({
-                        kind: getPropertyKind(decorator.name),
-                        name: description.name,
-                        type: description.type,
-                        description: description.documentation,
-                        options: options,
-                        default: getPropertyValue(propertyDeclaration, description.type),
-                        jsDocTags: symbol.getJsDocTags() as any
-                    });
+                    const propertyKind = getPropertyKind(decorator.name);
+                    const tags = getDocTagsBySymbol(symbol);
+                    const property: NgPropertyDoc = {
+                        kind: propertyKind,
+                        name: symbolDescription.name,
+                        aliasName: this.getNgPropertyAliasName(decorator),
+                        type: {
+                            name: symbolDescription.type,
+                            options: options,
+                            kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
+                        },
+                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.documentation,
+                        default: '',
+                        tags: tags
+                    };
+
+                    if (propertyKind === 'Input') {
+                        property.default =
+                            (tags.default && tags.default.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
+                    }
+                    properties.push(property);
                 }
             }
         });
         return properties;
     }
 
-    private createCompilerHost(): ts.CompilerHost {
-        const host = ts.createCompilerHost({});
-        // host.directoryExists = dirPath => {
-        //     return dirPath.startsWith(ts.sys.getCurrentDirectory());
-        // };
-        host.getDefaultLibFileName = () => '';
-        return host;
+    private getNgPropertyAliasName(decorator: NgParsedDecorator): string {
+        if (decorator.argumentInfo && decorator.argumentInfo[0]) {
+            return decorator.argumentInfo[0] as string;
+        } else {
+            return '';
+        }
     }
 }

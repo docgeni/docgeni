@@ -46,6 +46,7 @@ module.exports = {
             rootDir: './packages/a-lib',
             include: ['common'],
             exclude: '',
+            apiMode: 'compatible',
             categories: [
                 {
                     id: 'general',

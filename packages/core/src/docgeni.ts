@@ -54,9 +54,7 @@ export class Docgeni implements DocgeniContext {
         };
     }
 
-    get logger() {
-        return toolkit.print;
-    }
+    logger = toolkit.print;
 
     constructor(options: DocgeniOptions) {
         this.options = options;

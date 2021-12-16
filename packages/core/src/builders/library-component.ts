@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NgDefaultExportInfo } from '../interfaces';
+import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
 import { createNgSourceFile, NgModuleInfo, NgSourceFile } from '@docgeni/ngdoc';
 import {
@@ -19,7 +19,6 @@ import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
 import { relative, resolve } from '../fs';
 import { FileEmitter } from './emitter';
-import * as ts from 'typescript';
 import { generateComponentExamplesModule } from './examples-module';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
@@ -77,6 +76,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         await this.emitExamples();
     }
 
+    public getApiDocs(locale: string): ApiDeclaration[] {
+        return this.localeApiDocsMap[locale];
+    }
+
     public getDocItem(locale: string): ComponentDocItem {
         return this.localeDocItemsMap[locale];
     }
@@ -124,7 +127,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         // this.hooks.buildDocSucceed.call(docSourceFile);
     }
 
-    private async buildApiDocs(): Promise<void> {
+    private async tryGetApiDocsByManual(): Promise<Record<string, ApiDeclaration[]>> {
+        const result: Record<string, ApiDeclaration[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
             const explorer = cosmiconfig.call(cosmiconfig, localeKey, {
@@ -138,19 +142,41 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 ],
                 stopDir: this.absApiPath
             });
-            const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
-
-            if (result && result.config && toolkit.utils.isArray(result.config)) {
-                result.config.forEach(item => {
-                    item.description = item.description ? Markdown.toHTML(item.description) : '';
-                    (item.properties || []).forEach(property => {
-                        property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
-                        property.description = property.description ? Markdown.toHTML(property.description) : '';
-                    });
-                });
-                this.localeApiDocsMap[localeKey] = result.config;
-            }
+            const localeResult: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
+            result[localeKey] =
+                localeResult && localeResult.config && toolkit.utils.isArray(localeResult.config) ? localeResult.config : undefined;
         }
+        return result;
+    }
+
+    private async buildApiDocs(): Promise<void> {
+        if (this.lib.apiMode === 'automatic') {
+            const apiDocs = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+            this.docgeni.config.locales.forEach(locale => {
+                this.localeApiDocsMap[locale.key] = apiDocs;
+            });
+        } else if (this.lib.apiMode === 'compatible') {
+            const apiDocs = await this.tryGetApiDocsByManual();
+            this.docgeni.config.locales.forEach(locale => {
+                if (!apiDocs[locale.key]) {
+                    apiDocs[locale.key] = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+                }
+            });
+            this.localeApiDocsMap = apiDocs;
+        } else {
+            this.localeApiDocsMap = await this.tryGetApiDocsByManual();
+        }
+
+        this.docgeni.config.locales.forEach(locale => {
+            const apiDocs = this.localeApiDocsMap[locale.key];
+            (apiDocs || []).forEach(item => {
+                item.description = item.description ? Markdown.toHTML(item.description) : '';
+                (item.properties || []).forEach(property => {
+                    property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
+                    property.description = property.description ? Markdown.toHTML(property.description) : '';
+                });
+            });
+        });
     }
 
     private async buildExamples(): Promise<void> {
@@ -285,16 +311,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 overviewSourceFile = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
             }
             // Use default locale's data when api locale is not found
-            let apiDoc = this.localeApiDocsMap[locale.key];
-            if (!apiDoc) {
-                apiDoc = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
+            let apiDocs = this.localeApiDocsMap[locale.key];
+            if (!apiDocs) {
+                apiDocs = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
             }
 
             const title = this.getMetaProperty(overviewSourceFile, 'title') || toolkit.strings.titleCase(this.name);
             const subtitle = this.getMetaProperty(overviewSourceFile, 'subtitle') || '';
             const order = this.getMetaProperty(overviewSourceFile, 'order');
 
-            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || apiDoc) {
+            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || (apiDocs && apiDocs.length > 0)) {
                 const componentNav: ComponentDocItem = {
                     id: this.name,
                     title,
@@ -303,7 +329,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
-                    api: apiDoc ? true : false,
+                    api: apiDocs && apiDocs.length > 0 ? true : false,
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,

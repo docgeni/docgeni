@@ -29,6 +29,10 @@ export class Print {
         return colors;
     }
 
+    log(message?: any) {
+        console.log(message);
+    }
+
     /**
      * Prints text without theme.
      *
@@ -40,28 +44,28 @@ export class Print {
     fancy(message: string, ...optionalParams: any[]) {
         const msg = this.format(Levels.fancy, message, ...optionalParams);
         if (!this.options.silent) {
-            console.log(msg);
+            this.log(msg);
         }
     }
 
     debug(message: string) {
         const msg = this.format(Levels.debug, message);
         if (!this.options.silent) {
-            console.log(msg);
+            this.log(msg);
         }
     }
 
     info(message: string, ...optionalParams: any[]) {
         const msg = this.format(Levels.info, message, ...optionalParams);
         if (!this.options.silent) {
-            console.log(msg);
+            this.log(msg);
         }
     }
 
     warn(message: string, ...optionalParams: any[]) {
         const msg = this.format(Levels.warn, message, ...optionalParams);
         if (!this.options.silent) {
-            console.log(msg);
+            this.log(msg);
         }
     }
 
@@ -69,7 +73,7 @@ export class Print {
         if (isString(message)) {
             const msg = this.format(Levels.error, message, ...optionalParams);
             if (!this.options.silent) {
-                console.log(msg);
+                this.log(msg);
             }
         } else {
             console.error(message);
@@ -79,7 +83,7 @@ export class Print {
     success(message: string, ...optionalParams: any[]) {
         const msg = this.format(Levels.success, message, ...optionalParams);
         if (!this.options.silent) {
-            console.log(msg);
+            this.log(msg);
         }
     }
 

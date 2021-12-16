@@ -19,10 +19,15 @@ export class DocgeniProgress extends Spinner {
     }
 
     initialize() {
+        let originalLog: (message: string) => void;
         this.docgeni.hooks.compilation.tap('DocgeniProgress', compilation => {
             if (!this.isSpinning) {
                 this.start('\nStart building...');
             }
+            originalLog = this.docgeni.logger.log;
+            this.docgeni.logger.log = message => {
+                this.info(message);
+            };
             const startTime = new Date().getTime();
             let currentDoc = 0;
             let totalDoc = 0;
@@ -58,6 +63,7 @@ export class DocgeniProgress extends Spinner {
 
             compilation.hooks.finish.tap(this.name, () => {
                 this.stop();
+                this.docgeni.logger.log = originalLog;
                 if (compilation.increment && compilation.increment.changes) {
                     this.docgeni.logger.fancy(`\n${compilation.increment.changes.length} files changes\n`);
                 }

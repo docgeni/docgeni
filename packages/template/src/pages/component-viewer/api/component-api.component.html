@@ -1,5 +1,5 @@
 <!-- <dg-content-viewer [url]="contentUrl"> </dg-content-viewer> -->
-<ng-container *ngIf="apiDeclarations">
+<ng-container *ngIf="apiDeclarations; else loading">
   <ng-container *ngFor="let apiDeclaration of apiDeclarations">
     <div class="dg-api-header">
       <span class="name">{{ apiDeclaration.name }}</span>
@@ -22,7 +22,7 @@
             <label class="dg-label dg-label-sm dg-label-outline-primary">{{ property.name }}</label>
           </td>
           <td class="dg-api-properties-type-cell">
-            <label class=""> {{ property.type }}</label>
+            <label class=""> {{ property.type.name || property.type }}</label>
           </td>
           <td class="dg-api-properties-default-cell">
             {{ property.default || '-' }}
@@ -33,3 +33,5 @@
     </table>
   </ng-container>
 </ng-container>
+
+<ng-template #loading> Loading... </ng-template>

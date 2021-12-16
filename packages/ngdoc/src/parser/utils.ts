@@ -1,6 +1,6 @@
 import { ts } from '../typescript';
 import { lineFeedPrinter } from './line-feed-printer';
-import { ArgumentInfo, NgDirectiveMeta, NgDocItemType, NgPropertyKind } from '../types';
+import { ArgumentInfo, NgDirectiveMetadata, NgDocItemType, NgPropertyKind } from '../types';
 
 /**
  * Use a preconfigured TypeScript "printer" to render the text of a node, without comments.
@@ -14,7 +14,7 @@ export function normalizeNodeText(text: string) {
 }
 
 export function getNodeText(node: ts.Node) {
-    return normalizeNodeText(node.getText());
+    return (node as ts.StringLiteral).text ? (node as ts.StringLiteral).text : normalizeNodeText(node.getText());
 }
 
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
@@ -35,7 +35,7 @@ export function getNgDocItemType(name: string): NgDocItemType {
     }[name] as NgDocItemType;
 }
 
-export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMeta {
+export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMetadata {
     const firstArg = args[0] as Record<string, string | string[]>;
     return firstArg
         ? ({
@@ -45,7 +45,7 @@ export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMeta {
               styleUrls: firstArg.styleUrls || null,
               styles: firstArg.styles || null,
               exportAs: firstArg.exportAs || null
-          } as NgDirectiveMeta)
+          } as NgDirectiveMetadata)
         : undefined;
 }
 
@@ -167,3 +167,22 @@ export function findNodes<T extends ts.Node>(
 
 //     return result;
 // }
+
+interface DocTagResult {
+    description?: ts.JSDocTagInfo;
+    default?: ts.JSDocTagInfo;
+    deprecated?: ts.JSDocTagInfo;
+    [key: string]: ts.JSDocTagInfo;
+}
+/**
+ *
+ * @export
+ * @de
+ */
+export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
+    const tags = symbol.getJsDocTags();
+    return tags.reduce((result, item) => {
+        result[item.name] = item;
+        return result;
+    }, {});
+}

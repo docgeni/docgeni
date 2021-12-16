@@ -33,7 +33,7 @@ export function getNgDecorator(
     return decorator;
 }
 
-export function getPropertyDecorator(declaration: ts.Declaration) {
+export function getNgPropertyDecorator(declaration: ts.Declaration) {
     const decorators = getDecorators(declaration);
     const decorator = decorators
         ? decorators.find(decorator => {

@@ -6,9 +6,9 @@ import { getNodeText, nodeToString } from './utils';
 export function getCallExpressionInfo(callExpression: ts.CallExpression) {
     return {
         argumentInfo: callExpression.arguments.map(argument => parseArgument(argument)),
-        arguments: callExpression.arguments.map(argument =>
-            lineFeedPrinter.printNode(ts.EmitHint.Expression, argument, callExpression.getSourceFile())
-        ),
+        arguments: callExpression.arguments.map(argument => {
+            return lineFeedPrinter.printNode(ts.EmitHint.Expression, argument, callExpression.getSourceFile());
+        }),
         expression: callExpression,
         isCallExpression: true,
         name: nodeToString(callExpression.expression)
@@ -34,7 +34,9 @@ export function parseArgument(argument: ts.Expression): ArgumentInfo {
         return parseProperties((argument as ts.ObjectLiteralExpression).properties);
     }
     if (ts.isArrayLiteralExpression(argument)) {
-        return (argument as ts.ArrayLiteralExpression).elements.map(element => getNodeText(element));
+        return (argument as ts.ArrayLiteralExpression).elements.map(element => {
+            return getNodeText(element);
+        });
     }
     return getNodeText(argument);
 }

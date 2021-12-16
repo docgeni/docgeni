@@ -68,5 +68,6 @@ export function getPropertyValue(node: ts.PropertyDeclaration, type: string | nu
 }
 
 export function getPropertyKind(name: string): NgPropertyKind {
-    return toolkit.strings.camelCase(name) as NgPropertyKind;
+    return name as NgPropertyKind;
+    // return toolkit.strings.camelCase(name) as NgPropertyKind;
 }
