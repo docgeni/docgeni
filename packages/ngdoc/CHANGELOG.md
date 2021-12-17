@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
+
+
+### Features
+
+* **core:** auto generate and update examples module source #OSP-218 ([#291](https://github.com/docgeni/docgeni/issues/291)) ([5e88168](https://github.com/docgeni/docgeni/commit/5e881683adbdc89936f697c724423453a2c51f97)), closes [#OSP-218](https://github.com/docgeni/docgeni/issues/OSP-218)
+* **core:** support automatic generate api docs #OSP-230 ([#294](https://github.com/docgeni/docgeni/issues/294)) ([5b428a0](https://github.com/docgeni/docgeni/commit/5b428a0f72ea63be2e100a5646a70a0fbc0ef84d)), closes [#OSP-230](https://github.com/docgeni/docgeni/issues/OSP-230)
+* **core:** support custom imports and providers for custom built-in component ([#293](https://github.com/docgeni/docgeni/issues/293)) ([6aa9612](https://github.com/docgeni/docgeni/commit/6aa9612076322665f4af9db3f85cb00b936dbeb1))
+
+
+
+
+
 # [1.2.0-next.2](https://github.com/docgeni/docgeni/compare/v1.2.0-next.1...v1.2.0-next.2) (2021-11-17)
 
 **Note:** Version bump only for package @docgeni/ngdoc
