@@ -99,6 +99,7 @@ $dg-service-color: #8e24aa;
                     font-weight: 400;
                     text-transform: uppercase;
                     margin-left: 8px;
+                    margin-top: 3px;
 
                     &.directive {
                         background-color: rgba($color: $dg-directive-color, $alpha: 0.8);
@@ -115,10 +116,21 @@ $dg-service-color: #8e24aa;
                 }
             }
 
-            .dg-api-class-description {
+            .dg-api-description {
                 color: $dg-gray-700;
                 margin: 6px 0px 6px 0px;
                 font-size: $dg-font-size-base;
+            }
+
+            .dg-section {
+                margin-top: 10px;
+                .section-title {
+                    padding: 2px 0px;
+                    font-weight: 500;
+                }
+            }
+            .dg-section + .dg-section {
+                margin-top: 20px;
             }
 
             .dg-api-properties-table {
@@ -127,13 +139,16 @@ $dg-service-color: #8e24aa;
                 width: 100%;
                 max-width: 100%;
 
+                th {
+                    text-align: left;
+                }
                 .dg-api-properties-header-row {
                     .dg-api-properties-name-th {
                         width: 100px;
                     }
 
                     .dg-api-properties-type-th {
-                        width: 80px;
+                        width: 150px;
                     }
 
                     .dg-api-properties-default-th {
