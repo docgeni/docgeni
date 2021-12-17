@@ -100,7 +100,7 @@ export class ComponentsBuilder {
 
     async emitEntryFile() {
         let sourceFile: NgSourceFile;
-        if (this.docgeni.host.pathExists(this.modulePath)) {
+        if (await this.docgeni.host.pathExists(this.modulePath)) {
             const sourceFileText = await this.docgeni.host.readFile(this.modulePath);
             sourceFile = createNgSourceFile(this.modulePath, sourceFileText);
         } else {
@@ -114,6 +114,6 @@ export class ComponentsBuilder {
         for (const component of this.components.values()) {
             await component.emit();
         }
-        this.emitEntryFile();
+        await this.emitEntryFile();
     }
 }
