@@ -138,7 +138,7 @@ describe('DocSourceFile', () => {
         });
     });
 
-    it('should emit file success', async () => {
+    fit('should emit file success', async () => {
         const fileAbsPath = `${root}docs/getting-started.md`;
         await docgeniHost.writeFile(fileAbsPath, `content`);
         const docSourceFile = new DocSourceFile(
@@ -153,6 +153,7 @@ describe('DocSourceFile', () => {
         await docSourceFile.build();
         await docSourceFile.emit('/dest/root');
         const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
+        console.log(outputFilePath);
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         const outputContent = await docgeniHost.readFile(outputFilePath);
         expect(outputContent).toContain(`<p>content</p>`);
