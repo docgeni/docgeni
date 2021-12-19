@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.1.5) (2021-12-19)
+
+
+### Bug Fixes
+
+* **core:** should generate correct output path for docs [#295](https://github.com/docgeni/docgeni/issues/295) ([d940e25](https://github.com/docgeni/docgeni/commit/d940e2513bc5f39bc4e8191c1748a14e24d75299))
+* **core:** should use real abs path for cosmiconfig ([ab6d5c4](https://github.com/docgeni/docgeni/commit/ab6d5c486d2501281a55c3e56982df60633046f6))
+
+
+
+
+
 ## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
 
 
