@@ -5,6 +5,7 @@ import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
 import { DocgeniHost } from '../docgeni-host';
+import { resolve } from '../fs';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -118,11 +119,11 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     }
 
     public getOutputDir(outputRootPath: string) {
-        return path.resolve(outputRootPath, this.relativeDirname);
+        return resolve(outputRootPath, this.relativeDirname);
     }
 
     public getOutputPath(outputRootPath: string, ext = '.html') {
-        return path.resolve(this.getOutputDir(outputRootPath), this.name + ext);
+        return resolve(this.getOutputDir(outputRootPath), this.name + ext);
     }
 
     public getRelativeOutputPath(ext = '.html') {
