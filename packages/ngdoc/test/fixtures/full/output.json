@@ -1,0 +1,123 @@
+[
+  {
+    "type": "component",
+    "name": "ButtonComponent",
+    "description": "General Button Component description.",
+    "selector": "thy-button",
+    "templateUrl": "./button.component.html",
+    "template": null,
+    "styleUrls": [
+      "./button.component.scss"
+    ],
+    "styles": null,
+    "exportAs": "thyButton",
+    "properties": [
+      {
+        "kind": "Input",
+        "name": "thyType",
+        "aliasName": "thyTypeAlias",
+        "type": {
+          "name": "\"primary\" | \"info\" | \"success\"",
+          "options": [
+            "primary",
+            "info",
+            "success"
+          ],
+          "kindName": "UnionType"
+        },
+        "description": "Button Type for Description",
+        "default": "primary",
+        "tags": {
+          "description": {
+            "name": "description",
+            "text": "Button Type for Description"
+          }
+        }
+      },
+      {
+        "kind": "Input",
+        "name": "thySize",
+        "aliasName": "",
+        "type": {
+          "name": "any",
+          "options": null,
+          "kindName": "TypeReference"
+        },
+        "description": "Button Size",
+        "default": "md",
+        "tags": {
+          "deprecated": {
+            "name": "deprecated"
+          },
+          "default": {
+            "name": "default",
+            "text": "md"
+          }
+        }
+      },
+      {
+        "kind": "Input",
+        "name": "thyLoading",
+        "aliasName": "",
+        "type": {
+          "name": "boolean",
+          "options": null
+        },
+        "description": "",
+        "default": null,
+        "tags": {}
+      },
+      {
+        "kind": "Output",
+        "name": "thyLoadingEvent",
+        "aliasName": "",
+        "type": {
+          "name": "EventEmitter<boolean>",
+          "options": null
+        },
+        "description": "Loading Event",
+        "default": "",
+        "tags": {}
+      },
+      {
+        "kind": "ContentChild",
+        "name": "templateRef",
+        "aliasName": "template",
+        "type": {
+          "name": "TemplateRef<any>",
+          "options": null,
+          "kindName": "TypeReference"
+        },
+        "description": "Template",
+        "default": "",
+        "tags": {}
+      }
+    ]
+  },
+  {
+    "type": "directive",
+    "name": "ButtonIconComponent",
+    "description": "General Button Icon Directive description.",
+    "selector": "[thyButtonIcon]",
+    "templateUrl": null,
+    "template": null,
+    "styleUrls": null,
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  },
+  {
+    "type": "component",
+    "name": "LoadingComponent",
+    "description": "General Loading Component description.",
+    "selector": "thy-loading",
+    "templateUrl": "./loading.component.html",
+    "template": null,
+    "styleUrls": [
+      "./loading.component.scss"
+    ],
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  }
+]

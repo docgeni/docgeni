@@ -1,59 +1,27 @@
-import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniHost } from '../docgeni-host';
+import { createNgSourceFile, NgSourceFile } from '@docgeni/ngdoc';
+import { DocgeniContext } from '../../docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
-import { normalize, relative, resolve, HostWatchEventType } from '../fs';
-import { getSummaryStr } from '../utils';
+import { normalize, relative, resolve, HostWatchEventType } from '../../fs';
+import { getSummaryStr } from '../../utils';
+
+import { ComponentBuilder } from './component-builder';
+import { generateBuiltInComponentsModule } from './built-in-module';
 
 export interface ComponentDef {
     name: string;
     path: string;
 }
 
-export class ComponentBuilder {
-    public entryComponentFullPath: string;
-    private distPath: string;
-    private emitted = false;
-
-    constructor(private docgeniHost: DocgeniHost, public name: string, public fullPath: string, distRootPath: string) {
-        this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
-        this.distPath = resolve(distRootPath, name);
-    }
-
-    async exists() {
-        const result = await this.docgeniHost.pathExists(this.entryComponentFullPath);
-        return result;
-    }
-
-    async build() {
-        this.emitted = false;
-    }
-
-    async emit() {
-        if (this.emitted) {
-            return;
-        }
-        await this.docgeniHost.copy(this.fullPath, this.distPath);
-        this.emitted = true;
-    }
-
-    async buildAndEmit() {
-        await this.build();
-        await this.emit();
-    }
-
-    async clear() {
-        await this.docgeniHost.delete(this.distPath);
-    }
-}
-
 export class ComponentsBuilder {
     private components = new Map<string, ComponentBuilder>();
     private componentsSourcePath: string;
     private componentsDistPath: string;
+    private modulePath: string;
 
     constructor(private docgeni: DocgeniContext) {
         this.componentsSourcePath = resolve(this.docgeni.paths.cwd, this.docgeni.config.componentsDir);
         this.componentsDistPath = resolve(this.docgeni.paths.absSiteContentPath, 'components/custom');
+        this.modulePath = resolve(this.componentsSourcePath, 'module.ts');
     }
 
     private getComponentOfFile(fileFullPath: string) {
@@ -73,13 +41,18 @@ export class ComponentsBuilder {
         // toolkit.print.info(`Components: start watching ${this.componentsSourcePath}`);
         return this.docgeni.host.watch(this.componentsSourcePath, { ignoreInitial: true, recursive: true }).subscribe(async item => {
             try {
+                if (item.path === this.modulePath) {
+                    await this.emitEntryFile();
+                    return;
+                }
                 const type: HostWatchEventType = item.type as any;
                 toolkit.print.info(`Components: ${getSummaryStr(item.path)}, type: ${HostWatchEventType[item.type]}`);
+
                 const { name, componentPath } = this.getComponentOfFile(item.path);
                 if (!name) {
                     return;
                 }
-                const componentBuilder = componentPath ? this.components.get(componentPath) : undefined;
+                let componentBuilder = componentPath ? this.components.get(componentPath) : undefined;
                 if (componentBuilder) {
                     if (await componentBuilder.exists()) {
                         await componentBuilder.buildAndEmit();
@@ -91,13 +64,14 @@ export class ComponentsBuilder {
                     }
                 } else {
                     if (type === HostWatchEventType.Created) {
-                        const componentBuilder = new ComponentBuilder(this.docgeni.host, name, componentPath, this.componentsDistPath);
+                        componentBuilder = new ComponentBuilder(this.docgeni.host, name, componentPath, this.componentsDistPath);
+                        await componentBuilder.setComponentData();
                         this.components.set(componentPath, componentBuilder);
                         await componentBuilder.buildAndEmit();
                         toolkit.print.info(`Components: create component ${name} success`);
                     }
                 }
-                this.emitEntryFile();
+                await this.emitEntryFile();
             } catch (error) {
                 toolkit.print.error(error);
             }
@@ -117,6 +91,7 @@ export class ComponentsBuilder {
                 const isDirectory = await this.docgeni.host.isDirectory(dirFullPath);
                 if (isDirectory) {
                     const componentBuilder = new ComponentBuilder(this.docgeni.host, dir, dirFullPath, this.componentsDistPath);
+                    await componentBuilder.setComponentData();
                     this.components.set(dirFullPath, componentBuilder);
                 }
             }
@@ -124,19 +99,21 @@ export class ComponentsBuilder {
     }
 
     async emitEntryFile() {
-        const componentsData: { name: string }[] = Array.from(this.components.values()).map(item => {
-            return { name: item.name };
-        });
-        const entryContent = toolkit.template.compile('components-entry.hbs', {
-            components: componentsData
-        });
-        await this.docgeni.host.writeFile(resolve(this.componentsDistPath, 'index.ts'), entryContent);
+        let sourceFile: NgSourceFile;
+        if (await this.docgeni.host.pathExists(this.modulePath)) {
+            const sourceFileText = await this.docgeni.host.readFile(this.modulePath);
+            sourceFile = createNgSourceFile(this.modulePath, sourceFileText);
+        } else {
+            sourceFile = createNgSourceFile(this.modulePath, '');
+        }
+        const moduleText = await generateBuiltInComponentsModule(sourceFile, this.components);
+        await this.docgeni.host.writeFile(resolve(this.componentsDistPath, 'index.ts'), moduleText);
     }
 
     async emit() {
         for (const component of this.components.values()) {
             await component.emit();
         }
-        this.emitEntryFile();
+        await this.emitEntryFile();
     }
 }

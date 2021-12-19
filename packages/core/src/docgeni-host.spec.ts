@@ -41,14 +41,29 @@ describe('#docgeni-host', () => {
         expect(dirs).toEqual(['folder'] as PathFragment[]);
     });
 
+    it('should get all dirs success', async () => {
+        const dirs = await host.getDirs('', { recursively: true });
+        expect(dirs).toEqual(['folder', 'folder/subfolder'] as PathFragment[]);
+    });
+
     it('should get dirs exclude folder', async () => {
         const dirs = await host.getDirs('', { exclude: 'folder' });
         expect(dirs).toEqual([]);
     });
 
+    it('should get dirs exclude folder', async () => {
+        const dirs = await host.getDirs('', { exclude: 'subfolder', recursively: true });
+        expect(dirs).toEqual(['folder']);
+    });
+
     it('should get files success', async () => {
         const dirs = await host.getFiles('');
-        expect(dirs).toEqual(['file1.txt', 'file2.txt'] as PathFragment[]);
+        expect(dirs).toEqual(['file1.txt', 'file2.txt']);
+    });
+
+    it('should get all files success', async () => {
+        const dirs = await host.getFiles('', { recursively: true });
+        expect(dirs).toEqual(['file1.txt', 'file2.txt', 'folder/file1.txt', 'folder/file2.txt', 'folder/subfolder/file1.txt']);
     });
 
     it('should get files exclude file1.txt', async () => {

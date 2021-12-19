@@ -91,4 +91,6 @@ export function wait(milliseconds: number): Promise<void> {
     });
 }
 
+export * from './path';
+
 export { timestamp };

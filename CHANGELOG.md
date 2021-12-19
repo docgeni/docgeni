@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
+
+
+### Bug Fixes
+
+* **core:** fix error when has't modult.ts ([cbbddf6](https://github.com/docgeni/docgeni/commit/cbbddf63917aa8b12517d6f3747dc115096ad09c))
+* **core:** should generate stackblize bundle.json for examples when custom site project ([#290](https://github.com/docgeni/docgeni/issues/290)) ([bcf79b8](https://github.com/docgeni/docgeni/commit/bcf79b8acff515086ea7a41901a3b615282a9098))
+* **template:** improve api display for empty properties and spacing ([801a0db](https://github.com/docgeni/docgeni/commit/801a0dbcc3ed67d3daad60e73530fd940eee8d88))
+
+
+### Features
+
+* **core:** auto generate and update examples module source #OSP-218 ([#291](https://github.com/docgeni/docgeni/issues/291)) ([5e88168](https://github.com/docgeni/docgeni/commit/5e881683adbdc89936f697c724423453a2c51f97)), closes [#OSP-218](https://github.com/docgeni/docgeni/issues/OSP-218)
+* **core:** supoort default locale in docs or docs/locale ([#289](https://github.com/docgeni/docgeni/issues/289)) ([3c8fd72](https://github.com/docgeni/docgeni/commit/3c8fd72c2eb024a0929715f016f4e583f8e57d94))
+* **core:** support automatic generate api docs #OSP-230 ([#294](https://github.com/docgeni/docgeni/issues/294)) ([5b428a0](https://github.com/docgeni/docgeni/commit/5b428a0f72ea63be2e100a5646a70a0fbc0ef84d)), closes [#OSP-230](https://github.com/docgeni/docgeni/issues/OSP-230)
+* **core:** support custom imports and providers for custom built-in component ([#293](https://github.com/docgeni/docgeni/issues/293)) ([6aa9612](https://github.com/docgeni/docgeni/commit/6aa9612076322665f4af9db3f85cb00b936dbeb1))
+
+
+
+
+
+# [1.2.0-next.2](https://github.com/docgeni/docgeni/compare/v1.2.0-next.1...v1.2.0-next.2) (2021-11-17)
+
+**Note:** Version bump only for package docgeni
+
+
+
+
+
+# [1.2.0-next.1](https://github.com/docgeni/docgeni/compare/v1.2.0-next.0...v1.2.0-next.1) (2021-11-16)
+
+**Note:** Version bump only for package docgeni
+
+
+
+
+
+# [1.2.0-next.0](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.2.0-next.0) (2021-11-16)
+
+
+### Bug Fixes
+
+* horizontal line top of footer do not overlap when doc meta is empty ([6d75e03](https://github.com/docgeni/docgeni/commit/6d75e03abb0a94b27720127ccbaa091c78a44236))
+* **alib:** rename a-lib to @docgeni/alib and publish to npm ([317211c](https://github.com/docgeni/docgeni/commit/317211c3f6ec33fb0fd90162d2d650c5696c924b))
+* **core:** regenerate examples source bundle file when emit and refactor somethings #OSP-223 ([5d0e2bc](https://github.com/docgeni/docgeni/commit/5d0e2bc3ecd1925f56fb283f551399e00bab8836)), closes [#OSP-223](https://github.com/docgeni/docgeni/issues/OSP-223)
+* **core:** should generate navs success when there are no locale docs folder that configured  in locales #OSP-211 ([#268](https://github.com/docgeni/docgeni/issues/268)) ([697a366](https://github.com/docgeni/docgeni/commit/697a366574d9f28f975675dc365f23f11ff13e2f)), closes [#OSP-211](https://github.com/docgeni/docgeni/issues/OSP-211)
+* **template:** add @angular/cdk to dependencies of template and move @angular-devkit/schematics to cli ([#267](https://github.com/docgeni/docgeni/issues/267)) ([c136a0f](https://github.com/docgeni/docgeni/commit/c136a0fa1aa05942c8f3cc0a13ee99304ac36e13))
+* **template:** fix import docsearch error ([#274](https://github.com/docgeni/docgeni/issues/274)) ([9492006](https://github.com/docgeni/docgeni/commit/9492006cfe1636477289bfa75c6ca55803e13c24))
+
+
+### Features
+
+* **cli:** ng-add schematics add `@docgei/angular` dependency ([eca5b5b](https://github.com/docgeni/docgeni/commit/eca5b5b1fc83fd9267f5aec0e8ac8331e652edd0))
+* **core:** generate sitemap by config #OSP-192 ([#263](https://github.com/docgeni/docgeni/issues/263)) ([9ec9300](https://github.com/docgeni/docgeni/commit/9ec930020d534b2c9a30682a7db03076ff973d73)), closes [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192) [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192)
+* **core:** support config favicon.ico ([#282](https://github.com/docgeni/docgeni/issues/282)) ([72c9b11](https://github.com/docgeni/docgeni/commit/72c9b11ac105997206e3311d65f0b1119f6e9b83))
+* **core:** use define name in lib example component to generate entry file #OSP-167 ([#288](https://github.com/docgeni/docgeni/issues/288)) ([61de9b8](https://github.com/docgeni/docgeni/commit/61de9b8884bfd18393d488f93f6fb55361877e0a)), closes [#OSP-167](https://github.com/docgeni/docgeni/issues/OSP-167)
+* **ngdoc:** add @docgeni/ngdoc and init structure #OSP-226 ([#284](https://github.com/docgeni/docgeni/issues/284)) ([0fbc3c5](https://github.com/docgeni/docgeni/commit/0fbc3c5f4715c799c822faacd0328e065965361a)), closes [#OSP-226](https://github.com/docgeni/docgeni/issues/OSP-226)
+* **ngdoc:** add getExportsComponents for NgDocParser and refactor ngdoc #OSP-231 ([1af561b](https://github.com/docgeni/docgeni/commit/1af561b882ff4294bc96dc80b947056a2dd5e4ae)), closes [#OSP-231](https://github.com/docgeni/docgeni/issues/OSP-231)
+* add serve/build config `configuration` ([#283](https://github.com/docgeni/docgeni/issues/283)) ([80b210e](https://github.com/docgeni/docgeni/commit/80b210e392d00a1861818bb44bd7c5a1fc5db7d2))
+* example support stackblitz ([#276](https://github.com/docgeni/docgeni/issues/276)) ([9fe6a9c](https://github.com/docgeni/docgeni/commit/9fe6a9cec86dadce6bd7a472bffa709f5c8831ef))
+* **template:** add builtins search #OSP-202 ([#271](https://github.com/docgeni/docgeni/issues/271)) ([caf7724](https://github.com/docgeni/docgeni/commit/caf7724a098879fb15e79f2effa8db55858d4a89)), closes [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202) [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202)
+
+
+
+
+
 ## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
 
 

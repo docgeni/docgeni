@@ -1,14 +1,14 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { HostWatchEvent, HostWatchEventType, normalize, resolve } from '../fs';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture } from '../testing';
+import { HostWatchEventType, normalize, resolve } from '../fs';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, NgParserSpectator } from '../testing';
 import { LibraryBuilderImpl } from './library-builder';
 import { normalizeLibConfig } from './normalize';
 import * as systemPath from 'path';
-import { ChannelItem, NavigationItem } from '../interfaces';
-import { ASSETS_API_DOCS_RELATIVE_PATH, ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH, ASSETS_OVERVIEWS_RELATIVE_PATH } from '../constants';
-import { Observable, of } from 'rxjs';
+import { NavigationItem } from '../interfaces';
+import { of } from 'rxjs';
 import { LibraryBuilder, LibraryComponent } from '../types';
+import { DefaultNgParserHost, NgParserHost, ts, NgDocParser, DefaultNgParserHostOptions, NgDocParserOptions } from '@docgeni/ngdoc';
 
 class LibraryBuilderSpectator {
     components: LibraryComponent[];
@@ -213,12 +213,14 @@ describe('#library-builder', () => {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
-                category: 'general'
+                category: 'general',
+                channelPath: 'components'
             },
             alert: {
                 id: `alib/alert`,
                 path: `alert`,
-                title: 'Alert'
+                title: 'Alert',
+                channelPath: 'components'
             }
         };
         components.map(component => {
@@ -238,7 +240,7 @@ describe('#library-builder', () => {
         expect(rootNavs[0].items as unknown).toEqual([
             { id: 'general', title: '通用', items: [componentDocItems.button] },
             { id: 'layout', title: '布局', items: [] },
-            { id: 'alib/alert', path: 'alert', title: 'Alert' }
+            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' }
         ]);
     });
 
@@ -289,6 +291,62 @@ describe('#library-builder', () => {
         await libraryBuilder.emit();
         spyComponentEmits.forEach(spyComponentEmit => {
             expect(spyComponentEmit).toHaveBeenCalled();
+        });
+    });
+
+    it('should create ngDocParser with automatic api mode', async () => {
+        library.apiMode = 'automatic';
+        const ngParserSpectator = new NgParserSpectator();
+
+        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        context.host.writeFile(tsconfig, '{includes: []}');
+        const libraryBuilder = new LibraryBuilderImpl(context, library);
+        expect(libraryBuilder.getNgDocParser()).toBeFalsy();
+        ngParserSpectator.notHaveBeenCalled();
+        await libraryBuilder.initialize();
+        ngParserSpectator.toHaveBeenCalled({
+            tsConfigPath: tsconfig,
+            rootDir: libDirPath,
+            watch: true
+        });
+        expect(libraryBuilder.getNgDocParser()).toEqual(ngParserSpectator.mockNgParser);
+    });
+
+    it('should create ngDocParser with compatible api mode', async () => {
+        library.apiMode = 'compatible';
+        const ngParserSpectator = new NgParserSpectator();
+
+        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        context.host.writeFile(tsconfig, '{includes: []}');
+        const libraryBuilder = new LibraryBuilderImpl(context, library);
+        expect(libraryBuilder.getNgDocParser()).toBeFalsy();
+        ngParserSpectator.notHaveBeenCalled();
+        await libraryBuilder.initialize();
+        ngParserSpectator.toHaveBeenCalled({
+            tsConfigPath: tsconfig,
+            rootDir: libDirPath,
+            watch: true
+        });
+        expect(libraryBuilder.getNgDocParser()).toEqual(ngParserSpectator.mockNgParser);
+    });
+
+    it('should rebuild component when watch api docs', async () => {
+        library.apiMode = 'compatible';
+        const ngParserSpectator = new NgParserSpectator();
+
+        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        context.host.writeFile(tsconfig, '{includes: []}');
+        const libraryBuilder = new LibraryBuilderImpl(context, library);
+        expect(libraryBuilder.getNgDocParser()).toBeFalsy();
+        ngParserSpectator.notHaveBeenCalled();
+        await libraryBuilder.initialize();
+        const compileSpy = spyOn(context, 'compile');
+        expect(compileSpy).not.toHaveBeenCalled();
+        ngParserSpectator.fakeFileChange(resolve(libDirPath, './button/button.component.ts'));
+        expect(compileSpy).toHaveBeenCalledWith({
+            libraryBuilder: libraryBuilder,
+            libraryComponents: [libraryBuilder.components.get(resolve(libDirPath, 'button'))],
+            changes: []
         });
     });
 

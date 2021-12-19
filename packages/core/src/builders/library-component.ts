@@ -1,11 +1,14 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample } from '../interfaces';
+import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
+import { createNgSourceFile, NgModuleInfo, NgSourceFile } from '@docgeni/ngdoc';
 import {
     ASSETS_API_DOCS_RELATIVE_PATH,
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
+    ASSETS_EXAMPLES_SOURCE_BUNDLE_RELATIVE_PATH,
     ASSETS_OVERVIEWS_RELATIVE_PATH,
-    EXAMPLE_META_FILE_NAME
+    EXAMPLE_META_FILE_NAME,
+    SITE_ASSETS_RELATIVE_PATH
 } from '../constants';
 import { highlight } from '../utils';
 import { DocType } from '../enums';
@@ -14,8 +17,9 @@ import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
-import { resolve } from '../fs';
+import { relative, resolve } from '../fs';
 import { FileEmitter } from './emitter';
+import { generateComponentExamplesModule } from './examples-module';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
     public name: string;
@@ -37,11 +41,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     private get absDestAssetsApiDocsPath() {
         return resolve(this.docgeni.paths.absSitePath, `${ASSETS_API_DOCS_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
     }
+    private get absExamplesSourceBundleDir() {
+        return resolve(this.docgeni.paths.absSitePath, `${ASSETS_EXAMPLES_SOURCE_BUNDLE_RELATIVE_PATH}/${this.lib.name}/${this.name}`);
+    }
     public examples: LiveExample[];
     private localeOverviewsMap: Record<string, DocSourceFile> = {};
     private localeApiDocsMap: Record<string, ApiDeclaration[]> = {};
     private localeDocItemsMap: Record<string, ComponentDocItem> = {};
-    private exampleEntrySource: string;
+    // entry file index.ts
+    private examplesEntrySource: string;
+    private examplesModuleSource: string;
 
     constructor(private docgeni: DocgeniContext, public lib: Library, name: string, absPath: string) {
         super();
@@ -65,6 +74,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         await this.emitOverviews();
         await this.emitApiDocs();
         await this.emitExamples();
+    }
+
+    public getApiDocs(locale: string): ApiDeclaration[] {
+        return this.localeApiDocsMap[locale];
     }
 
     public getDocItem(locale: string): ComponentDocItem {
@@ -114,7 +127,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         // this.hooks.buildDocSucceed.call(docSourceFile);
     }
 
-    private async buildApiDocs(): Promise<void> {
+    private async tryGetApiDocsByManual(): Promise<Record<string, ApiDeclaration[]>> {
+        const result: Record<string, ApiDeclaration[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
             const explorer = cosmiconfig.call(cosmiconfig, localeKey, {
@@ -128,19 +142,41 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 ],
                 stopDir: this.absApiPath
             });
-            const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
-
-            if (result && result.config && toolkit.utils.isArray(result.config)) {
-                result.config.forEach(item => {
-                    item.description = item.description ? Markdown.toHTML(item.description) : '';
-                    (item.properties || []).forEach(property => {
-                        property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
-                        property.description = property.description ? Markdown.toHTML(property.description) : '';
-                    });
-                });
-                this.localeApiDocsMap[localeKey] = result.config;
-            }
+            const localeResult: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
+            result[localeKey] =
+                localeResult && localeResult.config && toolkit.utils.isArray(localeResult.config) ? localeResult.config : undefined;
         }
+        return result;
+    }
+
+    private async buildApiDocs(): Promise<void> {
+        if (this.lib.apiMode === 'automatic') {
+            const apiDocs = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+            this.docgeni.config.locales.forEach(locale => {
+                this.localeApiDocsMap[locale.key] = apiDocs;
+            });
+        } else if (this.lib.apiMode === 'compatible') {
+            const apiDocs = await this.tryGetApiDocsByManual();
+            this.docgeni.config.locales.forEach(locale => {
+                if (!apiDocs[locale.key]) {
+                    apiDocs[locale.key] = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+                }
+            });
+            this.localeApiDocsMap = apiDocs;
+        } else {
+            this.localeApiDocsMap = await this.tryGetApiDocsByManual();
+        }
+
+        this.docgeni.config.locales.forEach(locale => {
+            const apiDocs = this.localeApiDocsMap[locale.key];
+            (apiDocs || []).forEach(item => {
+                item.description = item.description ? Markdown.toHTML(item.description) : '';
+                (item.properties || []).forEach(property => {
+                    property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
+                    property.description = property.description ? Markdown.toHTML(property.description) : '';
+                });
+            });
+        });
     }
 
     private async buildExamples(): Promise<void> {
@@ -149,55 +185,104 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             return;
         }
 
+        let examplesModuleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
+
         const dirs = await this.docgeni.host.getDirs(this.absExamplesPath);
-        const moduleName = toolkit.strings.pascalCase(`${this.getLibAbbrName(this.lib)}-${this.name}-examples-module`);
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
-
         for (const exampleName of dirs) {
-            const libAbbrName = this.getLibAbbrName(this.lib);
-            const componentKey = `${libAbbrName}-${this.name}-${exampleName}-example`;
-            const componentName = toolkit.strings.pascalCase(`${libAbbrName}-${this.name}-${exampleName}-example-component`);
-            const absComponentExamplePath = resolve(this.absExamplesPath, exampleName);
-            const absComponentExampleDocPath = resolve(absComponentExamplePath, EXAMPLE_META_FILE_NAME);
-
-            const liveExample: LiveExample = {
-                key: componentKey,
-                name: exampleName,
-                title: toolkit.strings.headerCase(exampleName, { delimiter: ' ' }),
-                componentName,
-                module: {
-                    name: moduleName,
-                    importSpecifier: `${this.lib.name}/${this.name}`
-                },
-                sourceFiles: [],
-                additionalFiles: [],
-                additionalComponents: []
-            };
-
-            let exampleOrder = Number.MAX_SAFE_INTEGER;
-            if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
-                const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
-                const exampleFmResult = fm<{ title: string; order: number }>(content);
-                if (exampleFmResult.attributes.title) {
-                    liveExample.title = exampleFmResult.attributes.title;
-                }
-                if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
-                    exampleOrder = exampleFmResult.attributes.order;
-                }
-            }
-            exampleOrderMap.set(liveExample, exampleOrder);
-            const sourceFiles = await this.buildExampleHighlighted(absComponentExamplePath);
-            liveExample.sourceFiles = sourceFiles;
+            const { order, liveExample } = await this.buildExample(exampleName, examplesModuleName);
+            exampleOrderMap.set(liveExample, order);
             this.examples.push(liveExample);
         }
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
-        this.exampleEntrySource = toolkit.template.compile('component-examples-entry.hbs', {
+
+        const moduleFilePath = resolve(this.absExamplesPath, 'module.ts');
+        let exportedExamplesModule: NgModuleInfo;
+        let exampleModuleSourceFile: NgSourceFile;
+        if (await this.docgeni.host.pathExists(moduleFilePath)) {
+            const moduleSourceText = await this.docgeni.host.readFile(moduleFilePath);
+            exampleModuleSourceFile = createNgSourceFile(moduleFilePath, moduleSourceText);
+            exportedExamplesModule = exampleModuleSourceFile.getExportedNgModule();
+            this.examplesModuleSource = moduleSourceText;
+        } else {
+            exampleModuleSourceFile = createNgSourceFile(moduleFilePath, '');
+        }
+        if (exportedExamplesModule) {
+            examplesModuleName = exportedExamplesModule.name;
+        } else {
+            this.examplesModuleSource = await generateComponentExamplesModule(
+                exampleModuleSourceFile,
+                examplesModuleName,
+                this.examples.map(item => {
+                    return {
+                        name: item.componentName,
+                        moduleSpecifier: `./${item.name}/${item.name}.component`
+                    };
+                })
+            );
+        }
+
+        this.examplesEntrySource = toolkit.template.compile('component-examples-entry.hbs', {
             examples: this.examples,
-            examplesModule: moduleName
+            examplesModule: examplesModuleName
         });
     }
 
-    private async buildExampleHighlighted(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
+    private async buildExample(exampleName: string, moduleName: string) {
+        const libAbbrName = this.getLibAbbrName(this.lib);
+        const componentKey = `${libAbbrName}-${this.name}-${exampleName}-example`;
+        const defaultComponentName = toolkit.strings.pascalCase(`${libAbbrName}-${this.name}-${exampleName}-example-component`);
+        const absComponentExamplePath = resolve(this.absExamplesPath, exampleName);
+        const absComponentExampleDocPath = resolve(absComponentExamplePath, EXAMPLE_META_FILE_NAME);
+
+        const liveExample: LiveExample = {
+            key: componentKey,
+            name: exampleName,
+            title: toolkit.strings.headerCase(exampleName, { delimiter: ' ' }),
+            componentName: defaultComponentName,
+            module: {
+                name: moduleName,
+                importSpecifier: `${this.lib.name}/${this.name}`
+            },
+            sourceFiles: [],
+            additionalFiles: [],
+            additionalComponents: []
+        };
+
+        // build example source files
+        const exampleSourceFiles = await this.buildExampleSourceFiles(absComponentExamplePath);
+        liveExample.sourceFiles = exampleSourceFiles;
+
+        // try extract component name from example entry ts file
+        const entrySourceFile = exampleSourceFiles.find(sourceFile => {
+            return sourceFile.name === `${exampleName}.component.ts`;
+        });
+        if (entrySourceFile) {
+            const component = createNgSourceFile(entrySourceFile.name, entrySourceFile.content).getExpectExportedComponent(exampleName);
+            if (component) {
+                liveExample.componentName = component.name;
+            }
+        }
+
+        // build order, title from FrontMatter
+        let exampleOrder = Number.MAX_SAFE_INTEGER;
+        if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
+            const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
+            const exampleFmResult = fm<{ title: string; order: number }>(content);
+            if (exampleFmResult.attributes.title) {
+                liveExample.title = exampleFmResult.attributes.title;
+            }
+            if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
+                exampleOrder = exampleFmResult.attributes.order;
+            }
+        }
+        return {
+            order: exampleOrder,
+            liveExample
+        };
+    }
+
+    private async buildExampleSourceFiles(absComponentExamplePath: string): Promise<ExampleSourceFile[]> {
         const files = await this.docgeni.host.getFiles(absComponentExamplePath, {
             exclude: EXAMPLE_META_FILE_NAME
         });
@@ -210,7 +295,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             exampleSourceFiles.push({
                 name: fileName,
                 highlightedPath: destFileName,
-                highlightedContent: highlightedSourceCode
+                highlightedContent: highlightedSourceCode,
+                content: sourceCode
             });
         }
 
@@ -225,16 +311,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 overviewSourceFile = this.localeOverviewsMap[this.docgeni.config.defaultLocale];
             }
             // Use default locale's data when api locale is not found
-            let apiDoc = this.localeApiDocsMap[locale.key];
-            if (!apiDoc) {
-                apiDoc = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
+            let apiDocs = this.localeApiDocsMap[locale.key];
+            if (!apiDocs) {
+                apiDocs = this.localeApiDocsMap[this.docgeni.config.defaultLocale];
             }
 
             const title = this.getMetaProperty(overviewSourceFile, 'title') || toolkit.strings.titleCase(this.name);
             const subtitle = this.getMetaProperty(overviewSourceFile, 'subtitle') || '';
             const order = this.getMetaProperty(overviewSourceFile, 'order');
 
-            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || apiDoc) {
+            if (overviewSourceFile || !toolkit.utils.isEmpty(this.examples) || (apiDocs && apiDocs.length > 0)) {
                 const componentNav: ComponentDocItem = {
                     id: this.name,
                     title,
@@ -243,7 +329,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
-                    api: apiDoc ? true : false,
+                    api: apiDocs && apiDocs.length > 0 ? true : false,
                     order: toolkit.utils.isNumber(order) ? order : Number.MAX_SAFE_INTEGER,
                     category: this.meta.category,
                     hidden: this.meta.hidden,
@@ -292,16 +378,32 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         }
         const examplesEntryPath = resolve(this.absDestSiteContentComponentsPath, 'index.ts');
         await this.docgeni.host.copy(this.absExamplesPath, this.absDestSiteContentComponentsPath);
-        this.addEmitFile(examplesEntryPath, this.exampleEntrySource);
-        await this.docgeni.host.writeFile(examplesEntryPath, this.exampleEntrySource);
+        await this.docgeni.host.writeFile(resolve(this.absDestSiteContentComponentsPath, 'module.ts'), this.examplesModuleSource);
+        this.addEmitFile(examplesEntryPath, this.examplesEntrySource);
+        await this.docgeni.host.writeFile(examplesEntryPath, this.examplesEntrySource);
+        const allExampleSources: { path: string; content: string }[] = [];
         for (const example of this.examples) {
             for (const sourceFile of example.sourceFiles) {
                 const absExampleHighlightPath = resolve(this.absDestAssetsExamplesHighlightedPath, `${example.name}`);
                 const destHighlightedSourceFilePath = `${absExampleHighlightPath}/${sourceFile.highlightedPath}`;
+                allExampleSources.push({
+                    path: `${example.name}/${sourceFile.name}`,
+                    content: sourceFile.content
+                });
                 this.addEmitFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
                 await this.docgeni.host.writeFile(destHighlightedSourceFilePath, sourceFile.highlightedContent);
             }
         }
+
+        // for online example e.g. StackBlitz
+        allExampleSources.push({
+            path: 'examples.module.ts',
+            content: this.examplesModuleSource
+        });
+        const bundlePath = resolve(this.absExamplesSourceBundleDir, 'bundle.json');
+        const content = JSON.stringify(allExampleSources);
+        await this.addEmitFile(bundlePath, content);
+        await this.docgeni.host.writeFile(bundlePath, content);
     }
 
     private getLibAbbrName(lib: Library): string {

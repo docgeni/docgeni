@@ -6,9 +6,10 @@ import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { DocSourceFile } from '../builders/doc-file';
-import { DocsBuilder } from '../builders';
+import { DocsBuilder, LibrariesBuilder } from '../builders';
 import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
 import { Docgeni } from '../docgeni';
+import { DocgeniHost } from '../docgeni-host';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
 
@@ -28,7 +29,7 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
     options = { ...DEFAULT_OPTIONS, ...options };
     const paths = new DocgeniPaths(options.root, 'docs', 'dist/docgeni-site');
     paths.setSitePaths('.docgeni/site', '.docgeni/site/src');
-    return {
+    const context: DocgeniContext = {
         host: createTestDocgeniHost(options.initialFiles),
         config: {
             componentsDir: '.docgeni/components',
@@ -43,10 +44,14 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
                     name: 'EN'
                 }
             ],
+            defaultLocale: 'en-us',
             siteDir: '.docgeni/site',
             outputDir: 'dist/docgeni-site',
             publicDir: '.docgeni/public',
-            defaultLocale: 'zh-cn'
+            sitemap: {
+                host: 'https://test.org'
+            },
+            navs: []
         },
         watch: options.watch,
         paths: paths,
@@ -62,6 +67,11 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         },
         version: '1.0.0'
     };
+    Object.assign(context, {
+        librariesBuilder: new LibrariesBuilder(context),
+        docsBuilder: new DocsBuilder(context)
+    });
+    return context;
 }
 
 export function updateContext(context: DocgeniContext, update: Partial<DocgeniContext>) {

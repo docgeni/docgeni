@@ -2,6 +2,6 @@ module.exports = {
     extends: ['@commitlint/config-angular'],
     rules: {
         'header-max-length': [2, 'always', 120],
-        'scope-enum': [2, 'always', ['cli', 'core', 'template', 'a-lib', 'site', 'toolkit', 'deps', 'examples']]
+        'scope-enum': [2, 'always', ['cli', 'core', 'template', 'alib', 'ngdoc', 'toolkit', 'deps', 'examples']]
     }
 };

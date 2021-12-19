@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
+
+
+### Bug Fixes
+
+* **template:** improve api display for empty properties and spacing ([801a0db](https://github.com/docgeni/docgeni/commit/801a0dbcc3ed67d3daad60e73530fd940eee8d88))
+
+
+### Features
+
+* **core:** support automatic generate api docs #OSP-230 ([#294](https://github.com/docgeni/docgeni/issues/294)) ([5b428a0](https://github.com/docgeni/docgeni/commit/5b428a0f72ea63be2e100a5646a70a0fbc0ef84d)), closes [#OSP-230](https://github.com/docgeni/docgeni/issues/OSP-230)
+
+
+
+
+
+# [1.2.0-next.2](https://github.com/docgeni/docgeni/compare/v1.2.0-next.1...v1.2.0-next.2) (2021-11-17)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+# [1.2.0-next.1](https://github.com/docgeni/docgeni/compare/v1.2.0-next.0...v1.2.0-next.1) (2021-11-16)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+# [1.2.0-next.0](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.2.0-next.0) (2021-11-16)
+
+
+### Bug Fixes
+
+* horizontal line top of footer do not overlap when doc meta is empty ([6d75e03](https://github.com/docgeni/docgeni/commit/6d75e03abb0a94b27720127ccbaa091c78a44236))
+* **core:** regenerate examples source bundle file when emit and refactor somethings #OSP-223 ([5d0e2bc](https://github.com/docgeni/docgeni/commit/5d0e2bc3ecd1925f56fb283f551399e00bab8836)), closes [#OSP-223](https://github.com/docgeni/docgeni/issues/OSP-223)
+* **template:** add @angular/cdk to dependencies of template and move @angular-devkit/schematics to cli ([#267](https://github.com/docgeni/docgeni/issues/267)) ([c136a0f](https://github.com/docgeni/docgeni/commit/c136a0fa1aa05942c8f3cc0a13ee99304ac36e13))
+* **template:** fix import docsearch error ([#274](https://github.com/docgeni/docgeni/issues/274)) ([9492006](https://github.com/docgeni/docgeni/commit/9492006cfe1636477289bfa75c6ca55803e13c24))
+
+
+### Features
+
+* example support stackblitz ([#276](https://github.com/docgeni/docgeni/issues/276)) ([9fe6a9c](https://github.com/docgeni/docgeni/commit/9fe6a9cec86dadce6bd7a472bffa709f5c8831ef))
+* **core:** generate sitemap by config #OSP-192 ([#263](https://github.com/docgeni/docgeni/issues/263)) ([9ec9300](https://github.com/docgeni/docgeni/commit/9ec930020d534b2c9a30682a7db03076ff973d73)), closes [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192) [#OSP-192](https://github.com/docgeni/docgeni/issues/OSP-192)
+* **template:** add builtins search #OSP-202 ([#271](https://github.com/docgeni/docgeni/issues/271)) ([caf7724](https://github.com/docgeni/docgeni/commit/caf7724a098879fb15e79f2effa8db55858d4a89)), closes [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202) [#OSP-202](https://github.com/docgeni/docgeni/issues/OSP-202)
+
+
+
+
+
 ## [1.1.4](https://github.com/docgeni/docgeni/compare/v1.1.3...v1.1.4) (2021-10-18)
 
 

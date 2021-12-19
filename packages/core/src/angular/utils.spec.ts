@@ -12,14 +12,16 @@ describe('#ng-utils', () => {
                     notFoundUrl: '/not-found/',
                     ['not-found-url']: '/not-found/',
                     prod: true,
-                    port: 1000
+                    port: 1000,
+                    configuration: 'prod'
                 },
                 ngBuildOptions
             );
             expect(result).toEqual({
                 ['deploy-url']: '/docgeni/',
                 prod: true,
-                port: 1000
+                port: 1000,
+                configuration: 'prod'
             });
         });
 

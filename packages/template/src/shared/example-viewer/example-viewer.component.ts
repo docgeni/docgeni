@@ -3,6 +3,9 @@ import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { HttpClient } from '@angular/common/http';
+import { StackblitzExampleService } from '../../services/stackblitz-example.service';
+import { forkJoin } from 'rxjs';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 
@@ -63,7 +66,12 @@ export class ExampleViewerComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader, private globalContext: GlobalContext) {}
+    constructor(
+        private exampleLoader: ExampleLoader,
+        private globalContext: GlobalContext,
+        private http: HttpClient,
+        private stackblitzExampleService: StackblitzExampleService
+    ) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
     // the file name to match the exampleName.component.* that displays main source files.
@@ -105,5 +113,32 @@ export class ExampleViewerComponent implements OnInit {
 
     toggleSource() {
         this.showSource = !this.showSource;
+    }
+
+    openStackBlitz() {
+        forkJoin({
+            examplesSources: this.http.get(`assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`),
+            sharedFiles: this.http.get(`assets/stack-blitz/bundle.json`)
+        }).subscribe(
+            (result: { examplesSources: { path: string; content: string }[]; sharedFiles: { path: string; content: string }[] }) => {
+                const { examplesSources, sharedFiles } = result;
+                this.stackblitzExampleService.open(
+                    [
+                        ...examplesSources.map(item => {
+                            return {
+                                ...item,
+                                path: `src/${item.path}`
+                            };
+                        }),
+                        ...sharedFiles
+                    ],
+                    this.example.module,
+                    {
+                        name: this.example.componentName,
+                        selector: this.example.key
+                    }
+                );
+            }
+        );
     }
 }

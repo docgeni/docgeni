@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
  * @order 1
  */
 @Component({
-    selector: 'alib-baz-basic-example',
+    selector: 'alib-bar-basic-example',
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss']
 })

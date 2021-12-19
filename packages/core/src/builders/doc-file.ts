@@ -6,6 +6,7 @@ import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
 import { DocgeniHost } from '../docgeni-host';
 import { resolve } from '../fs';
+import { HeadingLink } from '../interfaces';
 
 export interface DocSourceFileOptions {
     cwd: string;
@@ -27,6 +28,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     public content: string;
     public meta?: TMeta;
     public output: string = '';
+    public headings: HeadingLink[] = [];
     /**
      * @example "docs/guide/getting-started.md" when base is cwd and path=/../docs/guide/getting-started.md
      */
@@ -94,6 +96,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         });
         this.meta = result.meta;
         this.output = result.html;
+        this.headings = result.headings;
     }
 
     public async emit(destRootPath: string) {
@@ -115,6 +118,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
             await this.host.delete(this.outputPath);
             this.output = '';
             this.meta = null;
+            this.headings = [];
         }
     }
 

@@ -53,7 +53,8 @@ export class Markdown {
         });
         return {
             html: html,
-            meta: result.attributes as TMate
+            meta: result.attributes as TMate,
+            headings: renderer.headingLinks
         };
     }
 

@@ -5,11 +5,12 @@ import { NgAddSchema } from '../types/ng-add-schema';
 import { InitDocgenirc } from './init-docgenirc';
 import { CreateDocs } from './create-docs';
 import { AddCommand } from './add-command';
-import { VERSION } from '../../version';
+import { ANGULAR_VERSION, VERSION } from '../../version';
 import { AddGitignore } from './add-gitignore';
+
 function addDependenciesToPackageJson() {
     return (host: Tree, context: SchematicContext) => {
-        [
+        const dependencies = [
             {
                 type: NodeDependencyType.Dev,
                 name: '@docgeni/template',
@@ -20,7 +21,23 @@ function addDependenciesToPackageJson() {
                 name: '@docgeni/cli',
                 version: VERSION
             }
-        ].forEach(dependency => addPackageJsonDependency(host, dependency));
+        ];
+        const docgeniAngular = {
+            type: NodeDependencyType.Dev,
+            name: '@docgei/angular',
+            version: ANGULAR_VERSION
+        };
+        if (host.exists('/package.json')) {
+            const packageJsonContent = host.read('/package.json').toString();
+            const packageJson = JSON.parse(packageJsonContent);
+            if (!packageJson?.devDependencies['@docgei/angular'] && !packageJson?.dependencies['@angular/core']) {
+                dependencies.push(docgeniAngular);
+            }
+        } else {
+            dependencies.push(docgeniAngular);
+        }
+
+        dependencies.forEach(dependency => addPackageJsonDependency(host, dependency));
 
         context.addTask(new NodePackageInstallTask());
 

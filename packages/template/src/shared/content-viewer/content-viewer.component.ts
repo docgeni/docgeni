@@ -22,7 +22,7 @@ import { ExampleViewerComponent } from '../example-viewer/example-viewer.compone
 import { take } from 'rxjs/operators';
 import { DomPortalOutlet } from '../../services/dom-portal-outlet';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
-import { ContentRenderer } from '../content-renderer ';
+import { ContentRenderer } from '../content-renderer';
 import { TocService } from '../../services/toc.service';
 
 @Component({

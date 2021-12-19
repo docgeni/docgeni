@@ -9,7 +9,7 @@ export default class AngularSitePlugin implements Plugin {
     public siteBuilder: SiteBuilder;
 
     apply(context: DocgeniContext): void {
-        context.hooks.run.tapPromise(NAME, async () => {
+        context.hooks.beforeRun.tapPromise(NAME, async () => {
             this.siteBuilder = SiteBuilder.create(context);
             await this.siteBuilder.build();
             context.enableIvy = this.siteBuilder.enableIvy;

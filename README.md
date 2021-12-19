@@ -79,6 +79,16 @@ Add a README badge to show it via:
 
 [![docgeni](https://img.shields.io/badge/docs%20by-docgeni-348fe4)](https://github.com/docgeni/docgeni)
 
+## 🎉 Versions
+
+@docgeni/*| @angular/*| Description
+---| --- | --- 
+<0.5.x|>=9.0 <=13.0 | -
+\>0.5.x|>=10.0 <=13.0 | -
+1.0.x|>=10.0 <=13.0 | -
+1.1.x|>=10.0 <=13.0 | -
+
+
 ## 💻 Development
 
 ```bash

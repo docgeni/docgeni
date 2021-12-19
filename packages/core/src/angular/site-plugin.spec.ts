@@ -47,7 +47,7 @@ describe('#site-plugin', () => {
     });
 
     it('should create site success', async () => {
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
         await assertExpectedFiles(context.host, {
             [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
             [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
@@ -60,10 +60,41 @@ describe('#site-plugin', () => {
 
     it('should use custom site', async () => {
         context.config.siteProjectName = 'customSite';
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
         expect(await context.host.exists(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`)).toBeFalsy();
         expect(context.paths.absSitePath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/custom/site`);
         expect(context.paths.absSiteContentPath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/custom/site/src/app/content`);
+    });
+
+    it('should watch custom site success', async () => {
+        const sitePath = `${DEFAULT_TEST_ROOT_PATH}/custom/site`;
+        context.config.siteProjectName = 'customSite';
+        const watchAggregated$ = new Subject<HostWatchEvent[]>();
+
+        updateContext(context, { watch: true });
+        const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+        watchAggregatedSpy.and.callFake(files => {
+            expect(files).toEqual([`${sitePath}/src/assets/stack-blitz`]);
+            return watchAggregated$.asObservable();
+        });
+        await context.hooks.beforeRun.promise();
+        const text1 = toolkit.strings.generateRandomId();
+        await writeFilesToHost(context.host, {
+            [`${sitePath}/src/assets/stack-blitz/a.txt`]: text1
+        });
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/a.txt`)).toBeTruthy();
+        watchAggregated$.next([
+            {
+                type: HostWatchEventType.Created,
+                path: normalize(`${sitePath}/src/assets/stack-blitz/a.txt`),
+                time: new Date()
+            }
+        ]);
+
+        await toolkit.utils.wait(2000);
+
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/a.txt`)).toBeTruthy();
+        expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/bundle.json`)).toBeTruthy();
     });
 
     it('should copy public dir success', async () => {
@@ -80,7 +111,7 @@ describe('#site-plugin', () => {
             [`${PUBLIC_PATH}/.browserslistrc`]: text2
         });
 
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
 
         assertExpectedFiles(context.host, {
             [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: `{"name": "test"}`,
@@ -104,13 +135,14 @@ describe('#site-plugin', () => {
                 `${PUBLIC_PATH}/assets`,
                 `${PUBLIC_PATH}/styles.scss`,
                 `${PUBLIC_PATH}/index.html`,
+                `${PUBLIC_PATH}/favicon.ico`,
                 `${PUBLIC_PATH}/.browserslistrc`,
                 `${PUBLIC_PATH}/tsconfig.json`
             ]);
             return watchAggregated$.asObservable();
         });
 
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
 
         const text1 = toolkit.strings.generateRandomId();
         const text2 = toolkit.strings.generateRandomId();
@@ -170,7 +202,7 @@ describe('#site-plugin', () => {
         await writeFilesToHost(context.host, {
             [`${DEFAULT_TEST_ROOT_PATH}/lib1-src/package.json`]: `{"name": "@test/lib1"}`
         });
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
         expect(await context.host.exists(`${DEFAULT_SITE_PATH}/tsconfig.app.json`));
         const tsConfig = await context.host.readJSON<any>(`${DEFAULT_SITE_PATH}/tsconfig.app.json`);
         expect(tsConfig.compilerOptions.paths).toEqual({
@@ -182,7 +214,7 @@ describe('#site-plugin', () => {
     it('should exec angular command success', async () => {
         const deployUrl = `/${toolkit.strings.generateRandomId()}/`;
         updateContextConfig(context, { deployUrl: deployUrl });
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
 
         let calledSpawn = false;
         ngSitePlugin.siteBuilder.spawn = function(command: string, commandArgs: string[], options: SpawnOptions) {
@@ -204,7 +236,7 @@ describe('#site-plugin', () => {
     it('should exec angular command success when site is custom', async () => {
         const deployUrl = `/${toolkit.strings.generateRandomId()}/`;
         updateContextConfig(context, { deployUrl: deployUrl, siteProjectName: 'customSite' });
-        await context.hooks.run.promise();
+        await context.hooks.beforeRun.promise();
 
         let calledSpawn = false;
         ngSitePlugin.siteBuilder.spawn = function(command: string, commandArgs: string[], options: SpawnOptions) {

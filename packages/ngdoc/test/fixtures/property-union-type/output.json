@@ -1,0 +1,23 @@
+[
+  {
+    "type": "component",
+    "name": "ButtonComponent",
+    "description": "General Button Component description.",
+    "selector": "thy-button",
+    "properties": [
+      {
+        "kind": "input",
+        "name": "thyType",
+        "type": "\"primary\" | \"info\" | \"success\"",
+        "description": "Button Type",
+        "options": [
+          "primary",
+          "info",
+          "success"
+        ],
+        "jsDocTags": [],
+        "default": "primary"
+      }
+    ]
+  }
+]

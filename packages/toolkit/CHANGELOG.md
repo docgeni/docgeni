@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
+
+
+### Features
+
+* **core:** support automatic generate api docs #OSP-230 ([#294](https://github.com/docgeni/docgeni/issues/294)) ([5b428a0](https://github.com/docgeni/docgeni/commit/5b428a0f72ea63be2e100a5646a70a0fbc0ef84d)), closes [#OSP-230](https://github.com/docgeni/docgeni/issues/OSP-230)
+
+
+
+
+
+# [1.2.0-next.2](https://github.com/docgeni/docgeni/compare/v1.2.0-next.1...v1.2.0-next.2) (2021-11-17)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [1.2.0-next.1](https://github.com/docgeni/docgeni/compare/v1.2.0-next.0...v1.2.0-next.1) (2021-11-16)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [1.2.0-next.0](https://github.com/docgeni/docgeni/compare/v1.1.4...v1.2.0-next.0) (2021-11-16)
+
+
+### Features
+
+* **ngdoc:** add @docgeni/ngdoc and init structure #OSP-226 ([#284](https://github.com/docgeni/docgeni/issues/284)) ([0fbc3c5](https://github.com/docgeni/docgeni/commit/0fbc3c5f4715c799c822faacd0328e065965361a)), closes [#OSP-226](https://github.com/docgeni/docgeni/issues/OSP-226)
+
+
+
+
+
 ## [1.1.2](https://github.com/docgeni/docgeni/compare/v1.1.1...v1.1.2) (2021-10-15)
 
 

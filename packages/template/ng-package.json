@@ -11,6 +11,7 @@
     ]
   },
   "whitelistedNonPeerDependencies": [
-    "docsearch.js"
+    "docsearch.js",
+    "@angular/cdk"
   ]
 }
