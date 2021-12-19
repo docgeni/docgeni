@@ -11,7 +11,7 @@ describe('DocSourceFile', () => {
     let docgeniHost: DocgeniHost;
 
     beforeEach(() => {
-        root = '/root/test/';
+        root = '/D/root/test/';
         testHost = new virtualFs.test.TestHost({});
         docgeniHost = new DocgeniHostImpl(new virtualFs.ScopedHost(testHost, normalize(root)));
     });
@@ -87,9 +87,9 @@ describe('DocSourceFile', () => {
         });
 
         it('should get correct outputDir', async () => {
-            const outputRootPath = '/dest/path';
+            const outputRootPath = '/D/dest/path';
             const outDir = docSourceFile.getOutputDir(outputRootPath);
-            expect(outDir).toEqual(path.resolve(outputRootPath, 'docs'));
+            expect(outDir).toEqual(`${outputRootPath}/docs`);
         });
 
         it('should get correct relativeOutputPath', async () => {
@@ -103,15 +103,15 @@ describe('DocSourceFile', () => {
         });
 
         it('should get correct outPath', async () => {
-            const outputRootPath = '/dest/path';
+            const outputRootPath = '/D/dest/path';
             const outPath = docSourceFile.getOutputPath(outputRootPath);
-            expect(outPath).toEqual(path.resolve(outputRootPath, `docs/getting-started.html`));
+            expect(outPath).toEqual(`${outputRootPath}/docs/getting-started.html`);
         });
 
         it(`should get correct outPath when ext = '.htm'`, async () => {
-            const outputRootPath = '/dest/path';
+            const outputRootPath = '/D/dest/path';
             const outPath = docSourceFile.getOutputPath(outputRootPath, '.htm');
-            expect(outPath).toEqual(path.resolve(outputRootPath, `docs/getting-started.htm`));
+            expect(outPath).toEqual(`${outputRootPath}/docs/getting-started.htm`);
         });
     });
 
@@ -151,8 +151,8 @@ describe('DocSourceFile', () => {
             docgeniHost
         );
         await docSourceFile.build();
-        await docSourceFile.emit('/dest/root');
-        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
+        await docSourceFile.emit('/D/dest/root');
+        const outputFilePath = `/D/dest/root/docs/getting-started.html`;
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         const outputContent = await docgeniHost.readFile(outputFilePath);
         expect(outputContent).toContain(`<p>content</p>`);
@@ -173,8 +173,8 @@ describe('DocSourceFile', () => {
             docgeniHost
         );
         await docSourceFile.build();
-        await docSourceFile.emit('/dest/root');
-        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
+        await docSourceFile.emit('/D/dest/root');
+        const outputFilePath = `/D/dest/root/docs/getting-started.html`;
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         await docSourceFile.clear();
         expect(await docgeniHost.pathExists(outputFilePath)).toBeFalsy();
@@ -195,13 +195,13 @@ describe('DocSourceFile', () => {
             docgeniHost
         );
         await docSourceFile.build();
-        await docSourceFile.emit('/dest/root');
-        const outputFilePath = path.resolve(`/dest/root/`, `docs/getting-started.html`);
+        await docSourceFile.emit('/D/dest/root');
+        const outputFilePath = `/D/dest/root/docs/getting-started.html`;
         expect(await docgeniHost.pathExists(outputFilePath)).toBeTruthy();
         await docSourceFile.build();
-        await docSourceFile.emit('/dest/root2');
+        await docSourceFile.emit('/D/dest/root2');
         expect(await docgeniHost.pathExists(outputFilePath)).toBeFalsy();
-        expect(await docgeniHost.pathExists(path.resolve(`/dest/root2/docs/getting-started.html`))).toBeTruthy();
+        expect(await docgeniHost.pathExists(`/D/dest/root2/docs/getting-started.html`)).toBeTruthy();
     });
 
     it('should get correct isEmpty', async () => {

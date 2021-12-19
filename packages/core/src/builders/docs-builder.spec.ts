@@ -9,10 +9,32 @@ describe('#components-builder', () => {
     let context: DocgeniContext;
     beforeEach(() => {
         context = createTestDocgeniContext({
-            [`${DEFAULT_TEST_ROOT_PATH}/docs/index.md`]: 'index',
-            [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/index.md`]: 'guides',
-            [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`]: 'hello'
+            initialFiles: {
+                [`${DEFAULT_TEST_ROOT_PATH}/docs/index.md`]: 'index',
+                [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/index.md`]: 'guides',
+                [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`]: 'hello'
+            }
         });
+    });
+
+    it('should emit docs success', async () => {
+        const docsBuilder = new DocsBuilder(context);
+        const globSyncSyp = spyOn(toolkit.fs, 'globSync');
+        const docFiles = ['index.md', 'guides/index.md', 'guides/hello.md'];
+        globSyncSyp.and.returnValue(
+            docFiles.map(docFile => {
+                return `${DEFAULT_TEST_ROOT_PATH}/docs/${docFile}`;
+            })
+        );
+        await docsBuilder.initialize();
+        await docsBuilder.build();
+        await docsBuilder.emit();
+
+        for (const docFile of docFiles) {
+            const distFullPath = `${context.paths.absSiteAssetsContentDocsPath}/${docFile.replace('.md', '.html')}`;
+            const isExists = await context.host.exists(distFullPath);
+            expect(isExists).toEqual(true, `doc file ${docFile} is not exist`);
+        }
     });
 
     it('should watch success', async () => {
