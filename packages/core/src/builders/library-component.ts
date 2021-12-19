@@ -14,7 +14,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
-import { resolve } from '../fs';
+import { getSystemPath, resolve } from '../fs';
 import { FileEmitter } from './emitter';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
@@ -117,6 +117,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     private async buildApiDocs(): Promise<void> {
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
+            const realAbsApiPath = getSystemPath(this.absApiPath);
             const explorer = cosmiconfig.call(cosmiconfig, localeKey, {
                 searchPlaces: [
                     localeKey,
@@ -126,9 +127,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     `${localeKey}.js`,
                     `${localeKey}.config.js`
                 ],
-                stopDir: this.absApiPath
+                stopDir: realAbsApiPath
             });
-            const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
+            const result: { config: ApiDeclaration[]; filepath: string } = await explorer.search(realAbsApiPath);
 
             if (result && result.config && toolkit.utils.isArray(result.config)) {
                 result.config.forEach(item => {
