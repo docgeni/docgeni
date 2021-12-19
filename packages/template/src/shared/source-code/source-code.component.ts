@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ContentRenderer } from '../content-renderer ';
+import { ContentRenderer } from '../content-renderer';
 
 @Component({
     selector: 'dg-source-code, [dgSourceCode]',
