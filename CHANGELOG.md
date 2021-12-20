@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.4](https://github.com/docgeni/docgeni/compare/v1.2.0-next.3...v1.2.0-next.4) (2021-12-20)
+
+
+### Bug Fixes
+
+* **core:** should generate correct output path for docs [#295](https://github.com/docgeni/docgeni/issues/295) ([#298](https://github.com/docgeni/docgeni/issues/298)) ([5e18a3a](https://github.com/docgeni/docgeni/commit/5e18a3abedc916a492b26f3cccbca5f99fe23596))
+* **core:** should transform to real abs path for cosmiconfig search #OSP-239 ([#299](https://github.com/docgeni/docgeni/issues/299)) ([fea46c8](https://github.com/docgeni/docgeni/commit/fea46c8896e8bda0db189754de21dbe671cf9521)), closes [#OSP-239](https://github.com/docgeni/docgeni/issues/OSP-239)
+* **template:** remove space from name of content-renderer ([abd804d](https://github.com/docgeni/docgeni/commit/abd804d87ad1af029014c39668932db863f6dbe8))
+
+
+
+
+
 # [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
 
 

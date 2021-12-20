@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.4](https://github.com/docgeni/docgeni/compare/v1.2.0-next.3...v1.2.0-next.4) (2021-12-20)
+
+
+### Bug Fixes
+
+* **template:** remove space from name of content-renderer ([abd804d](https://github.com/docgeni/docgeni/commit/abd804d87ad1af029014c39668932db863f6dbe8))
+
+
+
+
+
 # [1.2.0-next.3](https://github.com/docgeni/docgeni/compare/v1.2.0-next.2...v1.2.0-next.3) (2021-12-17)
 
 
