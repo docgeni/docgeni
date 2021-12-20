@@ -80,6 +80,17 @@ $dg-service-color: #8e24aa;
         }
 
         .dg-component-api {
+            display: flex;
+            align-items: flex-start;
+            .dg-component-api-content {
+                flex: auto;
+                width: 78%;
+                max-width: 78%;
+            }
+            .dg-component-api-toc {
+                margin: 0 0 20px 20px;
+            }
+
             .dg-api-header {
                 display: flex;
                 align-items: center;
@@ -89,6 +100,7 @@ $dg-service-color: #8e24aa;
                 }
 
                 .name {
+                    margin: 0;
                     font-size: $dg-font-size-lg;
                     font-weight: 500;
                 }
