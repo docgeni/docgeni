@@ -6,7 +6,7 @@ import { toolkit } from '@docgeni/toolkit';
 import * as systemPath from 'path';
 import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
 import { DocgeniHost } from '../docgeni-host';
-import { normalize } from '../fs';
+import { getSystemPath, normalize } from '../fs';
 import { compatibleNormalize } from '../markdown';
 import { ApiDeclaration } from '../interfaces';
 import { EOL } from 'os';
@@ -29,6 +29,7 @@ export class LibraryComponentSpectator {
             this.cosmiconfigOptions.push(options);
             return {
                 search: async (path: string) => {
+                    expect(path).toEqual(getSystemPath(component.absApiPath));
                     return {
                         config: apiDocsDefinitions[moduleName]
                     };
@@ -199,7 +200,7 @@ describe('#library-component', () => {
             const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
             const absDestAssetsExamplesBundlePath = `${siteRoot}/assets/content/examples-source-bundle/alib`;
 
-            componentSpectator.assertCosmiconfigOptions(buttonDirPath);
+            componentSpectator.assertCosmiconfigOptions(getSystemPath(buttonDirPath));
 
             await component.emit();
 

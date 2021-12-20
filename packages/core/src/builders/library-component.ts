@@ -17,7 +17,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
 import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
-import { relative, resolve } from '../fs';
+import { getSystemPath, resolve } from '../fs';
 import { FileEmitter } from './emitter';
 import { generateComponentExamplesModule } from './examples-module';
 
@@ -131,6 +131,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         const result: Record<string, ApiDeclaration[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
+            const realAbsApiPath = getSystemPath(this.absApiPath);
             const explorer = cosmiconfig.call(cosmiconfig, localeKey, {
                 searchPlaces: [
                     localeKey,
@@ -140,9 +141,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     `${localeKey}.js`,
                     `${localeKey}.config.js`
                 ],
-                stopDir: this.absApiPath
+                stopDir: realAbsApiPath
             });
-            const localeResult: { config: ApiDeclaration[]; filepath: string } = await explorer.search(this.absApiPath);
+            const localeResult: { config: ApiDeclaration[]; filepath: string } = await explorer.search(realAbsApiPath);
             result[localeKey] =
                 localeResult && localeResult.config && toolkit.utils.isArray(localeResult.config) ? localeResult.config : undefined;
         }
