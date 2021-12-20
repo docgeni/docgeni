@@ -46,11 +46,11 @@ export class LibraryComponentSpectator {
         expect(this.cosmiconfigOptions).toEqual([
             {
                 searchPlaces: ['zh-cn', 'zh-cn.json', 'zh-cn.yaml', 'zh-cn.yml', 'zh-cn.js', 'zh-cn.config.js'],
-                stopDir: `${componentDir}/api`
+                stopDir: getSystemPath(`${componentDir}/api`)
             },
             {
                 searchPlaces: ['en-us', 'en-us.json', 'en-us.yaml', 'en-us.yml', 'en-us.js', 'en-us.config.js'],
-                stopDir: `${componentDir}/api`
+                stopDir: getSystemPath(`${componentDir}/api`)
             }
         ]);
     }
@@ -200,7 +200,7 @@ describe('#library-component', () => {
             const absDestAssetsExamplesHighlightedPath = `${siteRoot}/assets/content/examples-highlighted/alib`;
             const absDestAssetsExamplesBundlePath = `${siteRoot}/assets/content/examples-source-bundle/alib`;
 
-            componentSpectator.assertCosmiconfigOptions(getSystemPath(buttonDirPath));
+            componentSpectator.assertCosmiconfigOptions(buttonDirPath);
 
             await component.emit();
 
