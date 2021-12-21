@@ -58,6 +58,13 @@
     .action-items {
         display: flex;
         align-items: center;
+        flex: auto;
+        justify-content: end;
+
+        .search-container {
+            flex: auto;
+            max-width: 300px;
+        }
 
         .action-item {
             margin-left: 20px;
@@ -66,12 +73,6 @@
         .repo-url {
             .dg-icon {
                 font-size: 32px;
-            }
-        }
-
-        .dg-search-container {
-            .search {
-                width: 200px;
             }
         }
     }
