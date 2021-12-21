@@ -1,5 +1,7 @@
 .dg-search-container {
     position: relative;
+    line-height: $dg-font-size-base;
+    font-size: $dg-font-size-base;
 
     .search-icon {
         position: absolute;
@@ -14,10 +16,12 @@
 
     .search {
         padding: 0.532rem 10px 0.532rem 30px;
+        width: 100%;
         outline: none;
         border: 1px solid $dg-gray-200;
         border-radius: 18px;
         -webkit-appearance: none;
+        box-sizing: border-box;
     }
 
     .search-results-container {
@@ -74,5 +78,9 @@
                 background-color: rgba($dg-warning, 0.4);
             }
         }
+    }
+
+    .algolia-autocomplete {
+        width: 100%;
     }
 }
