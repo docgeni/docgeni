@@ -46,17 +46,31 @@
         <thead>
           <tr class="dg-api-properties-header-row">
             <th class="dg-api-properties-name-th">Name</th>
-            <th class="dg-api-properties-type-th">Type</th>
+            <th class="dg-api-methods-type-th">Type</th>
             <th class="dg-api-properties-description-th">Description</th>
           </tr>
         </thead>
         <tbody>
           <tr class="dg-api-properties-row" *ngFor="let method of apiDeclaration.methods">
-            <td class="dg-api-properties-name-cell">
+            <td class="dg-api-properties-name-cell" [attr.rowspan]="method.rowSpan" *ngIf="method.rowSpan">
               <label class="dg-label dg-label-sm dg-label-outline-primary">{{ method.name }}</label>
             </td>
             <td class="dg-api-properties-type-cell">
-              <label class=""> {{ method.params }}</label>
+              <label class="">
+                参数:
+                <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
+                  <li *ngFor="let item of method.parameters">
+                    <label class="dg-label dg-label-sm dg-label-outline-primary"> {{ item.name }}:{{ item.type }}</label>
+                    {{ item.description }}
+                  </li>
+                </ng-container>
+
+                返回值:
+                <div>
+                  <label class="dg-label dg-label-sm dg-label-outline-primary">{{ method.returnValue.type }}</label>
+                  {{ method.returnValue.description }}
+                </div>
+              </label>
             </td>
             <td class="dg-api-property-description" [innerHTML]="method.description"></td>
           </tr>
@@ -68,5 +82,8 @@
     </div>
   </ng-container>
 </ng-container>
+<ng-template #noParametersTemplate>
+  <div>None</div>
+</ng-template>
 
 <ng-template #loading> Loading... </ng-template>

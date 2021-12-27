@@ -1,6 +1,6 @@
 import { ts } from './typescript';
 import { toolkit } from '@docgeni/toolkit';
-import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator } from './types';
+import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgMethodDoc, NgServiceDoc } from './types';
 import {
     getNgDecorator,
     getNgPropertyDecorator,
@@ -10,7 +10,10 @@ import {
     getNgPropertyOptions,
     getPropertyValue,
     serializeSymbol,
-    getDocTagsBySymbol
+    getDocTagsBySymbol,
+    getDocTagsBySignature,
+    serializeMethodParameterSymbol,
+    declarationIsPublic
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -87,7 +90,7 @@ export class NgDocParser {
                                     docs.push(this.parseDirectiveDoc(context, type, symbol, ngDecorator));
                                     break;
                                 case 'service':
-                                    this.parseServiceDoc(context, symbol, ngDecorator);
+                                    docs.push(this.parseServiceDoc(context, symbol, ngDecorator));
                                     break;
                                 case 'pipe':
                                     break;
@@ -102,14 +105,24 @@ export class NgDocParser {
         return docs;
     }
 
-    private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {}
+    private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
+        const description = serializeSymbol(symbol, context.checker);
+        let tags = getDocTagsBySymbol(symbol);
+        const directiveDoc: NgServiceDoc = {
+            name: description.name,
+            description: tags.description?.text || description.description
+        };
+        directiveDoc.properties = this.parseServiceProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        directiveDoc.methods = this.parseServiceMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        return directiveDoc;
+    }
 
     private parseDirectiveDoc(context: ParserSourceFileContext, type: NgDocItemType, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
         const description = serializeSymbol(symbol, context.checker);
         const directiveDoc: NgDirectiveDoc = {
             type: type,
             name: description.name,
-            description: description.documentation,
+            description: description.description,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
         directiveDoc.properties = this.parseDirectiveProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -137,7 +150,7 @@ export class NgDocParser {
                             options: options,
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
-                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.documentation,
+                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.description,
                         default: '',
                         tags: tags
                     };
@@ -147,6 +160,62 @@ export class NgDocParser {
                             (tags.default && tags.default.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
                     }
                     properties.push(property);
+                }
+            }
+        });
+        return properties;
+    }
+    private parseServiceProperties(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
+        const properties: NgPropertyDoc[] = [];
+        ts.forEachChild(classDeclaration, (node: ts.Node) => {
+            if ((ts.isPropertyDeclaration(node) || ts.isSetAccessor(node)) && declarationIsPublic(node)) {
+                const symbol = context.checker.getSymbolAtLocation(node.name);
+                if (symbol) {
+                    const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
+                    const symbolDescription = serializeSymbol(symbol, context.checker);
+                    const options = getNgPropertyOptions(propertyDeclaration, context.checker);
+                    const tags = getDocTagsBySymbol(symbol);
+                    const property: NgPropertyDoc = {
+                        name: symbolDescription.name,
+                        type: {
+                            name: symbolDescription.type,
+                            options: options,
+                            kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
+                        },
+                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.description,
+                        default: '',
+                        tags: tags
+                    };
+
+                    properties.push(property);
+                }
+            }
+        });
+        return properties;
+    }
+    private parseServiceMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
+        const properties: NgPropertyDoc[] = [];
+        ts.forEachChild(classDeclaration, (node: ts.Node) => {
+            if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
+                const symbol = context.checker.getSymbolAtLocation(node.name);
+                if (symbol && node.body) {
+                    let type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+                    const symbolDescription = serializeSymbol(symbol, context.checker);
+                    let list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map((signature, index, array) => {
+                        let tags = getDocTagsBySignature(signature);
+                        return {
+                            rowSpan: index === 0 ? array.length : 0,
+                            name: symbolDescription.name,
+                            parameters: signature.parameters.map(parameter =>
+                                serializeMethodParameterSymbol(parameter, context.checker, tags)
+                            ),
+                            returnValue: { type: context.checker.typeToString(signature.getReturnType()), description: tags.return?.text },
+                            description:
+                                tags.description?.text || ts.displayPartsToString(signature.getDocumentationComment(context.checker))
+                        } as NgMethodDoc;
+                    });
+
+                    properties.push(...list);
                 }
             }
         });
