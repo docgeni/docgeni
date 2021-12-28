@@ -108,7 +108,10 @@ Create custom built-in components in the default dir `.docgeni/components`, such
     ├── module.ts
 ```
 
-The `color` component needs to export the selector used in markdown and component by default, and inherit the `DocgeniBuiltInComponent` and pass it in to elementRef. The following example is the custom text color component:
+Custom components need to inherit the 'DocgeniBuiltInComponent' base class, inject `elementRef` into the constructor, and pass in the parent class by calling `super (elementRef)`.
+
+<alert type="info">The rendering component used in markdown takes the first component defined in the file by default, and the selector is the component's selector. If you need to customize, you can customize the settings through `export default { selector: '', component: xx}`.</alert>
+
 
 ```ts
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
@@ -139,3 +142,19 @@ Write the following syntax in markdown:
 <my-color color="red">Color</my-color>
 ```
 Preview: <my-color color="red">Color</my-color>
+
+
+
+Built in components configure third-party dependencies, new file named `module.ts` in `.docgeni/components` folder and type following code:
+
+```ts
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+export default {
+    imports: [FormsModule, CommonModule],
+    providers: []
+};
+```
+
+In this way, the components and directives exported by `CommonModule` and `FormsModule` can be used in custom built-in components.
