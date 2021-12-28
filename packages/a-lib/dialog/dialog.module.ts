@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Service1Service } from './service1.service';
+import { AlibDialog } from './dialog.service';
 
 @NgModule({
     declarations: [],
     imports: [CommonModule],
-    exports: [Service1Service],
+    exports: [AlibDialog],
     providers: []
 })
-export class AlibService1Module {}
+export class AlibDialogModule {}

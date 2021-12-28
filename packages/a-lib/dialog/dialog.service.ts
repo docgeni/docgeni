@@ -1,14 +1,46 @@
-import { Injectable } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { Injectable, TemplateRef } from '@angular/core';
+
+export abstract class AlibDialogRef<T = unknown, TResult = unknown> {
+    instance: T;
+    result: TResult;
+}
+
+export interface AlibDialogConfig {}
+
 /**
- * @description 测试服务备注
+ * @description Dialog Service of alib
  * @export
- * @class Service1Service
+ * @class AlibDialog
  */
 @Injectable()
-export class Service1Service {
+export class AlibDialog {
     property1: string;
     property2: number;
     private property3: string;
+
+    /** Keeps track of the currently-open dialogs. */
+    get openDialogs(): AlibDialogRef[] {
+        return [];
+    }
+
+    /**
+     * Opens a modal dialog containing the given template or component.
+     * @param componentOrTemplateRef
+     * @param config
+     */
+    open<T, TData = unknown, TResult = unknown>(
+        componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
+        config?: AlibDialogConfig
+    ): AlibDialogRef<T, TResult> {
+        return null;
+    }
+
+    /**
+     * Closes all of the currently-open dialogs.
+     */
+    closeAll(): void {}
+
     /**
      * 不会获取到
      * @description method1重载方法1
