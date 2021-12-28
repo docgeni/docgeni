@@ -9,7 +9,7 @@ export abstract class AlibDialogRef<T = unknown, TResult = unknown> {
 export interface AlibDialogConfig {}
 
 /**
- * @description Dialog Service of alib
+ * Service to open modal dialogs.
  * @export
  * @class AlibDialog
  */
