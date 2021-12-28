@@ -105,6 +105,7 @@ module.exports = [
 ];
 
 ```
+如需自动生成 API 请配置 [apiMode](/configuration/lib#apimode-<label>1-2-0+</label>)。
 
 ## examplesDir
 
@@ -160,3 +161,13 @@ module.exports = [
     }
 ]
 ```
+## apiMode <label>1.2.0+</label>
+
+- 类型：`'compatible' | 'manual' | 'automatic'`
+- 默认：`manual`
+
+组件 api 生成模式：
+
+- `manual`: 手动模式，以配置的形式定义组件 API，默认模式
+- `automatic`: 自动模式，通过组件的注释自动生成 API
+- `compatible`: 兼容模式，如果存在 [API 定义文件](configuration/lib#apidir) 以配置优先，否则通过注释自动生成

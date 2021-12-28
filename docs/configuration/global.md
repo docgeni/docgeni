@@ -156,3 +156,35 @@ module.exports = {
     ...
 }
 ```
+
+## sitemap <label>1.2.0+</label>
+- 类型：`{host?: string;}`
+- 默认： `null`
+
+开启自动生成`sitemap.xml`的功能，`hostname`配置生成的 URL 前缀。
+
+## algolia <label>1.2.0+</label>
+- 类型：`DocgeniAlgoliaConfig`
+- 默认： `null`
+
+配置 Algolia's [DocSearch](https://docsearch.algolia.com) 服务，需要配置`apiKey`和`indexName`。
+```js
+{
+  algolia: {
+    apiKey: 'Your api key',  // DocSearch 服务通过申请后接受的邮件中会为站点配置一个唯一 Key
+    indexName: 'docgeni',    // 索引名称
+  }
+}
+```
+
+如果网站不符合 DocSearch 的[免费标准](https://docsearch.algolia.com/docs/who-can-apply/)，可以自己[部署爬虫](https://docsearch.algolia.com/docs/legacy/run-your-own/) 抓取网站信息并上传到 Algolia 应用中，自己爬取需要提供`appId`。
+
+```js
+{
+  algolia: {
+    appId: 'Your app id',
+    apiKey: 'Your api key',
+    indexName: 'docgeni',
+  }
+}
+```

@@ -156,3 +156,35 @@ module.exports = {
     ...
 }
 ```
+
+## sitemap  <label>1.2.0+</label>
+- Type: `{host?: string;}`
+- Default: `null`
+
+Enable the automatic generation of `sitemap.xml`, `hostname` is configuration of url prefix.
+
+## algolia <label>1.2.0+</label>
+- Type: `DocgeniAlgoliaConfig`
+- Default: `null`
+
+Configure Algolia's [DocSearch]（ https://docsearch.algolia.com ）Service, you need to configure `apikey` and `indexname`.
+```js
+{
+  algolia: {
+    apiKey: 'Your api key',  // A unique key will be configured for the site in the mail received after the DocSearch service passes the application
+    indexName: 'docgeni',    // name of index 
+  }
+}
+```
+
+If your website does not meet DocSearch's [Free Standard](https://docsearch.algolia.com/docs/who-can-apply), you can [deploy crawler](https://docsearch.algolia.com/docs/legacy/run-your-own/) yourself and grab the website information and upload it to the algolia application. You need to provide `appid` for crawling.
+
+```js
+{
+  algolia: {
+    appId: 'Your app id',
+    apiKey: 'Your api key',
+    indexName: 'docgeni',
+  }
+}
+```
