@@ -109,6 +109,7 @@ export class NgDocParser {
         const description = serializeSymbol(symbol, context.checker);
         let tags = getDocTagsBySymbol(symbol);
         const directiveDoc: NgServiceDoc = {
+            type: 'service',
             name: description.name,
             description: tags.description?.text || description.description
         };

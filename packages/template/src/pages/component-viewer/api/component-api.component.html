@@ -24,7 +24,7 @@
         <tbody>
           <tr class="dg-api-properties-row" *ngFor="let property of apiDeclaration.properties">
             <td class="dg-api-properties-name-cell">
-              <label class="dg-label dg-label-sm dg-label-outline-primary">{{ property.name }}</label>
+              <label>{{ property.name }}</label>
             </td>
             <td class="dg-api-properties-type-cell">
               <label class="">{{ property.type.name || property.type }}</label>
@@ -53,24 +53,33 @@
         <tbody>
           <tr class="dg-api-properties-row" *ngFor="let method of apiDeclaration.methods">
             <td class="dg-api-properties-name-cell" [attr.rowspan]="method.rowSpan" *ngIf="method.rowSpan">
-              <label class="dg-label dg-label-sm dg-label-outline-primary">{{ method.name }}</label>
+              <label>{{ method.name }}</label>
             </td>
             <td class="dg-api-properties-type-cell">
-              <label class="">
-                参数:
-                <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
-                  <li *ngFor="let item of method.parameters">
-                    <label class="dg-label dg-label-sm dg-label-outline-primary"> {{ item.name }}:{{ item.type }}</label>
-                    {{ item.description }}
-                  </li>
-                </ng-container>
-
-                返回值:
-                <div>
-                  <label class="dg-label dg-label-sm dg-label-outline-primary">{{ method.returnValue.type }}</label>
-                  {{ method.returnValue.description }}
+              <div style="display: flex;">
+                <div class="method-parameter-head">
+                  参&nbsp;&nbsp;&nbsp;&nbsp;数:
                 </div>
-              </label>
+
+                <div style="display: flex;flex-wrap: wrap;">
+                  <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
+                    <div *ngFor="let item of method.parameters" class="method-parameter">
+                      <span class="method-parameter-type">{{ item.name }}:{{ item.type }}</span>
+                      <span class="method-parameter-description" *ngIf="item.description">{{ item.description }}</span>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div style="display: flex;">
+                <div class="method-parameter-head">
+                  返回值:
+                </div>
+                <div class="method-return-value">
+                  <span class="method-parameter-type">{{ method.returnValue.type }}</span>
+                  <span class="method-parameter-description">{{ method.returnValue.description }}</span>
+                </div>
+              </div>
             </td>
             <td class="dg-api-property-description" [innerHTML]="method.description"></td>
           </tr>
@@ -83,7 +92,7 @@
   </ng-container>
 </ng-container>
 <ng-template #noParametersTemplate>
-  <div>None</div>
+  <div style="padding-left: 5px;">None</div>
 </ng-template>
 
 <ng-template #loading> Loading... </ng-template>

@@ -123,6 +123,7 @@
   {
     "name": "Logger",
     "description": "This is logger service",
+    "type":"service",
     "properties": [],
     "methods": [
       {
@@ -145,6 +146,7 @@
   {
     "name": "Service1Service",
     "description": "测试服务备注",
+    "type":"service",
     "properties": [
       {
         "name": "property1",

@@ -24,6 +24,14 @@ export class Service1Service {
      * @memberof Service1Service
      */
     method1(input1: number, input2: number): void;
+    /**
+     * 不会获取到
+     * @description method1重载方法3
+     * @param input1
+     * @param input2 注释过长时
+     * @memberof Service1Service
+     */
+    method1(input1: number, input2: number): void;
     method1(input1: number, input2?: number): void {}
     /**
      * method2默认备注
