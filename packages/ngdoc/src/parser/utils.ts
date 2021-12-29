@@ -202,7 +202,7 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
         } else {
             let paramName: string;
             let paramText: string;
-            let regexpResult = (item.text || '').match(/(^\S+)\s?(.*)$/);
+            const regexpResult = (item.text || '').match(/(^\S+)\s?(.*)$/);
             if (regexpResult) {
                 paramText = regexpResult[2] || '';
                 paramName = regexpResult[1];
@@ -217,8 +217,8 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
 }
 
 export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.TypeChecker, tags: MethodDocTagResult) {
-    let result = serializeSymbol(symbol, checker);
-    result.description = tags.param[result.name]?.text || result.description;
+    const result = serializeSymbol(symbol, checker);
+    result.description = (tags.param || {})[result.name]?.text || result.description;
     return result;
 }
 

@@ -56,12 +56,12 @@
               <label>{{ method.name }}</label>
             </td>
             <td class="dg-api-properties-type-cell">
-              <div style="display: flex;">
+              <div class="dg-api-method-parameter">
                 <div class="method-parameter-head">
                   参&nbsp;&nbsp;&nbsp;&nbsp;数:
                 </div>
 
-                <div style="display: flex;flex-wrap: wrap;">
+                <div class="dg-api-method-parameter-list">
                   <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
                     <div *ngFor="let item of method.parameters" class="method-parameter">
                       <span class="method-parameter-type">{{ item.name }}:{{ item.type }}</span>
@@ -71,7 +71,7 @@
                 </div>
               </div>
 
-              <div style="display: flex;">
+              <div class="dg-api-method-parameter">
                 <div class="method-parameter-head">
                   返回值:
                 </div>
@@ -92,7 +92,7 @@
   </ng-container>
 </ng-container>
 <ng-template #noParametersTemplate>
-  <div style="padding-left: 5px;">None</div>
+  <div class="dg-api-no-method-parameter">None</div>
 </ng-template>
 
 <ng-template #loading> Loading... </ng-template>

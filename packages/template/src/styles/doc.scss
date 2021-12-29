@@ -152,7 +152,7 @@ $dg-service-color: #8e24aa;
                     }
 
                     .dg-api-methods-type-th {
-                        width: 300px;
+                        width: 400px;
                     }
 
                     .dg-api-properties-default-th {
@@ -466,5 +466,18 @@ td {
 }
 
 .method-return-value {
+    padding-left: 5px;
+}
+
+.dg-api-method-parameter {
+    display: flex;
+}
+
+.dg-api-method-parameter-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dg-api-no-method-parameter {
     padding-left: 5px;
 }

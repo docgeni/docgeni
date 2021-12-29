@@ -107,7 +107,7 @@ export class NgDocParser {
 
     private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
         const description = serializeSymbol(symbol, context.checker);
-        let tags = getDocTagsBySymbol(symbol);
+        const tags = getDocTagsBySymbol(symbol);
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
@@ -200,10 +200,10 @@ export class NgDocParser {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
                 if (symbol && node.body) {
-                    let type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+                    const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
-                    let list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map((signature, index, array) => {
-                        let tags = getDocTagsBySignature(signature);
+                    const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map((signature, index, array) => {
+                        const tags = getDocTagsBySignature(signature);
                         return {
                             rowSpan: index === 0 ? array.length : 0,
                             name: symbolDescription.name,
