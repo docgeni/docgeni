@@ -111,7 +111,7 @@ export class NgDocParser {
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
-            description: tags.description?.text || description.description
+            description: tags.description?.text || description.comment
         };
         directiveDoc.properties = this.parseServiceProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
         directiveDoc.methods = this.parseServiceMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -123,7 +123,7 @@ export class NgDocParser {
         const directiveDoc: NgDirectiveDoc = {
             type: type,
             name: description.name,
-            description: description.description,
+            description: description.comment,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
         directiveDoc.properties = this.parseDirectiveProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -151,7 +151,7 @@ export class NgDocParser {
                             options: options,
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
-                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.description,
+                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
                         default: '',
                         tags: tags
                     };
@@ -183,7 +183,7 @@ export class NgDocParser {
                             options: options,
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
-                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.description,
+                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
                         default: '',
                         tags: tags
                     };
@@ -202,10 +202,9 @@ export class NgDocParser {
                 if (symbol && node.body) {
                     const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
-                    const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map((signature, index, array) => {
+                    const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map(signature => {
                         const tags = getDocTagsBySignature(signature);
                         return {
-                            rowSpan: index === 0 ? array.length : 0,
                             name: symbolDescription.name,
                             parameters: signature.parameters.map(parameter =>
                                 serializeMethodParameterSymbol(parameter, context.checker, tags)

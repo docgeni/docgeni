@@ -20,7 +20,7 @@ export function getNodeText(node: ts.Node) {
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
     return {
         name: symbol.getName(),
-        description: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
+        comment: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
         type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
     };
 }
@@ -218,7 +218,7 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
 
 export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.TypeChecker, tags: MethodDocTagResult) {
     const result = serializeSymbol(symbol, checker);
-    result.description = (tags.param || {})[result.name]?.text || result.description;
+    result.comment = (tags.param || {})[result.name]?.text || result.comment;
     return result;
 }
 

@@ -121,18 +121,17 @@
     "properties": []
   },
   {
+    "type": "service",
     "name": "Logger",
     "description": "This is logger service",
-    "type":"service",
     "properties": [],
     "methods": [
       {
-        "rowSpan": 1,
         "name": "info",
         "parameters": [
           {
             "name": "message",
-            "description": "message to log",
+            "comment": "message to log",
             "type": "string"
           }
         ],
@@ -140,82 +139,6 @@
           "type": "void"
         },
         "description": "Log info message"
-      }
-    ]
-  },
-  {
-    "name": "Service1Service",
-    "description": "测试服务备注",
-    "type":"service",
-    "properties": [
-      {
-        "name": "property1",
-        "type": {
-          "name": "string",
-          "options": null,
-          "kindName": "StringKeyword"
-        },
-        "description": "",
-        "default": "",
-        "tags": {}
-      },
-      {
-        "name": "property2",
-        "type": {
-          "name": "number",
-          "options": null,
-          "kindName": "NumberKeyword"
-        },
-        "description": "",
-        "default": "",
-        "tags": {}
-      }
-    ],
-    "methods": [
-      {
-        "rowSpan": 2,
-        "name": "method1",
-        "parameters": [
-          {
-            "name": "input1",
-            "description": "这是一个参数",
-            "type": "number"
-          }
-        ],
-        "returnValue": {
-          "type": "void"
-        },
-        "description": "method1重载方法1"
-      },
-      {
-        "rowSpan": 0,
-        "name": "method1",
-        "parameters": [
-          {
-            "name": "input1",
-            "description": "",
-            "type": "number"
-          },
-          {
-            "name": "input2",
-            "description": "",
-            "type": "number"
-          }
-        ],
-        "returnValue": {
-          "type": "void"
-        },
-        "description": "method1重载方法2"
-      },
-      {
-        "rowSpan": 1,
-        "name": "method2",
-        "parameters": [],
-        "returnValue": {
-          "type": "number",
-          "description": "返回描述测试"
-        },
-        "description": "method2默认备注"
       }
     ]
   }

@@ -45,7 +45,7 @@ export class AlibDialog {
      * 不会获取到
      * @description method1重载方法1
      * @param input1 这是一个参数
-     * @memberof Service1Service
+     * @memberof AlibDialog
      */
     method1(input1: number): void;
     /**
@@ -53,7 +53,7 @@ export class AlibDialog {
      * @description method1重载方法2
      * @param input1
      * @param input2
-     * @memberof Service1Service
+     * @memberof AlibDialog
      */
     method1(input1: number, input2: number): void;
     /**
@@ -61,7 +61,7 @@ export class AlibDialog {
      * @description method1重载方法3
      * @param input1
      * @param input2 注释过长时
-     * @memberof Service1Service
+     * @memberof AlibDialog
      */
     method1(input1: number, input2: number): void;
     method1(input1: number, input2?: number): void {}
@@ -69,7 +69,7 @@ export class AlibDialog {
      * method2默认备注
      * @description
      * @return {*} 返回描述测试
-     * @memberof Service1Service
+     * @memberof AlibDialog
      */
     method2(): number {
         return 0;
