@@ -94,7 +94,7 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
 <embed src="/path/to/some.md#L5-L10"></embed>
 ```
 ## 自定义内置组件
-在默认的`.docgeni/components`文件夹下创建自定义内置组件，比如如下结构：
+在默认的`.docgeni/components`文件夹下创建自定义内置组件，文件结构如下：
 
 ```html
 .docgeni
@@ -104,8 +104,8 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
     │   ├── color.component.html
     ├── module.ts
 ```
-
-`color` 组件需要默认导出 Markdown 中使用的选择器 selector 和 component，同时需要继承 `DocgeniBuiltInComponent`并传入 ElementRef，如下示例是自定义设置文字颜色组件：
+自定义组件需要继承`DocgeniBuiltInComponent`基类并在构造函数注入`ElementRef`并通过调用`supper(elementRef)`传入父类。
+<alert type="info">Markdown 中使用的渲染组件默认取文件中定义的第一个组件，使用的选择器为组件的 selector, 如需自定义，可以通过 `export default { selector: '', component: xx}` 自定义设置。</alert>
 
 ```ts
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
@@ -130,8 +130,21 @@ export default {
     component: MyColorComponent
 };
 ```
-在 Markdown 中编写如下语法：
+在 Markdown 中使用组件的选择器`my-color`编写如下语法：
 ```html
 <my-color color="red">Color</my-color>
 ```
 展示效果：<my-color color="red">Color</my-color>
+
+内置组件配置第三方依赖，在`.docgeni/components`文件夹中新建`module.ts`，输入如下代码即可:
+
+```ts
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+export default {
+    imports: [FormsModule, CommonModule],
+    providers: []
+};
+```
+这样就可以在自定义内置组件中使用`CommonModule`和`FormsModule`导出的组件和服务。

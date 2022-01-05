@@ -104,6 +104,8 @@ module.exports = [
 ];
 
 ```
+To automatically generate API, please configure [apiMode](/configuration/lib#apimode-<label>1-2-0+</label>)。
+
 
 ## examplesDir
 
@@ -157,3 +159,13 @@ Component category, `Docgeni` will put the components of the same category toget
     }
 ]
 ```
+
+## apiMode <label>1.2.0+</label>
+
+- Type: `'compatible' | 'manual' | 'automatic'`
+- Default: `manual`
+
+Component API generation mode:
+- `manual`: Manual mode, defining component API in the json of configuration file, default mode
+- `automatic`: Automatic generation mode, the API is automatically generated through the comments of the component, directive and service
+- `compatible`: Compatibility mode. when there is [API configuration file](configuration/lib#apidir) takes precedence. otherwise, it is automatically generated through comments
