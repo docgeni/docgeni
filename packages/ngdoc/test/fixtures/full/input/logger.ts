@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class Logger {
+    property1: string;
+    property2: number;
+    private property3: string;
     constructor() {}
 
     /**

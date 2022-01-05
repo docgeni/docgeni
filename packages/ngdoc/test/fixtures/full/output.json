@@ -124,7 +124,30 @@
     "type": "service",
     "name": "Logger",
     "description": "This is logger service",
-    "properties": [],
+    "properties": [
+      {
+        "name": "property1",
+        "type": {
+          "name": "string",
+          "options": null,
+          "kindName": "StringKeyword"
+        },
+        "description": "",
+        "default": "",
+        "tags": {}
+      },
+      {
+        "name": "property2",
+        "type": {
+          "name": "number",
+          "options": null,
+          "kindName": "NumberKeyword"
+        },
+        "description": "",
+        "default": "",
+        "tags": {}
+      }
+    ],
     "methods": [
       {
         "name": "info",
