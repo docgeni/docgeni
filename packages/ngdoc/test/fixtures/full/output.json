@@ -119,5 +119,111 @@
     "styles": null,
     "exportAs": null,
     "properties": []
+  },
+  {
+    "type": "service",
+    "name": "Logger",
+    "description": "This is logger service",
+    "properties": [
+      {
+        "name": "property1",
+        "type": {
+          "name": "string",
+          "options": null,
+          "kindName": "StringKeyword"
+        },
+        "description": "",
+        "default": "",
+        "tags": {}
+      },
+      {
+        "name": "property2",
+        "type": {
+          "name": "number",
+          "options": null,
+          "kindName": "NumberKeyword"
+        },
+        "description": "",
+        "default": "",
+        "tags": {}
+      }
+    ],
+    "methods": [
+      {
+        "name": "info",
+        "parameters": [
+          {
+            "name": "message",
+            "comment": "message to log",
+            "type": "string"
+          }
+        ],
+        "returnValue": {
+          "type": "void"
+        },
+        "description": "Log info message"
+      },
+      {
+        "name": "method1",
+        "parameters": [
+          {
+            "name": "input1",
+            "comment": "这是一个参数",
+            "type": "number"
+          }
+        ],
+        "returnValue": {
+          "type": "void"
+        },
+        "description": "method1重载方法1"
+      },
+      {
+        "name": "method1",
+        "parameters": [
+          {
+            "name": "input1",
+            "comment": "",
+            "type": "number"
+          },
+          {
+            "name": "input2",
+            "comment": "",
+            "type": "number"
+          }
+        ],
+        "returnValue": {
+          "type": "void"
+        },
+        "description": "method1重载方法2"
+      },
+      {
+        "name": "method1",
+        "parameters": [
+          {
+            "name": "input1",
+            "comment": "",
+            "type": "number"
+          },
+          {
+            "name": "input2",
+            "comment": "注释过长时",
+            "type": "number"
+          }
+        ],
+        "returnValue": {
+          "type": "void"
+        },
+        "description": "method1重载方法3"
+      },
+      {
+        "name": "method2",
+        "parameters": [],
+        "returnValue": {
+          "type": "number",
+          "description": "返回描述测试"
+        },
+        "description": "method2默认备注"
+      }
+    ]
   }
 ]
