@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter, Injectable } from '@angular/core';
 
 /**
  * General Button Component description.
@@ -55,4 +55,25 @@ export class AlibButtonComponent implements OnInit {
     constructor(private elementRef: ElementRef<HTMLElement>) {}
 
     ngOnInit(): void {}
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ButtonService {
+    /**
+     * Open a button
+     *
+     * @param {string} pram1
+     * @param {number} pram2
+     * @memberof ButtonService
+     * @returns Return of
+     */
+    open(pram1: string, pram2: number): void {}
+
+    /**
+     * Close Button
+     * @param {string} id id desc
+     */
+    close(id: string): void {}
 }

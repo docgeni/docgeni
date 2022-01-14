@@ -16,3 +16,10 @@ export interface NgPropertyDoc {
     default?: string | number | boolean | null | object;
     tags?: Record<string, { name: string; text?: string }>;
 }
+
+export interface NgMethodDoc {
+    name?: string;
+    params?: Record<string, { type: string; description: string }>;
+    returnValue?: { type: string; description: string };
+    description?: string | null;
+}

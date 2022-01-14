@@ -80,6 +80,17 @@ $dg-service-color: #8e24aa;
         }
 
         .dg-component-api {
+            display: flex;
+            align-items: flex-start;
+            .dg-component-api-content {
+                flex: auto;
+                width: 78%;
+                max-width: 78%;
+            }
+            .dg-component-api-toc {
+                margin: 0 0 20px 20px;
+            }
+
             .dg-api-header {
                 display: flex;
                 align-items: center;
@@ -89,6 +100,7 @@ $dg-service-color: #8e24aa;
                 }
 
                 .name {
+                    margin: 0;
                     font-size: $dg-font-size-lg;
                     font-weight: 500;
                 }
@@ -133,12 +145,13 @@ $dg-service-color: #8e24aa;
                 margin-top: 20px;
             }
 
-            .dg-api-properties-table {
-                margin-top: 14px;
+            .dg-api-properties-table,
+            .dg-api-methods-table {
+                margin-top: 8px;
                 display: table;
                 width: 100%;
                 max-width: 100%;
-
+                table-layout: fixed;
                 th {
                     text-align: left;
                 }
@@ -172,9 +185,47 @@ $dg-service-color: #8e24aa;
                     .dg-api-properties-default-cell {
                         text-align: left;
                     }
+                }
+            }
+            .dg-api-methods-table {
+                .dg-api-methods-type-th {
+                    width: 400px;
+                }
+                .dg-api-method-parameter-description {
+                    padding-left: 7px;
+                    word-break: break-all;
+                }
 
-                    .dg-api-property-description-cell {
-                    }
+                .dg-api-method-parameter-item {
+                    padding-left: 5px;
+                    margin-bottom: 4px;
+                }
+
+                .dg-api-method-return-value {
+                    padding-left: 5px;
+                }
+
+                .dg-api-method-parameter-type {
+                    background-color: #f4f5f7;
+                    color: $dg-gray-700;
+                    border-radius: 4px;
+                    padding: 2px 4px;
+                }
+
+                .dg-api-method-parameter-head {
+                    color: $dg-gray-800;
+                }
+                .dg-api-method-parameter {
+                    display: flex;
+                }
+
+                .dg-api-method-parameter-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .dg-api-no-method-parameter {
+                    padding-left: 5px;
                 }
             }
         }
@@ -301,7 +352,7 @@ $dg-service-color: #8e24aa;
         th,
         td {
             border: 1px solid $dg-table-border-color;
-            padding: 8px 14px;
+            padding: 10px 14px;
             p {
                 margin: 0px;
             }
@@ -430,4 +481,12 @@ $dg-service-color: #8e24aa;
             line-height: 1.5;
         }
     }
+}
+
+th {
+    font-weight: 400;
+}
+
+td {
+    color: $dg-gray-700;
 }

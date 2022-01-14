@@ -20,7 +20,7 @@ export function getNodeText(node: ts.Node) {
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
     return {
         name: symbol.getName(),
-        documentation: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
+        comment: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
         type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
     };
 }
@@ -174,6 +174,13 @@ interface DocTagResult {
     deprecated?: ts.JSDocTagInfo;
     [key: string]: ts.JSDocTagInfo;
 }
+interface MethodDocTagResult {
+    description?: ts.JSDocTagInfo;
+    default?: ts.JSDocTagInfo;
+    deprecated?: ts.JSDocTagInfo;
+    return?: ts.JSDocTagInfo;
+    param?: Record<string, ts.JSDocTagInfo>;
+}
 /**
  *
  * @export
@@ -185,4 +192,39 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
         result[item.name] = item;
         return result;
     }, {});
+}
+
+export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult {
+    const tags = symbol.getJsDocTags();
+    return tags.reduce((result, item) => {
+        if (item.name !== 'param') {
+            result[item.name] = item;
+        } else {
+            let paramName: string;
+            let paramText: string;
+            const regexpResult = (item.text || '').match(/(^\S+)\s?(.*)$/);
+            if (regexpResult) {
+                paramText = regexpResult[2] || '';
+                paramName = regexpResult[1];
+            } else {
+                throw new Error(`[${item.name}-${item.text}]param comment format error`);
+            }
+            result[item.name] = result[item.name] || {};
+            result[item.name][paramName] = { ...item, text: paramText };
+        }
+        return result;
+    }, {});
+}
+
+export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.TypeChecker, tags: MethodDocTagResult) {
+    const result = serializeSymbol(symbol, checker);
+    result.comment = (tags.param || {})[result.name]?.text || result.comment;
+    return result;
+}
+
+export function declarationIsPublic(node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration) {
+    return (
+        !node.modifiers ||
+        !node.modifiers.some(item => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)
+    );
 }
