@@ -30,7 +30,7 @@ export class ButtonComponent implements OnInit {
      * @deprecated
      * @default md
      */
-    @Input() thySize: LoadingComponent;
+    @Input() thySize: ButtonSize;
 
     @Input() set thyLoading(loading: boolean){
         this.loading = loading;
