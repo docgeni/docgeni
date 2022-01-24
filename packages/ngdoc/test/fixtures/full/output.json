@@ -39,8 +39,12 @@
         "name": "thySize",
         "aliasName": "",
         "type": {
-          "name": "any",
-          "options": null,
+          "name": "ButtonSize",
+          "options": [
+            "lg",
+            "md",
+            "sm"
+          ],
           "kindName": "TypeReference"
         },
         "description": "Button Size",

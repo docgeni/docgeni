@@ -31,7 +31,7 @@ export interface ParserSourceFileContext {
 
 export class NgDocParser {
     static parse(pattern: string) {
-        return new NgDocParser({ fileGlobs: pattern }).parse(pattern);
+        return this.create({ fileGlobs: pattern }).parse(pattern);
     }
 
     static create(options: NgDocParserOptions) {
@@ -166,6 +166,7 @@ export class NgDocParser {
         });
         return properties;
     }
+
     private parseServiceProperties(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
         const properties: NgPropertyDoc[] = [];
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
@@ -194,6 +195,7 @@ export class NgDocParser {
         });
         return properties;
     }
+
     private parseServiceMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
         const properties: NgPropertyDoc[] = [];
         ts.forEachChild(classDeclaration, (node: ts.Node) => {

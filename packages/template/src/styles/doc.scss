@@ -249,7 +249,7 @@ $dg-service-color: #8e24aa;
     flex: 1;
     display: block;
     padding: 20px 0px;
-    font-size: $dg-font-size-md;
+    // font-size: $dg-font-size-md;
     // white-space: break-spaces;
     > :first-child {
         margin-top: 0;
@@ -319,6 +319,7 @@ $dg-service-color: #8e24aa;
         line-height: 26px;
         margin-top: 0;
         margin-bottom: 8px;
+        font-size: $dg-font-size-md;
 
         code {
             line-height: 24px;
