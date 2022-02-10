@@ -41,7 +41,7 @@
     "front-matter": "^3.1.0",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
-    "marked": "^3.0.2",
+    "marked": "^4.0.10",
     "node-prismjs": "0.1.2",
     "prismjs": "^1.20.0",
     "semver": "7.3.2",
