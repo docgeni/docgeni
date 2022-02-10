@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { marked } from 'marked';
 import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
 import { highlight } from '../utils';
