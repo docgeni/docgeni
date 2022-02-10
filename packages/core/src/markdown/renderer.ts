@@ -1,4 +1,4 @@
-import { Renderer } from 'marked';
+import { Renderer, marked } from 'marked';
 import { HeadingLink } from '../interfaces';
 /** Regular expression that matches whitespace. */
 // const whitespaceRegex = /\W+/g;

@@ -1,8 +1,10 @@
 import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
 import fm from 'front-matter';
-import { RendererExtension, TokenizerExtension } from 'marked';
+import { marked } from 'marked';
+
 import { compatibleNormalize } from './utils';
+
 const LINE_SEPARATE = /\r\n|\n|\r/;
 export function getEmbedBody(input: string, range: [number, number], url: string) {
     if (range[0] && range[1]) {
@@ -25,7 +27,7 @@ export interface EmbedToken {
     message?: string;
 }
 
-export const embed: TokenizerExtension & RendererExtension = {
+export const embed: marked.TokenizerExtension | marked.RendererExtension = {
     name: 'embed',
     level: 'block',
     start(src: string) {

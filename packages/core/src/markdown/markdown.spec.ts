@@ -1,9 +1,5 @@
-import { toolkit } from '@docgeni/toolkit';
-import { EOL } from 'os';
 import { loadFixture, FixtureResult } from '../testing/fixture-loader';
 import { Markdown } from './markdown';
-import path from 'path';
-import marked from 'marked';
 import { compatibleNormalize } from './utils';
 
 describe('markdown', () => {
