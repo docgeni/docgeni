@@ -1,11 +1,10 @@
 import { createNgSourceFile, NgSourceFile } from '@docgeni/ngdoc';
-import { DocgeniContext } from '../../docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
-import { normalize, relative, resolve, HostWatchEventType } from '../../fs';
+import { DocgeniContext } from '../../docgeni.interface';
+import { HostWatchEventType, normalize, relative, resolve } from '../../fs';
 import { getSummaryStr } from '../../utils';
-
-import { ComponentBuilder } from './component-builder';
 import { generateBuiltInComponentsModule } from './built-in-module';
+import { ComponentBuilder } from './component-builder';
 
 export interface ComponentDef {
     name: string;
@@ -71,6 +70,7 @@ export class ComponentsBuilder {
                         toolkit.print.info(`Components: create component ${name} success`);
                     }
                 }
+                await this.build();
                 await this.emitEntryFile();
             } catch (error) {
                 toolkit.print.error(error);
