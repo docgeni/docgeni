@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.5](https://github.com/docgeni/docgeni/compare/v1.2.0-next.4...v1.2.0-next.5) (2022-03-08)
+
+
+### Bug Fixes
+
+* **core:** should get correct source file for node_modules types #OSP-244 ([1f84bcc](https://github.com/docgeni/docgeni/commit/1f84bcc5befb3d45bed9e070dbeed48cd1400465)), closes [#OSP-244](https://github.com/docgeni/docgeni/issues/OSP-244)
+
+
+### Features
+
+* support service api ([#303](https://github.com/docgeni/docgeni/issues/303)) ([37b8ef0](https://github.com/docgeni/docgeni/commit/37b8ef0aa9d47fa5492b9cea02b8e399e2f4ffd1))
+
+
+
+
+
 # [1.2.0-next.4](https://github.com/docgeni/docgeni/compare/v1.2.0-next.3...v1.2.0-next.4) (2021-12-20)
 
 **Note:** Version bump only for package @docgeni/ngdoc

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.5](https://github.com/docgeni/docgeni/compare/v1.2.0-next.4...v1.2.0-next.5) (2022-03-08)
+
+
+### Bug Fixes
+
+* **core:** remove extractCss from angular.json ([#337](https://github.com/docgeni/docgeni/issues/337)) ([94773ff](https://github.com/docgeni/docgeni/commit/94773ff9c15f65a283155a76a622675c859d88e5))
+* **core:** should get correct source file for node_modules types #OSP-244 ([1f84bcc](https://github.com/docgeni/docgeni/commit/1f84bcc5befb3d45bed9e070dbeed48cd1400465)), closes [#OSP-244](https://github.com/docgeni/docgeni/issues/OSP-244)
+* **template:** set search container width and font-size ([a8364c9](https://github.com/docgeni/docgeni/commit/a8364c9c7366f5670799acd1f884314bc42384b1))
+
+
+### Features
+
+* **core:** update to es2020 ([9b795c5](https://github.com/docgeni/docgeni/commit/9b795c519007ae3f2bd23180f45d0d961fc9ffd8))
+* **template:** add toc to api #OSP-41 ([#300](https://github.com/docgeni/docgeni/issues/300)) ([e5c1c2a](https://github.com/docgeni/docgeni/commit/e5c1c2a5910d34eee1f7a55bd4313658890ce21c)), closes [#OSP-41](https://github.com/docgeni/docgeni/issues/OSP-41)
+* support service api ([#303](https://github.com/docgeni/docgeni/issues/303)) ([37b8ef0](https://github.com/docgeni/docgeni/commit/37b8ef0aa9d47fa5492b9cea02b8e399e2f4ffd1))
+* **core:** support sourceMap  Support emitDecoratorMetadata ([#304](https://github.com/docgeni/docgeni/issues/304)) ([674281c](https://github.com/docgeni/docgeni/commit/674281ceb2d9e6dd91ea994482fa87311b9933f6))
+
+
+
+
+
 # [1.2.0-next.4](https://github.com/docgeni/docgeni/compare/v1.2.0-next.3...v1.2.0-next.4) (2021-12-20)
 
 

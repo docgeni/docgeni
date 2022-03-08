@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.5](https://github.com/docgeni/docgeni/compare/v1.2.0-next.4...v1.2.0-next.5) (2022-03-08)
+
+
+### Bug Fixes
+
+* **core:** remove extractCss from angular.json ([#337](https://github.com/docgeni/docgeni/issues/337)) ([94773ff](https://github.com/docgeni/docgeni/commit/94773ff9c15f65a283155a76a622675c859d88e5))
+
+
+### Features
+
+* **core:** support sourceMap  Support emitDecoratorMetadata ([#304](https://github.com/docgeni/docgeni/issues/304)) ([674281c](https://github.com/docgeni/docgeni/commit/674281ceb2d9e6dd91ea994482fa87311b9933f6))
+* **core:** update to es2020 ([9b795c5](https://github.com/docgeni/docgeni/commit/9b795c519007ae3f2bd23180f45d0d961fc9ffd8))
+
+
+
+
+
 # [1.2.0-next.4](https://github.com/docgeni/docgeni/compare/v1.2.0-next.3...v1.2.0-next.4) (2021-12-20)
 
 
