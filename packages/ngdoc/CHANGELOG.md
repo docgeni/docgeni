@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.9](https://github.com/docgeni/docgeni/compare/v1.2.0-next.8...v1.2.0-next.9) (2022-03-08)
+
+
+### Bug Fixes
+
+* **ngdoc:** use useCaseSensitiveFileNames to normalize filePath ([c0ea534](https://github.com/docgeni/docgeni/commit/c0ea534332b70a06eaa1ee79b10e06122bbe7d87))
+
+
+
+
+
 # [1.2.0-next.8](https://github.com/docgeni/docgeni/compare/v1.2.0-next.7...v1.2.0-next.8) (2022-03-08)
 
 
