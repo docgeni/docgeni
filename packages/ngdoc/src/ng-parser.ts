@@ -1,5 +1,5 @@
 import { ts } from './typescript';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, debug } from '@docgeni/toolkit';
 import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgMethodDoc, NgServiceDoc } from './types';
 import {
     getNgDecorator,
@@ -44,11 +44,16 @@ export class NgDocParser {
         this.ngParserHost = options.ngParserHost ? options.ngParserHost : createNgParserHost(options);
     }
 
-    public getSourceFiles(fileGlob: string) {
-        const filePaths = toolkit.fs.globSync(fileGlob);
+    public getSourceFiles(fileGlobs: string) {
+        const filePaths = toolkit.fs.globSync(fileGlobs);
+        debug(`fileGlobs: ${fileGlobs}, filePaths: ${filePaths.length}`, 'ng-parser');
         const sourceFiles = filePaths
             .map(filePath => {
-                return this.ngParserHost.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
+                const sourceFile = this.ngParserHost.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
+                if (!sourceFile) {
+                    debug(`sourceFile is null by ${filePath.toLowerCase()}`, 'ng-parser');
+                }
+                return sourceFile;
             })
             .filter(sourceFile => {
                 return typeof sourceFile !== 'undefined' && !sourceFile.isDeclarationFile;
@@ -58,6 +63,7 @@ export class NgDocParser {
 
     public parse(fileGlobs: string): NgEntryItemDoc[] {
         const sourceFiles = this.getSourceFiles(fileGlobs);
+        debug(`fileGlobs: ${fileGlobs}, sourceFiles: ${sourceFiles.length}`, 'ng-parser');
         const checker = this.ngParserHost.program.getTypeChecker();
 
         const docs: NgEntryItemDoc[] = [];
