@@ -967,6 +967,9 @@ $dg-service-color: #8e24aa;
                 }
 
                 .dg-api-properties-row {
+                    label {
+                        margin: 0px;
+                    }
                     .dg-api-properties-name-cell {
                         text-align: left;
                     }
