@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.8](https://github.com/docgeni/docgeni/compare/v1.2.0-next.7...v1.2.0-next.8) (2022-03-08)
+
+
+### Features
+
+* **ngdoc:** update getCurrentDirectory use ts.sys.getCurrentDirectory and add debug logs ([99cbd66](https://github.com/docgeni/docgeni/commit/99cbd66b70220d3bb25d9c778ab86ce9fc4f7349))
+
+
+
+
+
 # [1.2.0-next.7](https://github.com/docgeni/docgeni/compare/v1.2.0-next.5...v1.2.0-next.7) (2022-03-08)
 
 
