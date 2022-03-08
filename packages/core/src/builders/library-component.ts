@@ -1,6 +1,6 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, debug } from '@docgeni/toolkit';
 import { createNgSourceFile, NgModuleInfo, NgSourceFile } from '@docgeni/ngdoc';
 import {
     ASSETS_API_DOCS_RELATIVE_PATH,
@@ -20,6 +20,8 @@ import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
 import { getSystemPath, resolve } from '../fs';
 import { FileEmitter } from './emitter';
 import { generateComponentExamplesModule } from './examples-module';
+
+const NAMESPACE = 'library-builder';
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
     public name: string;
@@ -160,7 +162,11 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             const apiDocs = await this.tryGetApiDocsByManual();
             this.docgeni.config.locales.forEach(locale => {
                 if (!apiDocs[locale.key]) {
-                    apiDocs[locale.key] = this.lib.ngDocParser.parse(resolve(this.absPath, '*.ts')) as ApiDeclaration[];
+                    const apiSrcPath = resolve(this.absPath, '*.ts');
+                    apiDocs[locale.key] = this.lib.ngDocParser.parse(apiSrcPath) as ApiDeclaration[];
+                    debug(`[${this.name}] apiSrcPath is ${apiSrcPath}, api docs length is ${apiDocs[locale.key].length}`, NAMESPACE);
+                } else {
+                    debug(`[${this.name}] manual apiDocs length is ${apiDocs[locale.key].length}`, NAMESPACE);
                 }
             });
             this.localeApiDocsMap = apiDocs;

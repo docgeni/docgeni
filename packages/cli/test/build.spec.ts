@@ -33,7 +33,8 @@ describe('#cli', () => {
             config: {
                 ...config,
                 skipSite: true
-            } as unknown
+            } as unknown,
+            progress: true
         });
         await docgeni.run();
         const expectConfig = { ...DEFAULT_CONFIG, ...config };
