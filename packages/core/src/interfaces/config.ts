@@ -100,6 +100,8 @@ export interface DocgeniConfig {
     toc?: DocItemToc;
     /** sitemap config */
     sitemap?: DocgeniSitemapConfig;
+    /** Progress */
+    progress?: boolean;
 }
 
 // For Angular Template

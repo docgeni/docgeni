@@ -1,6 +1,6 @@
 import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, debug } from '@docgeni/toolkit';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { LibraryComponentImpl } from './library-component';
@@ -9,6 +9,7 @@ import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types'
 import { FileEmitter } from './emitter';
 import { ts, NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
 
+const NAMESPACE = 'library-builder';
 export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private absLibPath: string;
     private localeCategoriesMap: Record<string, CategoryItem[]> = {};
@@ -63,11 +64,14 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private async initializeNgDocParser() {
         if (this.lib.apiMode !== 'manual') {
             const tsConfigPath = resolve(this.docgeni.paths.cwd, resolve(this.lib.rootDir, 'tsconfig.lib.json'));
+            debug(`[${this.lib.name}] apiMode is ${this.lib.apiMode}, tsConfigPath is ${tsConfigPath}`, NAMESPACE);
             if (await this.docgeni.host.exists(tsConfigPath)) {
+                const absRootDir = this.docgeni.paths.getAbsPath(this.lib.rootDir);
+                debug(`[${this.lib.name}] absRootDir is ${absRootDir}`, NAMESPACE);
                 const parserHost = DefaultNgParserHost.create({
                     tsConfigPath: tsConfigPath,
                     watch: this.docgeni.watch,
-                    rootDir: this.docgeni.paths.getAbsPath(this.lib.rootDir),
+                    rootDir: absRootDir,
                     watcher: (event, filename) => {
                         const changes: LibraryComponent[] = [];
                         for (const [key, component] of this.components) {
@@ -83,6 +87,8 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                     }
                 });
                 this.ngDocParser = this.lib.ngDocParser = NgDocParser.create({ ngParserHost: parserHost });
+            } else {
+                debug(`[${this.lib.name}] tsConfigPath is not exists`, NAMESPACE);
             }
         }
     }

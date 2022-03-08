@@ -126,7 +126,9 @@ export class Docgeni implements DocgeniContext {
         toolkit.initialize({
             baseDir: __dirname
         });
-        this.progress.initialize();
+        if (this.options.progress) {
+            this.progress.initialize();
+        }
     }
 
     public async verifyConfig() {

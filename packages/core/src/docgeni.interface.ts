@@ -48,4 +48,5 @@ export interface DocgeniOptions {
     config?: DocgeniConfig;
     host?: DocgeniHost;
     version?: string;
+    progress?: boolean;
 }

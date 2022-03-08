@@ -8,4 +8,5 @@ import { Toolkit } from './toolkit';
 import * as git from './git';
 export * from './spinner';
 export * from './timestamp';
+export * from './debug';
 export { fs, Toolkit as toolkit, Template, strings, shell, Print, colors, git };

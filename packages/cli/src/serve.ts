@@ -14,6 +14,10 @@ export const serveCommand: CommandModule = {
                 desc: `Site project name`,
                 default: ''
             })
+            .option('progress', {
+                desc: `Build progress`,
+                default: true
+            })
             .config(getConfiguration())
             .pkgConf('docgeni');
 
@@ -25,7 +29,8 @@ export const serveCommand: CommandModule = {
         const docgeni = new Docgeni({
             watch: true,
             config,
-            version: VERSION
+            version: VERSION,
+            progress: config.progress
         });
         await docgeni.run();
     }
