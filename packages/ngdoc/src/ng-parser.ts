@@ -49,9 +49,10 @@ export class NgDocParser {
         debug(`fileGlobs: ${fileGlobs}, filePaths: ${filePaths.length}`, 'ng-parser');
         const sourceFiles = filePaths
             .map(filePath => {
-                const sourceFile = this.ngParserHost.program.getSourceFileByPath(filePath.toLowerCase() as ts.Path);
+                const finalPath = ts.sys.useCaseSensitiveFileNames ? filePath : filePath.toLowerCase();
+                const sourceFile = this.ngParserHost.program.getSourceFileByPath(finalPath as ts.Path);
                 if (!sourceFile) {
-                    debug(`sourceFile is null by ${filePath.toLowerCase()}`, 'ng-parser');
+                    debug(`getSourceFileByPath(${finalPath}) is null, origin: ${filePath}`, 'ng-parser');
                 }
                 return sourceFile;
             })
