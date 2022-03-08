@@ -44,6 +44,7 @@ export class DefaultNgParserHost implements NgParserHost {
             this.tsProgram ? undefined : this.createCompilerHost(),
             this.tsProgram
         );
+        debug(`Program created, sourceFiles count: ${program.getSourceFiles().length}`, 'ng-parser');
         this.watchResolvedModules();
         return program;
     }
@@ -119,7 +120,9 @@ export class DefaultNgParserHost implements NgParserHost {
                 return ts.sys.writeFile(fileName, content);
             },
             getCurrentDirectory: () => {
-                return this.rootDir ? this.rootDir : ts.sys.getCurrentDirectory();
+                const result = ts.sys.getCurrentDirectory();
+                debug(`getCurrentDirectory is ${result}`, 'ng-parser');
+                return result;
             },
             getDirectories: path => {
                 return ts.sys.getDirectories(path);
