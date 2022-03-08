@@ -1,4 +1,4 @@
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, debug } from '@docgeni/toolkit';
 import { FSWatcher } from 'fs';
 import { ts } from './typescript';
 
@@ -69,6 +69,7 @@ export class DefaultNgParserHost implements NgParserHost {
             if (parsedResult) {
                 this.rootFileNames = parsedResult.fileNames;
                 this.compileOptions = parsedResult.options;
+                debug(`ConfigFile parsed rootFileNames is ${JSON.stringify(this.rootFileNames, null, 2)}`, 'ng-parser');
             }
         } else {
             this.rootFileNames = toolkit.fs.globSync(this.options.fileGlobs);
@@ -76,6 +77,7 @@ export class DefaultNgParserHost implements NgParserHost {
         }
         if (this.options.rootDir) {
             this.rootDir = toolkit.utils.normalizeSlashes(this.options.rootDir);
+            debug(`rootDir is ${this.rootDir} from ${this.options.rootDir}`, 'ng-parser');
         }
     }
 
