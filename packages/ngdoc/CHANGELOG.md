@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.6](https://github.com/docgeni/docgeni/compare/v1.2.0-next.5...v1.2.0-next.6) (2022-03-08)
+
+
+### Features
+
+* **ngdoc:** add debug logs for ng-parser #OSP-249 ([#339](https://github.com/docgeni/docgeni/issues/339)) ([9f96b9e](https://github.com/docgeni/docgeni/commit/9f96b9e1a7f0051c10e3096c7cfcf4af86ff0bfa)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+
+
+
+
+
 # [1.2.0-next.5](https://github.com/docgeni/docgeni/compare/v1.2.0-next.4...v1.2.0-next.5) (2022-03-08)
 
 

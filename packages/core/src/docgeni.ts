@@ -4,7 +4,7 @@ import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { Plugin } from './plugins';
 import { DocgeniConfig, DocItem } from './interfaces';
 import path from 'path';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, debug } from '@docgeni/toolkit';
 
 import { DocgeniContext, DocgeniHooks, DocgeniOptions } from './docgeni.interface';
 import { DEFAULT_CONFIG } from './defaults';
@@ -93,6 +93,7 @@ export class Docgeni implements DocgeniContext {
             await this.verifyConfig();
             await this.clearAndEnsureDirs();
             await this.hooks.run.promise();
+            debug(`docgeni running, cwd: ${this.paths.cwd}`, 'core');
             const compilation = this.createCompilation();
             await compilation.run();
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.6](https://github.com/docgeni/docgeni/compare/v1.2.0-next.5...v1.2.0-next.6) (2022-03-08)
+
+
+### Features
+
+* **core:** add debug logs for  LibraryBuilder #OSP-249 ([#338](https://github.com/docgeni/docgeni/issues/338)) ([212cb5f](https://github.com/docgeni/docgeni/commit/212cb5f008cfd6e7b3f7248ee11e7ed315c97236)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+
+
+
+
+
 # [1.2.0-next.5](https://github.com/docgeni/docgeni/compare/v1.2.0-next.4...v1.2.0-next.5) (2022-03-08)
 
 **Note:** Version bump only for package @docgeni/cli
