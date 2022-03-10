@@ -82,11 +82,13 @@ $dg-service-color: #8e24aa;
         .dg-component-api {
             display: flex;
             align-items: flex-start;
+
             .dg-component-api-content {
                 flex: auto;
                 width: 78%;
                 max-width: 78%;
             }
+
             .dg-component-api-toc {
                 margin: 0 0 20px 20px;
             }
@@ -155,17 +157,23 @@ $dg-service-color: #8e24aa;
                 th {
                     text-align: left;
                 }
+
+                td {
+                    label {
+                        word-break: break-all;
+                    }
+                }
                 .dg-api-properties-header-row {
                     .dg-api-properties-name-th {
-                        width: 100px;
+                        width: 15%;
                     }
 
                     .dg-api-properties-type-th {
-                        width: 150px;
+                        width: 15%;
                     }
 
                     .dg-api-properties-default-th {
-                        width: 100px;
+                        width: 15%;
                     }
 
                     .dg-api-properties-description-th {
@@ -191,6 +199,7 @@ $dg-service-color: #8e24aa;
                 .dg-api-methods-type-th {
                     width: 400px;
                 }
+
                 .dg-api-method-parameter-description {
                     padding-left: 7px;
                     word-break: break-all;
@@ -215,6 +224,7 @@ $dg-service-color: #8e24aa;
                 .dg-api-method-parameter-head {
                     color: $dg-gray-800;
                 }
+
                 .dg-api-method-parameter {
                     display: flex;
                 }
@@ -362,6 +372,7 @@ $dg-service-color: #8e24aa;
         th {
             background: $dg-table-header-bg-color;
             text-align: center;
+            font-weight: 400;
         }
 
         td {
@@ -482,12 +493,4 @@ $dg-service-color: #8e24aa;
             line-height: 1.5;
         }
     }
-}
-
-th {
-    font-weight: 400;
-}
-
-td {
-    color: $dg-gray-700;
 }

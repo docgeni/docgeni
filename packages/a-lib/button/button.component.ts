@@ -39,6 +39,8 @@ export class AlibButtonComponent implements OnInit {
      */
     @Input() alibSize: 'xs' | 'sm' | 'md' | 'lg' = 'xs';
 
+    @Input() alibLengthTooLongLengthTooLong: 'TypeLengthTooLongLengthTooLongLengthTooLong';
+
     /**
      * Button loading status
      * @default false

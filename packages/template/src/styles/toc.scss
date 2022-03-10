@@ -68,6 +68,7 @@
         text-overflow: ellipsis;
         width: 100%;
         box-sizing: border-box;
+        word-break: break-all;
 
         &::before {
             border-left: 2px solid $dg-gray-300;
