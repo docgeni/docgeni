@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.10](https://github.com/docgeni/docgeni/compare/v1.2.0-next.9...v1.2.0-next.10) (2022-03-10)
+
+
+### Bug Fixes
+
+* **core:** should not build example when entry component file is not exists #OSP-251 ([0e3cb83](https://github.com/docgeni/docgeni/commit/0e3cb83ba98525d540dd4a1ab78ec8a5a8532e60)), closes [#OSP-251](https://github.com/docgeni/docgeni/issues/OSP-251)
+* **template:** update word-break to break-all for toc link and table label #OSP-252 ([8ed816c](https://github.com/docgeni/docgeni/commit/8ed816cabc2f196c6fa290d5f24acb1d4f003596)), closes [#OSP-252](https://github.com/docgeni/docgeni/issues/OSP-252)
+
+
+
+
+
 # [1.2.0-next.9](https://github.com/docgeni/docgeni/compare/v1.2.0-next.8...v1.2.0-next.9) (2022-03-08)
 
 
