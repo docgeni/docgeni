@@ -73,6 +73,21 @@
     "rimraf": "^3.0.2",
     "typescript": "4.1.3"
   },
+  "keywords": [
+    "angular",
+    "docgeni",
+    "docgen",
+    "documentation",
+    "docs",
+    "markdown",
+    "components",
+    "library",
+    "docs generator",
+    "docs generate",
+    "docs generator",
+    "documentation generator",
+    "static site generator"
+  ],
   "schematics": "./lib/schematics/collection.json",
   "ng-add": {
     "save": "devDependencies"

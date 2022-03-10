@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom: -20px">
-  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
+  <a href="http://docgeni.com" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
 </p>
 <p align="center">
   <strong>Docgeni</strong>
@@ -32,14 +32,14 @@ English | [中文文档](https://github.com/docgeni/docgeni/blob/master/README.z
 
 ## 📖 Documentation
 Get started with Docgeni, learn the fundamentals and explore advanced topics on our documentation website.
-- [Introduce](https://docgeni.org/guides/intro)
-- [Getting Started](https://docgeni.org/guides/getting-started)
-- [Route & Nav & Menu](https://docgeni.org/guides/route-nav-menu)
-- [Configuration](https://docgeni.org/guides/configuration)
+- [Introduce](http://docgeni.com/guides/intro)
+- [Getting Started](http://docgeni.com/guides/getting-started)
+- [Route & Nav & Menu](http://docgeni.com/guides/route-nav-menu)
+- [Configuration](http://docgeni.com/guides/configuration)
 
 ### Advanced
-- [Customize Site](https://docgeni.org/guides/advance/customize)
-- [Multi-language](https://docgeni.org/guides/advance/locales)
+- [Customize Site](http://docgeni.com/guides/advance/customize)
+- [Multi-language](http://docgeni.com/guides/advance/locales)
 
 ## Who are using Docgeni?
 
