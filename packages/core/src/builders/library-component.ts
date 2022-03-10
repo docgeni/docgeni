@@ -198,8 +198,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         const exampleOrderMap: WeakMap<LiveExample, number> = new WeakMap();
         for (const exampleName of dirs) {
             const { order, liveExample } = await this.buildExample(exampleName, examplesModuleName);
-            exampleOrderMap.set(liveExample, order);
-            this.examples.push(liveExample);
+            if (liveExample) {
+                exampleOrderMap.set(liveExample, order);
+                this.examples.push(liveExample);
+            }
         }
         this.examples = toolkit.utils.sortByOrderMap(this.examples, exampleOrderMap);
 
@@ -220,10 +222,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             this.examplesModuleSource = await generateComponentExamplesModule(
                 exampleModuleSourceFile,
                 examplesModuleName,
-                this.examples.map(item => {
+                this.examples.map(example => {
                     return {
-                        name: item.componentName,
-                        moduleSpecifier: `./${item.name}/${item.name}.component`
+                        name: example.componentName,
+                        moduleSpecifier: `./${example.name}/${example.name}.component`
                     };
                 })
             );
@@ -258,6 +260,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
 
         // build example source files
         const exampleSourceFiles = await this.buildExampleSourceFiles(absComponentExamplePath);
+        if (
+            !exampleSourceFiles.find(item => {
+                return item.name === `${exampleName}.component.ts`;
+            })
+        ) {
+            return {
+                order: 0,
+                liveExample: undefined
+            };
+        }
         liveExample.sourceFiles = exampleSourceFiles;
 
         // try extract component name from example entry ts file
