@@ -63,5 +63,20 @@
     "cpx": "^1.5.0",
     "rimraf": "^3.0.2",
     "typescript": "4.0.5"
-  }
+  },
+  "keywords": [
+    "angular",
+    "docgeni",
+    "docgen",
+    "documentation",
+    "docs",
+    "markdown",
+    "components",
+    "library",
+    "docs generator",
+    "docs generate",
+    "docs generator",
+    "documentation generator",
+    "static site generator"
+  ]
 }

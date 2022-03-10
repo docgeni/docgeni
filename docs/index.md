@@ -43,7 +43,7 @@ $ ng add @docgeni/cli
 ```
 初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
 
-点击 [快速上手](https://docgeni.org/guides/intro/getting-started) 了解更多。
+点击 [快速上手](http://docgeni.com/guides/intro/getting-started) 了解更多。
 ## 参与贡献
 欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni
 
