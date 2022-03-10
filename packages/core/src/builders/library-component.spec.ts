@@ -269,6 +269,21 @@ describe('#library-component', () => {
                 expect(await context.host.exists(example)).toEqual(true);
             }
         });
+
+        it('should not build example when entry component file is not exists', async () => {
+            const notExistExample = 'not-exists';
+            await writeFilesToHost(context.host, {
+                [`${buttonDirPath}/examples/${notExistExample}/a.ts`]: 'xxx'
+            });
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            await component.build();
+            expect(component.examples.find(example => example.name === notExistExample)).toBeFalsy();
+            await writeFilesToHost(context.host, {
+                [`${buttonDirPath}/examples/${notExistExample}/${notExistExample}.component.ts`]: 'xxx'
+            });
+            await component.build();
+            expect(component.examples.find(example => example.name === notExistExample)).toBeTruthy();
+        });
     });
 
     describe('api-docs', () => {
