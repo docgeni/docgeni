@@ -7,7 +7,7 @@ hero:
     - text: Getting Started
       link: /guides/intro/getting-started
       btnShape: round
-    - text: Design
+    - text: Introduction
       link: /guides/intro
       btnShape: square
       btnType: outline-primary-light
