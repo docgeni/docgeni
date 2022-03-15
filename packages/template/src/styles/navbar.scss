@@ -44,9 +44,15 @@
         a {
             padding: 6px 18px;
             margin-right: 8px;
+            text-decoration: none;
 
             &.active {
                 border-radius: 4px;
+                text-decoration: none !important;
+            }
+
+            &:hover {
+                text-decoration: none !important;
             }
         }
     }
