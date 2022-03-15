@@ -3,51 +3,52 @@ title: Customize Home
 order: 30
 ---
 
-`mode`为`full`模式时包含首页，首页包含三部分内容，分别为：
-- Hero 区域: 展示当前站点的标题和一句话描述以及快速操作链接，同时支持`banner`图设置
-- 功能区域: 展示有哪些特性，每个特性包含名称、描述和图标
-- 内容区域: 和普通的文档一样，展示 Markdown 内容
+when `mode` is `full`, it includes the home page, which includes three parts:
+- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner
+- Feature area: show what features are available, each with a name, description, and icon 
+- Content area: show markdown content like markdown doc
 
-根目录下的`index.md`为首页的 Markdown 内容，通过首页文档的`FrontMatter`配置 Hero 和特性。
 
-## 首页预览
+`index.md` file on root directory is the markdown content of the home page, and the hero and features are configured through the `FrontMatter` of the home page.
+
+## Preview
 
 ![](https://cdn.worktile.com/open-sources/docgeni/home-preview.png?1)
 
 
 ## Hero
 
-- `title:` 标题
-- `description:` 描述
-- `banner:` 背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
-- `backgroundColor`: 背景色，默认为`#dae6f3`
-- `actions:` 快捷按钮列表
-- `actions.text:` 按钮文字
-- `actions.link:` 按钮链接
-- `actions.btnShape:` 按钮形状，可以设置为`round | square`，默认为`square`
-- `actions.btnType:` 按钮类型，可以设置为`primary | primary-light | success | danger`，默认为`primary-light`, 线框按钮需要加前缀 `outline`, 比如 `outline-primary-light`
+- `title:` title of site
+- `description:` description of site
+- `banner:` the background image, title and description are centered by default. If the background image is obscured, the position can be modified through custom styles
+- `backgroundColor`: background color, default is `#dae6f3`
+- `actions:` shortcut button actions
+- `actions.text:` button text for every action
+- `actions.link:` button link for every action
+- `actions.btnShape:` button shape，can be set to `round | square`，default is `square`
+- `actions.btnType:` button type for every action, can be set to `primary | primary-light | success | danger`，default is `primary-light`, outline style needs add prefix `outline`, e.g. `outline-primary-light`
 
-示例:
+Example:
 ```
 ---
 hero:
   title: Docgeni
-  description: 开箱即用的 Angular 组件文档生成工具
+  description: Out of the box angular component document generation tool
   banner: https://cdn.pingcode.com/open-sources/docgeni/home/banner.png
   actions:
-    - text: 快速上手
+    - text: Getting Started
       link: /guides/intro/getting-started
       btnShape: round,
       btnType: outline-primary-light
 ---
 ```
 
-## 特性
-- `title:` 特性标题
-- `description:` 特性描述
-- `icon:` 特性图标地址
+## Features
+- `title:` title of feature
+- `description:` description of feature
+- `icon:` icon url of feature
 
-示例:
+Example:
 ```
 ---
 features:
