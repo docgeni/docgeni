@@ -260,28 +260,23 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
 
         // build example source files
         const exampleSourceFiles = await this.buildExampleSourceFiles(absComponentExamplePath);
-        if (
-            !exampleSourceFiles.find(item => {
-                return item.name === `${exampleName}.component.ts`;
-            })
-        ) {
+        // try extract component name from example entry ts file
+        const entrySourceFile = exampleSourceFiles.find(sourceFile => {
+            return sourceFile.name === `${exampleName}.component.ts`;
+        });
+
+        if (entrySourceFile) {
+            const component = createNgSourceFile(entrySourceFile.name, entrySourceFile.content).getExpectExportedComponent();
+            if (component) {
+                liveExample.componentName = component.name;
+            }
+        } else {
             return {
                 order: 0,
                 liveExample: undefined
             };
         }
         liveExample.sourceFiles = exampleSourceFiles;
-
-        // try extract component name from example entry ts file
-        const entrySourceFile = exampleSourceFiles.find(sourceFile => {
-            return sourceFile.name === `${exampleName}.component.ts`;
-        });
-        if (entrySourceFile) {
-            const component = createNgSourceFile(entrySourceFile.name, entrySourceFile.content).getExpectExportedComponent(exampleName);
-            if (component) {
-                liveExample.componentName = component.name;
-            }
-        }
 
         // build order, title from FrontMatter
         let exampleOrder = Number.MAX_SAFE_INTEGER;

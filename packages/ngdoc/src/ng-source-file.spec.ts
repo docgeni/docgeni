@@ -20,13 +20,13 @@ describe('#ng-source-file', () => {
 
     it('should get exported components', () => {
         const sourceText = `
-        @Component({selector: "my-component"})
-        export class MyComponent {}
-
         export class NotComponent {}
 
         @Component({selector: "internal-component"})
         class InternalComponent {}
+
+        @Component({selector: "my-component"})
+        export class MyComponent {}
         `;
         const ngSourceFile = createNgSourceFile('test.ts', sourceText);
         expect(ngSourceFile.getExportedComponents()).toEqual([jasmine.objectContaining({ name: 'MyComponent', selector: 'my-component' })]);
