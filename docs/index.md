@@ -9,6 +9,10 @@ hero:
     - text: 快速上手
       link: /guides/intro/getting-started
       btnShape: round
+    - text: 介绍
+      link: /guides/intro
+      btnType: outline-primary-light
+      btnShape: square
 features:
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature1.png
     title: 开箱即用
