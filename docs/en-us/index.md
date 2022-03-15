@@ -45,6 +45,6 @@ $ ng add @docgeni/cli
 ```
 run `npm run start:docs` command to start site，open `http://127.0.0.1:4600` visit it by browser.
 
-Click [Getting Started](http://docgeni.com/guides/intro/getting-started) see more.
+Click [Getting Started](https://docgeni.org/guides/intro/getting-started) see more.
 ## Contributing
 Welcome to contribute together Docgeni: https://github.com/docgeni/docgeni

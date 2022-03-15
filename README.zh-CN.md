@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom: -20px">
-  <a href="http://docgeni.com" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
+  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
 </p>
 <p align="center">
   <strong>Docgeni</strong>
@@ -32,14 +32,14 @@
 
 ## 📖 文档
 开始使用 Docgeni，可以去官网学习基础知识并搜索高级功能。
-- [介绍](http://docgeni.com/guides/intro)
-- [快速开始](http://docgeni.com/guides/getting-started)
-- [路由导航和菜单](http://docgeni.com/guides/route-nav-menu)
-- [配置](http://docgeni.com/guides/configuration)
+- [介绍](https://docgeni.org/guides/intro)
+- [快速开始](https://docgeni.org/guides/getting-started)
+- [路由导航和菜单](https://docgeni.org/guides/route-nav-menu)
+- [配置](https://docgeni.org/guides/configuration)
 
 ### 高级
-- [自定义站点](http://docgeni.com/guides/advance/customize)
-- [多语言](http://docgeni.com/guides/advance/locales)
+- [自定义站点](https://docgeni.org/guides/advance/customize)
+- [多语言](https://docgeni.org/guides/advance/locales)
 
 ## 谁在使用 Docgeni?
 <table style="margin-top: 20px;">
