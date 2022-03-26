@@ -61,24 +61,25 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@docgeni/ngdoc@^1.2.0-next.4":
-  version "1.2.0-next.4"
-  resolved "https://registry.yarnpkg.com/@docgeni/ngdoc/-/ngdoc-1.2.0-next.4.tgz#35d1c19d4acd2fcbabc964337ddeebcf77323249"
-  integrity sha512-Z9SjWWQnHAaFrvDgJvimzN9JjHrsIG/ciemHZRIhVgb7OyFQsaUzi59XZo4v9+ZycGdeD66TC2f2omAWFQeudg==
+"@docgeni/ngdoc@^1.2.0-next.10":
+  version "1.2.0-next.10"
+  resolved "https://registry.yarnpkg.com/@docgeni/ngdoc/-/ngdoc-1.2.0-next.10.tgz#043be63c9acbfcbb243ba1341f3120a4d6fec8c6"
+  integrity sha512-Z7rITY1p2XmcbH3FcwYw5PLbbwYr76EXCL+plPu9cn8mh4L73+rTsvA0fDStRNTrsJo40oJzTHjb/hF7JcwLMQ==
   dependencies:
-    "@docgeni/toolkit" "^1.2.0-next.4"
+    "@docgeni/toolkit" "^1.2.0-next.10"
     ts-morph "12.1.0"
     typescript "4.1.3"
 
-"@docgeni/toolkit@^1.2.0-next.4":
-  version "1.2.0-next.4"
-  resolved "https://registry.yarnpkg.com/@docgeni/toolkit/-/toolkit-1.2.0-next.4.tgz#e6cbb2c3990cf9cfd02a834deff0ebcc10b3290c"
-  integrity sha512-mvJisUJ6gs3xIHnXuiO0P4qWt0oX2SE3eFXvd53cqjCkvG7wsNDocQMFbnDqWOT97wZXVM1Wbv1bbZsshJN2TQ==
+"@docgeni/toolkit@^1.2.0-next.10":
+  version "1.2.0-next.10"
+  resolved "https://registry.yarnpkg.com/@docgeni/toolkit/-/toolkit-1.2.0-next.10.tgz#592499dc827970d290257a34f7162a60c6177f18"
+  integrity sha512-BK2MOXmf8NrtznLYhwT1OsUTt1bXT+6v3sy4l3Hx6kxoj3vwft1KwEnuvoL2kf8oICS/RKWNvOX1JmtWp+hmZA==
   dependencies:
     camelcase "^6.0.0"
     chalk "^3.0.0"
     change-case "^4.1.1"
     chokidar "^3.3.1"
+    debug "^4.3.3"
     fancy-log "^1.3.3"
     front-matter "^3.1.0"
     fs-extra "^9.0.0"
@@ -88,7 +89,7 @@
     minimatch "3.0.4"
     param-case "^3.0.2"
     pluralize "^8.0.0"
-    shelljs "0.8.4"
+    shelljs "0.8.5"
     tapable "^1.1.3"
     time-stamp "^2.2.0"
     title-case "^3.0.2"
@@ -805,6 +806,13 @@ debug@^2.2.0, debug@^2.3.3:
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
   dependencies:
     ms "2.0.0"
+
+debug@^4.3.3:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
+  integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
+  dependencies:
+    ms "2.1.2"
 
 decode-uri-component@^0.2.0:
   version "0.2.0"
@@ -1797,9 +1805,9 @@ minimatch@3.0.4, minimatch@^3.0.2, minimatch@^3.0.4:
     brace-expansion "^1.1.7"
 
 minimist@^1.1.0, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 mixin-deep@^1.2.0:
   version "1.3.2"
@@ -1825,6 +1833,11 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
   integrity sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
+
+ms@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
+  integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
 multimatch@^4.0.0:
   version "4.0.0"
@@ -2365,10 +2378,10 @@ shell-quote@^1.6.1:
   resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.7.2.tgz#67a7d02c76c9da24f99d20808fcaded0e0e04be2"
   integrity sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
 
-shelljs@0.8.4:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.4.tgz#de7684feeb767f8716b326078a8a00875890e3c2"
-  integrity sha512-7gk3UZ9kOfPLIAbslLzyWeGiEqx9e3rxwZM0KE6EL8GlGwjym9Mrlx5/p33bWTu9YG6vcS4MBxYZDHYr5lr8BQ==
+shelljs@0.8.5:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.5.tgz#de055408d8361bed66c669d2f000538ced8ee20c"
+  integrity sha512-TiwcRcrkhHvbrZbnRcFYMLl30Dfov3HKqzp5tO5b4pt6G/SezKcYhmDg15zXVBswHmctSAQKznqNW2LO5tTDow==
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
