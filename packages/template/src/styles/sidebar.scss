@@ -68,6 +68,10 @@
             margin: 0 -1000px;
             padding: $dg-sidebar-menu-item-space-y 1000px;
             color: $dg-gray-800;
+            .external-icon {
+                margin-right: 5px;
+            }
+
             & > .item-content-title {
                 flex: 1 1 0;
             }
