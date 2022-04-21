@@ -47,7 +47,7 @@ export class NavigationService {
             // 类库频道
             if (this.channel.lib) {
                 index = this.docItems.findIndex(docItem => {
-                    return docItem.path === path && !!docItem.importSpecifier;
+                    return docItem.path === path && docItem.channelPath === this.channel.path && !!docItem.importSpecifier;
                 });
             } else {
                 index = this.docItems.findIndex(docItem => {
