@@ -40,9 +40,9 @@
     }
 
     .menu-item {
-        padding: 0px $dg-sidebar-menu-item-space-x/2 0 $dg-sidebar-menu-item-space-x;
+        padding: 0px $dg-sidebar-menu-item-space-x * 0.5 0 $dg-sidebar-menu-item-space-x;
         &.active {
-            padding-right: $dg-sidebar-menu-item-space-x/2 - 3px;
+            padding-right: $dg-sidebar-menu-item-space-x * 0.5 - 3px;
         }
         display: block;
         // a {
