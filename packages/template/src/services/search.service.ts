@@ -4,20 +4,20 @@ import { DOCUMENT } from '@angular/common';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 
-interface PageInfo {
+export interface SearchPageInfo {
     title: string;
     id: string;
     path: string;
-    parent?: PageInfo;
+    parent?: SearchPageInfo;
 }
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-    private allPages: PageInfo[] = [];
+    private allPages: SearchPageInfo[] = [];
 
     private destroyed$ = new Subject();
 
-    public result: PageInfo[] = [];
+    public result: SearchPageInfo[] = [];
 
     public get hasAlgolia() {
         return !!(this.global.config.algolia && this.global.config.algolia.apiKey && this.global.config.algolia.indexName);
@@ -126,7 +126,7 @@ export class SearchService {
         }
     }
 
-    public trackByFn(index: number, item: PageInfo) {
+    public trackByFn(index: number, item: SearchPageInfo) {
         return item.id || index;
     }
 }
