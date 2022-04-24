@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { SearchService } from '../../services/search.service';
+import { Router } from '@angular/router';
+import { SearchPageInfo, SearchService } from '../../services/search.service';
 
 @Component({
     selector: 'dg-search',
@@ -12,7 +13,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
     public hasSearchText: boolean;
 
-    constructor(public searchService: SearchService) {}
+    constructor(public searchService: SearchService, private router: Router) {}
 
     ngOnInit(): void {}
 
@@ -38,5 +39,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.hasSearchText = !!this.searchText?.trim();
         }, 200);
+    }
+
+    toRoute($event: Event, item: SearchPageInfo) {
+        if (!item.path.startsWith('http')) {
+            $event.preventDefault();
+            this.router.navigateByUrl(item.path);
+        }
     }
 }
