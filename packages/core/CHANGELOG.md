@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.11](https://github.com/docgeni/docgeni/compare/v1.2.0-next.10...v1.2.0-next.11) (2022-04-24)
+
+
+### Bug Fixes
+
+* **core:** getExpectExportedComponent without example name ([c3171cc](https://github.com/docgeni/docgeni/commit/c3171cc13e1af3a274d21432b89ee97ca61f77ab))
+* **core:** update index.ts after change custom built-in components #OSP-242 ([a2954e7](https://github.com/docgeni/docgeni/commit/a2954e709f2c63ca06d0c354743ce964e2134152)), closes [#OSP-242](https://github.com/docgeni/docgeni/issues/OSP-242)
+
+
+
+
+
 # [1.2.0-next.10](https://github.com/docgeni/docgeni/compare/v1.2.0-next.9...v1.2.0-next.10) (2022-03-10)
 
 

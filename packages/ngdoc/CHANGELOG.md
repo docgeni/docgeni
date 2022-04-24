@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.11](https://github.com/docgeni/docgeni/compare/v1.2.0-next.10...v1.2.0-next.11) (2022-04-24)
+
+
+### Bug Fixes
+
+* **core:** getExpectExportedComponent without example name ([c3171cc](https://github.com/docgeni/docgeni/commit/c3171cc13e1af3a274d21432b89ee97ca61f77ab))
+
+
+
+
+
 # [1.2.0-next.10](https://github.com/docgeni/docgeni/compare/v1.2.0-next.9...v1.2.0-next.10) (2022-03-10)
 
 **Note:** Version bump only for package @docgeni/ngdoc

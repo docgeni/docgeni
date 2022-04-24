@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.11](https://github.com/docgeni/docgeni/compare/v1.2.0-next.10...v1.2.0-next.11) (2022-04-24)
+
+
+### Bug Fixes
+
+* **template:** get corrected doc item when component is same in multiple  libraries [#347](https://github.com/docgeni/docgeni/issues/347) ([3c9ea1a](https://github.com/docgeni/docgeni/commit/3c9ea1a245bd1589d0efd6fb1c8662169dfba7ab))
+* **template:** import docsearch.css instead of docsearch.min.css ([bf3ec3d](https://github.com/docgeni/docgeni/commit/bf3ec3d0ce0f1c57dd9ba3db8457e0cd0c7c4253))
+* **template:** set text-decoration as none for link in nav ([cb005b6](https://github.com/docgeni/docgeni/commit/cb005b6079d346c0d97fb79094fda0edaf59865f))
+* **template:** update outline button styles for launch action ([eb0b593](https://github.com/docgeni/docgeni/commit/eb0b593c60f52472966605b58160869189f5fc7c))
+* **template:** use navigateByUrl when click search result item path is inernal route #OSP-253 [#350](https://github.com/docgeni/docgeni/issues/350) ([152e6f7](https://github.com/docgeni/docgeni/commit/152e6f7b8bfd81ede1b3d70041b62b13902cebea)), closes [#OSP-253](https://github.com/docgeni/docgeni/issues/OSP-253)
+
+
+
+
+
 # [1.2.0-next.10](https://github.com/docgeni/docgeni/compare/v1.2.0-next.9...v1.2.0-next.10) (2022-03-10)
 
 
