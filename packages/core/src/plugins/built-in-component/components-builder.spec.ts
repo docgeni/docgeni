@@ -46,7 +46,7 @@ describe('#components-builder', () => {
             await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
             const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
             const moduleText = 'module text';
-            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            builtInModuleSpy.and.returnValue(Promise.resolve(moduleText));
             const componentsBuilder = new ComponentsBuilder(context);
             await componentsBuilder.build();
             await componentsBuilder.emit();
@@ -68,7 +68,7 @@ describe('#components-builder', () => {
             await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
             const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
             const moduleText = 'module text';
-            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            builtInModuleSpy.and.returnValue(Promise.resolve(moduleText));
             const componentsBuilder = new ComponentsBuilder(context);
             await componentsBuilder.build();
             await componentsBuilder.emit();
@@ -84,7 +84,7 @@ describe('#components-builder', () => {
         it('should build success when not exist module.ts', async () => {
             const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
             const moduleText = 'module text';
-            builtInModuleSpy.and.returnValue(Promise.resolve('module text'));
+            builtInModuleSpy.and.returnValue(Promise.resolve(moduleText));
             const componentsBuilder = new ComponentsBuilder(context);
             await componentsBuilder.build();
             await componentsBuilder.emit();
@@ -100,6 +100,17 @@ describe('#components-builder', () => {
             });
 
             expect(entryContent).toEqual(moduleText);
+        });
+
+        it('should ignore without exported components when generating entry module', async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/color/color.component.ts`]: 'export class A {}' });
+
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(entryContent).not.toContain('color');
+            expect(entryContent).toContain('hello');
         });
     });
 
@@ -120,37 +131,56 @@ describe('#components-builder', () => {
         });
 
         it('should update file success', async () => {
-            await context.host.writeFile(resolve(COMPONENTS_ROOT_PATH, './hello/hello.component.ts'), 'new content');
+            const originalEntryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(originalEntryContent).toContain(`'hello'`);
+            expect(originalEntryContent).toContain('HelloComponent');
+
+            const newHelloComponentSource = `@Component({ selector: 'hello-new', templateUrl: './hello.component.html' }) export class MyHelloComponent {}`;
+            await context.host.writeFile(resolve(COMPONENTS_ROOT_PATH, './hello/hello.component.ts'), newHelloComponentSource);
             await toolkit.utils.wait(0);
-            expect(await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'))).toEqual('new content');
+            expect(await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'))).toEqual(newHelloComponentSource);
+
+            const latestEntryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(latestEntryContent).toContain('hello-new');
+            expect(latestEntryContent).toContain('MyHelloComponent');
+            expect(latestEntryContent).not.toContain(`'hello'`);
+            expect(latestEntryContent).not.toContain(`'HelloComponent'`);
         });
 
         it('should create file success', async () => {
             const newComponentPath = `${COMPONENTS_ROOT_PATH}/hello1`;
-            const hello1Text = `class HelloComponent {}; export default { selector: "hello", component: HelloComponent }`;
+            const hello1Text = `class Hello1Component {}; export default { selector: "hello1", component: Hello1Component }`;
             await context.host.writeFile(
                 resolve(newComponentPath, 'hello1.component.ts'),
-                'class HelloComponent {}; export default { selector: "hello", component: HelloComponent }'
+                'class Hello1Component {}; export default { selector: "hello1", component: Hello1Component }'
             );
 
             await toolkit.utils.wait(0);
             const newFileContent = await context.host.readFile(resolve(componentsDistPath, 'hello1/hello1.component.ts'));
             expect(newFileContent).toEqual(hello1Text);
+
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(entryContent).toContain('hello1');
+            expect(entryContent).toContain('Hello1Component');
         });
 
         it('should delete file success', async () => {
-            const newComponentPath = `${COMPONENTS_ROOT_PATH}/hello1`;
-            await context.host.writeFile(resolve(newComponentPath, 'hello1.component.ts'), 'new file');
+            await context.host.delete(resolve(COMPONENTS_ROOT_PATH, 'hello/hello.component.ts'));
             await toolkit.utils.wait(0);
-            await context.host.delete(resolve(newComponentPath, 'hello1.component.ts'));
-            await toolkit.utils.wait(0);
-            expect(await context.host.pathExists(resolve(componentsDistPath, 'hello1'))).toBeFalsy();
+            expect(await context.host.pathExists(resolve(componentsDistPath, 'hello'))).toBeFalsy();
+
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(entryContent).not.toContain('hello');
+            expect(entryContent).not.toContain('HelloComponent');
         });
 
         it('should do nothings when create file is not component', async () => {
             await context.host.writeFile(resolve(COMPONENTS_ROOT_PATH, 'hello1.component.ts'), 'new content');
             await toolkit.utils.wait(0);
             expect(await context.host.pathExists(resolve(componentsDistPath, 'hello1.component.ts'))).toBeFalsy();
+
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+            expect(entryContent).not.toContain('hello1');
         });
     });
 });

@@ -64,13 +64,11 @@ export class ComponentsBuilder {
                 } else {
                     if (type === HostWatchEventType.Created) {
                         componentBuilder = new ComponentBuilder(this.docgeni.host, name, componentPath, this.componentsDistPath);
-                        await componentBuilder.setComponentData();
-                        this.components.set(componentPath, componentBuilder);
                         await componentBuilder.buildAndEmit();
+                        this.components.set(componentPath, componentBuilder);
                         toolkit.print.info(`Components: create component ${name} success`);
                     }
                 }
-                await this.build();
                 await this.emitEntryFile();
             } catch (error) {
                 toolkit.print.error(error);
@@ -91,7 +89,7 @@ export class ComponentsBuilder {
                 const isDirectory = await this.docgeni.host.isDirectory(dirFullPath);
                 if (isDirectory) {
                     const componentBuilder = new ComponentBuilder(this.docgeni.host, dir, dirFullPath, this.componentsDistPath);
-                    await componentBuilder.setComponentData();
+                    await componentBuilder.build();
                     this.components.set(dirFullPath, componentBuilder);
                 }
             }
@@ -106,7 +104,9 @@ export class ComponentsBuilder {
         } else {
             sourceFile = createNgSourceFile(this.modulePath, '');
         }
-        const moduleText = await generateBuiltInComponentsModule(sourceFile, this.components);
+        // filter built-in components that source contains angular component
+        const components = Array.from(this.components.values()).filter(component => !!component.componentData);
+        const moduleText = await generateBuiltInComponentsModule(sourceFile, components);
         await this.docgeni.host.writeFile(resolve(this.componentsDistPath, 'index.ts'), moduleText);
     }
 
