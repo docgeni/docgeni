@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.12](https://github.com/docgeni/docgeni/compare/v1.2.0-next.11...v1.2.0-next.12) (2022-04-25)
+
+
+### Bug Fixes
+
+* **core:** add BrowserAnimationsModule to AppModule ([5356a60](https://github.com/docgeni/docgeni/commit/5356a60f2824a2ce73017e9cdeb565bec3b17dcd))
+* **core:** remove progress args from serve ([#355](https://github.com/docgeni/docgeni/issues/355)) ([a2d3509](https://github.com/docgeni/docgeni/commit/a2d350922a8ce622deaed9b62e8fdfe174c5b79a))
+* **core:** should ignore without exported components when generating entry module ([190a288](https://github.com/docgeni/docgeni/commit/190a288a8a6f25287eeb3be6c286f7569c5e5efb))
+
+
+
+
+
 # [1.2.0-next.11](https://github.com/docgeni/docgeni/compare/v1.2.0-next.10...v1.2.0-next.11) (2022-04-24)
 
 
