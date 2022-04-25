@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.13](https://github.com/docgeni/docgeni/compare/v1.2.0-next.12...v1.2.0-next.13) (2022-04-25)
+
+
+### Bug Fixes
+
+* **core:** remove progress from serve options ([a31ef90](https://github.com/docgeni/docgeni/commit/a31ef90b5f0cdcfe7feebb8b8f2e15fb1a666a04))
+
+
+
+
+
 # [1.2.0-next.12](https://github.com/docgeni/docgeni/compare/v1.2.0-next.11...v1.2.0-next.12) (2022-04-25)
 
 
