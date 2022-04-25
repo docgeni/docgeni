@@ -17,11 +17,12 @@ export default {
     const ngSourceFile = createNgSourceFile('module.ts', sourceText);
 
     it('should generate module success', async () => {
-        const components = new Map<string, ComponentBuilder>();
-        components.set('./basic.component', {
-            name: 'alib',
-            componentData: { selector: 'a-lib', name: 'AlibComponent' }
-        } as ComponentBuilder);
+        const components: ComponentBuilder[] = [
+            {
+                name: 'alib',
+                componentData: { selector: 'a-lib', name: 'AlibComponent' }
+            } as ComponentBuilder
+        ];
 
         const getNgModuleMetadataFromDefaultExportSpy = spyOn(utils, 'getNgModuleMetadataFromDefaultExport');
         const combineNgModuleMetaDataSpy = spyOn(utils, 'combineNgModuleMetaData');

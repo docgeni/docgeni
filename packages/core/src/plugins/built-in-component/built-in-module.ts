@@ -3,7 +3,7 @@ import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combine
 import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
-export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: Map<string, ComponentBuilder>) {
+export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: ComponentBuilder[]) {
     const declarations: string[] = Array.from(components.values()).map(item => {
         return item.componentData?.name;
     });
@@ -31,7 +31,7 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
     return module;
 }
 
-async function generateNgModuleText(sourceFile: NgSourceFile, components: Map<string, ComponentBuilder>, moduleMetadata: NgModuleMetadata) {
+async function generateNgModuleText(sourceFile: NgSourceFile, components: ComponentBuilder[], moduleMetadata: NgModuleMetadata) {
     const builtInComponents = Array.from(components.values()).map(item => {
         return item.componentData;
     });
@@ -41,6 +41,7 @@ async function generateNgModuleText(sourceFile: NgSourceFile, components: Map<st
         })
         .join(',\n    ');
     const builtInComponentsArgs = builtInComponents
+        .filter(item => !!item && item.selector)
         .map(item => {
             return `{ selector: '${item.selector}', component: ${item.name} }`;
         })

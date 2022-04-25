@@ -204,7 +204,6 @@ describe('#library-component', () => {
 
             await component.emit();
 
-            console.log(await context.host.readFile(`${absDestAssetsApiDocsPath}/button/zh-cn.json`));
             await expectFiles(context.host, {
                 [`${absDestAssetsOverviewsPath}/button/zh-cn.html`]: fixture.output['doc/zh-cn.html'],
                 [`${absDestAssetsOverviewsPath}/button/en-us.html`]: fixture.output['doc/en-us.html'],
