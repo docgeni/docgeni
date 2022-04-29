@@ -1,6 +1,7 @@
 import { NgParserHost, createNgParserHost } from './ng-parser-host';
 import path from 'path';
 import { ts } from './typescript';
+import { toolkit } from '@docgeni/toolkit';
 
 describe('#ng-parser-host', () => {
     const fixtureRootDir = path.resolve(__dirname, '../test/fixtures/tsconfig');
@@ -18,8 +19,9 @@ describe('#ng-parser-host', () => {
         expect(sourceFiles.length > 0).toBeTruthy();
     });
 
-    it('should create default NgParserHost with watch', () => {
+    fit('should create default NgParserHost with watch', () => {
         const tsConfigPath = path.resolve(fixtureRootDir, './tsconfig.json');
+        // const watchSpy = spyOn(toolkit.fs, 'watch');
         const parserHost = createNgParserHost({
             tsConfigPath: tsConfigPath,
             watch: true,
@@ -28,7 +30,7 @@ describe('#ng-parser-host', () => {
         });
         expect(parserHost).toBeTruthy();
         expect(parserHost.program).toBeTruthy();
-
+        // expect(watchSpy).toHaveBeenCalledTimes(1);
         const sourceFiles = parserHost.program.getSourceFiles();
         expect(sourceFiles).toBeTruthy();
         expect(sourceFiles.length > 0).toBeTruthy();

@@ -89,7 +89,12 @@ export class DefaultNgParserHost implements NgParserHost {
         const allResolvedModulesMap = new Map<string, boolean>();
         this.allResolvedModules.map(resolvedModule => {
             allResolvedModulesMap.set(resolvedModule.resolvedFileName, true);
-            if (this.moduleWatchersMap.get(resolvedModule.resolvedFileName)) {
+            console.log(`rootDir`, this.rootDir);
+            console.log(`resolvedFileName`, resolvedModule.resolvedFileName);
+            // Note: only watch resolved modules in rootDir and exclude others e.g. node_modules, otherwise it will trigger build many builds for the first time
+            // In fact, it is correct to only monitor the source code of library
+            // see https://github.com/docgeni/docgeni/issues/359
+            if (this.moduleWatchersMap.get(resolvedModule.resolvedFileName) || !this.rootDir.includes(resolvedModule.resolvedFileName)) {
                 return;
             }
             const watcher = toolkit.fs.watch(resolvedModule.resolvedFileName, { persistent: true }, (event: string, filename: string) => {
