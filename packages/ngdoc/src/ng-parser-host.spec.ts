@@ -19,9 +19,9 @@ describe('#ng-parser-host', () => {
         expect(sourceFiles.length > 0).toBeTruthy();
     });
 
-    fit('should create default NgParserHost with watch', () => {
+    it('should create default NgParserHost with watch', () => {
         const tsConfigPath = path.resolve(fixtureRootDir, './tsconfig.json');
-        // const watchSpy = spyOn(toolkit.fs, 'watch');
+        const watchSpy = spyOn(toolkit.fs, 'watch');
         const parserHost = createNgParserHost({
             tsConfigPath: tsConfigPath,
             watch: true,
@@ -30,7 +30,13 @@ describe('#ng-parser-host', () => {
         });
         expect(parserHost).toBeTruthy();
         expect(parserHost.program).toBeTruthy();
-        // expect(watchSpy).toHaveBeenCalledTimes(1);
+        expect(watchSpy).toHaveBeenCalledTimes(2);
+
+        const allArgs = watchSpy.calls.allArgs();
+        expect(allArgs[0][0]).toEqual(toolkit.utils.normalizeSlashes(`${fixtureRootDir}/src/button.component.ts`));
+        expect(allArgs[0][1]).toEqual({ persistent: true });
+        expect(allArgs[1][0]).toEqual(toolkit.utils.normalizeSlashes(`${fixtureRootDir}/src/public-api.ts`));
+        expect(allArgs[1][1]).toEqual({ persistent: true });
         const sourceFiles = parserHost.program.getSourceFiles();
         expect(sourceFiles).toBeTruthy();
         expect(sourceFiles.length > 0).toBeTruthy();

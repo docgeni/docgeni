@@ -2,5 +2,6 @@
   "compilerOptions": {
     "experimentalDecorators": true
   },
+  // "files": ["./src/public-api.ts"]
   "include": ["src/"]
 }
