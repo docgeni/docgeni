@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.14](https://github.com/docgeni/docgeni/compare/v1.2.0-next.13...v1.2.0-next.14) (2022-05-05)
+
+
+### Bug Fixes
+
+* **ngdoc:** only watch resolved modules in rootDir and exclude others such as node_modules [#359](https://github.com/docgeni/docgeni/issues/359) ([#360](https://github.com/docgeni/docgeni/issues/360)) ([8669684](https://github.com/docgeni/docgeni/commit/8669684452ba898d19bd0f85e73b8a7d770779f1))
+
+
+
+
+
 # [1.2.0-next.13](https://github.com/docgeni/docgeni/compare/v1.2.0-next.12...v1.2.0-next.13) (2022-04-25)
 
 
