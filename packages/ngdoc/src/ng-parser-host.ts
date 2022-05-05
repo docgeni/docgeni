@@ -60,7 +60,9 @@ export class DefaultNgParserHost implements NgParserHost {
                     return ts.sys.readFile(path);
                 },
                 getCurrentDirectory: () => {
-                    return ts.sys.getCurrentDirectory();
+                    const currentDirectory = ts.sys.getCurrentDirectory();
+                    debug(`getParsedCommandLineOfConfigFile currentDirectory is ${currentDirectory}`, 'ng-parser');
+                    return currentDirectory;
                 },
                 readDirectory: (path, extensions, excludes, includes, depth) => {
                     return ts.sys.readDirectory(path, extensions, excludes, includes, depth);
@@ -76,6 +78,10 @@ export class DefaultNgParserHost implements NgParserHost {
             this.rootFileNames = toolkit.fs.globSync(this.options.fileGlobs);
             this.compileOptions = {};
         }
+        debug(`rootFileNames is ${this.rootFileNames}`, 'ng-parser');
+        this.rootFileNames.forEach(fileName => {
+            this.allResolvedModules.push({ resolvedFileName: fileName });
+        });
         if (this.options.rootDir) {
             this.rootDir = toolkit.utils.normalizeSlashes(this.options.rootDir);
             debug(`rootDir is ${this.rootDir} from ${this.options.rootDir}`, 'ng-parser');
@@ -86,12 +92,21 @@ export class DefaultNgParserHost implements NgParserHost {
         if (!this.options.watch) {
             return;
         }
+        debug(`start watch resolvedModules, allResolvedModules: ${this.allResolvedModules.length}`, 'ng-parser');
         const allResolvedModulesMap = new Map<string, boolean>();
         this.allResolvedModules.map(resolvedModule => {
-            allResolvedModulesMap.set(resolvedModule.resolvedFileName, true);
-            if (this.moduleWatchersMap.get(resolvedModule.resolvedFileName)) {
+            // ignore duplicate module, we will add rootFileNames to allResolvedModules at initialization
+            if (allResolvedModulesMap.has(resolvedModule.resolvedFileName)) {
                 return;
             }
+            allResolvedModulesMap.set(resolvedModule.resolvedFileName, true);
+            // Note: only watch resolved modules in rootDir and exclude others e.g. node_modules, otherwise it will trigger build many builds for the first time
+            // In fact, it is correct to only monitor the source code of library
+            // see https://github.com/docgeni/docgeni/issues/359
+            if (this.moduleWatchersMap.get(resolvedModule.resolvedFileName) || !resolvedModule.resolvedFileName.includes(this.rootDir)) {
+                return;
+            }
+            debug(`watch resolvedModule: ${resolvedModule.resolvedFileName}`, 'ng-parser');
             const watcher = toolkit.fs.watch(resolvedModule.resolvedFileName, { persistent: true }, (event: string, filename: string) => {
                 this.tsProgram = this.createProgram();
                 this.options.watcher(event, resolvedModule.resolvedFileName);
@@ -121,7 +136,7 @@ export class DefaultNgParserHost implements NgParserHost {
             },
             getCurrentDirectory: () => {
                 const result = ts.sys.getCurrentDirectory();
-                debug(`getCurrentDirectory is ${result}`, 'ng-parser');
+                debug(`createCompilerHost currentDirectory is ${result}`, 'ng-parser');
                 return result;
             },
             getDirectories: path => {
