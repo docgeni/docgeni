@@ -6,7 +6,6 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": false,
