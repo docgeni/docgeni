@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.17](https://github.com/docgeni/docgeni/compare/v1.2.0-next.15...v1.2.0-next.17) (2022-07-27)
+
+
+### Bug Fixes
+
+* **cli:** add $id for schema of schematic ([efb40eb](https://github.com/docgeni/docgeni/commit/efb40eb2cc227b32d2712612147763d1ad56b44c))
+
+
+
+
+
 # [1.2.0-next.15](https://github.com/docgeni/docgeni/compare/v1.2.0-next.14...v1.2.0-next.15) (2022-07-27)
 
 **Note:** Version bump only for package docgeni

@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/core",
-  "version": "1.2.0-next.15",
+  "version": "1.2.0-next.17",
   "description": "Docgeni - Core Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -30,8 +30,8 @@
   "dependencies": {
     "@angular-devkit/core": "^12.2.18",
     "@angular-devkit/schematics": "^12.2.18",
-    "@docgeni/ngdoc": "^1.2.0-next.15",
-    "@docgeni/toolkit": "^1.2.0-next.15",
+    "@docgeni/ngdoc": "^1.2.0-next.17",
+    "@docgeni/toolkit": "^1.2.0-next.17",
     "@schematics/angular": "^11.2.15",
     "@types/text-table": "^0.2.2",
     "ansi-colors": "^4.1.1",
