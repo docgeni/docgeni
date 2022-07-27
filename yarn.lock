@@ -112,17 +112,6 @@
     "@angular-devkit/architect" "0.1202.17"
     rxjs "6.6.7"
 
-"@angular-devkit/core@11.2.14":
-  version "11.2.14"
-  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-11.2.14.tgz#b1658fc5bd5191e0012efb4bec72ad33e2e609e6"
-  integrity sha512-Ad1fHqLxDwhkQgLPqq9i+G65NSOoIHXQx7ILcSPACKurV3XLS1RO9BgP/BDaqHAG+WslUAPbMStaTzzPm+9dNw==
-  dependencies:
-    ajv "6.12.6"
-    fast-json-stable-stringify "2.1.0"
-    magic-string "0.25.7"
-    rxjs "6.6.3"
-    source-map "0.7.3"
-
 "@angular-devkit/core@11.2.15":
   version "11.2.15"
   resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-11.2.15.tgz#3e6d0308e049e47a3b21e42a0f2e8d5c31842665"
@@ -146,7 +135,7 @@
     rxjs "6.6.7"
     source-map "0.7.3"
 
-"@angular-devkit/core@12.2.18":
+"@angular-devkit/core@12.2.18", "@angular-devkit/core@^12.2.18":
   version "12.2.18"
   resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-12.2.18.tgz#6c530658b59f625388986fc73e4c4f966269725a"
   integrity sha512-GDLHGe9HEY5SRS+NrKr14C8aHsRCiBFkBFSSbeohgLgcgSXzZHFoU84nDWrl3KZNP8oqcUSv5lHu6dLcf2fnww==
@@ -170,7 +159,7 @@
     minimist "1.2.6"
     symbol-observable "4.0.0"
 
-"@angular-devkit/schematics@11.2.15", "@angular-devkit/schematics@^11.2.15":
+"@angular-devkit/schematics@11.2.15":
   version "11.2.15"
   resolved "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-11.2.15.tgz#a2fb129870c3c8e7b283981743999470bfd4a28e"
   integrity sha512-cFxtpdpwr9N2gtfIG9VyIMacDNsSuRyiV4pToNl/pyHy0z4zif4j32HydXandylHlrYKG4rBMq0UTD/WzHaUcw==
@@ -8961,6 +8950,14 @@ jasmine-ts-console-reporter@^3.1.1:
     minimatch "^3.0.4"
     source-map "^0.5.7"
     source-map-resolve "^0.5.0"
+
+jasmine@~3.6.0:
+  version "3.6.4"
+  resolved "https://registry.npmjs.org/jasmine/-/jasmine-3.6.4.tgz#1f8e4a0d5028a2dc66942b73b9fef4c32be97ad5"
+  integrity sha512-hIeOou6y0BgCOKYgXYveQvlY+PTHgDPajFf+vLCYbMTQ+VjAP9+EQv0nuC9+gyCAAWISRFauB1XUb9kFuOKtcQ==
+  dependencies:
+    glob "^7.1.6"
+    jasmine-core "~3.6.0"
 
 jest-worker@^27.0.2, jest-worker@^27.4.5:
   version "27.5.1"
