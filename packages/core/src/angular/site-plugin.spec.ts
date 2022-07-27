@@ -48,11 +48,15 @@ describe('#site-plugin', () => {
 
     it('should create site success', async () => {
         await context.hooks.beforeRun.promise();
-        await assertExpectedFiles(context.host, {
-            [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
-            [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
-            [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts'
-        });
+        await assertExpectedFiles(
+            context.host,
+            {
+                [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
+                [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
+                [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts'
+            },
+            true
+        );
         expect(context.paths.absSitePath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`);
         expect(context.paths.absSiteContentPath).toEqual(`${DEFAULT_SITE_PATH}/src/app/content`);
         expect(context.enableIvy).toBeTruthy();
