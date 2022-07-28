@@ -31,15 +31,16 @@ export class DocsMarkdownRenderer extends Renderer<any> {
     heading(label: string, level: number, raw: string) {
         if (level === 1 || level === 2 || level === 3 || level === 4) {
             const headingId = label.toLowerCase().replace(whitespaceRegex, '-');
+            const encodedHeadingId = encodeURI(headingId);
             this.headingLinks.push({
-                id: headingId,
+                id: encodedHeadingId,
                 name: label,
                 level: level,
                 type: `h${level}`
             });
             return `
-        <h${level} id="${headingId}" class="docs-header-link">
-          <span header-link="${headingId}"></span>
+        <h${level} id="${encodedHeadingId}" class="docs-header-link">
+          <span header-link="${encodedHeadingId}"></span>
           ${label}
         </h${level}>
       `;
