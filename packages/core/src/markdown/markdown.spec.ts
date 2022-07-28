@@ -66,4 +66,34 @@ describe('markdown', () => {
             expect(output).toContain(`<div embed src="./ref-not-found.md">can't resolve path ./ref-not-found.md</div>`);
         });
     });
+
+    describe('heading', () => {
+        it('should get correct headings', () => {
+            const result = Markdown.compile(`
+# heading1
+# heading2
+`);
+            expect(result.html).toContain(`<h1 id="heading1" class="docs-header-link">`);
+            expect(result.html).toContain(`<h1 id="heading2" class="docs-header-link">`);
+            expect(result.headings.length).toEqual(2);
+            expect(result.headings).toEqual([
+                { id: 'heading1', name: 'heading1', level: 1, type: 'h1' },
+                { id: 'heading2', name: 'heading2', level: 1, type: 'h1' }
+            ]);
+        });
+
+        it('should get correct headings when contains link', () => {
+            const result = Markdown.compile(`# heading1 <a href="https://example.com">Link</a>`);
+            expect(result.html).toContain(`<h1 id="heading1-%3Ca-href=%22https://example-com%22%3Elink%3C/a%3E" class="docs-header-link">`);
+            expect(result.headings.length).toEqual(1);
+            expect(result.headings).toEqual([
+                {
+                    id: 'heading1-%3Ca-href=%22https://example-com%22%3Elink%3C/a%3E',
+                    name: 'heading1 <a href="https://example.com">Link</a>',
+                    level: 1,
+                    type: 'h1'
+                }
+            ]);
+        });
+    });
 });
