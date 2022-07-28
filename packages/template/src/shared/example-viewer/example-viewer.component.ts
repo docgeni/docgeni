@@ -2,10 +2,10 @@ import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModul
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { HttpClient } from '@angular/common/http';
 import { StackblitzExampleService } from '../../services/stackblitz-example.service';
 import { forkJoin } from 'rxjs';
+import { coerceBooleanProperty } from '../../utils';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 

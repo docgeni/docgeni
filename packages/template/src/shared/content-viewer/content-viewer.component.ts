@@ -17,10 +17,9 @@ import {
     ChangeDetectionStrategy
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ComponentPortal } from '@angular/cdk/portal';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
 import { take } from 'rxjs/operators';
-import { DomPortalOutlet } from '../../services/dom-portal-outlet';
+import { ComponentPortal, DomPortalOutlet } from '../../services/dom-portal-outlet';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
 import { ContentRenderer } from '../content-renderer';
 import { TocService } from '../../services/toc.service';

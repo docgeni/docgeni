@@ -1,6 +1,6 @@
-import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
 
+interface ComponentType {}
 export abstract class AlibDialogRef<T = unknown, TResult = unknown> {
     instance: T;
     result: TResult;

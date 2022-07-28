@@ -1,5 +1,92 @@
-import { ComponentPortal, DomPortal, Portal, PortalOutlet } from '@angular/cdk/portal';
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injector } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injector, ViewContainerRef } from '@angular/core';
+
+export interface ComponentType<T> {
+    new (...args: any[]): T;
+}
+
+export interface PortalOutlet {
+    /** Attaches a portal to this outlet. */
+    attach(portal: Portal<any>): any;
+
+    /** Detaches the currently attached portal from this outlet. */
+    detach(): any;
+
+    /** Performs cleanup before the outlet is destroyed. */
+    dispose(): void;
+
+    /** Whether there is currently a portal attached to this outlet. */
+    hasAttached(): boolean;
+}
+
+export abstract class Portal<T> {
+    private _attachedHost: PortalOutlet | null;
+
+    /** Attach this portal to a host. */
+    attach(host: PortalOutlet): T {
+        this._attachedHost = host;
+        return <T>host.attach(this);
+    }
+
+    /** Detach this portal from its host */
+    detach(): void {
+        const host = this._attachedHost;
+
+        if (host !== null) {
+            this._attachedHost = null;
+            host.detach();
+        }
+    }
+
+    /** Whether this portal is attached to a host. */
+    get isAttached(): boolean {
+        return this._attachedHost !== null;
+    }
+
+    /**
+     * Sets the PortalOutlet reference without performing `attach()`. This is used directly by
+     * the PortalOutlet when it is performing an `attach()` or `detach()`.
+     */
+    setAttachedHost(host: PortalOutlet | null) {
+        this._attachedHost = host;
+    }
+}
+
+/**
+ * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
+ */
+export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
+    /** The type of the component that will be instantiated for attachment. */
+    component: ComponentType<T>;
+
+    /**
+     * [Optional] Where the attached component should live in Angular's *logical* component tree.
+     * This is different from where the component *renders*, which is determined by the PortalOutlet.
+     * The origin is necessary when the host is outside of the Angular application context.
+     */
+    viewContainerRef?: ViewContainerRef | null;
+
+    /** [Optional] Injector used for the instantiation of the component. */
+    injector?: Injector | null;
+
+    /**
+     * Alternate `ComponentFactoryResolver` to use when resolving the associated component.
+     * Defaults to using the resolver from the outlet that the portal is attached to.
+     */
+    componentFactoryResolver?: ComponentFactoryResolver | null;
+
+    constructor(
+        component: ComponentType<T>,
+        viewContainerRef?: ViewContainerRef | null,
+        injector?: Injector | null,
+        componentFactoryResolver?: ComponentFactoryResolver | null
+    ) {
+        super();
+        this.component = component;
+        this.viewContainerRef = viewContainerRef;
+        this.injector = injector;
+        this.componentFactoryResolver = componentFactoryResolver;
+    }
+}
 
 export class DomPortalOutlet implements PortalOutlet {
     private disposeFn: (() => void) | null;

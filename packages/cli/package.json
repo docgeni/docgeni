@@ -51,7 +51,6 @@
   "peerDependencies": {
     "@angular-devkit/build-angular": ">=0.900.0",
     "@angular/animations": ">=9.0.0",
-    "@angular/cdk": ">=9.0.0",
     "@angular/cli": ">=9.0.0",
     "@angular/common": ">=9.0.0",
     "@angular/compiler": ">=9.0.0",
