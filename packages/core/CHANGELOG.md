@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
+
+
+### Features
+
+* **template:** remove cdk deps ([6d51ad0](https://github.com/docgeni/docgeni/commit/6d51ad0b4da82cd38e365130f5aea11498236416))
+
+
+
+
+
 # [1.2.0-next.17](https://github.com/docgeni/docgeni/compare/v1.2.0-next.15...v1.2.0-next.17) (2022-07-27)
 
 **Note:** Version bump only for package @docgeni/core
