@@ -106,6 +106,11 @@ export class DefaultNgParserHost implements NgParserHost {
             if (this.moduleWatchersMap.get(resolvedModule.resolvedFileName) || !resolvedModule.resolvedFileName.includes(this.rootDir)) {
                 return;
             }
+            // Note: ignore json file, it will always trigger watch callback event for json file
+            // see https://github.com/docgeni/docgeni/issues/364
+            if (resolvedModule.resolvedFileName.endsWith('.json')) {
+                return;
+            }
             debug(`watch resolvedModule: ${resolvedModule.resolvedFileName}`, 'ng-parser');
             const watcher = toolkit.fs.watch(resolvedModule.resolvedFileName, { persistent: true }, (event: string, filename: string) => {
                 this.tsProgram = this.createProgram();
