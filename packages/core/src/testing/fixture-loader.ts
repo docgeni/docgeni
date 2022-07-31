@@ -10,7 +10,7 @@ export class FixtureResult {
     constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
 
     getSrcPath(relativePath: string) {
-        return path.resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
+        return resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
     }
 
     getOutputContent(relativePath: string, needNormalize = false) {
@@ -35,6 +35,6 @@ async function internalLoadFixture(name: string, rootName: 'src' | 'output'): Pr
 export async function loadFixture(name: string): Promise<FixtureResult> {
     const src = await internalLoadFixture(name, 'src');
     const output = await internalLoadFixture(name, 'output');
-    const rootPath = path.resolve(FIXTURES_PATH, `./${name}`);
+    const rootPath = resolve(FIXTURES_PATH, `./${name}`);
     return new FixtureResult(rootPath, src, output);
 }
