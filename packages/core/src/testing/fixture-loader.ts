@@ -35,6 +35,6 @@ async function internalLoadFixture(name: string, rootName: 'src' | 'output'): Pr
 export async function loadFixture(name: string): Promise<FixtureResult> {
     const src = await internalLoadFixture(name, 'src');
     const output = await internalLoadFixture(name, 'output');
-    const rootPath = path.resolve(FIXTURES_PATH, `./${name}`);
+    const rootPath = resolve(FIXTURES_PATH, `./${name}`);
     return new FixtureResult(rootPath, src, output);
 }
