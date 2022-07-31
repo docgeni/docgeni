@@ -56,7 +56,7 @@ describe('markdown', () => {
             expect(compatibleNormalize(output).trim()).toEqual(fixture.getOutputContent('hello.html', true));
         });
 
-        fit('should throw error when embed ref self', () => {
+        it('should throw error when embed ref self', () => {
             const output = Markdown.toHTML(fixture.src['embed-self.md'], { absFilePath: fixture.getSrcPath('embed-self.md') });
             expect(output).toContain(`<div embed src="./embed-self.md">can't resolve path ./embed-self.md</div>`);
         });
