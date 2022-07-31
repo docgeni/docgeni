@@ -49,8 +49,11 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
             };
             // eslint-disable-next-line dot-notation
             const absFilePath: string = this.lexer.options['absFilePath'];
+            console.log(`absFilePath: ${absFilePath}`);
             const absDirPath = path.dirname(absFilePath);
+            console.log(`absDirPath: ${absDirPath}`);
             const nodeAbsPath = getSystemPath(resolve(absDirPath, token.src));
+            console.log(`nodeAbsPath: ${nodeAbsPath}, resolve(absDirPath, token.src): ${resolve(absDirPath, token.src)}`);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
                 const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
                 this.lexer.blockTokens(
