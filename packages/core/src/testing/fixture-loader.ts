@@ -10,7 +10,7 @@ export class FixtureResult {
     constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
 
     getSrcPath(relativePath: string) {
-        return path.resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
+        return resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');
     }
 
     getOutputContent(relativePath: string, needNormalize = false) {

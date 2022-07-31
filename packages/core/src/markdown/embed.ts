@@ -4,6 +4,7 @@ import fm from 'front-matter';
 import { marked } from 'marked';
 
 import { compatibleNormalize } from './utils';
+import { getSystemPath, resolve } from '../fs';
 
 const LINE_SEPARATE = /\r\n|\n|\r/;
 export function getEmbedBody(input: string, range: [number, number], url: string) {
@@ -49,7 +50,7 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
             // eslint-disable-next-line dot-notation
             const absFilePath: string = this.lexer.options['absFilePath'];
             const absDirPath = path.dirname(absFilePath);
-            const nodeAbsPath = path.resolve(absDirPath, token.src);
+            const nodeAbsPath = getSystemPath(resolve(absDirPath, token.src));
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeAbsPath)) {
                 const content = toolkit.fs.readFileSync(nodeAbsPath).toString();
                 this.lexer.blockTokens(
