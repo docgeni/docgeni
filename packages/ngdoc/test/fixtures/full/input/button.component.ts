@@ -1,10 +1,10 @@
-import { Component, Directive, OnInit, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
+import { Component, Directive, OnInit, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 
 export type ButtonSize = 'lg' | 'md' | 'sm';
 
 /**
  * General Button Component description.
- * @export
+ * @name thy-button
  * @class ButtonComponent
  * @implements {OnInit}
  */
@@ -15,7 +15,6 @@ export type ButtonSize = 'lg' | 'md' | 'sm';
     exportAs: 'thyButton'
 })
 export class ButtonComponent implements OnInit {
-
     private type = '';
     private loading = false;
 
@@ -25,14 +24,14 @@ export class ButtonComponent implements OnInit {
      */
     @Input('thyTypeAlias') thyType: 'primary' | 'info' | 'success' = 'primary';
 
-     /**
+    /**
      * Button Size
      * @deprecated
      * @default md
      */
     @Input() thySize: ButtonSize;
 
-    @Input() set thyLoading(loading: boolean){
+    @Input() set thyLoading(loading: boolean) {
         this.loading = loading;
     }
 
@@ -44,14 +43,17 @@ export class ButtonComponent implements OnInit {
     /**
      * Template
      */
-    @ContentChild('template') templateRef: TemplateRef<any>;
+    @ContentChild('template') templateRef: TemplateRef<unknown>;
 
-    constructor() { }
+    /**
+     * @private
+     */
+    @ContentChild('view') viewChild: TemplateRef<unknown>;
 
-    ngOnInit(): void { }
+    constructor() {}
+
+    ngOnInit(): void {}
 }
-
-
 
 /**
  * General Button Icon Directive description.
@@ -59,7 +61,7 @@ export class ButtonComponent implements OnInit {
  * @class ButtonIconComponent
  * @implements {OnInit}
  */
- @Directive({
-    selector: '[thyButtonIcon]',
+@Directive({
+    selector: '[thyButtonIcon]'
 })
 export class ButtonIconComponent implements OnInit {}

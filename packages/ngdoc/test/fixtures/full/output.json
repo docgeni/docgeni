@@ -1,7 +1,8 @@
 [
   {
     "type": "component",
-    "name": "ButtonComponent",
+    "name": "thy-button",
+    "className": "ButtonComponent",
     "description": "General Button Component description.",
     "selector": "thy-button",
     "templateUrl": "./button.component.html",
@@ -88,7 +89,7 @@
         "name": "templateRef",
         "aliasName": "template",
         "type": {
-          "name": "TemplateRef<any>",
+          "name": "TemplateRef<unknown>",
           "options": null,
           "kindName": "TypeReference"
         },
@@ -101,6 +102,7 @@
   {
     "type": "directive",
     "name": "ButtonIconComponent",
+    "className": "ButtonIconComponent",
     "description": "General Button Icon Directive description.",
     "selector": "[thyButtonIcon]",
     "templateUrl": null,
@@ -113,6 +115,7 @@
   {
     "type": "component",
     "name": "LoadingComponent",
+    "className": "LoadingComponent",
     "description": "General Loading Component description.",
     "selector": "thy-loading",
     "templateUrl": "./loading.component.html",
