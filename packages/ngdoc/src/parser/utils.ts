@@ -196,7 +196,7 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
 }
 
 export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string) {
-    return (tag && tag.text && tag.text[0] && tag.text[0].text) || defaultValue;
+    return ts.displayPartsToString(tag && tag.text) || defaultValue;
 }
 /**
  * 公开的类或者属性，非 private 和 internal 标记
