@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
+
+
+### Features
+
+* **core:** example support background, compact and className #OSP-66 ([#386](https://github.com/docgeni/docgeni/issues/386)) ([0050190](https://github.com/docgeni/docgeni/commit/005019025458a450464f1c15d32e88f416bc0996)), closes [#OSP-66](https://github.com/docgeni/docgeni/issues/OSP-66)
+
+
+
+
+
 # [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
 
 

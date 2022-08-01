@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
+
+
+### Bug Fixes
+
+* **ngdoc:** should ignore watch json files [#364](https://github.com/docgeni/docgeni/issues/364) ([3bd92ab](https://github.com/docgeni/docgeni/commit/3bd92ab7799c71b7b917cbe37e88b52a36289a46))
+
+
+### Features
+
+* **core:** example support background, compact and className #OSP-66 ([#386](https://github.com/docgeni/docgeni/issues/386)) ([0050190](https://github.com/docgeni/docgeni/commit/005019025458a450464f1c15d32e88f416bc0996)), closes [#OSP-66](https://github.com/docgeni/docgeni/issues/OSP-66)
+* **ngdoc:** hide component and property when add private or internal and rewrite directive name for name tag ([41a15a1](https://github.com/docgeni/docgeni/commit/41a15a1ec3cc59aefd041142da4e0e249c7ce68d))
+
+
+
+
+
 # [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
 
 **Note:** Version bump only for package @docgeni/ngdoc

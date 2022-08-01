@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/toolkit",
-  "version": "1.2.0-next.18",
+  "version": "1.2.0-next.19",
   "description": "Docgeni - Toolkit Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -59,7 +59,6 @@
     "@types/pluralize": "^0.0.29",
     "@types/shelljs": "^0.8.8",
     "cpx": "^1.5.0",
-    "rimraf": "^3.0.2",
-    "typescript": "4.0.5"
+    "rimraf": "^3.0.2"
   }
 }

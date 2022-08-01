@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
+
+
+### Features
+
+* **ngdoc:** hide component and property when add private or internal and rewrite directive name for name tag ([41a15a1](https://github.com/docgeni/docgeni/commit/41a15a1ec3cc59aefd041142da4e0e249c7ce68d))
+
+
+
+
+
 # [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
 
 **Note:** Version bump only for package @docgeni/toolkit

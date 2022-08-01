@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
+
+
+### Bug Fixes
+
+* **core:** should encode headingId to fix heading contains a link [#362](https://github.com/docgeni/docgeni/issues/362) ([eebcd4d](https://github.com/docgeni/docgeni/commit/eebcd4d67153cac23c0a21ffe7f32c2baf48bd02))
+* **core:** should use getSystemPath to convert path for compatible with windows system [#376](https://github.com/docgeni/docgeni/issues/376) ([#383](https://github.com/docgeni/docgeni/issues/383)) ([e2b8b25](https://github.com/docgeni/docgeni/commit/e2b8b2555392a931d6274991e11a7eb64137e499))
+
+
+### Features
+
+* **core:** example support background, compact and className #OSP-66 ([#386](https://github.com/docgeni/docgeni/issues/386)) ([0050190](https://github.com/docgeni/docgeni/commit/005019025458a450464f1c15d32e88f416bc0996)), closes [#OSP-66](https://github.com/docgeni/docgeni/issues/OSP-66)
+
+
+
+
+
 # [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
 
 

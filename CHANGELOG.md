@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
+
+
+### Bug Fixes
+
+* **cli:** remove id from schema.json support ng 13 cli ([28a5554](https://github.com/docgeni/docgeni/commit/28a5554c14c57c9c7d9540bb2845f2a3a69f60ef))
+* **core:** should encode headingId to fix heading contains a link [#362](https://github.com/docgeni/docgeni/issues/362) ([eebcd4d](https://github.com/docgeni/docgeni/commit/eebcd4d67153cac23c0a21ffe7f32c2baf48bd02))
+* **core:** should use getSystemPath to convert path for compatible with windows system [#376](https://github.com/docgeni/docgeni/issues/376) ([#383](https://github.com/docgeni/docgeni/issues/383)) ([e2b8b25](https://github.com/docgeni/docgeni/commit/e2b8b2555392a931d6274991e11a7eb64137e499))
+* **ngdoc:** should ignore watch json files [#364](https://github.com/docgeni/docgeni/issues/364) ([3bd92ab](https://github.com/docgeni/docgeni/commit/3bd92ab7799c71b7b917cbe37e88b52a36289a46))
+
+
+### Features
+
+* **core:** example support background, compact and className #OSP-66 ([#386](https://github.com/docgeni/docgeni/issues/386)) ([0050190](https://github.com/docgeni/docgeni/commit/005019025458a450464f1c15d32e88f416bc0996)), closes [#OSP-66](https://github.com/docgeni/docgeni/issues/OSP-66)
+* **ngdoc:** hide component and property when add private or internal and rewrite directive name for name tag ([41a15a1](https://github.com/docgeni/docgeni/commit/41a15a1ec3cc59aefd041142da4e0e249c7ce68d))
+
+
+
+
+
 # [1.2.0-next.18](https://github.com/docgeni/docgeni/compare/v1.2.0-next.17...v1.2.0-next.18) (2022-07-28)
 
 
