@@ -4,6 +4,8 @@
   </div>
   <div
     class="dg-example-viewer-body"
+    [style.background]="example.background"
+    [class.dg-example-viewer-compact]="example.compact"
     dgExampleRenderer
     [exampleModuleType]="exampleModuleType"
     [exampleComponentType]="exampleComponentType"

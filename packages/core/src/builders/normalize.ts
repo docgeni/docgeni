@@ -1,5 +1,6 @@
 import { DEFAULT_COMPONENT_API_DIR, DEFAULT_COMPONENT_DOC_DIR, DEFAULT_COMPONENT_EXAMPLES_DIR, DEFAULT_LABEL_CONFIG } from '../constants';
-import { DocgeniLibrary, Library } from '../interfaces';
+import { DocgeniLibrary } from '../interfaces';
+import { Library } from '../types';
 
 export function normalizeLibConfig(lib: DocgeniLibrary): Library {
     return {

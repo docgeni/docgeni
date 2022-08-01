@@ -24,6 +24,7 @@ export interface DocItem {
     };
     toc?: DocItemToc;
     headings?: HeadingLink[];
+    ancestors?: CategoryItem[];
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -46,6 +47,8 @@ export interface CategoryItem {
             subtitle?: string;
         };
     };
+    toc?: DocItemToc;
+    ancestors?: CategoryItem[];
 }
 
 export interface ChannelItem {

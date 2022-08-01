@@ -31,7 +31,12 @@
         "tags": {
           "description": {
             "name": "description",
-            "text": "Button Type for Description"
+            "text": [
+              {
+                "text": "Button Type for Description",
+                "kind": "text"
+              }
+            ]
           }
         }
       },
@@ -56,7 +61,12 @@
           },
           "default": {
             "name": "default",
-            "text": "md"
+            "text": [
+              {
+                "text": "md",
+                "kind": "text"
+              }
+            ]
           }
         }
       },
@@ -227,7 +237,12 @@
         "parameters": [],
         "returnValue": {
           "type": "number",
-          "description": "返回描述测试"
+          "description": [
+            {
+              "text": "返回描述测试",
+              "kind": "text"
+            }
+          ]
         },
         "description": "method2默认备注"
       }

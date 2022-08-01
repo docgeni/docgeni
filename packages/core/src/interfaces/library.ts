@@ -1,14 +1,3 @@
-import { NgDocParser } from '@docgeni/ngdoc';
-import { CategoryItem } from './navigation-item';
-
-/**
- * 包含内部属性的定义
- */
-export interface Library extends DocgeniLibrary {
-    categories?: CategoryItem[];
-    ngDocParser?: NgDocParser;
-}
-
 /**
  * 用户可以配置的 Library 属性
  */

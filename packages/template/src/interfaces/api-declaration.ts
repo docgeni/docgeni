@@ -1,6 +1,12 @@
+export interface PropertyType {
+    name: string;
+    options?: (string | number)[] | null;
+    kindName?: string;
+}
+
 export interface PropertyDeclaration {
     name: string;
-    type: string;
+    type: string | PropertyType;
     description?: string;
     default?: string;
 }

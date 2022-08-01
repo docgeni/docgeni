@@ -1,5 +1,6 @@
-import { ComponentDocItem, Library, LiveExample } from '../interfaces';
+import { ComponentDocItem, LiveExample } from '../interfaces';
 import { EmitFiles } from './file';
+import { Library } from './library-builder';
 
 export interface LibraryComponent {
     readonly absPath: string;

@@ -1,5 +1,7 @@
 import { HeadingLink } from './toc';
 
+export type DocItemToc = 'menu' | 'content' | 'hidden' | false;
+
 export interface DocItem {
     id: string;
     title: string;
@@ -20,9 +22,9 @@ export interface DocItem {
             content?: string;
         };
     };
-    toc?: 'menu' | 'content' | 'hidden' | false;
-    ancestors?: CategoryItem[];
+    toc?: DocItemToc;
     headings?: HeadingLink[];
+    ancestors?: CategoryItem[];
 }
 
 export interface ComponentDocItem extends DocItem {
@@ -45,7 +47,7 @@ export interface CategoryItem {
             subtitle?: string;
         };
     };
-    toc?: 'menu' | 'content' | 'hidden' | false;
+    toc?: DocItemToc;
     ancestors?: CategoryItem[];
 }
 

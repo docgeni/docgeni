@@ -1,5 +1,5 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, Library, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
+import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
 import { toolkit, debug } from '@docgeni/toolkit';
 import { createNgSourceFile, NgModuleInfo, NgSourceFile } from '@docgeni/ngdoc';
 import {
@@ -16,7 +16,7 @@ import { Markdown } from '../markdown';
 import { cosmiconfig } from 'cosmiconfig';
 import fm from 'front-matter';
 import { DocSourceFile } from './doc-file';
-import { ComponentDocMeta, EmitFiles, LibraryComponent } from '../types';
+import { ComponentDocMeta, EmitFiles, Library, LibraryComponent } from '../types';
 import { getSystemPath, resolve } from '../fs';
 import { FileEmitter } from './emitter';
 import { generateComponentExamplesModule } from './examples-module';
@@ -282,9 +282,15 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         let exampleOrder = Number.MAX_SAFE_INTEGER;
         if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
             const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
-            const exampleFmResult = fm<{ title: string; order: number }>(content);
+            const exampleFmResult = fm<{ title: string; order: number; background: string; compact: boolean }>(content);
             if (exampleFmResult.attributes.title) {
                 liveExample.title = exampleFmResult.attributes.title;
+            }
+            if (exampleFmResult.attributes.background) {
+                liveExample.background = exampleFmResult.attributes.background;
+            }
+            if (exampleFmResult.attributes.compact) {
+                liveExample.compact = exampleFmResult.attributes.compact;
             }
             if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
                 exampleOrder = exampleFmResult.attributes.order;

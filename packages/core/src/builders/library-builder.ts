@@ -1,11 +1,11 @@
 import { DocgeniContext } from '../docgeni.interface';
-import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, Library, LiveExample, NavigationItem } from '../interfaces';
+import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, LiveExample, NavigationItem } from '../interfaces';
 import { toolkit, debug } from '@docgeni/toolkit';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { LibraryComponentImpl } from './library-component';
 import { HostWatchEventType, relative, resolve } from '../fs';
-import { EmitFile, EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
+import { EmitFile, EmitFiles, Library, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 import { ts, NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
 
