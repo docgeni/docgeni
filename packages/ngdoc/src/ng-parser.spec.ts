@@ -4,7 +4,7 @@ import { toolkit } from '@docgeni/toolkit';
 import { Project, Node } from 'ts-morph';
 import ts from 'typescript';
 
-const EXCLUDE_DIRS = [];
+const EXCLUDE_DIRS: string[] = [];
 const ONLY_TEST_FIXTURE = 'full';
 const ROOT_FIXTURES = path.resolve(__dirname, '../test/fixtures');
 

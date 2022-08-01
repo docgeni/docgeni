@@ -13,7 +13,9 @@ import {
     getDocTagsBySymbol,
     getDocTagsBySignature,
     serializeMethodParameterSymbol,
-    declarationIsPublic
+    declarationIsPublic,
+    isPublicTag,
+    DocTagResult
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -89,12 +91,12 @@ export class NgDocParser {
                     const ngDecorator = getNgDecorator(symbol.valueDeclaration);
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
-                        const tags = getDocTagsBySymbol(symbol) as { private: ts.JSDocTagInfo };
-                        if (!tags.private) {
+                        const tags = getDocTagsBySymbol(symbol);
+                        if (isPublicTag(tags)) {
                             switch (type) {
                                 case 'component':
                                 case 'directive':
-                                    docs.push(this.parseDirectiveDoc(context, type, symbol, ngDecorator));
+                                    docs.push(this.parseDirectiveDoc(context, type, symbol, ngDecorator, tags));
                                     break;
                                 case 'service':
                                     docs.push(this.parseServiceDoc(context, symbol, ngDecorator));
@@ -125,11 +127,18 @@ export class NgDocParser {
         return directiveDoc;
     }
 
-    private parseDirectiveDoc(context: ParserSourceFileContext, type: NgDocItemType, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
+    private parseDirectiveDoc(
+        context: ParserSourceFileContext,
+        type: NgDocItemType,
+        symbol: ts.Symbol,
+        ngDecorator: NgParsedDecorator,
+        tags: DocTagResult
+    ) {
         const description = serializeSymbol(symbol, context.checker);
         const directiveDoc: NgDirectiveDoc = {
             type: type,
-            name: description.name,
+            name: tags.name ? tags.name.text : description.name,
+            className: description.name,
             description: description.comment,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
@@ -149,25 +158,27 @@ export class NgDocParser {
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     const propertyKind = getPropertyKind(decorator.name);
                     const tags = getDocTagsBySymbol(symbol);
-                    const property: NgPropertyDoc = {
-                        kind: propertyKind,
-                        name: symbolDescription.name,
-                        aliasName: this.getNgPropertyAliasName(decorator),
-                        type: {
-                            name: symbolDescription.type,
-                            options: options,
-                            kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
-                        },
-                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
-                        default: '',
-                        tags: tags
-                    };
+                    if (isPublicTag(tags)) {
+                        const property: NgPropertyDoc = {
+                            kind: propertyKind,
+                            name: symbolDescription.name,
+                            aliasName: this.getNgPropertyAliasName(decorator),
+                            type: {
+                                name: symbolDescription.type,
+                                options: options,
+                                kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
+                            },
+                            description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
+                            default: '',
+                            tags: tags
+                        };
 
-                    if (propertyKind === 'Input') {
-                        property.default =
-                            (tags.default && tags.default.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
+                        if (propertyKind === 'Input') {
+                            property.default =
+                                (tags.default && tags.default.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
+                        }
+                        properties.push(property);
                     }
-                    properties.push(property);
                 }
             }
         });

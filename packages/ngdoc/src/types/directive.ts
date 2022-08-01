@@ -14,6 +14,7 @@ export interface NgDirectiveDoc extends NgDirectiveMetadata {
     type: NgDocItemType;
     name?: string;
     description?: string;
+    className?: string;
     properties?: NgPropertyDoc[];
 }
 

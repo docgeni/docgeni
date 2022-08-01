@@ -168,13 +168,14 @@ export function findNodes<T extends ts.Node>(
 //     return result;
 // }
 
-interface DocTagResult {
+export interface DocTagResult {
     description?: ts.JSDocTagInfo;
     default?: ts.JSDocTagInfo;
     deprecated?: ts.JSDocTagInfo;
+    name?: ts.JSDocTagInfo;
     [key: string]: ts.JSDocTagInfo;
 }
-interface MethodDocTagResult {
+export interface MethodDocTagResult {
     description?: ts.JSDocTagInfo;
     default?: ts.JSDocTagInfo;
     deprecated?: ts.JSDocTagInfo;
@@ -192,6 +193,13 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
         result[item.name] = item;
         return result;
     }, {});
+}
+
+/**
+ * 公开的类或者属性，非 private 和 internal 标记
+ */
+export function isPublicTag(tags: DocTagResult) {
+    return !(tags.private || tags.internal);
 }
 
 export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult {

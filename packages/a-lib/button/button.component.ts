@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter
 
 /**
  * General Button Component description.
+ * @name alib-button
  */
 @Component({
     selector: 'alib-button,[alibButton]',
