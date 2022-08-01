@@ -282,7 +282,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         let exampleOrder = Number.MAX_SAFE_INTEGER;
         if (await this.docgeni.host.pathExists(absComponentExampleDocPath)) {
             const content = await this.docgeni.host.readFile(absComponentExampleDocPath);
-            const exampleFmResult = fm<{ title: string; order: number; background: string; compact: boolean }>(content);
+            const exampleFmResult = fm<{ title: string; order: number; background: string; compact: boolean; className: string }>(content);
             if (exampleFmResult.attributes.title) {
                 liveExample.title = exampleFmResult.attributes.title;
             }
@@ -291,6 +291,9 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             }
             if (exampleFmResult.attributes.compact) {
                 liveExample.compact = exampleFmResult.attributes.compact;
+            }
+            if (exampleFmResult.attributes.className) {
+                liveExample.className = exampleFmResult.attributes.className;
             }
             if (toolkit.utils.isNumber(exampleFmResult.attributes.order)) {
                 exampleOrder = exampleFmResult.attributes.order;

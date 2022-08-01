@@ -18,6 +18,8 @@ export interface LiveExample {
     background?: string;
     /** Remove padding for the example when compact is true. */
     compact?: boolean;
+    /** Class name for styles of the example. */
+    className?: string;
     /** Name of the example component. */
     componentName: string;
     /** List of source files which are all of the example. */

@@ -178,7 +178,8 @@ describe('#library-component', () => {
                     additionalFiles: [],
                     additionalComponents: [],
                     background: '#ddd',
-                    compact: true
+                    compact: true,
+                    className: 'bg-custom-example'
                 })
             );
 

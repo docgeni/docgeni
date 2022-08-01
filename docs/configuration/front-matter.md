@@ -61,3 +61,21 @@ toc: menu
 
 组件的标签，如果是新组件，设置为`new`，如果组件已经被遗弃，设置为`deprecated`，如果组件是实验组件，设置为`experimental`，可以被设置成为任意在类库中配置的 id，配置标签参考：[labels](configuration/lib#labels)。
 
+## background <label>1.2.0+</label>
+- 类型：`string`
+- 默认：`null`
+
+组件示例渲染的背景色。
+
+## compact <label>1.2.0+</label>
+- 类型：`boolean`
+- 默认：`false`
+
+去除组件示例渲染间距。
+
+## className <label>1.2.0+</label>
+- 类型：`string`
+- 默认：`null`
+
+组件示例渲染的样式类，控制特殊样式处理。
+
