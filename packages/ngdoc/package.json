@@ -34,7 +34,7 @@
   "dependencies": {
     "@docgeni/toolkit": "^1.2.0-next.18",
     "ts-morph": "12.1.0",
-    "typescript": "4.1.3"
+    "typescript": "4.3.5"
   },
   "gitHead": "19aa63d7b4eeeb804ab66336086a54fecd91e6ed"
 }

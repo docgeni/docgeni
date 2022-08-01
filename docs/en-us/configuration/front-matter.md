@@ -60,3 +60,22 @@ Display mode of table of content, `content` indicates display on the right side 
 - Default: `null`
 
 Component label, if the component is a new, set it to `new`, if the component has been deprecated, set it to `deprecated`, if the component is an experimental, set it to `experimental`. it can be set to any id configured in the library labels. for the configuration label, refer to: [labels] (configuration/lib#labels).
+
+## background <label>1.2.0+</label>
+- Type: `string`
+- Default: `null`
+
+Background of component example rendering.
+
+## compact <label>1.2.0+</label>
+- Type: `boolean`
+- Default: `false`
+
+Remove component example spacing.
+
+## className <label>1.2.0+</label>
+- Type: `string`
+- Default: `null`
+
+The style class of component example rendering, which controls special style processing.
+

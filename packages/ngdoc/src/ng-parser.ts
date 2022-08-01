@@ -15,7 +15,8 @@ import {
     serializeMethodParameterSymbol,
     declarationIsPublic,
     isPublicTag,
-    DocTagResult
+    DocTagResult,
+    getTextByJSDocTagInfo
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -120,7 +121,7 @@ export class NgDocParser {
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
-            description: tags.description?.text || description.comment
+            description: getTextByJSDocTagInfo(tags.description, description.comment)
         };
         directiveDoc.properties = this.parseServiceProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
         directiveDoc.methods = this.parseServiceMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -137,7 +138,7 @@ export class NgDocParser {
         const description = serializeSymbol(symbol, context.checker);
         const directiveDoc: NgDirectiveDoc = {
             type: type,
-            name: tags.name ? tags.name.text : description.name,
+            name: getTextByJSDocTagInfo(tags.name, description.name),
             className: description.name,
             description: description.comment,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
@@ -168,14 +169,15 @@ export class NgDocParser {
                                 options: options,
                                 kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                             },
-                            description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
+                            description: getTextByJSDocTagInfo(tags.description, symbolDescription.comment),
                             default: '',
                             tags: tags
                         };
 
                         if (propertyKind === 'Input') {
                             property.default =
-                                (tags.default && tags.default.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
+                                ts.displayPartsToString(tags.default?.text) ||
+                                getPropertyValue(propertyDeclaration, symbolDescription.type);
                         }
                         properties.push(property);
                     }
@@ -202,7 +204,7 @@ export class NgDocParser {
                             options: options,
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
-                        description: tags.description && tags.description.text ? tags.description.text : symbolDescription.comment,
+                        description: ts.displayPartsToString(tags.description?.text) || symbolDescription.comment,
                         default: '',
                         tags: tags
                     };
@@ -224,15 +226,16 @@ export class NgDocParser {
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map(signature => {
                         const tags = getDocTagsBySignature(signature);
-                        return {
+                        const descriptionText = ts.displayPartsToString(tags.description?.text);
+                        const defaultDocumentationText = ts.displayPartsToString(signature.getDocumentationComment(context.checker));
+                        return ({
                             name: symbolDescription.name,
                             parameters: signature.parameters.map(parameter =>
                                 serializeMethodParameterSymbol(parameter, context.checker, tags)
                             ),
                             returnValue: { type: context.checker.typeToString(signature.getReturnType()), description: tags.return?.text },
-                            description:
-                                tags.description?.text || ts.displayPartsToString(signature.getDocumentationComment(context.checker))
-                        } as NgMethodDoc;
+                            description: descriptionText || defaultDocumentationText
+                        } as unknown) as NgMethodDoc;
                     });
 
                     properties.push(...list);

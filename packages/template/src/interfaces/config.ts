@@ -1,5 +1,6 @@
 import { DocgeniLibrary } from './library';
 import { Locale } from './locale';
+import { DocItemToc } from './navigation-item';
 
 export interface HeroAction {
     text: string;
@@ -22,7 +23,6 @@ export interface HomeDocMeta {
         title: string;
         description: string;
     }[];
-    footer: string;
     contentPath: string;
 }
 
@@ -66,7 +66,7 @@ export interface DocgeniConfig {
     mode?: DocgeniMode;
     /** Theme, angular navbar style and default style **/
     theme?: 'default' | 'angular';
-    /** Base href of documentation, default null / **/
+    /** Base href of documentation, default is / **/
     baseHref?: string;
     /** Logo url*/
     logoUrl?: string;
@@ -96,8 +96,12 @@ export interface DocgeniConfig {
     footer?: string;
     /** algolia config */
     algolia?: DocgeniAlgoliaConfig;
+    /** default toc, default is content **/
+    toc?: DocItemToc;
     /** sitemap config */
     sitemap?: DocgeniSitemapConfig;
+    /** Progress */
+    progress?: boolean;
 }
 
 // For Angular Template

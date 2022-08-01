@@ -164,6 +164,39 @@ describe('#library-component', () => {
                     label: { text: 'New', color: '#73D897' }
                 })
             );
+
+            expect(component.examples[0]).toEqual(
+                jasmine.objectContaining({
+                    key: 'alib-button-basic-example',
+                    name: 'basic',
+                    title: 'New Basic',
+                    componentName: 'AlibButtonBasicExampleComponent',
+                    module: {
+                        name: 'AlibButtonExamplesModule',
+                        importSpecifier: 'alib/button'
+                    },
+                    additionalFiles: [],
+                    additionalComponents: [],
+                    background: '#ddd',
+                    compact: true,
+                    className: 'bg-custom-example'
+                })
+            );
+
+            expect(component.examples[1]).toEqual(
+                jasmine.objectContaining({
+                    key: 'alib-button-advance-example',
+                    name: 'advance',
+                    title: 'Advance',
+                    componentName: 'AlibButtonAdvanceCustomExampleComponent',
+                    module: {
+                        name: 'AlibButtonExamplesModule',
+                        importSpecifier: 'alib/button'
+                    },
+                    additionalFiles: [],
+                    additionalComponents: []
+                })
+            );
         });
 
         it('should emit lib component success', async () => {
@@ -224,17 +257,18 @@ describe('#library-component', () => {
             const aliasBundleJsonFiles: { path: string; content: string }[] = await context.host.readJSON(
                 `${absDestAssetsExamplesBundlePath}/button/bundle.json`
             );
+            const d = aliasBundleJsonFiles.find(item => item.path === 'examples.module.ts');
             await expectFiles(context.host, {
                 [`${absDestSiteContentComponentsPath}/button/module.ts`]: aliasBundleJsonFiles.find(
                     item => item.path === 'examples.module.ts'
-                ).content,
+                )?.content,
                 [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: aliasBundleJsonFiles.find(
                     item => item.path === 'basic/basic.component.ts'
-                ).content,
+                )?.content,
                 [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: aliasBundleJsonFiles.find(
                     item => item.path === 'basic/basic.component.html'
-                ).content
-            });
+                )?.content
+            } as Record<string, string>);
         });
 
         it('should emit lib component with custom name', async () => {

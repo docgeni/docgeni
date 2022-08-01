@@ -54,6 +54,10 @@
 
     .dg-example-viewer-body {
         padding: 20px;
+
+        &.dg-example-viewer-compact {
+            padding: 0;
+        }
     }
 
     .dg-example-viewer-intro {

@@ -1,4 +1,4 @@
-import { Library } from '../interfaces';
+import { Library } from './library-builder';
 
 export interface LibraryContext {
     lib: Library;

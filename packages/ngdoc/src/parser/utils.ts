@@ -195,6 +195,9 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
     }, {});
 }
 
+export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string) {
+    return ts.displayPartsToString(tag && tag.text) || defaultValue;
+}
 /**
  * 公开的类或者属性，非 private 和 internal 标记
  */
@@ -210,7 +213,7 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
         } else {
             let paramName: string;
             let paramText: string;
-            const regexpResult = (item.text || '').match(/(^\S+)\s?(.*)$/);
+            const regexpResult = (ts.displayPartsToString(item.text) || '').match(/(^\S+)\s?(.*)$/);
             if (regexpResult) {
                 paramText = regexpResult[2] || '';
                 paramName = regexpResult[1];
@@ -226,7 +229,7 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
 
 export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.TypeChecker, tags: MethodDocTagResult) {
     const result = serializeSymbol(symbol, checker);
-    result.comment = (tags.param || {})[result.name]?.text || result.comment;
+    result.comment = getTextByJSDocTagInfo((tags.param || {})[result.name], result.comment);
     return result;
 }
 

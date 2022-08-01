@@ -1,11 +1,10 @@
 import { ValidationError } from './../errors/validation-error';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniLibrary, Library, LiveExample } from '../interfaces';
+import { DocgeniLibrary, LiveExample } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
 import { LibraryBuilderImpl } from './library-builder';
 import { normalizeLibConfig } from './normalize';
 import { resolve } from '../fs';
-import { EmitFiles, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 
 export class LibrariesBuilder extends FileEmitter {

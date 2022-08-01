@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit, OnChanges {
         if (!menu.items || !menu.items.length) {
             return;
         }
-        let status = this.menuDisplayMap.get(menu);
+        const status = this.menuDisplayMap.get(menu);
         this.setMenuOpen(menu, !status);
     }
 
@@ -47,8 +47,8 @@ export class SidebarComponent implements OnInit, OnChanges {
     private updateGroupsCollapseStates() {
         let ancestors: CategoryItem[] = [];
         for (const menu of this.global.docItems) {
-            let urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
-            let result = this.router.isActive(urlTree, !menu.examples);
+            const urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
+            const result = this.router.isActive(urlTree, !menu.examples);
             if (result) {
                 ancestors = menu.ancestors;
                 break;

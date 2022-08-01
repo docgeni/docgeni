@@ -14,7 +14,7 @@ export interface NgPropertyDoc {
     type?: string | null | NgPropertyType;
     /** 默认值 */
     default?: string | number | boolean | null | object;
-    tags?: Record<string, { name: string; text?: string }>;
+    tags?: Record<string, { name: string; text?: { text: string; kind: string }[] }>;
 }
 
 export interface NgMethodDoc {

@@ -7,11 +7,11 @@ export class DocgeniPaths {
     /* markdown docs absolute path, default is ${cwd}/docs */
     absDocsPath?: string;
     /* site build output path, only works for automatically creating site */
-    absOutputPath?: string;
+    absOutputPath: string;
     /* site absolute path, detect root from siteProjectName in angular.json, if siteProjectName is empty, default is ${cwd}/_site*/
-    absSitePath?: string;
+    absSitePath: string;
     /* site docs content absolute path */
-    absSiteContentPath?: string;
+    absSiteContentPath: string;
     /* site assets content absolute path */
     absSiteAssetsContentPath?: string;
     /* site assets content docs absolute path */
