@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter, Injectable } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter, Injectable, ContentChild, TemplateRef } from '@angular/core';
 
 /**
  * General Button Component description.
@@ -34,13 +34,18 @@ export class AlibButtonComponent implements OnInit {
         this.type = value;
         this.elementRef.nativeElement.classList.add(`dg-btn-${this.type}`);
     }
+
     /**
      * Button Size
      * @default md
      */
     @Input() alibSize: 'xs' | 'sm' | 'md' | 'lg' = 'xs';
 
-    @Input() alibLengthTooLongLengthTooLong: 'TypeLengthTooLongLengthTooLongLengthTooLong';
+    /**
+     * Input  of alib button component
+     * @type string
+     */
+    @Input('alibAliasName') alibLengthTooLongLengthTooLong: 'TypeLengthTooLongLengthTooLongLengthTooLong';
 
     /**
      * Button loading status
@@ -54,6 +59,8 @@ export class AlibButtonComponent implements OnInit {
      * Loading Event
      */
     @Output() thyLoadingEvent = new EventEmitter<boolean>();
+
+    @ContentChild('template') templateRef: TemplateRef<unknown>;
 
     constructor(private elementRef: ElementRef<HTMLElement>) {}
 

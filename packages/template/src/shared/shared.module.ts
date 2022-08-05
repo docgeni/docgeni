@@ -27,6 +27,7 @@ import { ExampleRendererComponent } from './example-renderer/example-renderer.co
 import { DocPagesLinksComponent } from './doc-pages-links/doc-pages-links.component';
 import { SearchComponent } from './search/search.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { IsNgContentChildKindPipe } from './pipes/ng-kind.pipe';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -45,6 +46,7 @@ const COMPONENTS = [
     LogoComponent,
     CopyComponent,
     IsComponentDocPipe,
+    IsNgContentChildKindPipe,
     TranslatePipe,
     IsModeLitePipe,
     IsModeFullPipe,
