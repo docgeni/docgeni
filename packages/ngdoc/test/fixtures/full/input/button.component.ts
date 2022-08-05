@@ -42,6 +42,7 @@ export class ButtonComponent implements OnInit {
 
     /**
      * Template
+     * @type TemplateRef
      */
     @ContentChild('template') templateRef: TemplateRef<unknown>;
 

@@ -99,7 +99,7 @@
         "name": "templateRef",
         "aliasName": "template",
         "type": {
-          "name": "TemplateRef<unknown>",
+          "name": "TemplateRef",
           "options": null,
           "kindName": "TypeReference"
         },
