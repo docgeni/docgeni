@@ -34,6 +34,7 @@ export class AlibButtonComponent implements OnInit {
         this.type = value;
         this.elementRef.nativeElement.classList.add(`dg-btn-${this.type}`);
     }
+
     /**
      * Button Size
      * @default md
