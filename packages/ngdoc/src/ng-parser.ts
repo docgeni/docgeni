@@ -165,7 +165,7 @@ export class NgDocParser {
                             name: symbolDescription.name,
                             aliasName: this.getNgPropertyAliasName(decorator),
                             type: {
-                                name: symbolDescription.type,
+                                name: getTextByJSDocTagInfo(tags.type, symbolDescription.type),
                                 options: options,
                                 kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                             },
