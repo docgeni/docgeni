@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.20](https://github.com/docgeni/docgeni/compare/v1.2.0-next.19...v1.2.0-next.20) (2022-08-05)
+
+
+### Features
+
+* **ngdoc:** add [@type](https://github.com/type) custom type ([b1ba6fd](https://github.com/docgeni/docgeni/commit/b1ba6fdc50f6b73bcaac1e23dd17511440de9d52))
+
+
+
+
+
 # [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
 
 

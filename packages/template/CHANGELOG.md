@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.20](https://github.com/docgeni/docgeni/compare/v1.2.0-next.19...v1.2.0-next.20) (2022-08-05)
+
+
+### Features
+
+* **template:** display aliasName first and add "#" before name for ContentChild and ContentChildren kinds ([#388](https://github.com/docgeni/docgeni/issues/388)) ([5a671b5](https://github.com/docgeni/docgeni/commit/5a671b5d8f1588666bd7b298716a3849358d45f2))
+
+
+
+
+
 # [1.2.0-next.19](https://github.com/docgeni/docgeni/compare/v1.2.0-next.18...v1.2.0-next.19) (2022-08-01)
 
 
