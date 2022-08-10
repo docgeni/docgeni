@@ -4,11 +4,7 @@
   "private": "true",
   "description": "Docgeni - Angular Template Components",
   "peerDependencies": {
-    "@angular/common": "*",
-    "@angular/core": "*",
-    "@angular/router": "*",
-    "docsearch.js": "*",
-    "tslib": "*"
+    "docsearch.js": "*"
   },
   "dependencies": {
     "docsearch.js": "2.6.3"
