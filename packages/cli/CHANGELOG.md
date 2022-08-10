@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.22](https://github.com/docgeni/docgeni/compare/v1.2.0-next.21...v1.2.0-next.22) (2022-08-10)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
 # [1.2.0-next.21](https://github.com/docgeni/docgeni/compare/v1.2.0-next.20...v1.2.0-next.21) (2022-08-09)
 
 **Note:** Version bump only for package @docgeni/cli
