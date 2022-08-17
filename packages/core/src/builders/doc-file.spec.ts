@@ -138,7 +138,7 @@ describe('DocSourceFile', () => {
         });
     });
 
-    it('should build file with content transform', async () => {
+    it('should rewrite file content', async () => {
         await docgeniHost.writeFile(
             'docs/getting-started.md',
             `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`
