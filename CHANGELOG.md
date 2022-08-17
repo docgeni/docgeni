@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.23](https://github.com/docgeni/docgeni/compare/v1.2.0-next.22...v1.2.0-next.23) (2022-08-17)
+
+
+### Features
+
+* **core:** support render all examples for overview ([#389](https://github.com/docgeni/docgeni/issues/389)) ([d61f728](https://github.com/docgeni/docgeni/commit/d61f7285f4c2a49bb8cf3114fdd89652f46b1256))
+
+
+
+
+
 # [1.2.0-next.22](https://github.com/docgeni/docgeni/compare/v1.2.0-next.21...v1.2.0-next.22) (2022-08-10)
 
 **Note:** Version bump only for package docgeni
