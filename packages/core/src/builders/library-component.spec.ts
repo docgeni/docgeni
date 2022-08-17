@@ -199,6 +199,38 @@ describe('#library-component', () => {
             );
         });
 
+        it('should build overview success', async () => {
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            expect(component.getOverviewContent('zh-cn')).toBeFalsy();
+            expect(component.getOverviewContent('en-us')).toBeFalsy();
+            await component.build();
+            expect(component.getOverviewContent('zh-cn')).toContain('这是一个按钮');
+            expect(component.getOverviewContent('en-us')).toContain('This is button');
+        });
+
+        it('should build overview with examples', async () => {
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            await writeFilesToHost(context.host, {
+                [`${buttonDirPath}/doc/zh-cn.md`]: `${fixture.src['doc/zh-cn.md']}\n<examples />`,
+                [`${buttonDirPath}/doc/en-us.md`]: `${fixture.src['doc/en-us.md']}\n<examples />`
+            });
+            expect(component.getOverviewContent('zh-cn')).toBeFalsy();
+            expect(component.getOverviewContent('en-us')).toBeFalsy();
+            await component.build();
+            expect(component.getOverviewContent('en-us')).toContain(
+                '<example title="New Basic" name="alib-button-basic-example"></example>'
+            );
+            expect(component.getOverviewContent('en-us')).toContain(
+                '<example title="Advance" name="alib-button-advance-example"></example> '
+            );
+            expect(component.getOverviewContent('zh-cn')).toContain(
+                '<example title="New Basic" name="alib-button-basic-example"></example>'
+            );
+            expect(component.getOverviewContent('zh-cn')).toContain(
+                '<example title="Advance" name="alib-button-advance-example"></example> '
+            );
+        });
+
         it('should emit lib component success', async () => {
             const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
             expect(component.getDocItem('zh-cn')).toBeFalsy();

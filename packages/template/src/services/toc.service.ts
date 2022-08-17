@@ -65,9 +65,25 @@ export class TocService {
     }
 
     generateToc(docViewerContent: HTMLElement, scrollContainer = '.dg-scroll-container') {
-        const headers = Array.from<HTMLHeadingElement>(docViewerContent.querySelectorAll('h1, h2, h3, h4'));
+        const headers = Array.from<HTMLHeadingElement>(docViewerContent.querySelectorAll('h1, h2, h3, h4, dg-examples'));
         const links: TocLink[] = [];
         headers.forEach(header => {
+            if (header.tagName === 'DG-EXAMPLES') {
+                const allExamples = header.querySelectorAll('example');
+                const headerLevel = 2;
+                allExamples.forEach(example => {
+                    links.push({
+                        name: example.getAttribute('title'),
+                        type: 'h2',
+                        top: example.getBoundingClientRect().top,
+                        id: example.getAttribute('name'),
+                        active: false,
+                        level: headerLevel,
+                        element: example as HTMLHeadingElement
+                    });
+                });
+                return;
+            }
             // remove the 'TocLink' icon name from the inner text
             const name = header.innerText.trim().replace(/^TocLink/, '');
             const { top } = header.getBoundingClientRect();

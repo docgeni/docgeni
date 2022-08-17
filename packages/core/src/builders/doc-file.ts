@@ -99,6 +99,10 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         this.headings = result.headings;
     }
 
+    public async rewrite(content: string) {
+        this.output = content;
+    }
+
     public async emit(destRootPath: string) {
         if (this.emitted) {
             return {};

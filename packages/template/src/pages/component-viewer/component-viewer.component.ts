@@ -9,6 +9,7 @@ export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
 
     @Input() docItem: ComponentDocItem;
+
     constructor() {}
 
     ngOnInit(): void {}

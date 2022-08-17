@@ -138,6 +138,25 @@ describe('DocSourceFile', () => {
         });
     });
 
+    it('should rewrite file content', async () => {
+        await docgeniHost.writeFile(
+            'docs/getting-started.md',
+            `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`
+        );
+        const docSourceFile = new DocSourceFile(
+            {
+                cwd: root,
+                path: 'docs/getting-started.md',
+                base: root,
+                locale: 'zh-cn'
+            },
+            docgeniHost
+        );
+        await docSourceFile.build();
+        await docSourceFile.rewrite(docSourceFile.content + 'append-content');
+        expect(docSourceFile.output).toContain(`append-content`);
+    });
+
     it('should emit file success', async () => {
         const fileAbsPath = `${root}docs/getting-started.md`;
         await docgeniHost.writeFile(fileAbsPath, `content`);
