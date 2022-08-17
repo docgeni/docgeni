@@ -48,3 +48,6 @@ import { AlibButtonModule } from "a-lib/button";
 ```html
 <alib-button alibType="primary">按钮</alib-button>
 ```
+
+
+<examples />

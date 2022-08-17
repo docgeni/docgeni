@@ -19,6 +19,11 @@
     display: block;
     padding: 20px 0px;
 
+    &:target {
+        .dg-example-viewer-wrapper {
+            border-color: $dg-primary;
+        }
+    }
     &.dg-example-viewer-inline {
         padding: 10px 0px;
         .dg-example-viewer-wrapper {
@@ -37,7 +42,7 @@
 
     .dg-example-viewer-wrapper {
         border: 1px solid $dg-border-color;
-        // box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
     }
 
     .dg-example-viewer-header {

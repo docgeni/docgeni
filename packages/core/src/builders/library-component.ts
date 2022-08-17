@@ -22,6 +22,7 @@ import { FileEmitter } from './emitter';
 import { generateComponentExamplesModule } from './examples-module';
 
 const NAMESPACE = 'library-builder';
+const EXAMPLES_REGEX = /<examples\W*\/>/g;
 
 export class LibraryComponentImpl extends FileEmitter implements LibraryComponent {
     public name: string;
@@ -67,8 +68,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     public async build(): Promise<void> {
         this.resetEmitted();
         await this.buildOverviews();
-        await this.buildApiDocs();
         await this.buildExamples();
+        await this.buildApiDocs();
         await this.buildDocItems();
     }
 
@@ -84,6 +85,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
 
     public getDocItem(locale: string): ComponentDocItem {
         return this.localeDocItemsMap[locale];
+    }
+
+    public getOverviewContent(locale: string): string {
+        return this.localeOverviewsMap[locale]?.output;
     }
 
     /**
@@ -124,9 +129,16 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     private async buildOverview(docSourceFile: DocSourceFile) {
-        // this.hooks.buildDoc.call(docSourceFile);
         await docSourceFile.build();
-        // this.hooks.buildDocSucceed.call(docSourceFile);
+        // await docSourceFile.build(content => {
+        //     const examples = this.examples
+        //         .map(example => {
+        //             return `<example title="${example.title}" name="${example.key}"></example> \n`;
+        //         })
+        //         .join('\n');
+        //     const newContent = content.replace(/<examples\W*\/>/g, `<dg-examples>\n${examples}\n</dg-examples>`);
+        //     return newContent;
+        // });
     }
 
     private async tryGetApiDocsByManual(): Promise<Record<string, ApiDeclaration[]>> {
@@ -235,6 +247,21 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             examples: this.examples,
             examplesModule: examplesModuleName
         });
+
+        for (const key in this.localeOverviewsMap) {
+            if (Object.prototype.hasOwnProperty.call(this.localeOverviewsMap, key)) {
+                const overviewSourceFile = this.localeOverviewsMap[key];
+                if (overviewSourceFile.output.match(EXAMPLES_REGEX)) {
+                    const examples = this.examples
+                        .map(example => {
+                            return `<example title="${example.title}" name="${example.key}"></example> \n`;
+                        })
+                        .join('\n');
+                    const newContent = overviewSourceFile.output.replace(EXAMPLES_REGEX, `<dg-examples>\n${examples}\n</dg-examples>`);
+                    overviewSourceFile.rewrite(newContent);
+                }
+            }
+        }
     }
 
     private async buildExample(exampleName: string, moduleName: string) {

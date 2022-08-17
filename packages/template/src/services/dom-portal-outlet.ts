@@ -102,7 +102,7 @@ export class DomPortalOutlet implements PortalOutlet {
         protected projectableNodes: any[][]
     ) {}
 
-    attach<T>(portal: ComponentPortal<T>) {
+    attach<T>(portal: ComponentPortal<T>, replace: boolean = false): ComponentRef<T> {
         const resolver = portal.componentFactoryResolver || this.componentFactoryResolver;
         const componentFactory = resolver.resolveComponentFactory(portal.component);
         let componentRef: ComponentRef<T>;
@@ -132,8 +132,12 @@ export class DomPortalOutlet implements PortalOutlet {
         }
         // At this point the component has been instantiated, so we move it to the location in the DOM
         // where we want it to be rendered.
-        this.outletElement.replaceWith(this.getComponentRootNode(componentRef));
-        // this.outletElement.appendChild(this._getComponentRootNode(componentRef));
+        if (replace) {
+            this.outletElement.replaceWith(this.getComponentRootNode(componentRef));
+        } else {
+            this.outletElement.appendChild(this.getComponentRootNode(componentRef));
+        }
+        //
         this.attachedPortal = portal;
 
         return componentRef;

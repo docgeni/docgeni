@@ -23,7 +23,10 @@ const nameOrdersMap = {
 
 @Component({
     selector: 'dg-example-viewer',
-    templateUrl: './example-viewer.component.html'
+    templateUrl: './example-viewer.component.html',
+    host: {
+        '[attr.id]': 'example?.key'
+    }
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;

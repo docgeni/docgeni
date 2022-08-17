@@ -56,7 +56,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
         getBuiltInComponents().forEach(item => {
-            this.loadComponents(item.selector, item.component);
+            this.loadComponents(item.selector, item.component, true);
         });
 
         this.cdr.markForCheck();
@@ -78,14 +78,14 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         }
     }
 
-    private loadComponents(selector: string, componentClass: Type<unknown>) {
+    private loadComponents(selector: string, componentClass: Type<unknown>, replace: boolean = false) {
         const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
             const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector, [
                 element.childNodes as any
             ]);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
-            const exampleViewerRef = portalHost.attach(examplePortal);
+            const exampleViewerRef = portalHost.attach(examplePortal, replace);
             // 循环设置属性
             for (const attributeKey in element.attributes) {
                 if (Object.prototype.hasOwnProperty.call(element.attributes, attributeKey)) {
