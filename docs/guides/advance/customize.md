@@ -88,6 +88,7 @@ assets/content
 
 ## 第四步
 需要修改生成站点的入口`index.html`和`styles.scss`,`index.html`中的`app-root`修改为`dg-root`，`style.scss`引入`@docgeni/template/styles/index.scss`。
+注意：如果运行时报typescript相关的错误，则需要修改生成站点的入口的`tsconfig.app.json`文件，在`compilerOptions`里加上`"strict": false`。
 
 ```html
 // index.html
