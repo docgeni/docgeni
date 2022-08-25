@@ -87,6 +87,7 @@ assets/content
 
 ## Step 4
 We need to modify the entry `index.html` and `styles.scss`,change the `app-root` to `dg-root`in `index.html`，import `@docgeni/template/styles/index.scss` to `style.scss`。
+Note: If some typescript errors occurred when `npm run start:docs`, you may need to modify the entry `tsconfig.app.json`, add `"strict": false` to `compilerOptions`.
 
 ```html
 // index.html
