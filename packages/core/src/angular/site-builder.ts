@@ -243,6 +243,14 @@ export class SiteBuilder {
             child.on('data', data => {
                 this.docgeni.logger.info(data);
             });
+            child.on('exit', (code, signal) => {
+                if (code) {
+                    throw new Error(`Child exited with code ${code}`);
+                }
+                if (signal) {
+                    throw new Error(`Child was killed with signal ${signal}`);
+                }
+            });
         } catch (error) {
             this.docgeni.logger.error(error);
         }
