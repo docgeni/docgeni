@@ -349,6 +349,15 @@ describe('#library-component', () => {
             await component.build();
             expect(component.examples.find(example => example.name === notExistExample)).toBeTruthy();
         });
+
+        it('should prevent the next build while building', () => {
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            const resetEmittedSpy = spyOn(component, 'resetEmitted');
+            component.build();
+            component.build();
+            component.build();
+            expect(resetEmittedSpy).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe('api-docs', () => {
