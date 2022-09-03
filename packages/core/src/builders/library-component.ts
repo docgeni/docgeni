@@ -32,6 +32,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     public absExamplesPath: string;
     public absDocPath: string;
     public absApiPath: string;
+    private isBuilding = false;
     private get absDestSiteContentComponentsPath() {
         return resolve(this.docgeni.paths.absSiteContentPath, `components/${this.lib.name}/${this.name}`);
     }
@@ -66,11 +67,21 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     public async build(): Promise<void> {
-        this.resetEmitted();
-        await this.buildOverviews();
-        await this.buildExamples();
-        await this.buildApiDocs();
-        await this.buildDocItems();
+        if (this.isBuilding) {
+            return;
+        }
+        try {
+            this.isBuilding = true;
+            this.resetEmitted();
+            await this.buildOverviews();
+            await this.buildExamples();
+            await this.buildApiDocs();
+            await this.buildDocItems();
+        } catch (error) {
+            throw error;
+        } finally {
+            this.isBuilding = false;
+        }
     }
 
     public async onEmit(): Promise<void> {
