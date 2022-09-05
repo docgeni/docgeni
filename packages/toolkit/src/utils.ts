@@ -34,7 +34,7 @@ export function isUndefinedOrNull(value: any) {
 export function keyBy<T>(value: Array<T>, key: keyof T): { [key: string]: T } {
     const result: { [key: string]: T } = {};
     (value || []).forEach(item => {
-        result[item[`${key}`]] = item;
+        result[item[`${key.toString()}`]] = item;
     });
     return result;
 }
@@ -43,6 +43,14 @@ export function sortByOrderMap<T extends object>(items: T[], ordersMap: WeakMap<
     return items.sort((a, b) => {
         const aOrder = isNumber(ordersMap.get(a)) ? ordersMap.get(a) : Number.MAX_SAFE_INTEGER;
         const bOrder = isNumber(ordersMap.get(b)) ? ordersMap.get(b) : Number.MAX_SAFE_INTEGER;
+        return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
+    });
+}
+
+export function sortByOrder<T extends { order?: number }>(items: T[]): T[] {
+    return items.sort((a, b) => {
+        const aOrder = isNumber(a.order) ? a.order : Number.MAX_SAFE_INTEGER;
+        const bOrder = isNumber(b.order) ? b.order : Number.MAX_SAFE_INTEGER;
         return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
     });
 }

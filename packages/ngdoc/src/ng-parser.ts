@@ -112,7 +112,7 @@ export class NgDocParser {
                 }
             });
         });
-        return docs;
+        return toolkit.utils.sortByOrder(docs);
     }
 
     private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
@@ -121,7 +121,8 @@ export class NgDocParser {
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
-            description: getTextByJSDocTagInfo(tags.description, description.comment)
+            description: getTextByJSDocTagInfo(tags.description, description.comment),
+            order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
         };
         directiveDoc.properties = this.parseServiceProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
         directiveDoc.methods = this.parseServiceMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -141,6 +142,7 @@ export class NgDocParser {
             name: getTextByJSDocTagInfo(tags.name, description.name),
             className: description.name,
             description: description.comment,
+            order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
         directiveDoc.properties = this.parseDirectiveProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);

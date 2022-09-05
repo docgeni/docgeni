@@ -1,4 +1,15 @@
-import { Component, OnInit, HostBinding, Input, ElementRef, Output, EventEmitter, Injectable, ContentChild, TemplateRef } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    HostBinding,
+    Input,
+    ElementRef,
+    Output,
+    EventEmitter,
+    Injectable,
+    ContentChild,
+    TemplateRef
+} from '@angular/core';
 
 /**
  * General Button Component description.
@@ -67,6 +78,11 @@ export class AlibButtonComponent implements OnInit {
     ngOnInit(): void {}
 }
 
+/**
+ * Button Service
+ * @name ButtonService
+ * @order 1
+ */
 @Injectable({
     providedIn: 'root'
 })

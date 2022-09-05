@@ -1,4 +1,4 @@
-import { isUndefinedOrNull, keyBy, random, some, sortByOrderMap, uniq } from './utils';
+import { isUndefinedOrNull, keyBy, random, some, sortByOrder, sortByOrderMap, uniq } from './utils';
 
 describe('#utils', () => {
     describe('isUndefinedOrNull', () => {
@@ -30,6 +30,18 @@ describe('#utils', () => {
         });
     });
 
+    describe('sortByOrder', () => {
+        it('should sort items success', () => {
+            const obj1 = { id: 'obj1', order: 100 };
+            const obj2 = { id: 'obj2', order: 1 };
+            const obj3 = { id: 'obj3', order: 10 };
+            const obj4 = { id: 'obj4', order: undefined };
+
+            const result = sortByOrder([obj1, obj4, obj3, obj2]);
+            expect(result).toEqual([obj2, obj3, obj1, obj4]);
+        });
+    });
+
     describe('uniq', () => {
         it('uniq numbers', () => {
             expect(uniq([1, 2, 1])).toEqual([1, 2]);
@@ -52,7 +64,7 @@ describe('#utils', () => {
 
     describe('keyBy', () => {
         it('keyBy undefined', () => {
-            const result = keyBy(undefined, 'id');
+            const result = keyBy((undefined as unknown) as Array<{ id: string }>, 'id');
             expect(result).toEqual({});
         });
 

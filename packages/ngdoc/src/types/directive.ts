@@ -8,6 +8,7 @@ export interface NgDirectiveMetadata {
     templateUrl?: string;
     template?: string;
     exportAs?: string;
+    order?: number;
 }
 
 export interface NgDirectiveDoc extends NgDirectiveMetadata {
