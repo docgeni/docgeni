@@ -49,7 +49,9 @@ export function sortByOrderMap<T extends object>(items: T[], ordersMap: WeakMap<
 
 export function sortByOrder<T extends { order?: number }>(items: T[]): T[] {
     return items.sort((a, b) => {
-        return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
+        const aOrder = isNumber(a.order) ? a.order : Number.MAX_SAFE_INTEGER;
+        const bOrder = isNumber(b.order) ? b.order : Number.MAX_SAFE_INTEGER;
+        return aOrder > bOrder ? 1 : aOrder === bOrder ? 0 : -1;
     });
 }
 
