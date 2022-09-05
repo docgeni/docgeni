@@ -10,7 +10,7 @@
       "src/assets/styles"
     ]
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "docsearch.js"
   ]
 }
