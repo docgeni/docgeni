@@ -28,6 +28,7 @@ import { DocPagesLinksComponent } from './doc-pages-links/doc-pages-links.compon
 import { SearchComponent } from './search/search.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { IsNgContentChildKindPipe } from './pipes/ng-kind.pipe';
+import { PropertyNamePipe } from './pipes/property-name.pipe';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -47,6 +48,7 @@ const COMPONENTS = [
     CopyComponent,
     IsComponentDocPipe,
     IsNgContentChildKindPipe,
+    PropertyNamePipe,
     TranslatePipe,
     IsModeLitePipe,
     IsModeFullPipe,
