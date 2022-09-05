@@ -47,6 +47,12 @@ export function sortByOrderMap<T extends object>(items: T[], ordersMap: WeakMap<
     });
 }
 
+export function sortByOrder<T extends { order?: number }>(items: T[]): T[] {
+    return items.sort((a, b) => {
+        return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
+    });
+}
+
 export function extractExtname(p: string, removeDot = false) {
     const extname = path.extname(p);
     return removeDot ? extname.replace('.', '') : extname;

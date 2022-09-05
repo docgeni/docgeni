@@ -7,4 +7,5 @@ export interface NgServiceDoc {
     properties?: NgPropertyDoc[];
     methods?: NgMethodDoc[];
     type: NgDocItemType;
+    order?: number;
 }

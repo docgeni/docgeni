@@ -174,6 +174,7 @@ export interface DocTagResult {
     deprecated?: ts.JSDocTagInfo;
     name?: ts.JSDocTagInfo;
     type?: ts.JSDocTagInfo;
+    order?: ts.JSDocTagInfo;
     [key: string]: ts.JSDocTagInfo;
 }
 export interface MethodDocTagResult {

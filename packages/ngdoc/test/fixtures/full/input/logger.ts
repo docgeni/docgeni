@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 /**
  * This is logger service
+ * @order 100
  */
 @Injectable()
 export class Logger {
@@ -15,9 +16,7 @@ export class Logger {
      * @param {string} message message to log
      * @memberof Logger
      */
-    info(message: string) {
-
-    }
+    info(message: string) {}
     /**
      * 不会获取到
      * @description method1重载方法1
@@ -49,7 +48,7 @@ export class Logger {
      * @memberof Logger
      */
     method2(): number {
-             return 0;
+        return 0;
     }
     private method3() {}
 }

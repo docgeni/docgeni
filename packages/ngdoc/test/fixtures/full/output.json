@@ -1,9 +1,26 @@
 [
   {
     "type": "component",
+    "name": "LoadingComponent",
+    "className": "LoadingComponent",
+    "description": "General Loading Component description.",
+    "order": 1,
+    "selector": "thy-loading",
+    "templateUrl": "./loading.component.html",
+    "template": null,
+    "styleUrls": [
+      "./loading.component.scss"
+    ],
+    "styles": null,
+    "exportAs": null,
+    "properties": []
+  },
+  {
+    "type": "component",
     "name": "thy-button",
     "className": "ButtonComponent",
     "description": "General Button Component description.",
+    "order": 10,
     "selector": "thy-button",
     "templateUrl": "./button.component.html",
     "template": null,
@@ -105,42 +122,25 @@
         },
         "description": "Template",
         "default": "",
-        "tags": {}
+        "tags": {
+          "type": {
+            "name": "type",
+            "text": [
+              {
+                "text": "TemplateRef",
+                "kind": "text"
+              }
+            ]
+          }
+        }
       }
     ]
-  },
-  {
-    "type": "directive",
-    "name": "ButtonIconComponent",
-    "className": "ButtonIconComponent",
-    "description": "General Button Icon Directive description.",
-    "selector": "[thyButtonIcon]",
-    "templateUrl": null,
-    "template": null,
-    "styleUrls": null,
-    "styles": null,
-    "exportAs": null,
-    "properties": []
-  },
-  {
-    "type": "component",
-    "name": "LoadingComponent",
-    "className": "LoadingComponent",
-    "description": "General Loading Component description.",
-    "selector": "thy-loading",
-    "templateUrl": "./loading.component.html",
-    "template": null,
-    "styleUrls": [
-      "./loading.component.scss"
-    ],
-    "styles": null,
-    "exportAs": null,
-    "properties": []
   },
   {
     "type": "service",
     "name": "Logger",
     "description": "This is logger service",
+    "order": 100,
     "properties": [
       {
         "name": "property1",
@@ -247,5 +247,19 @@
         "description": "method2默认备注"
       }
     ]
+  },
+  {
+    "type": "directive",
+    "name": "ButtonIconComponent",
+    "className": "ButtonIconComponent",
+    "description": "General Button Icon Directive description.",
+    "order": 9007199254740991,
+    "selector": "[thyButtonIcon]",
+    "templateUrl": null,
+    "template": null,
+    "styleUrls": null,
+    "styles": null,
+    "exportAs": null,
+    "properties": []
   }
 ]
