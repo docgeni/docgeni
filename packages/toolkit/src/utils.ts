@@ -34,7 +34,7 @@ export function isUndefinedOrNull(value: any) {
 export function keyBy<T>(value: Array<T>, key: keyof T): { [key: string]: T } {
     const result: { [key: string]: T } = {};
     (value || []).forEach(item => {
-        result[item[`${key}`]] = item;
+        result[item[`${key.toString()}`]] = item;
     });
     return result;
 }
