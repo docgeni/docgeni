@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.24](https://github.com/docgeni/docgeni/compare/v1.2.0-next.23...v1.2.0-next.24) (2022-09-05)
+
+
+### Bug Fixes
+
+* **core:** should prevent the next build while building ([365f323](https://github.com/docgeni/docgeni/commit/365f323bed20d910d115b29f0242afbff7535ec6))
+
+
+### Features
+
+* **core:** throw error when child_process is error exit ([87b4a82](https://github.com/docgeni/docgeni/commit/87b4a8205829fe2a86e25a56db09fea801ee95a0))
+
+
+
+
+
 # [1.2.0-next.23](https://github.com/docgeni/docgeni/compare/v1.2.0-next.22...v1.2.0-next.23) (2022-08-17)
 
 

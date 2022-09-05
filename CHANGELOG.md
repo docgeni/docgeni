@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.24](https://github.com/docgeni/docgeni/compare/v1.2.0-next.23...v1.2.0-next.24) (2022-09-05)
+
+
+### Bug Fixes
+
+* **core:** should prevent the next build while building ([365f323](https://github.com/docgeni/docgeni/commit/365f323bed20d910d115b29f0242afbff7535ec6))
+
+
+### Features
+
+* **core:** throw error when child_process is error exit ([87b4a82](https://github.com/docgeni/docgeni/commit/87b4a8205829fe2a86e25a56db09fea801ee95a0))
+* **ngdoc:** ignore site typescript error ([5ee49ad](https://github.com/docgeni/docgeni/commit/5ee49ad8b3c2c93309ece64bd036373a19bcc8d3))
+* **ngdoc:** support set [@sort](https://github.com/sort) tag for directives and services ([#395](https://github.com/docgeni/docgeni/issues/395)) ([900f04e](https://github.com/docgeni/docgeni/commit/900f04ecac303fe808a15934e9bd471d78ab036e))
+* **template:** add parentheses () wrapper for name when kind is Output ([d91143d](https://github.com/docgeni/docgeni/commit/d91143d75f71c078460d4649d4d946c274259e52))
+
+
+
+
+
 # [1.2.0-next.23](https://github.com/docgeni/docgeni/compare/v1.2.0-next.22...v1.2.0-next.23) (2022-08-17)
 
 

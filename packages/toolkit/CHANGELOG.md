@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.24](https://github.com/docgeni/docgeni/compare/v1.2.0-next.23...v1.2.0-next.24) (2022-09-05)
+
+
+### Features
+
+* **ngdoc:** support set [@sort](https://github.com/sort) tag for directives and services ([#395](https://github.com/docgeni/docgeni/issues/395)) ([900f04e](https://github.com/docgeni/docgeni/commit/900f04ecac303fe808a15934e9bd471d78ab036e))
+
+
+
+
+
 # [1.2.0-next.23](https://github.com/docgeni/docgeni/compare/v1.2.0-next.22...v1.2.0-next.23) (2022-08-17)
 
 **Note:** Version bump only for package @docgeni/toolkit
