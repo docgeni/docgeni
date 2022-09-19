@@ -52,14 +52,12 @@ async function generateNgModuleText(sourceFile: NgSourceFile, components: Compon
 
     return `
 @NgModule({
-${moduleMetadataArgs}
+  ${moduleMetadataArgs}
 })
 export class CustomComponentsModule {
-constructor() {
-    addBuiltInComponents([
-        ${builtInComponentsArgs},
-    ]);
-}
+  constructor() {
+    addBuiltInComponents([${builtInComponentsArgs}]);
+  }
 }
 `;
 }
