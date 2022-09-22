@@ -2,7 +2,7 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
@@ -17,27 +17,32 @@ const DOCGENI_MODE_KEY = 'docgeni-mode';
     providedIn: 'root'
 })
 export class GlobalContext {
-    locale: string;
+    locale!: string;
 
-    navs: NavigationItem[];
+    navs!: NavigationItem[];
 
-    docItems: NavigationItem[];
+    docItems!: NavigationItem[];
 
-    homeMeta: HomeDocMeta;
+    homeMeta!: HomeDocMeta;
 
-    owner: string;
+    owner!: string;
 
-    repo: string;
+    repo!: string;
 
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
     }
 
-    constructor(@Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig, private http: HttpClient, @Inject(DOCUMENT) private document: any) {
+    constructor(
+        @Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig,
+        private http: HttpClient,
+        @Inject(DOCUMENT) private document: any,
+        private location: Location
+    ) {
         this.setup();
     }
 
-    private getLocaleKey() {
+    private getLocaleKey(): string {
         const localeKeyFromUrl = this.getLocalKeyFromUrl();
         if (localeKeyFromUrl) {
             return localeKeyFromUrl;
@@ -49,7 +54,7 @@ export class GlobalContext {
             if (locale) {
                 return locale.key;
             } else {
-                return this.config.defaultLocale;
+                return this.config.defaultLocale as string;
             }
         }
     }
@@ -63,16 +68,18 @@ export class GlobalContext {
         }
 
         document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
-        const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
-        if (pattern && pattern.length === 3) {
-            this.owner = pattern[1];
-            this.repo = pattern[2];
+        if (this.config.repoUrl) {
+            const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
+            if (pattern && pattern.length === 3) {
+                this.owner = pattern[1];
+                this.repo = pattern[2];
+            }
         }
     }
 
     public getLocalKeyFromUrl() {
         const localeFromUrl = (this.config.locales || []).find(locale => {
-            return this.document.location.pathname.startsWith(`/${locale.key}`);
+            return this.location.path().startsWith(`/${locale.key}`);
         });
         return localeFromUrl && localeFromUrl.key;
     }
@@ -88,17 +95,21 @@ export class GlobalContext {
 
     initialize() {
         return new Promise((resolve, reject) => {
-            this.http.get(`assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`).subscribe({
-                next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
-                    this.homeMeta = response.homeMeta;
-                    this.navs = response.navs;
-                    this.docItems = this.sortDocItems(this.navs);
-                    resolve(response);
-                },
-                error: error => {
-                    reject(error);
-                }
-            });
+            this.http
+                .get<{ navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }>(
+                    `assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`
+                )
+                .subscribe({
+                    next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
+                        this.homeMeta = response.homeMeta;
+                        this.navs = response.navs;
+                        this.docItems = this.sortDocItems(this.navs);
+                        resolve(response);
+                    },
+                    error: error => {
+                        reject(error);
+                    }
+                });
         });
     }
 
@@ -111,14 +122,16 @@ export class GlobalContext {
         const list: NavigationItem[] = [];
         while (navs.length) {
             const item = navs.shift();
-            if (item.items) {
-                item.items.forEach(child => {
-                    child.ancestors = child.ancestors || [];
-                    child.ancestors.push(...(item.ancestors || []), item);
-                });
-                navs.unshift(...item.items);
-            } else if (!item.hidden) {
-                list.push(item);
+            if (item) {
+                if (item.items) {
+                    item.items.forEach(child => {
+                        child.ancestors = child.ancestors || [];
+                        child.ancestors.push(...(item.ancestors || []), item);
+                    });
+                    navs.unshift(...item.items);
+                } else if (!item.hidden) {
+                    list.push(item);
+                }
             }
         }
         return list;
