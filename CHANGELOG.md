@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.25](https://github.com/docgeni/docgeni/compare/v1.2.0-next.24...v1.2.0-next.25) (2022-09-22)
+
+
+### Bug Fixes
+
+* **template:** switch locale use Location service for scene with base-href ([#398](https://github.com/docgeni/docgeni/issues/398)) ([6fe13b5](https://github.com/docgeni/docgeni/commit/6fe13b59e1b8dd9e2b82fea3fea1a745d4f63424))
+
+
+
+
+
 # [1.2.0-next.24](https://github.com/docgeni/docgeni/compare/v1.2.0-next.23...v1.2.0-next.24) (2022-09-05)
 
 
