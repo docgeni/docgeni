@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, OnInit, HostBinding, ElementRef, Inject } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 
@@ -9,9 +9,9 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
 export class LocalesSelectorComponent implements OnInit {
     @HostBinding('class.dg-locales-selector') isNavbar = true;
 
-    locale: string;
+    locale!: string;
 
-    constructor(public global: GlobalContext, public navigationService: NavigationService, @Inject(DOCUMENT) private document: any) {}
+    constructor(public global: GlobalContext, public navigationService: NavigationService, private location: Location) {}
 
     ngOnInit(): void {
         this.locale = this.global.locale;
@@ -23,14 +23,13 @@ export class LocalesSelectorComponent implements OnInit {
         if (isDefaultLocale) {
             this.global.setLocale(this.locale);
         }
+        const currentPath = this.location.path();
         if (localKeyFromUrl) {
-            location.href =
-                document.location.origin +
-                document.location.pathname.replace('/' + localKeyFromUrl, isDefaultLocale ? '' : `/${this.locale}`);
+            this.location.go(currentPath.replace('/' + localKeyFromUrl, isDefaultLocale ? '' : `/${this.locale}`));
         } else {
-            location.href = isDefaultLocale
-                ? document.location.origin + document.location.pathname
-                : document.location.origin + `/${this.locale}` + location.pathname;
+            this.location.go(isDefaultLocale ? currentPath : `/${this.locale}${currentPath}`);
         }
+        // 强制刷新
+        location.href = location.href;
     }
 }
