@@ -85,7 +85,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
                 element.childNodes as any
             ]);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
-            const exampleViewerRef = portalHost.attach(examplePortal, replace);
+            const exampleViewerRef = portalHost.attach<any>(examplePortal, replace);
             // 循环设置属性
             for (const attributeKey in element.attributes) {
                 if (Object.prototype.hasOwnProperty.call(element.attributes, attributeKey)) {
@@ -93,7 +93,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
                     // eslint-disable-next-line dot-notation
                     const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'];
                     if (setAttributeFn) {
-                        setAttributeFn.call(exampleViewerRef.instance, attribute.nodeName, element.getAttribute(attribute.nodeName));
+                        setAttributeFn.call(exampleViewerRef.instance, attribute.nodeName, element.getAttribute(attribute.nodeName) || '');
                     } else {
                         exampleViewerRef.instance[attribute.nodeName] = element.getAttribute(attribute.nodeName);
                     }
