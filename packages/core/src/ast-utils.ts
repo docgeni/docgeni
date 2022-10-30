@@ -1,6 +1,7 @@
 import { HostTree } from '@angular-devkit/schematics';
 import { NgSourceFile, ts, getNodeText } from '@docgeni/ngdoc';
-import { applyToUpdateRecorder, Change, InsertChange } from '@schematics/angular/utility/change';
+import { toolkit } from '@docgeni/toolkit';
+import { applyToUpdateRecorder, Change, InsertChange, RemoveChange } from '@schematics/angular/utility/change';
 import { NgModuleMetadata } from './types/module';
 
 export function generateComponentsModule(
@@ -10,7 +11,12 @@ export function generateComponentsModule(
 ): string {
     const changes = insertImports(sourceFile, importStructures);
     const sourceText = sourceFile.origin.getFullText();
-    changes.push(new InsertChange(sourceFile.origin.fileName, sourceText.length, ngModuleText));
+    const defaultExportNode = sourceFile.getDefaultExportNode();
+    if (defaultExportNode) {
+        changes.push(new RemoveChange(sourceFile.origin.fileName, defaultExportNode.pos, defaultExportNode.getFullText()));
+    }
+    changes.push(new InsertChange(sourceFile.origin.fileName, defaultExportNode ? defaultExportNode.pos : sourceText.length, ngModuleText));
+
     return applyChanges(sourceFile.origin.fileName, sourceText, changes);
 }
 
@@ -69,14 +75,34 @@ export function combineNgModuleMetaData(metadata: NgModuleMetadata, appendMetada
 
     metadata = { ...defaultModuleMetadata, ...metadata };
     appendMetadata = { ...defaultModuleMetadata, ...appendMetadata };
-
     return {
-        declarations: Array.from(new Set([...metadata.declarations, ...appendMetadata?.declarations])),
-        entryComponents: Array.from(new Set([...metadata.entryComponents, ...appendMetadata?.entryComponents])),
-        providers: Array.from(new Set([...metadata.providers, ...appendMetadata?.providers])),
-        imports: Array.from(new Set([...metadata.imports, ...appendMetadata?.imports])),
-        exports: Array.from(new Set([...metadata.exports, ...appendMetadata.exports]))
+        declarations: combineArray(metadata.declarations, appendMetadata?.declarations),
+        entryComponents: combineArray(metadata.entryComponents, appendMetadata?.entryComponents),
+        providers: combineArray(metadata.providers, appendMetadata.providers),
+        imports: combineArray(metadata.imports, appendMetadata?.imports),
+        exports: combineArray(metadata.exports, appendMetadata.exports)
     };
+}
+
+function combineArray(origin: string | string[], append?: string[]) {
+    const result: string[] = [];
+    if (toolkit.utils.isArray(origin)) {
+        origin.forEach(item => {
+            result.push(item);
+        });
+    } else {
+        result.push(`...${origin}`);
+    }
+    if (append) {
+        if (toolkit.utils.isArray(append)) {
+            append.forEach(item => {
+                if (!result.includes(item)) {
+                    result.push(item);
+                }
+            });
+        }
+    }
+    return result;
 }
 
 export function applyChanges(filePath: string, originContent: string, changes: Change[]) {

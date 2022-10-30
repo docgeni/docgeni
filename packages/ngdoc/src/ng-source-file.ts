@@ -81,14 +81,24 @@ export class NgSourceFile {
         return ngModule;
     }
 
-    public getDefaultExports(): ArgumentInfo {
-        let exports: ArgumentInfo;
+    public getDefaultExports<TResult extends ArgumentInfo>(): TResult {
+        let exports: TResult;
         ts.forEachChild(this.sourceFile, node => {
             if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
                 exports = getObjectLiteralExpressionProperties(node.expression);
             }
         });
         return exports;
+    }
+
+    public getDefaultExportNode(): ts.Node {
+        let result: ts.Node;
+        ts.forEachChild(this.sourceFile, node => {
+            if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
+                result = node;
+            }
+        });
+        return result;
     }
 
     public getImportDeclarations(): ts.ImportDeclaration[] {

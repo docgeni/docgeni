@@ -1,4 +1,4 @@
 *.md
 *.json
 *.hbs
-fixtures/**/**
+**/fixtures/**/**

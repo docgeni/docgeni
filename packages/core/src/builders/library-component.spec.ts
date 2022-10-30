@@ -236,7 +236,7 @@ describe('#library-component', () => {
             expect(component.getDocItem('zh-cn')).toBeFalsy();
             expect(component.getDocItem('en-us')).toBeFalsy();
 
-            const apiDocsDefinitions: Record<string, ApiDeclaration[]> = {
+            const apiDocsDefinitions: Record<string, ApiDeclaration[]> = ({
                 'zh-cn': [
                     {
                         name: 'Button',
@@ -253,7 +253,7 @@ describe('#library-component', () => {
                         properties: []
                     }
                 ]
-            };
+            } as unknown) as Record<string, ApiDeclaration[]>;
             const componentSpectator = new LibraryComponentSpectator(component, apiDocsDefinitions);
 
             await component.build();
@@ -361,7 +361,7 @@ describe('#library-component', () => {
     });
 
     describe('api-docs', () => {
-        const apiDocsDefinitions: Record<string, ApiDeclaration[]> = {
+        const apiDocsDefinitions: Record<string, ApiDeclaration[]> = ({
             'zh-cn': [
                 {
                     name: 'Button',
@@ -369,6 +369,7 @@ describe('#library-component', () => {
                     description: 'This is button zh-cn desc',
                     properties: [
                         {
+                            kind: 'Input',
                             name: 'thyType',
                             type: 'string',
                             default: 'primary'
@@ -390,7 +391,7 @@ describe('#library-component', () => {
                     ]
                 }
             ]
-        };
+        } as unknown) as Record<string, ApiDeclaration[]>;
 
         beforeEach(async () => {
             fixture = await loadFixture('library-component-button');
@@ -441,6 +442,7 @@ describe('#library-component', () => {
                     type: 'component',
                     properties: [
                         {
+                            kind: 'Input',
                             name: 'thyType',
                             type: 'string',
                             default: 'primary',
@@ -521,7 +523,7 @@ describe('#library-component', () => {
 
             await expectFiles(context.host, {
                 [`${absDestSiteContentComponentsPath}/button/index.ts`]: fixture.output['index.ts'],
-                [`${absDestSiteContentComponentsPath}/button/module.ts`]: fixture.output['module.ts'],
+                [`${absDestSiteContentComponentsPath}/button/module.ts`]: fixture.output['module.ts.txt'],
                 [`${absDestSiteContentComponentsPath}/button/basic/basic.component.ts`]: fixture.output['basic/basic.component.ts'],
                 [`${absDestSiteContentComponentsPath}/button/basic/basic.component.html`]: fixture.output['basic/basic.component.html']
             });

@@ -51,6 +51,17 @@ describe('#ng-source-file', () => {
         expect(defaultExports).toEqual({ providers: [], imports: ['CommonModule'] });
     });
 
+    it('should get default exports with variables providers', () => {
+        const sourceText = `
+        import { CommonModule } from "@angular/common"
+        const myProviders = [ ClassA ];
+        export default { providers: myProviders, imports: [CommonModule] } {}
+        `;
+        const ngSourceFile = createNgSourceFile('test.ts', sourceText);
+        const defaultExports = ngSourceFile.getDefaultExports();
+        expect(defaultExports).toEqual({ providers: 'myProviders', imports: ['CommonModule'] });
+    });
+
     it('should get undefined default exports', () => {
         const sourceText = `
         export const book = { providers: [], imports: [] }
@@ -164,7 +175,7 @@ export default {
                 }
             } else {
                 if (insertImportDeclarations.get(importItem.moduleSpecifier)) {
-                    insertImportDeclarations.get(importItem.moduleSpecifier).push(importItem.name);
+                    insertImportDeclarations.get(importItem.moduleSpecifier)!.push(importItem.name);
                 } else {
                     insertImportDeclarations.set(importItem.moduleSpecifier, [importItem.name]);
                 }

@@ -1,4 +1,5 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
+import { toolkit } from '@docgeni/toolkit';
 import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combineNgModuleMetaData } from '../ast-utils';
 import { NgModuleMetadata } from '../types/module';
 
@@ -28,7 +29,10 @@ export async function generateComponentExamplesModule(
 function generateNgModuleText(ngModuleName: string, moduleMetadata: NgModuleMetadata) {
     const moduleMetadataArgs = Object.keys(moduleMetadata)
         .map(key => {
-            return `${key}: [ ${moduleMetadata[key].join(', ')} ]`;
+            return (
+                `${key}:` +
+                (toolkit.utils.isArray(moduleMetadata[key]) ? ` [ ${moduleMetadata[key].join(', ')} ]` : ` ${moduleMetadata[key]}`)
+            );
         })
         .join(',\n    ');
     return `

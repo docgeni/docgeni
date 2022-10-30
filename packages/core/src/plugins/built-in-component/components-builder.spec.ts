@@ -8,7 +8,7 @@ import * as systemPath from 'path';
 import * as builtInModule from './built-in-module';
 import { ComponentBuilder } from './component-builder';
 
-const COMPONENTS_ROOT_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
+const COMPONENTS_ROOT_PATH: string = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
 
 let linuxOnlyIt: typeof it = it;
 if (process.platform.startsWith('win') || process.platform.startsWith('darwin')) {
@@ -56,7 +56,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent'
             });
@@ -75,7 +75,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/color`).componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/color`)!.componentData).toEqual({
                 selector: 'my-color',
                 name: 'ColorComponent'
             });
@@ -94,7 +94,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`).componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent'
             });
@@ -123,7 +123,7 @@ describe('#components-builder', () => {
             await componentsBuilder.build();
             await componentsBuilder.emit();
             (context as any).watch = true;
-            subscription = componentsBuilder.watch();
+            subscription = componentsBuilder.watch() as Subscription;
         });
 
         afterEach(() => {
@@ -141,6 +141,7 @@ describe('#components-builder', () => {
             expect(await context.host.readFile(resolve(componentsDistPath, 'hello/hello.component.ts'))).toEqual(newHelloComponentSource);
 
             const latestEntryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+
             expect(latestEntryContent).toContain('hello-new');
             expect(latestEntryContent).toContain('MyHelloComponent');
             expect(latestEntryContent).not.toContain(`'hello'`);
