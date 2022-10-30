@@ -22,7 +22,7 @@ export class ComponentBuilder {
         }
         const componentText = await this.docgeniHost.readFile(this.entryComponentFullPath);
         const componentFile = createNgSourceFile(this.entryComponentFullPath, componentText);
-        const exportDefault = componentFile.getDefaultExports() as { selector: string; component: string };
+        const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string }>();
 
         if (exportDefault) {
             this.componentData = { selector: exportDefault.selector, name: exportDefault.component };
