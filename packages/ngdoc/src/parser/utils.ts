@@ -14,7 +14,13 @@ export function normalizeNodeText(text: string) {
 }
 
 export function getNodeText(node: ts.Node) {
-    return (node as ts.StringLiteral).text ? (node as ts.StringLiteral).text : normalizeNodeText(node.getText());
+    if (ts.isStringLiteral(node)) {
+        return node.text;
+    } else if (ts.isCallExpression(node)) {
+        return node.getText();
+    } else {
+        return normalizeNodeText(node.getText());
+    }
 }
 
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {

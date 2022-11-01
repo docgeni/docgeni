@@ -4,12 +4,14 @@ import { toolkit } from '@docgeni/toolkit';
 import { AngularCommandOptions, SiteProject } from './types';
 import Handlebars from 'handlebars';
 import { getSystemPath, HostWatchEventType, normalize, relative, resolve } from '../fs';
-import { of, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { createNgSourceFile } from '@docgeni/ngdoc';
 import { ValidationError } from '../errors';
 import semver from 'semver';
 import { spawn } from 'child_process';
 import { SITE_ASSETS_RELATIVE_PATH } from '../constants';
+import { NgModuleMetadata } from '../types/module';
+import { combineNgModuleMetadata } from '../ast-utils';
+import { NgSourceUpdater } from '../ng-source-updater';
 
 interface CopyFile {
     from: string;
@@ -43,6 +45,7 @@ export class SiteBuilder {
     public ngVersion: string;
     public enableIvy: boolean;
     private publicDirPath: string;
+    private srcAppDirPath: string;
     private siteProject: SiteProject;
 
     spawn = spawn;
@@ -55,6 +58,7 @@ export class SiteBuilder {
         if (this.docgeni.config.publicDir) {
             this.publicDirPath = this.docgeni.paths.getAbsPath(this.docgeni.config.publicDir);
         }
+        this.srcAppDirPath = this.docgeni.paths.getAbsPath('.docgeni/app');
     }
 
     public async build() {
@@ -66,7 +70,9 @@ export class SiteBuilder {
         } else {
             await this.createSiteProject();
             await this.syncPublic();
+            await this.syncSrcApp();
             this.watchPublic();
+            this.watchSrcApp();
         }
     }
 
@@ -163,6 +169,14 @@ export class SiteBuilder {
         return false;
     }
 
+    private async srcAppDirExists() {
+        if (this.srcAppDirPath) {
+            const result = await this.docgeni.host.exists(this.srcAppDirPath);
+            return result;
+        }
+        return false;
+    }
+
     private async syncPublic() {
         if (await this.publicDirExists()) {
             const assetsPath = resolve(this.publicDirPath, `assets`);
@@ -176,6 +190,71 @@ export class SiteBuilder {
                 }
             }
             this.updateShareExampleBundleJson(this.publicDirPath);
+        }
+    }
+
+    private async syncSrcApp() {
+        if (await this.srcAppDirExists()) {
+            this.docgeni.host.copy(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
+            await this.buildAppModule();
+        }
+    }
+
+    private async watchSrcApp() {
+        if (this.docgeni.watch && (await this.srcAppDirExists())) {
+            this.docgeni.host.watchAggregated(this.srcAppDirPath).subscribe(async events => {
+                for (const event of events) {
+                    const distPath = event.path.replace(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
+                    if (event.type === HostWatchEventType.Deleted) {
+                        await this.docgeni.host.delete(distPath);
+                    } else {
+                        await this.docgeni.host.copy(event.path, distPath);
+                    }
+                    if (event.path.includes(resolve(this.srcAppDirPath, 'module.ts'))) {
+                        this.buildAppModule();
+                    }
+                }
+            });
+        }
+    }
+
+    private async buildAppModule() {
+        const modulePath = resolve(this.srcAppDirPath, './module.ts');
+        if (await this.docgeni.host.pathExists(modulePath)) {
+            const ngSourceFile = createNgSourceFile(modulePath);
+            const defaultExports = ngSourceFile.getDefaultExports() as NgModuleMetadata;
+            const defaultExportNode = ngSourceFile.getDefaultExportNode();
+            if (defaultExportNode) {
+                const metadata = combineNgModuleMetadata(defaultExports, {
+                    declarations: [],
+                    imports: [
+                        'BrowserModule',
+                        'BrowserAnimationsModule',
+                        'DocgeniTemplateModule',
+                        'RouterModule.forRoot([])',
+                        ' ...IMPORT_MODULES'
+                    ],
+                    providers: ['...DOCGENI_SITE_PROVIDERS'],
+                    bootstrap: ['RootComponent']
+                });
+
+                const updater = new NgSourceUpdater(ngSourceFile);
+                updater.insertImports([
+                    { name: 'NgModule', moduleSpecifier: '@angular/core' },
+                    { name: 'RouterModule', moduleSpecifier: '@angular/router' },
+                    { name: 'BrowserModule', moduleSpecifier: '@angular/platform-browser' },
+                    { name: 'BrowserAnimationsModule', moduleSpecifier: '@angular/platform-browser/animations' },
+                    { name: 'DocgeniTemplateModule', moduleSpecifier: '@docgeni/template' },
+                    { name: 'DOCGENI_SITE_PROVIDERS', moduleSpecifier: './content/index' },
+                    { name: 'IMPORT_MODULES', moduleSpecifier: './content/index' },
+                    { name: 'RootComponent', moduleSpecifier: './content/index' }
+                ]);
+                updater.insertNgModule('AppModule', metadata);
+                updater.removeDefaultExport();
+
+                updater.update();
+                await this.docgeni.host.writeFile(resolve(this.siteProject.sourceRoot, './app/app.module.ts'), updater.update());
+            }
         }
     }
 

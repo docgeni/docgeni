@@ -1,6 +1,7 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
 import { toolkit } from '@docgeni/toolkit';
-import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combineNgModuleMetaData } from '../ast-utils';
+import { getNgModuleMetadataFromDefaultExport, combineNgModuleMetadata, generateNgModuleText } from '../ast-utils';
+import { NgSourceUpdater } from '../ng-source-updater';
 import { NgModuleMetadata } from '../types/module';
 
 export async function generateComponentExamplesModule(
@@ -10,35 +11,19 @@ export async function generateComponentExamplesModule(
 ) {
     const declarations = components.map(item => item.name);
     const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
-    const moduleMetadata: NgModuleMetadata = combineNgModuleMetaData(defaultModuleMetadata, {
+    const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
         imports: ['CommonModule'],
         declarations: [...declarations],
         entryComponents: [...declarations],
         exports: [...declarations]
     });
-    const ngModuleText = generateNgModuleText(ngModuleName, moduleMetadata);
-
-    const module = generateComponentsModule(sourceFile, ngModuleText, [
+    const updater = new NgSourceUpdater(sourceFile);
+    updater.insertImports([
         ...components,
         { name: 'CommonModule', moduleSpecifier: '@angular/common' },
         { name: 'NgModule', moduleSpecifier: '@angular/core' }
     ]);
-    return module;
-}
-
-function generateNgModuleText(ngModuleName: string, moduleMetadata: NgModuleMetadata) {
-    const moduleMetadataArgs = Object.keys(moduleMetadata)
-        .map(key => {
-            return (
-                `${key}:` +
-                (toolkit.utils.isArray(moduleMetadata[key]) ? ` [ ${moduleMetadata[key].join(', ')} ]` : ` ${moduleMetadata[key]}`)
-            );
-        })
-        .join(',\n    ');
-    return `
-@NgModule({
-    ${moduleMetadataArgs}
-})
-export class ${ngModuleName} {}
-`;
+    updater.insertNgModule(ngModuleName, moduleMetadata);
+    updater.removeDefaultExport();
+    return updater.update();
 }

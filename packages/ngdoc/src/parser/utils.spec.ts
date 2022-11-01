@@ -14,5 +14,17 @@ describe('#utils', () => {
             };
             visit(sourceFile);
         });
+
+        it('should normalize node text for callExpression', () => {
+            const sourceFile = ts.createSourceFile('test.ts', `@call({name: book(1, a, "2")}) class A {}`, ts.ScriptTarget.ES2015, true);
+            const visit = (node: ts.Node) => {
+                if (ts.isPropertyAssignment(node)) {
+                    expect(node.initializer.getText()).toEqual('book(1, a, "2")');
+                    expect(getNodeText(node.initializer)).toEqual('book(1, a, "2")');
+                }
+                ts.forEachChild(node, visit);
+            };
+            visit(sourceFile);
+        });
     });
 });

@@ -1,5 +1,6 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
-import { generateComponentsModule, getNgModuleMetadataFromDefaultExport, combineNgModuleMetaData } from '../../ast-utils';
+import { getNgModuleMetadataFromDefaultExport, combineNgModuleMetadata } from '../../ast-utils';
+import { NgSourceUpdater } from '../../ng-source-updater';
 import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
@@ -8,13 +9,14 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
         return item.componentData?.name;
     });
     const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
-    const moduleMetadata: NgModuleMetadata = combineNgModuleMetaData(defaultModuleMetadata, {
+    const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
         imports: ['CommonModule'],
         declarations: [...declarations],
         entryComponents: [...declarations],
         exports: [...declarations]
     });
 
+    const updater = new NgSourceUpdater(sourceFile);
     const ngModuleText = await generateNgModuleText(sourceFile, components, moduleMetadata);
 
     let componentsData = Array.from(components.values()).map(item => {
@@ -26,9 +28,10 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
         { name: 'NgModule', moduleSpecifier: '@angular/core' },
         { name: 'addBuiltInComponents', moduleSpecifier: '@docgeni/template' }
     ];
-
-    const module = generateComponentsModule(sourceFile, ngModuleText, componentsData);
-    return module;
+    updater.insertImports(componentsData);
+    updater.insertNgModuleByText(ngModuleText);
+    updater.removeDefaultExport();
+    return updater.update();
 }
 
 async function generateNgModuleText(sourceFile: NgSourceFile, components: ComponentBuilder[], moduleMetadata: NgModuleMetadata) {

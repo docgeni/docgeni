@@ -39,7 +39,8 @@ describe('#site-plugin', () => {
             initialFiles: {
                 [`${DEFAULT_TEST_ROOT_PATH}/node_modules/@angular/core/package.json`]: fixture.src['package.json'],
                 [`${DEFAULT_TEST_ROOT_PATH}/angular.json`]: fixture.src['angular.json'],
-                [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts'
+                [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts',
+                [`${SITE_TEMPLATE_PATH}/src/app/app.module.ts`]: fixture.src['app/app.module.ts']
             }
         });
         ngSitePlugin = new AngularSitePlugin();
@@ -53,7 +54,8 @@ describe('#site-plugin', () => {
             {
                 [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
                 [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
-                [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts'
+                [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts',
+                [`${DEFAULT_SITE_PATH}/src/app/app.module.ts`]: fixture.getOutputContent('app/app.module.ts')
             },
             true
         );

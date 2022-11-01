@@ -15,54 +15,54 @@ describe('#ast-utils', () => {
     };
         `;
 
-    describe('generateComponentsModule', () => {
-        const moduleMetadata: NgModuleMetadata = {
-            imports: ['CommonModule'],
-            declarations: ['AppComponent'],
-            providers: ['AppService']
-        };
+    // describe('generateComponentsModule', () => {
+    //     const moduleMetadata: NgModuleMetadata = {
+    //         imports: ['CommonModule'],
+    //         declarations: ['AppComponent'],
+    //         providers: ['AppService']
+    //     };
 
-        const moduleMetadataArgs = Object.keys(moduleMetadata)
-            .map(key => {
-                return `${key}: [ ${moduleMetadata[key].join(', ')} ]`;
-            })
-            .join(',\n    ');
-        const ngModuleName = 'MyButtonExamplesModule';
+    //     const moduleMetadataArgs = Object.keys(moduleMetadata)
+    //         .map(key => {
+    //             return `${key}: [ ${moduleMetadata[key].join(', ')} ]`;
+    //         })
+    //         .join(',\n    ');
+    //     const ngModuleName = 'MyButtonExamplesModule';
 
-        const moduleText = `
-        @NgModule({
-            ${moduleMetadataArgs}
-        })
-        export class ${ngModuleName} {}
-        `;
+    //     const moduleText = `
+    //     @NgModule({
+    //         ${moduleMetadataArgs}
+    //     })
+    //     export class ${ngModuleName} {}
+    //     `;
 
-        function expectOriginalSource(output: string) {
-            expect(output).toMatch(`import { AlibComponent } from './basic.component';`);
-            expect(output).toMatch(`export class MyButtonExamplesModule {}`);
-            expect(output).toMatch(/declarations: \[ AppComponent \]/);
-            expect(output).toMatch(/providers: \[ AppService \]/);
-            expect(output).toMatch(/imports: \[ CommonModule \],/);
-        }
+    //     function expectOriginalSource(output: string) {
+    //         expect(output).toMatch(`import { AlibComponent } from './basic.component';`);
+    //         expect(output).toMatch(`export class MyButtonExamplesModule {}`);
+    //         expect(output).toMatch(/declarations: \[ AppComponent \]/);
+    //         expect(output).toMatch(/providers: \[ AppService \]/);
+    //         expect(output).toMatch(/imports: \[ CommonModule \],/);
+    //     }
 
-        it('should generate module success with default export', () => {
-            const ngSourceFile = createNgSourceFile('module.ts', sourceText);
+    //     it('should generate module success with default export', () => {
+    //         const ngSourceFile = createNgSourceFile('module.ts', sourceText);
 
-            const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
-            const output = utils.generateComponentsModule(ngSourceFile, moduleText, components);
+    //         const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
+    //         const output = utils.generateComponentsModule(ngSourceFile, moduleText, components);
 
-            expectOriginalSource(output);
-            expect(output).toMatch(`import { CommonModule } from '@angular/common';`);
-            expect(output).toMatch(`import { AppComponent } from './app.component';`);
-        });
+    //         expectOriginalSource(output);
+    //         expect(output).toMatch(`import { CommonModule } from '@angular/common';`);
+    //         expect(output).toMatch(`import { AppComponent } from './app.component';`);
+    //     });
 
-        it('should generate module success with empty', async () => {
-            const ngSourceFile = createNgSourceFile('module.ts', '');
-            const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
-            const output = await utils.generateComponentsModule(ngSourceFile, moduleText, components);
+    //     it('should generate module success with empty', async () => {
+    //         const ngSourceFile = createNgSourceFile('module.ts', '');
+    //         const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
+    //         const output = await utils.generateComponentsModule(ngSourceFile, moduleText, components);
 
-            expectOriginalSource(output);
-        });
-    });
+    //         expectOriginalSource(output);
+    //     });
+    // });
 
     describe('insertImports', () => {
         it('should return changes when sourceFile has import and importStructures is []', () => {
@@ -162,9 +162,9 @@ describe('#ast-utils', () => {
         });
     });
 
-    describe('combineNgModuleMetaData', () => {
+    describe('combineNgModuleMetadata', () => {
         it('when metadata and append has value', () => {
-            const combinedMetadata = utils.combineNgModuleMetaData(
+            const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['FormsModule'], providers: ['AppService'] },
                 { imports: ['CommonModule'], declarations: ['AppComponent'] }
             );
@@ -178,7 +178,7 @@ describe('#ast-utils', () => {
         });
 
         it('when metadata and append has duplicate value', () => {
-            const combinedMetadata = utils.combineNgModuleMetaData(
+            const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['CommonModule', 'FormsModule'], providers: ['AppService'] },
                 { imports: ['CommonModule'], declarations: ['AppComponent'] }
             );
@@ -192,7 +192,7 @@ describe('#ast-utils', () => {
         });
 
         it('when append has`t value', () => {
-            const combinedMetadata = utils.combineNgModuleMetaData({ imports: ['FormsModule'], providers: ['AppService'] }, {});
+            const combinedMetadata = utils.combineNgModuleMetadata({ imports: ['FormsModule'], providers: ['AppService'] }, {});
             expect(combinedMetadata).toEqual({
                 declarations: [],
                 entryComponents: [],
@@ -203,7 +203,7 @@ describe('#ast-utils', () => {
         });
 
         it('when metadata has`t value', () => {
-            const combinedMetadata = utils.combineNgModuleMetaData({}, { imports: ['FormsModule'], providers: ['AppService'] });
+            const combinedMetadata = utils.combineNgModuleMetadata({}, { imports: ['FormsModule'], providers: ['AppService'] });
             expect(combinedMetadata).toEqual({
                 declarations: [],
                 entryComponents: [],
@@ -214,7 +214,7 @@ describe('#ast-utils', () => {
         });
 
         it('when metadata and append have not value', () => {
-            const combinedMetadata = utils.combineNgModuleMetaData({}, {});
+            const combinedMetadata = utils.combineNgModuleMetadata({}, {});
             expect(combinedMetadata).toEqual({
                 declarations: [],
                 entryComponents: [],
