@@ -21,6 +21,7 @@ const SITE_TEMPLATE_PATH = resolve(__dirname, '../site-template');
 
 const PUBLIC_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/public`;
 const DEFAULT_SITE_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`;
+const SRC_APP_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/app`;
 
 describe('#site-plugin', () => {
     let ngSitePlugin: AngularSitePlugin;
@@ -39,7 +40,8 @@ describe('#site-plugin', () => {
             initialFiles: {
                 [`${DEFAULT_TEST_ROOT_PATH}/node_modules/@angular/core/package.json`]: fixture.src['package.json'],
                 [`${DEFAULT_TEST_ROOT_PATH}/angular.json`]: fixture.src['angular.json'],
-                [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts'
+                [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts',
+                [`${SITE_TEMPLATE_PATH}/src/app/app.module.ts`]: fixture.src['app/app.module.ts']
             }
         });
         ngSitePlugin = new AngularSitePlugin();
@@ -53,7 +55,8 @@ describe('#site-plugin', () => {
             {
                 [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
                 [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
-                [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts'
+                [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts',
+                [`${DEFAULT_SITE_PATH}/src/app/app.module.ts`]: fixture.getOutputContent('app/app.module.ts')
             },
             true
         );
@@ -257,5 +260,108 @@ describe('#site-plugin', () => {
         expect(calledSpawn).toEqual(false);
         await context.hooks.done.promise();
         expect(calledSpawn).toEqual(true);
+    });
+
+    describe('src/app', () => {
+        it('should generate new ng module and copy other source files in ".docgeni/app" dir', async () => {
+            const moduleText = `export default { providers: [ AClass ] }`;
+            await writeFilesToHost(context.host, {
+                [`${SRC_APP_PATH}/module.ts`]: moduleText,
+                [`${SRC_APP_PATH}/a.ts`]: 'const export a = "aaa"',
+                [`${SRC_APP_PATH}/sub/b.ts`]: 'const export b = "bbb"'
+            });
+            await context.hooks.beforeRun.promise();
+            await assertExpectedFiles(
+                context.host,
+                {
+                    [`${DEFAULT_SITE_PATH}/src/app/a.ts`]: 'const export a = "aaa"',
+                    [`${DEFAULT_SITE_PATH}/src/app/sub/b.ts`]: 'const export b = "bbb"'
+                },
+                true
+            );
+            const appModule = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.module.ts`);
+            expect(appModule).toContain(`providers: [ AClass, ...DOCGENI_SITE_PROVIDERS ]`);
+        });
+
+        it('should copy new files when ".docgeni/app" dir files changed', async () => {
+            await writeFilesToHost(context.host, {
+                [`${SRC_APP_PATH}/a.ts`]: 'const export a = "aaa"',
+                [`${SRC_APP_PATH}/sub/b.ts`]: 'const export b = "bbb"'
+            });
+            updateContext(context, { watch: true });
+            const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+            const watchAggregated$ = new Subject<HostWatchEvent[]>();
+            watchAggregatedSpy.and.callFake(files => {
+                return watchAggregated$.asObservable();
+            });
+            await context.hooks.beforeRun.promise();
+
+            await writeFilesToHost(context.host, {
+                [`${SRC_APP_PATH}/a.ts`]: 'const export a = "new"',
+                [`${SRC_APP_PATH}/c.ts`]: 'const export c = "ccc"'
+            });
+
+            watchAggregated$.next([
+                {
+                    type: HostWatchEventType.Created,
+                    path: normalize(`${SRC_APP_PATH}/c.ts`),
+                    time: new Date()
+                },
+                {
+                    type: HostWatchEventType.Changed,
+                    path: normalize(`${SRC_APP_PATH}/a.ts`),
+                    time: new Date()
+                },
+                {
+                    type: HostWatchEventType.Deleted,
+                    path: normalize(`${SRC_APP_PATH}/sub/b.ts`),
+                    time: new Date()
+                }
+            ]);
+
+            await toolkit.utils.wait(2000);
+            expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/sub/b.ts`)).toBeFalsy();
+            await assertExpectedFiles(
+                context.host,
+                {
+                    [`${DEFAULT_SITE_PATH}/src/app/a.ts`]: 'const export a = "new"',
+                    [`${DEFAULT_SITE_PATH}/src/app/c.ts`]: 'const export c = "ccc"'
+                },
+                true
+            );
+        });
+
+        it('should rebuild app module when module.ts changed', async () => {
+            const moduleText = `export default { providers: [ AClass ] }`;
+            await writeFilesToHost(context.host, {
+                [`${SRC_APP_PATH}/module.ts`]: moduleText
+            });
+            updateContext(context, { watch: true });
+            const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
+            const watchAggregated$ = new Subject<HostWatchEvent[]>();
+            watchAggregatedSpy.and.callFake(files => {
+                return watchAggregated$.asObservable();
+            });
+            await context.hooks.beforeRun.promise();
+            const appModule = await context.host.readFile(resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
+            expect(appModule).toContain(`providers: [ AClass, ...DOCGENI_SITE_PROVIDERS ],`);
+
+            const newModuleText = `export default { providers: [ NewClass ] }`;
+            await writeFilesToHost(context.host, {
+                [`${SRC_APP_PATH}/module.ts`]: newModuleText
+            });
+
+            watchAggregated$.next([
+                {
+                    type: HostWatchEventType.Changed,
+                    path: normalize(`${SRC_APP_PATH}/module.ts`),
+                    time: new Date()
+                }
+            ]);
+
+            await toolkit.utils.wait(2000);
+            const newAppModule = await context.host.readFile(resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
+            expect(newAppModule).toContain(`providers: [ NewClass, ...DOCGENI_SITE_PROVIDERS ],`);
+        });
     });
 });

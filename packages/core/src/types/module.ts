@@ -1,7 +1,8 @@
 export interface NgModuleMetadata {
-    declarations?: string[];
-    providers?: string[];
-    imports?: string[];
-    entryComponents?: string[];
-    exports?: string[];
+    declarations?: string | string[];
+    providers?: string | string[];
+    imports?: string | string[];
+    entryComponents?: string | string[];
+    exports?: string | string[];
+    bootstrap?: string | string[];
 }

@@ -24,6 +24,10 @@ export class NgSourceFile {
         return this.sourceFile;
     }
 
+    public get length() {
+        return this.getFullText().length;
+    }
+
     constructor(sourceFile: ts.SourceFile);
     constructor(filePath: string, sourceText: string);
     constructor(filePathOrSourceFile: string | ts.SourceFile, sourceText?: string) {
@@ -32,6 +36,10 @@ export class NgSourceFile {
         } else {
             this.sourceFile = filePathOrSourceFile;
         }
+    }
+
+    public getFullText() {
+        return this.origin.getFullText();
     }
 
     public getExportedComponents(): NgComponentMetadata[] {
@@ -81,14 +89,14 @@ export class NgSourceFile {
         return ngModule;
     }
 
-    public getDefaultExports<TResult extends ArgumentInfo>(): TResult {
+    public getDefaultExports<TResult>(): TResult {
         let exports: TResult;
         ts.forEachChild(this.sourceFile, node => {
             if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
                 exports = getObjectLiteralExpressionProperties(node.expression);
             }
         });
-        return exports;
+        return (exports as unknown) as TResult;
     }
 
     public getDefaultExportNode(): ts.Node {

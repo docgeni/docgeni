@@ -4,22 +4,6 @@ import { toolkit } from '@docgeni/toolkit';
 import { applyToUpdateRecorder, Change, InsertChange, RemoveChange } from '@schematics/angular/utility/change';
 import { NgModuleMetadata } from './types/module';
 
-export function generateComponentsModule(
-    sourceFile: NgSourceFile,
-    ngModuleText: string,
-    importStructures: { name: string; moduleSpecifier: string }[]
-): string {
-    const changes = insertImports(sourceFile, importStructures);
-    const sourceText = sourceFile.origin.getFullText();
-    const defaultExportNode = sourceFile.getDefaultExportNode();
-    if (defaultExportNode) {
-        changes.push(new RemoveChange(sourceFile.origin.fileName, defaultExportNode.pos, defaultExportNode.getFullText()));
-    }
-    changes.push(new InsertChange(sourceFile.origin.fileName, defaultExportNode ? defaultExportNode.pos : sourceText.length, ngModuleText));
-
-    return applyChanges(sourceFile.origin.fileName, sourceText, changes);
-}
-
 export function insertImports(sourceFile: NgSourceFile, importStructures: { name: string; moduleSpecifier: string }[]): Change[] {
     const changes: Change[] = [];
     const allImports = sourceFile.getImportDeclarations();
@@ -64,7 +48,7 @@ export function getNgModuleMetadataFromDefaultExport(sourceFile: NgSourceFile): 
     return ((sourceFile.getDefaultExports() || {}) as unknown) as NgModuleMetadata;
 }
 
-export function combineNgModuleMetaData(metadata: NgModuleMetadata, appendMetadata: NgModuleMetadata): NgModuleMetadata {
+export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetadata: NgModuleMetadata): NgModuleMetadata {
     const defaultModuleMetadata = {
         declarations: [],
         entryComponents: [],
@@ -75,22 +59,27 @@ export function combineNgModuleMetaData(metadata: NgModuleMetadata, appendMetada
 
     metadata = { ...defaultModuleMetadata, ...metadata };
     appendMetadata = { ...defaultModuleMetadata, ...appendMetadata };
-    return {
-        declarations: combineArray(metadata.declarations, appendMetadata?.declarations),
-        entryComponents: combineArray(metadata.entryComponents, appendMetadata?.entryComponents),
-        providers: combineArray(metadata.providers, appendMetadata.providers),
-        imports: combineArray(metadata.imports, appendMetadata?.imports),
-        exports: combineArray(metadata.exports, appendMetadata.exports)
+    const result: NgModuleMetadata = {
+        declarations: combineSymbolMetadata(metadata.declarations, appendMetadata?.declarations),
+        entryComponents: combineSymbolMetadata(metadata.entryComponents, appendMetadata?.entryComponents),
+        providers: combineSymbolMetadata(metadata.providers, appendMetadata.providers),
+        imports: combineSymbolMetadata(metadata.imports, appendMetadata?.imports),
+        exports: combineSymbolMetadata(metadata.exports, appendMetadata.exports)
     };
+
+    if (metadata.bootstrap && appendMetadata.bootstrap) {
+        result.bootstrap = combineSymbolMetadata(metadata.bootstrap, appendMetadata.bootstrap);
+    }
+    return result;
 }
 
-function combineArray(origin: string | string[], append?: string[]) {
+function combineSymbolMetadata(origin: string | string[], append?: string | string[]) {
     const result: string[] = [];
     if (toolkit.utils.isArray(origin)) {
         origin.forEach(item => {
             result.push(item);
         });
-    } else {
+    } else if (origin) {
         result.push(`...${origin}`);
     }
     if (append) {
@@ -113,4 +102,21 @@ export function applyChanges(filePath: string, originContent: string, changes: C
     hostTree.commitUpdate(updater);
     const fileEntry = hostTree.get(filePath);
     return fileEntry.content.toString();
+}
+
+export function generateNgModuleText(ngModuleName: string, moduleMetadata: NgModuleMetadata) {
+    const moduleMetadataArgs = Object.keys(moduleMetadata)
+        .map(key => {
+            return (
+                `${key}:` +
+                (toolkit.utils.isArray(moduleMetadata[key]) ? ` [ ${moduleMetadata[key].join(', ')} ]` : ` ${moduleMetadata[key]}`)
+            );
+        })
+        .join(',\n    ');
+    return `
+@NgModule({
+    ${moduleMetadataArgs}
+})
+export class ${ngModuleName} {}
+`;
 }
