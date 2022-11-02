@@ -195,7 +195,7 @@ export class SiteBuilder {
 
     private async syncSrcApp() {
         if (await this.srcAppDirExists()) {
-            this.docgeni.host.copy(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
+            await this.docgeni.host.copy(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
             await this.buildAppModule();
         }
     }
@@ -221,7 +221,8 @@ export class SiteBuilder {
     private async buildAppModule() {
         const modulePath = resolve(this.srcAppDirPath, './module.ts');
         if (await this.docgeni.host.pathExists(modulePath)) {
-            const ngSourceFile = createNgSourceFile(modulePath);
+            const moduleText = await this.docgeni.host.readFile(modulePath);
+            const ngSourceFile = createNgSourceFile(modulePath, moduleText);
             const defaultExports = ngSourceFile.getDefaultExports() as NgModuleMetadata;
             const defaultExportNode = ngSourceFile.getDefaultExportNode();
             if (defaultExportNode) {

@@ -114,8 +114,8 @@ export class Docgeni implements DocgeniContext {
         // clear assets content dist dir
         await toolkit.fs.remove(this.paths.absSiteAssetsContentPath);
         // ensure docs content dist dir and assets content dist dir
-        toolkit.fs.ensureDir(this.paths.absSiteContentPath);
-        toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
+        await toolkit.fs.ensureDir(this.paths.absSiteContentPath);
+        await toolkit.fs.ensureDir(this.paths.absSiteAssetsContentPath);
     }
 
     private initialize() {
