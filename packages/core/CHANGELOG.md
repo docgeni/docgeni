@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.27](https://github.com/docgeni/docgeni/compare/v1.2.0-next.26...v1.2.0-next.27) (2022-11-02)
+
+
+### Bug Fixes
+
+* **core:** combine metadata bootstrap as long as one has a value ([1234de7](https://github.com/docgeni/docgeni/commit/1234de7cb4ed3c1ef81fa39a56c5216cca3e6e3a))
+
+
+### Performance Improvements
+
+* remove warning messages ([661f45f](https://github.com/docgeni/docgeni/commit/661f45fcb42f558c12075cd9c51c93c64ad856ae))
+
+
+
+
+
 # [1.2.0-next.26](https://github.com/docgeni/docgeni/compare/v1.2.0-next.25...v1.2.0-next.26) (2022-11-02)
 
 
