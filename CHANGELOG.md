@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.26](https://github.com/docgeni/docgeni/compare/v1.2.0-next.25...v1.2.0-next.26) (2022-11-02)
+
+
+### Bug Fixes
+
+* **template:** update  justify-content: end; to flex-end ([7d0cee7](https://github.com/docgeni/docgeni/commit/7d0cee703c6ba206316b32bad2290df739ff0743))
+
+
+### Features
+
+* **core:** generate example module support vars define providers, declarations and imports, and remove default export from module ([#400](https://github.com/docgeni/docgeni/issues/400)) ([55f2371](https://github.com/docgeni/docgeni/commit/55f237137af550e69608a5cd914a0c98d6d49e0e))
+* **core:** support define module.ts in .docgeni/app folder ([#401](https://github.com/docgeni/docgeni/issues/401)) ([03e8c52](https://github.com/docgeni/docgeni/commit/03e8c526031043fe30034f3d321e001a596e2ebd))
+
+
+
+
+
 # [1.2.0-next.25](https://github.com/docgeni/docgeni/compare/v1.2.0-next.24...v1.2.0-next.25) (2022-09-22)
 
 

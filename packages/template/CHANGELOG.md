@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.26](https://github.com/docgeni/docgeni/compare/v1.2.0-next.25...v1.2.0-next.26) (2022-11-02)
+
+
+### Bug Fixes
+
+* **template:** update  justify-content: end; to flex-end ([7d0cee7](https://github.com/docgeni/docgeni/commit/7d0cee703c6ba206316b32bad2290df739ff0743))
+
+
+
+
+
 # [1.2.0-next.25](https://github.com/docgeni/docgeni/compare/v1.2.0-next.24...v1.2.0-next.25) (2022-09-22)
 
 
