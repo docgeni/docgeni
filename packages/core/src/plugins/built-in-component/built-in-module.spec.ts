@@ -12,8 +12,7 @@ export default {
     imports: [ CommonModule ],
     declarations: [ AppComponent ],
     providers: [ AppService ]
-};
-    `;
+};`;
     const ngSourceFile = createNgSourceFile('module.ts', sourceText);
 
     it('should generate module success', async () => {
@@ -26,22 +25,18 @@ export default {
 
         const moduleText = `
 @NgModule({
-declarations: [ AppComponent, AlibComponent ],
+  declarations: [ AppComponent, AlibComponent ],
     entryComponents: [ AlibComponent ],
     providers: [ AppService ],
     imports: [ CommonModule ],
     exports: [ AlibComponent ]
 })
 export class CustomComponentsModule {
-constructor() {
-    addBuiltInComponents([
-        { selector: 'a-lib', component: AlibComponent },
-    ]);
-}
-}
-`;
+  constructor() {
+    addBuiltInComponents([{ selector: 'a-lib', component: AlibComponent }]);
+  }
+}`;
         const output = await generateBuiltInComponentsModule(ngSourceFile, components);
-        console.log(output);
         expect(output).toContain(moduleText);
         expect(output).toContain(`import { addBuiltInComponents } from '@docgeni/template';`);
         expect(output).toContain(`import { AlibComponent } from './alib/alib.component';`);
