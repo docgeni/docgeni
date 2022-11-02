@@ -67,7 +67,7 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
         exports: combineSymbolMetadata(metadata.exports, appendMetadata.exports)
     };
 
-    if (metadata.bootstrap && appendMetadata.bootstrap) {
+    if (metadata.bootstrap || appendMetadata.bootstrap) {
         result.bootstrap = combineSymbolMetadata(metadata.bootstrap, appendMetadata.bootstrap);
     }
     return result;
