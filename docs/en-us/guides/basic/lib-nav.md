@@ -5,7 +5,7 @@ order: 30
 
 The component documentation is presented as follows, including overview, examples, and API. At the same time, the left menu shows its category, which belongs to a channel in `full` mode.
 
-![Lib Component](https://cdn.pingcode.com/open-sources/docgeni/lib-component.png)
+![Lib Component](assets/images/lib-component.png)
 
 # Library navigation
 The library is usually the component library of `Angular`. `Docgeni` will strictly distinguish the document of the component from the common page document, and the presentation form will be very different.

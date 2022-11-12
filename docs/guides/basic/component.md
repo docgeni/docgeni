@@ -33,9 +33,10 @@ order: 40
 
 # 概览文档
 
-默认`doc`文件夹下存放每种多语言对应的组件文档，会展示在组件的概览中。如需配置不同目录，请查看 [docDir](configuration/lib#docDir) 配置项。
+默认`doc`文件夹下存放每种多语言对应的组件文档，会展示在组件的概览中，概览文档就是一个普通的 Markdown 文档，如需配置不同目录，请查看 [docDir](configuration/lib#docDir) 配置项。
 
-## 组件配置项
+# 组件配置项
+在概览文档中，通过定义 FrontMatter 设置组件的参数配置。  
 
 ```markdown
 ---
@@ -47,7 +48,7 @@ order: 1
 ---
 ```
 
-- `category`: 当前组件模块的所属类别，需要设置为对应lib配置的`categories`中的id属性
+- `category`: 当前组件模块的所属类别，需要设置为对应`lib`配置的`categories`中的`id`属性
 - `title`: 当前组件模块的标题
 - `subtitle`: 当前组件模块的子标题
 - `name`: 当前组件模块的名称，默认取文件夹的名称，示例模块以及示例组件的命名规则会使用`name`作为拼接，只有文件夹名称代表不了组件的含义时才会配置
@@ -118,7 +119,7 @@ export class AlibButtonExamplesModule {}
 <alert type="info">为了保持兼容性，如果`module.ts`中有定义 Angular 的模块以自定义的模块为主，不会自动生成模块。</alert>
 
 ## 引用配置
-Docgeni 运行时会把`examples`下的所有示例文件拷贝到站点下启动，在组件示例中不能采用相对路径引入组件模块，建议直接通过包路径引用，同时需要在 tsconfig.json 配置`paths`指向类库源代码路径，这样可以直接复制示例代码使用，比如：组件库叫`@docgeni/alib`，采用如下的方式配置和引入组件：
+Docgeni 运行时会把`examples`下的所有示例文件拷贝到站点下启动，在组件示例中不能采用相对路径引入组件模块源文件，建议直接通过包路径引用，同时需要在 tsconfig.json 配置`paths`指向类库源代码路径，这样可以直接复制示例代码使用，比如：组件库叫`@docgeni/alib`，采用如下的方式配置和引入组件：
 ```ts
 // button/examples/module.ts
 import { AlibButtonModule } from '@docgeni/alib/button';
@@ -168,6 +169,12 @@ tsconfig 配置如下，如何配置参考: [自定义配置 tsconfig.json](guid
 运行效果：
 
 <example name="alib-button-basic-example" inline />
+
+## 概览文档中引入所有示例 <label>1.2.0+</label>
+
+在概览文档中通过`<examples />`语法会在相应位置按顺序插入当前组件所有的示例，同时会在 Toc 中展示。
+
+![](assets/images/overview-examples.png)
 
 ## 示例的配置
 

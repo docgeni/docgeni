@@ -13,7 +13,7 @@ when `mode` is `full`, it includes the home page, which includes three parts:
 
 ## Preview
 
-![](https://cdn.worktile.com/open-sources/docgeni/home-preview.png?1)
+![](assets/images/home-preview.png)
 
 
 ## Hero

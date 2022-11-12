@@ -32,14 +32,14 @@ After executing any of the above command, the initial configuration of docgeni w
 After initialization, use `npm run start:docs` to start the documentation site, and open `http://127.0.0.1:4600` in the browser to access it.
 
 The preview effect of Lite mode is as follows:
-![](https://cdn.worktile.com/open-sources/docgeni/docgeni-lite-preview.png?2)
+![](assets/images/lite-preview.png)
 
 # Template repository initialization
 We provide a built-in GitHub template repository [docgeni-template](https://github.com/docgeni/docgeni-template).The template repository uses the `full` mode by default, and has a built-in `alib` component library and some initial configurations.Go to the [template repository homepage](https://github.com/docgeni/docgeni-template),then click the "Use this template" button in the upper right corner.
 <img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
 
 The preview effect is as follows:
-![](https://cdn.worktile.com/open-sources/docgeni/docgeni-template-preview.png?1)
+![](assets/images/template-preview.png)
 
 # Manual initialization
 ## Installation
@@ -111,6 +111,6 @@ A button means an immediate operation.
 ```
 As shown below:
 
-![Component](https://cdn.pingcode.com/open-sources/docgeni/docgeni-lite-component-preview.png)
+![Component](assets/images/component-button.png)
 
 For more component documentation configuration,please refer to the [Overview & API & Examples](guides/basic/component).

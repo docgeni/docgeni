@@ -5,7 +5,7 @@ order: 30
 
 组件文档的展现形式如下，包含概览、示例和API，同时左侧菜单展示所属类别，在`full`模式下属于某个频道。
 
-![Lib Component](https://cdn.pingcode.com/open-sources/docgeni/lib-component.png)
+![Lib Component](assets/images/lib-component.png)
 
 # 类库导航
 类库通常就是`Angular`的组件库，`Docgeni`会把组件的文档和普通的页面文档严格区分开，展示形式也会有很大的不同。

@@ -34,7 +34,7 @@ $ ng add @docgeni/cli
 初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
 
 Lite 模式的预览效果如下：
-![](https://cdn.worktile.com/open-sources/docgeni/docgeni-lite-preview.png?2)
+![](assets/images/lite-preview.png)
 
 # 模板仓储初始化
 我们提供了一个内置的 GitHub 模板仓储 [docgeni-template](https://github.com/docgeni/docgeni-template)。模板仓储默认使用`full`模式，且内置了一个`alib`组件库以及一些初始化配置，进入 [仓储模板首页](https://github.com/docgeni/docgeni-template) 点击右上角 "Use this template" 按钮。
@@ -42,7 +42,7 @@ Lite 模式的预览效果如下：
 <img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
 
 预览效果如下：
-![](https://cdn.worktile.com/open-sources/docgeni/docgeni-template-preview.png?1)
+![](assets/images/template-preview.png)
 
 # 手动初始化
 ## 安装
@@ -115,6 +115,6 @@ subtitle: Button
 ```
 展示效果如下:
 
-![Component](https://cdn.pingcode.com/open-sources/docgeni/docgeni-lite-component-preview.png)
+![Component](assets/images/component-button.png)
 
 关于组件文档更多的配置参考：[组件文档、API和示例](guides/basic/component)

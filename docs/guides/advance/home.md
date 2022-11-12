@@ -12,7 +12,7 @@ order: 30
 
 ## 首页预览
 
-![](https://cdn.worktile.com/open-sources/docgeni/home-preview.png?1)
+![](assets/images/home-preview.png)
 
 
 ## Hero

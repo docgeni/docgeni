@@ -1,6 +1,5 @@
 import fsExtra from 'fs-extra';
 import nodePath from 'path';
-import { WriteStream, ReadStream } from 'fs';
 import { matchGlob } from './utils';
 import glob from 'glob';
 
@@ -24,6 +23,7 @@ export interface GetDirsOrFilesOptions {
 const DEFAULT_OPTIONS: GetDirsOrFilesOptions = {
     dot: false
 };
+
 export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
     options = {
         ...DEFAULT_OPTIONS,
@@ -66,45 +66,10 @@ export function globSync(pattern: string, options?: GetDirsOrFilesOptions & { ro
     });
 }
 
-// export async function pathsExists(paths: string[]) {
-//     const result = [];
-//     let hasExists = false;
-//     let existsCount = 0;
-//     for (const path of paths) {
-//         const pathExists = await fsExtra.pathExists(path);
-//         if (pathExists) {
-//             hasExists = true;
-//             existsCount++;
-//         }
-//         result.push(pathExists);
-//     }
-//     return {
-//         result,
-//         allExists: existsCount === result.length,
-//         hasExists
-//     };
-// }
-
 export async function readFileContent(filePath: string, encoding: string = 'UTF-8'): Promise<string> {
     const result = await fsExtra.readFile(filePath, encoding);
     return result;
 }
-
-// export function isStream(stream: any): stream is NodeJS.ReadableStream {
-//     if (!stream) {
-//         return false;
-//     }
-
-//     if (typeof stream.pipe !== 'function') {
-//         return false;
-//     }
-
-//     return true;
-// }
-
-export * from 'fs-extra';
-
-export * from './fs';
 
 export function watch(
     filename: fsExtra.PathLike,
@@ -113,3 +78,5 @@ export function watch(
 ): fsExtra.FSWatcher {
     return fsExtra.watch(filename, options, listener);
 }
+
+export * from 'fs-extra';
