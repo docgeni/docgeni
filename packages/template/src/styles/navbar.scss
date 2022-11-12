@@ -31,6 +31,10 @@
         .title {
             font-weight: 600;
             color: $dg-white;
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 
