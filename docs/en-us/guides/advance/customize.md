@@ -3,7 +3,7 @@ title: Customize Site
 order: 20
 ---
 
-# Customize public
+# Customize public dir
 Docgeni will generate a documentation site in the `.docgeni/site` directory by default. This site is entirely an Angular project. The directory structure is as follows:
 ```
 .docgeni
@@ -52,6 +52,21 @@ The complete public example is as follows:
 ├── styles.scss
 └── tsconfig.json
 ```
+
+# Custom AppModule Metadata <label>1.2.0+</label>
+Sometimes it is necessary to import a third-party module and providers in the automatically generated `AppModule`. Docgeni allows user to define a `module.ts` under the `.docgeni/app` folder, and then customize some metadata through the`export default { imports: [], providers: [] }` syntax.
+
+```ts
+import { FormsModule } from '@angular/forms';
+import { SomeService } from './some.service.ts';
+
+export default {
+    imports: [FormsModule],
+    providers: [SomeService]
+};
+
+```
+In this way, `SomeService` can be injected into all example components.
 
 # Customize site
 If the custom public capabilities are not enough to meet the needs of customization, Docgeni also supports a completely customize site mode, which means that the document site is created and controlled by the user.
