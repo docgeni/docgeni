@@ -104,6 +104,8 @@ export async function readFileContent(filePath: string, encoding: string = 'UTF-
 
 export * from 'fs-extra';
 
+export * from './fs';
+
 export function watch(
     filename: fsExtra.PathLike,
     options: { encoding?: BufferEncoding; persistent?: boolean; recursive?: boolean } | BufferEncoding,
