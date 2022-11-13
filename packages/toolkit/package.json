@@ -44,7 +44,7 @@
     "glob": "^7.1.6",
     "handlebars": "^4.7.3",
     "lodash": "^4.17.21",
-    "minimatch": "3.0.4",
+    "minimatch": "3.0.5",
     "param-case": "^3.0.2",
     "pluralize": "^8.0.0",
     "shelljs": "0.8.5",
