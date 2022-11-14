@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/docgeni/docgeni/compare/v2.0.0-next.0...v2.0.0) (2022-11-14)
+
+### Performance Improvements
+
+* remove warning messages ([661f45f](https://github.com/docgeni/docgeni/commit/661f45fcb42f558c12075cd9c51c93c64ad856ae))
+
+### Features
+
+* **core:** generate example module support vars define providers, declarations and imports, and remove default export from module ([#400](https://github.com/docgeni/docgeni/issues/400)) ([55f2371](https://github.com/docgeni/docgeni/commit/55f237137af550e69608a5cd914a0c98d6d49e0e))
+* **core:** support define module.ts in .docgeni/app folder ([#401](https://github.com/docgeni/docgeni/issues/401)) ([03e8c52](https://github.com/docgeni/docgeni/commit/03e8c526031043fe30034f3d321e001a596e2ebd))
+* **core:** throw error when child_process is error exit ([87b4a82](https://github.com/docgeni/docgeni/commit/87b4a8205829fe2a86e25a56db09fea801ee95a0))
+* **ngdoc:** ignore site typescript error ([5ee49ad](https://github.com/docgeni/docgeni/commit/5ee49ad8b3c2c93309ece64bd036373a19bcc8d3))
+* **ngdoc:** support set [@sort](https://github.com/sort) tag for directives and services ([#395](https://github.com/docgeni/docgeni/issues/395)) ([900f04e](https://github.com/docgeni/docgeni/commit/900f04ecac303fe808a15934e9bd471d78ab036e))
+* **template:** add parentheses () wrapper for name when kind is Output ([d91143d](https://github.com/docgeni/docgeni/commit/d91143d75f71c078460d4649d4d946c274259e52))
+* **core:** support render all examples for overview ([#389](https://github.com/docgeni/docgeni/issues/389)) ([d61f728](https://github.com/docgeni/docgeni/commit/d61f7285f4c2a49bb8cf3114fdd89652f46b1256))
+* **ngdoc:** add [@type](https://github.com/type) custom type ([b1ba6fd](https://github.com/docgeni/docgeni/commit/b1ba6fdc50f6b73bcaac1e23dd17511440de9d52))
+* **template:** display aliasName first and add "#" before name for ContentChild and ContentChildren kinds ([#388](https://github.com/docgeni/docgeni/issues/388)) ([5a671b5](https://github.com/docgeni/docgeni/commit/5a671b5d8f1588666bd7b298716a3849358d45f2))
+* **core:** example support background, compact and className #OSP-66 ([#386](https://github.com/docgeni/docgeni/issues/386)) ([0050190](https://github.com/docgeni/docgeni/commit/005019025458a450464f1c15d32e88f416bc0996)), closes [#OSP-66](https://github.com/docgeni/docgeni/issues/OSP-66)
+* **ngdoc:** hide component and property when add private or internal and rewrite directive name for name tag ([41a15a1](https://github.com/docgeni/docgeni/commit/41a15a1ec3cc59aefd041142da4e0e249c7ce68d))
+* **template:** remove cdk deps ([6d51ad0](https://github.com/docgeni/docgeni/commit/6d51ad0b4da82cd38e365130f5aea11498236416))
+* **ngdoc:** update getCurrentDirectory use ts.sys.getCurrentDirectory and add debug logs ([99cbd66](https://github.com/docgeni/docgeni/commit/99cbd66b70220d3bb25d9c778ab86ce9fc4f7349))
+* **core:** add debug logs for  LibraryBuilder #OSP-249 ([#338](https://github.com/docgeni/docgeni/issues/338)) ([212cb5f](https://github.com/docgeni/docgeni/commit/212cb5f008cfd6e7b3f7248ee11e7ed315c97236)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+* **ngdoc:** add debug logs for ng-parser #OSP-249 ([#339](https://github.com/docgeni/docgeni/issues/339)) ([9f96b9e](https://github.com/docgeni/docgeni/commit/9f96b9e1a7f0051c10e3096c7cfcf4af86ff0bfa)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+* **core:** add debug logs for  LibraryBuilder #OSP-249 ([#338](https://github.com/docgeni/docgeni/issues/338)) ([212cb5f](https://github.com/docgeni/docgeni/commit/212cb5f008cfd6e7b3f7248ee11e7ed315c97236)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+* **ngdoc:** add debug logs for ng-parser #OSP-249 ([#339](https://github.com/docgeni/docgeni/issues/339)) ([9f96b9e](https://github.com/docgeni/docgeni/commit/9f96b9e1a7f0051c10e3096c7cfcf4af86ff0bfa)), closes [#OSP-249](https://github.com/docgeni/docgeni/issues/OSP-249)
+* **core:** update to es2020 ([9b795c5](https://github.com/docgeni/docgeni/commit/9b795c519007ae3f2bd23180f45d0d961fc9ffd8))
+* **template:** add toc to api #OSP-41 ([#300](https://github.com/docgeni/docgeni/issues/300)) ([e5c1c2a](https://github.com/docgeni/docgeni/commit/e5c1c2a5910d34eee1f7a55bd4313658890ce21c)), closes [#OSP-41](https://github.com/docgeni/docgeni/issues/OSP-41)
+* support service api ([#303](https://github.com/docgeni/docgeni/issues/303)) ([37b8ef0](https://github.com/docgeni/docgeni/commit/37b8ef0aa9d47fa5492b9cea02b8e399e2f4ffd1))
+* **core:** support sourceMap  Support emitDecoratorMetadata ([#304](https://github.com/docgeni/docgeni/issues/304)) ([674281c](https://github.com/docgeni/docgeni/commit/674281ceb2d9e6dd91ea994482fa87311b9933f6))
+* **core:** auto generate and update examples module source #OSP-218 ([#291](https://github.com/docgeni/docgeni/issues/291)) ([5e88168](https://github.com/docgeni/docgeni/commit/5e881683adbdc89936f697c724423453a2c51f97)), closes [#OSP-218](https://github.com/docgeni/docgeni/issues/OSP-218)
+* **core:** supoort default locale in docs or docs/locale ([#289](https://github.com/docgeni/docgeni/issues/289)) ([3c8fd72](https://github.com/docgeni/docgeni/commit/3c8fd72c2eb024a0929715f016f4e583f8e57d94))
+* **core:** support automatic generate api docs #OSP-230 ([#294](https://github.com/docgeni/docgeni/issues/294)) ([5b428a0](https://github.com/docgeni/docgeni/commit/5b428a0f72ea63be2e100a5646a70a0fbc0ef84d)), closes [#OSP-230](https://github.com/docgeni/docgeni/issues/OSP-230)
+* **core:** support custom imports and providers for custom built-in component ([#293](https://github.com/docgeni/docgeni/issues/293)) ([6aa9612](https://github.com/docgeni/docgeni/commit/6aa9612076322665f4af9db3f85cb00b936dbeb1))
+
+
+### Bug Fixes
+
+* **template:** add text-decoration for title of navbar-brand ([d5d23e1](https://github.com/docgeni/docgeni/commit/d5d23e17fe15ba9d7d1da06465e8be8580fe1f42))
+* **core:** combine metadata bootstrap as long as one has a value ([1234de7](https://github.com/docgeni/docgeni/commit/1234de7cb4ed3c1ef81fa39a56c5216cca3e6e3a))
+* **template:** update  justify-content: end; to flex-end ([7d0cee7](https://github.com/docgeni/docgeni/commit/7d0cee703c6ba206316b32bad2290df739ff0743))
+* **template:** switch locale use Location service for scene with base-href ([#398](https://github.com/docgeni/docgeni/issues/398)) ([6fe13b5](https://github.com/docgeni/docgeni/commit/6fe13b59e1b8dd9e2b82fea3fea1a745d4f63424))
+* **core:** should prevent the next build while building ([365f323](https://github.com/docgeni/docgeni/commit/365f323bed20d910d115b29f0242afbff7535ec6))
+* **cli:** remove id from schema.json support ng 13 cli ([28a5554](https://github.com/docgeni/docgeni/commit/28a5554c14c57c9c7d9540bb2845f2a3a69f60ef))
+* **core:** should encode headingId to fix heading contains a link [#362](https://github.com/docgeni/docgeni/issues/362) ([eebcd4d](https://github.com/docgeni/docgeni/commit/eebcd4d67153cac23c0a21ffe7f32c2baf48bd02))
+* **core:** should use getSystemPath to convert path for compatible with windows system [#376](https://github.com/docgeni/docgeni/issues/376) ([#383](https://github.com/docgeni/docgeni/issues/383)) ([e2b8b25](https://github.com/docgeni/docgeni/commit/e2b8b2555392a931d6274991e11a7eb64137e499))
+* **ngdoc:** should ignore watch json files [#364](https://github.com/docgeni/docgeni/issues/364) ([3bd92ab](https://github.com/docgeni/docgeni/commit/3bd92ab7799c71b7b917cbe37e88b52a36289a46))
+* **cli:** add $id for schema of schematic ([efb40eb](https://github.com/docgeni/docgeni/commit/efb40eb2cc227b32d2712612147763d1ad56b44c))
+* **ngdoc:** only watch resolved modules in rootDir and exclude others such as node_modules [#359](https://github.com/docgeni/docgeni/issues/359) ([#360](https://github.com/docgeni/docgeni/issues/360)) ([8669684](https://github.com/docgeni/docgeni/commit/8669684452ba898d19bd0f85e73b8a7d770779f1))
+* **core:** remove progress from serve options ([a31ef90](https://github.com/docgeni/docgeni/commit/a31ef90b5f0cdcfe7feebb8b8f2e15fb1a666a04))
+* **core:** add BrowserAnimationsModule to AppModule ([5356a60](https://github.com/docgeni/docgeni/commit/5356a60f2824a2ce73017e9cdeb565bec3b17dcd))
+* **core:** remove progress args from serve ([#355](https://github.com/docgeni/docgeni/issues/355)) ([a2d3509](https://github.com/docgeni/docgeni/commit/a2d350922a8ce622deaed9b62e8fdfe174c5b79a))
+* **core:** should ignore without exported components when generating entry module ([190a288](https://github.com/docgeni/docgeni/commit/190a288a8a6f25287eeb3be6c286f7569c5e5efb))
+* **core:** getExpectExportedComponent without example name ([c3171cc](https://github.com/docgeni/docgeni/commit/c3171cc13e1af3a274d21432b89ee97ca61f77ab))
+* **core:** update index.ts after change custom built-in components #OSP-242 ([a2954e7](https://github.com/docgeni/docgeni/commit/a2954e709f2c63ca06d0c354743ce964e2134152)), closes [#OSP-242](https://github.com/docgeni/docgeni/issues/OSP-242)
+* **template:** get corrected doc item when component is same in multiple  libraries [#347](https://github.com/docgeni/docgeni/issues/347) ([3c9ea1a](https://github.com/docgeni/docgeni/commit/3c9ea1a245bd1589d0efd6fb1c8662169dfba7ab))
+* **template:** import docsearch.css instead of docsearch.min.css ([bf3ec3d](https://github.com/docgeni/docgeni/commit/bf3ec3d0ce0f1c57dd9ba3db8457e0cd0c7c4253))
+* **template:** set text-decoration as none for link in nav ([cb005b6](https://github.com/docgeni/docgeni/commit/cb005b6079d346c0d97fb79094fda0edaf59865f))
+* **template:** update outline button styles for launch action ([eb0b593](https://github.com/docgeni/docgeni/commit/eb0b593c60f52472966605b58160869189f5fc7c))
+* **template:** use navigateByUrl when click search result item path is inernal route #OSP-253 [#350](https://github.com/docgeni/docgeni/issues/350) ([152e6f7](https://github.com/docgeni/docgeni/commit/152e6f7b8bfd81ede1b3d70041b62b13902cebea)), closes [#OSP-253](https://github.com/docgeni/docgeni/issues/OSP-253)
+* **core:** should not build example when entry component file is not exists #OSP-251 ([0e3cb83](https://github.com/docgeni/docgeni/commit/0e3cb83ba98525d540dd4a1ab78ec8a5a8532e60)), closes [#OSP-251](https://github.com/docgeni/docgeni/issues/OSP-251)
+* **template:** update word-break to break-all for toc link and table label #OSP-252 ([8ed816c](https://github.com/docgeni/docgeni/commit/8ed816cabc2f196c6fa290d5f24acb1d4f003596)), closes [#OSP-252](https://github.com/docgeni/docgeni/issues/OSP-252)
+* **ngdoc:** use useCaseSensitiveFileNames to normalize filePath ([c0ea534](https://github.com/docgeni/docgeni/commit/c0ea534332b70a06eaa1ee79b10e06122bbe7d87))
+* **core:** remove extractCss from angular.json ([#337](https://github.com/docgeni/docgeni/issues/337)) ([94773ff](https://github.com/docgeni/docgeni/commit/94773ff9c15f65a283155a76a622675c859d88e5))
+* **core:** should get correct source file for node_modules types #OSP-244 ([1f84bcc](https://github.com/docgeni/docgeni/commit/1f84bcc5befb3d45bed9e070dbeed48cd1400465)), closes [#OSP-244](https://github.com/docgeni/docgeni/issues/OSP-244)
+* **template:** set search container width and font-size ([a8364c9](https://github.com/docgeni/docgeni/commit/a8364c9c7366f5670799acd1f884314bc42384b1))
+* **core:** should generate correct output path for docs [#295](https://github.com/docgeni/docgeni/issues/295) ([#298](https://github.com/docgeni/docgeni/issues/298)) ([5e18a3a](https://github.com/docgeni/docgeni/commit/5e18a3abedc916a492b26f3cccbca5f99fe23596))
+* **core:** should transform to real abs path for cosmiconfig search #OSP-239 ([#299](https://github.com/docgeni/docgeni/issues/299)) ([fea46c8](https://github.com/docgeni/docgeni/commit/fea46c8896e8bda0db189754de21dbe671cf9521)), closes [#OSP-239](https://github.com/docgeni/docgeni/issues/OSP-239)
+* **template:** remove space from name of content-renderer ([abd804d](https://github.com/docgeni/docgeni/commit/abd804d87ad1af029014c39668932db863f6dbe8))
+* **core:** fix error when has't modult.ts ([cbbddf6](https://github.com/docgeni/docgeni/commit/cbbddf63917aa8b12517d6f3747dc115096ad09c))
+* **core:** should generate stackblize bundle.json for examples when custom site project ([#290](https://github.com/docgeni/docgeni/issues/290)) ([bcf79b8](https://github.com/docgeni/docgeni/commit/bcf79b8acff515086ea7a41901a3b615282a9098))
+* **template:** improve api display for empty properties and spacing ([801a0db](https://github.com/docgeni/docgeni/commit/801a0dbcc3ed67d3daad60e73530fd940eee8d88))
+* horizontal line top of footer do not overlap when doc meta is empty ([6d75e03](https://github.com/docgeni/docgeni/commit/6d75e03abb0a94b27720127ccbaa091c78a44236))
+* **alib:** rename a-lib to @docgeni/alib and publish to npm ([317211c](https://github.com/docgeni/docgeni/commit/317211c3f6ec33fb0fd90162d2d650c5696c924b))
+* **core:** regenerate examples source bundle file when emit and refactor somethings #OSP-223 ([5d0e2bc](https://github.com/docgeni/docgeni/commit/5d0e2bc3ecd1925f56fb283f551399e00bab8836)), closes [#OSP-223](https://github.com/docgeni/docgeni/issues/OSP-223)
+* **core:** should generate navs success when there are no locale docs folder that configured  in locales #OSP-211 ([#268](https://github.com/docgeni/docgeni/issues/268)) ([697a366](https://github.com/docgeni/docgeni/commit/697a366574d9f28f975675dc365f23f11ff13e2f)), closes [#OSP-211](https://github.com/docgeni/docgeni/issues/OSP-211)
+* **template:** add @angular/cdk to dependencies of template and move @angular-devkit/schematics to cli ([#267](https://github.com/docgeni/docgeni/issues/267)) ([c136a0f](https://github.com/docgeni/docgeni/commit/c136a0fa1aa05942c8f3cc0a13ee99304ac36e13))
+* **template:** fix import docsearch error ([#274](https://github.com/docgeni/docgeni/issues/274)) ([9492006](https://github.com/docgeni/docgeni/commit/9492006cfe1636477289bfa75c6ca55803e13c24))
+
+
+
+
 # [2.0.0-next.0](https://github.com/docgeni/docgeni/compare/v1.2.0-next.27...v2.0.0-next.0) (2022-11-14)
 
 
