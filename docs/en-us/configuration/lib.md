@@ -160,7 +160,7 @@ Component category, `Docgeni` will put the components of the same category toget
 ]
 ```
 
-## apiMode <label>1.2.0+</label>
+## apiMode <label>2.0+</label>
 
 - Type: `'compatible' | 'manual' | 'automatic'`
 - Default: `manual`

@@ -53,7 +53,7 @@ The complete public example is as follows:
 └── tsconfig.json
 ```
 
-# Custom AppModule Metadata <label>1.2.0+</label>
+# Custom AppModule Metadata <label>2.0+</label>
 Sometimes it is necessary to import a third-party module and providers in the automatically generated `AppModule`. Docgeni allows user to define a `module.ts` under the `.docgeni/app` folder, and then customize some metadata through the`export default { imports: [], providers: [] }` syntax.
 
 ```ts

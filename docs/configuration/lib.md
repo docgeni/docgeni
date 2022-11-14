@@ -161,7 +161,7 @@ module.exports = [
     }
 ]
 ```
-## apiMode <label>1.2.0+</label>
+## apiMode <label>2.0+</label>
 
 - 类型：`'compatible' | 'manual' | 'automatic'`
 - 默认：`manual`

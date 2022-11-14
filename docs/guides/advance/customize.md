@@ -53,7 +53,7 @@ Docgeni 默认会在`.docgeni/site`目录生成文档站点，这个站点是一
 └── tsconfig.json
 ```
 
-# 自定义根模块元数据 <label>1.2.0+</label>
+# 自定义根模块元数据 <label>2.0+</label>
 有时候需要在自动生成的 AppModule 导入一个第三方模块和提供供应商，Docgeni 允许使用者在 `.docgeni/app` 文件夹下定义一个`module.ts`，然后通过 `export default { imports: [], providers: [] }` 语法自定义部分元数据。
 
 ```ts

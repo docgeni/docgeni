@@ -157,13 +157,13 @@ module.exports = {
 }
 ```
 
-## sitemap <label>1.2.0+</label>
+## sitemap <label>2.0+</label>
 - 类型：`{host?: string;}`
 - 默认： `null`
 
 开启自动生成`sitemap.xml`的功能，`hostname`配置生成的 URL 前缀。
 
-## algolia <label>1.2.0+</label>
+## algolia <label>2.0+</label>
 - 类型：`DocgeniAlgoliaConfig`
 - 默认： `null`
 

@@ -61,19 +61,19 @@ Display mode of table of content, `content` indicates display on the right side 
 
 Component label, if the component is a new, set it to `new`, if the component has been deprecated, set it to `deprecated`, if the component is an experimental, set it to `experimental`. it can be set to any id configured in the library labels. for the configuration label, refer to: [labels] (configuration/lib#labels).
 
-## background <label>1.2.0+</label>
+## background <label>2.0+</label>
 - Type: `string`
 - Default: `null`
 
 Background of component example rendering.
 
-## compact <label>1.2.0+</label>
+## compact <label>2.0+</label>
 - Type: `boolean`
 - Default: `false`
 
 Remove component example spacing.
 
-## className <label>1.2.0+</label>
+## className <label>2.0+</label>
 - Type: `string`
 - Default: `null`
 

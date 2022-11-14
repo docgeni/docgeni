@@ -170,7 +170,7 @@ tsconfig 配置如下，如何配置参考: [自定义配置 tsconfig.json](guid
 
 <example name="alib-button-basic-example" inline />
 
-## 概览文档中引入所有示例 <label>1.2.0+</label>
+## 概览文档中引入所有示例 <label>2.0+</label>
 
 在概览文档中通过`<examples />`语法会在相应位置按顺序插入当前组件所有的示例，同时会在 Toc 中展示。
 
@@ -241,7 +241,7 @@ export class AlibButtonExamplesModule {}
 
 <alert type="info">注意：所有的示例在运行时都是动态加载的，在没有开启 Ivy 渲染引擎的情况下需要在`entryComponents`中导入。</alert>
 
-## StackBlitz 示例 <label>1.2.0+</label>
+## StackBlitz 示例 <label>2.0+</label>
 Docgeni 支持组件示例直接在 StackBlitz 平台展示, StackBlitz 在线示例需要配置示例的依赖，样式和`angular.json`，通过在 `.docgeni/public/assets/stack-blitz` 文件夹配置，文件结构如下：
 ```
 .docgeni

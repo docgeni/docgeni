@@ -157,13 +157,13 @@ module.exports = {
 }
 ```
 
-## sitemap  <label>1.2.0+</label>
+## sitemap  <label>2.0+</label>
 - Type: `{host?: string;}`
 - Default: `null`
 
 Enable the automatic generation of `sitemap.xml`, `hostname` is configuration of url prefix.
 
-## algolia <label>1.2.0+</label>
+## algolia <label>2.0+</label>
 - Type: `DocgeniAlgoliaConfig`
 - Default: `null`
 

@@ -229,7 +229,7 @@ export class AlibButtonExamplesModule {}
 
 Pay attention: all examples are dynamically loaded at runtime, and need to be imported in `entryComponents` when the Ivy rendering engine is not turned on.
 
-## StackBlitz Live Example <label>1.2.0+</label>
+## StackBlitz Live Example <label>2.0+</label>
 
 Docgeni supports component examples to be displayed directly on the StackBlitz platform. StackBlitz online examples need to configure the dependencies, styles and `angular.json`, through in `.docgeni/public/assets/stack-blitz` folder configuration. The file structure is as follows:
 
