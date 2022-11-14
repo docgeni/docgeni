@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.0](https://github.com/docgeni/docgeni/compare/v1.2.0-next.27...v2.0.0-next.0) (2022-11-14)
+
+
+### Bug Fixes
+
+* **template:** add text-decoration for title of navbar-brand ([d5d23e1](https://github.com/docgeni/docgeni/commit/d5d23e17fe15ba9d7d1da06465e8be8580fe1f42))
+
+
+
+
+
 # [1.2.0-next.27](https://github.com/docgeni/docgeni/compare/v1.2.0-next.26...v1.2.0-next.27) (2022-11-02)
 
 **Note:** Version bump only for package @docgeni/template
