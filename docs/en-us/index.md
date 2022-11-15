@@ -23,9 +23,9 @@ features:
     description: Full and Lite modes are supported to meet different needs. At the same time, default and angular styles are supported to allow users to choose their own themes
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature4.png
     title: Powerful Customization
-    description: It provides publicDir to realize features such as custom HTML, resources and styles, and supports fully customized site
+    description: It provides publicDir to realize features such as custom HTML, resources and styles, and supports AppModule metadata and fully customized site
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature5.png
-    title: Automatic Generation of Component API (WIP)
+    title: Automatic Generation of Component API
     description: Automatically generate component APIs based on typescript type definitions and comments, and maintain the consistency of code and documents
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature6.png
     title: Multilingual

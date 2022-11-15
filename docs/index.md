@@ -25,9 +25,9 @@ features:
     description: 支持 full 和 lite 两种模式满足不同的需求，同时支持默认和 Angular 风格，让用户选择适合自己的主题
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature4.png
     title: 强大的自定义能力
-    description: 提供了 publicDir 实现自定义 HTML，资源，样式等功能，同时支持完全自定义的站点
+    description: 提供了 publicDir 实现自定义 HTML，资源，样式等功能，同时还支持定义根模块元数据以及完全自定义的站点
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature5.png
-    title: 组件 API 自动生成（暂时未支持）
+    title: 组件 API 自动生成
     description: 基于 TypeScript 类型定义和注释自动生成组件 API，维护代码和文档始终如一
   - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature6.png
     title: 多语言支持
