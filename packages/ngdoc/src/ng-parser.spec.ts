@@ -24,7 +24,7 @@ function objectContaining<T>(object: T) {
                 }
             }
         }
-        return jasmine.objectContaining(object);
+        return jasmine.objectContaining(object as unknown as {});
     } else {
         return object;
     }

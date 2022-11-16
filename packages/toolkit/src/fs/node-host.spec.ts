@@ -3,9 +3,8 @@ import { normalize, virtualFs } from '@angular-devkit/core';
 import { NodeJsAsyncHost } from '@angular-devkit/core/node';
 import fs from 'fs';
 import temp from 'temp';
-import { Observable, Subscription } from 'rxjs';
 import { linuxAndDarwinIt, linuxOnlyIt } from '../testing';
-import { toolkit } from '@docgeni/toolkit';
+import * as utils from '../utils';
 
 describe('DocgeniNodeJsAsyncHost', () => {
     let root: string;
@@ -44,13 +43,13 @@ describe('DocgeniNodeJsAsyncHost', () => {
         const subscription = obs.subscribe(event => {
             allEvents.push(event);
         });
-        await toolkit.utils.wait(10);
+        await utils.wait(10);
         await host.write(normalize(file3Path), content).toPromise();
-        await toolkit.utils.wait(10);
+        await utils.wait(10);
         await host.write(normalize(file2Path), content2).toPromise();
-        await toolkit.utils.wait(10);
+        await utils.wait(10);
         await host.delete(normalize(file1Path)).toPromise();
-        await toolkit.utils.wait(3000);
+        await utils.wait(3000);
         expect(allEvents.length).toBe(3);
         subscription.unsubscribe();
     });
