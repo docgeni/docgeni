@@ -2,11 +2,9 @@ import { virtualFs } from '@angular-devkit/core';
 import temp from 'temp';
 import fs from 'fs';
 import { DocgeniNodeJsAsyncHost } from './node-host';
-import { normalize, resolve } from './path';
-import { Observable } from 'rxjs';
+import { normalize, resolve } from '../path';
 import { FileSystemWatcher, HostWatchEvent, HostWatchEventType } from './watcher';
 import { toolkit } from '@docgeni/toolkit';
-import chokidar from 'chokidar';
 import { linuxAndDarwinIt } from '../testing';
 
 describe('#fs-watcher', () => {

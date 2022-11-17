@@ -1,6 +1,7 @@
 import { Template } from './template';
 import * as fs from './filesystem';
-import * as path from 'path';
+import * as nodePath from 'path';
+import * as path from './path';
 import * as strings from './strings';
 import * as utils from './utils';
 import * as shell from './shell';
@@ -32,7 +33,7 @@ export class Toolkit {
     static get template() {
         if (!this._template) {
             this._template = new Template({
-                baseDir: path.resolve(this.config.baseDir, 'templates')
+                baseDir: nodePath.resolve(this.config.baseDir, 'templates')
             });
         }
         return this._template;
@@ -65,5 +66,9 @@ export class Toolkit {
 
     static get git() {
         return git;
+    }
+
+    static get path() {
+        return path;
     }
 }

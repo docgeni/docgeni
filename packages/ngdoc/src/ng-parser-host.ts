@@ -79,7 +79,8 @@ export class DefaultNgParserHost implements NgParserHost {
             };
         }
         if (this.options.tsConfigPath) {
-            const parsedResult = ts.getParsedCommandLineOfConfigFile(this.options.tsConfigPath, undefined, {
+            const tsConfigPath = toolkit.utils.getSystemPath(this.options.tsConfigPath);
+            const parsedResult = ts.getParsedCommandLineOfConfigFile(tsConfigPath, undefined, {
                 useCaseSensitiveFileNames: true,
                 fileExists: this.options.fsHost.fileExists,
                 readFile: this.options.fsHost.readFile,
@@ -105,7 +106,7 @@ export class DefaultNgParserHost implements NgParserHost {
             this.allResolvedModules.push({ resolvedFileName: fileName });
         });
         if (this.options.rootDir) {
-            this.rootDir = toolkit.utils.normalizeSlashes(this.options.rootDir);
+            this.rootDir = toolkit.path.getTSSystemPath(this.options.rootDir);
             debug(`rootDir is ${this.rootDir} from ${this.options.rootDir}`, 'ng-parser');
         }
     }
@@ -117,6 +118,7 @@ export class DefaultNgParserHost implements NgParserHost {
         debug(`start watch resolvedModules, allResolvedModules: ${this.allResolvedModules.length}`, 'ng-parser');
         const allResolvedModulesMap = new Map<string, boolean>();
         this.allResolvedModules.map(resolvedModule => {
+            debug(`start resolvedModule: ${resolvedModule.resolvedFileName}, rootDir: ${this.rootDir}`, 'ng-parser');
             // ignore duplicate module, we will add rootFileNames to allResolvedModules at initialization
             if (allResolvedModulesMap.has(resolvedModule.resolvedFileName)) {
                 return;

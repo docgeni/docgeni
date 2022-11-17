@@ -86,6 +86,7 @@ describe('#library-component', () => {
     const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/alib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
+
     beforeAll(async () => {
         toolkit.initialize({
             baseDir: systemPath.resolve(__dirname, '../')
@@ -421,7 +422,9 @@ describe('#library-component', () => {
                     properties: []
                 }
             ];
-            spectator.ngDocParseSpy.and.returnValue(parsedApiDocs);
+            spectator.ngDocParseSpy
+                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '*.ts')))
+                .and.returnValue(parsedApiDocs);
             await component.build();
             spectator.assertCosmiconfigOptions(buttonDirPath);
             const enApiDocs = component.getApiDocs('en-us');
@@ -472,7 +475,9 @@ describe('#library-component', () => {
                     properties: []
                 }
             ];
-            spectator.ngDocParseSpy.and.returnValue(parsedApiDocs);
+            spectator.ngDocParseSpy
+                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '*.ts')))
+                .and.returnValue(parsedApiDocs);
             await component.build();
             const enApiDocs = component.getApiDocs('en-us');
             const zhApiDocs = component.getApiDocs('zh-cn');

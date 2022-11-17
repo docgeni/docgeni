@@ -80,3 +80,4 @@ export function watch(
 }
 
 export * from 'fs-extra';
+export * from './fs';

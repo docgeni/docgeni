@@ -1,8 +1,8 @@
 import { Observable, Subject } from 'rxjs';
 import { FSWatcher, WatchOptions } from 'chokidar';
 import { getSystemPath, Path, virtualFs } from '@angular-devkit/core';
-import { normalize } from './path';
-import { toolkit } from '@docgeni/toolkit';
+import { normalize } from '../path';
+import { coerceArray } from '../utils';
 
 export enum HostWatchEventType {
     Changed = 0,
@@ -49,7 +49,7 @@ export class FileSystemWatcher {
 
     watch(paths: string | string[]): Observable<HostWatchEvent> {
         // this.watcher.add(paths);
-        this.watcher.add(toolkit.utils.coerceArray(paths).map(path => getSystemPath(normalize(path))));
+        this.watcher.add(coerceArray(paths).map(path => getSystemPath(normalize(path))));
         return this.events$.asObservable();
     }
 
