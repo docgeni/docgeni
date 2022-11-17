@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/docgeni/docgeni/compare/v2.0.0...v2.0.1) (2022-11-17)
+
+
+### Bug Fixes
+
+* **ngdoc:** should convert tsConfigPath and rootDir to ts supported path for windows ([#416](https://github.com/docgeni/docgeni/issues/416)) ([f1889cf](https://github.com/docgeni/docgeni/commit/f1889cffd10b051343b951d3292492a70fa53eb3))
+
+
+
+
+
 # [2.0.0](https://github.com/docgeni/docgeni/compare/v2.0.0-next.0...v2.0.0) (2022-11-14)
 
 **Note:** Version bump only for package @docgeni/ngdoc
