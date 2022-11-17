@@ -176,7 +176,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
     }
 
     private async buildApiDocs(): Promise<void> {
-        const apiSrcPath = resolve(this.absPath, '*.ts');
+        const apiSrcPath = toolkit.path.getSystemPath(resolve(this.absPath, '*.ts'));
         if (this.lib.apiMode === 'automatic') {
             const apiDocs = this.lib.ngDocParser.parse(apiSrcPath) as ApiDeclaration[];
             this.docgeni.config.locales.forEach(locale => {

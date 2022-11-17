@@ -35,7 +35,6 @@ describe('#ng-parser-host', () => {
             tsConfigPath: tsConfigPath
         });
         const buttonPath = toolkit.path.getSystemPath(toolkit.path.resolve(fixtureRootDir, 'src/button/*.ts'));
-        console.log(`buttonPath: ${buttonPath}`);
         const filePaths = toolkit.fs.globSync(buttonPath);
         console.log(filePaths);
         expect(filePaths.length).toBeGreaterThanOrEqual(1);
