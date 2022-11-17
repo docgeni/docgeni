@@ -4,10 +4,10 @@ import { toolkit, debug } from '@docgeni/toolkit';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { LibraryComponentImpl } from './library-component';
-import { HostWatchEventType, relative, resolve } from '../fs';
-import { EmitFile, EmitFiles, Library, LibraryBuilder, LibraryComponent } from '../types';
+import { resolve } from '../fs';
+import { Library, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
-import { ts, NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
+import { NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
 
 const NAMESPACE = 'library-builder';
 export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
@@ -63,7 +63,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     private async initializeNgDocParser() {
         if (this.lib.apiMode !== 'manual') {
-            const tsConfigPath = resolve(this.docgeni.paths.cwd, resolve(this.lib.rootDir, 'tsconfig.lib.json'));
+            const tsConfigPath = this.docgeni.paths.getAbsPath(resolve(this.lib.rootDir, 'tsconfig.lib.json'));
             debug(`[${this.lib.name}] apiMode is ${this.lib.apiMode}, tsConfigPath is ${tsConfigPath}`, NAMESPACE);
             if (await this.docgeni.host.exists(tsConfigPath)) {
                 const absRootDir = this.docgeni.paths.getAbsPath(this.lib.rootDir);

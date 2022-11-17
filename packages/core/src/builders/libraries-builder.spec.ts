@@ -6,7 +6,8 @@ import {
     DEFAULT_TEST_ROOT_PATH,
     expectThrowAsync,
     FixtureResult,
-    loadFixture
+    loadFixture,
+    writeFilesToHost
 } from '../testing';
 import { DocgeniHost } from '../docgeni-host';
 import { LibrariesBuilder } from './libraries-builder';
@@ -276,6 +277,64 @@ describe('libraries-builder', () => {
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
             }, `mylib lib's category id(${duplicateId}) duplicate`);
+        });
+
+        it("should throw error when lib's tsconfig.lib.json has not exist for compatible", async () => {
+            const libDirPath = `${DEFAULT_TEST_ROOT_PATH}/a-lib`;
+            await expectThrowAsync(async () => {
+                const context = createTestDocgeniContext({
+                    libs: {
+                        name: 'mylib',
+                        abbrName: 'alib',
+                        rootDir: libDirPath,
+                        apiMode: 'compatible',
+                        categories: []
+                    },
+                    initialFiles: {
+                        [`${libDirPath}/app.module.ts`]: ''
+                    }
+                });
+                const librariesBuilder = new LibrariesBuilder(context);
+                await librariesBuilder.initialize();
+            }, `mylib lib's tsConfigPath(/D/test/a-lib/tsconfig.lib.json) has not exists, should config it relative to rootDir(/D/test/a-lib) for apiMode: compatible`);
+        });
+
+        it("should throw error when lib's tsconfig.lib.json has not exist for automatic", async () => {
+            const libDirPath = `${DEFAULT_TEST_ROOT_PATH}/a-lib`;
+            await expectThrowAsync(async () => {
+                const context = createTestDocgeniContext({
+                    libs: {
+                        name: 'mylib',
+                        abbrName: 'alib',
+                        rootDir: libDirPath,
+                        apiMode: 'automatic',
+                        categories: []
+                    },
+                    initialFiles: {
+                        [`${libDirPath}/app.module.ts`]: ''
+                    }
+                });
+                const librariesBuilder = new LibrariesBuilder(context);
+                await librariesBuilder.initialize();
+            }, `mylib lib's tsConfigPath(/D/test/a-lib/tsconfig.lib.json) has not exists, should config it relative to rootDir(/D/test/a-lib) for apiMode: automatic`);
+        });
+
+        it('should build success when has tsconfig.lib.json for automatic', async () => {
+            const libDirPath = `${DEFAULT_TEST_ROOT_PATH}/a-lib`;
+            const context = createTestDocgeniContext({
+                libs: {
+                    name: 'mylib',
+                    abbrName: 'alib',
+                    rootDir: libDirPath,
+                    apiMode: 'automatic',
+                    categories: []
+                },
+                initialFiles: {
+                    [`${libDirPath}/tsconfig.lib.json`]: ''
+                }
+            });
+            const librariesBuilder = new LibrariesBuilder(context);
+            await librariesBuilder.initialize();
         });
     });
 });

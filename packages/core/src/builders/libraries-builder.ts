@@ -125,6 +125,15 @@ export class LibrariesBuilder extends FileEmitter {
         if (!rootDirExists) {
             throw new ValidationError(`${lib.name} lib's rootDir(${lib.rootDir}) has not exists`);
         }
+        if (lib.apiMode !== 'manual') {
+            const tsConfigPath = resolve(lib.rootDir, 'tsconfig.lib.json');
+            const tsConfigExists = await this.docgeni.host.pathExists(this.docgeni.paths.getAbsPath(tsConfigPath));
+            if (!tsConfigExists) {
+                throw new ValidationError(
+                    `${lib.name} lib's tsConfigPath(${tsConfigPath}) has not exists, should config it relative to rootDir(${lib.rootDir}) for apiMode: ${lib.apiMode}`
+                );
+            }
+        }
     }
 
     private async emitAllEntries() {
