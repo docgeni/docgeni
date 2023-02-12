@@ -33,10 +33,10 @@ let OFFSET = 0;
 })
 export class TocService {
     private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
-    private activeLinkSubject$ = new BehaviorSubject<TocLink>(null);
+    private activeLinkSubject$ = new BehaviorSubject<TocLink | null>(null);
     private destroyed$ = new Subject<TocLink[]>();
-    private scrollContainer: HTMLElement & Window;
-    public highestLevel: number;
+    private scrollContainer!: HTMLElement & Window;
+    public highestLevel!: number;
     public get links$(): Observable<TocLink[]> {
         return this.linksSubject$.asObservable();
     }
@@ -46,7 +46,7 @@ export class TocService {
     }
 
     public get activeLink$(): Observable<TocLink> {
-        return this.activeLinkSubject$.asObservable();
+        return this.activeLinkSubject$.asObservable() as Observable<TocLink>;
     }
 
     constructor(@Inject(DOCUMENT) private document: any, global: GlobalContext, private viewportScroller: ViewportScroller) {
@@ -73,10 +73,10 @@ export class TocService {
                 const headerLevel = 2;
                 allExamples.forEach(example => {
                     links.push({
-                        name: example.getAttribute('title'),
+                        name: example.getAttribute('title') as string,
                         type: 'h2',
                         top: example.getBoundingClientRect().top,
-                        id: example.getAttribute('name'),
+                        id: example.getAttribute('name') as string,
                         active: false,
                         level: headerLevel,
                         element: example as HTMLHeadingElement
@@ -122,14 +122,12 @@ export class TocService {
         if (scrollOffset <= OFFSET + 1) {
             activeItem = this.links[0];
         } else {
-            this.links.some(link => {
-                if (link.element.offsetTop >= scrollOffset) {
-                    activeItem = link;
-                    return true;
-                }
-                return false;
+            const itemOffset = this.links.find(link => {
+                return link.element!.offsetTop >= scrollOffset;
             });
-            if (!activeItem) {
+            if (itemOffset) {
+                activeItem = itemOffset;
+            } else {
                 activeItem = this.links[this.links.length - 1];
             }
         }
@@ -146,7 +144,7 @@ export class TocService {
                     return link.id === urlFragment;
                 });
                 if (link) {
-                    this.scrollContainer.scrollTop = link.element.offsetTop - 10;
+                    this.scrollContainer.scrollTop = link.element!.offsetTop - 10;
                 }
             }
         }

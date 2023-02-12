@@ -41,7 +41,7 @@ export class StackblitzExampleService extends ExampleService {
             }
         }
         const packageJsonFile = allFiles.find(item => item.path === 'package.json');
-        form.appendChild(this.createFormInput(`dependencies`, JSON.stringify(JSON.parse(packageJsonFile.content).dependencies)));
+        form.appendChild(this.createFormInput(`dependencies`, JSON.stringify(JSON.parse(packageJsonFile!.content).dependencies)));
         document.body.appendChild(form);
         form.submit();
         document.body.removeChild(form);

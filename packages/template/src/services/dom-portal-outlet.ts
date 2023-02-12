@@ -19,7 +19,7 @@ export interface PortalOutlet {
 }
 
 export abstract class Portal<T> {
-    private _attachedHost: PortalOutlet | null;
+    private _attachedHost!: PortalOutlet | null;
 
     /** Attach this portal to a host. */
     attach(host: PortalOutlet): T {
@@ -89,10 +89,10 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
 }
 
 export class DomPortalOutlet implements PortalOutlet {
-    private disposeFn: (() => void) | null;
-    private isDisposed: boolean;
+    private disposeFn!: (() => void) | null;
+    private isDisposed!: boolean;
 
-    protected attachedPortal: Portal<unknown>;
+    protected attachedPortal!: Portal<unknown> | null;
 
     constructor(
         protected outletElement: Element,

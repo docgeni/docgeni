@@ -9,7 +9,7 @@ const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
     templateUrl: './label.component.html'
 })
 export class LabelComponent implements OnInit {
-    @HostBinding(`class`) classList: string[];
+    @HostBinding(`class`) classList!: string[];
 
     @Input() set labelType(value: LabelType) {
         if (LABEL_LIST.includes(value)) {

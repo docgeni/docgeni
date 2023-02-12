@@ -10,7 +10,7 @@ import { ContentRenderer } from '../content-renderer';
     }
 })
 export class SourceCodeComponent extends ContentRenderer implements OnInit {
-    @ViewChild('codeContent', { static: true, read: ElementRef }) codeContent: ElementRef;
+    @ViewChild('codeContent', { static: true, read: ElementRef }) codeContent!: ElementRef;
 
     get textContent() {
         return this.codeContent.nativeElement?.textContent;

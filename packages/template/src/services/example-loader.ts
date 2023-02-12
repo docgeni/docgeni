@@ -8,6 +8,6 @@ export interface ExampleLoadResult {
 }
 @Injectable()
 export abstract class ExampleLoader {
-    enableIvy: boolean;
+    enableIvy!: boolean;
     abstract load(exampleName: string): Promise<ExampleLoadResult>;
 }
