@@ -6,7 +6,7 @@ import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef
     templateUrl: './logo.component.html'
 })
 export class LogoComponent implements OnInit {
-    @ViewChild('logo', { static: true }) logoTemplate: TemplateRef<HTMLElement>;
+    @ViewChild('logo', { static: true }) logoTemplate!: TemplateRef<HTMLElement>;
 
     constructor(public global: GlobalContext, private elementRef: ElementRef, private viewContainerRef: ViewContainerRef) {}
 

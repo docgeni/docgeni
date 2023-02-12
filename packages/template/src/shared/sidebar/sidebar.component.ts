@@ -11,7 +11,7 @@ import { GlobalContext } from '../../services/global-context';
 export class SidebarComponent implements OnInit, OnChanges {
     @HostBinding(`class.dg-sidebar`) isSidebar = true;
 
-    @Input() menus: NavigationItem[];
+    @Input() menus!: NavigationItem[];
 
     menuDisplayMap = new Map<CategoryItem, boolean>();
 
@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit, OnChanges {
             const urlTree = this.router.createUrlTree(['./' + menu.path], { relativeTo: this.activatedRoute });
             const result = this.router.isActive(urlTree, !menu.examples);
             if (result) {
-                ancestors = menu.ancestors;
+                ancestors = menu.ancestors || [];
                 break;
             }
         }

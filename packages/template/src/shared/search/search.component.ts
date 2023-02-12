@@ -7,11 +7,11 @@ import { SearchPageInfo, SearchService } from '../../services/search.service';
     templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnInit, AfterViewInit {
-    public searchText: string;
+    public searchText!: string;
 
-    public isFocus: boolean;
+    public isFocus!: boolean;
 
-    public hasSearchText: boolean;
+    public hasSearchText!: boolean;
 
     constructor(public searchService: SearchService, private router: Router) {}
 

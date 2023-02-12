@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 @Directive()
 export abstract class ContentRenderer {
-    private documentFetchSubscription: Subscription;
+    private documentFetchSubscription!: Subscription;
 
     @Input() set url(value: string) {
         if (value) {

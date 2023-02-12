@@ -51,7 +51,7 @@ export class RouterResetService {
             }
         ];
         const rootRoutes: Routes = [
-            ...this.global.config.locales.map(locale => {
+            ...this.global.config.locales!.map(locale => {
                 return {
                     path: locale.key,
                     component: ActualRootComponent,
@@ -88,9 +88,9 @@ export class RouterResetService {
                             }
                         ]
                     };
-                    channelPathToHomeRoutes[nav.path] = route.children[0];
+                    channelPathToHomeRoutes[nav.path] = route.children![0];
                     if (nav.lib) {
-                        route.children.push({
+                        route.children!.push({
                             path: ':id',
                             component: DocViewerComponent,
                             children: componentChildrenRoutes
@@ -112,13 +112,13 @@ export class RouterResetService {
                           component: DocViewerComponent
                       };
 
-                const channelRoute = channelPathToRoutes[docItem.channelPath];
+                const channelRoute = channelPathToRoutes[docItem.channelPath!];
                 if (channelRoute) {
                     // remove chanel home when has route path is ''
-                    if (route.path === '' && channelRoute.children.includes(channelPathToHomeRoutes[channelRoute.path])) {
-                        channelRoute.children.splice(0, 1);
+                    if (route.path === '' && channelRoute.children!.includes(channelPathToHomeRoutes[channelRoute.path!])) {
+                        channelRoute.children!.splice(0, 1);
                     }
-                    channelRoute.children.push(route);
+                    channelRoute.children!.push(route);
                 } else if (!docItem.importSpecifier) {
                     // 独立的页面，不属于任何频道
                     route.data = {

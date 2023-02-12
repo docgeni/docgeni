@@ -68,7 +68,7 @@ describe('router-reset.service', () => {
         spectator = createService();
         spectator.service.resetRoutes();
         assertRoutes(spectator.inject(Router).config, ['zh-cn', 'en-us', '', '~examples/:name', '**']);
-        assertRoutes(spectator.inject(Router).config[0].children, ['guides']);
+        assertRoutes(spectator.inject(Router).config[0].children!, ['guides']);
     });
 
     function assertRoutes(routes: Routes, paths: string[]) {

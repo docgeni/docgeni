@@ -19,7 +19,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     links: TocLink[] = [];
 
-    activeLink: TocLink = null;
+    activeLink!: TocLink;
 
     rootUrl = this.locationStrategy.path(false);
 
@@ -49,7 +49,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
         });
 
         this.route.fragment.pipe(takeUntil(this.destroyed)).subscribe(fragment => {
-            this.urlFragment = fragment;
+            this.urlFragment = fragment as string;
             this.tocService.scrollToAnchor(this.urlFragment);
         });
 
