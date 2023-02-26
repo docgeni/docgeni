@@ -50,7 +50,8 @@
     "through2": "^3.0.1",
     "ts-morph": "^7.0.2",
     "vinyl": "^2.2.0",
-    "vinyl-fs": "^3.0.3"
+    "vinyl-fs": "^3.0.3",
+    "rxjs": "6.6.7"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
