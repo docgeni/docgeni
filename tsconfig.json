@@ -12,7 +12,7 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "lib": [
       "es2018",
       "dom"
@@ -36,7 +36,8 @@
       "@docgeni/alib/*": [
         "packages/a-lib/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

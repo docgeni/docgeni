@@ -55,14 +55,14 @@
     "./packages/ngdoc"
   ],
   "dependencies": {
-    "@angular/animations": "^14.2.12",
-    "@angular/common": "^14.2.12",
-    "@angular/compiler": "^14.2.12",
-    "@angular/core": "^14.2.12",
-    "@angular/forms": "^14.2.12",
-    "@angular/platform-browser": "^14.2.12",
-    "@angular/platform-browser-dynamic": "^14.2.12",
-    "@angular/router": "^14.2.12",
+    "@angular/animations": "^15.2.0",
+    "@angular/common": "^15.2.0",
+    "@angular/compiler": "^15.2.0",
+    "@angular/core": "^15.2.0",
+    "@angular/forms": "^15.2.0",
+    "@angular/platform-browser": "^15.2.0",
+    "@angular/platform-browser-dynamic": "^15.2.0",
+    "@angular/router": "^15.2.0",
     "@types/watchpack": "^1.1.7",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
@@ -74,10 +74,10 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.10",
-    "@angular/cli": "^14.2.10",
-    "@angular/compiler-cli": "^14.2.12",
-    "@angular/language-service": "^14.2.12",
+    "@angular-devkit/build-angular": "^15.2.0",
+    "@angular/cli": "^15.2.0",
+    "@angular/compiler-cli": "^15.2.0",
+    "@angular/language-service": "^15.2.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-angular": "^11.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -115,7 +115,7 @@
     "lerna": "^3.20.2",
     "mocha": "^7.1.1",
     "ncp": "^2.0.0",
-    "ng-packagr": "^14.2.2",
+    "ng-packagr": "^15.2.2",
     "nyc": "^15.1.0",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
@@ -125,7 +125,7 @@
     "ts-node": "8.7.0",
     "tslint": "~6.1.0",
     "typemoq": "^2.1.0",
-    "typescript": "4.6.4"
+    "typescript": "4.9.5"
   },
   "keywords": [
     "angular",
