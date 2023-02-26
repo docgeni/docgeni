@@ -1,5 +1,4 @@
 import { SchematicContext, Tree } from '@angular-devkit/schematics';
-import { parseJsonAst, JsonAstObject } from '@angular-devkit/core';
 import { JSONFile } from '@schematics/angular/utility/json-file';
 export class AddCommand {
     constructor() {}
