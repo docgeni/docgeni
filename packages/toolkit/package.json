@@ -32,7 +32,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/core": "^12.2.18",
+    "@angular-devkit/core": "^14.2.10",
     "camelcase": "^6.0.0",
     "chalk": "^3.0.0",
     "change-case": "^4.1.1",

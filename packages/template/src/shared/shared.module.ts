@@ -61,7 +61,6 @@ const COMPONENTS = [
 @NgModule({
     declarations: [...COMPONENTS],
     imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
-    entryComponents: [ExampleViewerComponent],
     exports: [CommonModule, FormsModule, RouterModule, HttpClientModule, ...COMPONENTS]
 })
 export class DocgeniSharedModule {}

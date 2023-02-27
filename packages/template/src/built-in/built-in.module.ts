@@ -8,8 +8,7 @@ import { loadBuiltInComponents } from './loader';
     declarations: [DocgeniLabelComponent, DocgeniAlertComponent],
     imports: [CommonModule],
     exports: [],
-    providers: [],
-    entryComponents: [DocgeniLabelComponent, DocgeniAlertComponent]
+    providers: []
 })
 export class DocgeniBuiltInModule {
     constructor() {

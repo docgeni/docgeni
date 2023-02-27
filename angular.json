@@ -29,18 +29,6 @@
             "karmaConfig": "packages/template/karma.conf.js",
             "codeCoverage": true
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/template/tsconfig.lib.json",
-              "packages/template/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -69,24 +57,12 @@
             "tsConfig": "packages/a-lib/tsconfig.spec.json",
             "karmaConfig": "packages/a-lib/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/a-lib/tsconfig.lib.json",
-              "packages/a-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
   },
-  "defaultProject": "template",
   "cli": {
-    "analytics": "2e16f565-63a5-47d9-b3d2-c9001569c433"
+    "analytics": "2e16f565-63a5-47d9-b3d2-c9001569c433",
+    "packageManager": "yarn"
   }
 }

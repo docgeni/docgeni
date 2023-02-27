@@ -1,4 +1,4 @@
-import { apply, applyTemplates, HostTree, mergeWith, move, Tree, url } from '@angular-devkit/schematics';
+import { HostTree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
 export class TestWorkspaceFactory {
@@ -20,7 +20,7 @@ export class TestWorkspaceFactory {
                 'workspace',
                 {
                     name: 'test-workspace',
-                    version: '9.0.0',
+                    version: '14.2.10',
                     newProjectRoot: 'projects',
                     ...options
                 },
