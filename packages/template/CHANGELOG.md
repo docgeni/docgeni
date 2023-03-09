@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.1](https://github.com/docgeni/docgeni/compare/v2.1.0-next.0...v2.1.0-next.1) (2023-03-09)
+
+
+### Features
+
+* **template:** add exports of scss in package.json ([c10a8a0](https://github.com/docgeni/docgeni/commit/c10a8a07ed46ff3378e1e3431a4ff08857539113))
+
+
+
+
+
 # [2.1.0-next.0](https://github.com/docgeni/docgeni/compare/v2.0.1...v2.1.0-next.0) (2023-03-09)
 
 **Note:** Version bump only for package @docgeni/template
