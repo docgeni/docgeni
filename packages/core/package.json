@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/core",
-  "version": "2.0.1",
+  "version": "2.1.0-next.0",
   "description": "Docgeni - Core Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -30,8 +30,8 @@
   "dependencies": {
     "@angular-devkit/core": "^15.2.0",
     "@angular-devkit/schematics": "^15.2.0",
-    "@docgeni/ngdoc": "^2.0.1",
-    "@docgeni/toolkit": "^2.0.1",
+    "@docgeni/ngdoc": "^2.1.0-next.0",
+    "@docgeni/toolkit": "^2.1.0-next.0",
     "@schematics/angular": "^15.2.0",
     "@types/text-table": "^0.2.2",
     "ansi-colors": "^4.1.1",
@@ -44,14 +44,14 @@
     "marked": "^4.0.12",
     "node-prismjs": "0.1.2",
     "prismjs": "^1.20.0",
+    "rxjs": "6.6.7",
     "semver": "7.3.2",
     "tapable": "^1.1.3",
     "text-table": "^0.2.0",
     "through2": "^3.0.1",
     "ts-morph": "^7.0.2",
     "vinyl": "^2.2.0",
-    "vinyl-fs": "^3.0.3",
-    "rxjs": "6.6.7"
+    "vinyl-fs": "^3.0.3"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
