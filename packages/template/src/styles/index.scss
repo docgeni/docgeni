@@ -22,7 +22,7 @@
 
 @import '../pages/home/home.component.scss';
 @import '../pages/component-viewer/component-viewer.component.scss';
-@import '~prismjs/themes/prism.css';
-// @import '~prismjs/themes/prism-okaidia.css';
-@import '~docsearch.js/dist/cdn/docsearch.css';
+@import 'prismjs/themes/prism.css';
+// @import 'prismjs/themes/prism-okaidia.css';
+@import 'docsearch.js/dist/cdn/docsearch.css';
 @import './docsearch.scss';

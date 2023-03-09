@@ -13,6 +13,9 @@
     ".": {
       "sass": "./styles/index.scss"
     },
+    "./styles/index.css": {
+      "sass": "./styles/index.scss"
+    },
     "./styles/variables": {
       "sass": "./styles/variables.scss"
     },
