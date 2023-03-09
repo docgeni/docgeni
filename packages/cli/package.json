@@ -31,12 +31,12 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/schematics": "^14.2.10",
-    "@angular-devkit/schematics-cli": "^14.2.10",
+    "@angular-devkit/schematics": "^15.2.0",
+    "@angular-devkit/schematics-cli": "^15.2.0",
     "@docgeni/core": "^2.0.1",
     "@docgeni/template": "^2.0.1",
     "@docgeni/toolkit": "^2.0.1",
-    "@schematics/angular": "14.2.10",
+    "@schematics/angular": "15.2.0",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
     "fancy-log": "^1.3.3",
