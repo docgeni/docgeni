@@ -8,5 +8,19 @@
   },
   "dependencies": {
     "docsearch.js": "2.6.3"
+  },
+  "exports": {
+    ".": {
+      "sass": "./styles/index.scss"
+    },
+    "./styles/variables": {
+      "sass": "./styles/variables.scss"
+    },
+    "./styles/index": {
+      "sass": "./styles/index.scss"
+    },
+    "./styles/*": {
+      "sass": "./styles/*"
+    }
   }
 }
