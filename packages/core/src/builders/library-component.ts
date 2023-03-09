@@ -1,23 +1,22 @@
-import { DocgeniContext } from '../docgeni.interface';
-import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, LiveExample, Locale, NgDefaultExportInfo } from '../interfaces';
-import { toolkit, debug } from '@docgeni/toolkit';
 import { createNgSourceFile, NgModuleInfo, NgSourceFile } from '@docgeni/ngdoc';
+import { debug, toolkit } from '@docgeni/toolkit';
+import { cosmiconfig } from 'cosmiconfig';
+import fm from 'front-matter';
 import {
     ASSETS_API_DOCS_RELATIVE_PATH,
     ASSETS_EXAMPLES_HIGHLIGHTED_RELATIVE_PATH,
     ASSETS_EXAMPLES_SOURCE_BUNDLE_RELATIVE_PATH,
     ASSETS_OVERVIEWS_RELATIVE_PATH,
-    EXAMPLE_META_FILE_NAME,
-    SITE_ASSETS_RELATIVE_PATH
+    EXAMPLE_META_FILE_NAME
 } from '../constants';
-import { highlight } from '../utils';
+import { DocgeniContext } from '../docgeni.interface';
 import { DocType } from '../enums';
-import { Markdown } from '../markdown';
-import { cosmiconfig } from 'cosmiconfig';
-import fm from 'front-matter';
-import { DocSourceFile } from './doc-file';
-import { ComponentDocMeta, EmitFiles, Library, LibraryComponent } from '../types';
 import { getSystemPath, resolve } from '../fs';
+import { ApiDeclaration, ComponentDocItem, ExampleSourceFile, LiveExample } from '../interfaces';
+import { Markdown } from '../markdown';
+import { ComponentDocMeta, Library, LibraryComponent } from '../types';
+import { highlight } from '../utils';
+import { DocSourceFile } from './doc-file';
 import { FileEmitter } from './emitter';
 import { generateComponentExamplesModule } from './examples-module';
 
@@ -246,9 +245,18 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 exampleModuleSourceFile,
                 examplesModuleName,
                 this.examples.map(example => {
+                    let standalone = false;
+                    example.sourceFiles.map(item => {
+                        if (item.name.includes('.component.ts') && item.content.includes('standalone')) {
+                            standalone = true;
+                        } else {
+                            standalone = false;
+                        }
+                    });
                     return {
                         name: example.componentName,
-                        moduleSpecifier: `./${example.name}/${example.name}.component`
+                        moduleSpecifier: `./${example.name}/${example.name}.component`,
+                        standalone: standalone
                     };
                 })
             );

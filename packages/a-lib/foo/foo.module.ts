@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { AlibFooComponent } from './foo.component';
 
 @NgModule({
-    declarations: [AlibFooComponent],
-    imports: [CommonModule],
+    declarations: [],
+    imports: [CommonModule, AlibFooComponent],
     exports: [AlibFooComponent],
     providers: []
 })
