@@ -30,4 +30,6 @@ export interface LiveExample {
     additionalFiles?: string[];
     /** NgModule that declares this example. */
     module: NgModuleInfo;
+    /** Whether the example component is standalone. */
+    standalone?: boolean;
 }

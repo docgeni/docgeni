@@ -1,16 +1,15 @@
+import { NgDocParser } from '@docgeni/ngdoc';
+import { toolkit } from '@docgeni/toolkit';
+import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
+import * as systemPath from 'path';
+import { DocgeniHost } from '../docgeni-host';
 import { DocgeniContext } from '../docgeni.interface';
+import { getSystemPath, normalize } from '../fs';
+import { ApiDeclaration } from '../interfaces';
+import { compatibleNormalize } from '../markdown';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, writeFilesToHost } from '../testing';
 import { LibraryComponentImpl } from './library-component';
 import { normalizeLibConfig } from './normalize';
-import { toolkit } from '@docgeni/toolkit';
-import * as systemPath from 'path';
-import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
-import { DocgeniHost } from '../docgeni-host';
-import { getSystemPath, normalize } from '../fs';
-import { compatibleNormalize } from '../markdown';
-import { ApiDeclaration } from '../interfaces';
-import { EOL } from 'os';
-import { NgDocParser } from '@docgeni/ngdoc';
 
 type Explorer = { search: (path: string) => Promise<{ config: ApiDeclaration[] }> };
 export class LibraryComponentSpectator {
@@ -358,6 +357,12 @@ describe('#library-component', () => {
             component.build();
             component.build();
             expect(resetEmittedSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should build standalone example component', async () => {
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            await component.build();
+            expect(component.examples[0].standalone).toBeTruthy();
         });
     });
 

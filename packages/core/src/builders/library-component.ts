@@ -245,18 +245,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 exampleModuleSourceFile,
                 examplesModuleName,
                 this.examples.map(example => {
-                    let standalone = false;
-                    example.sourceFiles.map(item => {
-                        if (item.name.includes('.component.ts') && item.content.includes('standalone')) {
-                            standalone = true;
-                        } else {
-                            standalone = false;
-                        }
-                    });
                     return {
                         name: example.componentName,
                         moduleSpecifier: `./${example.name}/${example.name}.component`,
-                        standalone: standalone
+                        standalone: example.standalone
                     };
                 })
             );
@@ -301,7 +293,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             },
             sourceFiles: [],
             additionalFiles: [],
-            additionalComponents: []
+            additionalComponents: [],
+            standalone: false
         };
 
         // build example source files
@@ -315,6 +308,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             const component = createNgSourceFile(entrySourceFile.name, entrySourceFile.content).getExpectExportedComponent();
             if (component) {
                 liveExample.componentName = component.name;
+                liveExample.standalone = component.standalone;
             }
         } else {
             return {
