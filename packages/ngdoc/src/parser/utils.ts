@@ -1,6 +1,6 @@
+import { ArgumentInfo, NgDirectiveMetadata, NgDocItemType } from '../types';
 import { ts } from '../typescript';
 import { lineFeedPrinter } from './line-feed-printer';
-import { ArgumentInfo, NgDirectiveMetadata, NgDocItemType, NgPropertyKind } from '../types';
 
 /**
  * Use a preconfigured TypeScript "printer" to render the text of a node, without comments.
@@ -50,7 +50,8 @@ export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMetadata {
               template: firstArg.template || null,
               styleUrls: firstArg.styleUrls || null,
               styles: firstArg.styles || null,
-              exportAs: firstArg.exportAs || null
+              exportAs: firstArg.exportAs || null,
+              standalone: firstArg.standalone === 'true'
           } as NgDirectiveMetadata)
         : undefined;
 }

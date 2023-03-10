@@ -19,6 +19,7 @@ export const EXAMPLE_COMPONENTS = {
             }
         ],
         "additionalFiles": [],
-        "additionalComponents": []
+        "additionalComponents": [],
+        "standalone": false
     }
 };
