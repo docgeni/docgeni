@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.3](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.3) (2023-03-10)
+
+
+### Features
+
+* **template:** exports "./styles/index.css" in @docgeni/template ([83b3f99](https://github.com/docgeni/docgeni/commit/83b3f993f23f268154842defc7614c193a37ddd2))
+
+
+
+
+
 # [2.1.0-next.2](https://github.com/docgeni/docgeni/compare/v2.1.0-next.1...v2.1.0-next.2) (2023-03-09)
 
 **Note:** Version bump only for package docgeni
