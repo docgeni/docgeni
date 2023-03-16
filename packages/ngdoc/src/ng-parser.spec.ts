@@ -24,7 +24,7 @@ function objectContaining<T>(object: T) {
                 }
             }
         }
-        return jasmine.objectContaining(object as unknown as {});
+        return jasmine.objectContaining((object as unknown) as {});
     } else {
         return object;
     }
@@ -45,7 +45,6 @@ function testAllFixtures() {
                 // console.time('NgDocParser');
                 const docs = NgDocParser.parse(input);
                 // console.timeEnd('NgDocParser');
-                // console.log(JSON.stringify(docs, null, 2));
                 expect(docs).toEqual(objectContaining(output));
             });
         }

@@ -73,8 +73,8 @@ export function getTypeNodes(typeNodes: ts.NodeArray<ts.TypeNode>) {
 }
 
 export function isExported<TNode extends ts.Node>(node: TNode): node is TNode {
-    return node.modifiers
-        ? !!node.modifiers.find(modifier => {
+    return ts.canHaveModifiers(node) && ts.getModifiers(node)
+        ? !!ts.getModifiers(node).find(modifier => {
               return ts.SyntaxKind.ExportKeyword === modifier.kind;
           })
         : false;
@@ -191,15 +191,16 @@ export interface MethodDocTagResult {
     return?: ts.JSDocTagInfo;
     param?: Record<string, ts.JSDocTagInfo>;
 }
-/**
- *
- * @export
- * @de
- */
+
 export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
-    const tags = symbol.getJsDocTags();
+    return parseJsDocTagsToDocTagResult(symbol.getJsDocTags());
+}
+
+export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)[]): DocTagResult {
     return tags.reduce((result, item) => {
-        result[item.name] = item;
+        if (item) {
+            result[item.name] = item;
+        }
         return result;
     }, {});
 }
@@ -207,11 +208,19 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
 export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string) {
     return ts.displayPartsToString(tag && tag.text) || defaultValue;
 }
+
 /**
- * 公开的类或者属性，非 private 和 internal 标记
+ *  标记为 private 或者 internal 的 Tag
  */
-export function isPublicTag(tags: DocTagResult) {
-    return !(tags.private || tags.internal);
+export function hasPrivateTag(tags: DocTagResult) {
+    return !!(tags.private || tags.internal);
+}
+
+/**
+ * 标记为公开的 Tag
+ */
+export function hasPublicTag(tags: DocTagResult) {
+    return !!(tags.publicApi || tags.public);
 }
 
 export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult {
@@ -242,7 +251,9 @@ export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.Ty
     return result;
 }
 
-export function declarationIsPublic(node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration) {
+export function declarationIsPublic(
+    node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration | ts.PropertySignature
+) {
     return (
         !node.modifiers ||
         !node.modifiers.some(item => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)

@@ -11,9 +11,9 @@
       <!-- <div *ngIf="apiDeclaration.selector">Selector: <code>{{apiDeclaration.selector}}</code></div>
       <div *ngIf="apiDeclaration.exportAs">Exported as: {{apiDeclaration.exportAs}}</div> -->
 
-      <div class="dg-section">
+      <div class="dg-section" *ngIf="apiDeclaration.properties && apiDeclaration.properties.length">
         <div class="section-title">Properties</div>
-        <table class="dg-api-properties-table" *ngIf="apiDeclaration.properties">
+        <table class="dg-api-properties-table">
           <thead>
             <tr class="dg-api-properties-header-row">
               <th class="dg-api-properties-name-th">Name</th>
@@ -41,7 +41,7 @@
           </tbody>
         </table>
       </div>
-      <div class="dg-section" *ngIf="apiDeclaration.methods">
+      <div class="dg-section" *ngIf="apiDeclaration.methods && apiDeclaration.methods.length">
         <div class="section-title">Methods</div>
         <table class="dg-api-methods-table">
           <thead>

@@ -1,6 +1,15 @@
 import { ts } from './typescript';
 import { toolkit, debug } from '@docgeni/toolkit';
-import { NgDirectiveDoc, NgPropertyDoc, NgEntryItemDoc, NgDocItemType, NgParsedDecorator, NgMethodDoc, NgServiceDoc } from './types';
+import {
+    NgDirectiveDoc,
+    NgPropertyDoc,
+    NgEntryItemDoc,
+    NgDocItemType,
+    NgParsedDecorator,
+    NgMethodDoc,
+    NgServiceDoc,
+    ClassLikeDoc
+} from './types';
 import {
     getNgDecorator,
     getNgPropertyDecorator,
@@ -14,9 +23,10 @@ import {
     getDocTagsBySignature,
     serializeMethodParameterSymbol,
     declarationIsPublic,
-    isPublicTag,
+    hasPrivateTag,
     DocTagResult,
-    getTextByJSDocTagInfo
+    getTextByJSDocTagInfo,
+    hasPublicTag
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -82,18 +92,27 @@ export class NgDocParser {
             if (!moduleSymbol) {
                 return;
             }
+
             const exportSymbols = checker.getExportsOfModule(moduleSymbol);
+            debug(`sourceFile: ${sourceFile.fileName}, exportSymbols: ${exportSymbols.length}`, 'ng-parser');
             exportSymbols.forEach(symbol => {
-                if (parsedSymbols.get(symbol)) {
+                // 如果是类 valueDeclaration 就是类声明
+                // 如果是接口，需要通过 getDeclarations 获取第一个节点才是接口声明
+                let declaration = symbol.valueDeclaration;
+                if (!declaration && symbol.getDeclarations()) {
+                    declaration = symbol.getDeclarations()[0];
+                }
+                if (parsedSymbols.get(symbol) || !declaration) {
                     return;
                 }
+                // getExportsOfModule 对于同一个 symbol 可能会导出多次
                 parsedSymbols.set(symbol, true);
-                if (symbol.valueDeclaration && ts.isClassDeclaration(symbol.valueDeclaration)) {
-                    const ngDecorator = getNgDecorator(symbol.valueDeclaration);
+                if (ts.isClassDeclaration(declaration)) {
+                    const ngDecorator = getNgDecorator(declaration);
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
                         const tags = getDocTagsBySymbol(symbol);
-                        if (isPublicTag(tags)) {
+                        if (!hasPrivateTag(tags)) {
                             switch (type) {
                                 case 'component':
                                 case 'directive':
@@ -108,6 +127,16 @@ export class NgDocParser {
                                     throw new Error(`${type} is not support.`);
                             }
                         }
+                    } else {
+                        const tags = getDocTagsBySymbol(symbol);
+                        if (hasPublicTag(tags)) {
+                            docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
+                        }
+                    }
+                } else if (ts.isInterfaceDeclaration(declaration)) {
+                    const tags = getDocTagsBySymbol(symbol);
+                    if (hasPublicTag(tags)) {
+                        docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                     }
                 }
             });
@@ -124,8 +153,8 @@ export class NgDocParser {
             description: getTextByJSDocTagInfo(tags.description, description.comment),
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
         };
-        directiveDoc.properties = this.parseServiceProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
-        directiveDoc.methods = this.parseServiceMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        directiveDoc.properties = this.parseDeclarationProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        directiveDoc.methods = this.parseDeclarationMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
         return directiveDoc;
     }
 
@@ -161,7 +190,7 @@ export class NgDocParser {
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     const propertyKind = getPropertyKind(decorator.name);
                     const tags = getDocTagsBySymbol(symbol);
-                    if (isPublicTag(tags)) {
+                    if (!hasPrivateTag(tags)) {
                         const property: NgPropertyDoc = {
                             kind: propertyKind,
                             name: symbolDescription.name,
@@ -189,10 +218,10 @@ export class NgDocParser {
         return properties;
     }
 
-    private parseServiceProperties(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
+    private parseDeclarationProperties(context: ParserSourceFileContext, declaration: ts.Declaration) {
         const properties: NgPropertyDoc[] = [];
-        ts.forEachChild(classDeclaration, (node: ts.Node) => {
-            if ((ts.isPropertyDeclaration(node) || ts.isSetAccessor(node)) && declarationIsPublic(node)) {
+        ts.forEachChild(declaration, (node: ts.Node) => {
+            if ((ts.isPropertyDeclaration(node) || ts.isSetAccessor(node) || ts.isPropertySignature(node)) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
                 if (symbol) {
                     const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
@@ -210,7 +239,8 @@ export class NgDocParser {
                         default: '',
                         tags: tags
                     };
-
+                    property.default =
+                        ts.displayPartsToString(tags.default?.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
                     properties.push(property);
                 }
             }
@@ -218,8 +248,8 @@ export class NgDocParser {
         return properties;
     }
 
-    private parseServiceMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
-        const properties: NgPropertyDoc[] = [];
+    private parseDeclarationMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
+        const methods: NgPropertyDoc[] = [];
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
@@ -240,11 +270,27 @@ export class NgDocParser {
                         } as unknown) as NgMethodDoc;
                     });
 
-                    properties.push(...list);
+                    methods.push(...list);
                 }
             }
         });
-        return properties;
+        return methods;
+    }
+
+    /**
+     * parse interface or class doc
+     */
+    private parseClassLikeDoc(context: ParserSourceFileContext, symbol: ts.Symbol, declaration: ts.Declaration, tags: DocTagResult) {
+        const description = serializeSymbol(symbol, context.checker);
+        const doc: ClassLikeDoc = {
+            type: ts.isInterfaceDeclaration(declaration) ? 'interface' : 'class',
+            name: description.name,
+            description: getTextByJSDocTagInfo(tags.description, description.comment),
+            order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
+        };
+        doc.properties = this.parseDeclarationProperties(context, declaration);
+        doc.methods = this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration);
+        return doc;
     }
 
     private getNgPropertyAliasName(decorator: NgParsedDecorator): string {

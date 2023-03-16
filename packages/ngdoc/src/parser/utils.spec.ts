@@ -1,5 +1,5 @@
 import { ts } from '../typescript';
-import { getNodeText } from './utils';
+import { findNodes, getNodeText, hasPublicTag, parseJsDocTagsToDocTagResult } from './utils';
 
 describe('#utils', () => {
     describe('#getNodeText', () => {
@@ -25,6 +25,49 @@ describe('#utils', () => {
                 ts.forEachChild(node, visit);
             };
             visit(sourceFile);
+        });
+    });
+
+    describe('#parseJsDocTagsToDocTagResult', () => {
+        it('should parse to tag result', () => {
+            const result = parseJsDocTagsToDocTagResult([
+                {
+                    name: 'public',
+                    text: [{ text: '', kind: 'string' }]
+                },
+                {
+                    name: 'order',
+                    text: [{ text: '10', kind: 'string' }]
+                }
+            ]);
+
+            expect(result).toEqual({
+                public: { name: 'public', text: [{ text: '', kind: 'string' }] },
+                order: { name: 'order', text: [{ text: '10', kind: 'string' }] }
+            });
+        });
+    });
+
+    describe('#hasPublicTag', () => {
+        it('should get true for public tag', () => {
+            const result = hasPublicTag({
+                public: { name: 'public', text: [] }
+            });
+            expect(result).toBe(true);
+        });
+
+        it('should get true for publicApi tag', () => {
+            const result = hasPublicTag({
+                publicApi: { name: 'publicApi', text: [] }
+            });
+            expect(result).toBe(true);
+        });
+
+        it('should get false when have not publicApi or public tag', () => {
+            const result = hasPublicTag({
+                order: { name: 'order', text: [] }
+            });
+            expect(result).toBe(false);
         });
     });
 });
