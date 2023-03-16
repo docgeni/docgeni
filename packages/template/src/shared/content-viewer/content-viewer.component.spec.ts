@@ -12,7 +12,7 @@ import { CONFIG_TOKEN } from '../../services/global-context';
     template: 'my-label <ng-content></ng-content>'
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
-    @Input() type: string;
+    @Input() type!: string;
 
     constructor(elementRef: ElementRef<unknown>) {
         super(elementRef);

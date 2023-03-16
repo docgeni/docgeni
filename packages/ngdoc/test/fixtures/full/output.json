@@ -13,6 +13,7 @@
     ],
     "styles": null,
     "exportAs": null,
+    "standalone": false,
     "properties": []
   },
   {
@@ -29,6 +30,7 @@
     ],
     "styles": null,
     "exportAs": "thyButton",
+    "standalone": false,
     "properties": [
       {
         "kind": "Input",
@@ -150,7 +152,7 @@
           "kindName": "StringKeyword"
         },
         "description": "",
-        "default": "",
+        "default": null,
         "tags": {}
       },
       {
@@ -161,7 +163,7 @@
           "kindName": "NumberKeyword"
         },
         "description": "",
-        "default": "",
+        "default": null,
         "tags": {}
       }
     ],
@@ -260,6 +262,72 @@
     "styleUrls": null,
     "styles": null,
     "exportAs": null,
+    "standalone": false,
     "properties": []
+  },
+  {
+    "type": "interface",
+    "name": "DialogConfig",
+    "description": "Dialog config description",
+    "order": 9007199254740991,
+    "properties": [
+      {
+        "name": "class",
+        "type": {
+          "name": "string | {}",
+          "options": null,
+          "kindName": "UnionType"
+        },
+        "description": "样式类",
+        "default": "thy-dialog",
+        "tags": {
+          "default": {
+            "name": "default",
+            "text": [
+              {
+                "text": "thy-dialog",
+                "kind": "text"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "methods": []
+  },
+  {
+    "type": "class",
+    "name": "DialogRef",
+    "description": "Alib Dialog Ref",
+    "order": 9007199254740991,
+    "properties": [
+      {
+        "name": "component",
+        "type": {
+          "name": "T",
+          "options": null,
+          "kindName": "TypeReference"
+        },
+        "description": "Component of dialog ref",
+        "default": null,
+        "tags": {}
+      }
+    ],
+    "methods": [
+      {
+        "name": "close",
+        "parameters": [
+          {
+            "name": "id",
+            "comment": "",
+            "type": "string"
+          }
+        ],
+        "returnValue": {
+          "type": "void"
+        },
+        "description": "Close dialog"
+      }
+    ]
   }
 ]

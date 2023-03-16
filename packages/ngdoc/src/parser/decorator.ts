@@ -4,8 +4,8 @@ import { getNodeText, nodeToString } from './utils';
 import { getCallExpressionInfo } from './expression';
 
 export function getDecorators(declaration: ts.Declaration): NgParsedDecorator[] {
-    if (declaration.decorators) {
-        return declaration.decorators.map<NgParsedDecorator>(decorator => {
+    if (ts.canHaveDecorators(declaration) && ts.getDecorators(declaration)) {
+        return ts.getDecorators(declaration).map(decorator => {
             const callExpression = getCallExpression(decorator);
             if (callExpression) {
                 return getCallExpressionInfo(callExpression);
@@ -21,7 +21,7 @@ export function getDecorators(declaration: ts.Declaration): NgParsedDecorator[] 
 }
 
 export function getNgDecorator(
-    declaration: ts.Declaration,
+    declaration: ts.ClassDeclaration,
     decoratorNames: string[] = ['Component', 'Directive', 'Pipe', 'Injectable']
 ): NgParsedDecorator {
     const decorators = getDecorators(declaration);

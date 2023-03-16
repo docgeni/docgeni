@@ -183,14 +183,21 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             });
         } else if (this.lib.apiMode === 'compatible') {
             const apiDocs = await this.tryGetApiDocsByManual();
+            const autoLocaleKeys: string[] = [];
             this.docgeni.config.locales.forEach(locale => {
                 if (!apiDocs[locale.key]) {
-                    apiDocs[locale.key] = this.lib.ngDocParser.parse(apiSrcPath) as ApiDeclaration[];
-                    debug(`[${this.name}] apiSrcPath is ${apiSrcPath}, api docs length is ${apiDocs[locale.key].length}`, NAMESPACE);
+                    autoLocaleKeys.push(locale.key);
                 } else {
                     debug(`[${this.name}] manual apiDocs length is ${apiDocs[locale.key].length}`, NAMESPACE);
                 }
             });
+            if (autoLocaleKeys && !toolkit.utils.isEmpty(autoLocaleKeys)) {
+                const apiAutoDocs = this.lib.ngDocParser.parse(apiSrcPath) as ApiDeclaration[];
+                debug(`[${this.name}] apiSrcPath is ${apiSrcPath}, api docs length is ${apiAutoDocs.length}`, NAMESPACE);
+                autoLocaleKeys.forEach(key => {
+                    apiDocs[key] = apiAutoDocs;
+                });
+            }
             this.localeApiDocsMap = apiDocs;
         } else {
             this.localeApiDocsMap = await this.tryGetApiDocsByManual();

@@ -1,17 +1,61 @@
 import { Injectable, TemplateRef } from '@angular/core';
 
 interface ComponentType {}
+
+/**
+ * Alib Dialog Ref
+ * @public
+ * @order 30
+ */
 export abstract class AlibDialogRef<T = unknown, TResult = unknown> {
+    /**
+     * The instance of the dialog component.
+     **/
     instance: T;
+    /**
+     * Result of close dialog
+     */
     result: TResult;
+
+    /**
+     * Close dialog
+     */
+    close(id?: string) {}
 }
 
-export interface AlibDialogConfig {}
+type DialogRole = 'dialog';
+
+type OverlayPosition = 'left' | 'top';
+enum DialogSizes {
+    lg = 'lg',
+    'sm' = 'sm'
+}
+/**
+ * Alib Dialog Config
+ * @public
+ * @order 20
+ */
+export interface AlibDialogConfig {
+    /**
+     * The ARIA role of the dialog element.
+     * @default 'dialog'
+     **/
+    role?: DialogRole;
+
+    /**
+     * Position overrides.
+     * @default top
+     **/
+    position?: OverlayPosition;
+
+    /** Dialog size md, lg, sm*/
+    size?: DialogSizes;
+}
 
 /**
  * Service to open modal dialogs.
- * @export
  * @class AlibDialog
+ * @order 10
  */
 @Injectable()
 export class AlibDialog {

@@ -208,10 +208,17 @@ export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string
     return ts.displayPartsToString(tag && tag.text) || defaultValue;
 }
 /**
- * 公开的类或者属性，非 private 和 internal 标记
+ * 非私有的类或者属性，非 private 和 internal 标记
+ */
+export function isNonPrivateTag(tags: DocTagResult) {
+    return !(tags.private || tags.internal);
+}
+
+/**
+ * 标记为公开的接口
  */
 export function isPublicTag(tags: DocTagResult) {
-    return !(tags.private || tags.internal);
+    return tags.publicApi || tags.public;
 }
 
 export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult {
@@ -242,7 +249,9 @@ export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.Ty
     return result;
 }
 
-export function declarationIsPublic(node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration) {
+export function declarationIsPublic(
+    node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration | ts.PropertySignature
+) {
     return (
         !node.modifiers ||
         !node.modifiers.some(item => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)
