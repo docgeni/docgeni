@@ -210,14 +210,14 @@ export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string
 }
 
 /**
- * 含有 private 和 internal 标记
+ *  标记为 private 或者 internal 的 Tag
  */
 export function hasPrivateTag(tags: DocTagResult) {
-    return !(tags.private || tags.internal);
+    return !!(tags.private || tags.internal);
 }
 
 /**
- * 标记为公开的接口
+ * 标记为公开的 Tag
  */
 export function hasPublicTag(tags: DocTagResult) {
     return !!(tags.publicApi || tags.public);
