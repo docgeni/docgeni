@@ -210,9 +210,9 @@ export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string
 }
 
 /**
- * 非私有的类或者属性，非 private 和 internal 标记
+ * 含有 private 和 internal 标记
  */
-export function hasNonPrivateTag(tags: DocTagResult) {
+export function hasPrivateTag(tags: DocTagResult) {
     return !(tags.private || tags.internal);
 }
 

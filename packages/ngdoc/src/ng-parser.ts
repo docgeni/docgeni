@@ -23,7 +23,7 @@ import {
     getDocTagsBySignature,
     serializeMethodParameterSymbol,
     declarationIsPublic,
-    hasNonPrivateTag,
+    hasPrivateTag,
     DocTagResult,
     getTextByJSDocTagInfo,
     hasPublicTag
@@ -110,7 +110,7 @@ export class NgDocParser {
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
                         const tags = getDocTagsBySymbol(symbol);
-                        if (hasNonPrivateTag(tags)) {
+                        if (!hasPrivateTag(tags)) {
                             switch (type) {
                                 case 'component':
                                 case 'directive':
@@ -188,7 +188,7 @@ export class NgDocParser {
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     const propertyKind = getPropertyKind(decorator.name);
                     const tags = getDocTagsBySymbol(symbol);
-                    if (hasNonPrivateTag(tags)) {
+                    if (!hasPrivateTag(tags)) {
                         const property: NgPropertyDoc = {
                             kind: propertyKind,
                             name: symbolDescription.name,
