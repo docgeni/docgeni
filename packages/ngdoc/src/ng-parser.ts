@@ -96,6 +96,8 @@ export class NgDocParser {
             const exportSymbols = checker.getExportsOfModule(moduleSymbol);
             debug(`sourceFile: ${sourceFile.fileName}, exportSymbols: ${exportSymbols.length}`, 'ng-parser');
             exportSymbols.forEach(symbol => {
+                // 如果是类 valueDeclaration 就是类声明
+                // 如果是接口，需要通过 getDeclarations 获取第一个节点才是接口声明
                 let declaration = symbol.valueDeclaration;
                 if (!declaration && symbol.getDeclarations()) {
                     declaration = symbol.getDeclarations()[0];
