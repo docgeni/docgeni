@@ -1,5 +1,5 @@
 import { ts } from '../typescript';
-import { findNodes, getNodeText, isPublicTag, parseJsDocTagsToDocTagResult } from './utils';
+import { findNodes, getNodeText, hasPublicTag, parseJsDocTagsToDocTagResult } from './utils';
 
 describe('#utils', () => {
     describe('#getNodeText', () => {
@@ -48,23 +48,23 @@ describe('#utils', () => {
         });
     });
 
-    describe('#isPublicTag', () => {
+    describe('#hasPublicTag', () => {
         it('should get true for public tag', () => {
-            const result = isPublicTag({
+            const result = hasPublicTag({
                 public: { name: 'public', text: [] }
             });
             expect(result).toBe(true);
         });
 
         it('should get true for publicApi tag', () => {
-            const result = isPublicTag({
+            const result = hasPublicTag({
                 publicApi: { name: 'publicApi', text: [] }
             });
             expect(result).toBe(true);
         });
 
         it('should get false when have not publicApi or public tag', () => {
-            const result = isPublicTag({
+            const result = hasPublicTag({
                 order: { name: 'order', text: [] }
             });
             expect(result).toBe(false);

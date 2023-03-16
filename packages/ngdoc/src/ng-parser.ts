@@ -23,10 +23,10 @@ import {
     getDocTagsBySignature,
     serializeMethodParameterSymbol,
     declarationIsPublic,
-    isNonPrivateTag,
+    hasNonPrivateTag,
     DocTagResult,
     getTextByJSDocTagInfo,
-    isPublicTag
+    hasPublicTag
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -110,7 +110,7 @@ export class NgDocParser {
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
                         const tags = getDocTagsBySymbol(symbol);
-                        if (isNonPrivateTag(tags)) {
+                        if (hasNonPrivateTag(tags)) {
                             switch (type) {
                                 case 'component':
                                 case 'directive':
@@ -127,13 +127,13 @@ export class NgDocParser {
                         }
                     } else {
                         const tags = getDocTagsBySymbol(symbol);
-                        if (isPublicTag(tags)) {
+                        if (hasPublicTag(tags)) {
                             docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                         }
                     }
                 } else if (ts.isInterfaceDeclaration(declaration)) {
                     const tags = getDocTagsBySymbol(symbol);
-                    if (isPublicTag(tags)) {
+                    if (hasPublicTag(tags)) {
                         docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                     }
                 }
@@ -188,7 +188,7 @@ export class NgDocParser {
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     const propertyKind = getPropertyKind(decorator.name);
                     const tags = getDocTagsBySymbol(symbol);
-                    if (isNonPrivateTag(tags)) {
+                    if (hasNonPrivateTag(tags)) {
                         const property: NgPropertyDoc = {
                             kind: propertyKind,
                             name: symbolDescription.name,

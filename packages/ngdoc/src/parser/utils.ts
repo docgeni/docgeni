@@ -212,14 +212,14 @@ export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string
 /**
  * 非私有的类或者属性，非 private 和 internal 标记
  */
-export function isNonPrivateTag(tags: DocTagResult) {
+export function hasNonPrivateTag(tags: DocTagResult) {
     return !(tags.private || tags.internal);
 }
 
 /**
  * 标记为公开的接口
  */
-export function isPublicTag(tags: DocTagResult) {
+export function hasPublicTag(tags: DocTagResult) {
     return !!(tags.publicApi || tags.public);
 }
 
