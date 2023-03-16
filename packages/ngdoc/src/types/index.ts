@@ -6,4 +6,4 @@ export * from './entry';
 export * from './module';
 export * from './expression';
 export * from './service';
-export * from './class-interface';
+export * from './class-like';

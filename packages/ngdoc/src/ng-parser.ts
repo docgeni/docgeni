@@ -8,7 +8,7 @@ import {
     NgParsedDecorator,
     NgMethodDoc,
     NgServiceDoc,
-    ClassOrInterfaceDoc
+    ClassLikeDoc
 } from './types';
 import {
     getNgDecorator,
@@ -128,13 +128,13 @@ export class NgDocParser {
                     } else {
                         const tags = getDocTagsBySymbol(symbol);
                         if (isPublicTag(tags)) {
-                            docs.push(this.parseClassOrInterfaceDoc(context, symbol, declaration, tags));
+                            docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                         }
                     }
                 } else if (ts.isInterfaceDeclaration(declaration)) {
                     const tags = getDocTagsBySymbol(symbol);
                     if (isPublicTag(tags)) {
-                        docs.push(this.parseClassOrInterfaceDoc(context, symbol, declaration, tags));
+                        docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                     }
                 }
             });
@@ -275,9 +275,12 @@ export class NgDocParser {
         return methods;
     }
 
-    private parseClassOrInterfaceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, declaration: ts.Declaration, tags: DocTagResult) {
+    /**
+     * parse interface or class doc
+     */
+    private parseClassLikeDoc(context: ParserSourceFileContext, symbol: ts.Symbol, declaration: ts.Declaration, tags: DocTagResult) {
         const description = serializeSymbol(symbol, context.checker);
-        const doc: ClassOrInterfaceDoc = {
+        const doc: ClassLikeDoc = {
             type: ts.isInterfaceDeclaration(declaration) ? 'interface' : 'class',
             name: description.name,
             description: getTextByJSDocTagInfo(tags.description, description.comment),

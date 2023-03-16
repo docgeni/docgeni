@@ -73,8 +73,8 @@ export function getTypeNodes(typeNodes: ts.NodeArray<ts.TypeNode>) {
 }
 
 export function isExported<TNode extends ts.Node>(node: TNode): node is TNode {
-    return node.modifiers
-        ? !!node.modifiers.find(modifier => {
+    return ts.canHaveModifiers(node) && ts.getModifiers(node)
+        ? !!ts.getModifiers(node).find(modifier => {
               return ts.SyntaxKind.ExportKeyword === modifier.kind;
           })
         : false;
@@ -191,15 +191,16 @@ export interface MethodDocTagResult {
     return?: ts.JSDocTagInfo;
     param?: Record<string, ts.JSDocTagInfo>;
 }
-/**
- *
- * @export
- * @de
- */
+
 export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
-    const tags = symbol.getJsDocTags();
+    return parseJsDocTagsToDocTagResult(symbol.getJsDocTags());
+}
+
+export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)[]): DocTagResult {
     return tags.reduce((result, item) => {
-        result[item.name] = item;
+        if (item) {
+            result[item.name] = item;
+        }
         return result;
     }, {});
 }
@@ -207,6 +208,7 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
 export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string) {
     return ts.displayPartsToString(tag && tag.text) || defaultValue;
 }
+
 /**
  * 非私有的类或者属性，非 private 和 internal 标记
  */
@@ -218,7 +220,7 @@ export function isNonPrivateTag(tags: DocTagResult) {
  * 标记为公开的接口
  */
 export function isPublicTag(tags: DocTagResult) {
-    return tags.publicApi || tags.public;
+    return !!(tags.publicApi || tags.public);
 }
 
 export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult {
