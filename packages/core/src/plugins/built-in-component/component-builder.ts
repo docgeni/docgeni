@@ -1,5 +1,5 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
-import { DocgeniHost } from '../../docgeni-host';
+import { fs } from '@docgeni/toolkit';
 import { resolve } from '../../fs';
 
 export class ComponentBuilder {
@@ -9,7 +9,7 @@ export class ComponentBuilder {
 
     public componentData: { selector: string; name: string };
 
-    constructor(private docgeniHost: DocgeniHost, public name: string, public fullPath: string, distRootPath: string) {
+    constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
         this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
         this.distPath = resolve(distRootPath, name);
     }

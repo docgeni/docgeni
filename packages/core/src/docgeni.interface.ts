@@ -1,8 +1,7 @@
-import { DocgeniHost } from './docgeni-host';
 import { DocsBuilder } from './builders/docs-builder';
 import { DocgeniConfig, DocItem } from './interfaces';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
-import { Print } from '@docgeni/toolkit';
+import { Print, fs } from '@docgeni/toolkit';
 import { DocgeniPaths } from './docgeni-paths';
 import { DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
 import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
@@ -36,7 +35,7 @@ export interface DocgeniContext {
     readonly docsBuilder: DocsBuilder;
     readonly navsBuilder: NavsBuilder;
     readonly fs: virtualFs.Host;
-    readonly host: DocgeniHost;
+    readonly host: fs.DocgeniFsHost;
     compile(increment?: CompilationIncrement): Promise<void>;
 }
 
@@ -46,7 +45,7 @@ export interface DocgeniOptions {
     presets?: string[];
     plugins?: string[];
     config?: DocgeniConfig;
-    host?: DocgeniHost;
+    host?: fs.DocgeniFsHost;
     version?: string;
     progress?: boolean;
 }

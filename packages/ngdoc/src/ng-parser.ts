@@ -253,7 +253,7 @@ export class NgDocParser {
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
-                if (symbol && node.body) {
+                if (symbol) {
                     const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map(signature => {

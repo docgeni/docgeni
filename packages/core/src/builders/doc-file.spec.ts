@@ -1,19 +1,18 @@
 import { virtualFs, normalize } from '@angular-devkit/core';
 import { EOL } from 'os';
-import { DocgeniHost, DocgeniHostImpl } from '../docgeni-host';
 import { DocSourceFile } from './doc-file';
 import path from 'path';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 
 describe('DocSourceFile', () => {
     let root: string;
     let testHost: virtualFs.Host;
-    let docgeniHost: DocgeniHost;
+    let docgeniHost: fs.DocgeniFsHost;
 
     beforeEach(() => {
         root = '/D/root/test/';
         testHost = new virtualFs.test.TestHost({});
-        docgeniHost = new DocgeniHostImpl(new virtualFs.ScopedHost(testHost, normalize(root)));
+        docgeniHost = new fs.DocgeniFsHostImpl(new virtualFs.ScopedHost(testHost, normalize(root)));
     });
 
     describe('property', () => {

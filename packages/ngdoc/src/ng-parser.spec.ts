@@ -1,8 +1,9 @@
-import { NgDocParser } from '../src';
+import { NgDocParser, NgEntryItemDoc } from '../src';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Project, Node } from 'ts-morph';
 import ts from 'typescript';
+import { createTestNgDocParser } from './testing';
 
 const EXCLUDE_DIRS: string[] = [];
 const ONLY_TEST_FIXTURE = 'full';
@@ -49,6 +50,200 @@ function testAllFixtures() {
             });
         }
     }
+}
+
+describe('ng-parser', () => {
+    beforeEach(() => {});
+
+    it('should parse component docs', () => {
+        spyGlobSync(['/button/button.component.ts']);
+        const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+            '/button/button.component.ts': createButtonComponent(`@Input() param1: string;`)
+        });
+        const docs = ngDocParser.parse('/button/*');
+        expect(docs).toEqual(([
+            {
+                type: 'component',
+                name: 'ButtonComponent',
+                className: 'ButtonComponent',
+                description: '',
+                order: 9007199254740991,
+                selector: 'thy-button',
+                templateUrl: null,
+                template: null,
+                styleUrls: null,
+                styles: null,
+                exportAs: null,
+                standalone: false,
+                properties: [
+                    {
+                        kind: 'Input',
+                        name: 'param1',
+                        aliasName: '',
+                        type: {
+                            name: 'string',
+                            options: null,
+                            kindName: 'StringKeyword'
+                        },
+                        description: '',
+                        default: null,
+                        tags: {}
+                    }
+                ]
+            }
+        ] as unknown) as NgEntryItemDoc[]);
+    });
+
+    describe('interface', () => {
+        it('should parse interface properties and methods', () => {
+            spyGlobSync(['/dialog/dialog.ts']);
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': `
+            /**
+             * Dialog Config
+             * @public
+             **/
+            export interface DialogConfig {
+                /**
+                 * Parm1 desc
+                 **/
+                parm1: string;
+
+                /**
+                 * Close dialog
+                 **/
+                close: (id: string) => void;
+            }`
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'interface',
+                name: 'DialogConfig',
+                description: 'Dialog Config',
+                order: 9007199254740991,
+                properties: [
+                    {
+                        name: 'parm1',
+                        type: {
+                            name: 'string',
+                            options: null,
+                            kindName: 'StringKeyword'
+                        },
+                        description: 'Parm1 desc',
+                        default: null,
+                        tags: {}
+                    },
+                    {
+                        name: 'close',
+                        type: {
+                            name: '(id: string) => void',
+                            options: null,
+                            kindName: 'FunctionType'
+                        },
+                        description: 'Close dialog',
+                        default: null,
+                        tags: {}
+                    }
+                ],
+                methods: [
+                    // {
+                    //     name: 'close',
+                    //     parameters: [
+                    //         {
+                    //             name: 'id',
+                    //             comment: '',
+                    //             type: 'string'
+                    //         }
+                    //     ],
+                    //     returnValue: {
+                    //         type: 'void',
+                    //         description: undefined
+                    //     },
+                    //     description: ''
+                    // }
+                ]
+            });
+        });
+    });
+
+    describe('class', () => {
+        it('should parse class properties and methods', () => {
+            spyGlobSync(['/dialog/dialog.ts']);
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': `
+            /**
+             * Dialog Ref
+             * @public
+             **/
+            export class DialogRef {
+                /**
+                 * Parm1 desc
+                 **/
+                parm1: string;
+
+                /**
+                 * Close dialog
+                 **/
+                close(id?: string): void {}
+            }`
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'class',
+                name: 'DialogRef',
+                description: 'Dialog Ref',
+                order: 9007199254740991,
+                properties: [
+                    {
+                        name: 'parm1',
+                        type: {
+                            name: 'string',
+                            options: null,
+                            kindName: 'StringKeyword'
+                        },
+                        description: 'Parm1 desc',
+                        default: null,
+                        tags: {}
+                    }
+                ],
+                methods: [
+                    {
+                        name: 'close',
+                        parameters: [
+                            {
+                                name: 'id',
+                                comment: '',
+                                type: 'string'
+                            }
+                        ],
+                        returnValue: {
+                            type: 'void',
+                            description: undefined
+                        },
+                        description: 'Close dialog'
+                    }
+                ]
+            });
+        });
+    });
+});
+
+function spyGlobSync(files: string[]) {
+    const globSyncSpy = spyOn(toolkit.fs, 'globSync');
+    globSyncSpy.and.returnValue(files);
+}
+
+function createButtonComponent(body: string = '') {
+    return `
+    @Component({
+        selector: 'thy-button',
+        template: ''
+    })
+    export class ButtonComponent {
+        ${body}
+    }`;
 }
 
 describe('#parser', () => {
