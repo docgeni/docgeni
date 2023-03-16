@@ -146,23 +146,7 @@ describe('ng-parser', () => {
                         tags: {}
                     }
                 ],
-                methods: [
-                    // {
-                    //     name: 'close',
-                    //     parameters: [
-                    //         {
-                    //             name: 'id',
-                    //             comment: '',
-                    //             type: 'string'
-                    //         }
-                    //     ],
-                    //     returnValue: {
-                    //         type: 'void',
-                    //         description: undefined
-                    //     },
-                    //     description: ''
-                    // }
-                ]
+                methods: []
             });
         });
     });
