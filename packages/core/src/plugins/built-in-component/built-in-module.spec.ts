@@ -19,7 +19,7 @@ export default {
         const components: ComponentBuilder[] = [
             {
                 name: 'alib',
-                componentData: { selector: 'a-lib', name: 'AlibComponent' }
+                metadata: { selector: 'a-lib', name: 'AlibComponent' }
             } as ComponentBuilder
         ];
 

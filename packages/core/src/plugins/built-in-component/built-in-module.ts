@@ -5,16 +5,16 @@ import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
 export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: ComponentBuilder[]) {
-    const componentsValues = Array.from(components.values());
-    const declarations: string[] = componentsValues
-        .filter(item => !item.componentData?.standalone)
+    const componentsBuilders = Array.from(components.values());
+    const declarations: string[] = componentsBuilders
+        .filter(item => !item.metadata?.standalone)
         .map(item => {
-            return item.componentData?.name;
+            return item.metadata?.name;
         });
-    const importsComponents: string[] = componentsValues
-        .filter(item => item.componentData?.standalone)
+    const importsComponents: string[] = componentsBuilders
+        .filter(item => item.metadata?.standalone)
         .map(item => {
-            return item.componentData?.name;
+            return item.metadata?.name;
         });
     const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
     const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
@@ -27,16 +27,16 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
     const updater = new NgSourceUpdater(sourceFile);
     const ngModuleText = await generateNgModuleText(sourceFile, components, moduleMetadata);
 
-    let componentsData = Array.from(components.values()).map(item => {
-        return { name: item.componentData.name, moduleSpecifier: `./${item.name}/${item.name}.component` };
+    let componentsImportStructures = Array.from(components.values()).map(item => {
+        return { name: item.metadata.name, moduleSpecifier: `./${item.name}/${item.name}.component` };
     });
-    componentsData = [
-        ...componentsData,
+    componentsImportStructures = [
+        ...componentsImportStructures,
         { name: 'CommonModule', moduleSpecifier: '@angular/common' },
         { name: 'NgModule', moduleSpecifier: '@angular/core' },
         { name: 'addBuiltInComponents', moduleSpecifier: '@docgeni/template' }
     ];
-    updater.insertImports(componentsData);
+    updater.insertImports(componentsImportStructures);
     updater.insertNgModuleByText(ngModuleText);
     updater.removeDefaultExport();
     return updater.update();
@@ -44,7 +44,7 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
 
 async function generateNgModuleText(sourceFile: NgSourceFile, components: ComponentBuilder[], moduleMetadata: NgModuleMetadata) {
     const builtInComponents = Array.from(components.values()).map(item => {
-        return item.componentData;
+        return item.metadata;
     });
     const moduleMetadataArgs = Object.keys(moduleMetadata)
         .map(key => {
