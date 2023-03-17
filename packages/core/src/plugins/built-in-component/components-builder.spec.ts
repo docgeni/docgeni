@@ -1,12 +1,12 @@
-import { DocgeniContext } from '../../docgeni.interface';
-import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, writeFilesToHost } from '../../testing';
-import { ComponentsBuilder } from './components-builder';
 import { toolkit } from '@docgeni/toolkit';
-import { Subscription } from 'rxjs';
-import { resolve } from '../../fs';
 import * as systemPath from 'path';
+import { Subscription } from 'rxjs';
+import { DocgeniContext } from '../../docgeni.interface';
+import { resolve } from '../../fs';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, writeFilesToHost } from '../../testing';
 import * as builtInModule from './built-in-module';
 import { ComponentBuilder } from './component-builder';
+import { ComponentsBuilder } from './components-builder';
 
 const COMPONENTS_ROOT_PATH: string = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/components`;
 
@@ -26,7 +26,15 @@ describe('#components-builder', () => {
             selector: 'my-color',
             templateUrl: './color.component.html'
         }) export class ColorComponent {};`,
-        [`${COMPONENTS_ROOT_PATH}/color/color.component.html`]: 'color'
+        [`${COMPONENTS_ROOT_PATH}/color/color.component.html`]: 'color',
+        [`${COMPONENTS_ROOT_PATH}/world-standalone/world-standalone.component.ts`]: `class WorldStandaloneComponent {}; export default { selector: "world-standalone", component: WorldStandaloneComponent, standalone: true }`,
+        [`${COMPONENTS_ROOT_PATH}/world-standalone/world-standalone.component.html`]: 'world',
+        [`${COMPONENTS_ROOT_PATH}/heart-standalone/heart-standalone.component.ts`]: `@Component({
+            selector: 'my-heart-standalone',
+            templateUrl: './heart-standalone.component.html',
+            standalone: true
+        }) export class HeartStandaloneComponent {};`,
+        [`${COMPONENTS_ROOT_PATH}/heart-standalone/heart-standalone.component.html`]: 'heart'
     };
 
     beforeEach(() => {
@@ -58,7 +66,33 @@ describe('#components-builder', () => {
 
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
                 selector: 'hello',
-                name: 'HelloComponent'
+                name: 'HelloComponent',
+                standalone: false
+            });
+
+            expect(entryContent).toEqual(moduleText);
+        });
+
+        it('should build standalone components success', async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
+            const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
+            const moduleText = 'module text';
+            builtInModuleSpy.and.returnValue(Promise.resolve(moduleText));
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+            const helloComponentContent = await context.host.readFile(
+                resolve(componentsDistPath, 'world-standalone/world-standalone.component.ts')
+            );
+            expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/world-standalone/world-standalone.component.ts`]);
+            const entryContent = await context.host.readFile(resolve(componentsDistPath, 'index.ts'));
+
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/world-standalone`)!.componentData).toEqual({
+                selector: 'world-standalone',
+                name: 'WorldStandaloneComponent',
+                standalone: true
             });
 
             expect(entryContent).toEqual(moduleText);
@@ -77,7 +111,26 @@ describe('#components-builder', () => {
 
             expect(components.get(`${COMPONENTS_ROOT_PATH}/color`)!.componentData).toEqual({
                 selector: 'my-color',
-                name: 'ColorComponent'
+                name: 'ColorComponent',
+                standalone: false
+            });
+        });
+
+        it('should build standalone components success when has`t export default', async () => {
+            await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
+            const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
+            const moduleText = 'module text';
+            builtInModuleSpy.and.returnValue(Promise.resolve(moduleText));
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/heart-standalone`)!.componentData).toEqual({
+                selector: 'my-heart-standalone',
+                name: 'HeartStandaloneComponent',
+                standalone: true
             });
         });
 
@@ -96,7 +149,8 @@ describe('#components-builder', () => {
 
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
                 selector: 'hello',
-                name: 'HelloComponent'
+                name: 'HelloComponent',
+                standalone: false
             });
 
             expect(entryContent).toEqual(moduleText);
