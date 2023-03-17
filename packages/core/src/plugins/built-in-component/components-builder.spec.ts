@@ -64,7 +64,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentDef).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
                 standalone: false
@@ -89,7 +89,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/world-standalone`)!.componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/world-standalone`)!.componentDef).toEqual({
                 selector: 'world-standalone',
                 name: 'WorldStandaloneComponent',
                 standalone: true
@@ -109,7 +109,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/color`)!.componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/color`)!.componentDef).toEqual({
                 selector: 'my-color',
                 name: 'ColorComponent',
                 standalone: false
@@ -127,7 +127,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/heart-standalone`)!.componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/heart-standalone`)!.componentDef).toEqual({
                 selector: 'my-heart-standalone',
                 name: 'HeartStandaloneComponent',
                 standalone: true
@@ -147,7 +147,7 @@ describe('#components-builder', () => {
 
             const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
 
-            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentData).toEqual({
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.componentDef).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
                 standalone: false

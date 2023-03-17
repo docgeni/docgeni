@@ -1,4 +1,4 @@
-import { createNgSourceFile } from '@docgeni/ngdoc';
+import { createNgSourceFile, NgComponentMetadata } from '@docgeni/ngdoc';
 import { fs } from '@docgeni/toolkit';
 import { resolve } from '../../fs';
 
@@ -7,7 +7,7 @@ export class ComponentBuilder {
     private distPath: string;
     private emitted = false;
 
-    public componentData: { selector: string; name: string; standalone?: boolean };
+    public componentDef: NgComponentMetadata;
 
     constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
         this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
@@ -15,7 +15,7 @@ export class ComponentBuilder {
     }
 
     async setComponentData() {
-        this.componentData = null;
+        this.componentDef = null;
 
         if (!(await this.exists())) {
             return;
@@ -25,7 +25,7 @@ export class ComponentBuilder {
         const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string; standalone: string }>();
 
         if (exportDefault) {
-            this.componentData = {
+            this.componentDef = {
                 selector: exportDefault.selector,
                 name: exportDefault.component,
                 standalone: exportDefault.standalone === 'true'
@@ -33,13 +33,13 @@ export class ComponentBuilder {
         } else {
             const exportedComponents = componentFile.getExportedComponents();
             if (exportedComponents.length > 0) {
-                this.componentData = {
+                this.componentDef = {
                     selector: exportedComponents[0].selector,
                     name: exportedComponents[0].name,
                     standalone: exportedComponents[0].standalone
                 };
             } else {
-                this.componentData = null;
+                this.componentDef = null;
             }
         }
     }
