@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
 # [2.1.0-next.3](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.3) (2023-03-10)
 
 **Note:** Version bump only for package @docgeni/cli

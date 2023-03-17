@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
+
+
+### Bug Fixes
+
+* update tag h1 to span for dg-doc-header avoid conflict ([3a12593](https://github.com/docgeni/docgeni/commit/3a125938c279b7f8968f88c11531f83cf0a7d997))
+
+
+### Features
+
+* **core:** custom components support standalone #INFR-6938 ([#455](https://github.com/docgeni/docgeni/issues/455)) ([721b17c](https://github.com/docgeni/docgeni/commit/721b17c06b952d1a37a70193daaafc008a8a3a0b)), closes [#INFR-6938](https://github.com/docgeni/docgeni/issues/INFR-6938)
+* **core:** example support standalone component #INFR-6744 ([#450](https://github.com/docgeni/docgeni/issues/450)) ([08d517c](https://github.com/docgeni/docgeni/commit/08d517c9d04ad032d15743b0be80fe414b83139d)), closes [#INFR-6744](https://github.com/docgeni/docgeni/issues/INFR-6744)
+* **ngdoc:** support interface and class api doc when mark public or publicApi ([#452](https://github.com/docgeni/docgeni/issues/452)) ([81dcaca](https://github.com/docgeni/docgeni/commit/81dcacabb20087862221bf1be1df23244bd99387))
+* **template:** exports "./styles/index.css" in @docgeni/template ([83b3f99](https://github.com/docgeni/docgeni/commit/83b3f993f23f268154842defc7614c193a37ddd2))
+
+
+
+
+
 # [2.1.0-next.3](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.3) (2023-03-10)
 
 

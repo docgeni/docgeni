@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
+
+
+### Bug Fixes
+
+* update tag h1 to span for dg-doc-header avoid conflict ([3a12593](https://github.com/docgeni/docgeni/commit/3a125938c279b7f8968f88c11531f83cf0a7d997))
+
+
+### Features
+
+* **ngdoc:** support interface and class api doc when mark public or publicApi ([#452](https://github.com/docgeni/docgeni/issues/452)) ([81dcaca](https://github.com/docgeni/docgeni/commit/81dcacabb20087862221bf1be1df23244bd99387))
+* **template:** exports "./styles/index.css" in @docgeni/template ([83b3f99](https://github.com/docgeni/docgeni/commit/83b3f993f23f268154842defc7614c193a37ddd2))
+
+
+
+
+
 # [2.1.0-next.3](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.3) (2023-03-10)
 
 
