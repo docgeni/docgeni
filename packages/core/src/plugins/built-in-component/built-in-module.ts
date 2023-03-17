@@ -5,12 +5,13 @@ import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
 export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: ComponentBuilder[]) {
-    const declarations: string[] = Array.from(components.values())
+    const componentsValues = Array.from(components.values());
+    const declarations: string[] = componentsValues
         .filter(item => !item.componentData?.standalone)
         .map(item => {
             return item.componentData?.name;
         });
-    const importsComponents: string[] = Array.from(components.values())
+    const importsComponents: string[] = componentsValues
         .filter(item => item.componentData?.standalone)
         .map(item => {
             return item.componentData?.name;
