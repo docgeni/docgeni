@@ -5,16 +5,16 @@ import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
 export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: ComponentBuilder[]) {
-    const componentsValues = Array.from(components.values());
-    const declarations: string[] = componentsValues
-        .filter(item => !item.componentDef?.standalone)
+    const componentsBuilders = Array.from(components.values());
+    const declarations: string[] = componentsBuilders
+        .filter(item => !item.metadata?.standalone)
         .map(item => {
-            return item.componentDef?.name;
+            return item.metadata?.name;
         });
-    const importsComponents: string[] = componentsValues
-        .filter(item => item.componentDef?.standalone)
+    const importsComponents: string[] = componentsBuilders
+        .filter(item => item.metadata?.standalone)
         .map(item => {
-            return item.componentDef?.name;
+            return item.metadata?.name;
         });
     const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
     const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
@@ -28,7 +28,7 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
     const ngModuleText = await generateNgModuleText(sourceFile, components, moduleMetadata);
 
     let componentsImportStructures = Array.from(components.values()).map(item => {
-        return { name: item.componentDef.name, moduleSpecifier: `./${item.name}/${item.name}.component` };
+        return { name: item.metadata.name, moduleSpecifier: `./${item.name}/${item.name}.component` };
     });
     componentsImportStructures = [
         ...componentsImportStructures,
@@ -44,7 +44,7 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
 
 async function generateNgModuleText(sourceFile: NgSourceFile, components: ComponentBuilder[], moduleMetadata: NgModuleMetadata) {
     const builtInComponents = Array.from(components.values()).map(item => {
-        return item.componentDef;
+        return item.metadata;
     });
     const moduleMetadataArgs = Object.keys(moduleMetadata)
         .map(key => {

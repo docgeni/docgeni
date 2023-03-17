@@ -105,7 +105,7 @@ export class ComponentsBuilder {
             sourceFile = createNgSourceFile(this.modulePath, '');
         }
         // filter built-in components that source contains angular component
-        const components = Array.from(this.components.values()).filter(component => !!component.componentDef);
+        const components = Array.from(this.components.values()).filter(component => !!component.metadata);
         const moduleText = await generateBuiltInComponentsModule(sourceFile, components);
         await this.docgeni.host.writeFile(resolve(this.componentsDistPath, 'index.ts'), moduleText);
     }

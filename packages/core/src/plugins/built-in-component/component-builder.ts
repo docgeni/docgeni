@@ -7,15 +7,15 @@ export class ComponentBuilder {
     private distPath: string;
     private emitted = false;
 
-    public componentDef: NgComponentMetadata;
+    public metadata: NgComponentMetadata;
 
     constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
         this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
         this.distPath = resolve(distRootPath, name);
     }
 
-    async setComponentData() {
-        this.componentDef = null;
+    private async buildMetadata() {
+        this.metadata = null;
 
         if (!(await this.exists())) {
             return;
@@ -25,7 +25,7 @@ export class ComponentBuilder {
         const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string; standalone: string }>();
 
         if (exportDefault) {
-            this.componentDef = {
+            this.metadata = {
                 selector: exportDefault.selector,
                 name: exportDefault.component,
                 standalone: exportDefault.standalone === 'true'
@@ -33,13 +33,13 @@ export class ComponentBuilder {
         } else {
             const exportedComponents = componentFile.getExportedComponents();
             if (exportedComponents.length > 0) {
-                this.componentDef = {
+                this.metadata = {
                     selector: exportedComponents[0].selector,
                     name: exportedComponents[0].name,
                     standalone: exportedComponents[0].standalone
                 };
             } else {
-                this.componentDef = null;
+                this.metadata = null;
             }
         }
     }
@@ -51,7 +51,7 @@ export class ComponentBuilder {
 
     async build() {
         this.emitted = false;
-        await this.setComponentData();
+        await this.buildMetadata();
     }
 
     async emit() {
