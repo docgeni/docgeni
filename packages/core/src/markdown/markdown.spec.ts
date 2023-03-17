@@ -75,7 +75,7 @@ describe('markdown', () => {
 `);
             expect(result.html).toContain(`<h1 id="heading1" class="docs-header-link">`);
             expect(result.html).toContain(`<h1 id="heading2" class="docs-header-link">`);
-            expect(result.headings.length).toEqual(2);
+            expect(result.headings?.length).toEqual(2);
             expect(result.headings).toEqual([
                 { id: 'heading1', name: 'heading1', level: 1, type: 'h1' },
                 { id: 'heading2', name: 'heading2', level: 1, type: 'h1' }
@@ -85,7 +85,7 @@ describe('markdown', () => {
         it('should get correct headings when contains link', () => {
             const result = Markdown.compile(`# heading1 <a href="https://example.com">Link</a>`);
             expect(result.html).toContain(`<h1 id="heading1-%3Ca-href=%22https://example-com%22%3Elink%3C/a%3E" class="docs-header-link">`);
-            expect(result.headings.length).toEqual(1);
+            expect(result.headings?.length).toEqual(1);
             expect(result.headings).toEqual([
                 {
                     id: 'heading1-%3Ca-href=%22https://example-com%22%3Elink%3C/a%3E',
@@ -94,6 +94,25 @@ describe('markdown', () => {
                     type: 'h1'
                 }
             ]);
+        });
+
+        it('should get one header when content + code snippet,', () => {
+            /**
+             * marked v4.2.3 有一个破坏性更改，导致代码也解析成了标题
+             * 参考: https://github.com/markedjs/marked/issues/2735
+             */
+            const result = Markdown.compile(`
+## heading1
+对于普通页面文档，想要自定义路由，设置标题，可以使用名为。
+\`\`\`markdown
+---
+title: Button Base
+name: basic
+order: 1
+---
+\`\`\``);
+            expect(result.headings?.length).toBe(1);
+            expect(result.headings![0]).toEqual({ id: 'heading1', name: 'heading1', level: 2, type: 'h2' });
         });
     });
 });
