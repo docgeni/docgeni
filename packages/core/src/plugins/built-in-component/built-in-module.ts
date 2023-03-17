@@ -1,16 +1,24 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
-import { getNgModuleMetadataFromDefaultExport, combineNgModuleMetadata } from '../../ast-utils';
+import { combineNgModuleMetadata, getNgModuleMetadataFromDefaultExport } from '../../ast-utils';
 import { NgSourceUpdater } from '../../ng-source-updater';
 import { NgModuleMetadata } from '../../types/module';
 import { ComponentBuilder } from './component-builder';
 
 export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, components: ComponentBuilder[]) {
-    const declarations: string[] = Array.from(components.values()).map(item => {
-        return item.componentData?.name;
-    });
+    const componentsValues = Array.from(components.values());
+    const declarations: string[] = componentsValues
+        .filter(item => !item.componentData?.standalone)
+        .map(item => {
+            return item.componentData?.name;
+        });
+    const importsComponents: string[] = componentsValues
+        .filter(item => item.componentData?.standalone)
+        .map(item => {
+            return item.componentData?.name;
+        });
     const defaultModuleMetadata = getNgModuleMetadataFromDefaultExport(sourceFile);
     const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
-        imports: ['CommonModule'],
+        imports: ['CommonModule', ...importsComponents],
         declarations: [...declarations],
         entryComponents: [...declarations],
         exports: [...declarations]

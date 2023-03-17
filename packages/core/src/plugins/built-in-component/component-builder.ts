@@ -7,7 +7,7 @@ export class ComponentBuilder {
     private distPath: string;
     private emitted = false;
 
-    public componentData: { selector: string; name: string };
+    public componentData: { selector: string; name: string; standalone?: boolean };
 
     constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
         this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
@@ -22,14 +22,22 @@ export class ComponentBuilder {
         }
         const componentText = await this.docgeniHost.readFile(this.entryComponentFullPath);
         const componentFile = createNgSourceFile(this.entryComponentFullPath, componentText);
-        const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string }>();
+        const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string; standalone: string }>();
 
         if (exportDefault) {
-            this.componentData = { selector: exportDefault.selector, name: exportDefault.component };
+            this.componentData = {
+                selector: exportDefault.selector,
+                name: exportDefault.component,
+                standalone: exportDefault.standalone === 'true'
+            };
         } else {
             const exportedComponents = componentFile.getExportedComponents();
             if (exportedComponents.length > 0) {
-                this.componentData = { selector: exportedComponents[0].selector, name: exportedComponents[0].name };
+                this.componentData = {
+                    selector: exportedComponents[0].selector,
+                    name: exportedComponents[0].name,
+                    standalone: exportedComponents[0].standalone
+                };
             } else {
                 this.componentData = null;
             }

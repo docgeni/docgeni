@@ -1,9 +1,12 @@
-import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DocgeniBuiltInComponent } from '@docgeni/template';
-
 @Component({
     selector: 'my-color',
-    templateUrl: './color.component.html'
+    templateUrl: './color.component.html',
+    standalone: true,
+    imports: [FormsModule, CommonModule]
 })
 export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
     @Input() set color(value: string) {
@@ -19,5 +22,6 @@ export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit 
 
 // export default {
 //     selector: 'my-color',
-//     component: MyColorComponent
+//     component: MyColorComponent,
+//     standalone: true
 // };
