@@ -1,4 +1,4 @@
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
@@ -9,7 +9,6 @@ import { DocSourceFile } from '../builders/doc-file';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
 import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
 import { Docgeni } from '../docgeni';
-import { DocgeniHost } from '../docgeni-host';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
 

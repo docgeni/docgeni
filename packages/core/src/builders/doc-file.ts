@@ -1,10 +1,9 @@
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import path from 'path';
 import { DocMeta } from '../types';
 import { DocType } from '../enums';
 import { Markdown } from '../markdown';
 import { normalize, relative } from '@angular-devkit/core';
-import { DocgeniHost } from '../docgeni-host';
 import { resolve } from '../fs';
 import { HeadingLink } from '../interfaces';
 
@@ -18,7 +17,7 @@ export interface DocSourceFileOptions {
 
 export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     private emitted = false;
-    private host: DocgeniHost;
+    private host: fs.DocgeniFsHost;
     private outputPath?: string;
     public locale: string;
     public cwd: string;
@@ -70,7 +69,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         return path.basename(this.path, this.extname);
     }
 
-    constructor(options: DocSourceFileOptions, host: DocgeniHost) {
+    constructor(options: DocSourceFileOptions, host: fs.DocgeniFsHost) {
         this.cwd = options.cwd;
         this.base = options.base;
         this.path = options.path;

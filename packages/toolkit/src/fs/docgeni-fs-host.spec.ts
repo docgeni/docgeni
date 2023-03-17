@@ -1,12 +1,12 @@
 import { PathFragment, virtualFs } from '@angular-devkit/core';
-import { DocgeniHost, DocgeniHostImpl } from './docgeni-host';
-import { createTestDocgeniHost } from './testing';
+import { DocgeniFsHost, DocgeniFsHostImpl } from './docgeni-fs-host';
+import { createTestDocgeniFsHost } from '../testing';
 
 describe('#docgeni-host', () => {
-    let host: DocgeniHost;
+    let host: DocgeniFsHost;
 
     beforeEach(() => {
-        host = createTestDocgeniHost({
+        host = createTestDocgeniFsHost({
             'file1.txt': 'file1 content',
             'file2.txt': 'file2 content',
             'folder/file1.txt': 'folder/file1.txt',

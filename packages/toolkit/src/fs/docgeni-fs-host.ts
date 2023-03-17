@@ -1,7 +1,9 @@
 import { PathFragment, virtualFs } from '@angular-devkit/core';
 import { Observable } from 'rxjs';
-import { DocgeniHostWatchOptions, resolve, normalize, VfsHost, FileSystemWatcher, HostWatchEvent, relative } from './fs';
-import { toolkit } from '@docgeni/toolkit';
+import { DocgeniHostWatchOptions } from './node-host';
+import { FileSystemWatcher, HostWatchEvent } from './watcher';
+import { normalize, resolve } from '../path';
+import { matchGlob } from '../utils';
 
 export interface GetDirsOrFilesOptions {
     /** Include .dot files in normal matches */
@@ -10,7 +12,8 @@ export interface GetDirsOrFilesOptions {
     exclude?: string | string[];
     recursively?: boolean;
 }
-export interface DocgeniHost {
+
+export interface DocgeniFsHost {
     readFile(path: string): Promise<string>;
     readJSON<T = object>(path: string): Promise<T>;
     writeFile(path: string, data: string): Promise<void>;
@@ -28,7 +31,7 @@ export interface DocgeniHost {
     getFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
 }
 
-export class DocgeniHostImpl implements DocgeniHost {
+export class DocgeniFsHostImpl implements DocgeniFsHost {
     constructor(public readonly host: virtualFs.Host) {}
 
     async readFile(path: string): Promise<string> {
@@ -118,7 +121,7 @@ export class DocgeniHostImpl implements DocgeniHost {
         }
         allPaths.push(...subPaths);
         return allPaths.filter(dir => {
-            if (options.exclude && toolkit.utils.matchGlob(dir, options.exclude)) {
+            if (options.exclude && matchGlob(dir, options.exclude)) {
                 return false;
             }
             if (options.dot) {
@@ -152,6 +155,6 @@ export class DocgeniHostImpl implements DocgeniHost {
     }
 }
 
-export function createDocgeniHost(host: virtualFs.Host): DocgeniHost {
-    return new DocgeniHostImpl(host);
+export function createDocgeniFsHost(host: virtualFs.Host): DocgeniFsHost {
+    return new DocgeniFsHostImpl(host);
 }

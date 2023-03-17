@@ -1,4 +1,4 @@
-import { NgPropertyDoc } from './declarations';
+import { NgMethodDoc, NgPropertyDoc } from './declarations';
 import { NgDocItemType } from './enums';
 
 export interface NgDirectiveMetadata {
@@ -18,6 +18,7 @@ export interface NgDirectiveDoc extends NgDirectiveMetadata {
     description?: string;
     className?: string;
     properties?: NgPropertyDoc[];
+    methods?: NgMethodDoc[];
 }
 
 export interface NgComponentMetadata extends NgDirectiveMetadata {

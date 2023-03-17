@@ -22,5 +22,5 @@ export class DialogRef<T> {
     /**
      * Close dialog
      */
-    close(id?: string) {}
+    close(id?: string): void {}
 }

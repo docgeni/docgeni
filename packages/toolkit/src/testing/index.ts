@@ -9,3 +9,5 @@ if (process.platform.startsWith('win')) {
 }
 
 export { linuxOnlyIt, linuxAndDarwinIt };
+
+export * from './fs';
