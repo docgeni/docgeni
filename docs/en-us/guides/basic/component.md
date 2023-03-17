@@ -409,7 +409,24 @@ The generated API is defined as:
 ]
 ```
 
-## Configuration definition API
+To generate API doc for exported interfaces or classes declarations, you need to manually add a `@public` or `@publicApi` tag to the comments:
+
+```ts
+/**
+ * Dialog Config
+ * @public
+ */
+export interface DialogConfig {
+  /**
+   * param1 description
+   */
+  param1: string;
+}
+```
+
+## Configuration definition API 
+
+<label type="warning">Not Recommended</label>
 
 In `manual` or `compatible` mode, Docgeni will scan the configuration files in the `api` folder by default. The file name is the `Key` of multi-language, such as `zh-cn.js`. Please check the [apiDir](configuration/lib#apiDir) configuration item to configure the directory.
 
@@ -418,7 +435,7 @@ The configuration file naming rule is: `{localeKey}.<json|yaml|yml|js|config.js>
 - `yaml` format, named after `.yaml` or `yml` suffix
 - `js` format, named after `.js` or `.config.js` suffix
 
-## API configuration
+### API configuration
 A component module may contain multiple components or directives whatever the format, so the configuration of the API is an array. Each item in the array represents a component, a directive, a service, an interface, etc.
 
 JS format example is as follows:
@@ -489,7 +506,7 @@ JSON format example is as follows:
 ]
 ```
 
-## Parameter description
+### Parameter description
 
 - `type`: The type of the component, support `directive`, `component`, `class`, `interface`
 - `name`: The name of the component

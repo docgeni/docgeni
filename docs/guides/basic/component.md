@@ -179,6 +179,7 @@ tsconfig 配置如下，如何配置参考: [自定义配置 tsconfig.json](guid
 ## 示例的配置
 
 某个组件下可能有很多示例，每个示例会有标题和排序等字段，如果需要自定义配置，需要在对应的示例文件夹下创建一个`index.md`文件，并配置 FrontMatter：
+
 ```markdown
 ---
 title: Button Base
@@ -417,7 +418,23 @@ export class ButtonComponent implements OnInit {
 ]
 ```
 
+对于导出的接口或者类声明如需生成 API 文档，需要在声明的注释手动添加`@public`或者`@publicApi`标签：
+```ts
+/**
+ * Dialog Config
+ * @public
+ */
+export interface DialogConfig {
+  /**
+   * param1 description
+   */
+  param1: string;
+}
+```
+
 ## 配置定义 API
+
+<label type="warning">不推荐使用</label>
 
 `manual`或者`compatible`模式下，Docgeni 默认会扫描组件`api`文件夹下的配置文件，文件名为多语言的`Key`（比如：`zh-cn.js`、`en-us.js`），读取文件并生成 API 文档，如需配置目录，请查看 [apiDir](configuration/lib#apiDir) 配置项。
 
