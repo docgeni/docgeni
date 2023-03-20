@@ -1,4 +1,4 @@
-<div class="dg-hero" *ngIf="global.homeMeta.hero">
+<div class="dg-hero" *ngIf="global.homeMeta?.hero">
   <div class="dg-hero-launch">
     <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
     <p class="dg-launch-description">{{ global.homeMeta.hero.description }}</p>
@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div class="dg-features" *ngIf="global.homeMeta.features && global.homeMeta.features.length > 0">
+<div class="dg-features" *ngIf="global.homeMeta?.features && global.homeMeta?.features.length > 0">
   <div class="dg-feature" *ngFor="let item of global.homeMeta.features">
     <img [src]="item.icon" alt="" />
     <div class="dg-feature-title">
@@ -27,7 +27,7 @@
     <div class="dg-feature-description" [innerHTML]="item.description"></div>
   </div>
 </div>
-<div class="dg-extra-content" *ngIf="global.homeMeta.contentPath">
+<div class="dg-extra-content" *ngIf="global.homeMeta?.contentPath">
   <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
 </div>
 
