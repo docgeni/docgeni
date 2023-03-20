@@ -14,6 +14,7 @@ import {
 /**
  * General Button Component description.
  * @name alib-button
+ * @order 1
  */
 @Component({
     selector: 'alib-button,[alibButton]',
@@ -82,7 +83,7 @@ export class AlibButtonComponent implements OnInit {
 /**
  * Button Service
  * @name ButtonService
- * @order 1
+ * @order 2
  */
 @Injectable({
     providedIn: 'root'
