@@ -20,9 +20,10 @@
             "outputPath": "../../dist/docgeni-site",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -69,7 +70,8 @@
               "sourceMap": true,
               "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -92,36 +94,6 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "site:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "packages/site/src/test.ts",
-            "polyfills": "packages/site/src/polyfills.ts",
-            "tsConfig": "packages/site/tsconfig.spec.json",
-            "karmaConfig": "packages/site/karma.conf.js",
-            "assets": [
-              "packages/site/src/favicon.ico",
-              "packages/site/src/assets"
-            ],
-            "styles": [
-              "packages/site/src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/site/tsconfig.app.json",
-              "packages/site/tsconfig.spec.json",
-              "packages/site/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

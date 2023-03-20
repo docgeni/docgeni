@@ -10,7 +10,8 @@
     "moduleResolution": "node",
     "esModuleInterop": false,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
       "es2018",
       "dom"
@@ -34,8 +35,7 @@
     }
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "src/main.ts"
   ],
   "include": [
     "src/**/*.d.ts"
