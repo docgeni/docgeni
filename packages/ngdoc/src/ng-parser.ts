@@ -111,7 +111,7 @@ export class NgDocParser {
                     const ngDecorator = getNgDecorator(declaration);
                     if (ngDecorator) {
                         const type = getNgDocItemType(ngDecorator.name);
-                        const tags = getDocTagsBySymbol(symbol);
+                        const [tags, localeTags] = getDocTagsBySymbol(symbol);
                         if (!hasPrivateTag(tags)) {
                             switch (type) {
                                 case 'component':
@@ -128,13 +128,13 @@ export class NgDocParser {
                             }
                         }
                     } else {
-                        const tags = getDocTagsBySymbol(symbol);
+                        const [tags, localeTags] = getDocTagsBySymbol(symbol);
                         if (hasPublicTag(tags)) {
                             docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                         }
                     }
                 } else if (ts.isInterfaceDeclaration(declaration)) {
-                    const tags = getDocTagsBySymbol(symbol);
+                    const [tags, localeTags] = getDocTagsBySymbol(symbol);
                     if (hasPublicTag(tags)) {
                         docs.push(this.parseClassLikeDoc(context, symbol, declaration, tags));
                     }
@@ -146,7 +146,7 @@ export class NgDocParser {
 
     private parseServiceDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
         const description = serializeSymbol(symbol, context.checker);
-        const tags = getDocTagsBySymbol(symbol);
+        const [tags, localeTags] = getDocTagsBySymbol(symbol);
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
@@ -189,7 +189,7 @@ export class NgDocParser {
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
                     const propertyKind = getPropertyKind(decorator.name);
-                    const tags = getDocTagsBySymbol(symbol);
+                    const [tags, localeTags] = getDocTagsBySymbol(symbol);
                     if (!hasPrivateTag(tags)) {
                         const property: NgPropertyDoc = {
                             kind: propertyKind,
@@ -227,7 +227,7 @@ export class NgDocParser {
                     const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const options = getNgPropertyOptions(propertyDeclaration, context.checker);
-                    const tags = getDocTagsBySymbol(symbol);
+                    const [tags, localeTags] = getDocTagsBySymbol(symbol);
                     const property: NgPropertyDoc = {
                         name: symbolDescription.name,
                         type: {

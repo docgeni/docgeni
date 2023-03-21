@@ -56,7 +56,6 @@ describe('ng-parser', () => {
     beforeEach(() => {});
 
     it('should parse component docs', () => {
-        spyGlobSync(['/button/button.component.ts']);
         const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
             '/button/button.component.ts': createButtonComponent(`@Input() param1: string;`)
         });
@@ -94,9 +93,40 @@ describe('ng-parser', () => {
         ] as unknown) as NgEntryItemDoc[]);
     });
 
+    it('should get default language tags', () => {
+        const sourceText = `
+        /**
+         * thy-button description
+         * @description.zh-cn 中文描述
+         * @name thy-button
+         * @name.zh-cn 按钮
+        **/
+        @Component({
+            selector: 'thy-button',
+            template: ''
+        })
+        export class ButtonComponent {
+            /**
+             * en description
+             * @description.zh-cn 中文 description
+             **/
+            @Input() param1: string;
+        }`;
+
+        const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+            '/button/button.component.ts': sourceText
+        });
+        const docs = ngDocParser.parse('/button/*');
+        expect(docs.length).toBe(1);
+        expect(docs[0].name).toBe('thy-button');
+        expect(docs[0].description).toBe('thy-button description');
+        const properties = docs[0].properties;
+        expect(properties.length).toBe(1);
+        expect(properties[0].description).toBe('en description');
+    });
+
     describe('interface', () => {
         it('should parse interface properties and methods', () => {
-            spyGlobSync(['/dialog/dialog.ts']);
             const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
                 '/dialog/dialog.ts': `
             /**
@@ -153,7 +183,6 @@ describe('ng-parser', () => {
 
     describe('class', () => {
         it('should parse class properties and methods', () => {
-            spyGlobSync(['/dialog/dialog.ts']);
             const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
                 '/dialog/dialog.ts': `
             /**
@@ -213,11 +242,6 @@ describe('ng-parser', () => {
         });
     });
 });
-
-function spyGlobSync(files: string[]) {
-    const globSyncSpy = spyOn(toolkit.fs, 'globSync');
-    globSyncSpy.and.returnValue(files);
-}
 
 function createButtonComponent(body: string = '') {
     return `

@@ -15,6 +15,7 @@ export interface NgPropertyDoc {
     /** 默认值 */
     default?: string | number | boolean | null | object;
     tags?: Record<string, { name: string; text?: { text: string; kind: string }[] }>;
+    locales?: Record<string, NgPropertyDoc>;
 }
 
 export interface NgMethodDoc {

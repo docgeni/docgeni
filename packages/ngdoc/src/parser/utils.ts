@@ -192,17 +192,28 @@ export interface MethodDocTagResult {
     param?: Record<string, ts.JSDocTagInfo>;
 }
 
-export function getDocTagsBySymbol(symbol: ts.Symbol): DocTagResult {
+export function getDocTagsBySymbol(symbol: ts.Symbol): [DocTagResult, Record<string, DocTagResult>] {
     return parseJsDocTagsToDocTagResult(symbol.getJsDocTags());
 }
 
-export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)[]): DocTagResult {
-    return tags.reduce((result, item) => {
-        if (item) {
-            result[item.name] = item;
+export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)[]): [DocTagResult, Record<string, DocTagResult>] {
+    const defaultLocaleTags: DocTagResult = {};
+    const localeTags: Record<string, DocTagResult> = {};
+    tags.forEach(jsDocTag => {
+        if (jsDocTag.text && jsDocTag.text[0] && jsDocTag.text[0].text && jsDocTag.text[0].text.startsWith('.')) {
+            const local = jsDocTag.text[0].text.substring(1, jsDocTag.text[0].text.indexOf(' '));
+            jsDocTag.text[0].text = jsDocTag.text[0].text.replace(`.${local}`, '').trim();
+            if (local) {
+                if (!localeTags[local]) {
+                    localeTags[local] = {};
+                }
+                localeTags[local][jsDocTag.name] = jsDocTag;
+            }
+        } else {
+            defaultLocaleTags[jsDocTag.name] = jsDocTag;
         }
-        return result;
-    }, {});
+    });
+    return [defaultLocaleTags, localeTags];
 }
 
 export function getTextByJSDocTagInfo(tag: ts.JSDocTagInfo, defaultValue: string) {
