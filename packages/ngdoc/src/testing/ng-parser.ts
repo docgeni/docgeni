@@ -42,9 +42,9 @@ export function createTestNgParserHost(component: string, files: Record<string, 
 export function createTestNgDocParser(
     component: string,
     files: Record<string, string>,
-    options: { globSync: boolean } = { globSync: true }
+    options: { sypGlobSync: boolean } = { sypGlobSync: true }
 ) {
-    if (options && options.globSync) {
+    if (options && options.sypGlobSync) {
         spyGlobSync(Object.keys(files));
     }
     const { ngParserHost, fsHost } = createTestNgParserHost(component, files);
