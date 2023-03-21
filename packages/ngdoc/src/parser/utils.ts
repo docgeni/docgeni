@@ -201,13 +201,13 @@ export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)
     const localeTags: Record<string, DocTagResult> = {};
     tags.forEach(jsDocTag => {
         if (jsDocTag.text && jsDocTag.text[0] && jsDocTag.text[0].text && jsDocTag.text[0].text.startsWith('.')) {
-            const local = jsDocTag.text[0].text.substring(1, jsDocTag.text[0].text.indexOf(' '));
-            jsDocTag.text[0].text = jsDocTag.text[0].text.replace(`.${local}`, '').trim();
-            if (local) {
-                if (!localeTags[local]) {
-                    localeTags[local] = {};
+            const locale = jsDocTag.text[0].text.substring(1, jsDocTag.text[0].text.indexOf(' '));
+            jsDocTag.text[0].text = jsDocTag.text[0].text.replace(`.${locale}`, '').trim();
+            if (locale) {
+                if (!localeTags[locale]) {
+                    localeTags[locale] = {};
                 }
-                localeTags[local][jsDocTag.name] = jsDocTag;
+                localeTags[locale][jsDocTag.name] = jsDocTag;
             }
         } else {
             defaultLocaleTags[jsDocTag.name] = jsDocTag;
