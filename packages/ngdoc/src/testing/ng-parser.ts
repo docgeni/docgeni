@@ -39,7 +39,14 @@ export function createTestNgParserHost(component: string, files: Record<string, 
     };
 }
 
-export function createTestNgDocParser(component: string, files: Record<string, string>) {
+export function createTestNgDocParser(
+    component: string,
+    files: Record<string, string>,
+    options: { globSync: boolean } = { globSync: true }
+) {
+    if (options && options.globSync) {
+        spyGlobSync(Object.keys(files));
+    }
     const { ngParserHost, fsHost } = createTestNgParserHost(component, files);
     const ngDocParser = new NgDocParser({
         ngParserHost: ngParserHost
@@ -49,4 +56,9 @@ export function createTestNgDocParser(component: string, files: Record<string, s
         ngParserHost,
         fsHost
     };
+}
+
+export function spyGlobSync(files: string[]) {
+    const globSyncSpy = spyOn(toolkit.fs, 'globSync');
+    globSyncSpy.and.returnValue(files);
 }

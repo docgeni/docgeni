@@ -41,10 +41,47 @@ describe('#utils', () => {
                 }
             ]);
 
-            expect(result).toEqual({
-                public: { name: 'public', text: [{ text: '', kind: 'string' }] },
-                order: { name: 'order', text: [{ text: '10', kind: 'string' }] }
-            });
+            expect(result).toEqual([
+                {
+                    public: { name: 'public', text: [{ text: '', kind: 'string' }] },
+                    order: { name: 'order', text: [{ text: '10', kind: 'string' }] }
+                },
+                {}
+            ]);
+        });
+
+        it('should parse to tag result for multi-locals', () => {
+            const result = parseJsDocTagsToDocTagResult([
+                {
+                    name: 'description',
+                    text: [{ text: 'default description', kind: 'string' }]
+                },
+                {
+                    name: 'description',
+                    text: [{ text: '.zh-cn zh cn description', kind: 'string' }]
+                },
+                {
+                    name: 'name',
+                    text: [{ text: 'my name', kind: 'string' }]
+                },
+                {
+                    name: 'name',
+                    text: [{ text: '.zh-cn zh cn name', kind: 'string' }]
+                }
+            ]);
+
+            expect(result).toEqual([
+                {
+                    description: { name: 'description', text: [{ text: 'default description', kind: 'string' }] },
+                    name: { name: 'name', text: [{ text: 'my name', kind: 'string' }] }
+                },
+                {
+                    'zh-cn': {
+                        description: { name: 'description', text: [{ text: 'zh cn description', kind: 'string' }] },
+                        name: { name: 'name', text: [{ text: 'zh cn name', kind: 'string' }] }
+                    }
+                }
+            ]);
         });
     });
 
