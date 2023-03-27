@@ -5,6 +5,8 @@ import { createTestWorkspaceFactory, getJsonFileContent, TestWorkspaceFactory } 
 import { addPackageToPackageJson } from '../utils';
 import { ANGULAR_VERSION, VERSION } from '../../version';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
+import { toolkit } from '@docgeni/toolkit';
+import path from 'node:path';
 
 describe('ng-add Schematic', () => {
     let tree: Tree;
@@ -37,14 +39,14 @@ describe('ng-add Schematic', () => {
         let packageJson = JSON.parse(tree.read('/package.json').toString());
         delete packageJson[NodeDependencyType.Default]['@angular/core'];
         tree.overwrite('/package.json', JSON.stringify(packageJson));
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         packageJson = getJsonFileContent(workspaceTree, '/package.json');
         const devDependencies = packageJson[NodeDependencyType.Dev];
         expect(devDependencies['@docgei/angular']).toEqual(ANGULAR_VERSION);
     });
 
     it('should update package.json command', async () => {
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         expect(packageJson.scripts['start:docs']).toEqual('docgeni serve --port 4600');
         expect(packageJson.scripts['build:docs']).toEqual('docgeni build --prod');
@@ -53,7 +55,7 @@ describe('ng-add Schematic', () => {
     it('should init .docgenirc.js', async () => {
         const mode = 'full';
         const docsDir = 'test-docs';
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', { mode, docsDir }, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', { mode, docsDir }, tree);
         const exist = workspaceTree.exists('.docgenirc.js');
         expect(exist).toBeTruthy();
         const config = workspaceTree.read('.docgenirc.js').toString();
@@ -65,7 +67,7 @@ describe('ng-add Schematic', () => {
     });
 
     it('should create docsDir', async () => {
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         workspaceTree.getDir('docs');
         expect(workspaceTree.getDir('docs').subfiles.length).toBeTruthy();
         expect(workspaceTree.exists(`docs/getting-started.md`)).toBeTruthy();
@@ -75,10 +77,15 @@ describe('ng-add Schematic', () => {
         const libraryName = 'lib-test';
         await factory.addLibrary({ name: libraryName });
         tree = factory.getTree();
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const config = workspaceTree.read('.docgenirc.js').toString();
         expect(config).toContain(`rootDir: 'projects/${libraryName}'`);
         expect(config).toContain(`lib: '${libraryName}'`);
+        expect(config).toContain(`apiMode: 'automatic'`);
+        const expectContent = await toolkit.fs.readFileContent(
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc.js')
+        );
+        expect(config).toEqual(expectContent);
     });
 
     it('should generate without angular.json', async () => {
@@ -86,7 +93,7 @@ describe('ng-add Schematic', () => {
         await factory.addLibrary({ name: libraryName });
         factory.removeFile('angular.json');
         tree = factory.getTree();
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const config = workspaceTree.read('.docgenirc.js').toString();
         expect(config).not.toContain(`libs: `);
         expect(config).not.toContain(`navs: `);
@@ -95,7 +102,7 @@ describe('ng-add Schematic', () => {
     it('should create .gitignore if not exist', async () => {
         factory.removeFile('.gitignore');
         tree = factory.getTree();
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         expect(workspaceTree.exists('.gitignore')).toBeTruthy();
         const gitignoreContent = workspaceTree.read('.gitignore').toString();
         expect(gitignoreContent).toContain('.docgeni/site');
@@ -103,7 +110,7 @@ describe('ng-add Schematic', () => {
 
     it('should has `.docgeni/site` in .gitignore', async () => {
         tree = factory.getTree();
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         expect(workspaceTree.exists('.gitignore')).toBeTruthy();
         const gitignoreContent = workspaceTree.read('.gitignore').toString();
         expect(gitignoreContent.split('\n').some(item => item === '.docgeni/site')).toBeTruthy();
