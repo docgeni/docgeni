@@ -38,6 +38,7 @@ export class InitDocgenirc {
                 name: projectName,
                 rootDir: config.root,
                 include: ['src', 'src/lib'],
+                apiMode: 'automatic',
                 categories: []
             });
         });
