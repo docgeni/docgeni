@@ -8,9 +8,18 @@ import {
     EventEmitter,
     Injectable,
     ContentChild,
-    TemplateRef
+    TemplateRef,
+    Directive
 } from '@angular/core';
 
+@Directive()
+class Base {
+    /**
+     * Disabled
+     * @order 10
+     */
+    @Input() alibDisabled: boolean;
+}
 /**
  * General Button Component description.
  * @name alib-button
@@ -18,11 +27,12 @@ import {
  */
 @Component({
     selector: 'alib-button,[alibButton]',
-    template: '<ng-content></ng-content>'
+    template: '<ng-content></ng-content>',
+    host: {
+        class: 'dg-btn'
+    }
 })
-export class AlibButtonComponent implements OnInit {
-    @HostBinding(`class.dg-btn`) isBtn = true;
-
+export class AlibButtonComponent extends Base implements OnInit {
     private type: string;
     private loading = false;
 
@@ -75,7 +85,9 @@ export class AlibButtonComponent implements OnInit {
 
     @ContentChild('template') templateRef: TemplateRef<unknown>;
 
-    constructor(private elementRef: ElementRef<HTMLElement>) {}
+    constructor(private elementRef: ElementRef<HTMLElement>) {
+        super();
+    }
 
     ngOnInit(): void {}
 }
