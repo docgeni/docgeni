@@ -27,13 +27,12 @@ import { TocService } from '../../services/toc.service';
 @Component({
     selector: 'dg-content-viewer',
     template: 'Loading...',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        class: 'dg-doc-content'
+    }
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
-    @HostBinding('class.dg-doc-content') isDocContent = true;
-
-    @Output() contentRendered = new EventEmitter<HTMLElement>();
-
     private portalHosts: DomPortalOutlet[] = [];
 
     constructor(

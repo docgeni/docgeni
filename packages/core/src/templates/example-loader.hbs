@@ -5,7 +5,7 @@ import { EXAMPLE_COMPONENTS } from './component-examples';
 @Injectable()
 export class LibExampleLoader extends ExampleLoader {
 
-    enableIvy = {{enableIvy}};
+    override enableIvy = {{enableIvy}};
 
     {{#each moduleKeys}}
     '{{this}}'() {

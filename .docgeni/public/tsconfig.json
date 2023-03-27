@@ -12,6 +12,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "useDefineForClassFields": false,
+    "noImplicitOverride": true,
     "lib": [
       "es2018",
       "dom"

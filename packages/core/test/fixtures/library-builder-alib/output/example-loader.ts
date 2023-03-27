@@ -5,7 +5,7 @@ import { EXAMPLE_COMPONENTS } from './component-examples';
 @Injectable()
 export class LibExampleLoader extends ExampleLoader {
 
-    enableIvy = true;
+    override enableIvy = true;
 
     'alib/button'() {
        return import('./components/alib/button/index');

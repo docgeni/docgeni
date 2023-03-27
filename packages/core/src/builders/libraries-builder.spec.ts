@@ -9,10 +9,8 @@ import {
     loadFixture,
     writeFilesToHost
 } from '../testing';
-import { DocgeniHost } from '../docgeni-host';
 import { LibrariesBuilder } from './libraries-builder';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniPaths } from '../docgeni-paths';
 import { toolkit } from '@docgeni/toolkit';
 import { normalizeLibConfig } from './normalize';
 import { normalize, resolve } from '../fs';
