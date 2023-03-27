@@ -78,6 +78,7 @@ export class AlibButtonComponent extends Base implements OnInit {
         this.loading = loading;
     }
 
+    @Input() thysss = false;
     /**
      * Loading Event
      */
