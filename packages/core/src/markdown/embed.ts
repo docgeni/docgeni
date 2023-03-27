@@ -3,7 +3,6 @@ import * as path from 'path';
 import fm from 'front-matter';
 import { marked } from 'marked';
 
-import { compatibleNormalize } from './utils';
 import { getSystemPath, resolve } from '../fs';
 
 const LINE_SEPARATE = /\r\n|\n|\r/;
@@ -17,7 +16,7 @@ export function getEmbedBody(input: string, range: [number, number], url: string
         input = input.split(LINE_SEPARATE)[range[0] - 1];
     }
     // TODO: add hash
-    return fm(compatibleNormalize(input)).body;
+    return fm(toolkit.strings.compatibleNormalize(input)).body;
 }
 
 export interface EmbedToken {

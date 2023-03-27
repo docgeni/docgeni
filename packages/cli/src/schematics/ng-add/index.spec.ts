@@ -85,7 +85,7 @@ describe('ng-add Schematic', () => {
         const expectContent = await toolkit.fs.readFileContent(
             path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc.js')
         );
-        expect(config).toEqual(expectContent);
+        expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
     });
 
     it('should generate without angular.json', async () => {
