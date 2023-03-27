@@ -1,6 +1,5 @@
 import { virtualFs } from '@angular-devkit/core';
-import { fs } from '@docgeni/toolkit';
-import { compatibleNormalize } from '../markdown';
+import { fs, strings } from '@docgeni/toolkit';
 
 export function createTestDocgeniHost(initialFiles: Record<string, string> = {}) {
     return new fs.DocgeniFsHostImpl(new virtualFs.test.TestHost(initialFiles));
@@ -11,7 +10,7 @@ export async function assertExpectedFiles(host: fs.DocgeniFsHost, expectedFiles:
         const content = await host.readFile(filePath);
         if (expectedFiles[filePath]) {
             if (normalize) {
-                expect(compatibleNormalize(content)).toEqual(compatibleNormalize(expectedFiles[filePath]));
+                expect(strings.compatibleNormalize(content)).toEqual(strings.compatibleNormalize(expectedFiles[filePath]));
             } else {
                 expect(content).toEqual(expectedFiles[filePath]);
             }

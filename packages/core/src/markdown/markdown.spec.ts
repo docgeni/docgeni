@@ -1,6 +1,6 @@
 import { loadFixture, FixtureResult } from '../testing/fixture-loader';
 import { Markdown } from './markdown';
-import { compatibleNormalize } from './utils';
+import { strings } from '@docgeni/toolkit';
 
 describe('markdown', () => {
     it('should get correct result for base and ng command', () => {
@@ -53,7 +53,7 @@ describe('markdown', () => {
 
         it('should transform embed success', () => {
             const output = Markdown.toHTML(fixture.src['hello.md'], { absFilePath: fixture.getSrcPath('hello.md') });
-            expect(compatibleNormalize(output).trim()).toEqual(fixture.getOutputContent('hello.html', true));
+            expect(strings.compatibleNormalize(output).trim()).toEqual(fixture.getOutputContent('hello.html', true));
         });
 
         it('should throw error when embed ref self', () => {

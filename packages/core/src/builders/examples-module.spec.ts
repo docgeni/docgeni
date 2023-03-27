@@ -1,7 +1,5 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
 import { generateComponentExamplesModule } from './examples-module';
-import * as utils from '../ast-utils';
-import { compatibleNormalize } from '../markdown';
 
 describe('#examples-module', () => {
     const sourceText = `

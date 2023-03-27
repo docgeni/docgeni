@@ -1,12 +1,10 @@
 import { NgDocParser } from '@docgeni/ngdoc';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
 import * as systemPath from 'path';
-import { DocgeniHost } from '../docgeni-host';
 import { DocgeniContext } from '../docgeni.interface';
 import { getSystemPath, normalize } from '../fs';
 import { ApiDeclaration } from '../interfaces';
-import { compatibleNormalize } from '../markdown';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, writeFilesToHost } from '../testing';
 import { LibraryComponentImpl } from './library-component';
 import { normalizeLibConfig } from './normalize';
@@ -541,12 +539,12 @@ describe('#library-component', () => {
     });
 });
 
-async function expectFiles(host: DocgeniHost, files: Record<string, string>) {
+async function expectFiles(host: fs.DocgeniFsHost, files: Record<string, string>) {
     for (const path in files) {
         expect(await host.exists(path)).toBeTruthy(`${path} is not exists`);
         const content = await host.readFile(path);
-        expect(compatibleNormalize(content.trim())).toEqual(
-            files[path] ? compatibleNormalize(files[path].trim()) : '',
+        expect(toolkit.strings.compatibleNormalize(content.trim())).toEqual(
+            files[path] ? toolkit.strings.compatibleNormalize(files[path].trim()) : '',
             `${path} content is not equal`
         );
     }

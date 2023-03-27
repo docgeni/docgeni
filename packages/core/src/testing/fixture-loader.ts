@@ -1,7 +1,6 @@
 import * as path from 'path';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, strings } from '@docgeni/toolkit';
 import { relative, resolve } from '../fs';
-import { compatibleNormalize } from '../markdown';
 
 export const FIXTURES_PATH = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
@@ -15,7 +14,7 @@ export class FixtureResult {
 
     getOutputContent(relativePath: string, needNormalize = false) {
         const output = this.output[relativePath];
-        return needNormalize ? compatibleNormalize(output).trim() : output;
+        return needNormalize ? strings.compatibleNormalize(output).trim() : output;
     }
 }
 
