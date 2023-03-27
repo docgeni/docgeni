@@ -26,7 +26,10 @@ import {
     hasPrivateTag,
     DocTagResult,
     getTextByJSDocTagInfo,
-    hasPublicTag
+    hasPublicTag,
+    getHeritageClauses,
+    getSymbolDeclaration,
+    getHeritageDeclarations
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -96,12 +99,7 @@ export class NgDocParser {
             const exportSymbols = checker.getExportsOfModule(moduleSymbol);
             debug(`sourceFile: ${sourceFile.fileName}, exportSymbols: ${exportSymbols.length}`, 'ng-parser');
             exportSymbols.forEach(symbol => {
-                // 如果是类 valueDeclaration 就是类声明
-                // 如果是接口，需要通过 getDeclarations 获取第一个节点才是接口声明
-                let declaration = symbol.valueDeclaration;
-                if (!declaration && symbol.getDeclarations()) {
-                    declaration = symbol.getDeclarations()[0];
-                }
+                const declaration = getSymbolDeclaration(symbol);
                 if (parsedSymbols.get(symbol) || !declaration) {
                     return;
                 }
@@ -150,7 +148,7 @@ export class NgDocParser {
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
-            description: getTextByJSDocTagInfo(tags.description, description.comment),
+            description: getTextByJSDocTagInfo(tags.description, description.comment || ''),
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
         };
         directiveDoc.properties = this.parseDeclarationProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -165,6 +163,7 @@ export class NgDocParser {
         ngDecorator: NgParsedDecorator,
         tags: DocTagResult
     ) {
+        const declaration = symbol.valueDeclaration as ts.ClassDeclaration;
         const description = serializeSymbol(symbol, context.checker);
         const directiveDoc: NgDirectiveDoc = {
             type: type,
@@ -174,7 +173,7 @@ export class NgDocParser {
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
-        directiveDoc.properties = this.parseDirectiveProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        directiveDoc.properties = this.parseDirectiveProperties(context, declaration);
         return directiveDoc;
     }
 
@@ -215,6 +214,13 @@ export class NgDocParser {
                 }
             }
         });
+        const heritageDeclarations = getHeritageDeclarations(classDeclaration, context.checker);
+        if (heritageDeclarations && heritageDeclarations.length > 0) {
+            heritageDeclarations.forEach(declaration => {
+                properties.unshift(...this.parseDirectiveProperties(context, declaration as ts.ClassDeclaration));
+            });
+        }
+
         return properties;
     }
 
@@ -236,15 +242,20 @@ export class NgDocParser {
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
                         description: ts.displayPartsToString(tags.description?.text) || symbolDescription.comment,
-                        default: '',
+                        default:
+                            ts.displayPartsToString(tags.default?.text) || getPropertyValue(propertyDeclaration, symbolDescription.type),
                         tags: tags
                     };
-                    property.default =
-                        ts.displayPartsToString(tags.default?.text) || getPropertyValue(propertyDeclaration, symbolDescription.type);
                     properties.push(property);
                 }
             }
         });
+        const heritageDeclarations = getHeritageDeclarations(declaration, context.checker);
+        if (heritageDeclarations && heritageDeclarations.length) {
+            heritageDeclarations.forEach(declaration => {
+                properties.unshift(...this.parseDeclarationProperties(context, declaration as ts.ClassDeclaration));
+            });
+        }
         return properties;
     }
 
@@ -265,8 +276,11 @@ export class NgDocParser {
                             parameters: signature.parameters.map(parameter =>
                                 serializeMethodParameterSymbol(parameter, context.checker, tags)
                             ),
-                            returnValue: { type: context.checker.typeToString(signature.getReturnType()), description: tags.return?.text },
-                            description: descriptionText || defaultDocumentationText
+                            returnValue: {
+                                type: context.checker.typeToString(signature.getReturnType()),
+                                description: tags.return?.text || ''
+                            },
+                            description: descriptionText || defaultDocumentationText || ''
                         } as unknown) as NgMethodDoc;
                     });
 
@@ -274,6 +288,12 @@ export class NgDocParser {
                 }
             }
         });
+        const heritageDeclarations = getHeritageDeclarations(classDeclaration, context.checker);
+        if (heritageDeclarations && heritageDeclarations.length) {
+            heritageDeclarations.forEach(declaration => {
+                methods.unshift(...this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration));
+            });
+        }
         return methods;
     }
 

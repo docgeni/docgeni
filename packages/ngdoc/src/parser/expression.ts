@@ -40,3 +40,17 @@ export function parseArgument(argument: ts.Expression): ArgumentInfo {
     }
     return getNodeText(argument);
 }
+
+export function parseCallExpressionIdentifiers(expression: ts.Expression): ts.Identifier[] {
+    if (ts.isCallExpression(expression)) {
+        const identifiers: ts.Identifier[] = [];
+        expression.arguments.map(argument => {
+            identifiers.push(...parseCallExpressionIdentifiers(argument));
+        });
+        return identifiers;
+    } else if (ts.isIdentifier(expression)) {
+        return [expression];
+    } else {
+        return [];
+    }
+}

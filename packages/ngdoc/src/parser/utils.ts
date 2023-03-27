@@ -261,12 +261,3 @@ export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.Ty
     result.comment = getTextByJSDocTagInfo((tags.param || {})[result.name], result.comment);
     return result;
 }
-
-export function declarationIsPublic(
-    node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration | ts.PropertySignature
-) {
-    return (
-        !node.modifiers ||
-        !node.modifiers.some(item => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)
-    );
-}

@@ -1,4 +1,4 @@
-import { NgDocParser, NgEntryItemDoc } from '../src';
+import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
 import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { Project, Node } from 'ts-morph';
@@ -125,6 +125,282 @@ describe('ng-parser', () => {
         expect(properties[0].description).toBe('en description');
     });
 
+    describe('directive', () => {
+        it('should get heritage clauses properties', () => {
+            const sourceText = `
+
+            class Base {
+                @Input() param1: string;
+
+                @Output() param1Change: string;
+            }
+
+            @Component({
+                selector: 'thy-button',
+                template: ''
+            })
+            export class ButtonComponent extends Base {
+                @Input() param2: string;
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    kind: 'Input',
+                    name: 'param1',
+                    aliasName: '',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Output',
+                    name: 'param1Change',
+                    aliasName: '',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: '',
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param2',
+                    aliasName: '',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+        });
+
+        it('should get recursion heritage clauses properties', () => {
+            const sourceText = `
+
+            class Base1 {
+                @Input() param1: string;
+
+                @Output() param1Change: string;
+            }
+
+            class Base2 extends Base1 {
+                @Input() param2: string;
+                @Output() param2Change: string;
+            }
+
+            @Component({
+                selector: 'thy-button',
+                template: ''
+            })
+            export class ButtonComponent extends Base2 {
+                @Input() param3: string;
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    kind: 'Input',
+                    name: 'param1',
+                    aliasName: '',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Output',
+                    name: 'param1Change',
+                    aliasName: '',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: '',
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param2',
+                    aliasName: '',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Output',
+                    name: 'param2Change',
+                    aliasName: '',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: '',
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param3',
+                    aliasName: '',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+        });
+    });
+
+    describe('service', () => {
+        it('should get heritage clauses properties and methods', () => {
+            const sourceText = `
+
+            class ServiceBase {
+                param1: string;
+                /**
+                * @public
+                **/
+                method1() {}
+            }
+
+            @Injectable({ provideIn: 'root' })
+            export class DialogService extends ServiceBase {
+                param2: string
+                /**
+                * @public
+                **/
+                method2() {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    name: 'param1',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param2',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'method1',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: ''
+                },
+                {
+                    name: 'method2',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: ''
+                }
+            ] as NgMethodDoc[]);
+        });
+
+        it('should get recursion heritage clauses properties and methods', () => {
+            const sourceText = `
+
+            class ServiceBase {
+                param1: string;
+                /**
+                * @public
+                **/
+                method1() {}
+            }
+
+            class ServiceBase2 extends ServiceBase {
+                param2: string;
+                /**
+                * @public
+                **/
+                method2() {}
+            }
+
+            @Injectable({ provideIn: 'root' })
+            export class DialogService extends ServiceBase2 {
+                param3: string
+                /**
+                * @public
+                **/
+                method3() {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    name: 'param1',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param2',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param3',
+                    type: { name: 'string', options: null, kindName: 'StringKeyword' },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'method1',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: ''
+                },
+                {
+                    name: 'method2',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: ''
+                },
+                {
+                    name: 'method3',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: ''
+                }
+            ] as NgMethodDoc[]);
+        });
+    });
+
     describe('interface', () => {
         it('should parse interface properties and methods', () => {
             const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
@@ -178,6 +454,168 @@ describe('ng-parser', () => {
                 ],
                 methods: []
             });
+        });
+
+        it('should get heritage clauses interface', () => {
+            const sourceText = `
+
+            interface Base {
+                param1: string;
+            }
+
+            /**
+             * @public
+             **/
+            export interface ButtonConfig extends Base {
+                param2: string;
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    name: 'param1',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param2',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+        });
+
+        it('should get heritage clauses interfaces', () => {
+            const sourceText = `
+
+            interface Base1 {
+                param1: string;
+            }
+
+            interface Base2 {
+                param2: string;
+            }
+
+            /**
+             * @public
+             **/
+            export interface ButtonConfig extends Base2, Base1 {
+                param3: string;
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    name: 'param1',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param2',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param3',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
+        });
+
+        it('should get recursion heritage clauses interface', () => {
+            const sourceText = `
+
+            interface Base1 {
+                param1: string;
+            }
+
+            interface Base2 extends Base1 {
+                param2: string;
+            }
+
+            /**
+             * @public
+             **/
+            export interface ButtonConfig extends Base2 {
+                param3: string;
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/button/button.component.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    name: 'param1',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param2',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    name: 'param3',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                }
+            ]);
         });
     });
 
@@ -233,7 +671,7 @@ describe('ng-parser', () => {
                         ],
                         returnValue: {
                             type: 'void',
-                            description: undefined
+                            description: ''
                         },
                         description: 'Close dialog'
                     }
