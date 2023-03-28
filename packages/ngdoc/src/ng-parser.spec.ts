@@ -120,7 +120,7 @@ describe('ng-parser', () => {
         expect(docs.length).toBe(1);
         expect(docs[0].name).toBe('thy-button');
         expect(docs[0].description).toBe('thy-button description');
-        const properties = docs[0].properties;
+        const properties = docs[0].properties!;
         expect(properties.length).toBe(1);
         expect(properties[0].description).toBe('en description');
     });
@@ -260,6 +260,37 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
+                    tags: {}
+                }
+            ]);
+        });
+
+        it('should parse default value for boolean', () => {
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/button/button.component.ts': createButtonComponent(`
+                @Input() param1 = false;
+
+                @Input() param2 = true;
+                `)
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    kind: 'Input',
+                    name: 'param1',
+                    aliasName: '',
+                    type: { name: 'boolean', options: null, kindName: undefined },
+                    description: '',
+                    default: false,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param2',
+                    aliasName: '',
+                    type: { name: 'boolean', options: null, kindName: undefined },
+                    description: '',
+                    default: true,
                     tags: {}
                 }
             ]);

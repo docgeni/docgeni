@@ -208,7 +208,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             (apiDocs || []).forEach(item => {
                 item.description = item.description ? Markdown.toHTML(item.description) : '';
                 (item.properties || []).forEach(property => {
-                    property.default = !toolkit.utils.isEmpty(property.default) ? property.default : undefined;
+                    property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '';
                     property.description = property.description ? Markdown.toHTML(property.description) : '';
                 });
             });
