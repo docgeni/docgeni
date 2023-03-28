@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
+
+
+### Bug Fixes
+
+* **core:** update default value to property.default when it is not undefined or null [#424](https://github.com/docgeni/docgeni/issues/424) ([#463](https://github.com/docgeni/docgeni/issues/463)) ([83bd8cb](https://github.com/docgeni/docgeni/commit/83bd8cb2c0e34a154e73b594bff2f9af27ad3edc))
+* **ngdoc:** should parse correct tags when has multi-language ([#459](https://github.com/docgeni/docgeni/issues/459)) ([ab8ab53](https://github.com/docgeni/docgeni/commit/ab8ab533b5c1a4924095615c36bf943a2a1c3de9))
+
+
+### Features
+
+* **ngdoc:** parse heritage declarations for directives, services and class-likes #INFR-6929 ([edf7a6d](https://github.com/docgeni/docgeni/commit/edf7a6d78f10aaa53625fc4e4a66c40de97d714e)), closes [#INFR-6929](https://github.com/docgeni/docgeni/issues/INFR-6929)
+
+
+
+
+
 # [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
 
 

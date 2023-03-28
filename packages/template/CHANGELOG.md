@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
+
+
+### Bug Fixes
+
+* **core:** mark enableIvy as override for LibExampleLoader [#458](https://github.com/docgeni/docgeni/issues/458) ([#461](https://github.com/docgeni/docgeni/issues/461)) ([f42f2ad](https://github.com/docgeni/docgeni/commit/f42f2ad6003dfa5ee411cf87bb3068887d0e13d2))
+* **template:** update homeMeta to nullable for home template ([e563102](https://github.com/docgeni/docgeni/commit/e563102a473bd4dec8f5cff555f181f9b643e22b))
+
+
+
+
+
 # [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
 
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
+
+
+### Bug Fixes
+
+* **core:** mark enableIvy as override for LibExampleLoader [#458](https://github.com/docgeni/docgeni/issues/458) ([#461](https://github.com/docgeni/docgeni/issues/461)) ([f42f2ad](https://github.com/docgeni/docgeni/commit/f42f2ad6003dfa5ee411cf87bb3068887d0e13d2))
+* **core:** update default value to property.default when it is not undefined or null [#424](https://github.com/docgeni/docgeni/issues/424) ([#463](https://github.com/docgeni/docgeni/issues/463)) ([83bd8cb](https://github.com/docgeni/docgeni/commit/83bd8cb2c0e34a154e73b594bff2f9af27ad3edc))
+
+
+### Features
+
+* **core:** update site-template to ng 15 ([2aac8ff](https://github.com/docgeni/docgeni/commit/2aac8ff1eb974a2c572a6b281f496d31a8e345ec))
+
+
+
+
+
 # [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
 
 

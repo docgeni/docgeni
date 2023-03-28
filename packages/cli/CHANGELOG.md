@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
+
+
+### Features
+
+* **cli:** set apiMode to automatic when ng add @docgeni/cli ([2288c3e](https://github.com/docgeni/docgeni/commit/2288c3e6a310866131692ec3f48da5e92ee05907))
+
+
+
+
+
 # [2.1.0-next.4](https://github.com/docgeni/docgeni/compare/v2.1.0-next.2...v2.1.0-next.4) (2023-03-17)
 
 **Note:** Version bump only for package @docgeni/cli
