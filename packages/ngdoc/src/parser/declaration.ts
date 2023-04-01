@@ -39,8 +39,8 @@ export function getHeritageDeclarations(declaration: ts.Declaration, checker: ts
                 identifiers.push(type.expression as ts.Identifier);
             }
             identifiers.forEach(identifier => {
-                const symbol = checker.getSymbolAtLocation(identifier);
-                const declaration = getSymbolDeclaration(symbol);
+                const typeLocation = checker.getTypeAtLocation(identifier);
+                const declaration = getSymbolDeclaration(typeLocation.symbol);
                 if ((declaration && ts.isClassDeclaration(declaration)) || ts.isInterfaceDeclaration(declaration)) {
                     declarations.push(declaration);
                 }

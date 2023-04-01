@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { AbstractOverlayRef } from './overlay-ref';
 
 interface ComponentType {}
 
@@ -7,11 +8,7 @@ interface ComponentType {}
  * @public
  * @order 30
  */
-export abstract class AlibDialogRef<T = unknown, TResult = unknown> {
-    /**
-     * The instance of the dialog component.
-     **/
-    instance: T;
+export abstract class AlibDialogRef<T = unknown, TResult = unknown> extends AbstractOverlayRef<T> {
     /**
      * Result of close dialog
      */

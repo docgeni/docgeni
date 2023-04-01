@@ -36,11 +36,9 @@ describe('#ng-parser-host', () => {
         });
         const buttonPath = toolkit.path.getSystemPath(toolkit.path.resolve(fixtureRootDir, 'src/button/*.ts'));
         const filePaths = toolkit.fs.globSync(buttonPath);
-        console.log(filePaths);
         expect(filePaths.length).toBeGreaterThanOrEqual(1);
         const filePath = filePaths[0];
         const finalPath = ts.sys.useCaseSensitiveFileNames ? filePath : filePath.toLowerCase();
-        console.log(`finalPath: ${finalPath}`);
         const sourceFile = parserHost.program.getSourceFileByPath(finalPath as ts.Path);
         expect(sourceFile).toBeTruthy();
     });
