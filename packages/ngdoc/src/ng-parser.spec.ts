@@ -709,6 +709,97 @@ describe('ng-parser', () => {
                 ]
             });
         });
+
+        it('should parse heritage clauses class properties and methods', () => {
+            const sourceText = `
+ /**
+ * AbstractDialogRef
+ */
+export abstract class AbstractDialogRef<T> {
+    /**
+     * Parm1 desc
+     */
+    parm1: string;
+
+    parm1Method() {}
+}
+/**
+ * Dialog Ref
+ * @public
+ */
+export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
+    /**
+     * Parm2 desc
+     */
+    parm2: string;
+
+    /**
+     * Close dialog
+     */
+    close(id?: string): void {}
+}`;
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'class',
+                name: 'DialogRef',
+                description: 'Dialog Ref',
+                order: 9007199254740991,
+                properties: [
+                    {
+                        name: 'parm1',
+                        type: {
+                            name: 'string',
+                            options: null,
+                            kindName: 'StringKeyword'
+                        },
+                        description: 'Parm1 desc',
+                        default: null,
+                        tags: {}
+                    },
+                    {
+                        name: 'parm2',
+                        type: {
+                            name: 'string',
+                            options: null,
+                            kindName: 'StringKeyword'
+                        },
+                        description: 'Parm2 desc',
+                        default: null,
+                        tags: {}
+                    }
+                ],
+                methods: [
+                    {
+                        name: 'parm1Method',
+                        parameters: [],
+                        returnValue: {
+                            type: 'void',
+                            description: ''
+                        },
+                        description: ''
+                    },
+                    {
+                        name: 'close',
+                        parameters: [
+                            {
+                                name: 'id',
+                                comment: '',
+                                type: 'string'
+                            }
+                        ],
+                        returnValue: {
+                            type: 'void',
+                            description: ''
+                        },
+                        description: 'Close dialog'
+                    }
+                ]
+            });
+        });
     });
 });
 
