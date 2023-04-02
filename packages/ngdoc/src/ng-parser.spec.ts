@@ -436,13 +436,13 @@ describe('ng-parser', () => {
             @Injectable({ provideIn: 'root' })
             export class DialogService {
                 /**
-                 * @description method1重载方法1
+                 * method1 重载方法1
                  * @param input1 这是一个参数
                  * @memberof AlibDialog
                  */
                 method1(input1: number): void;
                 /**
-                 * @description method1重载方法2
+                 * @description method1 重载方法2
                  * @param input1
                  * @param input2
                  * @memberof AlibDialog
@@ -469,7 +469,7 @@ describe('ng-parser', () => {
                         type: 'void',
                         description: ''
                     },
-                    description: 'method1重载方法1'
+                    description: 'method1 重载方法1'
                 },
                 {
                     name: 'method1',
@@ -489,7 +489,7 @@ describe('ng-parser', () => {
                         type: 'void',
                         description: ''
                     },
-                    description: 'method1重载方法2'
+                    description: 'method1 重载方法2'
                 }
             ] as NgMethodDoc[]);
         });
