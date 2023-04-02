@@ -3498,10 +3498,10 @@
     "@webassemblyjs/ast" "1.11.1"
     "@xtuc/long" "4.2.2"
 
-"@worktile/pkg-manager@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.5.tgz#e585054519e7aa64000fdc3c7f9f907dd124ed5c"
-  integrity sha512-sy/dsUG4+WnB0Dj6iJjhWd4tQKKGKIW+2pJljDmM2xr3oy0LXKLceyfm5Zvn2ut3GmXmH/Mw/31dSarVwRkdpg==
+"@worktile/pkg-manager@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.npmjs.org/@worktile/pkg-manager/-/pkg-manager-0.0.11.tgz#285070e4f0d64790dcfcaffead8639ee47a72dd5"
+  integrity sha512-lj9VmPYaWAeVsexaixtTWiNsEI/rGpU4OVOdQoZM8O/CVSLOXo5Jqr+D1i/bumKtXYOOPvJ/uqrdjGGkupF3/g==
   dependencies:
     "@docgeni/toolkit" "^1.1.0"
     "@types/shelljs" "^0.8.8"
