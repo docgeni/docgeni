@@ -66,7 +66,9 @@
                     <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
                       <div *ngFor="let item of method.parameters" class="dg-api-method-parameter-item">
                         <span class="dg-api-method-parameter-type">{{ item.name }}:{{ item.type }}</span>
-                        <span class="dg-api-method-parameter-description" *ngIf="item.comment">{{ item.comment }}</span>
+                        <span class="dg-api-method-parameter-description" *ngIf="item.description || item.comment">{{
+                          item.description || item.comment
+                        }}</span>
                       </div>
                     </ng-container>
                   </div>

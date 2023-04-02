@@ -29,7 +29,8 @@ import {
     hasPublicTag,
     getHeritageClauses,
     getSymbolDeclaration,
-    getHeritageDeclarations
+    getHeritageDeclarations,
+    parseJsDocTagsToDocTagResult
 } from './parser';
 import { createNgParserHost, NgParserHost } from './ng-parser-host';
 
@@ -148,7 +149,7 @@ export class NgDocParser {
         const directiveDoc: NgServiceDoc = {
             type: 'service',
             name: description.name,
-            description: getTextByJSDocTagInfo(tags.description, description.comment || ''),
+            description: getTextByJSDocTagInfo(tags.description, description.description || ''),
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
         };
         directiveDoc.properties = this.parseDeclarationProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
@@ -169,7 +170,7 @@ export class NgDocParser {
             type: type,
             name: getTextByJSDocTagInfo(tags.name, description.name),
             className: description.name,
-            description: description.comment,
+            description: description.description,
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER,
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
@@ -199,7 +200,7 @@ export class NgDocParser {
                                 options: options,
                                 kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                             },
-                            description: getTextByJSDocTagInfo(tags.description, symbolDescription.comment),
+                            description: getTextByJSDocTagInfo(tags.description, symbolDescription.description),
                             default: '',
                             tags: tags
                         };
@@ -241,7 +242,7 @@ export class NgDocParser {
                             options: options,
                             kindName: ts.SyntaxKind[propertyDeclaration.type?.kind]
                         },
-                        description: ts.displayPartsToString(tags.description?.text) || symbolDescription.comment,
+                        description: ts.displayPartsToString(tags.description?.text) || symbolDescription.description,
                         default:
                             ts.displayPartsToString(tags.default?.text) || getPropertyValue(propertyDeclaration, symbolDescription.type),
                         tags: tags
@@ -261,13 +262,40 @@ export class NgDocParser {
 
     private parseDeclarationMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
         const methods: NgPropertyDoc[] = [];
+        const parsedSymbols = new WeakMap<ts.Symbol, boolean>();
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
-                if (symbol) {
+                if (symbol && !parsedSymbols.has(symbol)) {
+                    parsedSymbols.set(symbol, true);
+                    // const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+                    // const symbolDescription = serializeSymbol(symbol, context.checker);
+                    // const tagInfos = ts.getJSDocTags(node).map(tag => {
+                    //     return { name: tag.tagName.getFullText(), text: [{ text: tag.comment.toString(), kind: 'text' }] };
+                    // });
+                    // const [tags] = parseJsDocTagsToDocTagResult(tagInfos);
+                    // const descriptionText = ts.displayPartsToString(tags.description.text);
+                    // const method = {
+                    //     name: symbolDescription.name,
+                    //     parameters: node.parameters.map(parameter => {
+                    //         const paramName = parameter.name.getText();
+                    //         return {
+                    //             name: paramName,
+                    //             comment: ts.displayPartsToString(tags.param[paramName]?.text),
+                    //             type: parameter.type.getFullText()
+                    //         };
+                    //     }),
+                    //     returnValue: {
+                    //         type: context.checker.typeToString(type)
+                    //         // description: ts.displayPartsToString(tags.return.text)
+                    //     },
+                    //     description: descriptionText || symbolDescription.comment || ''
+                    // };
+                    // methods.push(method);
                     const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
-                    const list = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call).map(signature => {
+                    const signatures = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+                    const methodSignatures = signatures.map(signature => {
                         const tags = getDocTagsBySignature(signature);
                         const descriptionText = ts.displayPartsToString(tags.description?.text);
                         const defaultDocumentationText = ts.displayPartsToString(signature.getDocumentationComment(context.checker));
@@ -283,8 +311,7 @@ export class NgDocParser {
                             description: descriptionText || defaultDocumentationText || ''
                         } as unknown) as NgMethodDoc;
                     });
-
-                    methods.push(...list);
+                    methods.push(...methodSignatures);
                 }
             }
         });
@@ -305,7 +332,7 @@ export class NgDocParser {
         const doc: ClassLikeDoc = {
             type: ts.isInterfaceDeclaration(declaration) ? 'interface' : 'class',
             name: description.name,
-            description: getTextByJSDocTagInfo(tags.description, description.comment),
+            description: getTextByJSDocTagInfo(tags.description, description.description),
             order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER
         };
         doc.properties = this.parseDeclarationProperties(context, declaration);

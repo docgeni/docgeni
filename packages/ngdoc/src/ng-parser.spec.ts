@@ -430,6 +430,69 @@ describe('ng-parser', () => {
                 }
             ] as NgMethodDoc[]);
         });
+
+        it('should get multiple methods for overload', () => {
+            const sourceText = `
+            @Injectable({ provideIn: 'root' })
+            export class DialogService {
+                /**
+                 * @description method1重载方法1
+                 * @param input1 这是一个参数
+                 * @memberof AlibDialog
+                 */
+                method1(input1: number): void;
+                /**
+                 * @description method1重载方法2
+                 * @param input1
+                 * @param input2
+                 * @memberof AlibDialog
+                 */
+                method1(input1: number, input2: number): void;
+                method1(input1: number, input2?: number): void {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('dialog', {
+                '/dialog/dialog.service.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'method1',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '这是一个参数',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'method1重载方法1'
+                },
+                {
+                    name: 'method1',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '',
+                            type: 'number'
+                        },
+                        {
+                            name: 'input2',
+                            description: '',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'method1重载方法2'
+                }
+            ] as NgMethodDoc[]);
+        });
     });
 
     describe('interface', () => {
@@ -696,7 +759,7 @@ describe('ng-parser', () => {
                         parameters: [
                             {
                                 name: 'id',
-                                comment: '',
+                                description: '',
                                 type: 'string'
                             }
                         ],
@@ -787,7 +850,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                         parameters: [
                             {
                                 name: 'id',
-                                comment: '',
+                                description: '',
                                 type: 'string'
                             }
                         ],
