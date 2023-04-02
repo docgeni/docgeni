@@ -173,7 +173,7 @@
         "parameters": [
           {
             "name": "message",
-            "comment": "message to log",
+            "description": "message to log",
             "type": "string"
           }
         ],
@@ -187,7 +187,7 @@
         "parameters": [
           {
             "name": "input1",
-            "comment": "这是一个参数",
+            "description": "这是一个参数",
             "type": "number"
           }
         ],
@@ -201,12 +201,12 @@
         "parameters": [
           {
             "name": "input1",
-            "comment": "",
+            "description": "",
             "type": "number"
           },
           {
             "name": "input2",
-            "comment": "",
+            "description": "",
             "type": "number"
           }
         ],
@@ -220,12 +220,12 @@
         "parameters": [
           {
             "name": "input1",
-            "comment": "",
+            "description": "",
             "type": "number"
           },
           {
             "name": "input2",
-            "comment": "注释过长时",
+            "description": "注释过长时",
             "type": "number"
           }
         ],
@@ -319,7 +319,7 @@
         "parameters": [
           {
             "name": "id",
-            "comment": "",
+            "description": "",
             "type": "string"
           }
         ],

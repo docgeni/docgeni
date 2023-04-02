@@ -26,7 +26,7 @@ export function getNodeText(node: ts.Node) {
 export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
     return {
         name: symbol.getName(),
-        comment: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
+        description: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
         type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
     };
 }
@@ -182,6 +182,7 @@ export interface DocTagResult {
     name?: ts.JSDocTagInfo;
     type?: ts.JSDocTagInfo;
     order?: ts.JSDocTagInfo;
+    // param?: Record<string, ts.JSDocTagInfo>;
     [key: string]: ts.JSDocTagInfo;
 }
 export interface MethodDocTagResult {
@@ -210,7 +211,15 @@ export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)
                 localeTags[locale][jsDocTag.name] = jsDocTag;
             }
         } else {
-            defaultLocaleTags[jsDocTag.name] = jsDocTag;
+            if (jsDocTag.name === 'param') {
+                const paramName = jsDocTag.text[0].text;
+                const paramDesc = jsDocTag.text.length >= 3 ? jsDocTag.text[2].text : '';
+
+                defaultLocaleTags[jsDocTag.name] = defaultLocaleTags[jsDocTag.name] || (({} as unknown) as ts.JSDocTagInfo);
+                defaultLocaleTags[jsDocTag.name][paramName] = { name: paramName, text: [{ text: paramDesc, kind: 'text' }] };
+            } else {
+                defaultLocaleTags[jsDocTag.name] = jsDocTag;
+            }
         }
     });
     return [defaultLocaleTags, localeTags];
@@ -258,6 +267,6 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
 
 export function serializeMethodParameterSymbol(symbol: ts.Symbol, checker: ts.TypeChecker, tags: MethodDocTagResult) {
     const result = serializeSymbol(symbol, checker);
-    result.comment = getTextByJSDocTagInfo((tags.param || {})[result.name], result.comment);
+    result.description = getTextByJSDocTagInfo((tags.param || {})[result.name], result.description);
     return result;
 }
