@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.6](https://github.com/docgeni/docgeni/compare/v2.1.0-next.5...v2.1.0-next.6) (2023-04-04)
+
+
+### Bug Fixes
+
+* **ngdoc:** methods duplicate removal for overload ([#465](https://github.com/docgeni/docgeni/issues/465)) ([d31178a](https://github.com/docgeni/docgeni/commit/d31178a2dff1024c5214a8ba7d3fee8887a63c7e))
+
+
+
+
+
 # [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
 
 

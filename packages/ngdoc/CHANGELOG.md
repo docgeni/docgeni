@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.6](https://github.com/docgeni/docgeni/compare/v2.1.0-next.5...v2.1.0-next.6) (2023-04-04)
+
+
+### Bug Fixes
+
+* **core:** update *.ts to **/*.ts for ngDocParser component ([5b702f8](https://github.com/docgeni/docgeni/commit/5b702f817b13fea4cf00c9bad833bf25781cc682))
+* **ngdoc:** methods duplicate removal for overload ([#465](https://github.com/docgeni/docgeni/issues/465)) ([d31178a](https://github.com/docgeni/docgeni/commit/d31178a2dff1024c5214a8ba7d3fee8887a63c7e))
+* **ngdoc:** use getTypeAtLocation by identifier for get heritage declarations in other module ([d2ffeec](https://github.com/docgeni/docgeni/commit/d2ffeecb46d85f5f88ae95d995a155d49b538fb4))
+
+
+
+
+
 # [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.6](https://github.com/docgeni/docgeni/compare/v2.1.0-next.5...v2.1.0-next.6) (2023-04-04)
+
+
+### Bug Fixes
+
+* **core:** update *.ts to **/*.ts for ngDocParser component ([5b702f8](https://github.com/docgeni/docgeni/commit/5b702f817b13fea4cf00c9bad833bf25781cc682))
+
+
+
+
+
 # [2.1.0-next.5](https://github.com/docgeni/docgeni/compare/v2.1.0-next.4...v2.1.0-next.5) (2023-03-28)
 
 
