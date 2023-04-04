@@ -785,6 +785,11 @@ export abstract class AbstractDialogRef<T> {
     parm1: string;
 
     parm1Method() {}
+
+    /**
+     * 模态框打开后的回调
+     */
+    abstract afterOpened(): Observable<void>;
 }
 /**
  * Dialog Ref
@@ -844,6 +849,15 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                             description: ''
                         },
                         description: ''
+                    },
+                    {
+                        name: 'afterOpened',
+                        parameters: [],
+                        returnValue: {
+                            type: 'Observable<void>',
+                            description: ''
+                        },
+                        description: '模态框打开后的回调'
                     },
                     {
                         name: 'close',
