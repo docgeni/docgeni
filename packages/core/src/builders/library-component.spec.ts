@@ -426,7 +426,7 @@ describe('#library-component', () => {
                 }
             ];
             spectator.ngDocParseSpy
-                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '*.ts')))
+                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '**/*.ts')))
                 .and.returnValue(parsedApiDocs);
             await component.build();
             spectator.assertCosmiconfigOptions(buttonDirPath);
@@ -479,7 +479,7 @@ describe('#library-component', () => {
                 }
             ];
             spectator.ngDocParseSpy
-                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '*.ts')))
+                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '**/*.ts')))
                 .and.returnValue(parsedApiDocs);
             await component.build();
             const enApiDocs = component.getApiDocs('en-us');
