@@ -1,6 +1,6 @@
 <!-- <dg-content-viewer [url]="contentUrl"> </dg-content-viewer> -->
 <ng-container *ngIf="apiDeclarations; else loading">
-  <div class="dg-component-api-content">
+  <div class="dg-component-api-content dg-doc-content">
     <ng-container *ngFor="let apiDeclaration of apiDeclarations">
       <div class="dg-api-header">
         <h1 class="name" id="{{ apiDeclaration.name }}">{{ apiDeclaration.name }}</h1>
@@ -100,4 +100,4 @@
   <div class="dg-api-no-method-parameter">None</div>
 </ng-template>
 
-<ng-template #loading> Loading... </ng-template>
+<ng-template #loading> <div class="dg-doc-content">Loading...</div></ng-template>

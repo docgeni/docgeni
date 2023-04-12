@@ -9,16 +9,13 @@ import { TocService } from '../../../services/toc.service';
 @Component({
     selector: 'dg-component-api',
     templateUrl: './component-api.component.html',
-    providers: [TocService]
+    providers: [TocService],
+    host: {
+        class: 'dg-component-api'
+    }
 })
 export class ComponentApiComponent implements OnInit {
-    @HostBinding('class.dg-component-api') contentClass = true;
-
-    @HostBinding('class.dg-doc-content') isDocContent = true;
-
-    // contentUrl: string;
-
-    apiDeclarations: ApiDeclaration[];
+    apiDeclarations!: ApiDeclaration[];
 
     constructor(
         public componentViewer: ComponentViewerComponent,
