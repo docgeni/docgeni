@@ -4,7 +4,7 @@
     <a *ngIf="docItem.overview" class="dg-tab-link" [routerLink]="['./overview']" routerLinkActive="active">{{
       'OVERVIEW' | dgTranslate
     }}</a>
-    <a *ngIf="docItem.examples.length > 0" class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">{{
+    <a *ngIf="docItem.examples?.length > 0" class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">{{
       'EXAMPLES' | dgTranslate
     }}</a>
     <a *ngIf="docItem.api" class="dg-tab-link" [routerLink]="['./api']" routerLinkActive="active">API</a>

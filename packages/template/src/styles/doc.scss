@@ -89,10 +89,6 @@ $dg-service-color: #8e24aa;
                 max-width: 78%;
             }
 
-            .dg-component-api-toc {
-                margin: 0 0 20px 20px;
-            }
-
             .dg-api-header {
                 display: flex;
                 align-items: center;
@@ -255,6 +251,14 @@ $dg-service-color: #8e24aa;
     }
 }
 
+@mixin content-child-selector($names) {
+    @each $name in $names {
+        #{$name}:not(.dg-example-viewer #{$name}) {
+            @content;
+        }
+    }
+}
+
 .dg-doc-content {
     flex: 1;
     display: block;
@@ -262,37 +266,36 @@ $dg-service-color: #8e24aa;
     // font-size: $dg-font-size-md;
     // white-space: break-spaces;
     > :first-child {
-        margin-top: 0;
+        margin-top: 0 !important;
     }
-    h1 {
+    @include content-child-selector(h1) {
         font-size: $dg-font-size-xlg;
         margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
 
-    h2 {
+    @include content-child-selector(h2) {
         font-size: $dg-font-size-lg;
         margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
 
-    h3 {
+    @include content-child-selector(h3) {
         font-size: 18px;
         margin: 20px 0px 16px 0px;
     }
 
-    h4 {
+    @include content-child-selector(h4) {
         font-size: 16px;
         margin: 10px 0px 10px 0px;
     }
 
-    h5 {
+    @include content-child-selector(h5) {
         font-size: 14px;
         margin: 10px 0px 10px 0px;
     }
 
-    ul,
-    ol {
+    @include content-child-selector((ul, ol)) {
         margin: 10px 0 10px 32px;
         padding: 0;
         li {
@@ -300,7 +303,7 @@ $dg-service-color: #8e24aa;
         }
     }
 
-    code {
+    @include content-child-selector(code) {
         display: inline-block;
         padding: 0px 4px;
         margin: 0px 2px;
@@ -309,7 +312,7 @@ $dg-service-color: #8e24aa;
         color: $dg-gray-800;
     }
 
-    pre {
+    @include content-child-selector(pre) {
         padding: 1em;
         color: $dg-gray-700;
         background: $dg-gray-100;
@@ -323,8 +326,7 @@ $dg-service-color: #8e24aa;
         }
     }
 
-    p,
-    .dg-paragraph {
+    @include content-child-selector((p, '.dg-paragraph')) {
         // color: $gray-700;
         line-height: 26px;
         margin-top: 0;
@@ -336,11 +338,11 @@ $dg-service-color: #8e24aa;
         }
     }
 
-    img {
+    @include content-child-selector(img) {
         max-width: 100%;
     }
 
-    blockquote {
+    @include content-child-selector(blockquote) {
         margin-left: 0px;
         border-left: 2px solid $dg-gray-300;
         color: $dg-gray-600;
@@ -350,7 +352,7 @@ $dg-service-color: #8e24aa;
         padding-left: 10px;
     }
 
-    table {
+    @include content-child-selector(table) {
         border-collapse: collapse;
         border-spacing: 0;
         display: table;
