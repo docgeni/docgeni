@@ -73,12 +73,17 @@ The file structure is as follows:
 │   │   └── module.ts
 ```
 
-Naming rules:
+## Naming Rules
+
 - Example file name: `{take the name of the folder and split it with - }.component.ts` (e.e. `basic.component.ts` and `advance-title.component.ts`)
 - Example component name: `{library abbreviation} + {component name} + {example name} + ExampleComponent` (for example: ` AlibButtonExamplesModule `, the component name supports customization after version '1.2', and docgeni will dynamically read the exported component name)
 - `module` name: `{library abbreviation}+{component name} + ExamplesModule` (e.g. `AlibButtonExamplesModule`). After version ` 1.2', the module name supports customization and dynamic generation
+- <label type="success">Recommended</label>Version `2.1.0` supports standalone components in the examples. If all examples are standalone components, No need to define module.ts file, and it is recommended to use standalone components
 
-`module.ts' is the entry module of all examples of the current component. from version `1.2`, docgeni will automatically generate 'module.ts`, you don't need to configure `module .ts` file, and supports configuring imported modules and other module metadata through the `export default {}` mode without importing each example components. the configuration example is as follows:
+## Configuration module
+<alert>All examples is that non standalone components need to be configured. it is recommended not to define module.ts if it is an standalone components.</alert>
+
+`module.ts` is the entry module for all examples of the current component. from version `1.2`, docgeni will automatically generate a complete NgModule. You only need to configure the imported modules and other metadata through `export default {}`, without the need to manually import each example components. The configuration example is as follows:
 
 ```ts
 // module.ts
@@ -117,7 +122,7 @@ export class AlibButtonExamplesModule {}
 ```
 <alert type="info">To maintain compatibility, if there is angular module defined in `module.ts` are mainly user-defined module, and will not be generated api automatically by comments.</alert>
 
-## Import configuration
+## Import configuration (tsconfig paths）
 When Docgeni runs, it will copy all the example files under `examples` to the site to start. In the component examples, relative paths cannot be used to import component modules. It is recommended to import directly through the package path. At the same time, you need to configure paths in tsconfig.json to point to the source code path of the library, so that you can directly copy the example code to use. For example, the component library is called `alib`, and the components are configured and imported in the following way:
 ```ts
 // button/examples/module.ts

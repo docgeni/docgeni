@@ -158,3 +158,5 @@ export default {
 ```
 
 In this way, the components and directives exported by `CommonModule` and `FormsModule` can be used in custom built-in components.
+
+If the custom component is a standalone component, there is no need to define `module.ts`, simply import the required modules into the standalone component.

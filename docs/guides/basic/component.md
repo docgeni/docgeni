@@ -74,12 +74,16 @@ Docgeni 默认会扫描`examples`文件夹下的所有子文件夹，每个子�
 │   │   └── module.ts
 ```
 
-命名规则
+## 命名规则
+
 - 示例组件文件名: `{取文件夹的名称，并以 - 分割}.component.ts` (如: `basic.component.ts`、`advance-title.component.ts`)
 - 示例组件名: `{类库缩写}+{组件名}+{示例名}+ExampleComponent` (如: `AlibButtonBasicExampleComponent`, `1.2`版本后组件名支持自定义，Docgeni 会动态读取导出的组件名称)
-- `module`模块名: `{类库缩写}+{组件名}+ExamplesModule`(如: `AlibButtonExamplesModule`)，`1.2`版本后模块名支持自定义且支持动态生成
+- `module`模块名: `{类库缩写}+{组件名}+ExamplesModule`(如: `AlibButtonExamplesModule`)，`1.2`版本后模块支持动态生成
+- <label type="success">推荐</label>`2.1.0`版本示例支持独立组件，如果所有示例都是独立组件，module.ts 可以无需定义，推荐使用独立组件
 
-`module.ts`为当前组件所有示例的入口模块，从`1.2`版本开始 Docgeni 会自动生成`module.ts`，可以不需要配置`module.ts`，同时支持通过`export default {}`模式配置导入的模块和其他模块元数据，无需导入每个示例组件，配置示例如下:
+## 配置 module
+<alert>示例为非独立组件需要配置，如果是独立组件建议不要配置 module.ts，当然配置也没有问题。</alert>
+`module.ts`为当前组件所有示例的入口模块，从`1.2`版本开始 Docgeni 会自动生成完整的 NgModule，只需要通过`export default {}`配置导入的模块和其他模块元数据即可，无需手写 NgModule 模块导入每个示例组件，配置示例如下:
 
 ```ts
 // module.ts
@@ -118,7 +122,7 @@ export class AlibButtonExamplesModule {}
 
 <alert type="info">为了保持兼容性，如果`module.ts`中有定义 Angular 的模块以自定义的模块为主，不会自动生成模块。</alert>
 
-## 引用配置
+## 引用配置（tsconfig paths）
 Docgeni 运行时会把`examples`下的所有示例文件拷贝到站点下启动，在组件示例中不能采用相对路径引入组件模块源文件，建议直接通过包路径引用，同时需要在 tsconfig.json 配置`paths`指向类库源代码路径，这样可以直接复制示例代码使用，比如：组件库叫`@docgeni/alib`，采用如下的方式配置和引入组件：
 ```ts
 // button/examples/module.ts

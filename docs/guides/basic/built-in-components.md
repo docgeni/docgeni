@@ -148,3 +148,4 @@ export default {
 };
 ```
 这样就可以在自定义内置组件中使用`CommonModule`和`FormsModule`导出的组件和服务。
+当然如果自定义组件是一个独立组件，无需定义`module.ts`，直接在独立组件中导入需要的模块即可。
