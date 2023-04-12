@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.7](https://github.com/docgeni/docgeni/compare/v2.1.0-next.6...v2.1.0-next.7) (2023-04-12)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
 # [2.1.0-next.6](https://github.com/docgeni/docgeni/compare/v2.1.0-next.5...v2.1.0-next.6) (2023-04-04)
 
 

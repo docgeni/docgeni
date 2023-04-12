@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.7](https://github.com/docgeni/docgeni/compare/v2.1.0-next.6...v2.1.0-next.7) (2023-04-12)
+
+
+### Bug Fixes
+
+* **template:** update sub selectors of dg-doc-content to avoid cover elements styles of example viewer [#432](https://github.com/docgeni/docgeni/issues/432) ([3b7d623](https://github.com/docgeni/docgeni/commit/3b7d623dccba10d28d84193654768acb21a9bd4f))
+
+
+
+
+
 # [2.1.0-next.6](https://github.com/docgeni/docgeni/compare/v2.1.0-next.5...v2.1.0-next.6) (2023-04-04)
 
 
