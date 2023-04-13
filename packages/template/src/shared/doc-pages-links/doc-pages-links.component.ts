@@ -10,12 +10,12 @@ import { GlobalContext } from '../../services/global-context';
     }
 })
 export class DocPagesLinksComponent implements OnInit {
-    @Input() docPages: {
+    @Input() docPages!: {
         pre: NavigationItem;
         next: NavigationItem;
     };
-    preRouterLink: string;
-    nextRouterLink: string;
+    preRouterLink!: string;
+    nextRouterLink!: string;
     constructor(private globalContext: GlobalContext) {}
 
     ngOnInit(): void {

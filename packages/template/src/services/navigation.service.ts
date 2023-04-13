@@ -7,10 +7,10 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class NavigationService {
-    channel$ = new BehaviorSubject<ChannelItem>(null);
+    channel$ = new BehaviorSubject<ChannelItem | null>(null);
 
-    docItem$ = new BehaviorSubject<NavigationItem>(null);
-    docPages$ = new BehaviorSubject<{ pre: NavigationItem; next: NavigationItem }>(null);
+    docItem$ = new BehaviorSubject<NavigationItem | null>(null);
+    docPages$ = new BehaviorSubject<{ pre: NavigationItem; next: NavigationItem } | null>(null);
     /** Responsive layout, sidebar default is hide */
     showSidebar = false;
     get channel() {
@@ -38,7 +38,7 @@ export class NavigationService {
     getChannel(path: string): ChannelItem {
         return this.navs.find(nav => {
             return nav.path === path;
-        });
+        }) as ChannelItem;
     }
 
     getDocItemByPath(path: string) {
@@ -47,11 +47,11 @@ export class NavigationService {
             // 类库频道
             if (this.channel.lib) {
                 index = this.docItems.findIndex(docItem => {
-                    return docItem.path === path && docItem.channelPath === this.channel.path && !!docItem.importSpecifier;
+                    return docItem.path === path && docItem.channelPath === this.channel!.path && !!docItem.importSpecifier;
                 });
             } else {
                 index = this.docItems.findIndex(docItem => {
-                    return docItem.path === path && docItem.channelPath === this.channel.path;
+                    return docItem.path === path && docItem.channelPath === this.channel!.path;
                 });
             }
         } else {
@@ -63,8 +63,8 @@ export class NavigationService {
             const preDocItem = index ? this.docItems[index - 1] : undefined;
             const nextDocItem = this.docItems.length - 1 === index ? undefined : this.docItems[index + 1];
             this.docPages$.next({
-                pre: preDocItem,
-                next: nextDocItem
+                pre: preDocItem!,
+                next: nextDocItem!
             });
         }
         return this.docItems[index];
@@ -86,11 +86,10 @@ export class NavigationService {
     }
 
     getChannelFirstDocItem() {
-        let docItem: DocItem;
         if (this.channel && this.channel.items) {
             return this.searchFirstDocItem(this.channel.items as NavigationItem[]);
         }
-        return docItem;
+        return null;
     }
 
     searchFirstDocItem(items: NavigationItem[] = this.navs) {
@@ -105,12 +104,12 @@ export class NavigationService {
                 break;
             }
         }
-        return docItem;
+        return docItem!;
     }
 
     getNavFirstDocItem(nav: NavigationItem) {
         let docItem: DocItem;
-        for (const item of nav.items) {
+        for (const item of nav.items!) {
             if (item && this.isCategoryItem(item)) {
                 docItem = this.getNavFirstDocItem(item);
             } else {
@@ -120,7 +119,7 @@ export class NavigationService {
                 break;
             }
         }
-        return docItem;
+        return docItem!;
     }
 
     toggleSidebar() {

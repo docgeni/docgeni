@@ -34,15 +34,16 @@ export class SearchService {
     }
 
     private async initAlgolia(searchSelector: string) {
-        const algolia = this.global.config.algolia.appId
+        const algoliaConfig = this.global.config.algolia;
+        const algolia = algoliaConfig?.appId
             ? {
-                  appId: this.global.config.algolia.appId,
-                  apiKey: this.global.config.algolia.apiKey,
-                  indexName: this.global.config.algolia.indexName
+                  appId: algoliaConfig.appId,
+                  apiKey: algoliaConfig.apiKey,
+                  indexName: algoliaConfig.indexName
               }
             : {
-                  apiKey: this.global.config.algolia.apiKey,
-                  indexName: this.global.config.algolia.indexName
+                  apiKey: algoliaConfig?.apiKey,
+                  indexName: algoliaConfig?.indexName
               };
 
         (window as any).global = window;
@@ -51,6 +52,7 @@ export class SearchService {
             env: { DEBUG: undefined }
         };
 
+        // @ts-ignore
         const { default: docsearch } = await import('docsearch.js');
 
         docsearch({

@@ -13,6 +13,7 @@
     "target": "ES2022",
     "useDefineForClassFields": false,
     "noImplicitOverride": true,
+    "strict": true,
     "lib": [
       "es2018",
       "dom"

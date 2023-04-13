@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class CopierService {
-    private textarea: HTMLTextAreaElement;
+    private textarea?: HTMLTextAreaElement;
 
     /** Copy the text value to the clipboard. */
     copyText(text: string): boolean {

@@ -25,13 +25,13 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    docItem$: Observable<NavigationItem> = this.navigationService.docItem$.asObservable();
+    docItem$: Observable<NavigationItem | null> = this.navigationService.docItem$.asObservable();
     docPages$: Observable<{
         pre: NavigationItem;
         next: NavigationItem;
-    }> = this.navigationService.docPages$.asObservable();
+    } | null> = this.navigationService.docPages$.asObservable();
 
-    @ViewChild('toc') tableOfContents: TableOfContentsComponent;
+    @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
     private destroyed = new Subject();
 
@@ -59,8 +59,8 @@ export class DocViewerComponent implements OnInit, OnDestroy {
                 this.navigationService.resetShowSidebar();
             } else {
                 // doc
-                const path = this.route.snapshot.routeConfig.path;
-                this.navigationService.selectDocItem(path);
+                const path = this.route.snapshot.routeConfig?.path;
+                this.navigationService.selectDocItem(path!);
             }
             if (this.navigationService.docItem) {
                 this.pageTitle.title = '' + this.navigationService.docItem.title;
@@ -75,7 +75,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         combineLatest([this.navigationService.docItem$, this.tocService.links$])
             .pipe(takeUntil(this.destroyed))
             .subscribe(result => {
-                this.hasContentToc = result[0].toc === 'content' && result[1].length > 0;
+                this.hasContentToc = result[0]!.toc === 'content' && result[1].length > 0;
             });
     }
 

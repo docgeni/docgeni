@@ -11,7 +11,7 @@ export abstract class DocgeniBuiltInComponent {
     constructor(protected elementRef: ElementRef) {}
 
     setAttribute(qualifiedName: string, value: string) {
-        this[qualifiedName] = value;
+        (this as any)[qualifiedName] = value;
         this.hostElement.setAttribute(qualifiedName, value);
     }
 

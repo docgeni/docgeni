@@ -11,7 +11,7 @@ import { CopierService } from '../copier/copier.service';
 export class CopyComponent implements OnInit {
     public icon = 'copy';
 
-    @Input() text: string;
+    @Input() text!: string;
 
     @Input('dgCopy') set dgCopy(text: string) {
         this.text = text;

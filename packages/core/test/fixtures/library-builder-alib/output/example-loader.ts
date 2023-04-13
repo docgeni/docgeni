@@ -12,9 +12,9 @@ export class LibExampleLoader extends ExampleLoader {
     }
 
     load(exampleKey: string): Promise<ExampleLoadResult> {
-        const example = EXAMPLE_COMPONENTS[exampleKey];
+        const example = (EXAMPLE_COMPONENTS as Record<string, any>)[exampleKey];
         return new Promise(resolve => {
-            this[example.module.importSpecifier]().then(result => {
+            (this as any)[example.module.importSpecifier]().then((result: any) => {
                 resolve({
                     moduleType: result.EXAMPLES_MODULE,
                     componentType: result.EXAMPLE_COMPONENTS[exampleKey],
@@ -23,6 +23,7 @@ export class LibExampleLoader extends ExampleLoader {
             });
         });
     }
+
 }
 
 export const LIB_EXAMPLE_LOADER_PROVIDER = {

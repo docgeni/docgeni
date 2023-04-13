@@ -7,9 +7,9 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocHeaderComponent implements OnInit, OnDestroy {
-    @Input() title: string;
+    @Input() title!: string;
 
-    @Input() subtitle: string;
+    @Input() subtitle!: string;
 
     constructor(public navigationService: NavigationService, public global: GlobalContext) {}
 

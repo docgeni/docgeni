@@ -8,7 +8,7 @@ import { ComponentDocItem } from '../../interfaces/public-api';
 export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
 
-    @Input() docItem: ComponentDocItem;
+    @Input() docItem!: ComponentDocItem;
 
     constructor() {}
 
