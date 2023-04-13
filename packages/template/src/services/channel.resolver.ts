@@ -10,7 +10,7 @@ export class ChannelResolver implements Resolve<ChannelItem> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<ChannelItem> | Promise<ChannelItem> | ChannelItem {
         const path = route.paramMap.get('channel');
-        const channel = this.navigationService.getChannel(path);
+        const channel = this.navigationService.getChannel(path!);
         return channel;
     }
 }

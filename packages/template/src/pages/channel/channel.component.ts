@@ -26,7 +26,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        const path = this.route.snapshot.routeConfig.path;
+        const path = this.route.snapshot.routeConfig?.path!;
         this.navigationService.selectChannelByPath(path);
     }
 

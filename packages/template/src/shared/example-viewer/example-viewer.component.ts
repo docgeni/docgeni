@@ -14,7 +14,7 @@ interface ExampleTab {
     path: string;
 }
 
-const nameOrdersMap = {
+const nameOrdersMap: Record<string, number> = {
     HTML: 1,
     TS: 2,
     SCSS: 3,
@@ -40,7 +40,7 @@ export class ExampleViewerComponent implements OnInit {
         this.name = name;
     }
 
-    @Input() name: string;
+    @Input() name!: string;
 
     @HostBinding('class.dg-example-viewer-inline')
     @Input()
@@ -57,13 +57,13 @@ export class ExampleViewerComponent implements OnInit {
 
     exampleModuleType: Type<any> | null = null;
 
-    example: LiveExample;
+    example!: LiveExample;
 
     showSource = false;
 
     exampleTabs: ExampleTab[] = [];
 
-    selectedTab: ExampleTab;
+    selectedTab!: ExampleTab;
 
     get enableIvy() {
         return this.exampleLoader.enableIvy;
@@ -120,8 +120,10 @@ export class ExampleViewerComponent implements OnInit {
 
     openStackBlitz() {
         forkJoin({
-            examplesSources: this.http.get(`assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`),
-            sharedFiles: this.http.get(`assets/stack-blitz/bundle.json`)
+            examplesSources: this.http.get<{ path: string; content: string }[]>(
+                `assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`
+            ),
+            sharedFiles: this.http.get<{ path: string; content: string }[]>(`assets/stack-blitz/bundle.json`)
         }).subscribe(
             (result: { examplesSources: { path: string; content: string }[]; sharedFiles: { path: string; content: string }[] }) => {
                 const { examplesSources, sharedFiles } = result;

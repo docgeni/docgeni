@@ -18,7 +18,7 @@ class Base {
      * Disabled
      * @order 10
      */
-    @Input() alibDisabled: boolean;
+    @Input() alibDisabled!: boolean;
 }
 /**
  * General Button Component description.
@@ -33,7 +33,7 @@ class Base {
     }
 })
 export class AlibButtonComponent extends Base implements OnInit {
-    private type: string;
+    private type!: string;
     private loading = false;
 
     /**
@@ -68,7 +68,7 @@ export class AlibButtonComponent extends Base implements OnInit {
      * Input  of alib button component
      * @type string
      */
-    @Input('alibAliasName') alibLengthTooLongLengthTooLong: 'TypeLengthTooLongLengthTooLongLengthTooLong';
+    @Input('alibAliasName') alibLengthTooLongLengthTooLong!: 'TypeLengthTooLongLengthTooLongLengthTooLong';
 
     /**
      * Button loading status
@@ -80,7 +80,7 @@ export class AlibButtonComponent extends Base implements OnInit {
      */
     @Output() thyLoadingEvent = new EventEmitter<boolean>();
 
-    @ContentChild('template') templateRef: TemplateRef<unknown>;
+    @ContentChild('template') templateRef!: TemplateRef<unknown>;
 
     constructor(private elementRef: ElementRef<HTMLElement>) {
         super();

@@ -7,7 +7,7 @@ import { PageTitleService } from '../../services/page-title.service';
     templateUrl: './example.component.html'
 })
 export class ExampleIsolatedViewerComponent implements OnInit {
-    public name: string;
+    public name!: string | null;
 
     constructor(private route: ActivatedRoute, private pageTitle: PageTitleService) {}
 

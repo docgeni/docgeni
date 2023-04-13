@@ -15,7 +15,7 @@ export class AlibFooComponent implements OnInit {
      * Type is foo
      * @type string
      */
-    @Input() alibType: 'primary' | 'secondary';
+    @Input() alibType!: 'primary' | 'secondary';
 
     /**
      * Close event when foo close

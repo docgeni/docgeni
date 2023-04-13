@@ -2,7 +2,7 @@ import { GlobalContext } from './../../services/global-context';
 import { NavigationItem } from './../../interfaces/navigation-item';
 import { Pipe, PipeTransform } from '@angular/core';
 
-const TRANSLATES = {
+const TRANSLATES: Record<string, Record<string, string>> = {
     'zh-cn': {
         OVERVIEW: '概览',
         EXAMPLES: '示例',

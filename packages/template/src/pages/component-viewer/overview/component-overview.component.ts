@@ -8,11 +8,11 @@ import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
     templateUrl: './component-overview.component.html'
 })
 export class ComponentOverviewComponent implements OnInit {
-    contentUrl: string;
+    contentUrl!: string;
 
     @HostBinding('class.dg-component-overview') contentClass = true;
 
-    @ViewChild('toc') tableOfContents: TableOfContentsComponent;
+    @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
     constructor(public componentViewer: ComponentViewerComponent, private global: GlobalContext) {}
 
