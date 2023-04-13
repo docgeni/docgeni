@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.8](https://github.com/docgeni/docgeni/compare/v2.1.0-next.7...v2.1.0-next.8) (2023-04-13)
+
+
+### Bug Fixes
+
+* **ngdoc:** replace logic of custom parse tags by signature with ts tag infos array [#469](https://github.com/docgeni/docgeni/issues/469) ([#471](https://github.com/docgeni/docgeni/issues/471)) ([518cfc7](https://github.com/docgeni/docgeni/commit/518cfc767237f8c38e05d1510d4733618c5c280f))
+* **template:** update word-break to break-all of api table td ([6b86d17](https://github.com/docgeni/docgeni/commit/6b86d1782031854f4b9bee613225c5649f114fdf))
+
+
+
+
+
 # [2.1.0-next.7](https://github.com/docgeni/docgeni/compare/v2.1.0-next.6...v2.1.0-next.7) (2023-04-12)
 
 

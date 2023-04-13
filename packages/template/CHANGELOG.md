@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.8](https://github.com/docgeni/docgeni/compare/v2.1.0-next.7...v2.1.0-next.8) (2023-04-13)
+
+
+### Bug Fixes
+
+* **template:** update word-break to break-all of api table td ([6b86d17](https://github.com/docgeni/docgeni/commit/6b86d1782031854f4b9bee613225c5649f114fdf))
+
+
+
+
+
 # [2.1.0-next.7](https://github.com/docgeni/docgeni/compare/v2.1.0-next.6...v2.1.0-next.7) (2023-04-12)
 
 
