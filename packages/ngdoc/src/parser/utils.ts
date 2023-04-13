@@ -219,17 +219,18 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
         if (item.name !== 'param') {
             result[item.name] = item;
         } else {
-            let paramName: string;
-            let paramText: string;
-            const regexpResult = (ts.displayPartsToString(item.text) || '').match(/(^\S+)\s?(.*)$/);
-            if (regexpResult) {
-                paramText = regexpResult[2] || '';
-                paramName = regexpResult[1];
-            } else {
-                throw new Error(`[${item.name}-${item.text}]param comment format error`);
-            }
             result[item.name] = result[item.name] || {};
-            result[item.name][paramName] = { ...item, text: paramText };
+            if (item.text && item.text?.length > 0) {
+                const paramName = item.text[0].kind === 'parameterName' ? item.text[0].text : '';
+                const paramText = item.text.length > 2 ? item.text[2].text : '';
+
+                result[item.name][paramName] = {
+                    name: paramName,
+                    text: paramText
+                };
+            } else {
+                throw new Error(`[${item.name}] param comment format error`);
+            }
         }
         return result;
     }, {});
