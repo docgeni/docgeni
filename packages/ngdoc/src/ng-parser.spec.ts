@@ -494,7 +494,7 @@ describe('ng-parser', () => {
             ] as NgMethodDoc[]);
         });
 
-        it('should generate service api when implements interface', () => {
+        it('should generate service api when implements interface and param contains newline', () => {
             const sourceText = `
 
             interface HttpInterceptor {
