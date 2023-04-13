@@ -1,3 +1,6 @@
+@use './variables.scss';
+@use 'sass:color';
+
 $dg-heading-color: $dg-gray-800;
 $dg-table-border-color: $dg-gray-200;
 $dg-table-header-bg-color: $dg-gray-80;
@@ -155,6 +158,7 @@ $dg-service-color: #8e24aa;
                 }
 
                 td {
+                    word-break: break-all;
                     label {
                         word-break: break-all;
                     }
@@ -184,6 +188,7 @@ $dg-service-color: #8e24aa;
 
                     .dg-api-properties-type-cell {
                         text-align: left;
+                        // color: color.adjust(variables.$dg-danger, $lightness: -5%);
                     }
 
                     .dg-api-properties-default-cell {
