@@ -493,6 +493,56 @@ describe('ng-parser', () => {
                 }
             ] as NgMethodDoc[]);
         });
+
+        it('should generate service api when implements interface', () => {
+            const sourceText = `
+
+            interface HttpInterceptor {
+                /**
+                 * Identifies and handles a given HTTP request.
+                 * @param req The outgoing request object to handle.
+                 * @param next The next interceptor in the chain, or the backend
+                 * if no interceptors remain in the chain.
+                 * @returns An observable of the event stream.
+                 */
+                intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
+            }
+
+            @Injectable()
+            export class MyHttpInterceptor implements HttpInterceptor {
+                intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+                    return of(null);
+                }
+            }
+            `;
+            const { ngDocParser } = createTestNgDocParser('dialog', {
+                '/dialog/dialog.service.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'intercept',
+                    parameters: [
+                        {
+                            name: 'req',
+                            description: '',
+                            type: 'HttpRequest<any>'
+                        },
+                        {
+                            name: 'next',
+                            description: '',
+                            type: 'HttpHandler'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'Observable<HttpEvent<any>>',
+                        description: ''
+                    },
+                    description: 'Identifies and handles a given HTTP request.'
+                }
+            ]);
+        });
     });
 
     describe('interface', () => {
