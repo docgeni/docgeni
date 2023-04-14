@@ -1,5 +1,5 @@
 import { ts } from './typescript';
-import { toolkit, debug } from '@docgeni/toolkit';
+import { toolkit, debug, fs } from '@docgeni/toolkit';
 import {
     NgDirectiveDoc,
     NgPropertyDoc,
@@ -61,8 +61,8 @@ export class NgDocParser {
         this.ngParserHost = options.ngParserHost ? options.ngParserHost : createNgParserHost(options);
     }
 
-    public getSourceFiles(fileGlobs: string) {
-        const filePaths = toolkit.fs.globSync(fileGlobs);
+    public getSourceFiles(fileGlobs: string, options?: fs.GetDirsOrFilesOptions) {
+        const filePaths = toolkit.fs.globSync(fileGlobs, options);
         debug(`fileGlobs: ${fileGlobs}, filePaths: ${filePaths.length}`, 'ng-parser');
         const sourceFiles = filePaths
             .map(filePath => {
@@ -79,8 +79,8 @@ export class NgDocParser {
         return sourceFiles;
     }
 
-    public parse(fileGlobs: string): NgEntryItemDoc[] {
-        const sourceFiles = this.getSourceFiles(fileGlobs);
+    public parse(fileGlobs: string, options?: fs.GetDirsOrFilesOptions): NgEntryItemDoc[] {
+        const sourceFiles = this.getSourceFiles(fileGlobs, options);
         debug(`fileGlobs: ${fileGlobs}, sourceFiles: ${sourceFiles.length}`, 'ng-parser');
         const checker = this.ngParserHost.program.getTypeChecker();
 

@@ -58,6 +58,7 @@ describe('#library-component', () => {
         name: 'alib',
         rootDir: 'alib',
         include: ['common'],
+        examplesDir: 'examples',
         exclude: '',
         categories: [
             {
@@ -425,9 +426,9 @@ describe('#library-component', () => {
                     properties: []
                 }
             ];
-            spectator.ngDocParseSpy
-                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '**/*.ts')))
-                .and.returnValue(parsedApiDocs);
+
+            const ngParseArguments = createNgParseArguments(buttonDirPath);
+            spectator.ngDocParseSpy.withArgs(...ngParseArguments).and.returnValue(parsedApiDocs);
             await component.build();
             spectator.assertCosmiconfigOptions(buttonDirPath);
             const enApiDocs = component.getApiDocs('en-us');
@@ -478,9 +479,7 @@ describe('#library-component', () => {
                     properties: []
                 }
             ];
-            spectator.ngDocParseSpy
-                .withArgs(toolkit.path.getSystemPath(toolkit.path.resolve(buttonDirPath, '**/*.ts')))
-                .and.returnValue(parsedApiDocs);
+            spectator.ngDocParseSpy.withArgs(...createNgParseArguments(buttonDirPath)).and.returnValue(parsedApiDocs);
             await component.build();
             const enApiDocs = component.getApiDocs('en-us');
             const zhApiDocs = component.getApiDocs('zh-cn');
@@ -548,4 +547,16 @@ async function expectFiles(host: fs.DocgeniFsHost, files: Record<string, string>
             `${path} content is not equal`
         );
     }
+}
+
+function createNgParseArguments(componentDir: string) {
+    return [
+        toolkit.path.getSystemPath(toolkit.path.resolve(componentDir, '**/*.ts')),
+        {
+            exclude: [
+                toolkit.path.getSystemPath(toolkit.path.resolve(componentDir, 'examples/**/*')),
+                toolkit.path.getSystemPath(toolkit.path.resolve(componentDir, '**/*.spec.ts'))
+            ]
+        }
+    ];
 }
