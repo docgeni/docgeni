@@ -1,6 +1,11 @@
 import { NavigationItem, Locale } from './interfaces';
 import { toolkit } from '@docgeni/toolkit';
 import * as Prism from 'node-prismjs';
+// import { highlight as prismjsHighlight, languages } from 'prismjs';
+// import loadLanguages from 'prismjs/components/index';
+// import prismCore from 'prismjs/components/prism-core';
+
+// loadLanguages(['haml', 'ts', 'markup', 'javascript', 'css', 'ruby', 'clike', 'c', 'bash', 'autoit']);
 
 export const DOCS_ENTRY_FILE_NAMES = ['index', 'readme'];
 
@@ -61,6 +66,8 @@ export function isEntryDoc(name: string) {
 }
 
 export function highlight(sourceCode: string, lang: string) {
+    // const language = languages[`${lang}`] || languages.autoit;
+    // return `<div>${prismjsHighlight(sourceCode, language, lang || 'autoit')}`;
     const language = Prism.languages[lang] || Prism.languages.autoit;
     return `<div>${Prism.highlight(sourceCode, language)}</div>`;
 }

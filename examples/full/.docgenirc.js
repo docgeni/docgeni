@@ -29,6 +29,7 @@ module.exports = {
             name: 'alib',
             rootDir: './src',
             exclude: '',
+            apiMode: 'automatic',
             categories: [
                 {
                     id: 'general',

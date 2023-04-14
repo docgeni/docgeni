@@ -14,9 +14,9 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@docgeni/angular": "13.0.1",
-    "@docgeni/cli": "1.1.2",
-    "@docgeni/template": "1.1.2",
+    "@docgeni/angular": "15.0.0",
+    "@docgeni/cli": "2.1.0-next.9",
+    "@docgeni/template": "2.1.0-next.9",
     "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
