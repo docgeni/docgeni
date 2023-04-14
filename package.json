@@ -1,6 +1,6 @@
 {
   "name": "docgeni",
-  "version": "2.1.0-next.8",
+  "version": "2.1.0-next.9",
   "scripts": {
     "ng": "ng",
     "start": "yarn run start:docs",

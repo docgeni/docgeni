@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.9](https://github.com/docgeni/docgeni/compare/v2.1.0-next.8...v2.1.0-next.9) (2023-04-14)
+
+
+### Bug Fixes
+
+* **core:** exclude examples and spec files when parse api docs ([bbd009b](https://github.com/docgeni/docgeni/commit/bbd009b5dc11e364e1a3b1e0a7a7e571a1864ed0))
+
+
+
+
+
 # [2.1.0-next.8](https://github.com/docgeni/docgeni/compare/v2.1.0-next.7...v2.1.0-next.8) (2023-04-13)
 
 
