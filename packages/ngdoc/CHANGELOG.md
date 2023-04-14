@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/docgeni/docgeni/compare/v2.0.1...v2.0.2) (2023-04-14)
+
+
+### Bug Fixes
+
+* **ngdoc:** replace logic of custom parse tags by signature with ts tag infos array [#469](https://github.com/docgeni/docgeni/issues/469) ([#471](https://github.com/docgeni/docgeni/issues/471)) ([79747d2](https://github.com/docgeni/docgeni/commit/79747d2dca51714b60b97598838a5cf240a4fb7b))
+
+
+
+
+
 ## [2.0.1](https://github.com/docgeni/docgeni/compare/v2.0.0...v2.0.1) (2022-11-17)
 
 
