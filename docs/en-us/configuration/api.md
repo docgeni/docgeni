@@ -45,13 +45,13 @@ The name of the Component/Directive, which defaults to the class name.
 ## @description
 
 - Type: `string`
-- Default: ``
+- Default: `null`
 
 Description. If there is a `@description` tag, it is main, otherwise the default comment content will be used as the description.
 
 ```ts
 /**
- * General Button Component description.
+ * Default description.
  * @name alib-button
  * @description This is description
  * @order 1
@@ -75,8 +75,6 @@ The default API document generation includes：
 - All Component/Directive/Service
 - Properties of @Input and @Output in Component/Directive
 - Public methods in Component/Directive/Service
-
-以上的组件/指令/服务/参数/函数是内部的，不需要生成 API 文档，需要添加`@private`或者`@internal`即可。
 
 If the above Component/Directive/Service/Property/Methods are internal and do not need to generate API documents, you need to add `@private` or `@internal`.
 

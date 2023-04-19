@@ -40,18 +40,18 @@ export class AlibButtonComponent extends Base implements OnInit {
 - 类型：`string`
 - 默认：`{ClassName}`
 
-组件/指令/服务/类/接口的名称，默认根据 Class 类名。
+组件/指令/服务/类/接口的名称，默认 Class 类名。
 
 ## @description
 
 - 类型：`string`
-- 默认：``
+- 默认：`null`
 
-组件/指令/服务/类/接口的名称的描述，如果有`@description` Tag 以次为主，否则以默认注释内容为描述。
+组件/指令/服务/类/接口的描述，如果有`@description` Tag 以此为主，否则以默认注释内容为描述。
 
 ```ts
 /**
- * General Button Component description.
+ * Default description.
  * @name alib-button
  * @description This is description
  * @order 1
@@ -76,7 +76,7 @@ API 文档的排序。
 - 组件/指令的 @Input 和 @Output 属性
 - 组件/指令/服务的公开函数
 
-以上的组件/指令/服务/属性/函数是内部的，不需要生成 API 文档，需要添加`@private`或者`@internal`即可。
+以上的组件/指令/服务/属性/函数如果是内部的，不需要生成 API 文档，添加`@private`或者`@internal`标记。
 
 ```ts
 /**
@@ -91,7 +91,7 @@ API 文档的排序。
 - 默认：`false`
 - 别名：`publicApi`
 
-默认所有的 Class 和 Interface 都不会生成 API 文档，如果某个 Class 和 Interface 需要生成 API 文档，需要添加`@public`或者`@publicApi`即可。
+默认所有的 Class 和 Interface 都不会生成 API 文档，如果某个 Class 和 Interface 需要生成 API 文档，需要添加`@public`或者`@publicApi`标记。
 
 ```ts
 /**
