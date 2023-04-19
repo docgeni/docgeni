@@ -282,7 +282,7 @@ The docgeni component API supports three modes: `'compatible' | 'manual' | 'auto
 
 ## Automatic generate API
 
-In `automatic` or `compatible` mode，Docgeni will load all typescript files of components, dynamically read angular components/directives/services, and generate corresponding API documents through JS Doc comments
+In `automatic` or `compatible` mode，Docgeni will load all typescript files of components, dynamically read angular components/directives/services, and generate corresponding API documents through JS Doc comments, Detailed configuration reference: [API Comment](configuration/api)。
 
 For example, define the following component:
 
