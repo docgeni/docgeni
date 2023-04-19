@@ -942,43 +942,43 @@ $dg-service-color: #8e24aa;
                 font-size: $dg-font-size-base;
             }
 
-            .dg-api-properties-table {
+            .dg-api-property-table {
                 margin-top: 14px;
                 display: table;
                 width: 100%;
                 max-width: 100%;
 
-                .dg-api-properties-header-row {
-                    .dg-api-properties-name-th {
+                .dg-api-property-header-row {
+                    .dg-api-property-name-th {
                         width: 100px;
                     }
 
-                    .dg-api-properties-type-th {
+                    .dg-api-property-type-th {
                         width: 80px;
                     }
 
-                    .dg-api-properties-default-th {
+                    .dg-api-property-default-th {
                         width: 100px;
                     }
 
-                    .dg-api-properties-description-th {
+                    .dg-api-property-description-th {
                         width: auto;
                     }
                 }
 
-                .dg-api-properties-row {
+                .dg-api-property-row {
                     label {
                         margin: 0px;
                     }
-                    .dg-api-properties-name-cell {
+                    .dg-api-property-name-cell {
                         text-align: left;
                     }
 
-                    .dg-api-properties-type-cell {
+                    .dg-api-property-type-cell {
                         text-align: left;
                     }
 
-                    .dg-api-properties-default-cell {
+                    .dg-api-property-default-cell {
                         text-align: left;
                     }
 

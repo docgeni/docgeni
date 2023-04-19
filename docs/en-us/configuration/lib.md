@@ -1,7 +1,7 @@
 ---
 title: Library Configuration
 path: 'lib'
-order: 30
+order: 20
 toc: menu
 ---
 

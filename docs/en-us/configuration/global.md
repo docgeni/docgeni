@@ -1,7 +1,7 @@
 ---
 title: Global Configuration
 path: 'global'
-order: 30
+order: 10
 toc: menu
 ---
 

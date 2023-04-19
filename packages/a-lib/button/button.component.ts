@@ -101,8 +101,8 @@ export class ButtonService {
     /**
      * Open a button
      *
-     * @param {string} pram1
-     * @param {number} pram2
+     * @param {string} pram1 pram1 desc
+     * @param {number} pram2 pram2 desc
      * @memberof ButtonService
      * @returns Return of
      */

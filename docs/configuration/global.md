@@ -1,7 +1,7 @@
 ---
 title: 全局配置
 path: 'global'
-order: 30
+order: 10
 toc: menu
 ---
 
