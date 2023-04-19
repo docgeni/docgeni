@@ -1,7 +1,7 @@
 ---
 title: 类库配置
 path: 'lib'
-order: 30
+order: 20
 toc: menu
 ---
 

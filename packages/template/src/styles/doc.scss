@@ -143,7 +143,7 @@ $dg-service-color: #8e24aa;
                 margin-top: 20px;
             }
 
-            .dg-api-properties-table,
+            .dg-api-property-table,
             .dg-api-methods-table {
                 margin-top: 8px;
                 display: table;
@@ -155,41 +155,47 @@ $dg-service-color: #8e24aa;
                 }
 
                 td {
-                    word-break: break-all;
                     label {
                         word-break: break-all;
                     }
                 }
-                .dg-api-properties-header-row {
-                    .dg-api-properties-name-th {
+                .dg-api-property-header-row {
+                    .dg-api-property-name-th {
                         width: 18%;
                     }
 
-                    .dg-api-properties-type-th {
+                    .dg-api-property-type-th {
                         width: 18%;
                     }
 
-                    .dg-api-properties-default-th {
+                    .dg-api-property-default-th {
                         width: 18%;
                     }
 
-                    .dg-api-properties-description-th {
+                    .dg-api-property-description-th {
                         width: auto;
+                        word-break: break-all;
                     }
                 }
 
-                .dg-api-properties-row {
-                    .dg-api-properties-name-cell {
+                .dg-api-property-row {
+                    .dg-api-property-name-cell {
                         text-align: left;
+                        word-break: break-all;
                     }
 
-                    .dg-api-properties-type-cell {
+                    .dg-api-property-type-cell {
                         text-align: left;
                         // color: color.adjust(variables.$dg-danger, $lightness: -5%);
                     }
 
-                    .dg-api-properties-default-cell {
+                    .dg-api-property-default-cell {
                         text-align: left;
+                        word-break: break-all;
+                    }
+
+                    .dg-api-property-description-cell {
+                        word-break: break-all;
                     }
                 }
             }

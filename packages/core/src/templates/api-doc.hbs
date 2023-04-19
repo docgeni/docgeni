@@ -7,26 +7,26 @@
   <div class="dg-api-class-description">{{{description}}}</div>
   {{/if}}
   {{#if properties}}
-  <table class="dg-api-properties-table">
+  <table class="dg-api-property-table">
     <thead>
-      <tr class="dg-api-properties-header-row">
-        <th class="dg-api-properties-name-th">Name</th>
-        <th class="dg-api-properties-type-th">Type</th>
-        <th class="dg-api-properties-default-th">Default</th>
-        <th class="dg-api-properties-description-th">Description</th>
+      <tr class="dg-api-property-header-row">
+        <th class="dg-api-property-name-th">Name</th>
+        <th class="dg-api-property-type-th">Type</th>
+        <th class="dg-api-property-default-th">Default</th>
+        <th class="dg-api-property-description-th">Description</th>
       </tr>
     </thead>
     <tbody>
 
       {{#each properties}}
-      <tr class="dg-api-properties-row">
-         <td class="dg-api-properties-name-cell">
+      <tr class="dg-api-property-row">
+         <td class="dg-api-property-name-cell">
           {{name}}
          </td>
-         <td class="dg-api-properties-type-cell">
+         <td class="dg-api-property-type-cell">
              <label class="dg-label dg-label-outline-info">{{type}}</label>
          </td>
-         <td class="dg-api-properties-default-cell">
+         <td class="dg-api-property-default-cell">
            <label class="dg-label dg-label-default">{{default}}</label>
          </td>
          <td class="dg-api-property-description">
