@@ -5,7 +5,7 @@ title: "常见问题"
 ## 如何部署到域名的非根目录?
 执行 build 命令的时候传入 `base-href` 即可实现自定义，或者在配置文件中配置`baseHref`属性。
 
-`docgeni build --prod --base-href=/xxx/`
+`docgeni build --base-href=/xxx/`
 
 ## Docgeni 支持其他框架吗？
 不支持，Docgeni 目前是一款为 Angular 框架量身打造的文档生成工具。

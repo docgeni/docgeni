@@ -7,7 +7,7 @@ export class AddCommand {
             if (host.exists('package.json')) {
                 const packageJson = new JSONFile(host, 'package.json');
                 packageJson.modify(['scripts', 'start:docs'], `docgeni serve --port 4600`);
-                packageJson.modify(['scripts', 'build:docs'], `docgeni build --prod`);
+                packageJson.modify(['scripts', 'build:docs'], `docgeni build`);
             }
             return host;
         };

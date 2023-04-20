@@ -57,7 +57,7 @@ After installation, add the following script to the `package.json`:
   "scripts": {
     ...
     "start:docs": "docgeni serve --port 4600",
-    "build:docs": "docgeni build --prod"
+    "build:docs": "docgeni build"
     ...
   }
 }

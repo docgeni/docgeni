@@ -49,7 +49,7 @@ describe('ng-add Schematic', () => {
         workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         expect(packageJson.scripts['start:docs']).toEqual('docgeni serve --port 4600');
-        expect(packageJson.scripts['build:docs']).toEqual('docgeni build --prod');
+        expect(packageJson.scripts['build:docs']).toEqual('docgeni build');
     });
 
     it('should init .docgenirc.js', async () => {

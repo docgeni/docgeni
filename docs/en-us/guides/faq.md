@@ -4,7 +4,7 @@ title: "FAQ"
 ## How to deploy to a non-root directory of domain?
 By passing in `base-href` when executing the build command, or by configuring the `baseHref` attribute in the configuration.
 
-`docgeni build --prod --base-href=/xxx/`
+`docgeni build --base-href=/xxx/`
 
 ## Does Docgeni support other frameworks?
 Sorry, it is not supported yet. Docgeni is currently a document generation tool tailored for the Angular framework.
