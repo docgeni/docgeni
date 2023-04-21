@@ -7,7 +7,9 @@ import stringifyObject from 'stringify-object';
 
 export class InitDocgenirc {
     private docgenirc: Partial<DocgeniConfig> = {};
+
     constructor(private options: NgAddSchema) {}
+
     private addProperty<T extends keyof DocgeniConfig>(key: T, value: DocgeniConfig[T]) {
         if (!value) {
             return this;
@@ -34,10 +36,29 @@ export class InitDocgenirc {
                 lib: projectName,
                 locales: {}
             });
+            const include: string[] = [];
+            const exclude: string[] = [];
+            const libDirEntry = host.getDir(`${config.sourceRoot}/lib`);
+            const libDirExists = libDirEntry.subdirs.length > 0 || libDirEntry.subfiles.length > 0;
+            if (config.sourceRoot && config.sourceRoot !== config.root) {
+                const sourceDir = config.sourceRoot.replace(config.root + '/', '');
+                // 如果当前 sourceDir 路径和 root 路径不同，说明有 src 文件夹
+                if (sourceDir) {
+                    if (libDirExists) {
+                        include.push(`${sourceDir}/lib`);
+                    } else {
+                        // src 文件夹添加到 include，读取 src 文件夹的组件
+                        include.push(sourceDir);
+                    }
+                }
+            } else {
+                include.push('');
+            }
             libs.push({
                 name: projectName,
                 rootDir: config.root,
-                include: ['src', 'src/lib'],
+                include: include,
+                exclude: exclude,
                 apiMode: 'automatic',
                 categories: []
             });

@@ -20,7 +20,7 @@ module.exports = {
             name: 'lib-test',
             rootDir: 'projects/lib-test',
             include: [
-                'src/lib'
+                ''
             ],
             exclude: [],
             apiMode: 'automatic',

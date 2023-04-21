@@ -75,7 +75,7 @@ describe('libraries-builder', () => {
         const library = {
             name: 'alib',
             rootDir: libDirPath,
-            include: ['common'],
+            include: ['', 'common'],
             exclude: '',
             categories: [
                 {

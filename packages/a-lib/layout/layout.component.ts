@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@an
 
 /**
  * Layout container component. it is required that all child components should be placed inside.
+ * @name alibLayout
  */
 @Component({
     selector: 'alib-layout, [alibLayout]',
@@ -30,6 +31,9 @@ export class AlibLayoutComponent implements OnInit {
     ngOnInit(): void {}
 }
 
+/**
+ * @name alibSidebar
+ */
 @Component({
     selector: 'alib-sidebar, [alibSidebar]',
     template: `
