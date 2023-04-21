@@ -90,7 +90,7 @@ describe('#library-builder', () => {
     const library = normalizeLibConfig({
         name: 'alib',
         rootDir: 'a-lib',
-        include: ['common'],
+        include: ['', 'common'],
         exclude: '',
         categories: [
             {
@@ -168,7 +168,7 @@ describe('#library-builder', () => {
 
         expect(libraryBuilder.components.size).toEqual(0);
         await libraryBuilder.initialize();
-        expect(libraryBuilder.components.size).toEqual(4);
+        expect(libraryBuilder.components.size).toEqual(3);
 
         const barComponent = libraryBuilder.components.get(`${libDirPath}/common/bar`);
         expect(barComponent).toBeTruthy();
@@ -335,7 +335,7 @@ describe('#library-builder', () => {
         const ngParserSpectator = new NgParserSpectator();
 
         const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
-        context.host.writeFile(tsconfig, '{includes: []}');
+        context.host.writeFile(tsconfig, `{include: []}`);
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         expect(libraryBuilder.getNgDocParser()).toBeFalsy();
         ngParserSpectator.notHaveBeenCalled();

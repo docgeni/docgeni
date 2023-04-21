@@ -1,4 +1,4 @@
-import { Tree } from '@angular-devkit/schematics';
+import { Tree, move } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 // import { DEPENDENCIES } from '../dependencies';
 import { createTestWorkspaceFactory, getJsonFileContent, TestWorkspaceFactory } from '../testing';
@@ -88,6 +88,41 @@ describe('ng-add Schematic', () => {
         expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
     });
 
+    it('should include src without lib dir', async () => {
+        const libraryName = 'lib-test';
+        await factory.addLibrary({ name: libraryName });
+        tree = factory.getTree();
+        deleteDirFilesInTree(tree, `projects/${libraryName}/src/lib`);
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
+        const config = workspaceTree.read('.docgenirc.js').toString();
+        expect(config).toContain(`rootDir: 'projects/${libraryName}'`);
+        expect(config).toContain(`lib: '${libraryName}'`);
+        expect(config).toContain(`apiMode: 'automatic'`);
+        const expectContent = await toolkit.fs.readFileContent(
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-without-lib.js')
+        );
+        expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
+    });
+
+    it('should include src when sourceRoot is equal root', async () => {
+        const libraryName = 'lib-test';
+        await factory.addLibrary({ name: libraryName });
+        tree = factory.getTree();
+        const angularJSONText = tree.readText('angular.json');
+        tree.overwrite('angular.json', angularJSONText.replace(`projects/lib-test/src`, `projects/lib-test`));
+        deleteDirFilesInTree(tree, `projects/${libraryName}/src/lib`);
+        deleteDirFilesInTree(tree, `projects/${libraryName}/src`);
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
+        const config = workspaceTree.read('.docgenirc.js').toString();
+        expect(config).toContain(`rootDir: 'projects/${libraryName}'`);
+        expect(config).toContain(`lib: '${libraryName}'`);
+        expect(config).toContain(`apiMode: 'automatic'`);
+        const expectContent = await toolkit.fs.readFileContent(
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-root-equal-source-root.js')
+        );
+        expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
+    });
+
     it('should generate without angular.json', async () => {
         const libraryName = 'lib-test';
         await factory.addLibrary({ name: libraryName });
@@ -116,3 +151,10 @@ describe('ng-add Schematic', () => {
         expect(gitignoreContent.split('\n').some(item => item === '.docgeni/site')).toBeTruthy();
     });
 });
+
+function deleteDirFilesInTree(tree: Tree, dir: string) {
+    const dirEntry = tree.getDir(dir);
+    dirEntry.subfiles.forEach(subFile => {
+        tree.delete(`${dir}/${subFile}`);
+    });
+}

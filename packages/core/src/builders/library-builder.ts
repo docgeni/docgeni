@@ -32,13 +32,17 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     public async initialize(): Promise<void> {
         this.buildLocaleCategoriesMap(this.lib.categories);
 
-        const components: LibraryComponentImpl[] = [];
         const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
+        const excludes = [...this.lib.exclude];
         for (const include of includes) {
+            // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件，所以需要把 includes 都排除
+            if (include === '' || include === './') {
+                excludes.push(...includes);
+            }
             const includeAbsPath = resolve(this.absLibPath, include);
             const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
             if (dirExists) {
-                const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: this.lib.exclude });
+                const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: excludes });
                 subDirs.forEach(dir => {
                     const absComponentPath = resolve(includeAbsPath, dir);
                     const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
@@ -46,16 +50,6 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                 });
             }
         }
-
-        // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件
-        const excludes = this.lib.exclude ? toolkit.utils.coerceArray(this.lib.exclude) : [];
-        const dirs = await this.docgeni.host.getDirs(this.absLibPath, { exclude: [...excludes] });
-        dirs.forEach(dir => {
-            const absComponentPath = resolve(this.absLibPath, dir);
-            const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
-            components.push(component);
-            this.componentsMap.set(absComponentPath, component);
-        });
 
         this.watch();
         await this.initializeNgDocParser();
