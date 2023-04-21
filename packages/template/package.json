@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/template",
-  "version": "2.1.0-next.11",
+  "version": "2.1.0",
   "private": "true",
   "description": "Docgeni - Angular Template Components",
   "peerDependencies": {

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+# [2.1.0](https://github.com/docgeni/docgeni/compare/v2.1.0-next.11...v2.1.0) (2023-04-21)
+
+### Bug Fixes
+
+* **cli:** ng-add remove --prod flag ([964b12a](https://github.com/docgeni/docgeni/commit/964b12ac55f1811208119022538a4ea545c87a70))
+* **core:** exclude examples and spec files when parse api docs ([bbd009b](https://github.com/docgeni/docgeni/commit/bbd009b5dc11e364e1a3b1e0a7a7e571a1864ed0))
+* **ngdoc:** replace logic of custom parse tags by signature with ts tag infos array [#469](https://github.com/docgeni/docgeni/issues/469) ([#471](https://github.com/docgeni/docgeni/issues/471)) ([518cfc7](https://github.com/docgeni/docgeni/commit/518cfc767237f8c38e05d1510d4733618c5c280f))
+* **template:** update word-break to break-all of api table td ([6b86d17](https://github.com/docgeni/docgeni/commit/6b86d1782031854f4b9bee613225c5649f114fdf))
+* **template:** update sub selectors of dg-doc-content to avoid cover elements styles of example viewer [#432](https://github.com/docgeni/docgeni/issues/432) ([3b7d623](https://github.com/docgeni/docgeni/commit/3b7d623dccba10d28d84193654768acb21a9bd4f))
+* **core:** update *.ts to **/*.ts for ngDocParser component ([5b702f8](https://github.com/docgeni/docgeni/commit/5b702f817b13fea4cf00c9bad833bf25781cc682))
+* **ngdoc:** methods duplicate removal for overload ([#465](https://github.com/docgeni/docgeni/issues/465)) ([d31178a](https://github.com/docgeni/docgeni/commit/d31178a2dff1024c5214a8ba7d3fee8887a63c7e))
+* **ngdoc:** use getTypeAtLocation by identifier for get heritage declarations in other module ([d2ffeec](https://github.com/docgeni/docgeni/commit/d2ffeecb46d85f5f88ae95d995a155d49b538fb4))
+* **core:** mark enableIvy as override for LibExampleLoader [#458](https://github.com/docgeni/docgeni/issues/458) ([#461](https://github.com/docgeni/docgeni/issues/461)) ([f42f2ad](https://github.com/docgeni/docgeni/commit/f42f2ad6003dfa5ee411cf87bb3068887d0e13d2))
+* **core:** update default value to property.default when it is not undefined or null [#424](https://github.com/docgeni/docgeni/issues/424) ([#463](https://github.com/docgeni/docgeni/issues/463)) ([83bd8cb](https://github.com/docgeni/docgeni/commit/83bd8cb2c0e34a154e73b594bff2f9af27ad3edc))
+* **ngdoc:** should parse correct tags when has multi-language ([#459](https://github.com/docgeni/docgeni/issues/459)) ([ab8ab53](https://github.com/docgeni/docgeni/commit/ab8ab533b5c1a4924095615c36bf943a2a1c3de9))
+* **template:** update homeMeta to nullable for home template ([e563102](https://github.com/docgeni/docgeni/commit/e563102a473bd4dec8f5cff555f181f9b643e22b))
+* update tag h1 to span for dg-doc-header avoid conflict ([3a12593](https://github.com/docgeni/docgeni/commit/3a125938c279b7f8968f88c11531f83cf0a7d997))
+
+
+### Features
+* **core:** remove default logic that parse components for lib root path, only according to include, and root dir exclude include in config ([76d1e78](https://github.com/docgeni/docgeni/commit/76d1e78013fc98ac0a8f08a3f28634eec965e813))
+* **cli:** set apiMode to automatic when ng add @docgeni/cli ([2288c3e](https://github.com/docgeni/docgeni/commit/2288c3e6a310866131692ec3f48da5e92ee05907))
+* **core:** update site-template to ng 15 ([2aac8ff](https://github.com/docgeni/docgeni/commit/2aac8ff1eb974a2c572a6b281f496d31a8e345ec))
+* **ngdoc:** parse heritage declarations for directives, services and class-likes #INFR-6929 ([edf7a6d](https://github.com/docgeni/docgeni/commit/edf7a6d78f10aaa53625fc4e4a66c40de97d714e)), closes [#INFR-6929](https://github.com/docgeni/docgeni/issues/INFR-6929)
+* **core:** custom components support standalone #INFR-6938 ([#455](https://github.com/docgeni/docgeni/issues/455)) ([721b17c](https://github.com/docgeni/docgeni/commit/721b17c06b952d1a37a70193daaafc008a8a3a0b)), closes [#INFR-6938](https://github.com/docgeni/docgeni/issues/INFR-6938)
+* **core:** example support standalone component #INFR-6744 ([#450](https://github.com/docgeni/docgeni/issues/450)) ([08d517c](https://github.com/docgeni/docgeni/commit/08d517c9d04ad032d15743b0be80fe414b83139d)), closes [#INFR-6744](https://github.com/docgeni/docgeni/issues/INFR-6744)
+* **ngdoc:** support interface and class api doc when mark public or publicApi ([#452](https://github.com/docgeni/docgeni/issues/452)) ([81dcaca](https://github.com/docgeni/docgeni/commit/81dcacabb20087862221bf1be1df23244bd99387))
+* **template:** exports "./styles/index.css" in @docgeni/template ([83b3f99](https://github.com/docgeni/docgeni/commit/83b3f993f23f268154842defc7614c193a37ddd2))
+* **template:** exports "./styles/index.css" in @docgeni/template ([83b3f99](https://github.com/docgeni/docgeni/commit/83b3f993f23f268154842defc7614c193a37ddd2))
+* **template:** add exports of scss in package.json ([c10a8a0](https://github.com/docgeni/docgeni/commit/c10a8a07ed46ff3378e1e3431a4ff08857539113))
+
+
 # [2.1.0-next.11](https://github.com/docgeni/docgeni/compare/v2.1.0-next.10...v2.1.0-next.11) (2023-04-21)
 
 
