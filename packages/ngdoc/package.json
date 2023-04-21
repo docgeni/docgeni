@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/ngdoc",
-  "version": "2.1.0-next.10",
+  "version": "2.1.0-next.11",
   "description": "Docgeni - Ng Doc generate library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -32,7 +32,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/toolkit": "^2.1.0-next.10",
+    "@docgeni/toolkit": "^2.1.0-next.11",
     "ts-morph": "12.1.0",
     "typescript": "~4.9.5"
   },

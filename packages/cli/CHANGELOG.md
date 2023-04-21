@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.11](https://github.com/docgeni/docgeni/compare/v2.1.0-next.10...v2.1.0-next.11) (2023-04-21)
+
+
+### Bug Fixes
+
+* **cli:** ng-add remove --prod flag ([964b12a](https://github.com/docgeni/docgeni/commit/964b12ac55f1811208119022538a4ea545c87a70))
+
+
+### Features
+
+* **core:** remove default logic that parse components for lib root path, only according to include, and root dir exclude include in config ([76d1e78](https://github.com/docgeni/docgeni/commit/76d1e78013fc98ac0a8f08a3f28634eec965e813))
+
+
+
+
+
 # [2.1.0-next.10](https://github.com/docgeni/docgeni/compare/v2.1.0-next.9...v2.1.0-next.10) (2023-04-19)
 
 **Note:** Version bump only for package @docgeni/cli
