@@ -176,6 +176,22 @@ describe('#library-builder', () => {
         expect(barComponent.name).toEqual(`bar`);
     });
 
+    it('should load root components when include is empty ', async () => {
+        const libraryBuilder = new LibraryBuilderImpl(context, { ...library, include: [] });
+
+        expect(libraryBuilder.components.size).toEqual(0);
+        await libraryBuilder.initialize();
+        expect(libraryBuilder.components.size).toEqual(2);
+    });
+
+    it('should load root components when include is undefined ', async () => {
+        const libraryBuilder = new LibraryBuilderImpl(context, { ...library, include: undefined });
+
+        expect(libraryBuilder.components.size).toEqual(0);
+        await libraryBuilder.initialize();
+        expect(libraryBuilder.components.size).toEqual(2);
+    });
+
     it('should build components success', async () => {
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         expect(libraryBuilder.components.size).toEqual(0);

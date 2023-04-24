@@ -33,6 +33,10 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
         this.buildLocaleCategoriesMap(this.lib.categories);
 
         const includes = this.lib.include ? toolkit.utils.coerceArray(this.lib.include) : [];
+        // include 没有任何值包含 rootDir
+        if (includes.length === 0) {
+            includes.push('');
+        }
         const excludes = [...this.lib.exclude];
         for (const include of includes) {
             // 比如示例中的 common/zoo, 那么 common 文件夹不是一个组件，所以需要把 includes 都排除
