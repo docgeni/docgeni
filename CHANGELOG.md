@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/docgeni/docgeni/compare/v2.1.0...v2.1.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* should load root components when include is undefined or empty ([8169bbc](https://github.com/docgeni/docgeni/commit/8169bbc771d7cdcdec64c7511e9f20cef8ad3c75))
+
+
+
+
+
 
 # [2.1.0](https://github.com/docgeni/docgeni/compare/v2.1.0-next.11...v2.1.0) (2023-04-21)
 
