@@ -1,7 +1,6 @@
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import { of, Subject } from 'rxjs';
 import { DocgeniContext } from '../docgeni.interface';
-import { HostWatchEvent, HostWatchEventType, normalize } from '../fs';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, updateContext } from '../testing';
 import { DocsBuilder } from './docs-builder';
 
@@ -44,17 +43,17 @@ describe('#components-builder', () => {
         const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
         const changes = [
             {
-                type: HostWatchEventType.Deleted,
-                path: normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`),
+                type: fs.HostWatchEventType.Deleted,
+                path: toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`),
                 time: new Date()
             },
             {
-                type: HostWatchEventType.Created,
-                path: normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`),
+                type: fs.HostWatchEventType.Created,
+                path: toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`),
                 time: new Date()
             }
         ];
-        const subject = new Subject<HostWatchEvent[]>();
+        const subject = new Subject<fs.HostWatchEvent[]>();
         watchAggregatedSpy.and.callFake((path, options) => {
             expect(path).toEqual(`${DEFAULT_TEST_ROOT_PATH}/docs`);
             expect(options).toEqual({ ignoreInitial: true });
@@ -66,7 +65,7 @@ describe('#components-builder', () => {
         subject.next(changes);
         expect(spyCompile).toHaveBeenCalled();
         expect(spyCompile).toHaveBeenCalledWith({
-            docs: [docsBuilder.getDoc(normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`))],
+            docs: [docsBuilder.getDoc(toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`))],
             changes: changes
         });
     });

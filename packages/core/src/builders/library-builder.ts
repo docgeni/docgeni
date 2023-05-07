@@ -4,7 +4,6 @@ import { toolkit, debug } from '@docgeni/toolkit';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
 
 import { LibraryComponentImpl } from './library-component';
-import { resolve } from '../fs';
 import { Library, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
 import { NgDocParser, DefaultNgParserHost } from '@docgeni/ngdoc';
@@ -18,7 +17,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     constructor(private docgeni: DocgeniContext, public lib: Library) {
         super();
-        this.absLibPath = resolve(this.docgeni.paths.cwd, lib.rootDir);
+        this.absLibPath = toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir);
     }
 
     public get components(): Map<string, LibraryComponent> {
@@ -43,12 +42,12 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             if (include === '' || include === './') {
                 excludes.push(...includes);
             }
-            const includeAbsPath = resolve(this.absLibPath, include);
+            const includeAbsPath = toolkit.path.resolve(this.absLibPath, include);
             const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
             if (dirExists) {
                 const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: excludes });
                 subDirs.forEach(dir => {
-                    const absComponentPath = resolve(includeAbsPath, dir);
+                    const absComponentPath = toolkit.path.resolve(includeAbsPath, dir);
                     const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
                     this.componentsMap.set(absComponentPath, component);
                 });
@@ -61,7 +60,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     private async initializeNgDocParser() {
         if (this.lib.apiMode !== 'manual') {
-            const tsConfigPath = this.docgeni.paths.getAbsPath(resolve(this.lib.rootDir, 'tsconfig.lib.json'));
+            const tsConfigPath = this.docgeni.paths.getAbsPath(toolkit.path.resolve(this.lib.rootDir, 'tsconfig.lib.json'));
             debug(`[${this.lib.name}] apiMode is ${this.lib.apiMode}, tsConfigPath is ${tsConfigPath}`, NAMESPACE);
             if (await this.docgeni.host.exists(tsConfigPath)) {
                 const absRootDir = this.docgeni.paths.getAbsPath(this.lib.rootDir);

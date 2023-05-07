@@ -4,7 +4,6 @@ import { DocgeniLibrary, LiveExample } from '../interfaces';
 import { toolkit } from '@docgeni/toolkit';
 import { LibraryBuilderImpl } from './library-builder';
 import { normalizeLibConfig } from './normalize';
-import { resolve } from '../fs';
 import { FileEmitter } from './emitter';
 
 export class LibrariesBuilder extends FileEmitter {
@@ -126,7 +125,7 @@ export class LibrariesBuilder extends FileEmitter {
             throw new ValidationError(`${lib.name} lib's rootDir(${lib.rootDir}) has not exists`);
         }
         if (lib.apiMode !== 'manual') {
-            const tsConfigPath = resolve(lib.rootDir, 'tsconfig.lib.json');
+            const tsConfigPath = toolkit.path.resolve(lib.rootDir, 'tsconfig.lib.json');
             const tsConfigExists = await this.docgeni.host.pathExists(this.docgeni.paths.getAbsPath(tsConfigPath));
             if (!tsConfigExists) {
                 throw new ValidationError(
@@ -142,14 +141,14 @@ export class LibrariesBuilder extends FileEmitter {
         const componentExamplesContent = toolkit.template.compile('component-examples.hbs', {
             data: JSON.stringify(liveExampleComponents, null, 4)
         });
-        const componentExamplesPath = resolve(this.absDestSiteContentPath, 'component-examples.ts');
+        const componentExamplesPath = toolkit.path.resolve(this.absDestSiteContentPath, 'component-examples.ts');
         await this.docgeni.host.writeFile(componentExamplesPath, componentExamplesContent);
         this.addEmitFile(componentExamplesPath, componentExamplesContent);
         const exampleLoaderContent = toolkit.template.compile('example-loader.hbs', {
             moduleKeys,
             enableIvy: this.docgeni.enableIvy
         });
-        const exampleLoaderPath = resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts');
+        const exampleLoaderPath = toolkit.path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts');
         await this.docgeni.host.writeFile(exampleLoaderPath, exampleLoaderContent);
         this.addEmitFile(exampleLoaderPath, exampleLoaderContent);
         // generate all modules fallback for below angular 9
@@ -166,12 +165,12 @@ export class LibrariesBuilder extends FileEmitter {
         const exampleModulesContent = toolkit.template.compile('example-modules.hbs', {
             modules
         });
-        const exampleModulesPath = resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts');
+        const exampleModulesPath = toolkit.path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts');
         await this.docgeni.host.writeFile(exampleModulesPath, exampleModulesContent);
         this.addEmitFile(exampleModulesPath, exampleModulesContent);
 
         const contentIndexContent = toolkit.template.compile('content-index.hbs', {});
-        const contentIndexPath = resolve(this.docgeni.paths.absSiteContentPath, 'index.ts');
+        const contentIndexPath = toolkit.path.resolve(this.docgeni.paths.absSiteContentPath, 'index.ts');
         await this.docgeni.host.writeFile(contentIndexPath, contentIndexContent);
         this.addEmitFile(contentIndexPath, contentIndexContent);
     }

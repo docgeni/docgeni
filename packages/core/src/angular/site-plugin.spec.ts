@@ -10,14 +10,13 @@ import {
     updateContextConfig
 } from '../testing';
 import AngularSitePlugin from './site-plugin';
-import { toolkit } from '@docgeni/toolkit';
+import { toolkit, fs } from '@docgeni/toolkit';
 import * as systemPath from 'path';
-import { getSystemPath, HostWatchEvent, HostWatchEventType, normalize, resolve } from '../fs';
 import { of, Subject } from 'rxjs';
 import { EventEmitter } from 'stream';
 import { SpawnOptions } from 'child_process';
 
-const SITE_TEMPLATE_PATH = resolve(__dirname, '../site-template');
+const SITE_TEMPLATE_PATH = toolkit.path.resolve(__dirname, '../site-template');
 
 const PUBLIC_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/public`;
 const DEFAULT_SITE_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`;
@@ -76,7 +75,7 @@ describe('#site-plugin', () => {
     it('should watch custom site success', async () => {
         const sitePath = `${DEFAULT_TEST_ROOT_PATH}/custom/site`;
         context.config.siteProjectName = 'customSite';
-        const watchAggregated$ = new Subject<HostWatchEvent[]>();
+        const watchAggregated$ = new Subject<fs.HostWatchEvent[]>();
 
         updateContext(context, { watch: true });
         const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
@@ -92,8 +91,8 @@ describe('#site-plugin', () => {
         expect(await context.host.exists(`${sitePath}/src/assets/stack-blitz/a.txt`)).toBeTruthy();
         watchAggregated$.next([
             {
-                type: HostWatchEventType.Created,
-                path: normalize(`${sitePath}/src/assets/stack-blitz/a.txt`),
+                type: fs.HostWatchEventType.Created,
+                path: toolkit.path.normalize(`${sitePath}/src/assets/stack-blitz/a.txt`),
                 time: new Date()
             }
         ]);
@@ -130,7 +129,7 @@ describe('#site-plugin', () => {
     });
 
     it('should watch public dir success', async () => {
-        const watchAggregated$ = new Subject<HostWatchEvent[]>();
+        const watchAggregated$ = new Subject<fs.HostWatchEvent[]>();
         await writeFilesToHost(context.host, {
             [`${PUBLIC_PATH}/tsconfig.json`]: `{"name": "test"}`,
             [`${PUBLIC_PATH}/assets/2.txt`]: `2.txt`
@@ -166,23 +165,23 @@ describe('#site-plugin', () => {
         expect(await context.host.exists(`${DEFAULT_SITE_PATH}/tsconfig.app.json`)).toBeTruthy();
         watchAggregated$.next([
             {
-                type: HostWatchEventType.Created,
-                path: normalize(`${PUBLIC_PATH}/index.html`),
+                type: toolkit.fs.HostWatchEventType.Created,
+                path: toolkit.path.normalize(`${PUBLIC_PATH}/index.html`),
                 time: new Date()
             },
             {
-                type: HostWatchEventType.Created,
-                path: normalize(`${PUBLIC_PATH}/assets/1.txt`),
+                type: toolkit.fs.HostWatchEventType.Created,
+                path: toolkit.path.normalize(`${PUBLIC_PATH}/assets/1.txt`),
                 time: new Date()
             },
             {
-                type: HostWatchEventType.Deleted,
-                path: normalize(`${PUBLIC_PATH}/assets/2.txt`),
+                type: toolkit.fs.HostWatchEventType.Deleted,
+                path: toolkit.path.normalize(`${PUBLIC_PATH}/assets/2.txt`),
                 time: new Date()
             },
             {
-                type: HostWatchEventType.Deleted,
-                path: normalize(`${PUBLIC_PATH}/tsconfig.json`),
+                type: toolkit.fs.HostWatchEventType.Deleted,
+                path: toolkit.path.normalize(`${PUBLIC_PATH}/tsconfig.json`),
                 time: new Date()
             }
         ]);
@@ -229,7 +228,7 @@ describe('#site-plugin', () => {
             expect(commandArgs).toEqual(['build', 'site', '--deploy-url', deployUrl]);
             expect(options).toEqual({
                 stdio: 'inherit',
-                cwd: getSystemPath(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`),
+                cwd: toolkit.path.getSystemPath(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`),
                 shell: process.platform === 'win32'
             });
             calledSpawn = true;
@@ -290,7 +289,7 @@ describe('#site-plugin', () => {
             });
             updateContext(context, { watch: true });
             const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
-            const watchAggregated$ = new Subject<HostWatchEvent[]>();
+            const watchAggregated$ = new Subject<fs.HostWatchEvent[]>();
             watchAggregatedSpy.and.callFake(files => {
                 return watchAggregated$.asObservable();
             });
@@ -303,18 +302,18 @@ describe('#site-plugin', () => {
 
             watchAggregated$.next([
                 {
-                    type: HostWatchEventType.Created,
-                    path: normalize(`${SRC_APP_PATH}/c.ts`),
+                    type: fs.HostWatchEventType.Created,
+                    path: toolkit.path.normalize(`${SRC_APP_PATH}/c.ts`),
                     time: new Date()
                 },
                 {
-                    type: HostWatchEventType.Changed,
-                    path: normalize(`${SRC_APP_PATH}/a.ts`),
+                    type: fs.HostWatchEventType.Changed,
+                    path: toolkit.path.normalize(`${SRC_APP_PATH}/a.ts`),
                     time: new Date()
                 },
                 {
-                    type: HostWatchEventType.Deleted,
-                    path: normalize(`${SRC_APP_PATH}/sub/b.ts`),
+                    type: fs.HostWatchEventType.Deleted,
+                    path: toolkit.path.normalize(`${SRC_APP_PATH}/sub/b.ts`),
                     time: new Date()
                 }
             ]);
@@ -338,12 +337,12 @@ describe('#site-plugin', () => {
             });
             updateContext(context, { watch: true });
             const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
-            const watchAggregated$ = new Subject<HostWatchEvent[]>();
+            const watchAggregated$ = new Subject<fs.HostWatchEvent[]>();
             watchAggregatedSpy.and.callFake(files => {
                 return watchAggregated$.asObservable();
             });
             await context.hooks.beforeRun.promise();
-            const appModule = await context.host.readFile(resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
+            const appModule = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
             expect(appModule).toContain(`providers: [ AClass, ...DOCGENI_SITE_PROVIDERS ],`);
 
             const newModuleText = `export default { providers: [ NewClass ] }`;
@@ -353,14 +352,14 @@ describe('#site-plugin', () => {
 
             watchAggregated$.next([
                 {
-                    type: HostWatchEventType.Changed,
-                    path: normalize(`${SRC_APP_PATH}/module.ts`),
+                    type: fs.HostWatchEventType.Changed,
+                    path: toolkit.path.normalize(`${SRC_APP_PATH}/module.ts`),
                     time: new Date()
                 }
             ]);
 
             await toolkit.utils.wait(2000);
-            const newAppModule = await context.host.readFile(resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
+            const newAppModule = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
             expect(newAppModule).toContain(`providers: [ NewClass, ...DOCGENI_SITE_PROVIDERS ],`);
         });
     });

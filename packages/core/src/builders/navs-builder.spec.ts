@@ -8,10 +8,8 @@ import {
     updateContext
 } from '../testing';
 import { NavsBuilder } from './navs-builder';
-import * as path from 'path';
-import { DocSourceFile } from './doc-file';
-import { DocType } from '../enums';
 import { toolkit } from '@docgeni/toolkit';
+
 describe('#navs-builder', () => {
     for (const dir of ['', 'en-us/']) {
         let context: DocgeniContext;

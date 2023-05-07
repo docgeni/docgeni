@@ -1,15 +1,15 @@
 import { SyncHook } from 'tapable';
 import { DocsBuilder, DocSourceFile } from '../builders';
-import { HostWatchEvent } from '../fs';
 import { EmitFile, EmitFiles } from './file';
 import { LibraryBuilder } from './library-builder';
 import { LibraryComponent } from './library-component';
+import { fs } from '@docgeni/toolkit';
 
 export interface CompilationIncrement {
     docs?: DocSourceFile[];
     libraryBuilder?: LibraryBuilder;
     libraryComponents?: LibraryComponent[];
-    changes?: HostWatchEvent[];
+    changes?: fs.HostWatchEvent[];
 }
 
 export interface CompilationResult {

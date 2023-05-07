@@ -1,5 +1,4 @@
 import { createNgSourceFile } from '@docgeni/ngdoc';
-import * as utils from '../../ast-utils';
 import { generateBuiltInComponentsModule } from './built-in-module';
 import { ComponentBuilder } from './component-builder';
 

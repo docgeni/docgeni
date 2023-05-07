@@ -2,18 +2,15 @@ import { DocgeniLibrary } from './../interfaces/library';
 import {
     assertExpectedFiles,
     createTestDocgeniContext,
-    createTestDocgeniHost,
     DEFAULT_TEST_ROOT_PATH,
     expectThrowAsync,
     FixtureResult,
-    loadFixture,
-    writeFilesToHost
+    loadFixture
 } from '../testing';
 import { LibrariesBuilder } from './libraries-builder';
 import { DocgeniContext } from '../docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
 import { normalizeLibConfig } from './normalize';
-import { normalize, resolve } from '../fs';
 import * as systemPath from 'path';
 import { EmitFiles, LibraryBuilder } from '../types';
 
@@ -150,10 +147,16 @@ describe('libraries-builder', () => {
             await librariesBuilder.emit();
 
             const expectedFiles = {
-                [resolve(context.paths.absSiteContentPath, 'index.ts')]: fixture.getOutputContent(`index.ts`),
-                [resolve(context.paths.absSiteContentPath, 'example-modules.ts')]: fixture.getOutputContent(`example-modules.ts`),
-                [resolve(context.paths.absSiteContentPath, 'example-loader.ts')]: fixture.getOutputContent(`example-loader.ts`),
-                [resolve(context.paths.absSiteContentPath, 'component-examples.ts')]: fixture.getOutputContent(`component-examples.ts`)
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'index.ts')]: fixture.getOutputContent(`index.ts`),
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-modules.ts')]: fixture.getOutputContent(
+                    `example-modules.ts`
+                ),
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-loader.ts')]: fixture.getOutputContent(
+                    `example-loader.ts`
+                ),
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'component-examples.ts')]: fixture.getOutputContent(
+                    `component-examples.ts`
+                )
             };
             await assertExpectedFiles(context.host, expectedFiles, true);
         });

@@ -4,7 +4,6 @@ import { ChannelItem, ComponentDocItem, DocItem, HomeDocMeta, Locale, Navigation
 import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
 import * as path from 'path';
-import { resolve } from '../fs';
 
 export class NavsBuilder {
     private localeNavsMap: Record<string, NavigationItem[]> = {};
@@ -146,7 +145,7 @@ export class NavsBuilder {
         let navs: Array<NavigationItem> = [];
         let homeMeta: HomeDocMeta;
         for (const dirname of dirsAndFiles) {
-            const absDocPath = resolve(dirPath, dirname);
+            const absDocPath = toolkit.path.resolve(dirPath, dirname);
             if (await this.docgeni.host.isDirectory(absDocPath)) {
                 const entryFile = this.tryGetEntryFile(absDocPath);
                 const currentPath = this.getCurrentRoutePath(dirname, entryFile);
@@ -215,7 +214,7 @@ export class NavsBuilder {
 
     private tryGetEntryFile(dirPath: string) {
         const fullPath = DOCS_ENTRY_FILE_NAMES.map(name => {
-            return resolve(dirPath, `${name}.md`);
+            return toolkit.path.resolve(dirPath, `${name}.md`);
         }).find(path => {
             return this.docgeni.docsBuilder.getDoc(path);
         });
@@ -252,11 +251,11 @@ export class NavsBuilder {
     private async getLocaleDocsPath(locale: Locale) {
         const isDefaultLocale = locale.key === this.config.defaultLocale;
         if (isDefaultLocale) {
-            const dir = resolve(this.docgeni.paths.absDocsPath, locale.key);
+            const dir = toolkit.path.resolve(this.docgeni.paths.absDocsPath, locale.key);
             if (await this.docgeni.host.pathExists(dir)) {
                 return dir;
             }
         }
-        return isDefaultLocale ? this.docgeni.paths.absDocsPath : resolve(this.docgeni.paths.absDocsPath, locale.key);
+        return isDefaultLocale ? this.docgeni.paths.absDocsPath : toolkit.path.resolve(this.docgeni.paths.absDocsPath, locale.key);
     }
 }

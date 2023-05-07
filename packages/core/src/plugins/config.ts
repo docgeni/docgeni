@@ -1,7 +1,6 @@
 import { Plugin } from './plugin';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniSiteConfig } from '../interfaces';
-import { resolve } from '../fs';
 import { toolkit } from '@docgeni/toolkit';
 
 const PLUGIN_NAME = 'SiteConfigPlugin';
@@ -23,7 +22,7 @@ export class ConfigPlugin implements Plugin {
                     footer: docgeni.config.footer,
                     algolia: docgeni.config.algolia
                 };
-                const outputConfigPath = resolve(docgeni.paths.absSiteContentPath, 'config.ts');
+                const outputConfigPath = toolkit.path.resolve(docgeni.paths.absSiteContentPath, 'config.ts');
                 const content = toolkit.template.compile('config.hbs', {
                     siteConfig: JSON.stringify(siteConfig, null, 4)
                 });

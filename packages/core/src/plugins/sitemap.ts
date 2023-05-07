@@ -1,6 +1,5 @@
 import { Plugin } from './plugin';
 import { DocgeniContext } from '../docgeni.interface';
-import { resolve } from '../fs';
 import { toolkit } from '@docgeni/toolkit';
 import { DocItem, NavigationItem } from '../interfaces';
 
@@ -28,7 +27,7 @@ export default class SitemapPlugin implements Plugin {
     apply(docgeni: DocgeniContext): void {
         if (docgeni.config.sitemap?.host) {
             docgeni.hooks.navsEmitSucceed.tap(PLUGIN_NAME, async (navsBuild, config: Record<string, DocItem[]>) => {
-                const outputConfigPath = resolve(docgeni.paths.absSitePath, 'src/sitemap.xml');
+                const outputConfigPath = toolkit.path.resolve(docgeni.paths.absSitePath, 'src/sitemap.xml');
                 const content = toolkit.template.compile('sitemap-xml.hbs', {
                     urls: this.generateUrls(docgeni, config)
                 });
