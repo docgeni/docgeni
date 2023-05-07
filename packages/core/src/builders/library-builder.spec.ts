@@ -1,6 +1,5 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { HostWatchEventType, normalize, resolve } from '../fs';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, NgParserSpectator } from '../testing';
 import { LibraryBuilderImpl } from './library-builder';
 import { normalizeLibConfig } from './normalize';
@@ -113,7 +112,7 @@ describe('#library-builder', () => {
             }
         ]
     });
-    const libDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib`);
+    const libDirPath = toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib`);
 
     let context: DocgeniContext;
     let fixture: FixtureResult;
@@ -314,7 +313,7 @@ describe('#library-builder', () => {
         library.apiMode = 'automatic';
         const ngParserSpectator = new NgParserSpectator();
 
-        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        const tsconfig = toolkit.path.resolve(libDirPath, 'tsconfig.lib.json');
         context.host.writeFile(tsconfig, '{includes: []}');
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         expect(libraryBuilder.getNgDocParser()).toBeFalsy();
@@ -332,7 +331,7 @@ describe('#library-builder', () => {
         library.apiMode = 'compatible';
         const ngParserSpectator = new NgParserSpectator();
 
-        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        const tsconfig = toolkit.path.resolve(libDirPath, 'tsconfig.lib.json');
         context.host.writeFile(tsconfig, '{includes: []}');
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         expect(libraryBuilder.getNgDocParser()).toBeFalsy();
@@ -350,7 +349,7 @@ describe('#library-builder', () => {
         library.apiMode = 'compatible';
         const ngParserSpectator = new NgParserSpectator();
 
-        const tsconfig = resolve(libDirPath, 'tsconfig.lib.json');
+        const tsconfig = toolkit.path.resolve(libDirPath, 'tsconfig.lib.json');
         context.host.writeFile(tsconfig, `{include: []}`);
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         expect(libraryBuilder.getNgDocParser()).toBeFalsy();
@@ -358,10 +357,10 @@ describe('#library-builder', () => {
         await libraryBuilder.initialize();
         const compileSpy = spyOn(context, 'compile');
         expect(compileSpy).not.toHaveBeenCalled();
-        ngParserSpectator.fakeFileChange(resolve(libDirPath, './button/button.component.ts'));
+        ngParserSpectator.fakeFileChange(toolkit.path.resolve(libDirPath, './button/button.component.ts'));
         expect(compileSpy).toHaveBeenCalledWith({
             libraryBuilder: libraryBuilder,
-            libraryComponents: [libraryBuilder.components.get(resolve(libDirPath, 'button'))],
+            libraryComponents: [libraryBuilder.components.get(toolkit.path.resolve(libDirPath, 'button'))],
             changes: []
         });
     });
@@ -373,13 +372,13 @@ describe('#library-builder', () => {
             const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
             const changes = [
                 {
-                    type: HostWatchEventType.Created,
-                    path: normalize(`${libDirPath}/button/examples/basic/module.ts`),
+                    type: toolkit.fs.HostWatchEventType.Created,
+                    path: toolkit.path.normalize(`${libDirPath}/button/examples/basic/module.ts`),
                     time: new Date()
                 },
                 {
-                    type: HostWatchEventType.Changed,
-                    path: normalize(`${libDirPath}/button/examples/basic/basic.component.ts`),
+                    type: toolkit.fs.HostWatchEventType.Changed,
+                    path: toolkit.path.normalize(`${libDirPath}/button/examples/basic/basic.component.ts`),
                     time: new Date()
                 }
             ];
@@ -416,8 +415,8 @@ describe('#library-builder', () => {
             const watchAggregatedSpy = spyOn(context.host, 'watchAggregated');
             const changes = [
                 {
-                    type: HostWatchEventType.Created,
-                    path: normalize(`${libDirPath}/button1/examples/basic/module.ts`),
+                    type: toolkit.fs.HostWatchEventType.Created,
+                    path: toolkit.path.normalize(`${libDirPath}/button1/examples/basic/module.ts`),
                     time: new Date()
                 }
             ];

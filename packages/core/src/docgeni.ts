@@ -10,7 +10,6 @@ import { DEFAULT_CONFIG } from './defaults';
 import { DocgeniPaths } from './docgeni-paths';
 import { ValidationError } from './errors';
 import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './builders';
-import { DocgeniNodeJsAsyncHost, DocgeniScopedHost, resolve } from './fs';
 import { DocgeniProgress } from './progress';
 import { DocgeniCompilationImpl } from './compilation';
 import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
@@ -61,7 +60,7 @@ export class Docgeni implements DocgeniContext {
         this.paths = new DocgeniPaths(options.cwd || process.cwd(), this.config.docsDir, this.config.outputDir);
         this.watch = options.watch || false;
         this.presets = options.presets || [];
-        this.fs = new DocgeniScopedHost(new DocgeniNodeJsAsyncHost(), this.paths.cwd);
+        this.fs = new fs.DocgeniScopedHost(new fs.DocgeniNodeJsAsyncHost(), this.paths.cwd);
         this.host = options.host || fs.createDocgeniFsHost(this.fs);
         this.plugins = options.plugins || [
             require.resolve('./plugins/markdown'),
@@ -137,7 +136,7 @@ export class Docgeni implements DocgeniContext {
         }
 
         if (this.config.docsDir) {
-            const absDocsPath = resolve(this.paths.cwd, this.config.docsDir);
+            const absDocsPath = toolkit.path.resolve(this.paths.cwd, this.config.docsDir);
             const docsDosExists = await this.host.pathExists(absDocsPath);
             if (!docsDosExists) {
                 throw new ValidationError(`docs dir(${this.config.docsDir}) has not exists, full path: ${getSystemPath(absDocsPath)}`);

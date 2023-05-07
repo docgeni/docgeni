@@ -1,9 +1,7 @@
-import { SyncHook, AsyncSeriesHook } from 'tapable';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocSourceFile } from './doc-file';
 import { toolkit } from '@docgeni/toolkit';
 import { FileEmitter } from './emitter';
-import { getSystemPath, HostWatchEventType, normalize, resolve } from '../fs';
 
 export class DocsBuilder extends FileEmitter {
     private docFiles = new Map<string, DocSourceFile>();
@@ -65,7 +63,7 @@ export class DocsBuilder extends FileEmitter {
                         docFile = this.createDocSourceFile(this.getLocaleByAbsPath(event.path), event.path);
                         this.docFiles.set(event.path, docFile);
                     }
-                    if (event.type === HostWatchEventType.Deleted) {
+                    if (event.type === toolkit.fs.HostWatchEventType.Deleted) {
                         docFile.clear();
                         this.docFiles.delete(event.path);
                     } else {
@@ -84,7 +82,7 @@ export class DocsBuilder extends FileEmitter {
 
     private getLocaleByAbsPath(filePath: string) {
         const locale = this.docgeni.config.locales.find(locale => {
-            return filePath.startsWith(resolve(this.docgeni.paths.absDocsPath, locale.key + '/'));
+            return filePath.startsWith(toolkit.path.resolve(this.docgeni.paths.absDocsPath, locale.key + '/'));
         });
         return locale ? locale.key : this.docgeni.config.defaultLocale;
     }
@@ -98,11 +96,11 @@ export class DocsBuilder extends FileEmitter {
     private async initializeDocFiles() {
         const allFiles = toolkit.fs.globSync(`/**/*.md`, {
             dot: true,
-            root: getSystemPath(this.docgeni.paths.absDocsPath)
+            root: toolkit.path.getSystemPath(this.docgeni.paths.absDocsPath)
         });
         // init all doc files
         for (const filepath of allFiles) {
-            const absFilePath = normalize(filepath);
+            const absFilePath = toolkit.path.normalize(filepath);
             const docFile = this.createDocSourceFile(this.getLocaleByAbsPath(absFilePath), absFilePath);
             this.docFiles.set(docFile.path, docFile);
         }

@@ -1,6 +1,5 @@
 import { createNgSourceFile, NgComponentMetadata } from '@docgeni/ngdoc';
-import { fs } from '@docgeni/toolkit';
-import { resolve } from '../../fs';
+import { fs, toolkit } from '@docgeni/toolkit';
 
 export class ComponentBuilder {
     public entryComponentFullPath: string;
@@ -10,8 +9,8 @@ export class ComponentBuilder {
     public metadata: NgComponentMetadata;
 
     constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
-        this.entryComponentFullPath = resolve(fullPath, `${name}.component.ts`);
-        this.distPath = resolve(distRootPath, name);
+        this.entryComponentFullPath = toolkit.path.resolve(fullPath, `${name}.component.ts`);
+        this.distPath = toolkit.path.resolve(distRootPath, name);
     }
 
     private async buildMetadata() {

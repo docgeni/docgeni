@@ -3,7 +3,6 @@ import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
 import { AngularCommandOptions, SiteProject } from './types';
 import Handlebars from 'handlebars';
-import { getSystemPath, HostWatchEventType, normalize, relative, resolve } from '../fs';
 import { createNgSourceFile } from '@docgeni/ngdoc';
 import { ValidationError } from '../errors';
 import semver from 'semver';
@@ -108,19 +107,19 @@ export class SiteBuilder {
     }
 
     private async createSiteProject(): Promise<void> {
-        const sitePath = resolve(this.docgeni.paths.cwd, this.docgeni.config.siteDir);
+        const sitePath = toolkit.path.resolve(this.docgeni.paths.cwd, this.docgeni.config.siteDir);
         const siteProject: SiteProject = {
             name: 'site',
             root: sitePath,
-            sourceRoot: resolve(sitePath, 'src')
+            sourceRoot: toolkit.path.resolve(sitePath, 'src')
         };
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
-        await this.docgeni.host.copy(resolve(__dirname, '../site-template'), sitePath);
-        const angularJSONPath = resolve(this.siteProject.root, './angular.json');
+        await this.docgeni.host.copy(toolkit.path.resolve(__dirname, '../site-template'), sitePath);
+        const angularJSONPath = toolkit.path.resolve(this.siteProject.root, './angular.json');
         const angularJSONContent = toolkit.template.compile('angular-json.hbs', {
             root: this.docgeni.config.siteDir,
-            outputPath: normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir))
+            outputPath: toolkit.path.normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir))
         });
         await this.docgeni.host.writeFile(angularJSONPath, angularJSONContent);
         await this.syncTsconfig();
@@ -140,21 +139,29 @@ export class SiteBuilder {
                 {
                     key: `${packageJson.name}/*`,
                     value: new Handlebars.SafeString(
-                        [`"${relative(this.siteProject.root, resolve(this.docgeni.paths.cwd, lib.rootDir))}/*"`].join(',')
+                        [
+                            `"${toolkit.path.relative(this.siteProject.root, toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir))}/*"`
+                        ].join(',')
                     )
                 },
                 {
                     key: packageJson.name,
                     value: new Handlebars.SafeString(
                         [
-                            `"${relative(this.siteProject.root, resolve(this.docgeni.paths.cwd, lib.rootDir))}/index.ts"`,
-                            `"${relative(this.siteProject.root, resolve(this.docgeni.paths.cwd, lib.rootDir))}/public-api.ts"`
+                            `"${toolkit.path.relative(
+                                this.siteProject.root,
+                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir)
+                            )}/index.ts"`,
+                            `"${toolkit.path.relative(
+                                this.siteProject.root,
+                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir)
+                            )}/public-api.ts"`
                         ].join(',')
                     )
                 }
             );
         }
-        const tsconfigJsonPath = resolve(this.siteProject.root, './tsconfig.app.json');
+        const tsconfigJsonPath = toolkit.path.resolve(this.siteProject.root, './tsconfig.app.json');
         const tsconfigJsonContent = toolkit.template.compile('tsconfig-app-json.hbs', {
             paths: tsPaths
         });
@@ -179,14 +186,14 @@ export class SiteBuilder {
 
     private async syncPublic() {
         if (await this.publicDirExists()) {
-            const assetsPath = resolve(this.publicDirPath, `assets`);
+            const assetsPath = toolkit.path.resolve(this.publicDirPath, `assets`);
             if (await this.docgeni.host.pathExists(assetsPath)) {
-                await this.docgeni.host.copy(assetsPath, resolve(this.siteProject.sourceRoot, 'assets'));
+                await this.docgeni.host.copy(assetsPath, toolkit.path.resolve(this.siteProject.sourceRoot, 'assets'));
             }
             for (const copyFile of COPY_FILES) {
-                const fromPath = resolve(this.publicDirPath, copyFile.from);
+                const fromPath = toolkit.path.resolve(this.publicDirPath, copyFile.from);
                 if (await this.docgeni.host.pathExists(fromPath)) {
-                    await this.docgeni.host.copy(fromPath, resolve(this.siteProject.root, copyFile.to));
+                    await this.docgeni.host.copy(fromPath, toolkit.path.resolve(this.siteProject.root, copyFile.to));
                 }
             }
             this.updateShareExampleBundleJson(this.publicDirPath);
@@ -195,7 +202,7 @@ export class SiteBuilder {
 
     private async syncSrcApp() {
         if (await this.srcAppDirExists()) {
-            await this.docgeni.host.copy(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
+            await this.docgeni.host.copy(this.srcAppDirPath, toolkit.path.resolve(this.siteProject.sourceRoot, 'app'));
             await this.buildAppModule();
         }
     }
@@ -204,13 +211,13 @@ export class SiteBuilder {
         if (this.docgeni.watch && (await this.srcAppDirExists())) {
             this.docgeni.host.watchAggregated(this.srcAppDirPath).subscribe(async events => {
                 for (const event of events) {
-                    const distPath = event.path.replace(this.srcAppDirPath, resolve(this.siteProject.sourceRoot, 'app'));
-                    if (event.type === HostWatchEventType.Deleted) {
+                    const distPath = event.path.replace(this.srcAppDirPath, toolkit.path.resolve(this.siteProject.sourceRoot, 'app'));
+                    if (event.type === toolkit.fs.HostWatchEventType.Deleted) {
                         await this.docgeni.host.delete(distPath);
                     } else {
                         await this.docgeni.host.copy(event.path, distPath);
                     }
-                    if (event.path.includes(resolve(this.srcAppDirPath, 'module.ts'))) {
+                    if (event.path.includes(toolkit.path.resolve(this.srcAppDirPath, 'module.ts'))) {
                         this.buildAppModule();
                     }
                 }
@@ -219,7 +226,7 @@ export class SiteBuilder {
     }
 
     private async buildAppModule() {
-        const modulePath = resolve(this.srcAppDirPath, './module.ts');
+        const modulePath = toolkit.path.resolve(this.srcAppDirPath, './module.ts');
         if (await this.docgeni.host.pathExists(modulePath)) {
             const moduleText = await this.docgeni.host.readFile(modulePath);
             const ngSourceFile = createNgSourceFile(modulePath, moduleText);
@@ -254,20 +261,23 @@ export class SiteBuilder {
                 updater.removeDefaultExport();
 
                 updater.update();
-                await this.docgeni.host.writeFile(resolve(this.siteProject.sourceRoot, './app/app.module.ts'), updater.update());
+                await this.docgeni.host.writeFile(
+                    toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.module.ts'),
+                    updater.update()
+                );
             }
         }
     }
 
     private async watchPublic() {
         if (this.docgeni.watch && (await this.publicDirExists())) {
-            const assetsPath = resolve(this.publicDirPath, 'assets');
+            const assetsPath = toolkit.path.resolve(this.publicDirPath, 'assets');
 
             const fromToMap = new Map<string, string>();
             const watchFilePaths: string[] = [];
             COPY_FILES.forEach(copyFile => {
-                const fromPath = resolve(this.publicDirPath, copyFile.from);
-                const toPath = resolve(this.siteProject.root, copyFile.to);
+                const fromPath = toolkit.path.resolve(this.publicDirPath, copyFile.from);
+                const toPath = toolkit.path.resolve(this.siteProject.root, copyFile.to);
                 fromToMap.set(fromPath, toPath);
                 watchFilePaths.push(fromPath);
             });
@@ -277,15 +287,17 @@ export class SiteBuilder {
                     if (fromToMap.get(event.path)) {
                         distPath = fromToMap.get(event.path);
                     } else {
-                        distPath = resolve(this.siteProject.sourceRoot, relative(this.publicDirPath, event.path));
+                        distPath = toolkit.path.resolve(this.siteProject.sourceRoot, toolkit.path.relative(this.publicDirPath, event.path));
                     }
-                    if (event.type === HostWatchEventType.Deleted) {
+                    if (event.type === toolkit.fs.HostWatchEventType.Deleted) {
                         await this.docgeni.host.delete(distPath);
                     } else {
                         await this.docgeni.host.copy(event.path, distPath);
                     }
                 }
-                const isStackBlitzDir = events.some(event => !relative(resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..'));
+                const isStackBlitzDir = events.some(
+                    event => !toolkit.path.relative(toolkit.path.resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..')
+                );
                 if (isStackBlitzDir) {
                     this.updateShareExampleBundleJson(this.publicDirPath);
                 }
@@ -294,13 +306,13 @@ export class SiteBuilder {
     }
 
     private async syncSiteProject() {
-        this.updateShareExampleBundleJson(resolve(this.docgeni.paths.absSitePath, 'src'));
+        this.updateShareExampleBundleJson(toolkit.path.resolve(this.docgeni.paths.absSitePath, 'src'));
     }
 
     private async watchSiteProject() {
         if (this.docgeni.watch) {
-            const sourceRoot = resolve(this.docgeni.paths.absSitePath, 'src');
-            const assetsPath = resolve(sourceRoot, 'assets');
+            const sourceRoot = toolkit.path.resolve(this.docgeni.paths.absSitePath, 'src');
+            const assetsPath = toolkit.path.resolve(sourceRoot, 'assets');
             this.docgeni.host.watchAggregated([`${assetsPath}/stack-blitz`]).subscribe(async events => {
                 const isStackBlitzDir = events.some(event => !event.path.endsWith('stack-blitz/bundle.json'));
                 if (isStackBlitzDir) {
@@ -313,7 +325,7 @@ export class SiteBuilder {
     private async execAngularCommand(command: string, args: Array<string> = []) {
         try {
             const commandArgs = [command, this.siteProject.name, ...args];
-            const commandCwd = this.siteProject.custom ? undefined : getSystemPath(this.docgeni.paths.absSitePath);
+            const commandCwd = this.siteProject.custom ? undefined : toolkit.path.getSystemPath(this.docgeni.paths.absSitePath);
             this.docgeni.logger.fancy(`\nStart run ${toolkit.print.colors.blueBright(`ng ${commandArgs.join(' ')}`)} for site...`);
             const child = this.spawn('ng', commandArgs, {
                 stdio: 'inherit',
@@ -347,9 +359,12 @@ export class SiteBuilder {
     }
 
     private async updateShareExampleBundleJson(sitePath: string) {
-        const sharedExampleDir = resolve(resolve(sitePath, 'assets'), 'stack-blitz');
+        const sharedExampleDir = toolkit.path.resolve(toolkit.path.resolve(sitePath, 'assets'), 'stack-blitz');
         if (!(await this.docgeni.host.exists(sharedExampleDir))) {
-            await this.docgeni.host.writeFile(resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`), `[]`);
+            await this.docgeni.host.writeFile(
+                toolkit.path.resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
+                `[]`
+            );
             return;
         }
         const files = await this.docgeni.host.getFiles(sharedExampleDir, { recursively: true });
@@ -358,11 +373,11 @@ export class SiteBuilder {
             if (file === 'bundle.json') {
                 continue;
             }
-            list.push({ path: file, content: await this.docgeni.host.readFile(resolve(sharedExampleDir, file)) });
+            list.push({ path: file, content: await this.docgeni.host.readFile(toolkit.path.resolve(sharedExampleDir, file)) });
         }
         const content = JSON.stringify(list);
         await this.docgeni.host.writeFile(
-            resolve(this.docgeni.paths.absSitePath, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
+            toolkit.path.resolve(this.docgeni.paths.absSitePath, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
             content
         );
     }

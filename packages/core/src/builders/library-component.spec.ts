@@ -3,7 +3,6 @@ import { toolkit, fs } from '@docgeni/toolkit';
 import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
 import * as systemPath from 'path';
 import { DocgeniContext } from '../docgeni.interface';
-import { getSystemPath, normalize } from '../fs';
 import { ApiDeclaration } from '../interfaces';
 import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, writeFilesToHost } from '../testing';
 import { LibraryComponentImpl } from './library-component';
@@ -26,7 +25,7 @@ export class LibraryComponentSpectator {
             this.cosmiconfigOptions.push(options);
             return {
                 search: async (path: string) => {
-                    expect(path).toEqual(getSystemPath(component.absApiPath));
+                    expect(path).toEqual(toolkit.path.getSystemPath(component.absApiPath));
                     return {
                         config: apiDocsDefinitions[moduleName]
                     };
@@ -43,11 +42,11 @@ export class LibraryComponentSpectator {
         expect(this.cosmiconfigOptions).toEqual([
             {
                 searchPlaces: ['zh-cn', 'zh-cn.json', 'zh-cn.yaml', 'zh-cn.yml', 'zh-cn.js', 'zh-cn.config.js'],
-                stopDir: getSystemPath(`${componentDir}/api`)
+                stopDir: toolkit.path.getSystemPath(`${componentDir}/api`)
             },
             {
                 searchPlaces: ['en-us', 'en-us.json', 'en-us.yaml', 'en-us.yml', 'en-us.js', 'en-us.config.js'],
-                stopDir: getSystemPath(`${componentDir}/api`)
+                stopDir: toolkit.path.getSystemPath(`${componentDir}/api`)
             }
         ]);
     }
@@ -81,7 +80,7 @@ describe('#library-component', () => {
             }
         ]
     });
-    const buttonDirPath = normalize(`${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+    const buttonDirPath = toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/alib/button`);
     let context: DocgeniContext;
     let fixture: FixtureResult;
 

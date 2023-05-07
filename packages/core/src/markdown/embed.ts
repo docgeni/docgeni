@@ -3,8 +3,6 @@ import * as path from 'path';
 import fm from 'front-matter';
 import { marked } from 'marked';
 
-import { getSystemPath, resolve } from '../fs';
-
 const LINE_SEPARATE = /\r\n|\n|\r/;
 export function getEmbedBody(input: string, range: [number, number], url: string) {
     if (range[0] && range[1]) {
@@ -49,8 +47,8 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
             // eslint-disable-next-line dot-notation
             const absFilePath: string = this.lexer.options['absFilePath'];
             const absDirPath = path.dirname(absFilePath);
-            const nodeAbsPath = resolve(absDirPath, token.src);
-            const nodeSystemAbsPath = getSystemPath(nodeAbsPath);
+            const nodeAbsPath = toolkit.path.resolve(absDirPath, token.src);
+            const nodeSystemAbsPath = toolkit.path.getSystemPath(nodeAbsPath);
             if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeSystemAbsPath)) {
                 const content = toolkit.fs.readFileSync(nodeSystemAbsPath).toString();
                 this.lexer.blockTokens(
