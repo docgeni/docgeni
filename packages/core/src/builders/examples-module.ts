@@ -14,7 +14,6 @@ export async function generateComponentExamplesModule(
     const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
         imports: ['CommonModule', ...importsComponents],
         declarations: [...declarations],
-        entryComponents: [...declarations],
         exports: [...declarations]
     });
     const updater = new NgSourceUpdater(sourceFile);

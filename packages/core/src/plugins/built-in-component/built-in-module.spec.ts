@@ -25,7 +25,6 @@ export default {
         const moduleText = `
 @NgModule({
   declarations: [ AppComponent, AlibComponent ],
-    entryComponents: [ AlibComponent ],
     providers: [ AppService ],
     imports: [ CommonModule ],
     exports: [ AlibComponent ]

@@ -11,8 +11,7 @@ const COMPONENTS = [
     imports: [
       CommonModule
     ],
-    declarations: [...COMPONENTS],
-    entryComponents: [...COMPONENTS]
+    declarations: [...COMPONENTS]
 })
 export class CustomComponentsModule {
   constructor() {

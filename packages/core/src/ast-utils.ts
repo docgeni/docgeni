@@ -51,7 +51,6 @@ export function getNgModuleMetadataFromDefaultExport(sourceFile: NgSourceFile): 
 export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetadata: NgModuleMetadata): NgModuleMetadata {
     const defaultModuleMetadata = {
         declarations: [],
-        entryComponents: [],
         providers: [],
         imports: [],
         exports: []
@@ -61,7 +60,6 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
     appendMetadata = { ...defaultModuleMetadata, ...appendMetadata };
     const result: NgModuleMetadata = {
         declarations: combineSymbolMetadata(metadata.declarations, appendMetadata?.declarations),
-        entryComponents: combineSymbolMetadata(metadata.entryComponents, appendMetadata?.entryComponents),
         providers: combineSymbolMetadata(metadata.providers, appendMetadata.providers),
         imports: combineSymbolMetadata(metadata.imports, appendMetadata?.imports),
         exports: combineSymbolMetadata(metadata.exports, appendMetadata.exports)

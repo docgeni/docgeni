@@ -107,10 +107,6 @@ Docgeni will resolve the objects exported by `default` in `module.ts`, dynamical
       AlibButtonBasicExampleComponent, 
       AlibButtonAdvanceExampleComponent 
     ],
-    entryComponents: [ 
-      AlibButtonBasicExampleComponent, 
-      AlibButtonAdvanceExampleComponent 
-    ],
     providers: [ ],
     imports: [ CommonModule, AlibButtonModule ],
     exports: [ 
@@ -131,7 +127,6 @@ import { AlibButtonModule } from '@docgeni/alib/button';
 @NgModule({
     declarations: [AlibButtonBasicExampleComponent],
     imports: [CommonModule, AlibButtonModule, FormsModule],
-    entryComponents: [],
     exports: [AlibButtonBasicExampleComponent],
     providers: []
 })
@@ -224,15 +219,12 @@ const COMPONENTS = [
 @NgModule({
     declarations: COMPONENTS,
     imports: [CommonModule, AlibButtonModule],
-    entryComponents: COMPONENTS,
     exports: COMPONENTS,
     providers: []
 })
 export class AlibButtonExamplesModule {}
 
 ```
-
-Pay attention: all examples are dynamically loaded at runtime, and need to be imported in `entryComponents` when the Ivy rendering engine is not turned on.
 
 ## StackBlitz Live Example <label>2.0+</label>
 

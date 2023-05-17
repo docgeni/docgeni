@@ -106,10 +106,6 @@ Docgeni 会解析`module.ts`中`default`导出的对象并动态解析所有示�
       AlibButtonBasicExampleComponent, 
       AlibButtonAdvanceExampleComponent 
     ],
-    entryComponents: [ 
-      AlibButtonBasicExampleComponent, 
-      AlibButtonAdvanceExampleComponent 
-    ],
     providers: [ ],
     imports: [ CommonModule, AlibButtonModule ],
     exports: [ 
@@ -131,7 +127,6 @@ import { AlibButtonModule } from '@docgeni/alib/button';
 @NgModule({
     declarations: [AlibButtonBasicExampleComponent],
     imports: [CommonModule, AlibButtonModule, FormsModule],
-    entryComponents: [],
     exports: [AlibButtonBasicExampleComponent],
     providers: []
 })
@@ -236,15 +231,12 @@ const COMPONENTS = [
 @NgModule({
     declarations: COMPONENTS,
     imports: [CommonModule, AlibButtonModule],
-    entryComponents: COMPONENTS,
     exports: COMPONENTS,
     providers: []
 })
 export class AlibButtonExamplesModule {}
 
 ```
-
-<alert type="info">注意：所有的示例在运行时都是动态加载的，在没有开启 Ivy 渲染引擎的情况下需要在`entryComponents`中导入。</alert>
 
 ## StackBlitz 示例 <label>2.0+</label>
 Docgeni 支持组件示例直接在 StackBlitz 平台展示, StackBlitz 在线示例需要配置示例的依赖，样式和`angular.json`，通过在 `.docgeni/public/assets/stack-blitz` 文件夹配置，文件结构如下：

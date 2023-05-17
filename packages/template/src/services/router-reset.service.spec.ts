@@ -1,7 +1,7 @@
 import { Router, RouterModule, Routes } from '@angular/router';
-import { createServiceFactory, Spectator, SpectatorService } from '@ngneat/spectator';
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { DocgeniSiteConfig, NavigationItem } from '../interfaces';
-import { CONFIG_TOKEN, GlobalContext } from './global-context';
+import { GlobalContext } from './global-context';
 import { RouterResetService } from './router-reset.service';
 
 describe('router-reset.service', () => {
@@ -19,7 +19,6 @@ describe('router-reset.service', () => {
             }
         ],
         imports: [RouterModule.forRoot([], {})],
-        entryComponents: [],
         mocks: []
     });
 

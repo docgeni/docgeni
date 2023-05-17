@@ -20,7 +20,6 @@ export async function generateBuiltInComponentsModule(sourceFile: NgSourceFile, 
     const moduleMetadata: NgModuleMetadata = combineNgModuleMetadata(defaultModuleMetadata, {
         imports: ['CommonModule', ...importsComponents],
         declarations: [...declarations],
-        entryComponents: [...declarations],
         exports: [...declarations]
     });
 
