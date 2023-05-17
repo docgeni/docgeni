@@ -19,7 +19,6 @@ describe('GlobalContext', () => {
                 }
             }
         ],
-        entryComponents: [],
         mocks: []
     });
 

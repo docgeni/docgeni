@@ -4,6 +4,5 @@ import { AlibButtonAdvanceCustomExampleComponent } from './advance/advance.compo
 
 @NgModule({
     declarations: [AlibButtonBasicExampleComponent, AlibButtonAdvanceCustomExampleComponent],
-    entryComponents: [AlibButtonBasicExampleComponent, AlibButtonAdvanceCustomExampleComponent]
 })
 export class AlibButtonExamplesModule {}

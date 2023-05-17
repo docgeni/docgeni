@@ -121,7 +121,6 @@ describe('#ast-utils', () => {
             );
             expect(combinedMetadata).toEqual({
                 declarations: ['AppComponent'],
-                entryComponents: [],
                 providers: ['AppService'],
                 imports: ['FormsModule', 'CommonModule'],
                 exports: [],
@@ -136,7 +135,6 @@ describe('#ast-utils', () => {
             );
             expect(combinedMetadata).toEqual({
                 declarations: ['AppComponent'],
-                entryComponents: [],
                 providers: ['AppService'],
                 imports: ['CommonModule', 'FormsModule'],
                 exports: []
@@ -147,7 +145,6 @@ describe('#ast-utils', () => {
             const combinedMetadata = utils.combineNgModuleMetadata({ imports: ['FormsModule'], providers: ['AppService'] }, {});
             expect(combinedMetadata).toEqual({
                 declarations: [],
-                entryComponents: [],
                 providers: ['AppService'],
                 imports: ['FormsModule'],
                 exports: []
@@ -158,7 +155,6 @@ describe('#ast-utils', () => {
             const combinedMetadata = utils.combineNgModuleMetadata({}, { imports: ['FormsModule'], providers: ['AppService'] });
             expect(combinedMetadata).toEqual({
                 declarations: [],
-                entryComponents: [],
                 providers: ['AppService'],
                 imports: ['FormsModule'],
                 exports: []
@@ -169,7 +165,6 @@ describe('#ast-utils', () => {
             const combinedMetadata = utils.combineNgModuleMetadata({}, {});
             expect(combinedMetadata).toEqual({
                 declarations: [],
-                entryComponents: [],
                 providers: [],
                 imports: [],
                 exports: []

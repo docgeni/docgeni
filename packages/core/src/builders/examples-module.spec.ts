@@ -18,7 +18,6 @@ export default {
         const components = [{ name: 'AlibComponent', moduleSpecifier: './basic.component' }];
         const metaData = {
             declarations: ['AppComponent', 'AlibComponent'],
-            entryComponents: ['AlibComponent'],
             providers: ['AppService'],
             imports: ['CommonModule'],
             exports: ['AlibComponent']

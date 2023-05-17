@@ -162,7 +162,6 @@ describe('NavigationService', () => {
                 useValue: mockGlobalContext
             }
         ],
-        entryComponents: [],
         mocks: []
     });
 
