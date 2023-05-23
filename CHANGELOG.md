@@ -3,15 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
+
+
+### Features
+* support Angular v16 version
+### Bug Fixes
+
+* remove entryComponents ([4818fe3](https://github.com/docgeni/docgeni/commit/4818fe31cd5e48ef7642ba7b540a3dac4c33b4f3))
+* **core:** remove defaultProject and update root to src for site angular.json ([33a4e70](https://github.com/docgeni/docgeni/commit/33a4e703e8bce74b129769386adc6cc10477ff3b))
+
+
 ## [2.1.1](https://github.com/docgeni/docgeni/compare/v2.1.0...v2.1.1) (2023-04-24)
 
 
 ### Bug Fixes
 
 * should load root components when include is undefined or empty ([8169bbc](https://github.com/docgeni/docgeni/commit/8169bbc771d7cdcdec64c7511e9f20cef8ad3c75))
-
-
-
+* **core:** remove defaultProject and update root to src for site angular.json
 
 
 

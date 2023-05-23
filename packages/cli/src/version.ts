@@ -1,2 +1,2 @@
-export const VERSION = '2.1.1';
+export const VERSION = '2.2.0';
 export const ANGULAR_VERSION = '^15.0.0';
