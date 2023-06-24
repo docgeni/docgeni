@@ -45,7 +45,7 @@
     "node-prismjs": "0.1.2",
     "prismjs": "^1.29.0",
     "rxjs": "6.6.7",
-    "semver": "7.3.2",
+    "semver": "7.5.2",
     "tapable": "^1.1.3",
     "text-table": "^0.2.0",
     "through2": "^3.0.1",
