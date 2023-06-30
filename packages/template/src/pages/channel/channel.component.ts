@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding, NgModuleFactory, Type, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, OnDestroy, HostBinding, NgModuleFactory, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 
@@ -9,21 +8,13 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
 })
 export class ChannelComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-layout`) isLayout = true;
-    @HostBinding(`class.dg-scroll-container`) isScrollContainer = true;
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    constructor(
-        private http: HttpClient,
-        private elementRef: ElementRef<HTMLElement>,
-        private route: ActivatedRoute,
-        private router: Router,
-        public navigationService: NavigationService,
-        public global: GlobalContext
-    ) {}
+    constructor(private route: ActivatedRoute, public navigationService: NavigationService, public global: GlobalContext) {}
 
     ngOnInit(): void {
         const path = this.route.snapshot.routeConfig?.path!;
