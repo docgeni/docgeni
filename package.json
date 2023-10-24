@@ -47,6 +47,7 @@
     "install-examples": "cd examples/full && npm i && cd ../lite && npm i && cd ../../"
   },
   "private": true,
+  "packageManager": "yarn@1.22.0",
   "engines": {
     "node": ">=16.10.0",
     "yarn": ">=1.22.0",

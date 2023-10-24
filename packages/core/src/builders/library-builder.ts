@@ -140,7 +140,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
         });
     }
 
-    public generateLocaleNavs(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
+    public generateDocsAndNavsForLocale(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
         let channel: ChannelItem = rootNavs.find(nav => {
             return nav.lib === this.lib.name;
         });
@@ -181,7 +181,8 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                 category.items = ascendingSortByOrder(category.items);
             }
         });
-        return docItems;
+        channel.items = ascendingSortByOrder(channel.items);
+        return ascendingSortByOrder(docItems);
     }
 
     private async buildComponent(component: LibraryComponent) {

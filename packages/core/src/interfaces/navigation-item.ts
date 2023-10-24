@@ -49,6 +49,7 @@ export interface CategoryItem {
     };
     toc?: DocItemToc;
     ancestors?: CategoryItem[];
+    order?: number;
 }
 
 export interface ChannelItem {
