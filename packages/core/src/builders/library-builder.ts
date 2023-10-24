@@ -182,7 +182,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             }
         });
         channel.items = ascendingSortByOrder(channel.items);
-        return ascendingSortByOrder(docItems);
+        return docItems;
     }
 
     private async buildComponent(component: LibraryComponent) {
@@ -203,7 +203,8 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                     id: rawCategory.id,
                     title: getItemLocaleProperty(rawCategory, locale.key, 'title'),
                     subtitle: getItemLocaleProperty(rawCategory, locale.key, 'subtitle'),
-                    items: []
+                    items: [],
+                    order: 0
                 };
                 localeCategories[locale.key].push(category);
             });

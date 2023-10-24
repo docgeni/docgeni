@@ -206,12 +206,12 @@ describe('#library-builder', () => {
         const localeCategoriesMap = libraryBuilder['localeCategoriesMap'];
         expect(localeCategoriesMap).toEqual({
             'zh-cn': [
-                { id: 'general', title: '通用', subtitle: undefined, items: [] },
-                { id: 'layout', title: '布局', subtitle: undefined, items: [] }
+                { id: 'general', title: '通用', subtitle: undefined, items: [], order: 0 },
+                { id: 'layout', title: '布局', subtitle: undefined, items: [], order: 0 }
             ],
             'en-us': [
-                { id: 'general', title: 'General', subtitle: undefined, items: [] },
-                { id: 'layout', title: 'Layout', subtitle: undefined, items: [] }
+                { id: 'general', title: 'General', subtitle: undefined, items: [], order: 0 },
+                { id: 'layout', title: 'Layout', subtitle: undefined, items: [], order: 0 }
             ]
         });
     });
@@ -253,8 +253,8 @@ describe('#library-builder', () => {
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
         expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
         expect(rootNavs[0].items as unknown).toEqual([
-            { id: 'general', title: '通用', items: [componentDocItems.button] },
-            { id: 'layout', title: '布局', items: [] },
+            { id: 'general', title: '通用', items: [componentDocItems.button], order: 0 },
+            { id: 'layout', title: '布局', items: [], order: 0 },
             { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' }
         ]);
     });
@@ -324,7 +324,7 @@ describe('#library-builder', () => {
             }
         ];
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
-        expect(zhNavs).toEqual([componentDocItems.alert, componentDocItems.button]);
+        expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
         expect(rootNavs[0].items).toEqual([
             { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components', order: 10 },
             {
