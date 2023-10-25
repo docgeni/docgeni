@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* **core:** set default sort of category to 0 ([c251e82](https://github.com/docgeni/docgeni/commit/c251e82421ff35cafe6b13563f706dd32ee8be8d))
+* **core:** should sort navs of component lib without category ([0f21bb5](https://github.com/docgeni/docgeni/commit/0f21bb5c65890e2dc26c56a3b38d1bc29174b1ca))
+
+
+### Features
+
+* **core:** return headings when build component #INFR-9194 ([4dce242](https://github.com/docgeni/docgeni/commit/4dce2425116d937fc42409174712bae974f609b1)), closes [#INFR-9194](https://github.com/docgeni/docgeni/issues/INFR-9194)
+
+
+
+
+
 # [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
 
 

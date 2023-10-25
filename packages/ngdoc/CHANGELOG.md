@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Features
+
+* **ngdoc:** use [@public](https://github.com/public) mark methods of component as public [#504](https://github.com/docgeni/docgeni/issues/504) ([8000f12](https://github.com/docgeni/docgeni/commit/8000f12ddf7b395d787675259d6e74c08ab27825))
+
+
+
+
+
 ## [2.1.1](https://github.com/docgeni/docgeni/compare/v2.1.0...v2.1.1) (2023-04-24)
 
 **Note:** Version bump only for package @docgeni/ngdoc

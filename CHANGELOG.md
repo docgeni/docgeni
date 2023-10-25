@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* **core:** set default sort of category to 0 ([c251e82](https://github.com/docgeni/docgeni/commit/c251e82421ff35cafe6b13563f706dd32ee8be8d))
+* **core:** should sort navs of component lib without category ([0f21bb5](https://github.com/docgeni/docgeni/commit/0f21bb5c65890e2dc26c56a3b38d1bc29174b1ca))
+* **template:** show next and pre in root dir ([#509](https://github.com/docgeni/docgeni/issues/509)) ([9d196a1](https://github.com/docgeni/docgeni/commit/9d196a1a8ea3d712d57a0b421ac1610afd7b1af0))
+
+
+### Features
+
+* **core:** return headings when build component #INFR-9194 ([4dce242](https://github.com/docgeni/docgeni/commit/4dce2425116d937fc42409174712bae974f609b1)), closes [#INFR-9194](https://github.com/docgeni/docgeni/issues/INFR-9194)
+* **ngdoc:** use [@public](https://github.com/public) mark methods of component as public [#504](https://github.com/docgeni/docgeni/issues/504) ([8000f12](https://github.com/docgeni/docgeni/commit/8000f12ddf7b395d787675259d6e74c08ab27825))
+
+
+
+
+
 # [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
 
 
