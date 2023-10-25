@@ -175,6 +175,7 @@ export class NgDocParser {
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
         directiveDoc.properties = this.parseDirectiveProperties(context, declaration);
+        directiveDoc.methods = this.parseDeclarationMethods(context, declaration, { explicitPublic: true });
         return directiveDoc;
     }
 
@@ -260,38 +261,27 @@ export class NgDocParser {
         return properties;
     }
 
-    private parseDeclarationMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
+    private parseDeclarationMethods(
+        context: ParserSourceFileContext,
+        classDeclaration: ts.ClassDeclaration,
+        options: { explicitPublic: boolean } = { explicitPublic: false }
+    ) {
         const methods: NgPropertyDoc[] = [];
         const parsedSymbols = new WeakMap<ts.Symbol, boolean>();
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
+
+                // 显示公开的函数才会添加
+                if (options && options.explicitPublic) {
+                    const [tags] = getDocTagsBySymbol(symbol);
+                    if (!hasPublicTag(tags)) {
+                        return;
+                    }
+                }
+
                 if (symbol && !parsedSymbols.has(symbol)) {
                     parsedSymbols.set(symbol, true);
-                    // const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
-                    // const symbolDescription = serializeSymbol(symbol, context.checker);
-                    // const tagInfos = ts.getJSDocTags(node).map(tag => {
-                    //     return { name: tag.tagName.getFullText(), text: [{ text: tag.comment.toString(), kind: 'text' }] };
-                    // });
-                    // const [tags] = parseJsDocTagsToDocTagResult(tagInfos);
-                    // const descriptionText = ts.displayPartsToString(tags.description.text);
-                    // const method = {
-                    //     name: symbolDescription.name,
-                    //     parameters: node.parameters.map(parameter => {
-                    //         const paramName = parameter.name.getText();
-                    //         return {
-                    //             name: paramName,
-                    //             comment: ts.displayPartsToString(tags.param[paramName]?.text),
-                    //             type: parameter.type.getFullText()
-                    //         };
-                    //     }),
-                    //     returnValue: {
-                    //         type: context.checker.typeToString(type)
-                    //         // description: ts.displayPartsToString(tags.return.text)
-                    //     },
-                    //     description: descriptionText || symbolDescription.comment || ''
-                    // };
-                    // methods.push(method);
                     const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const signatures = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call);
@@ -318,7 +308,7 @@ export class NgDocParser {
         const heritageDeclarations = getHeritageDeclarations(classDeclaration, context.checker);
         if (heritageDeclarations && heritageDeclarations.length) {
             heritageDeclarations.forEach(declaration => {
-                methods.unshift(...this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration));
+                methods.unshift(...this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration, options));
             });
         }
         return methods;

@@ -88,7 +88,8 @@ describe('ng-parser', () => {
                         default: null,
                         tags: {}
                     }
-                ]
+                ],
+                methods: []
             }
         ] as unknown) as NgEntryItemDoc[]);
     });
@@ -292,6 +293,43 @@ describe('ng-parser', () => {
                     description: '',
                     default: true,
                     tags: {}
+                }
+            ]);
+        });
+
+        it('should parse methods and properties', () => {
+            const sourceText = `
+            @Input() param1 = false;
+
+            method1() {}
+
+            /**
+             * This is public method
+             * @public
+            **/
+            method2() {}
+            `;
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/button/button.component.ts': createButtonComponent(sourceText)
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    kind: 'Input',
+                    name: 'param1',
+                    aliasName: '',
+                    type: { name: 'boolean', options: null, kindName: undefined },
+                    description: '',
+                    default: false,
+                    tags: {}
+                }
+            ]);
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'method2',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: 'This is public method'
                 }
             ]);
         });

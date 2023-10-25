@@ -87,6 +87,12 @@ export class AlibButtonComponent extends Base implements OnInit {
     }
 
     ngOnInit(): void {}
+
+    /**
+     * Disable Button
+     * @public
+     */
+    disable(): void {}
 }
 
 /**
