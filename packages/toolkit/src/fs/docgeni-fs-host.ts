@@ -4,6 +4,7 @@ import { DocgeniHostWatchOptions } from './node-host';
 import { FileSystemWatcher, HostWatchEvent } from './watcher';
 import { normalize, resolve } from '../path';
 import { matchGlob } from '../utils';
+import { VfsHost } from './host';
 
 export interface GetDirsOrFilesOptions {
     /** Include .dot files in normal matches */
@@ -32,7 +33,7 @@ export interface DocgeniFsHost {
 }
 
 export class DocgeniFsHostImpl implements DocgeniFsHost {
-    constructor(public readonly host: virtualFs.Host) {}
+    constructor(public readonly host: virtualFs.Host | VfsHost) {}
 
     async readFile(path: string): Promise<string> {
         const data = await this.host.read(normalize(path)).toPromise();
@@ -152,6 +153,10 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
             }
         }
         return result;
+    }
+
+    async mkdir(path: string): Promise<void> {
+        return (this.host as VfsHost).mkdir(normalize(path));
     }
 }
 
