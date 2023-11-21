@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **toolkit:** add ora to  dependencies of toolkit ([51229a3](https://github.com/docgeni/docgeni/commit/51229a382496291ecd97050fd9effea2332d7f09))
+
+
+### Features
+
+* **toolkit:** copy support exclude ([9f56049](https://github.com/docgeni/docgeni/commit/9f560492dcf776aee211b9306813a03b42a5466e))
+
+
+
+
+
 ## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
 
 
