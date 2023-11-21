@@ -6,7 +6,7 @@ import { normalize, resolve } from '../path';
 import { matchGlob } from '../utils';
 import { VfsHost } from './host';
 
-export interface CopyOptions {
+export interface DocgeniFsCopyOptions {
     exclude?: string | string[];
 }
 
@@ -28,7 +28,7 @@ export interface DocgeniFsHost {
     isFile(path: string): Promise<boolean>;
     watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent>;
     watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]>;
-    copy(src: string, dest: string, options?: CopyOptions): Promise<void>;
+    copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
     getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
@@ -84,7 +84,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
         return this.host.stat(normalize(path)).toPromise();
     }
 
-    async copy(src: string, dest: string, options?: CopyOptions): Promise<void> {
+    async copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void> {
         if (options?.exclude && matchGlob(src, options.exclude)) {
             return;
         }
