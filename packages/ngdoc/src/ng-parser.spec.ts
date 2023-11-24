@@ -1,8 +1,8 @@
-import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Project, Node } from 'ts-morph';
+import * as path from 'path';
+import { Project } from 'ts-morph';
 import ts from 'typescript';
+import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
 import { createTestNgDocParser } from './testing';
 
 const EXCLUDE_DIRS: string[] = [];
@@ -961,6 +961,63 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                             description: ''
                         },
                         description: 'Close dialog'
+                    }
+                ]
+            });
+        });
+    });
+
+    describe('pipe', () => {
+        it('should parse pipe methods', () => {
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': `
+                /**
+                 * 把文本转换成全大写形式
+                 * @public
+                 * @name uppercase
+                 * @order 10
+                 */
+                @Pipe({
+                    name: 'uppercase',
+                    standalone: true
+                })
+                export class UpperCasePipe implements PipeTransform {
+                    constructor() {}
+                
+                    /**
+                     * @public
+                     * @param {string} value 输入值
+                     * @returns  {boolean}
+                     */
+                    transform(value: string): boolean {                   
+                        return true;
+                    }
+                }`
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'pipe',
+                name: 'uppercase',
+                description: '把文本转换成全大写形式',
+                order: 10,
+                pure: true,
+                standalone: true,
+                methods: [
+                    {
+                        name: 'transform',
+                        parameters: [
+                            {
+                                name: 'value',
+                                description: '输入值',
+                                type: 'string'
+                            }
+                        ],
+                        returnValue: {
+                            type: 'boolean',
+                            description: ''
+                        },
+                        description: ''
                     }
                 ]
             });

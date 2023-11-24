@@ -1,4 +1,4 @@
-import { ArgumentInfo, NgDirectiveMetadata, NgDocItemType } from '../types';
+import { ArgumentInfo, NgDirectiveMetadata, NgDocItemType, NgPipeMetadata } from '../types';
 import { ts } from '../typescript';
 import { lineFeedPrinter } from './line-feed-printer';
 
@@ -53,6 +53,17 @@ export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMetadata {
               exportAs: firstArg.exportAs || null,
               standalone: firstArg.standalone === 'true'
           } as NgDirectiveMetadata)
+        : undefined;
+}
+
+export function getPipeMeta(args: ArgumentInfo[]): NgPipeMetadata {
+    const firstArg = args[0] as Record<string, string | string[]>;
+    return firstArg
+        ? ({
+              name: firstArg.name,
+              pure: !(firstArg.pure === 'false'),
+              standalone: firstArg.standalone === 'true'
+          } as NgPipeMetadata)
         : undefined;
 }
 
