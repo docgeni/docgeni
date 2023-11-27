@@ -1,38 +1,38 @@
-import { ts } from './typescript';
-import { toolkit, debug, fs } from '@docgeni/toolkit';
+import { debug, fs, toolkit } from '@docgeni/toolkit';
+import { NgParserHost, createNgParserHost } from './ng-parser-host';
 import {
-    NgDirectiveDoc,
-    NgPropertyDoc,
-    NgEntryItemDoc,
-    NgDocItemType,
-    NgParsedDecorator,
-    NgMethodDoc,
-    NgServiceDoc,
-    ClassLikeDoc
-} from './types';
-import {
-    getNgDecorator,
-    getNgPropertyDecorator,
-    getDirectiveMeta,
-    getNgDocItemType,
-    getPropertyKind,
-    getNgPropertyOptions,
-    getPropertyValue,
-    serializeSymbol,
-    getDocTagsBySymbol,
-    getDocTagsBySignature,
-    serializeMethodParameterSymbol,
-    declarationIsPublic,
-    hasPrivateTag,
     DocTagResult,
-    getTextByJSDocTagInfo,
-    hasPublicTag,
-    getHeritageClauses,
-    getSymbolDeclaration,
+    declarationIsPublic,
+    getDirectiveMeta,
+    getDocTagsBySignature,
+    getDocTagsBySymbol,
     getHeritageDeclarations,
-    parseJsDocTagsToDocTagResult
+    getNgDecorator,
+    getNgDocItemType,
+    getNgPropertyDecorator,
+    getNgPropertyOptions,
+    getPipeMeta,
+    getPropertyKind,
+    getPropertyValue,
+    getSymbolDeclaration,
+    getTextByJSDocTagInfo,
+    hasPrivateTag,
+    hasPublicTag,
+    serializeMethodParameterSymbol,
+    serializeSymbol
 } from './parser';
-import { createNgParserHost, NgParserHost } from './ng-parser-host';
+import {
+    ClassLikeDoc,
+    NgDirectiveDoc,
+    NgDocItemType,
+    NgEntryItemDoc,
+    NgMethodDoc,
+    NgParsedDecorator,
+    NgPipeDoc,
+    NgPropertyDoc,
+    NgServiceDoc
+} from './types';
+import { ts } from './typescript';
 
 export interface NgDocParserOptions {
     tsConfigPath?: string;
@@ -121,6 +121,7 @@ export class NgDocParser {
                                     docs.push(this.parseServiceDoc(context, symbol, ngDecorator));
                                     break;
                                 case 'pipe':
+                                    docs.push(this.parsePipeDoc(context, symbol, ngDecorator));
                                     break;
                                 default:
                                     throw new Error(`${type} is not support.`);
@@ -154,6 +155,21 @@ export class NgDocParser {
         };
         directiveDoc.properties = this.parseDeclarationProperties(context, symbol.valueDeclaration as ts.ClassDeclaration);
         directiveDoc.methods = this.parseDeclarationMethods(context, symbol.valueDeclaration as ts.ClassDeclaration);
+        return directiveDoc;
+    }
+
+    private parsePipeDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
+        const declaration = symbol.valueDeclaration as ts.ClassDeclaration;
+        const description = serializeSymbol(symbol, context.checker);
+        const [tags, localeTags] = getDocTagsBySymbol(symbol);
+        const directiveDoc: NgPipeDoc = {
+            type: 'pipe',
+            description: description.description,
+            order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER,
+            ...getPipeMeta(ngDecorator.argumentInfo),
+            name: getTextByJSDocTagInfo(tags.name, getPipeMeta(ngDecorator.argumentInfo)?.name)
+        };
+        directiveDoc.methods = this.parseDeclarationMethods(context, declaration, { explicitPublic: true });
         return directiveDoc;
     }
 
@@ -266,7 +282,7 @@ export class NgDocParser {
         classDeclaration: ts.ClassDeclaration,
         options: { explicitPublic: boolean } = { explicitPublic: false }
     ) {
-        const methods: NgPropertyDoc[] = [];
+        const methods: NgMethodDoc[] = [];
         const parsedSymbols = new WeakMap<ts.Symbol, boolean>();
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {

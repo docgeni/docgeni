@@ -1,8 +1,8 @@
-import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Project, Node } from 'ts-morph';
+import * as path from 'path';
+import { Project } from 'ts-morph';
 import ts from 'typescript';
+import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
 import { createTestNgDocParser } from './testing';
 
 const EXCLUDE_DIRS: string[] = [];
@@ -964,6 +964,130 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                     }
                 ]
             });
+        });
+    });
+
+    describe('pipe', () => {
+        it('should parse pipe methods', () => {
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': `
+                /**
+                 * 把文本转换成全大写形式
+                 * @public
+                 * @name uppercase
+                 * @order 10
+                 */
+                @Pipe({
+                    name: 'uppercase',
+                    standalone: true
+                })
+                export class UpperCasePipe implements PipeTransform {
+                    constructor() {}
+                
+                    /**
+                     * @public
+                     * @param {string} value 输入值
+                     * @returns  {boolean}
+                     */
+                    transform(value: string): boolean {                   
+                        return true;
+                    }
+                }`
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'pipe',
+                name: 'uppercase',
+                description: '把文本转换成全大写形式',
+                order: 10,
+                pure: true,
+                standalone: true,
+                methods: [
+                    {
+                        name: 'transform',
+                        parameters: [
+                            {
+                                name: 'value',
+                                description: '输入值',
+                                type: 'string'
+                            }
+                        ],
+                        returnValue: {
+                            type: 'boolean',
+                            description: ''
+                        },
+                        description: ''
+                    }
+                ]
+            });
+        });
+
+        it('should get multiple methods for overload', () => {
+            const sourceText = `
+            @Pipe({
+                name: 'lowercase',
+                standalone: true
+            })
+            export class LowerCasePipe implements PipeTransform {
+                constructor() {}
+            
+                /**
+                 * @public
+                 * @description transform 重载方法1
+                 * @param input1 这是一个参数
+                 */
+                transform(input1: number): void;
+                /**
+                 * @description transform 重载方法2
+                 * @param input1
+                 * @param input2
+                 */
+                transform(input1: number, input2: number): void;
+                transform(input1: number, input2?: number): void {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('dialog', {
+                '/dialog/dialog.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '这是一个参数',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法1'
+                },
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '',
+                            type: 'number'
+                        },
+                        {
+                            name: 'input2',
+                            description: '',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法2'
+                }
+            ] as NgMethodDoc[]);
         });
     });
 });

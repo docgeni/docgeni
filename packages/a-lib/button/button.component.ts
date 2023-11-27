@@ -1,15 +1,16 @@
 import {
     Component,
-    OnInit,
-    HostBinding,
-    Input,
+    ContentChild,
+    Directive,
     ElementRef,
-    Output,
     EventEmitter,
     Injectable,
-    ContentChild,
-    TemplateRef,
-    Directive
+    Input,
+    OnInit,
+    Output,
+    Pipe,
+    PipeTransform,
+    TemplateRef
 } from '@angular/core';
 
 @Directive()
@@ -119,4 +120,32 @@ export class ButtonService {
      * @param {string} id id desc
      */
     close(id: string): void {}
+}
+
+/**
+ * 把文本转换成全大写形式
+ * @public
+ * @name uppercase
+ * @order 10
+ */
+@Pipe({
+    name: 'uppercase',
+    standalone: true
+})
+export class UpperCasePipe implements PipeTransform {
+    constructor() {}
+
+    /**
+     * 大写转换
+     * @public
+     * @param {string} value 输入值
+     * @param {string} defaultValue 转不成大写时候的默认值
+     * @returns {string}
+     */
+    transform(value: string, defaultValue: string): string {
+        if (typeof value !== 'string') {
+            return defaultValue;
+        }
+        return value.toUpperCase();
+    }
 }

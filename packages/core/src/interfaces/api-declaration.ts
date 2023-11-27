@@ -21,7 +21,7 @@ export interface PropertyDeclaration {
 }
 
 export interface ApiDeclaration {
-    type: 'directive' | 'component' | 'service' | 'interface' | 'class';
+    type: 'directive' | 'component' | 'service' | 'interface' | 'class' | 'pipe';
     name: string;
     className: string;
     selector: string;
