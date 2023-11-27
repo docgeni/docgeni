@@ -1022,6 +1022,73 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                 ]
             });
         });
+
+        it('should get multiple methods for overload', () => {
+            const sourceText = `
+            @Pipe({
+                name: 'lowercase',
+                standalone: true
+            })
+            export class LowerCasePipe implements PipeTransform {
+                constructor() {}
+            
+                /**
+                 * @public
+                 * @description transform 重载方法1
+                 * @param input1 这是一个参数
+                 */
+                transform(input1: number): void;
+                /**
+                 * @description transform 重载方法2
+                 * @param input1
+                 * @param input2
+                 */
+                transform(input1: number, input2: number): void;
+                transform(input1: number, input2?: number): void {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('dialog', {
+                '/dialog/dialog.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '这是一个参数',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法1'
+                },
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '',
+                            type: 'number'
+                        },
+                        {
+                            name: 'input2',
+                            description: '',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法2'
+                }
+            ] as NgMethodDoc[]);
+        });
     });
 });
 
