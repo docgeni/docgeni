@@ -70,7 +70,7 @@ describe('#content-viewer', () => {
         req.flush('<div>content</div>');
         httpTestingController.verify();
         expect(contentRenderedSpy).not.toHaveBeenCalled();
-        spectator.inject(NgZone).onStable.next();
+        spectator.inject(NgZone).onStable.next(null);
         expect(contentRenderedSpy).toHaveBeenCalled();
         expect(contentRenderedSpy).toHaveBeenCalledWith(spectator.element);
     }));

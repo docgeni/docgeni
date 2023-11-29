@@ -28,11 +28,11 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/core": "^15.2.0",
-    "@angular-devkit/schematics": "^15.2.0",
+    "@angular-devkit/core": "^16.2.0",
+    "@angular-devkit/schematics": "^16.2.0",
     "@docgeni/ngdoc": "^2.2.2",
     "@docgeni/toolkit": "^2.2.2",
-    "@schematics/angular": "^15.2.0",
+    "@schematics/angular": "^16.2.0",
     "@types/text-table": "^0.2.2",
     "ansi-colors": "^4.1.1",
     "chokidar": "^3.3.1",
