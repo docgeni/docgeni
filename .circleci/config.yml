@@ -1,10 +1,13 @@
 version: 2
+orbs:
+    browser-tools: circleci/browser-tools@1.4.3
 jobs:
     build:
         working_directory: ~/docgeni
         docker:
-            - image: circleci/node:16-browsers
+            - image: cimg/node:18.16-browsers
         steps:
+            - browser-tools/install-chrome
             - checkout
             - restore_cache:
                   key: docgeni-{{ .Branch }}-{{ checksum "yarn.lock" }}
