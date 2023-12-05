@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+
+### Features
+
+* **core:** export standalone components  from examples module for stack-blitz #INFR-10671 ([#518](https://github.com/docgeni/docgeni/issues/518)) ([abbeffd](https://github.com/docgeni/docgeni/commit/abbeffd586f3ff9852d49d33fe7a2cc253b94e8c)), closes [#INFR-10671](https://github.com/docgeni/docgeni/issues/INFR-10671)
+* **ngdoc:** pipe api doc default public ([8e83c1b](https://github.com/docgeni/docgeni/commit/8e83c1bee2b2e60b3359216c043525db02b6c75a))
+* **ngdoc:** support pipe api doc ([#515](https://github.com/docgeni/docgeni/issues/515)) ([c60e648](https://github.com/docgeni/docgeni/commit/c60e648be1bb824a225f373959486b1d15c7b889))
+
+
+
+
+
 ## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
 
 
