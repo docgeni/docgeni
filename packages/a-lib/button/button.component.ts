@@ -124,7 +124,6 @@ export class ButtonService {
 
 /**
  * 把文本转换成全大写形式
- * @public
  * @name uppercase
  * @order 10
  */
@@ -137,7 +136,6 @@ export class UpperCasePipe implements PipeTransform {
 
     /**
      * 大写转换
-     * @public
      * @param {string} value 输入值
      * @param {string} defaultValue 转不成大写时候的默认值
      * @returns {string}

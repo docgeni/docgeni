@@ -973,7 +973,6 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                 '/dialog/dialog.ts': `
                 /**
                  * 把文本转换成全大写形式
-                 * @public
                  * @name uppercase
                  * @order 10
                  */
@@ -985,7 +984,6 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                     constructor() {}
                 
                     /**
-                     * @public
                      * @param {string} value 输入值
                      * @returns  {boolean}
                      */
@@ -1033,7 +1031,6 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                 constructor() {}
             
                 /**
-                 * @public
                  * @description transform 重载方法1
                  * @param input1 这是一个参数
                  */
