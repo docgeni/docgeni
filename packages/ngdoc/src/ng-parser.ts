@@ -169,7 +169,7 @@ export class NgDocParser {
             ...getPipeMeta(ngDecorator.argumentInfo),
             name: getTextByJSDocTagInfo(tags.name, getPipeMeta(ngDecorator.argumentInfo)?.name)
         };
-        directiveDoc.methods = this.parseDeclarationMethods(context, declaration, { explicitPublic: true });
+        directiveDoc.methods = this.parseDeclarationMethods(context, declaration);
         return directiveDoc;
     }
 
