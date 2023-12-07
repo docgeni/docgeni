@@ -5,7 +5,7 @@ order: 50
 toc: menu
 ---
 
-通过给组件/指令/服务/类/接口/属性/函数添加注释生成 API 文档。
+通过给组件/指令/服务/管道/类/接口/属性/函数添加注释生成 API 文档。
 
 ```ts
 /**
@@ -40,14 +40,14 @@ export class AlibButtonComponent extends Base implements OnInit {
 - 类型：`string`
 - 默认：`{ClassName}`
 
-组件/指令/服务/类/接口的名称，默认 Class 类名。
+组件/指令/服务/管道/类/接口的名称，默认 Class 类名，管道默认 name 名。
 
 ## @description
 
 - 类型：`string`
 - 默认：`null`
 
-组件/指令/服务/类/接口的描述，如果有`@description` Tag 以此为主，否则以默认注释内容为描述。
+组件/指令/服务/管道/类/接口的描述，如果有`@description` Tag 以此为主，否则以默认注释内容为描述。
 
 ```ts
 /**
@@ -72,11 +72,11 @@ API 文档的排序。
 - 别名：`internal`
 
 默认生成 API 文档的有：
-- 所有的组件/指令/服务
+- 所有的组件/指令/服务/管道
 - 组件/指令的 @Input 和 @Output 属性
-- 组件/指令/服务的公开函数
+- 组件/指令/服务/管道的公开函数
 
-以上的组件/指令/服务/属性/函数如果是内部的，不需要生成 API 文档，添加`@private`或者`@internal`标记。
+以上的组件/指令/服务/管道/属性/函数如果是内部的，不需要生成 API 文档，添加`@private`或者`@internal`标记。
 
 ```ts
 /**
