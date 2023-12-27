@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+
+### Bug Fixes
+
+* **core:** add custom path for component ([87954ae](https://github.com/docgeni/docgeni/commit/87954ae219ca79653fc3cae0b561e4a323b8f15f))
+
+
+
+
+
 # [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
 
 
