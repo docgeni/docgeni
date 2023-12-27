@@ -362,6 +362,21 @@ describe('#library-component', () => {
             await component.build();
             expect(component.examples[0].standalone).toBeTruthy();
         });
+
+        it('should custom component path', async () => {
+            const docContent = `---
+title: New Button
+path: button-path
+---
+This is button`;
+            await writeFilesToHost(context.host, {
+                [`${buttonDirPath}/doc/en-us.md`]: docContent
+            });
+            const component = new LibraryComponentImpl(context, library, 'button', `${DEFAULT_TEST_ROOT_PATH}/alib/button`);
+            await component.build();
+            const docItem = component.getDocItem('en-us');
+            expect(docItem.path).toEqual('button-path');
+        });
     });
 
     describe('api-docs', () => {

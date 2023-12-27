@@ -3,6 +3,7 @@ import { DocItemToc, HeadingLink, HomeDocMeta } from '../interfaces';
 export interface ComponentDocMeta {
     title?: string;
     name?: string;
+    path?: string;
     category?: string;
     subtitle?: string;
     description?: string;

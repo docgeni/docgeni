@@ -406,7 +406,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     id: this.name,
                     title,
                     subtitle,
-                    path: this.name,
+                    path: this.meta.path || this.name,
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
