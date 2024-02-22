@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta } from '../interfaces/public-api';
+import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
 import { DOCUMENT, Location } from '@angular/common';
@@ -124,11 +124,11 @@ export class GlobalContext {
             const item = navs.shift();
             if (item) {
                 if (item.items) {
-                    item.items.forEach(child => {
+                    item.items.forEach((child: CategoryItem) => {
                         child.ancestors = child.ancestors || [];
                         child.ancestors.push(...(item.ancestors || []), item);
                     });
-                    navs.unshift(...item.items);
+                    navs.unshift(...(item.items as NavigationItem[]));
                 } else if (!item.hidden) {
                     list.push(item);
                 }
