@@ -40,7 +40,7 @@ export interface CategoryItem {
     id?: string;
     title: string;
     subtitle?: string;
-    items?: Array<DocItem | ComponentDocItem>;
+    items?: Array<DocItem | ComponentDocItem | CategoryItem>;
     locales?: {
         [key: string]: {
             title: string;
@@ -63,7 +63,7 @@ export interface ChannelItem {
             title: string;
         };
     };
-    items?: Array<CategoryItem | DocItem>;
+    items?: Array<CategoryItem | DocItem | ChannelItem>;
 }
 
 export type NavigationItem = ChannelItem & CategoryItem & DocItem & ComponentDocItem;
