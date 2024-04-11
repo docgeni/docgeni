@@ -142,6 +142,12 @@ describe('ng-parser', () => {
             })
             export class ButtonComponent extends Base {
                 @Input() param2: string;
+
+                @Input('thySize') param3: string;
+
+                @Input({ transform: numberAttribute })  param4: number;
+
+                @Input({ alias: 'thyDisabled', transform: booleanAttribute }) param5: boolean;
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
@@ -183,6 +189,45 @@ describe('ng-parser', () => {
                         name: 'string',
                         options: null,
                         kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param3',
+                    aliasName: 'thySize',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param4',
+                    aliasName: '',
+                    type: {
+                        name: 'number',
+                        options: null,
+                        kindName: 'NumberKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param5',
+                    aliasName: 'thyDisabled',
+                    type: {
+                        name: 'boolean',
+                        options: null,
+                        kindName: 'BooleanKeyword'
                     },
                     description: '',
                     default: null,

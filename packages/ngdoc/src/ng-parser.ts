@@ -348,7 +348,16 @@ export class NgDocParser {
 
     private getNgPropertyAliasName(decorator: NgParsedDecorator): string {
         if (decorator.argumentInfo && decorator.argumentInfo[0]) {
-            return decorator.argumentInfo[0] as string;
+            const argumentInfo = decorator.argumentInfo[0];
+            if (typeof argumentInfo === 'object') {
+                if ((argumentInfo as { alias: string }).alias) {
+                    return (argumentInfo as { alias: string }).alias;
+                } else {
+                    return '';
+                }
+            } else {
+                return decorator.argumentInfo[0] as string;
+            }
         } else {
             return '';
         }
