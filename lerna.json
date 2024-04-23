@@ -4,7 +4,8 @@
     "packages/core",
     "packages/cli",
     "packages/template",
-    "packages/ngdoc"
+    "packages/ngdoc",
+    "packages/create-docgeni"
   ],
   "command": {
     "version": {

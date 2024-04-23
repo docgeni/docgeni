@@ -1,0 +1,46 @@
+{
+  "name": "create-docgeni",
+  "version": "2.3.2-next.0",
+  "description": "CLI template for Docgeni Create",
+  "author": "why520crazy <why520crazy@163.com>",
+  "homepage": "https://github.com/docgeni/docgeni#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "clean": "",
+    "build": "echo \"Build Success\" && exit 1",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bin": {
+    "create-docgeni": "bin/create-docgeni"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docgeni/docgeni.git"
+  },
+  "keywords": [
+    "angular",
+    "docgeni",
+    "docgen",
+    "documentation",
+    "docs",
+    "markdown",
+    "components",
+    "library",
+    "docs generator",
+    "docs generate",
+    "docs generator",
+    "documentation generator",
+    "static site generator"
+  ],
+  "dependencies": {
+    "@docgeni/cli": "^2.3.2-next.0"
+  }
+}

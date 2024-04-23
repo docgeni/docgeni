@@ -58,7 +58,8 @@
     "./packages/core",
     "./packages/toolkit",
     "./packages/template",
-    "./packages/ngdoc"
+    "./packages/ngdoc",
+    "./packages/create-docgeni"
   ],
   "dependencies": {
     "@angular/animations": "^17.2.2",
