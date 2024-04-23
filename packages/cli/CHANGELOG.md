@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
+
+
+### Bug Fixes
+
+* **cli:** should not show help for default command ([d83a95c](https://github.com/docgeni/docgeni/commit/d83a95c91db5f8acd0307e4206f95cac8afc68d9))
+
+
+
+
+
 ## [2.3.2-next.1](https://github.com/docgeni/docgeni/compare/v2.3.2-next.0...v2.3.2-next.1) (2024-04-23)
 
 **Note:** Version bump only for package @docgeni/cli
