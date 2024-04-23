@@ -3,8 +3,9 @@
   "version": "2.3.2-next.0",
   "scripts": {
     "ng": "ng",
+    "docgeni": "cross-env DOCGENI_ENV=development NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni",
     "start": "yarn run start:docs",
-    "start:docs": "cross-env DOCGENI_ENV=development NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni serve",
+    "start:docs": "yarn docgeni serve",
     "build:a-lib": "ng build a-lib --configuration production",
     "build": "yarn build:deps && yarn build:cli && yarn build:template && yarn update-package-json",
     "build:template": "ng build template && yarn build-styles",
