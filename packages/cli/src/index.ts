@@ -22,6 +22,6 @@ const argv = yargs
 
 const command = argv._[0] as string;
 
-if (!['build', 'dev', 'serve', 'init'].includes(command)) {
+if (command && !['build', 'dev', 'serve', 'init', ''].includes(command)) {
     yargs.showHelp();
 }
