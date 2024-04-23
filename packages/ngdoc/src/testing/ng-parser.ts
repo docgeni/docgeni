@@ -6,25 +6,46 @@ import { createNgParserHost } from '../ng-parser-host';
 
 export function createTestNgParserFsHost(files: Record<string, string>) {
     const host = createTestFsSyncDelegateHost(files);
+
+    function readDirectory(
+        rootDir: string,
+        extensions: readonly string[],
+        excludes: readonly string[] | undefined,
+        includes: readonly string[],
+        depth?: number
+    ) {
+        const list = host.list(rootDir as Path);
+        const result: string[] = [];
+        list.forEach(item => {
+            const itemPath = `${rootDir}/${item}`;
+            if (host.isDirectory(itemPath as Path)) {
+                const files = readDirectory(itemPath, extensions, excludes, includes, depth);
+                if (files.length > 0) {
+                    result.push(...files);
+                }
+            } else if (item.endsWith('.ts')) {
+                result.push(itemPath);
+            }
+        });
+
+        return result;
+    }
+
     return {
         fileExists: (path: string) => {
             return host.exists(path as Path);
         },
         readFile: (path: string) => {
-            return virtualFs.fileBufferToString(host.read(path as Path));
+            if (host.exists(path as Path)) {
+                return virtualFs.fileBufferToString(host.read(path as Path));
+            } else {
+                return toolkit.fs.readFileSync(path, { encoding: 'utf-8' });
+            }
         },
         writeFile: (path: string, data: string, writeByteOrderMark?: boolean) => {
             host.write(path as Path, virtualFs.stringToFileBuffer(data));
         },
-        readDirectory: (
-            rootDir: string,
-            extensions: readonly string[],
-            excludes: readonly string[] | undefined,
-            includes: readonly string[],
-            depth?: number
-        ) => {
-            return [] as string[];
-        }
+        readDirectory: readDirectory
     };
 }
 

@@ -2,7 +2,7 @@ import { DocgeniContext } from '../docgeni.interface';
 import { CategoryItem, ChannelItem, ComponentDocItem, ExampleSourceFile, LiveExample, NavigationItem } from '../interfaces';
 import { toolkit, debug } from '@docgeni/toolkit';
 import { ascendingSortByOrder, getItemLocaleProperty } from '../utils';
-
+import { Path } from '@angular-devkit/core';
 import { LibraryComponentImpl } from './library-component';
 import { Library, LibraryBuilder, LibraryComponent } from '../types';
 import { FileEmitter } from './emitter';
@@ -70,17 +70,19 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                     watch: this.docgeni.watch,
                     rootDir: absRootDir,
                     watcher: (event, filename) => {
-                        const changes: LibraryComponent[] = [];
+                        const changedComponents: LibraryComponent[] = [];
                         for (const [key, component] of this.components) {
                             if (filename.includes(key)) {
-                                changes.push(component);
+                                changedComponents.push(component);
                             }
                         }
-                        this.docgeni.compile({
-                            libraryBuilder: this,
-                            libraryComponents: changes,
-                            changes: []
-                        });
+                        if (changedComponents.length > 0) {
+                            this.docgeni.compile({
+                                libraryBuilder: this,
+                                libraryComponents: changedComponents,
+                                changes: [{ type: toolkit.fs.HostWatchEventType.Changed, path: filename as Path, time: new Date() }]
+                            });
+                        }
                     }
                 });
                 this.ngDocParser = this.lib.ngDocParser = NgDocParser.create({ ngParserHost: parserHost });

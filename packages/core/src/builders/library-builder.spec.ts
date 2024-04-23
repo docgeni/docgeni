@@ -408,7 +408,12 @@ describe('#library-builder', () => {
         expect(compileSpy).toHaveBeenCalledWith({
             libraryBuilder: libraryBuilder,
             libraryComponents: [libraryBuilder.components.get(toolkit.path.resolve(libDirPath, 'button'))],
-            changes: []
+            changes: [
+                jasmine.objectContaining({
+                    type: toolkit.fs.HostWatchEventType.Changed,
+                    path: toolkit.path.resolve(libDirPath, './button/button.component.ts')
+                })
+            ]
         });
     });
 
