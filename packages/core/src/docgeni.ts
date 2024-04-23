@@ -30,7 +30,7 @@ export class Docgeni implements DocgeniContext {
     private plugins: string[];
     private initialPlugins: Plugin[] = [];
     private progress = new DocgeniProgress(this);
-
+    private compilation: DocgeniCompilationImpl;
     hooks: DocgeniHooks = Docgeni.createHooks();
 
     static createHooks(): DocgeniHooks {
@@ -75,8 +75,12 @@ export class Docgeni implements DocgeniContext {
     }
 
     async compile(increment?: CompilationIncrement) {
-        const compilation = this.createCompilation(increment);
-        await compilation.run();
+        if (this.compilation.finished) {
+            this.compilation = this.createCompilation(increment);
+            await this.compilation.run();
+        } else {
+            this.logger.warn(`latest compilation is not finished, it trigger recompile by increment.`);
+        }
     }
 
     private createCompilation(increment?: CompilationIncrement) {
@@ -92,8 +96,8 @@ export class Docgeni implements DocgeniContext {
             await this.clearAndEnsureDirs();
             await this.hooks.run.promise();
             debug(`docgeni running, cwd: ${this.paths.cwd}`, 'core');
-            const compilation = this.createCompilation();
-            await compilation.run();
+            this.compilation = this.createCompilation();
+            await this.compilation.run();
 
             await this.hooks.done.promise();
         } catch (error) {

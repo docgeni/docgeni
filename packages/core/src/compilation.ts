@@ -8,6 +8,8 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
 
     private preparedEmitFiles: EmitFiles = {};
 
+    public finished = false;
+
     public hooks = {
         docBuild: this.docgeni.hooks.docBuild,
         docBuildSucceed: this.docgeni.hooks.docBuildSucceed,
@@ -82,6 +84,7 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
         } finally {
             await this.seal();
             this.hooks.finish.call();
+            this.finished = true;
         }
     }
 
