@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/core",
-  "version": "2.3.1",
+  "version": "2.3.2-next.0",
   "description": "Docgeni - Core Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@angular-devkit/core": "^16.2.0",
     "@angular-devkit/schematics": "^16.2.0",
-    "@docgeni/ngdoc": "^2.3.1",
+    "@docgeni/ngdoc": "^2.3.2-next.0",
     "@docgeni/toolkit": "^2.3.0",
     "@schematics/angular": "^16.2.0",
     "@types/text-table": "^0.2.2",

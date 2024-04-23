@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2-next.0](https://github.com/docgeni/docgeni/compare/v2.3.1...v2.3.2-next.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* **ngdoc:** cache latest file content, only trigger watcher func when file content changed #OSP-625 ([#542](https://github.com/docgeni/docgeni/issues/542)) ([4f5ee09](https://github.com/docgeni/docgeni/commit/4f5ee09e9544b0d8c8ca696e7b30236601a7145a)), closes [#OSP-625](https://github.com/docgeni/docgeni/issues/OSP-625)
+
+
+
+
+
 ## [2.3.1](https://github.com/docgeni/docgeni/compare/v2.3.0...v2.3.1) (2024-04-12)
 
 
