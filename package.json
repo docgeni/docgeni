@@ -1,6 +1,6 @@
 {
   "name": "docgeni",
-  "version": "2.3.2-next.0",
+  "version": "2.3.2-next.1",
   "scripts": {
     "ng": "ng",
     "docgeni": "cross-env DOCGENI_ENV=development NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni",

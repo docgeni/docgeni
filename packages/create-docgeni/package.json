@@ -41,6 +41,6 @@
     "static site generator"
   ],
   "dependencies": {
-    "@docgeni/cli": "^2.3.2-next.0"
+    "@docgeni/cli": "^2.3.2-next.1"
   }
 }
