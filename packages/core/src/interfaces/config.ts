@@ -87,7 +87,7 @@ export interface DocgeniConfig {
     /** Angular libraries **/
     libs?: DocgeniLibrary[];
     /** Navigations for menu and nav **/
-    navs?: DocgeniNavItem[];
+    navs?: (DocgeniNavItem | null)[];
     /** Locales **/
     locales?: Locale[];
     /** Default locale **/

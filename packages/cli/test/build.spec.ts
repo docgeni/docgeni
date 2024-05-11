@@ -16,7 +16,7 @@ describe('#cli', () => {
             baseHref: '/',
             mode: 'full',
             title: 'Docgeni',
-            logoUrl: 'https://cdn.pingcode.com/open-sources/docgeni/logo.png',
+            logoUrl: './assets/images/logo.png',
             docsDir: 'docs',
             repoUrl: 'https://github.com/docgeni/docgeni',
             navs: [null],
