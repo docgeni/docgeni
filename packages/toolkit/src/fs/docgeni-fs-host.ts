@@ -1,4 +1,4 @@
-import { PathFragment, virtualFs } from '@angular-devkit/core';
+import { getSystemPath, PathFragment, virtualFs } from '@angular-devkit/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { DocgeniHostWatchOptions } from './node-host';
 import { FileSystemWatcher, HostWatchEvent } from './watcher';
@@ -87,7 +87,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
     }
 
     async copyFile(src: string, dest: string): Promise<void> {
-        await copy(normalize(src), normalize(dest), {
+        await copy(getSystemPath(normalize(src)), getSystemPath(normalize(dest)), {
             overwrite: true
         });
     }
