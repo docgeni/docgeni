@@ -1,10 +1,11 @@
-import { PathFragment, virtualFs } from '@angular-devkit/core';
-import { Observable } from 'rxjs';
+import { getSystemPath, PathFragment, virtualFs } from '@angular-devkit/core';
+import { firstValueFrom, Observable } from 'rxjs';
 import { DocgeniHostWatchOptions } from './node-host';
 import { FileSystemWatcher, HostWatchEvent } from './watcher';
 import { normalize, resolve } from '../path';
 import { matchGlob } from '../utils';
 import { VfsHost } from './host';
+import { copyFile, copy } from '../filesystem';
 
 export interface DocgeniFsCopyOptions {
     exclude?: string | string[];
@@ -28,6 +29,7 @@ export interface DocgeniFsHost {
     isFile(path: string): Promise<boolean>;
     watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent>;
     watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]>;
+    copyFile(src: string, dest: string): Promise<void>;
     copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
@@ -81,7 +83,13 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
     }
 
     async stat(path: string) {
-        return this.host.stat(normalize(path)).toPromise();
+        return firstValueFrom(this.host.stat(normalize(path)));
+    }
+
+    async copyFile(src: string, dest: string): Promise<void> {
+        await copy(getSystemPath(normalize(src)), getSystemPath(normalize(dest)), {
+            overwrite: true
+        });
     }
 
     async copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void> {
@@ -93,8 +101,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
             throw new Error(`${src} is not exist`);
         }
         if (stat.isFile()) {
-            const data = await this.host.read(normalize(src)).toPromise();
-            await this.host.write(normalize(dest), data).toPromise();
+            await this.copyFile(src, dest);
         } else {
             const result = await this.list(src);
             await Promise.all(

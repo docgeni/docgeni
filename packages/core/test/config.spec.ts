@@ -1,13 +1,13 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
-import { toolkit } from '@docgeni/toolkit';
-import { createTestDocgeniHost, expectThrowAsync } from '../src/testing';
-import { DocgeniHost } from '../src/docgeni-host';
+import { toolkit, fs } from '@docgeni/toolkit';
+import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
+import { expectThrowAsync } from '../src/testing';
 import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
 
 describe('#config', () => {
-    let docgeniHost: DocgeniHost;
+    let docgeniHost: fs.DocgeniFsHost;
     beforeEach(() => {
-        docgeniHost = createTestDocgeniHost({
+        docgeniHost = createTestDocgeniFsHost({
             'docs/getting-started.md': 'Getting Started'
         });
     });
