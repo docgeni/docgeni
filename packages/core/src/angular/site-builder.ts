@@ -335,6 +335,9 @@ export class SiteBuilder {
             child.on('data', data => {
                 this.docgeni.logger.info(data);
             });
+            child.on('error', error => {
+                console.error(error);
+            });
             child.on('exit', (code, signal) => {
                 if (code) {
                     throw new Error(`Child exited with code ${code}`);
