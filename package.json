@@ -63,14 +63,14 @@
     "./packages/create-docgeni"
   ],
   "dependencies": {
-    "@angular/animations": "^17.2.2",
-    "@angular/common": "^17.2.2",
-    "@angular/compiler": "^17.2.2",
-    "@angular/core": "^17.2.2",
-    "@angular/forms": "^17.2.2",
-    "@angular/platform-browser": "^17.2.2",
-    "@angular/platform-browser-dynamic": "^17.2.2",
-    "@angular/router": "^17.2.2",
+    "@angular/animations": "^18.2.0",
+    "@angular/common": "^18.2.0",
+    "@angular/compiler": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "@angular/forms": "^18.2.0",
+    "@angular/platform-browser": "^18.2.0",
+    "@angular/platform-browser-dynamic": "^18.2.0",
+    "@angular/router": "^18.2.0",
     "@types/watchpack": "^1.1.7",
     "chokidar": "^3.3.1",
     "cosmiconfig": "^6.0.0",
@@ -79,13 +79,13 @@
     "marked": "^4.0.12",
     "rxjs": "^7.8.1",
     "tslib": "^2.0.0",
-    "zone.js": "~0.14.4"
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.2.0",
-    "@angular/cli": "^17.2.0",
-    "@angular/compiler-cli": "^17.2.2",
-    "@angular/language-service": "^17.2.2",
+    "@angular-devkit/build-angular": "^18.2.0",
+    "@angular/cli": "^18.2.0",
+    "@angular/compiler-cli": "^18.2.0",
+    "@angular/language-service": "^18.2.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-angular": "^11.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -122,7 +122,7 @@
     "karma-coverage": "~2.2.0",
     "lerna": "^3.20.2",
     "mocha": "^7.1.1",
-    "ng-packagr": "^17.2.0",
+    "ng-packagr": "^18.2.0",
     "ncp": "^2.0.0",
     "nyc": "^15.1.0",
     "prettier": "^1.19.1",
@@ -133,7 +133,7 @@
     "ts-node": "8.7.0",
     "tslint": "~6.1.0",
     "typemoq": "^2.1.0",
-    "typescript": "5.3.3"
+    "typescript": "5.5.4"
   },
   "keywords": [
     "angular",
