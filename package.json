@@ -1,14 +1,15 @@
 {
   "name": "docgeni",
-  "version": "2.3.2",
+  "version": "2.4.0-next.0",
   "scripts": {
     "ng": "ng",
+    "lerna": "lerna",
     "docgeni": "cross-env DOCGENI_ENV=development NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni",
     "start": "yarn run start:docs",
     "start:docs": "yarn docgeni serve",
     "build:a-lib": "ng build a-lib --configuration production",
     "build": "yarn build:deps && yarn build:cli && yarn build:template && yarn update-package-json",
-    "build:template": "ng build template && yarn build-styles",
+    "build:template": "ng build template",
     "build:preset": "ng build preset",
     "build:toolkit": "yarn workspace @docgeni/toolkit run build",
     "build:ngdoc": "yarn workspace @docgeni/ngdoc run build",
@@ -43,7 +44,7 @@
     "pub-docs-git": "wpm git-publish --source ./dist/docgeni-site --name docgeni-site --organization docgeni",
     "pub-template": "cd dist/template && npm publish --access=public",
     "pub-template-next": "cd dist/template && npm publish --access=public --tag=next",
-    "build-styles": "scss-bundle --config ./scss-bundle.config.json && sass ./packages/template/src/styles/index.scss >> dist/template/styles/index.css",
+    "// build-styles": "scss-bundle --config ./scss-bundle.config.json && sass ./packages/template/src/styles/index.scss >> dist/template/styles/index.css",
     "pretty": "pretty-quick --staged",
     "install-examples": "cd examples/full && npm i && cd ../lite && npm i && cd ../../",
     "prepare": "husky"

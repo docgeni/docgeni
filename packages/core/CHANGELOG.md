@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+
+### Features
+
+* update angular.json use default application builder ([a936b05](https://github.com/docgeni/docgeni/commit/a936b055992ee67cefb1fb5d163307bed3586de6))
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
+
+
 ## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
 
 **Note:** Version bump only for package @docgeni/core
