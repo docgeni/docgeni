@@ -30,7 +30,8 @@
             ],
             "inlineStyleLanguage": "scss",
             "tsConfig": "packages/template/tsconfig.spec.json",
-            "codeCoverage": true
+            "codeCoverage": true,
+            "karmaConfig": "packages/template/karma.conf.js"
           }
         }
       }
