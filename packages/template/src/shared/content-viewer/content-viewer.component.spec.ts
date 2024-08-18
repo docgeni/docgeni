@@ -1,5 +1,6 @@
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { createComponentFactory, createHostFactory, Spectator, SpectatorHost, createHttpFactory } from '@ngneat/spectator';
 import { ContentViewerComponent } from './content-viewer.component';
 import { DocgeniBuiltInComponent } from '../../built-in/built-in-component';
@@ -9,7 +10,7 @@ import { CONFIG_TOKEN } from '../../services/global-context';
 
 @Component({
     selector: 'my-label',
-    template: 'my-label <ng-content></ng-content>'
+    template: 'my-label <ng-content></ng-content>',
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
     @Input() type!: string;
@@ -22,24 +23,26 @@ class MyLabelComponent extends DocgeniBuiltInComponent {
 setBuiltInComponents([
     {
         selector: 'my-label',
-        component: MyLabelComponent
-    }
+        component: MyLabelComponent,
+    },
 ]);
 
 describe('#content-viewer', () => {
     let spectator: Spectator<ContentViewerComponent>;
     const createComponent = createComponentFactory({
         component: ContentViewerComponent,
-        imports: [HttpClientTestingModule],
+        imports: [],
         providers: [
             {
                 provide: CONFIG_TOKEN,
                 useValue: {
-                    defaultLocale: 'zh-cn'
-                }
-            }
+                    defaultLocale: 'zh-cn',
+                },
+            },
+            provideHttpClient(withInterceptorsFromDi()),
+            provideHttpClientTesting(),
         ],
-        declarations: [MyLabelComponent]
+        declarations: [MyLabelComponent],
     });
 
     beforeEach(() => {
@@ -84,7 +87,7 @@ describe('#content-viewer', () => {
         expect(req.request.responseType).toEqual('text');
         const error = new Error(`fetch url ${url} fail`);
         req.error(new ErrorEvent('request', { error: error }), {
-            statusText: "remote content can't been load"
+            statusText: "remote content can't been load",
         });
         httpTestingController.verify();
         expect(spectator.element.innerHTML).toEqual(`Failed to load document: /test. Error: remote content can't been load`);

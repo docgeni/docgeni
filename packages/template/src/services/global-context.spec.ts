@@ -3,8 +3,8 @@ import { CONFIG_TOKEN, GlobalContext } from './global-context';
 import { createServiceFactory, createHttpFactory, SpectatorHttp, HttpMethod } from '@ngneat/spectator';
 import { DocItem, NavigationItem } from '../interfaces';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 describe('GlobalContext', () => {
@@ -34,7 +34,8 @@ describe('GlobalContext', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule]
+            imports: [],
+            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
     });
 

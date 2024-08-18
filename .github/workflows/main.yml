@@ -18,22 +18,15 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                node_version: ['18']
+                node_version: ['20']
                 os: [ubuntu-latest, windows-latest]
 
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v4
             - name: Use Node.js ${{ matrix.node_version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node_version }}
-            - id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn cache dir)"
-            - uses: actions/cache@v1
-              with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: ${{ runner.os }}-yarn-
             - run: yarn --frozen-lockfile
             - run: yarn test-coverage
             - run: yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
