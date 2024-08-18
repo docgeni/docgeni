@@ -24,9 +24,12 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "packages/template/src/test.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "inlineStyleLanguage": "scss",
             "tsConfig": "packages/template/tsconfig.spec.json",
-            "karmaConfig": "packages/template/karma.conf.js",
             "codeCoverage": true
           }
         }

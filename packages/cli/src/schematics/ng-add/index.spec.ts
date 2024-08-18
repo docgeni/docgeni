@@ -26,13 +26,13 @@ describe('ng-add Schematic', () => {
     });
 
     it('should update package.json devDependencies', async () => {
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         const devDependencies = packageJson[NodeDependencyType.Dev];
         expect(devDependencies['@docgei/angular']).toBeFalsy();
         expect(devDependencies['@docgeni/template']).toEqual(VERSION);
         expect(devDependencies['@docgeni/cli']).toEqual(VERSION);
-        expect(schematicRunner.tasks.some(task => task.name === 'node-package')).toBe(true);
+        expect(schematicRunner.tasks.some((task) => task.name === 'node-package')).toBe(true);
     });
 
     it('should update package.json devDependencies without @angular/core', async () => {
@@ -83,7 +83,7 @@ describe('ng-add Schematic', () => {
         expect(config).toContain(`lib: '${libraryName}'`);
         expect(config).toContain(`apiMode: 'automatic'`);
         const expectContent = await toolkit.fs.readFileContent(
-            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc.js')
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc.js'),
         );
         expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
     });
@@ -99,7 +99,7 @@ describe('ng-add Schematic', () => {
         expect(config).toContain(`lib: '${libraryName}'`);
         expect(config).toContain(`apiMode: 'automatic'`);
         const expectContent = await toolkit.fs.readFileContent(
-            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-without-lib.js')
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-without-lib.js'),
         );
         expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
     });
@@ -118,7 +118,7 @@ describe('ng-add Schematic', () => {
         expect(config).toContain(`lib: '${libraryName}'`);
         expect(config).toContain(`apiMode: 'automatic'`);
         const expectContent = await toolkit.fs.readFileContent(
-            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-root-equal-source-root.js')
+            path.resolve(__dirname, '../../../test/fixtures/docgenirc/output/.docgenirc-root-equal-source-root.js'),
         );
         expect(toolkit.strings.compatibleNormalize(config)).toEqual(toolkit.strings.compatibleNormalize(expectContent));
     });
@@ -148,13 +148,13 @@ describe('ng-add Schematic', () => {
         workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         expect(workspaceTree.exists('.gitignore')).toBeTruthy();
         const gitignoreContent = workspaceTree.read('.gitignore').toString();
-        expect(gitignoreContent.split('\n').some(item => item === '.docgeni/site')).toBeTruthy();
+        expect(gitignoreContent.split('\n').some((item) => item === '.docgeni/site')).toBeTruthy();
     });
 });
 
 function deleteDirFilesInTree(tree: Tree, dir: string) {
     const dirEntry = tree.getDir(dir);
-    dirEntry.subfiles.forEach(subFile => {
+    dirEntry.subfiles.forEach((subFile) => {
         tree.delete(`${dir}/${subFile}`);
     });
 }
