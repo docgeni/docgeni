@@ -258,16 +258,16 @@ Docgeni 支持组件示例直接在 StackBlitz 平台展示, StackBlitz 在线�
 ```json
 {
     "dependencies": { 
-        "@angular/animations": "~10.2.4",
-        "@angular/cdk": "^10.2.7",
-        "@angular/common": "~10.2.4",
-        "@angular/compiler": "~10.2.4",
-        "@angular/core": "~10.2.4",
-        "@angular/forms": "~10.2.4",
-        "@angular/platform-browser": "~10.2.4",
-        "@angular/platform-browser-dynamic": "~10.2.4",
-        "rxjs": "~6.5.4",
-        "zone.js": "~0.10.2",
+        "@angular/animations": "~18.2.0",
+        "@angular/cdk": "^18.2.0",
+        "@angular/common": "~18.2.0",
+        "@angular/compiler": "~18.2.0",
+        "@angular/core": "~18.2.0",
+        "@angular/forms": "~18.2.0",
+        "@angular/platform-browser": "~18.2.0",
+        "@angular/platform-browser-dynamic": "~18.2.0",
+        "rxjs": "~7.8.1",
+        "zone.js": "~0.14.10",
         "@docgeni/alib": "0.0.1"
     }
 }
