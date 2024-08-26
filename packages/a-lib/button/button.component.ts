@@ -3,14 +3,15 @@ import {
     ContentChild,
     Directive,
     ElementRef,
-    EventEmitter,
     Injectable,
     Input,
     OnInit,
-    Output,
     Pipe,
     PipeTransform,
-    TemplateRef
+    TemplateRef,
+    input,
+    model,
+    output,
 } from '@angular/core';
 
 @Directive()
@@ -30,8 +31,8 @@ class Base {
     selector: 'alib-button,[alibButton]',
     template: '<ng-content></ng-content>',
     host: {
-        class: 'dg-btn'
-    }
+        class: 'dg-btn',
+    },
 })
 export class AlibButtonComponent extends Base implements OnInit {
     private type!: string;
@@ -60,12 +61,6 @@ export class AlibButtonComponent extends Base implements OnInit {
     }
 
     /**
-     * Button Size
-     * @default md
-     */
-    @Input() alibSize: 'xs' | 'sm' | 'md' | 'lg' = 'xs';
-
-    /**
      * Input  of alib button component
      * @type string
      */
@@ -77,9 +72,18 @@ export class AlibButtonComponent extends Base implements OnInit {
     @Input() thyLoading = false;
 
     /**
+     * 按钮大小
+     * @type xs | sm | md | lg
+     * @default xs
+     */
+    alibSize = input<'xs' | 'sm' | 'md' | 'lg'>('xs');
+
+    disabled = model<boolean>(false);
+
+    /**
      * Loading Event
      */
-    @Output() thyLoadingEvent = new EventEmitter<boolean>();
+    thyLoadingEvent = output<boolean>();
 
     @ContentChild('template') templateRef!: TemplateRef<unknown>;
 
@@ -102,7 +106,7 @@ export class AlibButtonComponent extends Base implements OnInit {
  * @order 2
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ButtonService {
     /**
@@ -129,7 +133,7 @@ export class ButtonService {
  */
 @Pipe({
     name: 'uppercase',
-    standalone: true
+    standalone: true,
 })
 export class UpperCasePipe implements PipeTransform {
     constructor() {}
