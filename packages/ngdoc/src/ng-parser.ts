@@ -3,6 +3,7 @@ import { NgParserHost, createNgParserHost } from './ng-parser-host';
 import {
     DocTagResult,
     declarationIsPublic,
+    getCallExpressionInfo,
     getDirectiveMeta,
     getDocTagsBySignature,
     getDocTagsBySymbol,
@@ -201,7 +202,7 @@ export class NgDocParser {
             if (ts.isPropertyDeclaration(node) || ts.isSetAccessor(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
                 const decorator = getNgPropertyDecorator(node);
-                const signalApis = ['ModelSignal', 'InputSignal', 'OutputEmitterRef'];
+                const signalApis = ['model', 'input', 'output'];
 
                 if (symbol) {
                     const propertyDeclaration = symbol.valueDeclaration as ts.PropertyDeclaration;
@@ -230,15 +231,18 @@ export class NgDocParser {
                                     getPropertyValue(propertyDeclaration, symbolDescription.type);
                             }
                             properties.push(property);
-                        }
-                        const signalApi = signalApis.find((api) => symbolDescription.type?.includes(api));
-                        if (signalApi) {
-                            if (signalApi === 'InputSignal') {
-                                property.default =
-                                    ts.displayPartsToString(tags.default?.text) ||
-                                    getPropertyValue(propertyDeclaration, symbolDescription.type);
+                        } else {
+                            let callInfo = null;
+                            if (propertyDeclaration.initializer?.kind === ts.SyntaxKind.CallExpression) {
+                                callInfo = getCallExpressionInfo(propertyDeclaration.initializer as ts.CallExpression);
                             }
-                            properties.push(property);
+                            if (signalApis.includes(callInfo?.name)) {
+                                property.kind = callInfo.name === 'output' ? 'Output' : 'Input';
+                                if (callInfo.name === 'input') {
+                                    property.default = ts.displayPartsToString(tags.default?.text) || callInfo?.argumentInfo[0];
+                                }
+                                properties.push(property);
+                            }
                         }
                     }
                 }
