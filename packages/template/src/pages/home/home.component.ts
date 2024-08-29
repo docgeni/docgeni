@@ -11,7 +11,9 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 })
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;
+
     hasHome = false;
+
     constructor(public global: GlobalContext, router: Router, navigationService: NavigationService, pageTitle: PageTitleService) {
         if (!global.homeMeta) {
             if (global.config.mode === 'full') {

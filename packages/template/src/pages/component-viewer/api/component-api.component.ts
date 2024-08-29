@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, HostBinding, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { ApiDeclaration } from '../../../interfaces';

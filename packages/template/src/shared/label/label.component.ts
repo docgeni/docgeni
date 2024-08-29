@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, HostBinding, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2 } from '@angular/core';
 import { colorMetadata } from '../../utils/color-metadata';
 
 type LabelType = 'primary' | 'danger' | 'warning' | 'info' | '';

@@ -1,4 +1,3 @@
-import { NavigationItem } from './../../interfaces/navigation-item';
 import { Pipe, PipeTransform } from '@angular/core';
 import { PropertyDeclaration } from '../../interfaces';
 import { IsNgContentChildKindPipe } from './ng-kind.pipe';

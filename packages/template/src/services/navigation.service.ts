@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { NavigationItem, DocItem, ChannelItem, CategoryItem, DocgeniSiteConfig } from '../interfaces/public-api';
+import { Injectable } from '@angular/core';
+import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
 import { BehaviorSubject } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, HostBinding, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 
 @Component({

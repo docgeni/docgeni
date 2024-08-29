@@ -1,5 +1,4 @@
 import { GlobalContext } from './../../services/global-context';
-import { NavigationItem } from './../../interfaces/navigation-item';
 import { Pipe, PipeTransform } from '@angular/core';
 
 const TRANSLATES: Record<string, Record<string, string>> = {

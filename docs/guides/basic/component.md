@@ -147,7 +147,7 @@ tsconfig 配置如下，如何配置参考: [自定义配置 tsconfig.json](guid
 ```
 
 ## 在文档中使用示例
-`Docgeni`为每个示例生成一个唯一的 Key, 命名规则为：`类库缩写-组件名-示例名-example`，如：`alib-button-basic-example`
+`Docgeni`为每个示例生成一个唯一的 Key，命名规则为：`类库缩写-组件名-示例名-example`，如：`alib-button-basic-example`
 
 那么不管是在普通的页面文档还是在组件的概览文档中，都可以按照下面的语法在 Markdown 中引入某个示例，`name`为示例的唯一标识。
 
@@ -239,7 +239,7 @@ export class AlibButtonExamplesModule {}
 ```
 
 ## StackBlitz 示例 <label>2.0+</label>
-Docgeni 支持组件示例直接在 StackBlitz 平台展示, StackBlitz 在线示例需要配置示例的依赖，样式和`angular.json`，通过在 `.docgeni/public/assets/stack-blitz` 文件夹配置，文件结构如下：
+Docgeni 支持组件示例直接在 StackBlitz 平台展示，StackBlitz 在线示例需要配置示例的依赖，样式和`angular.json`，通过在 `.docgeni/public/assets/stack-blitz` 文件夹配置，文件结构如下：
 ```
 .docgeni
 ├── public

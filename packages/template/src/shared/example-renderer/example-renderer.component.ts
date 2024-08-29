@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, NgModuleFactory, OnInit, Output, Type, ɵNgModuleFactory } from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
-import { ExampleLoader, ExampleLoadResult } from '../../services/example-loader';
+import { ExampleLoader } from '../../services/example-loader';
 
 @Component({
     selector: 'dg-example-renderer, [dgExampleRenderer]',

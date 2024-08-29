@@ -1,8 +1,8 @@
 @import './variables.scss';
-@import './functions.scss';
 @import './mixins/index.scss';
 @import './global.scss';
 @import './utils.scss';
+@import './theme.scss';
 @import './layout.scss';
 @import './nav.scss';
 @import './doc.scss';
@@ -23,6 +23,5 @@
 @import '../pages/home/home.component.scss';
 @import '../pages/component-viewer/component-viewer.component.scss';
 @import 'prismjs/themes/prism.css';
-// @import 'prismjs/themes/prism-okaidia.css';
 @import 'docsearch.js/dist/cdn/docsearch.css';
 @import './docsearch.scss';

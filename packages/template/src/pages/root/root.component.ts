@@ -1,6 +1,7 @@
 import { NavigationService } from './../../services/navigation.service';
 import { Component, HostBinding } from '@angular/core';
 import { GlobalContext } from '../../services/public-api';
+
 @Component({
     selector: 'dg-root-actual',
     templateUrl: './root.component.html'

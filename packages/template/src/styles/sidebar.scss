@@ -45,9 +45,6 @@
             padding-right: $dg-sidebar-menu-item-space-x * 0.5 - 3px;
         }
         display: block;
-        // a {
-        //     color: $dg-gray-800;
-        // }
 
         &.active {
             border-right: 3px solid $dg-primary;
@@ -58,7 +55,6 @@
             &::after {
                 background-color: $dg-primary;
                 width: 3px;
-                // border-right: 3px solid $dg-primary;
             }
         }
 
@@ -77,7 +73,7 @@
             }
             & > .item-content-label {
                 flex: 0 0 auto;
-                background-color: $dg-white;
+                background-color: $dg-bg-default;
                 display: flex;
                 border-radius: 4px;
             }
@@ -104,7 +100,7 @@
         flex-direction: column;
         align-items: center;
         padding: 0px 0px 10px 0px;
-        border-bottom: 1px solid $dg-gray-210;
+        border-bottom: 1px solid $dg-gray-200;
 
         .logo {
             width: 80px;
@@ -125,7 +121,7 @@
     }
 
     .action-items {
-        border-top: 1px solid $dg-gray-210;
+        border-top: 1px solid $dg-gray-200;
 
         .action-item {
             padding: 10px 30px;

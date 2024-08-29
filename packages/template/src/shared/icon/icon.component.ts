@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ViewChildren, TemplateRef, AfterViewInit, ElementRef, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding } from '@angular/core';
 import { BUILTIN_SVGS } from './svgs';
 import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
     selector: 'dg-icon',
     templateUrl: './icon.component.html'

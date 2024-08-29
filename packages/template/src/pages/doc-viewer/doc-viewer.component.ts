@@ -4,7 +4,7 @@ import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
-import { GlobalContext, NavigationService } from '../../services/public-api';
+import { NavigationService } from '../../services/public-api';
 import { TocService } from '../../services/toc.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 

@@ -219,8 +219,8 @@ $dg-service-color: #8e24aa;
                 }
 
                 .dg-api-method-parameter-type {
-                    background-color: #f4f5f7;
-                    color: $dg-gray-700;
+                    background-color: $dg-code-bg-color;
+                    color: $dg-gray-800;
                     border-radius: 4px;
                     padding: 2px 4px;
                 }
@@ -271,8 +271,7 @@ $dg-service-color: #8e24aa;
     flex: 1;
     display: block;
     padding: 20px 0px;
-    // font-size: $dg-font-size-md;
-    // white-space: break-spaces;
+
     > :first-child {
         margin-top: 0 !important;
     }
@@ -328,14 +327,12 @@ $dg-service-color: #8e24aa;
         overflow: auto;
         code {
             padding: 0px;
-            // color: $body-color;
             background: transparent;
             font-size: $dg-font-size-base;
         }
     }
 
     @include content-child-selector((p, '.dg-paragraph')) {
-        // color: $gray-700;
         line-height: 26px;
         margin-top: 0;
         margin-bottom: 8px;
@@ -502,5 +499,46 @@ $dg-service-color: #8e24aa;
             font-weight: 500;
             line-height: 1.5;
         }
+    }
+}
+
+.dg-doc-content,
+.dg-source-code-content {
+    code[class*='language-'],
+    pre[class*='language-'] {
+        text-shadow: none;
+    }
+
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        background: none;
+    }
+
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #00b42a;
+    }
+
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #b882ff;
+    }
+
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #6698ff;
     }
 }

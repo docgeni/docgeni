@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
-import { LocationStrategy, ViewportScroller } from '@angular/common';
+import { LocationStrategy } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

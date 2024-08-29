@@ -1,6 +1,3 @@
-// $dg-danger-color: #d81b60;
-// $dg-primary-color: #348fe4;
-
 .dg-label {
     display: inline-flex;
     align-items: center;
@@ -24,7 +21,6 @@ $dg-theme-colors: map-merge(
 @each $name, $color in $dg-theme-colors {
     .dg-label-#{$name} {
         background-color: $color;
-        color: dg-color-yiq($color);
     }
 }
 
