@@ -90,7 +90,9 @@
             border-radius: 6px;
             transition: all 0.2s;
             cursor: pointer;
+            outline: none;
             color: $dg-gray-800;
+
             &:hover {
                 background-color: var(--dg-gray-80);
             }
