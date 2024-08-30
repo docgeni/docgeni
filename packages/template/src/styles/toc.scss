@@ -77,7 +77,7 @@
         }
 
         &.active {
-            color: $dg-primary-light;
+            color: darken($dg-primary, 10%);
             &::before {
                 border-color: $dg-primary;
                 border-width: 2px;
