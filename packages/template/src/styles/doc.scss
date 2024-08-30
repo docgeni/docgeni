@@ -445,7 +445,7 @@ $dg-service-color: #8e24aa;
             border-radius: 3px;
             color: $dg-gray-800;
             border: 1px solid $dg-gray-200;
-            box-shadow: rgb(116 129 141 / 10%) 0px 3px 8px 0px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
             width: 100%;
             display: flex;
             &:hover {

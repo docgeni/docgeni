@@ -39,8 +39,9 @@
         padding: 6px 0;
         z-index: 10;
         background-color: $dg-gray-10;
-        border-radius: 1px;
-        box-shadow: 0 0 24px rgb(0 0 0 / 18%);
+        border-radius: 4px;
+        border: 1px solid $dg-gray-200;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
         overflow-y: auto;
 
