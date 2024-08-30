@@ -19,6 +19,9 @@ $dg-gray-600: var(--dg-gray-600) !default;
 $dg-gray-700: var(--dg-gray-700) !default;
 $dg-gray-800: var(--dg-gray-800) !default;
 
+$dg-box-shadow-1: var(--dg-box-shadow-1); // navbar 阴影
+$dg-box-shadow-2: var(--dg-box-shadow-2); // 下拉框阴影
+
 $dg-bg-default: $dg-gray-10 !default;
 $dg-body-color: $dg-gray-800 !default;
 $dg-body-bg: $dg-gray-10 !default;
@@ -102,7 +105,7 @@ $dg-navbar-height: 60px !default;
 
 // default theme
 $dg-navbar-background-default: $dg-bg-default;
-$dg-navbar-box-shadow-default: var(--dg-navbar-box-shadow);
+$dg-navbar-box-shadow-default: $dg-box-shadow-1;
 $dg-navbar-color-default: $dg-body-color;
 
 // angular theme

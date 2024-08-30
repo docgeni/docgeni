@@ -6,7 +6,7 @@
 >
   <dg-icon iconName="locale"></dg-icon>
 </button>
-<div *ngIf="isDropdownOpen" class="locales-container">
+<div *ngIf="!!isDropdownOpen" class="locales-container">
   <div class="locales-menu">
     <div
       *ngFor="let item of global.config.locales"

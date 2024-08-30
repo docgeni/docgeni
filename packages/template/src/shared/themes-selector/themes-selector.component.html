@@ -1,0 +1,8 @@
+<button type="button" class="action-icon">
+  <dg-icon [iconName]="themesMap[theme].icon" (click)="toggleTheme()"></dg-icon>
+</button>
+
+<div class="dg-tooltip-container">
+  <div class="dg-tooltip-arrow"></div>
+  <div class="dg-tooltip-content">{{ themesMap[theme].actionTooltip }}</div>
+</div>

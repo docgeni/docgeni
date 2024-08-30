@@ -11,7 +11,8 @@
     --dg-gray-700: #666;
     --dg-gray-800: #333;
 
-    --dg-navbar-box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
+    --dg-box-shadow-1: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
+    --dg-box-shadow-2: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 :root[theme='dark'] {
@@ -27,5 +28,6 @@
     --dg-gray-700: #87909e;
     --dg-gray-800: #bcc4d1;
 
-    --dg-navbar-box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.15);
+    --dg-box-shadow-1: 0 8px 24px -2px rgba(0, 0, 0, 0.15);
+    --dg-box-shadow-2: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
