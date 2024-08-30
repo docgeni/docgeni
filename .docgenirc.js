@@ -71,12 +71,12 @@ module.exports = {
     ],
     locales: [
         {
-            key: 'en-us',
-            name: 'EN'
-        },
-        {
             key: 'zh-cn',
             name: '中文'
+        },
+        {
+            key: 'en-us',
+            name: 'English'
         }
     ],
     defaultLocale: 'zh-cn',

@@ -77,9 +77,8 @@
             max-width: 300px;
         }
 
-        .action-icon-item {
+        .action-icon {
             padding: 0;
-            margin-left: 12px;
             width: 32px;
             height: 32px;
             display: inline-flex;
@@ -93,12 +92,17 @@
             outline: none;
             color: $dg-gray-800;
 
-            &:hover {
+            &:hover,
+            &.active {
                 background-color: var(--dg-gray-80);
             }
             .dg-icon {
                 font-size: $dg-font-size-lg;
             }
+        }
+
+        .action-btn-item {
+            margin-left: 12px;
         }
     }
 

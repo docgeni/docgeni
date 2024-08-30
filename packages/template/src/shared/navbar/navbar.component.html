@@ -20,15 +20,12 @@
 <div class="spacer"></div>
 <div class="action-items">
   <dg-search class="action-item search-container" *ngIf="global.config.mode | dgIsFull"></dg-search>
-
-  <button type="button" class="action-icon-item">
-    <dg-icon iconName="locale" (click)="toggleLocale()"></dg-icon>
-  </button>
-  <button type="button" class="action-icon-item">
+  <dg-locales-selector *ngIf="global.config.locales && global.config.locales.length > 1" class="action-btn-item"></dg-locales-selector>
+  <button type="button" class="action-btn-item action-icon">
     <dg-icon [iconName]="themeIcon" (click)="toggleTheme()"></dg-icon>
   </button>
   <a *ngIf="global.config.repoUrl" href="{{ global.config.repoUrl }}" target="_blank">
-    <button type="button" class="action-icon-item">
+    <button type="button" class="action-btn-item action-icon">
       <dg-icon iconName="github"></dg-icon>
     </button>
   </a>

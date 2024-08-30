@@ -1,34 +1,40 @@
 .dg-locales-selector {
-    display: block;
     position: relative;
-    margin: 0;
-    cursor: pointer;
 
-    select {
-        width: 100%;
-        padding: 0 22px 0 0;
-        text-align: right;
-        height: 30px;
-        outline: none;
-        font-size: 14px;
-        appearance: none;
-        border: none;
-        background: transparent;
-        cursor: pointer;
+    .locales-container {
+        background-color: transparent;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100px;
     }
 
-    .dg-selector-arrow {
-        width: 9px;
-        height: 9px;
-        border-left: 1px solid $dg-gray-500;
-        border-top: 1px solid $dg-gray-500;
-        transform: rotate(-135deg);
-        position: absolute;
-        top: 50%;
-        right: 2px;
-        margin-top: -8px;
-        right: 2px;
-        z-index: -1;
+    .locales-menu {
+        width: 100%;
+        margin-top: 8px;
+        padding: 8px 0;
+        background-color: $dg-gray-10;
+        border-radius: 4px;
+        border: 1px solid $dg-gray-200;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+
+        .locale {
+            cursor: pointer;
+            font-size: $dg-font-size-base;
+            padding: 0 8px;
+            line-height: 36px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            &:hover {
+                background-color: $dg-gray-80;
+            }
+            &.active {
+                color: $dg-primary;
+                background-color: #6698ff1a;
+            }
+        }
     }
 }
 
