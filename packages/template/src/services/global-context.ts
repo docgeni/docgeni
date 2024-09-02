@@ -1,8 +1,9 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta } from '../interfaces/public-api';
+import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
 import { DOCUMENT, Location } from '@angular/common';
+
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
@@ -12,12 +13,15 @@ export const DEFAULT_CONFIG: DocgeniSiteConfig = {
 
 const DOCGENI_LOCALE_KEY = 'docgeni-locale';
 const DOCGENI_MODE_KEY = 'docgeni-mode';
+const DOCGENI_THEME_KEY = 'docgeni-theme';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GlobalContext {
     locale!: string;
+
+    theme!: DocgeniTheme;
 
     navs!: NavigationItem[];
 
@@ -59,8 +63,18 @@ export class GlobalContext {
         }
     }
 
+    private getTheme(): DocgeniTheme {
+        const cacheTheme = window.localStorage.getItem(DOCGENI_THEME_KEY) as DocgeniTheme;
+        if (cacheTheme && [DocgeniTheme.light, DocgeniTheme.dark].includes(cacheTheme)) {
+            return cacheTheme;
+        } else {
+            return this.config.defaultTheme as DocgeniTheme;
+        }
+    }
+
     private setup() {
         this.setLocale(this.getLocaleKey());
+        this.setTheme(this.getTheme());
 
         const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
         if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
@@ -87,6 +101,17 @@ export class GlobalContext {
     public setLocale(locale: string) {
         this.locale = locale;
         window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
+    }
+
+    public setTheme(theme: DocgeniTheme) {
+        this.theme = theme;
+        if (this.theme === DocgeniTheme.dark) {
+            document.documentElement.setAttribute('theme', theme);
+            window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+        } else {
+            document.documentElement.removeAttribute('theme');
+            window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+        }
     }
 
     getNowTimestamp() {

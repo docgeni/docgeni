@@ -80,6 +80,8 @@ module.exports = {
         }
     ],
     defaultLocale: 'zh-cn',
+    defaultTheme: 'light',
+    enableThemes: true,
     sitemap: {
         host: 'https://docgeni.org'
     },

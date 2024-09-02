@@ -28,6 +28,11 @@ export interface HomeDocMeta {
 
 export type DocgeniMode = 'full' | 'lite';
 
+export enum DocgeniTheme {
+    light = 'light',
+    dark = 'dark'
+}
+
 export interface DocgeniNavItem {
     /** Title for nav item **/
     title: string;
@@ -92,6 +97,10 @@ export interface DocgeniConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** Enable themes */
+    enableThemes?: boolean;
+    /** Default theme **/
+    defaultTheme?: DocgeniTheme;
     /** footer content **/
     footer?: string;
     /** algolia config */
@@ -130,6 +139,10 @@ export interface DocgeniSiteConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** Enable themes */
+    enableThemes?: boolean;
+    /** Default theme **/
+    defaultTheme?: DocgeniTheme;
     /** footer content **/
     footer?: string;
     /** algolia config */

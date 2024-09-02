@@ -101,6 +101,20 @@ Default multi-language.
 
 Supported multi-language, if you don't need to support multiple languages, no configuration, only the `defaultLocale` language will be generated.
 
+
+## defaultTheme
+- Type: `DocgeniTheme`
+- Default: `light`
+
+Default theme.
+
+## enableThemes
+- Type: `boolean`
+- Default: `false`
+
+Configuration: whether to enable the theme switching function.
+
+
 ## navs
 - Type: `Array<NavigationItem>`
 - Default: `[]`

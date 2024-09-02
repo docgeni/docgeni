@@ -17,6 +17,8 @@ export class ConfigPlugin implements Plugin {
                     baseHref: docgeni.config.baseHref,
                     locales: docgeni.config.locales,
                     defaultLocale: docgeni.config.defaultLocale,
+                    defaultTheme: docgeni.config.defaultTheme,
+                    enableThemes: docgeni.config.enableThemes,
                     logoUrl: docgeni.config.logoUrl,
                     repoUrl: docgeni.config.repoUrl,
                     footer: docgeni.config.footer,
