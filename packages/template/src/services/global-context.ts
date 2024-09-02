@@ -1,5 +1,5 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
-import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem } from '../interfaces/public-api';
+import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
 import { DOCUMENT, Location } from '@angular/common';
@@ -8,7 +8,7 @@ export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 
 export const DEFAULT_CONFIG: DocgeniSiteConfig = {
     title: 'Docgeni',
-    description: ''
+    description: '',
 };
 
 const DOCGENI_LOCALE_KEY = 'docgeni-locale';
@@ -16,7 +16,7 @@ const DOCGENI_MODE_KEY = 'docgeni-mode';
 const DOCGENI_THEME_KEY = 'docgeni-theme';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class GlobalContext {
     locale!: string;
@@ -41,7 +41,7 @@ export class GlobalContext {
         @Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig,
         private http: HttpClient,
         @Inject(DOCUMENT) private document: any,
-        private location: Location
+        private location: Location,
     ) {
         this.setup();
     }
@@ -52,7 +52,7 @@ export class GlobalContext {
             return localeKeyFromUrl;
         } else {
             const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
-            const locale = (this.config.locales || []).find(locale => {
+            const locale = (this.config.locales || []).find((locale) => {
                 return languageCompare(locale.key, cacheLocale);
             });
             if (locale) {
@@ -92,7 +92,7 @@ export class GlobalContext {
     }
 
     public getLocalKeyFromUrl() {
-        const localeFromUrl = (this.config.locales || []).find(locale => {
+        const localeFromUrl = (this.config.locales || []).find((locale) => {
             return this.location.path().startsWith(`/${locale.key}`);
         });
         return localeFromUrl && localeFromUrl.key;
@@ -121,9 +121,11 @@ export class GlobalContext {
     initialize() {
         return new Promise((resolve, reject) => {
             this.http
-                .get<{ navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }>(
-                    `assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`
-                )
+                .get<{
+                    navs: NavigationItem[];
+                    docs: NavigationItem[];
+                    homeMeta: HomeDocMeta;
+                }>(`assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`)
                 .subscribe({
                     next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
                         this.homeMeta = response.homeMeta;
@@ -131,9 +133,9 @@ export class GlobalContext {
                         this.docItems = this.sortDocItems(this.navs);
                         resolve(response);
                     },
-                    error: error => {
+                    error: (error) => {
                         reject(error);
-                    }
+                    },
                 });
         });
     }
