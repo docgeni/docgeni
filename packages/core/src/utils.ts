@@ -74,7 +74,15 @@ export function highlight(sourceCode: string, lang: string) {
 
 export function ascendingSortByOrder<T extends { order?: number }>(items: T[]) {
     return items.sort((a, b) => {
-        return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
+        if (toolkit.utils.isNumber(a.order) && toolkit.utils.isUndefinedOrNull(b.order)) {
+            return -1;
+        } else if (toolkit.utils.isNumber(b.order) && toolkit.utils.isUndefinedOrNull(a.order)) {
+            return 1;
+        } else if (toolkit.utils.isUndefinedOrNull(a.order) && toolkit.utils.isUndefinedOrNull(b.order)) {
+            return 0;
+        } else {
+            return a.order > b.order ? 1 : a.order === b.order ? 0 : -1;
+        }
     });
 }
 

@@ -5,7 +5,7 @@ import { AlibDialog } from './dialog.service';
 @NgModule({
     declarations: [],
     imports: [CommonModule],
-    exports: [AlibDialog],
-    providers: []
+    exports: [],
+    providers: [AlibDialog]
 })
 export class AlibDialogModule {}

@@ -31,7 +31,7 @@ export class DefaultNgParserHost implements NgParserHost {
     private tsProgram: ts.Program;
     private allResolvedModules: ts.ResolvedModule[] = [];
     private moduleWatchersMap = new Map<string, FSWatcher>();
-    private readFiles: string[] = [];
+    private latestFileContents = new Map<string, string>();
     private rootDir: string;
 
     static create(options: DefaultNgParserHostOptions): NgParserHost {
@@ -137,8 +137,13 @@ export class DefaultNgParserHost implements NgParserHost {
             }
             debug(`watch resolvedModule: ${resolvedModule.resolvedFileName}`, 'ng-parser');
             const watcher = toolkit.fs.watch(resolvedModule.resolvedFileName, { persistent: true }, (event: string, filename: string) => {
-                this.tsProgram = this.createProgram();
-                this.options.watcher(event, resolvedModule.resolvedFileName);
+                const newContent = this.options.fsHost.readFile(resolvedModule.resolvedFileName);
+                const oldContent = this.latestFileContents.get(resolvedModule.resolvedFileName);
+                if (newContent !== oldContent) {
+                    this.latestFileContents.set(resolvedModule.resolvedFileName, newContent);
+                    this.tsProgram = this.createProgram();
+                    this.options.watcher(event, resolvedModule.resolvedFileName);
+                }
             });
             this.moduleWatchersMap.set(resolvedModule.resolvedFileName, watcher);
         });
@@ -151,8 +156,8 @@ export class DefaultNgParserHost implements NgParserHost {
     }
 
     private getSourceFile(fileName: string, languageVersion: ts.ScriptTarget, onError?: (message: string) => void) {
-        this.readFiles.push(fileName);
         const sourceText = this.options.fsHost.readFile(fileName);
+        this.latestFileContents.set(fileName, sourceText);
         return sourceText !== undefined ? ts.createSourceFile(fileName, sourceText, languageVersion) : undefined;
     }
 

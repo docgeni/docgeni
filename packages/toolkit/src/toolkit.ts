@@ -6,7 +6,9 @@ import * as strings from './strings';
 import * as utils from './utils';
 import * as shell from './shell';
 import * as git from './git';
+import { colors } from './colors';
 import { Print } from './print';
+import { Spinner } from './spinner';
 
 export interface ToolkitConfig {
     baseDir: string;
@@ -70,5 +72,13 @@ export class Toolkit {
 
     static get path() {
         return path;
+    }
+
+    static get colors() {
+        return colors;
+    }
+
+    static createSpinner(text?: string) {
+        return new Spinner(text);
     }
 }

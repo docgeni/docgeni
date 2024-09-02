@@ -1,7 +1,5 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable, TemplateRef, Type } from '@angular/core';
 import { AbstractOverlayRef } from './overlay-ref';
-
-interface ComponentType {}
 
 /**
  * Alib Dialog Ref
@@ -71,10 +69,10 @@ export class AlibDialog {
      * @param config
      */
     open<T, TData = unknown, TResult = unknown>(
-        componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
+        componentOrTemplateRef: Type<T> | TemplateRef<T>,
         config?: AlibDialogConfig
     ): AlibDialogRef<T, TResult> {
-        return null;
+        return (undefined as unknown) as AlibDialogRef<T, TResult>;
     }
 
     /**

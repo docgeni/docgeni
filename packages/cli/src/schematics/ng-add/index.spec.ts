@@ -26,7 +26,7 @@ describe('ng-add Schematic', () => {
     });
 
     it('should update package.json devDependencies', async () => {
-        workspaceTree = await schematicRunner.runSchematicAsync('ng-add', undefined, tree).toPromise();
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
         const devDependencies = packageJson[NodeDependencyType.Dev];
         expect(devDependencies['@docgei/angular']).toBeFalsy();

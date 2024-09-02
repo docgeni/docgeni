@@ -34,7 +34,7 @@ Example:
 hero:
   title: Docgeni
   description: Out of the box angular component document generation tool
-  banner: https://cdn.pingcode.com/open-sources/docgeni/home/banner.png
+  banner: ./assets/images/home/banner.png
   actions:
     - text: Getting Started
       link: /guides/intro/getting-started
@@ -52,22 +52,22 @@ Example:
 ```
 ---
 features:
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature1.png
+  - icon: ./assets/images/home/feature1.png
     title: Out of the box
     description: Automatically generate navigation and menus according to the directory structure, and help developers get started at zero cost through command-line tools, so that you can quickly start  writing document and development component
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature2.png
+  - icon: ./assets/images/home/feature2.png
     title: Born for Angular Component Development
     description: Independent angular component preview experience that contains component overview, examples, APIs and rich markdown extensions make it easier to write documents and support multiple libraries at one site
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature3.png
+  - icon: ./assets/images/home/feature3.png
     title: Two modes and multiple styles support
     description: Full and Lite modes are supported to meet different needs. At the same time, default and angular styles are supported to allow users to choose their own themes
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature4.png
+  - icon: ./assets/images/home/feature4.png
     title: Powerful Customization
     description: It provides publicDir to realize features such as custom HTML, resources and styles, and supports fully customized site
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature5.png
+  - icon: ./assets/images/home/feature5.png
     title: Automatic Generation of Component API (WIP)
     description: Automatically generate component APIs based on typescript type definitions and comments, and maintain the consistency of code and documents
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/feature6.png
+  - icon: ./assets/images/home/feature6.png
     title: Multilingual
     description: Support flexible multilingual configuration
 ---

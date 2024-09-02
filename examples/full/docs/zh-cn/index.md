@@ -9,22 +9,22 @@ hero:
       link: /guide/intro/getting-started
       btnShape: round
 features:
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能1.png
+  - icon: ./assets/images/home/功能1.png
     title: 功能1
     description: 功能1 描述 
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能2.png
+  - icon: ./assets/images/home/功能2.png
     title: 功能2
     description: 功能2描述
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能3.png
+  - icon: ./assets/images/home/功能3.png
     title: 功能3 
     description: 功能3描述
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能4.png
+  - icon: ./assets/images/home/功能4.png
     title: 功能4
     description: 功能4描述
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能5.png
+  - icon: ./assets/images/home/功能5.png
     title: 功能5
     description: 功能5描述
-  - icon: https://cdn.pingcode.com/open-sources/docgeni/home/功能6.png
+  - icon: ./assets/images/home/功能6.png
     title: 功能6
     description: 功能6描述
 ---

@@ -1,5 +1,5 @@
 <p align="center" style="margin-bottom: -20px">
-  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://cdn.pingcode.com/open-sources/docgeni/logo.png" /></a>
+  <a href="https://docgeni.org" target="_blank"><img width="80px" height="80px" src="https://github.com/docgeni/docgeni/blob/master/.docgeni/public/assets/images/logo.png?raw=true" /></a>
 </p>
 <p align="center">
   <strong>Docgeni</strong>
@@ -88,8 +88,9 @@ Add a README badge to show it via:
 1.0.x|>=10.0 <=13.0 | -
 1.1.x|>=10.0 <=13.0 | -
 2.0.x|>=12.0 <=14.0 | -
-2.1.x|>=14.0 <=15.0 | -
-2.2.x|>=16.0 <=16.0 | -
+2.1.x|>=15.0 <16.0 | -
+2.2.x|>=16.0 <17.0 | -
+2.3.0|>=17.0 <18.0 | -
 
 
 ## 💻 Development

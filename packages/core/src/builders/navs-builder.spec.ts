@@ -1,14 +1,8 @@
 import { DocgeniContext } from '../docgeni.interface';
-import {
-    createTestDocgeniContext,
-    createTestDocgeniHost,
-    DEFAULT_TEST_ROOT_PATH,
-    FixtureResult,
-    loadFixture,
-    updateContext
-} from '../testing';
+import { createTestDocgeniContext, DEFAULT_TEST_ROOT_PATH, FixtureResult, loadFixture, updateContext } from '../testing';
 import { NavsBuilder } from './navs-builder';
 import { toolkit } from '@docgeni/toolkit';
+import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
 
 describe('#navs-builder', () => {
     for (const dir of ['', 'en-us/']) {
@@ -140,7 +134,7 @@ describe('#navs-builder', () => {
                     expect(pattern).toEqual(`/**/*.md`);
                     return Object.keys(initialFiles);
                 });
-                const host = createTestDocgeniHost(initialFiles);
+                const host = createTestDocgeniFsHost(initialFiles);
                 updateContext(context, { host: host });
                 await context.docsBuilder.run();
                 const navsBuilder = new NavsBuilder(context);

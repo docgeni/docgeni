@@ -1,6 +1,6 @@
 {
   "name": "@docgeni/toolkit",
-  "version": "2.1.1",
+  "version": "2.4.0-next.2",
   "description": "Docgeni - Toolkit Library",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -32,7 +32,7 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@angular-devkit/core": "^15.2.0",
+    "@angular-devkit/core": "^18.2.0",
     "camelcase": "^6.0.0",
     "chalk": "^3.0.0",
     "change-case": "^4.1.1",
@@ -45,6 +45,7 @@
     "handlebars": "^4.7.3",
     "lodash": "^4.17.21",
     "minimatch": "3.0.5",
+    "ora": "^5.4.1",
     "param-case": "^3.0.2",
     "pluralize": "^8.0.0",
     "shelljs": "0.8.5",

@@ -29,4 +29,8 @@ export class DocgeniNodeJsAsyncHost extends NodeJsAsyncHost {
         const watcher = new FileSystemWatcher(options);
         return watcher.watch(path) as Observable<virtualFs.HostWatchEvent>;
     }
+
+    mkdir(path: Path) {
+        return fsPromises.mkdir(getSystemPath(path), { recursive: true });
+    }
 }

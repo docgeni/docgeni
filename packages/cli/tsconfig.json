@@ -4,6 +4,7 @@
     "outDir": "./lib",
     "alwaysStrict": true,
     "rootDir": "src",
+    "skipLibCheck": true,
     "baseUrl": "."
   },
   "include": [

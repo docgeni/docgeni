@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.2](https://github.com/docgeni/docgeni/compare/v2.4.0-next.1...v2.4.0-next.2) (2024-08-19)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [2.4.0-next.1](https://github.com/docgeni/docgeni/compare/v2.4.0-next.0...v2.4.0-next.1) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+
+### Features
+
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
+
+
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+**Note:** Version bump only for package @docgeni/toolkit
+
+
+
+
+
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **toolkit:** add ora to  dependencies of toolkit ([51229a3](https://github.com/docgeni/docgeni/commit/51229a382496291ecd97050fd9effea2332d7f09))
+
+
+### Features
+
+* **toolkit:** copy support exclude ([9f56049](https://github.com/docgeni/docgeni/commit/9f560492dcf776aee211b9306813a03b42a5466e))
+
+
+
+
+
 ## [2.1.1](https://github.com/docgeni/docgeni/compare/v2.1.0...v2.1.1) (2023-04-24)
 
 **Note:** Version bump only for package @docgeni/toolkit

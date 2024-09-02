@@ -1,10 +1,6 @@
 import { virtualFs } from '@angular-devkit/core';
 import { fs, strings } from '@docgeni/toolkit';
 
-export function createTestDocgeniHost(initialFiles: Record<string, string> = {}) {
-    return new fs.DocgeniFsHostImpl(new virtualFs.test.TestHost(initialFiles));
-}
-
 export async function assertExpectedFiles(host: fs.DocgeniFsHost, expectedFiles: Record<string, string>, normalize = false) {
     for (const filePath of Object.keys(expectedFiles)) {
         const content = await host.readFile(filePath);

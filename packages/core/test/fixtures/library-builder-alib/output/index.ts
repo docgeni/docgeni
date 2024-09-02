@@ -6,8 +6,6 @@ import {
     DOCGENI_INITIALIZER_PROVIDERS
 } from '@docgeni/template';
 
-import './navigations.json';
-
 export const DOCGENI_SITE_PROVIDERS = [
     ...DOCGENI_INITIALIZER_PROVIDERS,
     LIB_EXAMPLE_LOADER_PROVIDER,

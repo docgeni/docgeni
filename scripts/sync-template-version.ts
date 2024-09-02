@@ -1,6 +1,6 @@
 import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
-import * as yargs from 'yargs-parser';
+import yargs from 'yargs-parser';
 import writeJsonFile from 'write-json-file';
 
 async function sync() {

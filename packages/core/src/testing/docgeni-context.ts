@@ -3,7 +3,7 @@ import { normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniConfig, DocgeniLibrary, DocgeniTheme } from '../interfaces';
-import { createTestDocgeniHost } from './docgeni-host';
+import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
 import { Docgeni } from '../docgeni';
 
@@ -26,7 +26,7 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
     const paths = new DocgeniPaths(options.root, 'docs', 'dist/docgeni-site');
     paths.setSitePaths('.docgeni/site', '.docgeni/site/src');
     const context: DocgeniContext = {
-        host: createTestDocgeniHost(options.initialFiles),
+        host: createTestDocgeniFsHost(options.initialFiles),
         config: {
             componentsDir: '.docgeni/components',
             libs: toolkit.utils.coerceArray(options.libs || []),

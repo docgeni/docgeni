@@ -1,7 +1,7 @@
 import { IsComponentDocPipe } from './pipes/nav.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -62,8 +62,9 @@ const COMPONENTS = [
 ];
 @NgModule({
     declarations: [...COMPONENTS],
-    imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
-    exports: [CommonModule, FormsModule, RouterModule, HttpClientModule, ...COMPONENTS]
+    exports: [CommonModule, FormsModule, RouterModule, ...COMPONENTS],
+    imports: [CommonModule, FormsModule, RouterModule],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class DocgeniSharedModule {}
 

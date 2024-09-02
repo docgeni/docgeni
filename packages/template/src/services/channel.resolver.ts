@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NavigationService } from './navigation.service';
 import { ChannelItem } from '../interfaces/public-api';
 
 @Injectable({ providedIn: 'root' })
-export class ChannelResolver implements Resolve<ChannelItem> {
+export class ChannelResolver {
     constructor(private navigationService: NavigationService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<ChannelItem> | Promise<ChannelItem> | ChannelItem {

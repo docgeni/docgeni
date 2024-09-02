@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.2](https://github.com/docgeni/docgeni/compare/v2.4.0-next.1...v2.4.0-next.2) (2024-08-19)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [2.4.0-next.1](https://github.com/docgeni/docgeni/compare/v2.4.0-next.0...v2.4.0-next.1) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+
+### Features
+
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
+
+
+## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
+
+
+### Bug Fixes
+
+* **cli:** should not show help for default command ([d83a95c](https://github.com/docgeni/docgeni/commit/d83a95c91db5f8acd0307e4206f95cac8afc68d9))
+
+
+
+
+
+## [2.3.2-next.1](https://github.com/docgeni/docgeni/compare/v2.3.2-next.0...v2.3.2-next.1) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+## [2.3.2-next.0](https://github.com/docgeni/docgeni/compare/v2.3.1...v2.3.2-next.0) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+## [2.3.1](https://github.com/docgeni/docgeni/compare/v2.3.0...v2.3.1) (2024-04-12)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
 # [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
 
 **Note:** Version bump only for package @docgeni/cli

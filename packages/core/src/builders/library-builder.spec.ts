@@ -150,13 +150,13 @@ describe('#library-builder', () => {
 
         const buttonComponent = libraryBuilder.components.get(`${libDirPath}/button`);
         expect(buttonComponent).toBeTruthy();
-        expect(buttonComponent.absPath).toEqual(`${libDirPath}/button`);
-        expect(buttonComponent.name).toEqual(`button`);
+        expect(buttonComponent?.absPath).toEqual(`${libDirPath}/button`);
+        expect(buttonComponent?.name).toEqual(`button`);
 
         const alertComponent = libraryBuilder.components.get(`${libDirPath}/alert`);
         expect(alertComponent).toBeTruthy();
-        expect(alertComponent.absPath).toEqual(`${libDirPath}/alert`);
-        expect(alertComponent.name).toEqual(`alert`);
+        expect(alertComponent?.absPath).toEqual(`${libDirPath}/alert`);
+        expect(alertComponent?.name).toEqual(`alert`);
     });
 
     it('should initialize components success with include', async () => {
@@ -171,8 +171,8 @@ describe('#library-builder', () => {
 
         const barComponent = libraryBuilder.components.get(`${libDirPath}/common/bar`);
         expect(barComponent).toBeTruthy();
-        expect(barComponent.absPath).toEqual(`${libDirPath}/common/bar`);
-        expect(barComponent.name).toEqual(`bar`);
+        expect(barComponent?.absPath).toEqual(`${libDirPath}/common/bar`);
+        expect(barComponent?.name).toEqual(`bar`);
     });
 
     it('should load root components when include is empty ', async () => {
@@ -206,12 +206,12 @@ describe('#library-builder', () => {
         const localeCategoriesMap = libraryBuilder['localeCategoriesMap'];
         expect(localeCategoriesMap).toEqual({
             'zh-cn': [
-                { id: 'general', title: '通用', subtitle: undefined, items: [] },
-                { id: 'layout', title: '布局', subtitle: undefined, items: [] }
+                { id: 'general', title: '通用', subtitle: undefined, items: [], order: 0 },
+                { id: 'layout', title: '布局', subtitle: undefined, items: [], order: 0 }
             ],
             'en-us': [
-                { id: 'general', title: 'General', subtitle: undefined, items: [] },
-                { id: 'layout', title: 'Layout', subtitle: undefined, items: [] }
+                { id: 'general', title: 'General', subtitle: undefined, items: [], order: 0 },
+                { id: 'layout', title: 'Layout', subtitle: undefined, items: [], order: 0 }
             ]
         });
     });
@@ -224,17 +224,17 @@ describe('#library-builder', () => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
         });
         const componentDocItems = {
+            alert: {
+                id: `alib/alert`,
+                path: `alert`,
+                title: 'Alert',
+                channelPath: 'components'
+            },
             button: {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
                 category: 'general',
-                channelPath: 'components'
-            },
-            alert: {
-                id: `alib/alert`,
-                path: `alert`,
-                title: 'Alert',
                 channelPath: 'components'
             }
         };
@@ -250,11 +250,11 @@ describe('#library-builder', () => {
                 path: 'components'
             }
         ];
-        const zhNavs = libraryBuilder.generateLocaleNavs('zh-cn', rootNavs);
+        const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
         expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
         expect(rootNavs[0].items as unknown).toEqual([
-            { id: 'general', title: '通用', items: [componentDocItems.button] },
-            { id: 'layout', title: '布局', items: [] },
+            { id: 'general', title: '通用', items: [componentDocItems.button], order: 0 },
+            { id: 'layout', title: '布局', items: [], order: 0 },
             { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' }
         ]);
     });
@@ -285,8 +285,55 @@ describe('#library-builder', () => {
             title: 'Alib Components',
             path: 'components'
         };
-        const zhNavs = libraryBuilder.generateLocaleNavs('zh-cn', [channel]);
+        const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', [channel]);
         expect(zhNavs).toEqual([{ ...componentDocItems.button, path: 'components/button' }]);
+    });
+
+    it('should generate locale navs without category', async () => {
+        const libraryBuilder = new LibraryBuilderImpl(context, { ...library, categories: [] });
+        await libraryBuilder.initialize();
+        const components = Array.from(libraryBuilder.components.values());
+        components.map(component => {
+            return spyOn(component, 'build').and.returnValue(Promise.resolve());
+        });
+        const componentDocItems = {
+            button: {
+                id: `alib/button`,
+                path: `button`,
+                title: 'Button',
+                channelPath: 'components'
+            },
+            alert: {
+                id: `alib/alert`,
+                path: `alert`,
+                title: 'Alert',
+                channelPath: 'components',
+                order: 10
+            }
+        };
+        components.map(component => {
+            return spyOn(component, 'getDocItem').and.returnValue(componentDocItems[component.name]);
+        });
+        await libraryBuilder.build();
+        const rootNavs: NavigationItem[] = [
+            {
+                lib: 'alib',
+                id: 'alib',
+                title: 'Alib Components',
+                path: 'components'
+            }
+        ];
+        const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
+        expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
+        expect(rootNavs[0].items).toEqual([
+            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components', order: 10 },
+            {
+                id: `alib/button`,
+                path: `button`,
+                title: 'Button',
+                channelPath: 'components'
+            }
+        ]);
     });
 
     it('should emit success', async () => {
@@ -361,7 +408,12 @@ describe('#library-builder', () => {
         expect(compileSpy).toHaveBeenCalledWith({
             libraryBuilder: libraryBuilder,
             libraryComponents: [libraryBuilder.components.get(toolkit.path.resolve(libDirPath, 'button'))],
-            changes: []
+            changes: [
+                jasmine.objectContaining({
+                    type: toolkit.fs.HostWatchEventType.Changed,
+                    path: toolkit.path.resolve(libDirPath, './button/button.component.ts')
+                })
+            ]
         });
     });
 

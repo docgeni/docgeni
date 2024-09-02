@@ -34,7 +34,7 @@ let OFFSET = 0;
 export class TocService {
     private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
     private activeLinkSubject$ = new BehaviorSubject<TocLink | null>(null);
-    private destroyed$ = new Subject<TocLink[]>();
+    private destroyed$ = new Subject<TocLink[] | null>();
     private scrollContainer!: HTMLElement & Window;
     public highestLevel!: number;
     public get links$(): Observable<TocLink[]> {
@@ -60,7 +60,7 @@ export class TocService {
         this.linksSubject$.next([]);
         this.activeLinkSubject$.next(null);
         this.highestLevel = 0;
-        this.destroyed$.next();
+        this.destroyed$.next(null);
         this.destroyed$.complete();
     }
 
@@ -119,11 +119,11 @@ export class TocService {
     onScroll() {
         const scrollOffset = this.getScrollOffset();
         let activeItem: TocLink;
-        if (scrollOffset <= OFFSET + 1) {
+        if (scrollOffset! <= OFFSET + 1) {
             activeItem = this.links[0];
         } else {
             const itemOffset = this.links.find(link => {
-                return link.element!.offsetTop >= scrollOffset;
+                return link.element!.offsetTop >= scrollOffset!;
             });
             if (itemOffset) {
                 activeItem = itemOffset;
@@ -150,13 +150,14 @@ export class TocService {
         }
     }
 
-    private getScrollOffset(): number | void {
+    private getScrollOffset(): number {
         if (this.scrollContainer) {
             if (typeof this.scrollContainer.scrollTop !== 'undefined') {
                 return this.scrollContainer.scrollTop + OFFSET;
             } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
                 return this.scrollContainer.pageYOffset + OFFSET;
             }
+            return 0;
         } else {
             return 0;
         }

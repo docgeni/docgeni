@@ -29,7 +29,7 @@ The sorting of channels, categories, pages or components, is in ascending order 
 - Type: `string`
 - Default: `folder name, file name`
 
-The routing of the channel or page, will use `paramCase` nomenclature to convert the folder name or file name by default, the actual access route of the document will bring the path of the category and channel.
+The routing of the channel or page or component, will use `paramCase` nomenclature to convert the folder name or file name by default, the actual access route of the document will bring the path of the category and channel.
 
 ## hidden
 - Type: `boolean`

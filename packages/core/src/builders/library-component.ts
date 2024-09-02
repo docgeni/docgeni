@@ -406,7 +406,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     id: this.name,
                     title,
                     subtitle,
-                    path: this.name,
+                    path: this.meta.path || this.name,
                     importSpecifier: `${this.lib.name}/${this.name}`,
                     examples: this.examples.map(example => example.key),
                     overview: overviewSourceFile && overviewSourceFile.output ? true : false,
@@ -416,7 +416,8 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                     hidden: this.meta.hidden,
                     label: this.meta.label ? this.lib.labels[this.meta.label] : undefined,
                     originPath: overviewSourceFile && overviewSourceFile.relative,
-                    toc: toolkit.utils.isUndefinedOrNull(this.meta.toc) ? 'content' : this.meta.toc
+                    toc: toolkit.utils.isUndefinedOrNull(this.meta.toc) ? 'content' : this.meta.toc,
+                    headings: overviewSourceFile?.headings
                 };
                 this.localeDocItemsMap[locale.key] = componentNav;
             }

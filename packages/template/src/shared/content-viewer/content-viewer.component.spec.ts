@@ -1,5 +1,6 @@
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { createComponentFactory, createHostFactory, Spectator, SpectatorHost, createHttpFactory } from '@ngneat/spectator';
 import { ContentViewerComponent } from './content-viewer.component';
 import { DocgeniBuiltInComponent } from '../../built-in/built-in-component';
@@ -30,14 +31,16 @@ describe('#content-viewer', () => {
     let spectator: Spectator<ContentViewerComponent>;
     const createComponent = createComponentFactory({
         component: ContentViewerComponent,
-        imports: [HttpClientTestingModule],
+        imports: [],
         providers: [
             {
                 provide: CONFIG_TOKEN,
                 useValue: {
                     defaultLocale: 'zh-cn'
                 }
-            }
+            },
+            provideHttpClient(withInterceptorsFromDi()),
+            provideHttpClientTesting()
         ],
         declarations: [MyLabelComponent]
     });
@@ -70,7 +73,7 @@ describe('#content-viewer', () => {
         req.flush('<div>content</div>');
         httpTestingController.verify();
         expect(contentRenderedSpy).not.toHaveBeenCalled();
-        spectator.inject(NgZone).onStable.next();
+        spectator.inject(NgZone).onStable.next(null);
         expect(contentRenderedSpy).toHaveBeenCalled();
         expect(contentRenderedSpy).toHaveBeenCalledWith(spectator.element);
     }));

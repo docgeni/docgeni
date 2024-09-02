@@ -27,7 +27,7 @@ After executing any of the above command, the initial configuration of docgeni w
 - The first step is to select the document site mode: `full` or `lite` (default `lite`)
 - The second step is to enter the document directory (default `docs`)
 
-<img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
+<img class="mb-2" width="90%" style="padding-left: 5%;" src="./assets/images/cli-init.png?4" />
 
 After initialization, use `npm run start:docs` to start the documentation site, and open `http://127.0.0.1:4600` in the browser to access it.
 
@@ -36,7 +36,7 @@ The preview effect of Lite mode is as follows:
 
 # Template repository initialization
 We provide a built-in GitHub template repository [docgeni-template](https://github.com/docgeni/docgeni-template).The template repository uses the `full` mode by default, and has a built-in `alib` component library and some initial configurations.Go to the [template repository homepage](https://github.com/docgeni/docgeni-template),then click the "Use this template" button in the upper right corner.
-<img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
+<img class="mt-2" src="./assets/images/use-docgeni-template.png" />
 
 The preview effect is as follows:
 ![](assets/images/template-preview.png)

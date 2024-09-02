@@ -111,7 +111,7 @@ export class NavigationService {
         let docItem: DocItem;
         for (const item of nav.items!) {
             if (item && this.isCategoryItem(item)) {
-                docItem = this.getNavFirstDocItem(item);
+                docItem = this.getNavFirstDocItem(item as NavigationItem);
             } else {
                 docItem = item as DocItem;
             }
