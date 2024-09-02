@@ -90,7 +90,7 @@ export class NgSourceFile {
     }
 
     public getDefaultExports<TResult>(): TResult {
-        let exports: TResult;
+        let exports: ArgumentInfo;
         ts.forEachChild(this.sourceFile, node => {
             if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
                 exports = getObjectLiteralExpressionProperties(node.expression);

@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.2](https://github.com/docgeni/docgeni/compare/v2.4.0-next.1...v2.4.0-next.2) (2024-08-19)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+# [2.4.0-next.1](https://github.com/docgeni/docgeni/compare/v2.4.0-next.0...v2.4.0-next.1) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+
+### Features
+
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
+
+
+## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+## [2.3.2-next.1](https://github.com/docgeni/docgeni/compare/v2.3.2-next.0...v2.3.2-next.1) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+## [2.3.2-next.0](https://github.com/docgeni/docgeni/compare/v2.3.1...v2.3.2-next.0) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+## [2.3.1](https://github.com/docgeni/docgeni/compare/v2.3.0...v2.3.1) (2024-04-12)
+
+
+### Features
+
+* upgrade ng to 17 ([#530](https://github.com/docgeni/docgeni/issues/530)) ([4e9b483](https://github.com/docgeni/docgeni/commit/4e9b483176e71d068d34b222a6c49ea2a85860f6))
+
+
+
+
+
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+
+### Features
+
+* **ngdoc:** support pipe api doc ([#515](https://github.com/docgeni/docgeni/issues/515)) ([c60e648](https://github.com/docgeni/docgeni/commit/c60e648be1bb824a225f373959486b1d15c7b889))
+
+
+
+
+
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* **template:** show next and pre in root dir ([#509](https://github.com/docgeni/docgeni/issues/509)) ([9d196a1](https://github.com/docgeni/docgeni/commit/9d196a1a8ea3d712d57a0b421ac1610afd7b1af0))
+
+
+
+
+
 # [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
 
 

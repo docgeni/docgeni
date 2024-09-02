@@ -1,9 +1,10 @@
-import { toolkit, fs } from '@docgeni/toolkit';
+import { toolkit } from '@docgeni/toolkit';
+import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
+
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
-import { createTestDocgeniHost } from './docgeni-host';
 import { AsyncSeriesHook, SyncHook } from 'tapable';
 import { DocSourceFile } from '../builders/doc-file';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
@@ -29,7 +30,7 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
     const paths = new DocgeniPaths(options.root, 'docs', 'dist/docgeni-site');
     paths.setSitePaths('.docgeni/site', '.docgeni/site/src');
     const context: DocgeniContext = {
-        host: createTestDocgeniHost(options.initialFiles),
+        host: createTestDocgeniFsHost(options.initialFiles),
         config: {
             componentsDir: '.docgeni/components',
             libs: toolkit.utils.coerceArray(options.libs || []),

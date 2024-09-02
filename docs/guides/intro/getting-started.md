@@ -29,7 +29,7 @@ $ ng add @docgeni/cli
 - 第一步选择文档站点模式: `full`或者`lite`(默认`lite`)
 - 第二步输入文档目录 (默认`docs`)
 
-<img class="mb-2" width="90%" style="padding-left: 5%;" src="https://cdn.pingcode.com/open-sources/docgeni/cli-init.png?4" />
+<img class="mb-2" width="90%" style="padding-left: 5%;" src="./assets/images/cli-init.png?4" />
 
 初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
 
@@ -39,7 +39,7 @@ Lite 模式的预览效果如下：
 # 模板仓储初始化
 我们提供了一个内置的 GitHub 模板仓储 [docgeni-template](https://github.com/docgeni/docgeni-template)。模板仓储默认使用`full`模式，且内置了一个`alib`组件库以及一些初始化配置，进入 [仓储模板首页](https://github.com/docgeni/docgeni-template) 点击右上角 "Use this template" 按钮。
 
-<img class="mt-2" src="https://cdn.pingcode.com/open-sources/docgeni/use-docgeni-template.png" />
+<img class="mt-2" src="./assets/images/use-docgeni-template.png" />
 
 预览效果如下：
 ![](assets/images/template-preview.png)

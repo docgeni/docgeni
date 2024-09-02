@@ -3,6 +3,118 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.2](https://github.com/docgeni/docgeni/compare/v2.4.0-next.1...v2.4.0-next.2) (2024-08-19)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+# [2.4.0-next.1](https://github.com/docgeni/docgeni/compare/v2.4.0-next.0...v2.4.0-next.1) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+
+### Features
+
+* update angular.json use default application builder ([a936b05](https://github.com/docgeni/docgeni/commit/a936b055992ee67cefb1fb5d163307bed3586de6))
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
+
+
+## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+## [2.3.2-next.1](https://github.com/docgeni/docgeni/compare/v2.3.2-next.0...v2.3.2-next.1) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+## [2.3.2-next.0](https://github.com/docgeni/docgeni/compare/v2.3.1...v2.3.2-next.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* **core:** trigger recompile when latest compilation is finished ([fa37adb](https://github.com/docgeni/docgeni/commit/fa37adb1b49dbfe0d5e72799337c36dc3815ca7a))
+* **ngdoc:** cache latest file content, only trigger watcher func when file content changed #OSP-625 ([#542](https://github.com/docgeni/docgeni/issues/542)) ([4f5ee09](https://github.com/docgeni/docgeni/commit/4f5ee09e9544b0d8c8ca696e7b30236601a7145a)), closes [#OSP-625](https://github.com/docgeni/docgeni/issues/OSP-625)
+
+
+
+
+
+## [2.3.1](https://github.com/docgeni/docgeni/compare/v2.3.0...v2.3.1) (2024-04-12)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+
+### Bug Fixes
+
+* **core:** add custom path for component ([87954ae](https://github.com/docgeni/docgeni/commit/87954ae219ca79653fc3cae0b561e4a323b8f15f))
+
+
+
+
+
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+
+### Features
+
+* **core:** export standalone components  from examples module for stack-blitz #INFR-10671 ([#518](https://github.com/docgeni/docgeni/issues/518)) ([abbeffd](https://github.com/docgeni/docgeni/commit/abbeffd586f3ff9852d49d33fe7a2cc253b94e8c)), closes [#INFR-10671](https://github.com/docgeni/docgeni/issues/INFR-10671)
+* **ngdoc:** support pipe api doc ([#515](https://github.com/docgeni/docgeni/issues/515)) ([c60e648](https://github.com/docgeni/docgeni/commit/c60e648be1bb824a225f373959486b1d15c7b889))
+
+
+
+
+
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+**Note:** Version bump only for package @docgeni/core
+
+
+
+
+
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* **core:** set default sort of category to 0 ([c251e82](https://github.com/docgeni/docgeni/commit/c251e82421ff35cafe6b13563f706dd32ee8be8d))
+* **core:** should sort navs of component lib without category ([0f21bb5](https://github.com/docgeni/docgeni/commit/0f21bb5c65890e2dc26c56a3b38d1bc29174b1ca))
+
+
+### Features
+
+* **core:** return headings when build component #INFR-9194 ([4dce242](https://github.com/docgeni/docgeni/commit/4dce2425116d937fc42409174712bae974f609b1)), closes [#INFR-9194](https://github.com/docgeni/docgeni/issues/INFR-9194)
+
+
+
+
+
 # [2.2.0](https://github.com/docgeni/docgeni/compare/v2.1.1...v2.2.0) (2023-05-23)
 
 

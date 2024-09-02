@@ -4,7 +4,8 @@
     "packages/core",
     "packages/cli",
     "packages/template",
-    "packages/ngdoc"
+    "packages/ngdoc",
+    "packages/create-docgeni"
   ],
   "command": {
     "version": {
@@ -23,6 +24,5 @@
     }
   },
   "npmClient": "yarn",
-  "version": "2.2.0",
-  "useWorkspaces": true
+  "version": "2.4.0-next.2"
 }

@@ -1,8 +1,8 @@
-import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
-import * as path from 'path';
 import { toolkit } from '@docgeni/toolkit';
-import { Project, Node } from 'ts-morph';
+import * as path from 'path';
+import { Project } from 'ts-morph';
 import ts from 'typescript';
+import { NgDocParser, NgEntryItemDoc, NgMethodDoc } from '../src';
 import { createTestNgDocParser } from './testing';
 
 const EXCLUDE_DIRS: string[] = [];
@@ -88,7 +88,8 @@ describe('ng-parser', () => {
                         default: null,
                         tags: {}
                     }
-                ]
+                ],
+                methods: []
             }
         ] as unknown) as NgEntryItemDoc[]);
     });
@@ -141,6 +142,12 @@ describe('ng-parser', () => {
             })
             export class ButtonComponent extends Base {
                 @Input() param2: string;
+
+                @Input('thySize') param3: string;
+
+                @Input({ transform: numberAttribute })  param4: number;
+
+                @Input({ alias: 'thyDisabled', transform: booleanAttribute }) param5: boolean;
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
@@ -182,6 +189,45 @@ describe('ng-parser', () => {
                         name: 'string',
                         options: null,
                         kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param3',
+                    aliasName: 'thySize',
+                    type: {
+                        name: 'string',
+                        options: null,
+                        kindName: 'StringKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param4',
+                    aliasName: '',
+                    type: {
+                        name: 'number',
+                        options: null,
+                        kindName: 'NumberKeyword'
+                    },
+                    description: '',
+                    default: null,
+                    tags: {}
+                },
+                {
+                    kind: 'Input',
+                    name: 'param5',
+                    aliasName: 'thyDisabled',
+                    type: {
+                        name: 'boolean',
+                        options: null,
+                        kindName: 'BooleanKeyword'
                     },
                     description: '',
                     default: null,
@@ -292,6 +338,43 @@ describe('ng-parser', () => {
                     description: '',
                     default: true,
                     tags: {}
+                }
+            ]);
+        });
+
+        it('should parse methods and properties', () => {
+            const sourceText = `
+            @Input() param1 = false;
+
+            method1() {}
+
+            /**
+             * This is public method
+             * @public
+            **/
+            method2() {}
+            `;
+            const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
+                '/button/button.component.ts': createButtonComponent(sourceText)
+            });
+            const docs = ngDocParser.parse('/button/*');
+            expect(docs[0].properties).toEqual([
+                {
+                    kind: 'Input',
+                    name: 'param1',
+                    aliasName: '',
+                    type: { name: 'boolean', options: null, kindName: undefined },
+                    description: '',
+                    default: false,
+                    tags: {}
+                }
+            ]);
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'method2',
+                    parameters: [],
+                    returnValue: { type: 'void', description: '' },
+                    description: 'This is public method'
                 }
             ]);
         });
@@ -926,6 +1009,127 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                     }
                 ]
             });
+        });
+    });
+
+    describe('pipe', () => {
+        it('should parse pipe methods', () => {
+            const { ngDocParser } = createTestNgDocParser('button', {
+                '/dialog/dialog.ts': `
+                /**
+                 * 把文本转换成全大写形式
+                 * @name uppercase
+                 * @order 10
+                 */
+                @Pipe({
+                    name: 'uppercase',
+                    standalone: true
+                })
+                export class UpperCasePipe implements PipeTransform {
+                    constructor() {}
+                
+                    /**
+                     * @param {string} value 输入值
+                     * @returns  {boolean}
+                     */
+                    transform(value: string): boolean {                   
+                        return true;
+                    }
+                }`
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs.length).toBe(1);
+            expect(docs[0]).toEqual({
+                type: 'pipe',
+                name: 'uppercase',
+                description: '把文本转换成全大写形式',
+                order: 10,
+                pure: true,
+                standalone: true,
+                methods: [
+                    {
+                        name: 'transform',
+                        parameters: [
+                            {
+                                name: 'value',
+                                description: '输入值',
+                                type: 'string'
+                            }
+                        ],
+                        returnValue: {
+                            type: 'boolean',
+                            description: ''
+                        },
+                        description: ''
+                    }
+                ]
+            });
+        });
+
+        it('should get multiple methods for overload', () => {
+            const sourceText = `
+            @Pipe({
+                name: 'lowercase',
+                standalone: true
+            })
+            export class LowerCasePipe implements PipeTransform {
+                constructor() {}
+            
+                /**
+                 * @description transform 重载方法1
+                 * @param input1 这是一个参数
+                 */
+                transform(input1: number): void;
+                /**
+                 * @description transform 重载方法2
+                 * @param input1
+                 * @param input2
+                 */
+                transform(input1: number, input2: number): void;
+                transform(input1: number, input2?: number): void {}
+            }`;
+
+            const { ngDocParser } = createTestNgDocParser('dialog', {
+                '/dialog/dialog.ts': sourceText
+            });
+            const docs = ngDocParser.parse('/dialog/*');
+            expect(docs[0].methods).toEqual([
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '这是一个参数',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法1'
+                },
+                {
+                    name: 'transform',
+                    parameters: [
+                        {
+                            name: 'input1',
+                            description: '',
+                            type: 'number'
+                        },
+                        {
+                            name: 'input2',
+                            description: '',
+                            type: 'number'
+                        }
+                    ],
+                    returnValue: {
+                        type: 'void',
+                        description: ''
+                    },
+                    description: 'transform 重载方法2'
+                }
+            ] as NgMethodDoc[]);
         });
     });
 });

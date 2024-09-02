@@ -40,7 +40,9 @@
     }
 
     .menu-item {
+        display: block;
         padding: 0px $dg-sidebar-menu-item-space-x * 0.5 0 $dg-sidebar-menu-item-space-x;
+
         &.active {
             padding-right: $dg-sidebar-menu-item-space-x * 0.5 - 3px;
         }

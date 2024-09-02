@@ -258,16 +258,16 @@ Docgeni 支持组件示例直接在 StackBlitz 平台展示，StackBlitz 在线�
 ```json
 {
     "dependencies": { 
-        "@angular/animations": "~10.2.4",
-        "@angular/cdk": "^10.2.7",
-        "@angular/common": "~10.2.4",
-        "@angular/compiler": "~10.2.4",
-        "@angular/core": "~10.2.4",
-        "@angular/forms": "~10.2.4",
-        "@angular/platform-browser": "~10.2.4",
-        "@angular/platform-browser-dynamic": "~10.2.4",
-        "rxjs": "~6.5.4",
-        "zone.js": "~0.10.2",
+        "@angular/animations": "~18.2.0",
+        "@angular/cdk": "^18.2.0",
+        "@angular/common": "~18.2.0",
+        "@angular/compiler": "~18.2.0",
+        "@angular/core": "~18.2.0",
+        "@angular/forms": "~18.2.0",
+        "@angular/platform-browser": "~18.2.0",
+        "@angular/platform-browser-dynamic": "~18.2.0",
+        "rxjs": "~7.8.1",
+        "zone.js": "~0.14.10",
         "@docgeni/alib": "0.0.1"
     }
 }
@@ -283,7 +283,7 @@ Docgeni 组件 API 支持三种模式，分别为: `'compatible' | 'manual' | 'a
 - `compatible`: 兼容模式，如果存在 API 定义文件配置优先，否则通过注释自动生成
 
 ## 自动生成 API
-`automatic`或者`compatible`模式下，Docgeni 会加载组件所有的 TypeScript 文件，动态读取 Angular 组件/指令/服务以及标记为公开的类/接口，并通过 JS Doc 注释生成对应的 API 文档。
+`automatic`或者`compatible`模式下，Docgeni 会加载组件所有的 TypeScript 文件，动态读取 Angular 组件/指令/服务/管道以及标记为公开的类/接口，并通过 JS Doc 注释生成对应的 API 文档。
 详细配置参考：[API 注释](configuration/api)。
 
 比如定义如下组件:

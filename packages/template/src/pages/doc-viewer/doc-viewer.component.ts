@@ -33,7 +33,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
-    private destroyed = new Subject();
+    private destroyed = new Subject<void>();
 
     get channel() {
         return this.navigationService.channel;
@@ -96,7 +96,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     template: ''
 })
 export class DocViewerHomeComponent implements OnDestroy {
-    destroy$ = new Subject();
+    destroy$ = new Subject<void>();
 
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
         navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {

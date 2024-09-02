@@ -1,0 +1,36 @@
+{
+  "name": "Docgeni Documentation",
+  "short_name": "docgeni.org",
+  "background_color": "#6698ff",
+  "theme_color": "#6698ff",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/favicons/favicon-194x194.png",
+      "sizes": "194x194 512x512",
+      "type": "image/png"
+    },
+
+    {
+      "src": "images/favicons/favicon-144x144-maskable.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "shortcuts": [
+    {
+      "name": "Go to Guides",
+      "short_name": "Guides",
+      "description": "Go to the guides reference page.",
+      "url": "/guides?utm_source=homescreen"
+    },
+    {
+      "name": "Go to Configuration",
+      "short_name": "Configuration",
+      "description": "Go to the configuration",
+      "url": "/configuration?utm_source=homescreen"
+    }
+  ]
+}

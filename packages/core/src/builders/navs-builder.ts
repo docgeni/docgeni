@@ -41,7 +41,9 @@ export class NavsBuilder {
             let componentDocItems: ComponentDocItem[] = [];
             localeNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...navsForLocale);
             this.docgeni.librariesBuilder.libraries.forEach(libraryBuilder => {
-                componentDocItems = componentDocItems.concat(libraryBuilder.generateLocaleNavs(locale.key, localeNavsMap[locale.key]));
+                componentDocItems = componentDocItems.concat(
+                    libraryBuilder.generateDocsAndNavsForLocale(locale.key, localeNavsMap[locale.key])
+                );
             });
 
             await this.docgeni.host.writeFile(

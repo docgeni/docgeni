@@ -25,7 +25,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     @HostBinding('class.dg-d-none') hideToc = true;
 
-    private destroyed = new Subject();
+    private destroyed = new Subject<void>();
 
     private urlFragment = '';
 

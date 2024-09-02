@@ -3,6 +3,108 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.2](https://github.com/docgeni/docgeni/compare/v2.4.0-next.1...v2.4.0-next.2) (2024-08-19)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+# [2.4.0-next.1](https://github.com/docgeni/docgeni/compare/v2.4.0-next.0...v2.4.0-next.1) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+# [2.4.0-next.0](https://github.com/docgeni/docgeni/compare/v2.3.2...v2.4.0-next.0) (2024-08-18)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+## [2.3.2](https://github.com/docgeni/docgeni/compare/v2.3.2-next.1...v2.3.2) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+## [2.3.2-next.1](https://github.com/docgeni/docgeni/compare/v2.3.2-next.0...v2.3.2-next.1) (2024-04-23)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+## [2.3.2-next.0](https://github.com/docgeni/docgeni/compare/v2.3.1...v2.3.2-next.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* **ngdoc:** cache latest file content, only trigger watcher func when file content changed #OSP-625 ([#542](https://github.com/docgeni/docgeni/issues/542)) ([4f5ee09](https://github.com/docgeni/docgeni/commit/4f5ee09e9544b0d8c8ca696e7b30236601a7145a)), closes [#OSP-625](https://github.com/docgeni/docgeni/issues/OSP-625)
+
+
+
+
+
+## [2.3.1](https://github.com/docgeni/docgeni/compare/v2.3.0...v2.3.1) (2024-04-12)
+
+
+### Features
+
+* **ngdoc:** support parse alias in input params #INFR-12159 ([0cc36cf](https://github.com/docgeni/docgeni/commit/0cc36cf36493de7cc5c1404d21289ea02582f527)), closes [#INFR-12159](https://github.com/docgeni/docgeni/issues/INFR-12159)
+* upgrade ng to 17 ([#530](https://github.com/docgeni/docgeni/issues/530)) ([4e9b483](https://github.com/docgeni/docgeni/commit/4e9b483176e71d068d34b222a6c49ea2a85860f6))
+
+
+
+
+
+# [2.3.0](https://github.com/docgeni/docgeni/compare/v2.3.0-next.0...v2.3.0) (2023-12-27)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+# [2.3.0-next.0](https://github.com/docgeni/docgeni/compare/v2.2.2...v2.3.0-next.0) (2023-12-05)
+
+
+### Features
+
+* **ngdoc:** pipe api doc default public ([8e83c1b](https://github.com/docgeni/docgeni/commit/8e83c1bee2b2e60b3359216c043525db02b6c75a))
+* **ngdoc:** support pipe api doc ([#515](https://github.com/docgeni/docgeni/issues/515)) ([c60e648](https://github.com/docgeni/docgeni/commit/c60e648be1bb824a225f373959486b1d15c7b889))
+
+
+
+
+
+## [2.2.2](https://github.com/docgeni/docgeni/compare/v2.2.1...v2.2.2) (2023-11-21)
+
+**Note:** Version bump only for package @docgeni/ngdoc
+
+
+
+
+
+## [2.2.1](https://github.com/docgeni/docgeni/compare/v2.2.0...v2.2.1) (2023-10-25)
+
+
+### Features
+
+* **ngdoc:** use [@public](https://github.com/public) mark methods of component as public [#504](https://github.com/docgeni/docgeni/issues/504) ([8000f12](https://github.com/docgeni/docgeni/commit/8000f12ddf7b395d787675259d6e74c08ab27825))
+
+
+
+
+
 ## [2.1.1](https://github.com/docgeni/docgeni/compare/v2.1.0...v2.1.1) (2023-04-24)
 
 **Note:** Version bump only for package @docgeni/ngdoc

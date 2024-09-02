@@ -1,9 +1,15 @@
-import { PathFragment, virtualFs } from '@angular-devkit/core';
-import { Observable } from 'rxjs';
+import { getSystemPath, PathFragment, virtualFs } from '@angular-devkit/core';
+import { firstValueFrom, Observable } from 'rxjs';
 import { DocgeniHostWatchOptions } from './node-host';
 import { FileSystemWatcher, HostWatchEvent } from './watcher';
 import { normalize, resolve } from '../path';
 import { matchGlob } from '../utils';
+import { VfsHost } from './host';
+import { copyFile, copy } from '../filesystem';
+
+export interface DocgeniFsCopyOptions {
+    exclude?: string | string[];
+}
 
 export interface GetDirsOrFilesOptions {
     /** Include .dot files in normal matches */
@@ -23,7 +29,8 @@ export interface DocgeniFsHost {
     isFile(path: string): Promise<boolean>;
     watch(path: string, options?: DocgeniHostWatchOptions): Observable<HostWatchEvent>;
     watchAggregated(path: string | string[], options?: DocgeniHostWatchOptions): Observable<HostWatchEvent[]>;
-    copy(src: string, dest: string): Promise<void>;
+    copyFile(src: string, dest: string): Promise<void>;
+    copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void>;
     delete(path: string): Promise<void>;
     list(path: string): Promise<PathFragment[]>;
     getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions): Promise<string[]>;
@@ -32,7 +39,7 @@ export interface DocgeniFsHost {
 }
 
 export class DocgeniFsHostImpl implements DocgeniFsHost {
-    constructor(public readonly host: virtualFs.Host) {}
+    constructor(public readonly host: virtualFs.Host | VfsHost) {}
 
     async readFile(path: string): Promise<string> {
         const data = await this.host.read(normalize(path)).toPromise();
@@ -76,22 +83,32 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
     }
 
     async stat(path: string) {
-        return this.host.stat(normalize(path)).toPromise();
+        return firstValueFrom(this.host.stat(normalize(path)));
     }
 
-    async copy(src: string, dest: string): Promise<void> {
+    async copyFile(src: string, dest: string): Promise<void> {
+        await copy(getSystemPath(normalize(src)), getSystemPath(normalize(dest)), {
+            overwrite: true
+        });
+    }
+
+    async copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void> {
+        if (options?.exclude && matchGlob(src, options.exclude)) {
+            return;
+        }
         const stat = await this.stat(src);
         if (!stat) {
             throw new Error(`${src} is not exist`);
         }
         if (stat.isFile()) {
-            const data = await this.host.read(normalize(src)).toPromise();
-            await this.host.write(normalize(dest), data).toPromise();
+            await this.copyFile(src, dest);
         } else {
             const result = await this.list(src);
-            for (const item of result) {
-                await this.copy(resolve(normalize(src), item), resolve(normalize(dest), item));
-            }
+            await Promise.all(
+                result.map(item => {
+                    return this.copy(resolve(normalize(src), item), resolve(normalize(dest), item), options);
+                })
+            );
         }
     }
 
@@ -152,6 +169,10 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
             }
         }
         return result;
+    }
+
+    async mkdir(path: string): Promise<void> {
+        return (this.host as VfsHost).mkdir(normalize(path));
     }
 }
 

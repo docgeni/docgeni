@@ -1,4 +1,4 @@
-<div class="dg-page-link" *ngIf="docPages.pre && docPages.pre.channelPath">
+<div class="dg-page-link" *ngIf="docPages.pre && preRouterLink">
   <a [routerLink]="[preRouterLink]">
     <div class="dg-page-link-icon">
       <dg-icon iconName="arrowLeft"></dg-icon>
@@ -13,7 +13,7 @@
     </div>
   </a>
 </div>
-<div class="dg-page-link" *ngIf="docPages.next && docPages.next.channelPath">
+<div class="dg-page-link" *ngIf="docPages.next && nextRouterLink">
   <a [routerLink]="[nextRouterLink]">
     <div class="dg-page-link-icon">
       <dg-icon iconName="arrowRight"></dg-icon>

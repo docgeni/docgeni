@@ -2,7 +2,7 @@
 category: general
 title: Foo
 subtitle: 测试
-order: 2
+order: 10
 ---
 
 <alert>Foo 组件，测试组件库文档的示例组件。</alert>

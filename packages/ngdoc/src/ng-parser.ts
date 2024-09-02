@@ -1,38 +1,38 @@
-import { ts } from './typescript';
-import { toolkit, debug, fs } from '@docgeni/toolkit';
+import { debug, fs, toolkit } from '@docgeni/toolkit';
+import { NgParserHost, createNgParserHost } from './ng-parser-host';
 import {
-    NgDirectiveDoc,
-    NgPropertyDoc,
-    NgEntryItemDoc,
-    NgDocItemType,
-    NgParsedDecorator,
-    NgMethodDoc,
-    NgServiceDoc,
-    ClassLikeDoc
-} from './types';
-import {
-    getNgDecorator,
-    getNgPropertyDecorator,
-    getDirectiveMeta,
-    getNgDocItemType,
-    getPropertyKind,
-    getNgPropertyOptions,
-    getPropertyValue,
-    serializeSymbol,
-    getDocTagsBySymbol,
-    getDocTagsBySignature,
-    serializeMethodParameterSymbol,
-    declarationIsPublic,
-    hasPrivateTag,
     DocTagResult,
-    getTextByJSDocTagInfo,
-    hasPublicTag,
-    getHeritageClauses,
-    getSymbolDeclaration,
+    declarationIsPublic,
+    getDirectiveMeta,
+    getDocTagsBySignature,
+    getDocTagsBySymbol,
     getHeritageDeclarations,
-    parseJsDocTagsToDocTagResult
+    getNgDecorator,
+    getNgDocItemType,
+    getNgPropertyDecorator,
+    getNgPropertyOptions,
+    getPipeMeta,
+    getPropertyKind,
+    getPropertyValue,
+    getSymbolDeclaration,
+    getTextByJSDocTagInfo,
+    hasPrivateTag,
+    hasPublicTag,
+    serializeMethodParameterSymbol,
+    serializeSymbol
 } from './parser';
-import { createNgParserHost, NgParserHost } from './ng-parser-host';
+import {
+    ClassLikeDoc,
+    NgDirectiveDoc,
+    NgDocItemType,
+    NgEntryItemDoc,
+    NgMethodDoc,
+    NgParsedDecorator,
+    NgPipeDoc,
+    NgPropertyDoc,
+    NgServiceDoc
+} from './types';
+import { ts } from './typescript';
 
 export interface NgDocParserOptions {
     tsConfigPath?: string;
@@ -121,6 +121,7 @@ export class NgDocParser {
                                     docs.push(this.parseServiceDoc(context, symbol, ngDecorator));
                                     break;
                                 case 'pipe':
+                                    docs.push(this.parsePipeDoc(context, symbol, ngDecorator));
                                     break;
                                 default:
                                     throw new Error(`${type} is not support.`);
@@ -157,6 +158,21 @@ export class NgDocParser {
         return directiveDoc;
     }
 
+    private parsePipeDoc(context: ParserSourceFileContext, symbol: ts.Symbol, ngDecorator: NgParsedDecorator) {
+        const declaration = symbol.valueDeclaration as ts.ClassDeclaration;
+        const description = serializeSymbol(symbol, context.checker);
+        const [tags, localeTags] = getDocTagsBySymbol(symbol);
+        const directiveDoc: NgPipeDoc = {
+            type: 'pipe',
+            description: description.description,
+            order: tags.order ? parseInt(getTextByJSDocTagInfo(tags.order, ''), 10) : Number.MAX_SAFE_INTEGER,
+            ...getPipeMeta(ngDecorator.argumentInfo),
+            name: getTextByJSDocTagInfo(tags.name, getPipeMeta(ngDecorator.argumentInfo)?.name)
+        };
+        directiveDoc.methods = this.parseDeclarationMethods(context, declaration);
+        return directiveDoc;
+    }
+
     private parseDirectiveDoc(
         context: ParserSourceFileContext,
         type: NgDocItemType,
@@ -175,6 +191,7 @@ export class NgDocParser {
             ...getDirectiveMeta(ngDecorator.argumentInfo)
         };
         directiveDoc.properties = this.parseDirectiveProperties(context, declaration);
+        directiveDoc.methods = this.parseDeclarationMethods(context, declaration, { explicitPublic: true });
         return directiveDoc;
     }
 
@@ -260,38 +277,27 @@ export class NgDocParser {
         return properties;
     }
 
-    private parseDeclarationMethods(context: ParserSourceFileContext, classDeclaration: ts.ClassDeclaration) {
-        const methods: NgPropertyDoc[] = [];
+    private parseDeclarationMethods(
+        context: ParserSourceFileContext,
+        classDeclaration: ts.ClassDeclaration,
+        options: { explicitPublic: boolean } = { explicitPublic: false }
+    ) {
+        const methods: NgMethodDoc[] = [];
         const parsedSymbols = new WeakMap<ts.Symbol, boolean>();
         ts.forEachChild(classDeclaration, (node: ts.Node) => {
             if (ts.isMethodDeclaration(node) && declarationIsPublic(node)) {
                 const symbol = context.checker.getSymbolAtLocation(node.name);
+
+                // 显示公开的函数才会添加
+                if (options && options.explicitPublic) {
+                    const [tags] = getDocTagsBySymbol(symbol);
+                    if (!hasPublicTag(tags)) {
+                        return;
+                    }
+                }
+
                 if (symbol && !parsedSymbols.has(symbol)) {
                     parsedSymbols.set(symbol, true);
-                    // const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
-                    // const symbolDescription = serializeSymbol(symbol, context.checker);
-                    // const tagInfos = ts.getJSDocTags(node).map(tag => {
-                    //     return { name: tag.tagName.getFullText(), text: [{ text: tag.comment.toString(), kind: 'text' }] };
-                    // });
-                    // const [tags] = parseJsDocTagsToDocTagResult(tagInfos);
-                    // const descriptionText = ts.displayPartsToString(tags.description.text);
-                    // const method = {
-                    //     name: symbolDescription.name,
-                    //     parameters: node.parameters.map(parameter => {
-                    //         const paramName = parameter.name.getText();
-                    //         return {
-                    //             name: paramName,
-                    //             comment: ts.displayPartsToString(tags.param[paramName]?.text),
-                    //             type: parameter.type.getFullText()
-                    //         };
-                    //     }),
-                    //     returnValue: {
-                    //         type: context.checker.typeToString(type)
-                    //         // description: ts.displayPartsToString(tags.return.text)
-                    //     },
-                    //     description: descriptionText || symbolDescription.comment || ''
-                    // };
-                    // methods.push(method);
                     const type = context.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
                     const symbolDescription = serializeSymbol(symbol, context.checker);
                     const signatures = context.checker.getSignaturesOfType(type, ts.SignatureKind.Call);
@@ -318,7 +324,7 @@ export class NgDocParser {
         const heritageDeclarations = getHeritageDeclarations(classDeclaration, context.checker);
         if (heritageDeclarations && heritageDeclarations.length) {
             heritageDeclarations.forEach(declaration => {
-                methods.unshift(...this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration));
+                methods.unshift(...this.parseDeclarationMethods(context, declaration as ts.ClassDeclaration, options));
             });
         }
         return methods;
@@ -342,7 +348,16 @@ export class NgDocParser {
 
     private getNgPropertyAliasName(decorator: NgParsedDecorator): string {
         if (decorator.argumentInfo && decorator.argumentInfo[0]) {
-            return decorator.argumentInfo[0] as string;
+            const argumentInfo = decorator.argumentInfo[0];
+            if (typeof argumentInfo === 'object') {
+                if ((argumentInfo as { alias: string }).alias) {
+                    return (argumentInfo as { alias: string }).alias;
+                } else {
+                    return '';
+                }
+            } else {
+                return decorator.argumentInfo[0] as string;
+            }
         } else {
             return '';
         }
