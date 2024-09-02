@@ -81,7 +81,7 @@ module.exports = {
     ],
     defaultLocale: 'zh-cn',
     defaultTheme: 'light',
-    enableThemes: false,
+    enableThemes: true,
     sitemap: {
         host: 'https://docgeni.org',
     },
