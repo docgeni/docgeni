@@ -1,8 +1,9 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
 import { toolkit } from '@docgeni/toolkit';
 import { createTestDocgeniHost, expectThrowAsync } from '../src/testing';
+import { DocgeniTheme } from '../src/interfaces';
 import { DocgeniHost } from '../src/docgeni-host';
-import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
+import { normalize, getSystemPath } from '@angular-devkit/core';
 
 describe('#config', () => {
     let docgeniHost: DocgeniHost;
@@ -44,6 +45,8 @@ describe('#config', () => {
                 publicDir: '.docgeni/public',
                 locales: [{ name: 'en-us', key: 'en-us' }],
                 defaultLocale: 'en-us',
+                defaultTheme: 'light',
+                enableThemes: false,
                 libs: [],
                 navs: [],
                 toc: 'content'
@@ -68,6 +71,8 @@ describe('#config', () => {
                     { key: 'zh-tw', name: '繁体' }
                 ],
                 defaultLocale: 'zh-tw',
+                defaultTheme: DocgeniTheme.dark,
+                enableThemes: true,
                 libs: [
                     {
                         name: 'alib',

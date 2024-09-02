@@ -1,13 +1,10 @@
-import { toolkit, fs } from '@docgeni/toolkit';
-import { getSystemPath, normalize } from '@angular-devkit/core';
+import { toolkit } from '@docgeni/toolkit';
+import { normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
+import { DocgeniConfig, DocgeniLibrary, DocgeniTheme } from '../interfaces';
 import { createTestDocgeniHost } from './docgeni-host';
-import { AsyncSeriesHook, SyncHook } from 'tapable';
-import { DocSourceFile } from '../builders/doc-file';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
-import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
 import { Docgeni } from '../docgeni';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
@@ -44,6 +41,8 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
                 }
             ],
             defaultLocale: 'en-us',
+            defaultTheme: DocgeniTheme.light,
+            enableThemes: false,
             siteDir: '.docgeni/site',
             outputDir: 'dist/docgeni-site',
             publicDir: '.docgeni/public',
