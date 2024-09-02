@@ -1,6 +1,6 @@
 .dg-btn {
     display: inline-block;
-    color: $dg-body-color;
+    color: $dg-white;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
@@ -8,7 +8,6 @@
     background-color: transparent;
     border: $dg-btn-border-width solid transparent;
     @include dg-button-size($dg-btn-padding-y, $dg-btn-padding-x, $dg-btn-font-size, $dg-btn-line-height, $dg-btn-border-radius);
-    // @include transition($btn-transition);
 
     &:focus,
     &.focus {
@@ -22,15 +21,6 @@
         opacity: $dg-btn-disabled-opacity;
         @include dg-box-shadow(none);
     }
-
-    // &:not(:disabled):not(.disabled):active,
-    // &:not(:disabled):not(.disabled).active {
-    //     @include dg-box-shadow($dg-btn-active-box-shadow);
-
-    //     &:focus {
-    //         @include box-shadow($dg-btn-focus-box-shadow, $dg-btn-active-box-shadow);
-    //     }
-    // }
 }
 
 // Future-proof disabling of clicks on `<a>` elements
@@ -39,13 +29,10 @@ fieldset:disabled a.btn {
     pointer-events: none;
 }
 
-//
 // Alternate buttons
-//
-
 @each $color, $value in $dg-theme-colors {
     .dg-btn.dg-btn-outline-#{$color} {
-        @include dg-button-outline-variant($value, lighten($value, 5%), lighten($value, 5%));
+        @include dg-button-outline-variant($value, $value, $value);
     }
     .dg-btn.dg-btn-#{$color} {
         @include dg-button-variant($value, $value);
@@ -119,20 +106,6 @@ fieldset:disabled a.btn {
         font-size: $dg-btn-font-size-xlg;
     }
 }
-
-//
-// Block button
-//
-
-// .dg-btn-block {
-//     display: block;
-//     width: 100%;
-
-//     // Vertically space out multiple block buttons
-//     + .btn-block {
-//         margin-top: $dg-btn-block-spacing-y;
-//     }
-// }
 
 // Specificity overrides
 input[type='submit'],

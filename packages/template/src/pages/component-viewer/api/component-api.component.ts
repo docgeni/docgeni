@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, HostBinding, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { ApiDeclaration } from '../../../interfaces';
@@ -11,8 +11,8 @@ import { TocService } from '../../../services/toc.service';
     templateUrl: './component-api.component.html',
     providers: [TocService],
     host: {
-        class: 'dg-component-api'
-    }
+        class: 'dg-component-api',
+    },
 })
 export class ComponentApiComponent implements OnInit {
     apiDeclarations!: ApiDeclaration[];
@@ -23,7 +23,7 @@ export class ComponentApiComponent implements OnInit {
         private http: HttpClient,
         private ngZone: NgZone,
         private elementRef: ElementRef,
-        private tocService: TocService
+        private tocService: TocService,
     ) {}
 
     ngOnInit(): void {
@@ -31,10 +31,10 @@ export class ComponentApiComponent implements OnInit {
         //     `api-docs/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`
         // );
         const apiUrl = this.global.getAssetsContentPath(
-            `api-docs/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.json`
+            `api-docs/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.json`,
         );
         this.http.get<ApiDeclaration[]>(apiUrl).subscribe({
-            next: data => {
+            next: (data) => {
                 this.apiDeclarations = data;
                 this.ngZone.onStable.pipe(take(1)).subscribe(() => {
                     this.ngZone.run(() => {
@@ -43,7 +43,7 @@ export class ComponentApiComponent implements OnInit {
                         }
                     });
                 });
-            }
+            },
         });
     }
 }

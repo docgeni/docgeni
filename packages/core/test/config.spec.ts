@@ -2,13 +2,14 @@ import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
 import { toolkit, fs } from '@docgeni/toolkit';
 import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
 import { expectThrowAsync } from '../src/testing';
-import { virtualFs, normalize, getSystemPath } from '@angular-devkit/core';
+import { normalize, getSystemPath } from '@angular-devkit/core';
+import { DocgeniTheme } from '../src/interfaces';
 
 describe('#config', () => {
     let docgeniHost: fs.DocgeniFsHost;
     beforeEach(() => {
         docgeniHost = createTestDocgeniFsHost({
-            'docs/getting-started.md': 'Getting Started'
+            'docs/getting-started.md': 'Getting Started',
         });
     });
 
@@ -28,8 +29,8 @@ describe('#config', () => {
             expect(docgeni.config.locales).toEqual([
                 {
                     name: DEFAULT_CONFIG.defaultLocale,
-                    key: DEFAULT_CONFIG.defaultLocale
-                }
+                    key: DEFAULT_CONFIG.defaultLocale,
+                },
             ]);
 
             expect(docgeni.config).toEqual({
@@ -44,9 +45,11 @@ describe('#config', () => {
                 publicDir: '.docgeni/public',
                 locales: [{ name: 'en-us', key: 'en-us' }],
                 defaultLocale: 'en-us',
+                defaultTheme: 'light',
+                enableThemes: false,
                 libs: [],
                 navs: [],
-                toc: 'content'
+                toc: 'content',
             });
         });
 
@@ -65,9 +68,11 @@ describe('#config', () => {
                 locales: [
                     { key: 'en-us', name: 'EN' },
                     { key: 'zh-cn', name: '中文' },
-                    { key: 'zh-tw', name: '繁体' }
+                    { key: 'zh-tw', name: '繁体' },
                 ],
                 defaultLocale: 'zh-tw',
+                defaultTheme: DocgeniTheme.dark,
+                enableThemes: true,
                 libs: [
                     {
                         name: 'alib',
@@ -80,21 +85,21 @@ describe('#config', () => {
                                 title: '通用',
                                 locales: {
                                     'en-us': {
-                                        title: 'General'
-                                    }
-                                }
+                                        title: 'General',
+                                    },
+                                },
                             },
                             {
                                 id: 'layout',
                                 title: '布局',
                                 locales: {
                                     'en-us': {
-                                        title: 'Layout'
-                                    }
-                                }
-                            }
-                        ]
-                    }
+                                        title: 'Layout',
+                                    },
+                                },
+                            },
+                        ],
+                    },
                 ],
                 navs: [
                     {
@@ -103,25 +108,25 @@ describe('#config', () => {
                         lib: 'alib',
                         locales: {
                             'en-us': {
-                                title: 'Components'
-                            }
-                        }
+                                title: 'Components',
+                            },
+                        },
                     },
                     {
                         title: 'GitHub',
                         path: 'https://github.com/docgeni/docgeni',
-                        isExternal: true
-                    }
+                        isExternal: true,
+                    },
                 ],
                 footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode',
-                toc: 'menu'
+                toc: 'menu',
             };
             const docgeni = new Docgeni({
-                config: customConfig
+                config: customConfig,
             });
 
             expect(docgeni.config).toEqual({
-                ...customConfig
+                ...customConfig,
             });
         });
 
@@ -131,16 +136,16 @@ describe('#config', () => {
                     locales: [
                         {
                             key: 'en-us',
-                            name: 'EN'
-                        }
-                    ]
-                }
+                            name: 'EN',
+                        },
+                    ],
+                },
             });
             expect(docgeni.config.locales).toEqual([
                 {
                     key: 'en-us',
-                    name: 'EN'
-                }
+                    name: 'EN',
+                },
             ]);
         });
     });
@@ -153,11 +158,11 @@ describe('#config', () => {
                         locales: [
                             {
                                 key: 'en-us',
-                                name: 'EN'
-                            }
+                                name: 'EN',
+                            },
                         ],
-                        defaultLocale: 'zh-cn'
-                    }
+                        defaultLocale: 'zh-cn',
+                    },
                 }).verifyConfig();
             }, `default locale(zh-cn) is not in locales`);
         });
@@ -170,12 +175,12 @@ describe('#config', () => {
                         locales: [
                             {
                                 key: 'en-us',
-                                name: 'EN'
-                            }
+                                name: 'EN',
+                            },
                         ],
-                        defaultLocale: 'zh-cn'
+                        defaultLocale: 'zh-cn',
                     },
-                    host: docgeniHost
+                    host: docgeniHost,
                 });
                 await docgeni.verifyConfig();
             }, `default locale(zh-cn) is not in locales`);
@@ -184,21 +189,24 @@ describe('#config', () => {
         it('should throw error when doc dir has not exists', async () => {
             const notFoundPath = 'not-found/path';
             const expectFullPath = normalize(`${process.cwd()}/${notFoundPath}`);
-            await expectThrowAsync(async () => {
-                const docgeni = new Docgeni({
-                    config: {
-                        docsDir: notFoundPath
-                    },
-                    host: docgeniHost
-                });
-                await docgeni.verifyConfig();
-            }, `docs dir(${notFoundPath}) has not exists, full path: ${getSystemPath(expectFullPath)}`);
+            await expectThrowAsync(
+                async () => {
+                    const docgeni = new Docgeni({
+                        config: {
+                            docsDir: notFoundPath,
+                        },
+                        host: docgeniHost,
+                    });
+                    await docgeni.verifyConfig();
+                },
+                `docs dir(${notFoundPath}) has not exists, full path: ${getSystemPath(expectFullPath)}`,
+            );
             docgeniHost.writeFile(`${process.cwd()}/${notFoundPath}/index.md`, 'content');
             await new Docgeni({
                 config: {
-                    docsDir: notFoundPath
+                    docsDir: notFoundPath,
                 },
-                host: docgeniHost
+                host: docgeniHost,
             }).verifyConfig();
         });
 
@@ -220,9 +228,9 @@ describe('#config', () => {
             await expectThrowAsync(async () => {
                 const docgeni = new Docgeni({
                     config: {
-                        mode: 'full1' as any
+                        mode: 'full1' as any,
                     },
-                    host: docgeniHost
+                    host: docgeniHost,
                 });
                 await docgeni.verifyConfig();
             }, `mode must be full or lite, current is full1`);

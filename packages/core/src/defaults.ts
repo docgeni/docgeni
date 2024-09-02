@@ -1,4 +1,4 @@
-import { DocgeniConfig } from './interfaces';
+import { DocgeniConfig, DocgeniTheme } from './interfaces';
 
 export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     title: 'Docgeni',
@@ -12,5 +12,7 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     publicDir: '.docgeni/public',
     locales: [],
     defaultLocale: 'en-us',
-    toc: 'content'
+    enableThemes: false,
+    defaultTheme: DocgeniTheme.light,
+    toc: 'content',
 };

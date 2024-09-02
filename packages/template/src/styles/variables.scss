@@ -1,24 +1,30 @@
 $dg-primary: #6698ff !default;
 $dg-primary-light: #246eff;
-$dg-success: #66c060 !default; // 2dbcff
-$dg-info: #2dbcff !default;
-$dg-warning: #ffc442 !default;
-$dg-danger: #ff5b57 !default;
-
-$dg-gray-80: #f3f3f3 !default;
-$dg-gray-100: #f6f8fa !default;
-$dg-gray-200: #eee !default;
-$dg-gray-210: #e9e9e9 !default;
-$dg-gray-300: #ddd !default;
-$dg-gray-400: #cacaca !default;
-$dg-gray-500: #aaa !default;
-$dg-gray-600: #888 !default;
-$dg-gray-700: #666 !default;
-$dg-gray-800: #333 !default;
-$dg-body-color: #333 !default;
+$dg-success: #73d897 !default;
+$dg-info: #5dcfff !default;
+$dg-warning: #ffcd5d !default;
+$dg-danger: #ff7575 !default;
 $dg-white: #fff !default;
 $dg-black: #000 !default;
-$dg-body-bg: $dg-white !default;
+
+$dg-gray-10: var(--dg-gray-10) !default;
+$dg-gray-80: var(--dg-gray-80) !default;
+$dg-gray-90: var(--dg-gray-90) !default;
+$dg-gray-100: var(--dg-gray-100) !default;
+$dg-gray-200: var(--dg-gray-200) !default;
+$dg-gray-300: var(--dg-gray-300) !default;
+$dg-gray-400: var(--dg-gray-400) !default;
+$dg-gray-500: var(--dg-gray-500) !default;
+$dg-gray-600: var(--dg-gray-600) !default;
+$dg-gray-700: var(--dg-gray-700) !default;
+$dg-gray-800: var(--dg-gray-800) !default;
+
+$dg-box-shadow-1: var(--dg-box-shadow-1); // navbar 阴影
+$dg-box-shadow-2: var(--dg-box-shadow-2); // 下拉框阴影
+
+$dg-bg-default: $dg-gray-10 !default;
+$dg-body-color: $dg-gray-800 !default;
+$dg-body-bg: $dg-gray-10 !default;
 
 $dg-yiq-contrasted-threshold: 180 !default;
 $dg-yiq-text-dark: $dg-gray-800 !default;
@@ -27,7 +33,7 @@ $dg-enable-gradients: false !default;
 $dg-enable-shadows: true !default;
 $dg-enable-rounded: true !default;
 
-$dg-border-color: #eee !default;
+$dg-border-color: $dg-gray-200 !default;
 $dg-border-radius: 4px !default;
 
 $dg-theme-colors: () !default;
@@ -40,7 +46,7 @@ $dg-theme-colors: map-merge(
         'warning': $dg-warning,
         'danger': $dg-danger,
         'light': $dg-gray-300,
-        'dark': $dg-gray-700
+        'dark': $dg-gray-700,
     ),
     $dg-theme-colors
 );
@@ -50,7 +56,7 @@ $dg-grid-breakpoints: (
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px
+    xl: 1200px,
 ) !default;
 
 $dg-spacer: 1rem !default;
@@ -60,34 +66,43 @@ $dg-spacers: map-merge(
     (
         0: 0,
         1: (
-            $dg-spacer * 0.25
+            $dg-spacer * 0.25,
         ),
         2: (
-            $dg-spacer * 0.5
+            $dg-spacer * 0.5,
         ),
         3: $dg-spacer,
         4: (
-            $dg-spacer * 1.5
+            $dg-spacer * 1.5,
         ),
         5: (
-            $dg-spacer * 3
-        )
+            $dg-spacer * 3,
+        ),
     ),
     $dg-spacers
 );
 
 $dg-line-height: 1.5715 !default;
 
-$dg-code-bg-color: #f3f5f7 !default;
+$dg-code-bg-color: $dg-gray-90 !default;
 
 // link
 $dg-link-hover-decoration: none !default;
 
 // font
-// $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-//         'Segoe UI Symbol';
-$dg-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Helvetica Neue, Noto Sans, Noto Sans CJK SC,
-    Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif !default;
+$dg-font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    PingFang SC,
+    Helvetica Neue,
+    Noto Sans,
+    Noto Sans CJK SC,
+    Microsoft Yahei,
+    Arial,
+    Hiragino Sans GB,
+    sans-serif !default;
 $dg-font-size-base: 0.875rem !default; // 14px
 $dg-font-size-md: 1rem !default; // 16px
 $dg-font-size-lg: 1.25rem !default; // 20px
@@ -100,13 +115,16 @@ $dg-font-size-xlg: 1.5rem !default; // 24px
 $dg-navbar-height: 60px !default;
 
 // default theme
-$dg-navbar-background-default: $dg-white;
-$dg-navbar-box-shadow-default: 0 8px 24px -2px rgba(0, 0, 0, 0.05);
+$dg-navbar-background-default: $dg-bg-default;
+$dg-navbar-box-shadow-default: $dg-box-shadow-1;
 $dg-navbar-color-default: $dg-body-color;
 
 // angular theme
 $dg-navbar-background-angular: #3f51b5 !default;
-$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-box-shadow-angular:
+    0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
 $dg-hero-background: #dae6f3 !default;
@@ -150,6 +168,5 @@ $dg-btn-line-height-xlg: $dg-line-height !default;
 $dg-btn-border-radius-xlg: 4px !default;
 $dg-btn-disabled-opacity: 0.6 !default;
 $dg-btn-box-shadow: none !default;
-// $dg-btn-box-shadow: inset 0 1px 0 rgba($dg-white, 0.15), 0 1px 1px rgba($dg-black, 0.075) !default;
 $dg-btn-focus-box-shadow: none !default;
 $dg-btn-focus-width: 0.2rem !default;

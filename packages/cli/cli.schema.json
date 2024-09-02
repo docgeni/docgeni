@@ -226,6 +226,14 @@
     "defaultLocale": {
       "type": "string",
       "description": "Default locale"
+    },
+    "defaultTheme": {
+      "type": "string",
+      "description": "Default theme"
+    },
+    "enableThemes": {
+      "type": "boolean",
+      "description": "Enable themes"
     }
   }
 }

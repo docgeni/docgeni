@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
-import { LocationStrategy, ViewportScroller } from '@angular/common';
+import { LocationStrategy } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,7 +10,7 @@ let OFFSET = 60;
 
 @Component({
     selector: 'dg-toc',
-    templateUrl: './toc.component.html'
+    templateUrl: './toc.component.html',
 })
 export class TableOfContentsComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-toc`) isToc = true;
@@ -34,12 +34,12 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         global: GlobalContext,
         private locationStrategy: LocationStrategy,
-        public tocService: TocService
+        public tocService: TocService,
     ) {
         if (global.config.mode === 'lite') {
             OFFSET = 0;
         }
-        this.router.events.pipe(takeUntil(this.destroyed)).subscribe(event => {
+        this.router.events.pipe(takeUntil(this.destroyed)).subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 const rootUrl = this.locationStrategy.path(false);
                 if (rootUrl !== this.rootUrl) {
@@ -48,19 +48,19 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.route.fragment.pipe(takeUntil(this.destroyed)).subscribe(fragment => {
+        this.route.fragment.pipe(takeUntil(this.destroyed)).subscribe((fragment) => {
             this.urlFragment = fragment as string;
             this.tocService.scrollToAnchor(this.urlFragment);
         });
 
-        this.tocService.links$.pipe(takeUntil(this.destroyed)).subscribe(links => {
+        this.tocService.links$.pipe(takeUntil(this.destroyed)).subscribe((links) => {
             this.hideToc = !links || links.length === 0;
             if (!this.hideToc) {
                 this.tocService.scrollToAnchor(this.urlFragment);
             }
         });
 
-        this.tocService.activeLink$.pipe(takeUntil(this.destroyed)).subscribe(activeLink => {
+        this.tocService.activeLink$.pipe(takeUntil(this.destroyed)).subscribe((activeLink) => {
             this.activeLink = activeLink;
         });
     }

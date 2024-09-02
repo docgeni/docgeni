@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, NgModuleFactory, OnInit, Output, Type, ɵNgModuleFactory } from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
-import { ExampleLoader, ExampleLoadResult } from '../../services/example-loader';
+import { ExampleLoader } from '../../services/example-loader';
 
 @Component({
     selector: 'dg-example-renderer, [dgExampleRenderer]',
-    templateUrl: './example-renderer.component.html'
+    templateUrl: './example-renderer.component.html',
 })
 export class ExampleRendererComponent implements OnInit {
     /** Component type for the current example. */
@@ -35,7 +35,7 @@ export class ExampleRendererComponent implements OnInit {
     ngOnInit(): void {}
 
     load(name: string) {
-        this.exampleLoader.load(name).then(result => {
+        this.exampleLoader.load(name).then((result) => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
             this.componentType = result.componentType;
             this.exampleLoadSuccess.emit(result.example);

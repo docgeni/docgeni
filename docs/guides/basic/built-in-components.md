@@ -64,7 +64,6 @@ order: 50
 <alert type="danger">Danger</alert>
 
 ```html
-
 <alert type="primary">Primary</alert>
 <alert type="info">Info</alert>
 <alert type="success">Success</alert>
@@ -105,7 +104,7 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
     ├── module.ts
 ```
 自定义组件需要继承`DocgeniBuiltInComponent`基类并在构造函数注入`ElementRef`并通过调用`supper(elementRef)`传入父类。
-<alert type="info">Markdown 中使用的渲染组件默认取文件中定义的第一个组件，使用的选择器为组件的 selector, 如需自定义，可以通过 `export default { selector: '', component: xx}` 自定义设置。</alert>
+<alert type="info">Markdown 中使用的渲染组件默认取文件中定义的第一个组件，使用的选择器为组件的 selector，如需自定义，可以通过 `export default { selector: '', component: xx}` 自定义设置。</alert>
 
 ```ts
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';

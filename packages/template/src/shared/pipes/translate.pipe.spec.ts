@@ -1,5 +1,4 @@
 import { GlobalContext } from './../../services/global-context';
-import { TestBed } from '@angular/core/testing';
 import { TranslatePipe } from './translate.pipe';
 
 describe('translate OVERVIEW ans EXAMPLE', () => {

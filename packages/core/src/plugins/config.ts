@@ -7,7 +7,7 @@ const PLUGIN_NAME = 'SiteConfigPlugin';
 
 export class ConfigPlugin implements Plugin {
     apply(docgeni: DocgeniContext): void {
-        docgeni.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+        docgeni.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
             compilation.hooks.buildSucceed.tap(PLUGIN_NAME, () => {
                 const siteConfig: DocgeniSiteConfig = {
                     title: docgeni.config.title,
@@ -17,14 +17,16 @@ export class ConfigPlugin implements Plugin {
                     baseHref: docgeni.config.baseHref,
                     locales: docgeni.config.locales,
                     defaultLocale: docgeni.config.defaultLocale,
+                    defaultTheme: docgeni.config.defaultTheme,
+                    enableThemes: docgeni.config.enableThemes,
                     logoUrl: docgeni.config.logoUrl,
                     repoUrl: docgeni.config.repoUrl,
                     footer: docgeni.config.footer,
-                    algolia: docgeni.config.algolia
+                    algolia: docgeni.config.algolia,
                 };
                 const outputConfigPath = toolkit.path.resolve(docgeni.paths.absSiteContentPath, 'config.ts');
                 const content = toolkit.template.compile('config.hbs', {
-                    siteConfig: JSON.stringify(siteConfig, null, 4)
+                    siteConfig: JSON.stringify(siteConfig, null, 4),
                 });
                 compilation.addEmitFiles(outputConfigPath, content);
             });
