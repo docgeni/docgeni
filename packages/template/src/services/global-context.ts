@@ -68,7 +68,7 @@ export class GlobalContext {
         if (cacheTheme && [DocgeniTheme.light, DocgeniTheme.dark].includes(cacheTheme)) {
             return cacheTheme;
         } else {
-            return this.config.defaultTheme as DocgeniTheme;
+            return (this.config.defaultTheme as DocgeniTheme) || DocgeniTheme.light;
         }
     }
 
