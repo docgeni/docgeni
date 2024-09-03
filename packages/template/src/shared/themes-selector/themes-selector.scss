@@ -36,4 +36,12 @@
             }
         }
     }
+
+    .dg-icon {
+        &.system {
+            svg {
+                fill: none;
+            }
+        }
+    }
 }

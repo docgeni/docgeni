@@ -13,6 +13,8 @@ export class ThemesSelectorComponent implements OnInit {
 
     isDropdownOpen = false;
 
+    docgeniTheme = DocgeniTheme;
+
     theme!: DocgeniTheme;
 
     themesMap = {
@@ -45,5 +47,14 @@ export class ThemesSelectorComponent implements OnInit {
     selectTheme(theme: DocgeniTheme) {
         this.theme = theme;
         this.global.setTheme(this.theme);
+    }
+
+    toggleTheme() {
+        if (this.theme === DocgeniTheme.dark) {
+            this.selectTheme(DocgeniTheme.light);
+        } else if (this.theme === DocgeniTheme.light) {
+            this.selectTheme(DocgeniTheme.dark);
+        } else {
+        }
     }
 }

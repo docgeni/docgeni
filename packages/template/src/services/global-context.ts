@@ -105,15 +105,17 @@ export class GlobalContext {
 
     public setTheme(theme: DocgeniTheme) {
         this.theme = theme;
+        window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
 
-        if ((theme === DocgeniTheme.system && window.matchMedia('(prefers-color-scheme: dark)').matches) || theme === DocgeniTheme.dark) {
+        if (
+            (theme === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+            theme === DocgeniTheme.dark
+        ) {
             document.documentElement.setAttribute('theme', DocgeniTheme.dark);
             document.documentElement.style.setProperty('color-scheme', 'dark');
-            window.localStorage.setItem(DOCGENI_THEME_KEY, DocgeniTheme.dark);
         } else {
             document.documentElement.removeAttribute('theme');
             document.documentElement.style.removeProperty('color-scheme');
-            window.localStorage.setItem(DOCGENI_THEME_KEY, DocgeniTheme.light);
         }
     }
 
