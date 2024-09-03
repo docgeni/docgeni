@@ -57,10 +57,10 @@
     }
 }
 
-.dg-theme-default {
+.dg-navbar-theme-default {
     @include dg-locales-selector-theme(inherit, rgba($color: $dg-text-color, $alpha: 0.8));
 }
 
-.dg-theme-angular {
+.dg-navbar-theme-angular {
     @include dg-locales-selector-theme($dg-white, rgba($color: $dg-white, $alpha: 0.8));
 }

@@ -148,7 +148,6 @@
 @mixin dg-navbar-theme($background-color, $box-shadow, $color) {
     background-color: $background-color;
     box-shadow: $box-shadow;
-    color: $color;
 
     .nav {
         a {
@@ -166,7 +165,7 @@
     }
 }
 
-.dg-theme-angular {
+.dg-navbar-theme-angular {
     .dg-navbar {
         @include dg-navbar-theme($dg-navbar-background-angular, $dg-navbar-box-shadow-angular, $dg-navbar-color-angular);
 
@@ -181,10 +180,19 @@
                 }
             }
         }
+
+        .action-items {
+            .action-icon {
+                color: $dg-white;
+                &:hover,
+                &.active {
+                    background-color: hsla(0, 0%, 100%, 0.15);
+                }
+            }
+        }
     }
 }
-
-.dg-theme-default {
+@mixin dg-navbar-theme-default() {
     .dg-navbar {
         @include dg-navbar-theme($dg-navbar-background-default, $dg-navbar-box-shadow-default, $dg-navbar-color-default);
 
@@ -200,5 +208,15 @@
                 }
             }
         }
+    }
+}
+
+.dg-navbar-theme-default {
+    @include dg-navbar-theme-default();
+}
+
+:root[theme='dark'] {
+    .dg-navbar-theme-angular {
+        @include dg-navbar-theme-default();
     }
 }

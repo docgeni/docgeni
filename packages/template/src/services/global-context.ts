@@ -72,7 +72,7 @@ export class GlobalContext {
             this.config.mode = cacheMode as DocgeniMode;
         }
 
-        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-theme-${this.config.theme}`);
+        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-navbar-theme-${this.config.theme}`);
         if (this.config.repoUrl) {
             const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
             if (pattern && pattern.length === 3) {
@@ -103,14 +103,18 @@ export class GlobalContext {
         }
     }
 
+    private isDarkTheme() {
+        return (
+            (this.theme === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+            this.theme === DocgeniTheme.dark
+        );
+    }
+
     public setTheme(theme: DocgeniTheme) {
         this.theme = theme;
         window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
 
-        if (
-            (theme === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-            theme === DocgeniTheme.dark
-        ) {
+        if (this.isDarkTheme()) {
             document.documentElement.setAttribute('theme', DocgeniTheme.dark);
             document.documentElement.style.setProperty('color-scheme', 'dark');
         } else {

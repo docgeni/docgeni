@@ -17,9 +17,17 @@ toc: menu
 - 类型：`default`｜`angular`
 - 默认：`default`
 
-主题设置：
+导航主题设置：
 - `default`: 默认主题，导航背景色为白色
 - `angular`：`Angular`官网风格，默认导航背景色为: <code style="color: #3f51b5">#3f51b5</code>，可以修改 SCSS 颜色变量修改
+
+
+
+## switchTheme
+- 类型：`boolean`
+- 默认：`false`
+
+是否开启整体主题切换功能，开启后，支持 `亮色主题`、`暗黑主题`、`跟随系统` 三种主题的切换。
 
 
 ## title
@@ -101,12 +109,6 @@ Angular 自定义站点的项目名称，组件库开发除了默认的文档和
 
 支持的多语言，如果不需要支持多种语言，无需配置，会只生成 `defaultLocale` 的语言。
 
-
-## switchTheme
-- 类型：`boolean`
-- 默认：`false`
-
-是否开启主题切换功能
 
 ## navs
 - 类型：`Array<NavigationItem>`
