@@ -1,20 +1,42 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, HostBinding, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 
 @Component({
     selector: 'dg-locales-selector',
-    templateUrl: './locales-selector.component.html'
+    templateUrl: './locales-selector.component.html',
 })
 export class LocalesSelectorComponent implements OnInit {
     @HostBinding('class.dg-locales-selector') isNavbar = true;
 
     locale!: string;
 
-    constructor(public global: GlobalContext, public navigationService: NavigationService, private location: Location) {}
+    isDropdownOpen = false;
+
+    constructor(
+        public global: GlobalContext,
+        public navigationService: NavigationService,
+        private location: Location,
+    ) {}
 
     ngOnInit(): void {
         this.locale = this.global.locale;
+    }
+
+    @HostListener('mouseenter')
+    openDropdown() {
+        this.isDropdownOpen = true;
+    }
+
+    @HostListener('mouseleave')
+    closeDropdown() {
+        this.isDropdownOpen = false;
+    }
+
+    selectLocale(locale: string) {
+        this.locale = locale;
+        this.isDropdownOpen = false;
+        this.localeModelChange();
     }
 
     localeModelChange() {

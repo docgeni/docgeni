@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ViewChildren, TemplateRef, AfterViewInit, ElementRef, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding } from '@angular/core';
 import { BUILTIN_SVGS } from './svgs';
 import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
     selector: 'dg-icon',
-    templateUrl: './icon.component.html'
+    templateUrl: './icon.component.html',
 })
 export class IconComponent implements OnInit, AfterViewInit {
     @HostBinding('class.dg-icon') isIcon = true;
@@ -12,7 +13,10 @@ export class IconComponent implements OnInit, AfterViewInit {
         this.setSvg(name);
     }
 
-    constructor(private elementRef: ElementRef<HTMLElement>, private domSanitizer: DomSanitizer) {}
+    constructor(
+        private elementRef: ElementRef<HTMLElement>,
+        private domSanitizer: DomSanitizer,
+    ) {}
 
     ngOnInit(): void {}
 

@@ -14,15 +14,15 @@ module.exports = {
             lib: 'alib',
             locales: {
                 'en-us': {
-                    title: 'Components'
-                }
-            }
+                    title: 'Components',
+                },
+            },
         },
         {
             title: 'GitHub',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
-        }
+            isExternal: true,
+        },
     ],
     libs: [
         {
@@ -36,32 +36,33 @@ module.exports = {
                     title: '通用',
                     locales: {
                         'en-us': {
-                            title: 'General'
-                        }
-                    }
+                            title: 'General',
+                        },
+                    },
                 },
                 {
                     id: 'layout',
                     title: '布局',
                     locales: {
                         'en-us': {
-                            title: 'Layout'
-                        }
-                    }
-                }
-            ]
-        }
+                            title: 'Layout',
+                        },
+                    },
+                },
+            ],
+        },
     ],
     locales: [
         {
             key: 'zh-cn',
-            name: 'ZH-CN'
+            name: 'ZH-CN',
         },
         {
             key: 'en-us',
-            name: 'EN'
-        }
+            name: 'EN',
+        },
     ],
     defaultLocale: 'en-us',
-    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self'
+    switchTheme: true,
+    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self',
 };

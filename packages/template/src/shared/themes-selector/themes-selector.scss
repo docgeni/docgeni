@@ -1,7 +1,7 @@
-.dg-locales-selector {
+.dg-themes-selector {
     position: relative;
 
-    .locales-container {
+    .themes-container {
         background-color: transparent;
         position: absolute;
         top: 100%;
@@ -9,7 +9,7 @@
         width: 80px;
     }
 
-    .locales-menu {
+    .themes-menu {
         width: 100%;
         margin-top: 8px;
         padding: 8px 0;
@@ -19,7 +19,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
 
-        .locale {
+        .theme {
             cursor: pointer;
             font-size: $dg-font-size-base;
             padding: 0 8px;
@@ -36,31 +36,12 @@
             }
         }
     }
-}
 
-@mixin dg-locales-selector-theme($color, $hover-color) {
-    .dg-locales-selector {
-        select {
-            color: $color;
-        }
-        .dg-selector-arrow {
-            border-color: $color;
-        }
-        &:hover {
-            select {
-                color: $hover-color;
-            }
-            .dg-selector-arrow {
-                border-color: $hover-color;
+    .dg-icon {
+        &.system {
+            svg {
+                fill: none;
             }
         }
     }
-}
-
-.dg-navbar-theme-default {
-    @include dg-locales-selector-theme(inherit, rgba($color: $dg-text-color, $alpha: 0.8));
-}
-
-.dg-navbar-theme-angular {
-    @include dg-locales-selector-theme($dg-white, rgba($color: $dg-white, $alpha: 0.8));
 }

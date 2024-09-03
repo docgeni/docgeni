@@ -1,6 +1,7 @@
 export * from './doc-meta/doc-meta.component';
 export * from './doc-pages-links/doc-pages-links.component';
 export * from './locales-selector/locales-selector.component';
+export * from './themes-selector/themes-selector.component';
 export * from './logo/logo.component';
 export * from './pipes/hero.pipe';
 export * from './pipes/nav.pipe';

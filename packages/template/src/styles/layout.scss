@@ -16,8 +16,6 @@
     display: flex;
     flex-direction: column;
     flex: auto;
-    // height: 0;
-    // overflow: auto;
     .dg-sidebar {
         flex: 0 0 auto;
         width: 300px;
@@ -33,7 +31,6 @@
         flex: auto;
         padding: 30px 50px 0 50px;
         margin-left: 300px;
-        // max-height: 100vh;
 
         // 单个页面，没有频道，也就没有左侧菜单，间距为 0
         &--single {
@@ -43,7 +40,9 @@
 
     .dg-doc-viewer-backdrop {
         position: absolute;
-        transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s 0.4s;
+        transition:
+            background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+            z-index 0s 0.4s;
         background-color: transparent;
         z-index: -1;
         top: 0;
@@ -69,14 +68,11 @@
 
         .dg-sidebar {
             z-index: 2;
-            transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s;
+            transition:
+                left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                background 0.4s;
             left: -300px;
         }
-
-        // .dg-content {
-        //     margin-left: 0px;
-        //     padding: 0;
-        // }
 
         .dg-doc-viewer {
             margin-left: 0px;

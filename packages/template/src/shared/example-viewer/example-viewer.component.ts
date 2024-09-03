@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Type, NgModuleFactory, ɵNgModuleFactory } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
@@ -18,15 +18,15 @@ const nameOrdersMap: Record<string, number> = {
     HTML: 1,
     TS: 2,
     SCSS: 3,
-    CSS: 4
+    CSS: 4,
 };
 
 @Component({
     selector: 'dg-example-viewer',
     templateUrl: './example-viewer.component.html',
     host: {
-        '[attr.id]': 'example?.key'
-    }
+        '[attr.id]': 'example?.key',
+    },
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;
@@ -73,7 +73,7 @@ export class ExampleViewerComponent implements OnInit {
         private exampleLoader: ExampleLoader,
         private globalContext: GlobalContext,
         private http: HttpClient,
-        private stackblitzExampleService: StackblitzExampleService
+        private stackblitzExampleService: StackblitzExampleService,
     ) {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
@@ -85,19 +85,19 @@ export class ExampleViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.exampleLoader.load(this.name).then(result => {
+        this.exampleLoader.load(this.name).then((result) => {
             this.exampleModuleType = result.moduleType;
             this.exampleComponentType = result.componentType;
             this.example = result.example;
             const rootDir = this.globalContext.getAssetsContentPath(
-                `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`
+                `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`,
             );
 
             this.exampleTabs = this.example.sourceFiles
-                .map(file => {
+                .map((file) => {
                     return {
                         name: this.transformFileName(file.name, this.example.name),
-                        path: `${rootDir}/${file.highlightedPath}`
+                        path: `${rootDir}/${file.highlightedPath}`,
                     };
                 })
                 // The order we expect is TS > HTML > SCSS | CSS
@@ -121,29 +121,29 @@ export class ExampleViewerComponent implements OnInit {
     openStackBlitz() {
         forkJoin({
             examplesSources: this.http.get<{ path: string; content: string }[]>(
-                `assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`
+                `assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`,
             ),
-            sharedFiles: this.http.get<{ path: string; content: string }[]>(`assets/stack-blitz/bundle.json`)
+            sharedFiles: this.http.get<{ path: string; content: string }[]>(`assets/stack-blitz/bundle.json`),
         }).subscribe(
             (result: { examplesSources: { path: string; content: string }[]; sharedFiles: { path: string; content: string }[] }) => {
                 const { examplesSources, sharedFiles } = result;
                 this.stackblitzExampleService.open(
                     [
-                        ...examplesSources.map(item => {
+                        ...examplesSources.map((item) => {
                             return {
                                 ...item,
-                                path: `src/${item.path}`
+                                path: `src/${item.path}`,
                             };
                         }),
-                        ...sharedFiles
+                        ...sharedFiles,
                     ],
                     this.example.module,
                     {
                         name: this.example.componentName,
-                        selector: this.example.key
-                    }
+                        selector: this.example.key,
+                    },
                 );
-            }
+            },
         );
     }
 }

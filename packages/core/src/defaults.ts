@@ -12,5 +12,6 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     publicDir: '.docgeni/public',
     locales: [],
     defaultLocale: 'en-us',
-    toc: 'content'
+    switchTheme: false,
+    toc: 'content',
 };

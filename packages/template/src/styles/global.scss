@@ -18,7 +18,8 @@ html {
 body {
     font-family: $dg-font-family;
     font-size: $dg-font-size-base;
-    color: $dg-body-color;
+    color: $dg-text-color;
+    background-color: $dg-bg-color;
     line-height: $dg-line-height;
 }
 

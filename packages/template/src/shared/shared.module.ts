@@ -29,6 +29,7 @@ import { SearchComponent } from './search/search.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { IsNgContentChildKindPipe } from './pipes/ng-kind.pipe';
 import { PropertyNamePipe } from './pipes/property-name.pipe';
+import { ThemesSelectorComponent } from './themes-selector/themes-selector.component';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -43,6 +44,7 @@ const COMPONENTS = [
     LabelComponent,
     TableOfContentsComponent,
     LocalesSelectorComponent,
+    ThemesSelectorComponent,
     AssetsContentPathPipe,
     LogoComponent,
     CopyComponent,
@@ -56,13 +58,13 @@ const COMPONENTS = [
     DocMetaComponent,
     DocPagesLinksComponent,
     SearchComponent,
-    HighlightPipe
+    HighlightPipe,
 ];
 @NgModule({
     declarations: [...COMPONENTS],
     exports: [CommonModule, FormsModule, RouterModule, ...COMPONENTS],
     imports: [CommonModule, FormsModule, RouterModule],
-    providers: [provideHttpClient(withInterceptorsFromDi())]
+    providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class DocgeniSharedModule {}
 
@@ -83,5 +85,5 @@ export {
     AssetsContentPathPipe,
     IsModeFullPipe,
     IsModeLitePipe,
-    HighlightPipe
+    HighlightPipe,
 };

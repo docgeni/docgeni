@@ -4,13 +4,13 @@ import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
-import { GlobalContext, NavigationService } from '../../services/public-api';
+import { NavigationService } from '../../services/public-api';
 import { TocService } from '../../services/toc.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 
 @Component({
     selector: 'dg-doc-viewer',
-    templateUrl: './doc-viewer.component.html'
+    templateUrl: './doc-viewer.component.html',
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
@@ -44,14 +44,14 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         private router: Router,
         private navigationService: NavigationService,
         private pageTitle: PageTitleService,
-        private tocService: TocService
+        private tocService: TocService,
     ) {}
 
     ngOnInit(): void {
         if (this.route.snapshot.data) {
             this.isSingle = this.route.snapshot.data.single;
         }
-        this.route.paramMap.subscribe(params => {
+        this.route.paramMap.subscribe((params) => {
             const id = params.get('id');
             // component doc
             if (id) {
@@ -74,7 +74,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
         combineLatest([this.navigationService.docItem$, this.tocService.links$])
             .pipe(takeUntil(this.destroyed))
-            .subscribe(result => {
+            .subscribe((result) => {
                 this.hasContentToc = result[0]!.toc === 'content' && result[1].length > 0;
             });
     }
@@ -93,13 +93,13 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
 @Component({
     selector: 'doc-viewer-home',
-    template: ''
+    template: '',
 })
 export class DocViewerHomeComponent implements OnDestroy {
     destroy$ = new Subject<void>();
 
     constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
-        navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe(docItem => {
+        navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe((docItem) => {
             if (docItem) {
                 let redirectTo = './empty';
                 if (docItem.overview) {

@@ -103,7 +103,7 @@ assets/content
 ```
 
 ## 第四步：修改入口 HTML 和样式
-需要修改生成站点的入口`index.html`和`styles.scss`,`index.html`中的`app-root`修改为`dg-root`，`style.scss`引入`@docgeni/template/styles/index.scss`。
+需要修改生成站点的入口`index.html`和`styles.scss`，`index.html`中的`app-root`修改为`dg-root`，`style.scss`引入`@docgeni/template/styles/index.scss`。
 
 <alert type="warning">注意：如果运行时报 TypeScript 相关的错误，则需在`tsconfig.app.json`文件中`compilerOptions`配置中设置`"strict": false`。</alert>
 

@@ -1,5 +1,5 @@
 ---
 order: 2
-background: '#f6f8fa'
+background: 'var(--dg-bg-color)'
 className: 'bg-custom-example'
 ---

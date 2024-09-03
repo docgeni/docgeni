@@ -1,0 +1,11 @@
+<button type="button" class="action-icon" [ngClass]="{ active: !!isDropdownOpen }" (click)="toggleTheme()">
+  <dg-icon [iconName]="themesMap[theme]?.icon" [ngClass]="{ system: theme === docgeniTheme.system }"></dg-icon>
+</button>
+
+<div *ngIf="!!isDropdownOpen" class="themes-container">
+  <div class="themes-menu">
+    <div *ngFor="let item of themes" class="theme" [ngClass]="{ active: item.key === theme }" (click)="selectTheme(item.key)">
+      {{ item.name }}
+    </div>
+  </div>
+</div>

@@ -226,6 +226,10 @@
     "defaultLocale": {
       "type": "string",
       "description": "Default locale"
+    },
+    "switchTheme": {
+      "type": "boolean",
+      "description": "Whether to enable the theme switching function"
     }
   }
 }

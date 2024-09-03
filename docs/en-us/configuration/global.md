@@ -17,9 +17,15 @@ It's used to set the document display mode. The default is lite mode(left menu +
 - Type: `default`｜`angular`
 - Default: `default`
 
-Theme settings:
+Navbar Theme settings:
 - `default`: default theme, navigation background color is white
 - `angular`：`Angular` official website style, default navigation background color is: <code style="color: #3f51b5">#3f51b5</code>, SCSS color variables can be modified to change the navigation background color
+
+## switchTheme
+- Type: `boolean`
+- Default: `false`
+
+Whether to enable the overall theme switching function. When enabled, it supports switching between three themes: `Light Theme`, `Dark Theme`, and `Follow System`.
 
 ## title
 
@@ -100,6 +106,7 @@ Default multi-language.
 - Default: `[]`
 
 Supported multi-language, if you don't need to support multiple languages, no configuration, only the `defaultLocale` language will be generated.
+
 
 ## navs
 - Type: `Array<NavigationItem>`

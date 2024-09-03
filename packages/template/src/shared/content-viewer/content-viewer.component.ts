@@ -1,20 +1,16 @@
 import {
     Component,
     OnInit,
-    Input,
     ElementRef,
-    HostBinding,
     ApplicationRef,
     ComponentFactoryResolver,
     Injector,
     ViewContainerRef,
     NgZone,
-    Output,
-    EventEmitter,
     OnDestroy,
     Type,
     ChangeDetectorRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
@@ -29,8 +25,8 @@ import { TocService } from '../../services/toc.service';
     template: 'Loading...',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        class: 'dg-doc-content'
-    }
+        class: 'dg-doc-content',
+    },
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     private portalHosts: DomPortalOutlet[] = [];
@@ -44,7 +40,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         private viewContainerRef: ViewContainerRef,
         private ngZone: NgZone,
         private tocService: TocService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
     ) {
         super(http);
     }
@@ -54,7 +50,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     updateDocument(content: string) {
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
-        getBuiltInComponents().forEach(item => {
+        getBuiltInComponents().forEach((item) => {
             this.loadComponents(item.selector, item.component, true);
         });
 
@@ -81,7 +77,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
             const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector, [
-                element.childNodes as any
+                element.childNodes as any,
             ]);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
             const exampleViewerRef = portalHost.attach<any>(examplePortal, replace);
@@ -109,7 +105,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     }
 
     private clearLiveExamples() {
-        this.portalHosts.forEach(h => h.dispose());
+        this.portalHosts.forEach((h) => h.dispose());
         this.portalHosts = [];
     }
 
