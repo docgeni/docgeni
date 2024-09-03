@@ -25,11 +25,6 @@ $dg-text-color: var(--dg-text-color) !default; // 主文字色
 $dg-box-shadow-1: var(--dg-box-shadow-1); // navbar 阴影
 $dg-box-shadow-2: var(--dg-box-shadow-2); // 下拉框阴影
 
-// @deprecated Use `$dg-bg-color` instead
-$dg-body-bg: $dg-bg-color !default;
-// @deprecated Use `$dg-text-color` instead
-$dg-body-color: $dg-text-color !default;
-
 $dg-yiq-contrasted-threshold: 180 !default;
 $dg-yiq-text-dark: $dg-gray-800 !default;
 $dg-yiq-text-light: $dg-white !default;

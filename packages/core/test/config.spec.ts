@@ -45,8 +45,7 @@ describe('#config', () => {
                 publicDir: '.docgeni/public',
                 locales: [{ name: 'en-us', key: 'en-us' }],
                 defaultLocale: 'en-us',
-                defaultTheme: 'light',
-                enableThemes: false,
+                switchTheme: false,
                 libs: [],
                 navs: [],
                 toc: 'content',
@@ -71,8 +70,7 @@ describe('#config', () => {
                     { key: 'zh-tw', name: '繁体' },
                 ],
                 defaultLocale: 'zh-tw',
-                defaultTheme: DocgeniTheme.dark,
-                enableThemes: true,
+                switchTheme: true,
                 libs: [
                     {
                         name: 'alib',

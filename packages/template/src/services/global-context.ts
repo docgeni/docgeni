@@ -63,15 +63,6 @@ export class GlobalContext {
         }
     }
 
-    private getTheme(): DocgeniTheme {
-        const cacheTheme = window.localStorage.getItem(DOCGENI_THEME_KEY) as DocgeniTheme;
-        if (cacheTheme && [DocgeniTheme.light, DocgeniTheme.dark].includes(cacheTheme)) {
-            return cacheTheme;
-        } else {
-            return (this.config.defaultTheme as DocgeniTheme) || DocgeniTheme.light;
-        }
-    }
-
     private setup() {
         this.setLocale(this.getLocaleKey());
         this.setTheme(this.getTheme());
@@ -103,14 +94,26 @@ export class GlobalContext {
         window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
     }
 
+    private getTheme(): DocgeniTheme {
+        const cacheTheme = window.localStorage.getItem(DOCGENI_THEME_KEY) as DocgeniTheme;
+        if (cacheTheme && [DocgeniTheme.light, DocgeniTheme.dark, DocgeniTheme.system].includes(cacheTheme)) {
+            return cacheTheme;
+        } else {
+            return DocgeniTheme.light;
+        }
+    }
+
     public setTheme(theme: DocgeniTheme) {
         this.theme = theme;
-        if (this.theme === DocgeniTheme.dark) {
-            document.documentElement.setAttribute('theme', theme);
-            window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+
+        if ((theme === DocgeniTheme.system && window.matchMedia('(prefers-color-scheme: dark)').matches) || theme === DocgeniTheme.dark) {
+            document.documentElement.setAttribute('theme', DocgeniTheme.dark);
+            document.documentElement.style.setProperty('color-scheme', 'dark');
+            window.localStorage.setItem(DOCGENI_THEME_KEY, DocgeniTheme.dark);
         } else {
             document.documentElement.removeAttribute('theme');
-            window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+            document.documentElement.style.removeProperty('color-scheme');
+            window.localStorage.setItem(DOCGENI_THEME_KEY, DocgeniTheme.light);
         }
     }
 

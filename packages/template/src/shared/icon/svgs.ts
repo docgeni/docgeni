@@ -97,6 +97,7 @@ const stackBlitz = `<svg viewBox="0 0 28 28" aria-hidden="true" class="StackBlit
 
 const lightTheme = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 48 48" aria-hidden="true" focusable="false" class="arco-icon arco-icon-sun-fill"><circle cx="24" cy="24" r="9" fill="currentColor" stroke="none"/><path fill="currentColor" stroke="none" d="M21 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-5ZM21 37.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-5ZM42.5 21a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5h5ZM10.5 21a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5h5ZM39.203 34.96a.5.5 0 0 1 0 .707l-3.536 3.536a.5.5 0 0 1-.707 0l-3.535-3.536a.5.5 0 0 1 0-.707l3.535-3.535a.5.5 0 0 1 .707 0l3.536 3.535ZM16.575 12.333a.5.5 0 0 1 0 .707l-3.535 3.535a.5.5 0 0 1-.707 0L8.797 13.04a.5.5 0 0 1 0-.707l3.536-3.536a.5.5 0 0 1 .707 0l3.535 3.536ZM13.04 39.203a.5.5 0 0 1-.707 0l-3.536-3.536a.5.5 0 0 1 0-.707l3.536-3.535a.5.5 0 0 1 .707 0l3.536 3.535a.5.5 0 0 1 0 .707l-3.536 3.536ZM35.668 16.575a.5.5 0 0 1-.708 0l-3.535-3.535a.5.5 0 0 1 0-.707l3.535-3.536a.5.5 0 0 1 .708 0l3.535 3.536a.5.5 0 0 1 0 .707l-3.535 3.535Z"/></svg>`;
 const darkTheme = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 48 48" aria-hidden="true" focusable="false" class="arco-icon arco-icon-moon-fill"><path fill="currentColor" stroke="none" d="M42.108 29.769c.124-.387-.258-.736-.645-.613A17.99 17.99 0 0 1 36 30c-9.941 0-18-8.059-18-18 0-1.904.296-3.74.844-5.463.123-.387-.226-.768-.613-.645C10.558 8.334 5 15.518 5 24c0 10.493 8.507 19 19 19 8.482 0 15.666-5.558 18.108-13.231Z"/></svg>`;
+const systemTheme = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 48 48" class="arco-react-icon arco-react-icon-desktop"><path d="M24 32v8m0 0h-9m9 0h9M7 32h34a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v22a1 1 0 0 0 1 1Z"/></svg>`;
 
 const locale = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M2 5C2 3.34315 3.34315 2 5 2H7C8.65685 2 10 3.34315 10 5V11H8V8.5H4V11H2V5ZM4 6.5H8V5C8 4.44772 7.55228 4 7 4H5C4.44772 4 4 4.44772 4 5V6.5ZM12 3.5H18C19.6569 3.5 21 4.84315 21 6.5V9H19V6.5C19 5.94772 18.5523 5.5 18 5.5H12V3.5ZM18 11.5V13H22V15H20.9381C20.7182 16.7638 19.9241 18.3492 18.7488 19.5634C19.4441 19.845 20.2041 20 21 20H22V22H21C19.5425 22 18.1765 21.6102 17.0001 20.9297C15.8234 21.6104 14.4572 22 13 22H12V20H13C13.7962 20 14.5562 19.8449 15.2514 19.5633C14.6487 18.9407 14.1463 18.2205 13.7704 17.4291L13.3413 16.5258L15.1478 15.6676L15.5769 16.5709C15.9219 17.2971 16.4081 17.9427 16.9999 18.4723C17.9921 17.5843 18.687 16.371 18.917 15H12V13H16V11.5H18ZM6 13V19C6 19.5523 6.44772 20 7 20H9.5V22H7C5.34315 22 4 20.6569 4 19V13H6Z" fill="currentColor"/>
@@ -115,7 +116,8 @@ export const BUILTIN_SVGS: Record<string, string> = {
     search,
     empty,
     stackBlitz,
+    locale,
     lightTheme,
     darkTheme,
-    locale,
+    systemTheme,
 };

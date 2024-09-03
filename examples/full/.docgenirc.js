@@ -63,7 +63,6 @@ module.exports = {
         },
     ],
     defaultLocale: 'en-us',
-    defaultTheme: 'light',
-    enableThemes: true,
+    switchTheme: true,
     footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self',
 };

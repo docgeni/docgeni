@@ -101,13 +101,8 @@ Angular 自定义站点的项目名称，组件库开发除了默认的文档和
 
 支持的多语言，如果不需要支持多种语言，无需配置，会只生成 `defaultLocale` 的语言。
 
-## defaultTheme
-- 类型：`DocgeniTheme`
-- 默认：`light`
 
-默认主题
-
-## enableThemes
+## switchTheme
 - 类型：`boolean`
 - 默认：`false`
 

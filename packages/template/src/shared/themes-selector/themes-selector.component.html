@@ -1,8 +1,11 @@
-<button type="button" class="action-icon" (click)="toggleTheme()">
+<button type="button" class="action-icon" [ngClass]="{ active: !!isDropdownOpen }">
   <dg-icon [iconName]="themesMap[theme]?.icon"></dg-icon>
 </button>
 
-<div class="dg-tooltip-container">
-  <div class="dg-tooltip-arrow"></div>
-  <div class="dg-tooltip-content">{{ themesMap[theme]?.actionTooltip }}</div>
+<div *ngIf="!!isDropdownOpen" class="themes-container">
+  <div class="themes-menu">
+    <div *ngFor="let item of themes" class="theme" [ngClass]="{ active: item.key === theme }" (click)="selectTheme(item.key)">
+      {{ item.name }}
+    </div>
+  </div>
 </div>

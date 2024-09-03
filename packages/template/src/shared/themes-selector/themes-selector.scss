@@ -1,43 +1,39 @@
 .dg-themes-selector {
     position: relative;
 
-    .dg-tooltip-container {
-        display: none;
+    .themes-container {
         background-color: transparent;
         position: absolute;
         top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 8px;
-
-        .dg-tooltip-arrow {
-            position: absolute;
-            top: -0.375rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 0.375rem solid transparent;
-            border-right: 0.375rem solid transparent;
-            border-bottom: 0.375rem solid rgba(0, 0, 0, 0.75);
-        }
-
-        .dg-tooltip-content {
-            width: max-content;
-            max-width: 350px;
-            padding: 0.375rem 0.75rem;
-            color: $dg-white;
-            text-align: left;
-            background-color: rgba(0, 0, 0, 0.75);
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-            border-radius: 0.25rem;
-            font-size: $dg-font-size-base;
-        }
+        left: 0;
+        width: 80px;
     }
 
-    &:hover {
-        .dg-tooltip-container {
-            display: block;
+    .themes-menu {
+        width: 100%;
+        margin-top: 8px;
+        padding: 8px 0;
+        background-color: $dg-bg-color;
+        border-radius: 4px;
+        border: 1px solid $dg-gray-200;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+
+        .theme {
+            cursor: pointer;
+            font-size: $dg-font-size-base;
+            padding: 0 8px;
+            line-height: 36px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            &:hover {
+                background-color: $dg-gray-80;
+            }
+            &.active {
+                color: $dg-primary;
+                background-color: #6698ff1a;
+            }
         }
     }
 }

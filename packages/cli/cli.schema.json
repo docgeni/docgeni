@@ -227,13 +227,9 @@
       "type": "string",
       "description": "Default locale"
     },
-    "defaultTheme": {
-      "type": "string",
-      "description": "Default theme"
-    },
-    "enableThemes": {
+    "switchTheme": {
       "type": "boolean",
-      "description": "Enable themes"
+      "description": "Whether to enable the theme switching function"
     }
   }
 }

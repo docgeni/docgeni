@@ -31,6 +31,7 @@ export type DocgeniMode = 'full' | 'lite';
 export enum DocgeniTheme {
     light = 'light',
     dark = 'dark',
+    system = 'system',
 }
 
 export interface DocgeniNavItem {
@@ -98,9 +99,7 @@ export interface DocgeniConfig {
     /** Default locale **/
     defaultLocale?: string;
     /** Enable themes */
-    enableThemes?: boolean;
-    /** Default theme **/
-    defaultTheme?: DocgeniTheme;
+    switchTheme?: boolean;
     /** footer content **/
     footer?: string;
     /** algolia config */
@@ -140,9 +139,7 @@ export interface DocgeniSiteConfig {
     /** Default locale **/
     defaultLocale?: string;
     /** Enable themes */
-    enableThemes?: boolean;
-    /** Default theme **/
-    defaultTheme?: DocgeniTheme;
+    switchTheme?: boolean;
     /** footer content **/
     footer?: string;
     /** algolia config */

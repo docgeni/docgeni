@@ -1,5 +1,4 @@
-import { Location } from '@angular/common';
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { DocgeniTheme } from '../../interfaces';
 
@@ -12,27 +11,39 @@ export class ThemesSelectorComponent implements OnInit {
 
     cacheKey = 'docgeni-theme';
 
-    isTooltipOpen = false;
+    isDropdownOpen = false;
 
     theme!: DocgeniTheme;
 
-    themesMap: Record<DocgeniTheme, { key: DocgeniTheme; icon: string; actionTooltip: string }> = {
-        [DocgeniTheme.light]: { key: DocgeniTheme.light, icon: 'lightTheme', actionTooltip: '切换暗黑主题' },
-        [DocgeniTheme.dark]: { key: DocgeniTheme.dark, icon: 'darkTheme', actionTooltip: '切换亮色主题' },
+    themesMap = {
+        [DocgeniTheme.light]: { key: DocgeniTheme.light, name: '亮色主题', icon: 'lightTheme' },
+        [DocgeniTheme.dark]: { key: DocgeniTheme.dark, name: '暗黑主题', icon: 'darkTheme' },
+        [DocgeniTheme.system]: { key: DocgeniTheme.system, name: '跟随系统', icon: 'systemTheme' },
     };
+
+    themes = [this.themesMap[DocgeniTheme.light], this.themesMap[DocgeniTheme.dark], this.themesMap[DocgeniTheme.system]];
 
     constructor(
         public global: GlobalContext,
         public navigationService: NavigationService,
-        private location: Location,
     ) {}
+
+    @HostListener('mouseenter')
+    openDropdown() {
+        this.isDropdownOpen = true;
+    }
+
+    @HostListener('mouseleave')
+    closeDropdown() {
+        this.isDropdownOpen = false;
+    }
 
     ngOnInit(): void {
         this.theme = this.global.theme;
     }
 
-    toggleTheme() {
-        this.theme = this.theme === DocgeniTheme.dark ? DocgeniTheme.light : DocgeniTheme.dark;
+    selectTheme(theme: DocgeniTheme) {
+        this.theme = theme;
         this.global.setTheme(this.theme);
     }
 }
