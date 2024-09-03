@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@docgeni/angular": "15.0.0",
+    "@docgeni/angular": "18.0.0",
     "@docgeni/cli": "2.1.0-next.9",
     "@docgeni/template": "2.1.0-next.9",
     "@types/node": "^12.11.1",
