@@ -31,6 +31,7 @@ export type DocgeniMode = 'full' | 'lite';
 export enum DocgeniTheme {
     light = 'light',
     dark = 'dark',
+    system = 'system',
 }
 
 export interface DocgeniNavItem {
