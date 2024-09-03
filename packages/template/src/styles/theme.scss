@@ -1,4 +1,5 @@
 :root {
+    --dg-gray-10: #fff;
     --dg-gray-80: #f3f3f3;
     --dg-gray-90: #f3f5f7;
     --dg-gray-100: #f6f8fa;
@@ -18,6 +19,7 @@
 }
 
 :root[theme='dark'] {
+    --dg-gray-10: #2a2e34;
     --dg-gray-80: #393e46;
     --dg-gray-90: #3c414a;
     --dg-gray-100: #393e46;
