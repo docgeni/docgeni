@@ -7,7 +7,6 @@ $dg-danger: #ff7575 !default;
 $dg-white: #fff !default;
 $dg-black: #000 !default;
 
-$dg-gray-10: var(--dg-gray-10) !default;
 $dg-gray-80: var(--dg-gray-80) !default;
 $dg-gray-90: var(--dg-gray-90) !default;
 $dg-gray-100: var(--dg-gray-100) !default;
@@ -19,12 +18,16 @@ $dg-gray-600: var(--dg-gray-600) !default;
 $dg-gray-700: var(--dg-gray-700) !default;
 $dg-gray-800: var(--dg-gray-800) !default;
 
+$dg-bg-color: var(--dg-bg-color) !default; // 主背景色
+$dg-text-color: var(--dg-text-color) !default; // 主文字色
+
 $dg-box-shadow-1: var(--dg-box-shadow-1); // navbar 阴影
 $dg-box-shadow-2: var(--dg-box-shadow-2); // 下拉框阴影
 
-$dg-bg-default: $dg-gray-10 !default;
-$dg-body-color: $dg-gray-800 !default;
-$dg-body-bg: $dg-gray-10 !default;
+// @deprecated Use `$dg-bg-color` instead
+$dg-body-bg: $dg-bg-color !default;
+// @deprecated Use `$dg-text-color` instead
+$dg-body-color: $dg-text-color !default;
 
 $dg-yiq-contrasted-threshold: 180 !default;
 $dg-yiq-text-dark: $dg-gray-800 !default;
@@ -115,9 +118,9 @@ $dg-font-size-xlg: 1.5rem !default; // 24px
 $dg-navbar-height: 60px !default;
 
 // default theme
-$dg-navbar-background-default: $dg-bg-default;
+$dg-navbar-background-default: $dg-bg-color;
 $dg-navbar-box-shadow-default: $dg-box-shadow-1;
-$dg-navbar-color-default: $dg-body-color;
+$dg-navbar-color-default: $dg-text-color;
 
 // angular theme
 $dg-navbar-background-angular: #3f51b5 !default;

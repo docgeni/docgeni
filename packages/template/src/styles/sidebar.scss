@@ -64,7 +64,7 @@
             align-items: center;
             margin: 0 -1000px;
             padding: $dg-sidebar-menu-item-space-y 1000px;
-            color: $dg-gray-800;
+            color: $dg-text-color;
             .external-icon {
                 margin-right: 5px;
             }
@@ -74,7 +74,7 @@
             }
             & > .item-content-label {
                 flex: 0 0 auto;
-                background-color: $dg-bg-default;
+                background-color: $dg-bg-color;
                 display: flex;
                 border-radius: 4px;
             }
@@ -110,7 +110,7 @@
 
         .title {
             font-weight: 500;
-            color: $dg-body-color;
+            color: $dg-text-color;
             font-size: $dg-font-size-lg;
             padding: 5px 0px;
         }

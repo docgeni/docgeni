@@ -2,7 +2,7 @@
 
 @mixin dg-gradient-bg($color) {
     @if $dg-enable-gradients {
-        background: $color linear-gradient(180deg, mix($dg-body-bg, $color, 15%), $color) repeat-x;
+        background: $color linear-gradient(180deg, mix($dg-bg-color, $color, 15%), $color) repeat-x;
     } @else {
         background-color: $color;
     }

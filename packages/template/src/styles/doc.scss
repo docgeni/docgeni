@@ -1,4 +1,4 @@
-$dg-heading-color: $dg-gray-800;
+$dg-heading-color: $dg-text-color;
 $dg-table-border-color: $dg-gray-200;
 $dg-table-header-bg-color: $dg-gray-80;
 
@@ -225,13 +225,13 @@ $dg-pipe-color: #546e7a;
 
                 .dg-api-method-parameter-type {
                     background-color: $dg-code-bg-color;
-                    color: $dg-gray-800;
+                    color: $dg-text-color;
                     border-radius: 4px;
                     padding: 2px 4px;
                 }
 
                 .dg-api-method-parameter-head {
-                    color: $dg-gray-800;
+                    color: $dg-text-color;
                 }
 
                 .dg-api-method-parameter {
@@ -321,7 +321,7 @@ $dg-pipe-color: #546e7a;
         margin: 0px 2px;
         background: $dg-code-bg-color;
         border-radius: $dg-border-radius;
-        color: $dg-gray-800;
+        color: $dg-text-color;
     }
 
     @include content-child-selector(pre) {
@@ -448,7 +448,7 @@ $dg-pipe-color: #546e7a;
         a {
             padding: 16px;
             border-radius: 3px;
-            color: $dg-gray-800;
+            color: $dg-text-color;
             border: 1px solid $dg-gray-200;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
             width: 100%;
