@@ -41,7 +41,7 @@ export class ThemesSelectorComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.theme = this.global.theme;
+        this.theme = this.global.theme();
     }
 
     selectTheme(theme: DocgeniTheme) {
