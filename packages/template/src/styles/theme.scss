@@ -12,7 +12,7 @@
     --dg-gray-800: #333;
 
     --dg-bg-color: #fff;
-    --dg-bg-1: #dae6f3;
+    --dg-bg-banner: #dae6f3;
 
     --dg-text-color: #333;
     --dg-text-1: #1e3042;
@@ -35,11 +35,11 @@
     --dg-gray-800: #bcc4d1;
 
     --dg-bg-color: #2a2e34;
-    --dg-bg-1: #dae6f3; // TODO 没有 banner 时，背景色支持黑暗主题
+    --dg-bg-banner: #303640;
 
     --dg-text-color: #bcc4d1;
     --dg-text-1: #bcc4d1;
 
-    --dg-box-shadow-1: 0 8px 24px -2px rgba(0, 0, 0, 0.15);
-    --dg-box-shadow-2: 0 4px 10px rgba(0, 0, 0, 0.1); // TODO  使用黑色 banner 后，阴影需要调整
+    --dg-box-shadow-1: 0 4px 10px -2px rgba(0, 0, 0, 0.15);
+    --dg-box-shadow-2: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
