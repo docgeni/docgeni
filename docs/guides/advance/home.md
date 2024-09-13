@@ -4,7 +4,7 @@ order: 30
 ---
 
 `mode`为`full`模式时包含首页，首页包含三部分内容，分别为：
-- Hero 区域: 展示当前站点的标题和一句话描述以及快速操作链接，同时支持`banner`图设置
+- Hero 区域: 展示当前站点的标题和一句话描述以及快速操作链接，同时支持亮色主题的`banner`图设置和黑暗主题的`darkBanner`图设置
 - 功能区域: 展示有哪些特性，每个特性包含名称、描述和图标
 - 内容区域: 和普通的文档一样，展示 Markdown 内容
 
@@ -20,6 +20,7 @@ order: 30
 - `title:` 标题
 - `description:` 描述
 - `banner:` 背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
+- `darkBanner:` 黑暗主题下的背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
 - `backgroundColor:` 背景色，默认为`#dae6f3`
 - `actions:` 快捷按钮列表
 - `actions.text:` 按钮文字
@@ -34,6 +35,7 @@ hero:
   title: Docgeni
   description: 开箱即用的 Angular 组件文档生成工具
   banner: ./assets/images/home/banner.png
+  darkBanner: ./assets/images/home/dark-banner.png
   actions:
     - text: 快速上手
       link: /guides/intro/getting-started

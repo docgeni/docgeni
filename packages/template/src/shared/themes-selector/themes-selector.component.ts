@@ -41,19 +41,24 @@ export class ThemesSelectorComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.theme = this.global.theme;
+        this.theme = this.global.theme();
     }
 
-    selectTheme(theme: DocgeniTheme) {
+    setTheme(theme: DocgeniTheme) {
         this.theme = theme;
         this.global.setTheme(this.theme);
     }
 
+    selectTheme(theme: DocgeniTheme) {
+        this.setTheme(theme);
+        this.isDropdownOpen = false;
+    }
+
     toggleTheme() {
         if (this.theme === DocgeniTheme.dark) {
-            this.selectTheme(DocgeniTheme.light);
+            this.setTheme(DocgeniTheme.light);
         } else if (this.theme === DocgeniTheme.light) {
-            this.selectTheme(DocgeniTheme.dark);
+            this.setTheme(DocgeniTheme.dark);
         } else {
         }
     }

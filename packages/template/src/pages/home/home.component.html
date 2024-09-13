@@ -14,7 +14,12 @@
     </div>
   </div>
   <div class="dg-hero-banner" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
-    <img *ngIf="global.homeMeta.hero.banner" [src]="global.homeMeta.hero.banner" />
+    @if (global.homeMeta.hero.darkBanner && global.isDarkTheme()) {
+      <img [src]="global.homeMeta.hero.darkBanner" />
+    }
+    @if (global.homeMeta.hero.banner && !global.isDarkTheme()) {
+      <img [src]="global.homeMeta.hero.banner" />
+    }
   </div>
 </div>
 
