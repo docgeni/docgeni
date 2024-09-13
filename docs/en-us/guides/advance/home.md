@@ -4,7 +4,7 @@ order: 30
 ---
 
 when `mode` is `full`, it includes the home page, which includes three parts:
-- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner and dark banner
+- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner and darkBanner
 - Feature area: show what features are available, each with a name, description, and icon 
 - Content area: show markdown content like markdown doc
 
