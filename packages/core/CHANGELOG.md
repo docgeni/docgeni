@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.4](https://github.com/docgeni/docgeni/compare/v2.4.0-next.3...v2.4.0-next.4) (2024-09-19)
+
+
+### Features
+
+* banner support dark theme #TINFR-585 ([#561](https://github.com/docgeni/docgeni/issues/561)) ([ccf0bed](https://github.com/docgeni/docgeni/commit/ccf0bedda8c86b4974bff9a9432f190d57edb9d5)), closes [#TINFR-585](https://github.com/docgeni/docgeni/issues/TINFR-585)
+
+
+
+
+
 # [2.4.0-next.3](https://github.com/docgeni/docgeni/compare/v2.4.0-next.2...v2.4.0-next.3) (2024-09-03)
 
 
