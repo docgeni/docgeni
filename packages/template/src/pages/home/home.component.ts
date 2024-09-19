@@ -14,6 +14,36 @@ export class HomeComponent implements OnInit {
 
     hasHome = false;
 
+    get bannerImgSrc() {
+        const banner = this.global.homeMeta.hero.banner;
+
+        if (banner) {
+            if (typeof banner === 'string') {
+                return banner;
+            }
+
+            if (Array.isArray(banner)) {
+                if (banner.length === 1) {
+                    return banner[0];
+                }
+
+                if (banner.length === 2) {
+                    if (this.global.isDarkTheme()) {
+                        return banner[1];
+                    } else {
+                        return banner[0];
+                    }
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
     constructor(
         public global: GlobalContext,
         router: Router,

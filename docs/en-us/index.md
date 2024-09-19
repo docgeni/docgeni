@@ -2,8 +2,7 @@
 hero:
   title: Docgeni
   description: Out of the box Angular Component Document Generator
-  banner: ./assets/images/home/banner.png
-  darkBanner: ./assets/images/home/dark-banner.png
+  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
   actions:
     - text: Getting Started
       link: /guides/intro/getting-started

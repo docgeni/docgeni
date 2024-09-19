@@ -4,7 +4,7 @@ order: 30
 ---
 
 when `mode` is `full`, it includes the home page, which includes three parts:
-- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner and darkBanner
+- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner
 - Feature area: show what features are available, each with a name, description, and icon 
 - Content area: show markdown content like markdown doc
 
@@ -21,7 +21,6 @@ when `mode` is `full`, it includes the home page, which includes three parts:
 - `title:` title of site
 - `description:` description of site
 - `banner:` the background image, title and description are centered by default. If the background image is obscured, the position can be modified through custom styles
-- `darkBanner:` the dark theme background image, title and description are centered by default. If the background image is obscured, the position can be modified through custom styles
 - `backgroundColor`: background color, default is `#dae6f3`
 - `actions:` shortcut button actions
 - `actions.text:` button text for every action
@@ -35,8 +34,7 @@ Example:
 hero:
   title: Docgeni
   description: Out of the box angular component document generation tool
-  banner: ./assets/images/home/banner.png
-  darkBanner: ./assets/images/home/dark-banner.png
+  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
   actions:
     - text: Getting Started
       link: /guides/intro/getting-started
