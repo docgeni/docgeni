@@ -22,9 +22,6 @@ $dg-gray-800: var(--dg-gray-800) !default;
 $dg-bg-color: var(--dg-bg-color) !default; // 主背景色
 $dg-text-color: var(--dg-text-color) !default; // 主文字色
 
-$dg-box-shadow-1: var(--dg-box-shadow-1); // navbar 阴影
-$dg-box-shadow-2: var(--dg-box-shadow-2); // 下拉框阴影
-
 $dg-yiq-contrasted-threshold: 180 !default;
 $dg-yiq-text-dark: $dg-gray-800 !default;
 $dg-yiq-text-light: $dg-white !default;
@@ -110,12 +107,16 @@ $dg-font-size-max-lg: 3.25rem !default; // 补充字体大小 52px
 $dg-font-size-xs: 0.625rem !default; // 10px
 $dg-font-size-xlg: 1.5rem !default; // 24px
 
+// dropdown
+$dg-dropdown-box-shadow: var(--dg-dropdown-box-shadow) !default;
+
 // navbar
 $dg-navbar-height: 60px !default;
+$dg-navbar-action-bg-color: var(--dg-gray-80) !default;
 
 // default theme
 $dg-navbar-background-default: $dg-bg-color;
-$dg-navbar-box-shadow-default: $dg-box-shadow-1;
+$dg-navbar-box-shadow-default: var(--dg-navbar-box-shadow) !default;
 $dg-navbar-color-default: $dg-text-color;
 
 // angular theme
@@ -126,7 +127,8 @@ $dg-navbar-box-shadow-angular:
     0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
-$dg-hero-background: #dae6f3 !default;
+$dg-hero-background: var(--dg-hero-banner-bg-color) !default;
+$dg-hero-launch-title-color: var(--dg-hero-launch-title-color) !default;
 
 // sidebar
 $dg-sidebar-item-indent: 10px !default;

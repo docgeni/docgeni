@@ -34,7 +34,7 @@ Example:
 hero:
   title: Docgeni
   description: Out of the box angular component document generation tool
-  banner: ./assets/images/home/banner.png
+  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
   actions:
     - text: Getting Started
       link: /guides/intro/getting-started

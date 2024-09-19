@@ -90,12 +90,7 @@
             transition: all 0.2s;
             cursor: pointer;
             outline: none;
-            color: $dg-text-color;
 
-            &:hover,
-            &.active {
-                background-color: var(--dg-gray-80);
-            }
             .dg-icon {
                 font-size: $dg-font-size-lg;
             }
@@ -205,6 +200,17 @@
                 &.active {
                     color: $dg-primary;
                     background: rgba($dg-primary, 0.12);
+                }
+            }
+        }
+
+        .action-items {
+            .action-icon {
+                color: $dg-text-color;
+
+                &:hover,
+                &.active {
+                    background-color: $dg-navbar-action-bg-color;
                 }
             }
         }

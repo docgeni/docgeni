@@ -1,4 +1,4 @@
-import { Injectable, Inject, InjectionToken } from '@angular/core';
+import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal } from '@angular/core';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
@@ -21,8 +21,6 @@ const DOCGENI_THEME_KEY = 'docgeni-theme';
 export class GlobalContext {
     locale!: string;
 
-    theme!: DocgeniTheme;
-
     navs!: NavigationItem[];
 
     docItems!: NavigationItem[];
@@ -32,6 +30,15 @@ export class GlobalContext {
     owner!: string;
 
     repo!: string;
+
+    theme: WritableSignal<DocgeniTheme> = signal(DocgeniTheme.light);
+
+    isDarkTheme: Signal<boolean> = computed(() => {
+        return (
+            (this.theme() === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+            this.theme() === DocgeniTheme.dark
+        );
+    });
 
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
@@ -103,15 +110,8 @@ export class GlobalContext {
         }
     }
 
-    private isDarkTheme() {
-        return (
-            (this.theme === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-            this.theme === DocgeniTheme.dark
-        );
-    }
-
     public setTheme(theme: DocgeniTheme) {
-        this.theme = theme;
+        this.theme.set(theme);
         window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
 
         if (this.isDarkTheme()) {

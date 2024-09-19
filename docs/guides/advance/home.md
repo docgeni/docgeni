@@ -33,7 +33,7 @@ order: 30
 hero:
   title: Docgeni
   description: 开箱即用的 Angular 组件文档生成工具
-  banner: ./assets/images/home/banner.png
+  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
   actions:
     - text: 快速上手
       link: /guides/intro/getting-started
