@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, HostBinding, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2 } from '@angular/core';
 import { colorMetadata } from '../../utils/color-metadata';
 
 type LabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
@@ -6,7 +6,7 @@ const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
 
 @Component({
     selector: 'dg-label',
-    templateUrl: './label.component.html'
+    templateUrl: './label.component.html',
 })
 export class LabelComponent implements OnInit {
     @HostBinding(`class`) classList!: string[];
@@ -21,7 +21,10 @@ export class LabelComponent implements OnInit {
         }
     }
 
-    constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private elementRef: ElementRef,
+        private renderer: Renderer2,
+    ) {}
 
     ngOnInit(): void {}
 

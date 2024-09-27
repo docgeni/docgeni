@@ -1,10 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { NavigationItem, DocItem, ChannelItem, CategoryItem, DocgeniSiteConfig } from '../interfaces/public-api';
+import { Injectable } from '@angular/core';
+import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class NavigationService {
     channel$ = new BehaviorSubject<ChannelItem | null>(null);
@@ -36,7 +36,7 @@ export class NavigationService {
     }
 
     getChannel(path: string): ChannelItem {
-        return this.navs.find(nav => {
+        return this.navs.find((nav) => {
             return nav.path === path;
         }) as ChannelItem;
     }
@@ -46,16 +46,16 @@ export class NavigationService {
         if (this.channel) {
             // 类库频道
             if (this.channel.lib) {
-                index = this.docItems.findIndex(docItem => {
+                index = this.docItems.findIndex((docItem) => {
                     return docItem.path === path && docItem.channelPath === this.channel!.path && !!docItem.importSpecifier;
                 });
             } else {
-                index = this.docItems.findIndex(docItem => {
+                index = this.docItems.findIndex((docItem) => {
                     return docItem.path === path && docItem.channelPath === this.channel!.path;
                 });
             }
         } else {
-            index = this.docItems.findIndex(docItem => {
+            index = this.docItems.findIndex((docItem) => {
                 return docItem.path === path && (this.global.config.mode === 'lite' ? true : !docItem.channelPath);
             });
         }
@@ -64,7 +64,7 @@ export class NavigationService {
             const nextDocItem = this.docItems.length - 1 === index ? undefined : this.docItems[index + 1];
             this.docPages$.next({
                 pre: preDocItem!,
-                next: nextDocItem!
+                next: nextDocItem!,
             });
         }
         return this.docItems[index];

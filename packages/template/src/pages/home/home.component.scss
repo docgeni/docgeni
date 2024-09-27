@@ -26,6 +26,7 @@
             .dg-launch-actions {
                 .dg-launch-action {
                     margin-right: 20px;
+                    border-radius: 8888px;
                     &:hover {
                         text-decoration: none;
                     }
@@ -64,7 +65,7 @@
             padding-top: 0;
         }
         .dg-feature-title {
-            color: $dg-gray-800;
+            color: $dg-text-color;
             font-size: 16px;
             padding-bottom: 14px;
         }

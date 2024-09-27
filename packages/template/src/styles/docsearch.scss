@@ -4,10 +4,10 @@
         box-shadow: 0 0 24px rgba($dg-black, 0.18);
 
         [class^='ds-dataset-'] {
-            background: $dg-white;
+            background: $dg-bg-color;
             border: none;
             .algolia-docsearch-suggestion {
-                background: $dg-white;
+                background: $dg-bg-color;
             }
         }
 
@@ -17,7 +17,7 @@
     }
 
     .algolia-docsearch-suggestion--title {
-        color: $dg-gray-800;
+        color: $dg-text-color;
     }
 
     .algolia-docsearch-suggestion--highlight {

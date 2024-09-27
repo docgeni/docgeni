@@ -20,14 +20,14 @@ module.exports = {
             lib: 'alib',
             locales: {
                 'en-us': {
-                    title: 'Components'
-                }
-            }
+                    title: 'Components',
+                },
+            },
         },
         {
             title: 'GitHub',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
+            isExternal: true,
         },
         {
             title: '更新日志',
@@ -35,10 +35,10 @@ module.exports = {
             isExternal: true,
             locales: {
                 'en-us': {
-                    title: 'Changelog'
-                }
-            }
-        }
+                    title: 'Changelog',
+                },
+            },
+        },
     ],
     libs: [
         {
@@ -53,36 +53,37 @@ module.exports = {
                     title: '通用',
                     locales: {
                         'en-us': {
-                            title: 'General'
-                        }
-                    }
+                            title: 'General',
+                        },
+                    },
                 },
                 {
                     id: 'layout',
                     title: '布局',
                     locales: {
                         'en-us': {
-                            title: 'Layout'
-                        }
-                    }
-                }
-            ]
-        }
+                            title: 'Layout',
+                        },
+                    },
+                },
+            ],
+        },
     ],
     locales: [
         {
-            key: 'en-us',
-            name: 'EN'
+            key: 'zh-cn',
+            name: '中文',
         },
         {
-            key: 'zh-cn',
-            name: '中文'
-        }
+            key: 'en-us',
+            name: 'English',
+        },
     ],
     defaultLocale: 'zh-cn',
+    switchTheme: true,
     sitemap: {
-        host: 'https://docgeni.org'
+        host: 'https://docgeni.org',
     },
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />
-    <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`
+    <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`,
 };

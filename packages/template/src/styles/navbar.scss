@@ -3,13 +3,13 @@
     top: 0;
     left: 0;
     right: 0;
-    // height: $dg-navbar-height;
     display: flex;
     align-items: center;
     padding: 0.719rem 1.25rem;
     justify-content: space-between;
     font-size: $dg-font-size-md;
     z-index: 100;
+
     .nav.nav-spacer {
         display: flex;
         visibility: hidden;
@@ -17,6 +17,7 @@
         margin: 0;
         flex: 0 0 auto;
     }
+
     .navbar-brand {
         display: inline-flex;
         align-items: center;
@@ -76,14 +77,27 @@
             max-width: 300px;
         }
 
-        .action-item {
-            margin-left: 20px;
+        .action-icon {
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: pointer;
+            outline: none;
+
+            .dg-icon {
+                font-size: $dg-font-size-lg;
+            }
         }
 
-        .repo-url {
-            .dg-icon {
-                font-size: 32px;
-            }
+        .action-icon-item {
+            margin-left: 12px;
         }
     }
 
@@ -129,7 +143,6 @@
 @mixin dg-navbar-theme($background-color, $box-shadow, $color) {
     background-color: $background-color;
     box-shadow: $box-shadow;
-    color: $color;
 
     .nav {
         a {
@@ -147,7 +160,7 @@
     }
 }
 
-.dg-theme-angular {
+.dg-navbar-theme-angular {
     .dg-navbar {
         @include dg-navbar-theme($dg-navbar-background-angular, $dg-navbar-box-shadow-angular, $dg-navbar-color-angular);
 
@@ -162,10 +175,19 @@
                 }
             }
         }
+
+        .action-items {
+            .action-icon {
+                color: $dg-white;
+                &:hover,
+                &.active {
+                    background-color: hsla(0, 0%, 100%, 0.15);
+                }
+            }
+        }
     }
 }
-
-.dg-theme-default {
+@mixin dg-navbar-theme-default() {
     .dg-navbar {
         @include dg-navbar-theme($dg-navbar-background-default, $dg-navbar-box-shadow-default, $dg-navbar-color-default);
 
@@ -181,5 +203,26 @@
                 }
             }
         }
+
+        .action-items {
+            .action-icon {
+                color: $dg-text-color;
+
+                &:hover,
+                &.active {
+                    background-color: $dg-navbar-action-bg-color;
+                }
+            }
+        }
+    }
+}
+
+.dg-navbar-theme-default {
+    @include dg-navbar-theme-default();
+}
+
+:root[theme='dark'] {
+    .dg-navbar-theme-angular {
+        @include dg-navbar-theme-default();
     }
 }

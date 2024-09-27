@@ -1,4 +1,4 @@
-$dg-heading-color: $dg-gray-800;
+$dg-heading-color: $dg-text-color;
 $dg-table-border-color: $dg-gray-200;
 $dg-table-header-bg-color: $dg-gray-80;
 
@@ -224,14 +224,14 @@ $dg-pipe-color: #546e7a;
                 }
 
                 .dg-api-method-parameter-type {
-                    background-color: #f4f5f7;
-                    color: $dg-gray-700;
+                    background-color: $dg-code-bg-color;
+                    color: $dg-text-color;
                     border-radius: 4px;
                     padding: 2px 4px;
                 }
 
                 .dg-api-method-parameter-head {
-                    color: $dg-gray-800;
+                    color: $dg-text-color;
                 }
 
                 .dg-api-method-parameter {
@@ -276,8 +276,7 @@ $dg-pipe-color: #546e7a;
     flex: 1;
     display: block;
     padding: 20px 0px;
-    // font-size: $dg-font-size-md;
-    // white-space: break-spaces;
+
     > :first-child {
         margin-top: 0 !important;
     }
@@ -322,7 +321,7 @@ $dg-pipe-color: #546e7a;
         margin: 0px 2px;
         background: $dg-code-bg-color;
         border-radius: $dg-border-radius;
-        color: $dg-gray-800;
+        color: $dg-text-color;
     }
 
     @include content-child-selector(pre) {
@@ -333,14 +332,12 @@ $dg-pipe-color: #546e7a;
         overflow: auto;
         code {
             padding: 0px;
-            // color: $body-color;
             background: transparent;
             font-size: $dg-font-size-base;
         }
     }
 
     @include content-child-selector((p, '.dg-paragraph')) {
-        // color: $gray-700;
         line-height: 26px;
         margin-top: 0;
         margin-bottom: 8px;
@@ -451,9 +448,9 @@ $dg-pipe-color: #546e7a;
         a {
             padding: 16px;
             border-radius: 3px;
-            color: $dg-gray-800;
+            color: $dg-text-color;
             border: 1px solid $dg-gray-200;
-            box-shadow: rgb(116 129 141 / 10%) 0px 3px 8px 0px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
             width: 100%;
             display: flex;
             &:hover {
@@ -507,5 +504,46 @@ $dg-pipe-color: #546e7a;
             font-weight: 500;
             line-height: 1.5;
         }
+    }
+}
+
+.dg-doc-content,
+.dg-source-code-content {
+    code[class*='language-'],
+    pre[class*='language-'] {
+        text-shadow: none;
+    }
+
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        background: none;
+    }
+
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #00b42a;
+    }
+
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #b882ff;
+    }
+
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #6698ff;
     }
 }

@@ -20,12 +20,12 @@ order: 30
 - `title:` 标题
 - `description:` 描述
 - `banner:` 背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
-- `backgroundColor`: 背景色，默认为`#dae6f3`
+- `backgroundColor:` 背景色，默认为`#dae6f3`
 - `actions:` 快捷按钮列表
 - `actions.text:` 按钮文字
 - `actions.link:` 按钮链接
 - `actions.btnShape:` 按钮形状，可以设置为`round | square`，默认为`square`
-- `actions.btnType:` 按钮类型，可以设置为`primary | primary-light | success | danger`，默认为`primary-light`, 线框按钮需要加前缀 `outline`, 比如 `outline-primary-light`
+- `actions.btnType:` 按钮类型，可以设置为`primary | primary-light | success | danger`，默认为`primary-light`，线框按钮需要加前缀 `outline`，比如 `outline-primary-light`
 
 示例:
 ```
@@ -33,7 +33,7 @@ order: 30
 hero:
   title: Docgeni
   description: 开箱即用的 Angular 组件文档生成工具
-  banner: ./assets/images/home/banner.png
+  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
   actions:
     - text: 快速上手
       link: /guides/intro/getting-started

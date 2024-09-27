@@ -1,5 +1,4 @@
 import { GlobalContext } from './../../services/global-context';
-import { NavigationItem } from './../../interfaces/navigation-item';
 import { Pipe, PipeTransform } from '@angular/core';
 
 const TRANSLATES: Record<string, Record<string, string>> = {
@@ -10,7 +9,7 @@ const TRANSLATES: Record<string, Record<string, string>> = {
         LAST_UPDATED_TIME: '最后更新',
         PRE_PAGE: '上一篇',
         NEXT_PAGE: '下一篇',
-        SEARCH: '搜索'
+        SEARCH: '搜索',
     },
     'en-us': {
         OVERVIEW: 'Overview',
@@ -19,8 +18,8 @@ const TRANSLATES: Record<string, Record<string, string>> = {
         LAST_UPDATED_TIME: 'Last updated',
         PRE_PAGE: 'Previous',
         NEXT_PAGE: 'Next',
-        SEARCH: 'Search'
-    }
+        SEARCH: 'Search',
+    },
 };
 @Pipe({ name: 'dgTranslate' })
 export class TranslatePipe implements PipeTransform {

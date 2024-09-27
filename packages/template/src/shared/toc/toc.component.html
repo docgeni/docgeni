@@ -15,15 +15,5 @@
         {{ link.name }}
       </a>
     </li>
-    <!-- <a
-      (click)="onLinkClick($event, link)"
-      [href]="rootUrl + '#' + link.id"
-      *ngFor="let link of tocService.links; let i = index"
-      class="dg-level-{{ link.type }} dg-link"
-      [class.active]="link === activeLink"
-      [attr.data-level]="link.level - tocService.highestLevel + 1"
-    >
-      {{ link.name }}
-    </a> -->
   </ul>
 </div>

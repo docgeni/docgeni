@@ -1,14 +1,10 @@
 import { toolkit } from '@docgeni/toolkit';
-import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
-
-import { getSystemPath, normalize } from '@angular-devkit/core';
+import { normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
-import { DocgeniConfig, DocgeniLibrary } from '../interfaces';
-import { AsyncSeriesHook, SyncHook } from 'tapable';
-import { DocSourceFile } from '../builders/doc-file';
+import { DocgeniConfig, DocgeniLibrary, DocgeniTheme } from '../interfaces';
+import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
-import { DocgeniCompilation, LibraryBuilder, LibraryComponent } from '../types';
 import { Docgeni } from '../docgeni';
 
 export const DEFAULT_TEST_ROOT_PATH = normalize(`/D/test`);
@@ -22,7 +18,7 @@ export interface TestDocgeniContextOptions {
 
 const DEFAULT_OPTIONS = {
     root: DEFAULT_TEST_ROOT_PATH,
-    libs: []
+    libs: [],
 };
 
 export function createTestDocgeniContext(options?: TestDocgeniContextOptions): DocgeniContext {
@@ -37,21 +33,22 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
             locales: [
                 {
                     key: 'zh-cn',
-                    name: 'ZH'
+                    name: 'ZH',
                 },
                 {
                     key: 'en-us',
-                    name: 'EN'
-                }
+                    name: 'EN',
+                },
             ],
             defaultLocale: 'en-us',
+            switchTheme: false,
             siteDir: '.docgeni/site',
             outputDir: 'dist/docgeni-site',
             publicDir: '.docgeni/public',
             sitemap: {
-                host: 'https://test.org'
+                host: 'https://test.org',
             },
-            navs: []
+            navs: [],
         },
         watch: options.watch,
         paths: paths,
@@ -65,11 +62,11 @@ export function createTestDocgeniContext(options?: TestDocgeniContextOptions): D
         compile: () => {
             return Promise.resolve();
         },
-        version: '1.0.0'
+        version: '1.0.0',
     };
     Object.assign(context, {
         librariesBuilder: new LibrariesBuilder(context),
-        docsBuilder: new DocsBuilder(context)
+        docsBuilder: new DocsBuilder(context),
     });
     return context;
 }

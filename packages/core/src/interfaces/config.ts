@@ -14,7 +14,7 @@ export interface HomeDocMeta {
     hero: {
         title: string;
         description: string;
-        banner: string;
+        banner: string | string[];
         actions: HeroAction;
         backgroundColor?: string;
     };
@@ -27,6 +27,12 @@ export interface HomeDocMeta {
 }
 
 export type DocgeniMode = 'full' | 'lite';
+
+export enum DocgeniTheme {
+    light = 'light',
+    dark = 'dark',
+    system = 'system',
+}
 
 export interface DocgeniNavItem {
     /** Title for nav item **/
@@ -92,6 +98,8 @@ export interface DocgeniConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** Enable themes */
+    switchTheme?: boolean;
     /** footer content **/
     footer?: string;
     /** algolia config */
@@ -130,6 +138,8 @@ export interface DocgeniSiteConfig {
     locales?: Locale[];
     /** Default locale **/
     defaultLocale?: string;
+    /** Enable themes */
+    switchTheme?: boolean;
     /** footer content **/
     footer?: string;
     /** algolia config */

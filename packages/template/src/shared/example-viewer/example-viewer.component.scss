@@ -10,7 +10,7 @@
         padding: 0 4px;
         color: $dg-gray-700;
         font-weight: 500;
-        background-color: $dg-white;
+        background-color: $dg-bg-color;
         transform: translateY(-50%);
     }
 }
@@ -48,7 +48,7 @@
     .dg-example-viewer-header {
         border-bottom: 1px solid $dg-border-color;
         padding: 5px 20px;
-        background: $dg-gray-100; // rgba(0, 0, 0, 0.03);
+        background: $dg-gray-100;
         color: $dg-gray-700;
 
         .title {
@@ -75,7 +75,6 @@
         border-top: 1px dashed $dg-border-color;
         padding: 10px;
         text-align: center;
-        // @include top-show-title-variant();
         clear: both;
         .action-item {
             color: $dg-gray-500;

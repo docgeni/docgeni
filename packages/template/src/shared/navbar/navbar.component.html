@@ -20,9 +20,11 @@
 <div class="spacer"></div>
 <div class="action-items">
   <dg-search class="action-item search-container" *ngIf="global.config.mode | dgIsFull"></dg-search>
-
-  <dg-locales-selector class="action-item" *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
-  <a *ngIf="global.config.repoUrl" class="action-item repo-url" href="{{ global.config.repoUrl }}" target="_blank">
-    <dg-icon iconName="github"></dg-icon>
+  <dg-locales-selector class="action-icon-item" *ngIf="global.config.locales && global.config.locales.length > 1"></dg-locales-selector>
+  <dg-themes-selector class="action-icon-item" *ngIf="global.config.switchTheme"></dg-themes-selector>
+  <a class="action-icon-item" *ngIf="global.config.repoUrl" href="{{ global.config.repoUrl }}" target="_blank">
+    <button type="button" class="action-icon">
+      <dg-icon iconName="github"></dg-icon>
+    </button>
   </a>
 </div>

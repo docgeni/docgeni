@@ -6,10 +6,7 @@
 
     .dg-toc-container {
         font-size: 13px;
-        // Width is container width minus content width
         width: 19%;
-        // position: sticky;
-        // top: 0;
         padding-left: 10px;
         box-sizing: border-box;
         display: inline-flex;
@@ -94,7 +91,6 @@
         }
         .dg-link {
             position: relative;
-            // padding: 6px 6px 6px 6px;
             &::before {
                 border-width: 0px;
             }
