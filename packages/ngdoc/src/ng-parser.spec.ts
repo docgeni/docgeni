@@ -12,9 +12,9 @@ const ROOT_FIXTURES = path.resolve(__dirname, '../test/fixtures');
 function objectContaining<T>(object: T) {
     if (toolkit.utils.isArray(object)) {
         return jasmine.arrayContaining(
-            object.map(item => {
+            object.map((item) => {
                 return objectContaining(item);
-            })
+            }),
         );
     } else if (typeof object === 'object') {
         for (const key in object) {
@@ -25,7 +25,7 @@ function objectContaining<T>(object: T) {
                 }
             }
         }
-        return jasmine.objectContaining((object as unknown) as {});
+        return jasmine.objectContaining(object as unknown as {});
     } else {
         return object;
     }
@@ -57,10 +57,18 @@ describe('ng-parser', () => {
 
     it('should parse component docs', () => {
         const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
-            '/button/button.component.ts': createButtonComponent(`@Input() param1: string;`)
+            '/button/button.component.ts': createButtonComponent(`
+                @Input() param1: string;
+                /**
+                 * 按钮大小
+                 * @type xs | sm | md | lg
+                 * @default xs
+                 */
+                param2 = input<'blur' | 'change'>('blur');
+            `),
         });
         const docs = ngDocParser.parse('/button/*');
-        expect(docs).toEqual(([
+        expect(docs).toEqual([
             {
                 type: 'component',
                 name: 'ButtonComponent',
@@ -82,16 +90,37 @@ describe('ng-parser', () => {
                         type: {
                             name: 'string',
                             options: null,
-                            kindName: 'StringKeyword'
+                            kindName: 'StringKeyword',
                         },
                         description: '',
                         default: null,
-                        tags: {}
-                    }
+                        tags: {},
+                    },
+                    {
+                        kind: 'Input',
+                        name: 'param2',
+                        type: {
+                            name: 'xs | sm | md | lg',
+                            options: null,
+                            kindName: undefined,
+                        },
+                        description: '按钮大小',
+                        default: 'xs',
+                        tags: {
+                            type: {
+                                name: 'type',
+                                text: [{ text: 'xs | sm | md | lg', kind: 'text' }],
+                            },
+                            default: {
+                                name: 'default',
+                                text: [{ text: 'xs', kind: 'text' }],
+                            },
+                        },
+                    },
                 ],
-                methods: []
-            }
-        ] as unknown) as NgEntryItemDoc[]);
+                methods: [],
+            },
+        ] as unknown as NgEntryItemDoc[]);
     });
 
     it('should get default language tags', () => {
@@ -115,7 +144,7 @@ describe('ng-parser', () => {
         }`;
 
         const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
-            '/button/button.component.ts': sourceText
+            '/button/button.component.ts': sourceText,
         });
         const docs = ngDocParser.parse('/button/*');
         expect(docs.length).toBe(1);
@@ -151,7 +180,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -162,11 +191,11 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Output',
@@ -175,11 +204,11 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: '',
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -188,11 +217,11 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -201,11 +230,11 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -214,11 +243,11 @@ describe('ng-parser', () => {
                     type: {
                         name: 'number',
                         options: null,
-                        kindName: 'NumberKeyword'
+                        kindName: 'NumberKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -227,12 +256,12 @@ describe('ng-parser', () => {
                     type: {
                         name: 'boolean',
                         options: null,
-                        kindName: 'BooleanKeyword'
+                        kindName: 'BooleanKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
 
@@ -259,7 +288,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -270,7 +299,7 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Output',
@@ -279,7 +308,7 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: '',
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -288,7 +317,7 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Output',
@@ -297,7 +326,7 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: '',
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -306,8 +335,8 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
 
@@ -317,7 +346,7 @@ describe('ng-parser', () => {
                 @Input() param1 = false;
 
                 @Input() param2 = true;
-                `)
+                `),
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -328,7 +357,7 @@ describe('ng-parser', () => {
                     type: { name: 'boolean', options: null, kindName: undefined },
                     description: '',
                     default: false,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     kind: 'Input',
@@ -337,8 +366,8 @@ describe('ng-parser', () => {
                     type: { name: 'boolean', options: null, kindName: undefined },
                     description: '',
                     default: true,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
 
@@ -355,7 +384,7 @@ describe('ng-parser', () => {
             method2() {}
             `;
             const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
-                '/button/button.component.ts': createButtonComponent(sourceText)
+                '/button/button.component.ts': createButtonComponent(sourceText),
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -366,16 +395,16 @@ describe('ng-parser', () => {
                     type: { name: 'boolean', options: null, kindName: undefined },
                     description: '',
                     default: false,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
             expect(docs[0].methods).toEqual([
                 {
                     name: 'method2',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: 'This is public method'
-                }
+                    description: 'This is public method',
+                },
             ]);
         });
     });
@@ -402,7 +431,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -411,29 +440,29 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param2',
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
             expect(docs[0].methods).toEqual([
                 {
                     name: 'method1',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: ''
+                    description: '',
                 },
                 {
                     name: 'method2',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: ''
-                }
+                    description: '',
+                },
             ] as NgMethodDoc[]);
         });
 
@@ -466,7 +495,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -475,42 +504,42 @@ describe('ng-parser', () => {
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param2',
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param3',
                     type: { name: 'string', options: null, kindName: 'StringKeyword' },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
             expect(docs[0].methods).toEqual([
                 {
                     name: 'method1',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: ''
+                    description: '',
                 },
                 {
                     name: 'method2',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: ''
+                    description: '',
                 },
                 {
                     name: 'method3',
                     parameters: [],
                     returnValue: { type: 'void', description: '' },
-                    description: ''
-                }
+                    description: '',
+                },
             ] as NgMethodDoc[]);
         });
 
@@ -535,7 +564,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('dialog', {
-                '/dialog/dialog.service.ts': sourceText
+                '/dialog/dialog.service.ts': sourceText,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs[0].methods).toEqual([
@@ -545,14 +574,14 @@ describe('ng-parser', () => {
                         {
                             name: 'input1',
                             description: '这是一个参数',
-                            type: 'number'
-                        }
+                            type: 'number',
+                        },
                     ],
                     returnValue: {
                         type: 'void',
-                        description: ''
+                        description: '',
                     },
-                    description: 'method1 重载方法1'
+                    description: 'method1 重载方法1',
                 },
                 {
                     name: 'method1',
@@ -560,20 +589,20 @@ describe('ng-parser', () => {
                         {
                             name: 'input1',
                             description: '',
-                            type: 'number'
+                            type: 'number',
                         },
                         {
                             name: 'input2',
                             description: '',
-                            type: 'number'
-                        }
+                            type: 'number',
+                        },
                     ],
                     returnValue: {
                         type: 'void',
-                        description: ''
+                        description: '',
                     },
-                    description: 'method1 重载方法2'
-                }
+                    description: 'method1 重载方法2',
+                },
             ] as NgMethodDoc[]);
         });
 
@@ -599,7 +628,7 @@ describe('ng-parser', () => {
             }
             `;
             const { ngDocParser } = createTestNgDocParser('dialog', {
-                '/dialog/dialog.service.ts': sourceText
+                '/dialog/dialog.service.ts': sourceText,
             });
             const docs = ngDocParser.parse('/dialog/*');
 
@@ -610,20 +639,20 @@ describe('ng-parser', () => {
                         {
                             name: 'req',
                             description: '',
-                            type: 'HttpRequest<any>'
+                            type: 'HttpRequest<any>',
                         },
                         {
                             name: 'next',
                             description: '',
-                            type: 'HttpHandler'
-                        }
+                            type: 'HttpHandler',
+                        },
                     ],
                     returnValue: {
                         type: 'Observable<HttpEvent<any>>',
-                        description: ''
+                        description: '',
                     },
-                    description: 'Identifies and handles a given HTTP request.'
-                }
+                    description: 'Identifies and handles a given HTTP request.',
+                },
             ]);
         });
     });
@@ -646,7 +675,7 @@ describe('ng-parser', () => {
                  * Close dialog
                  **/
                 close: (id: string) => void;
-            }`
+            }`,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs.length).toBe(1);
@@ -661,25 +690,25 @@ describe('ng-parser', () => {
                         type: {
                             name: 'string',
                             options: null,
-                            kindName: 'StringKeyword'
+                            kindName: 'StringKeyword',
                         },
                         description: 'Parm1 desc',
                         default: null,
-                        tags: {}
+                        tags: {},
                     },
                     {
                         name: 'close',
                         type: {
                             name: '(id: string) => void',
                             options: null,
-                            kindName: 'FunctionType'
+                            kindName: 'FunctionType',
                         },
                         description: 'Close dialog',
                         default: null,
-                        tags: {}
-                    }
+                        tags: {},
+                    },
                 ],
-                methods: []
+                methods: [],
             });
         });
 
@@ -698,7 +727,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -707,23 +736,23 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param2',
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
 
@@ -746,7 +775,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -755,34 +784,34 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param2',
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param3',
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
 
@@ -805,7 +834,7 @@ describe('ng-parser', () => {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('button', {
-                '/button/button.component.ts': sourceText
+                '/button/button.component.ts': sourceText,
             });
             const docs = ngDocParser.parse('/button/*');
             expect(docs[0].properties).toEqual([
@@ -814,34 +843,34 @@ describe('ng-parser', () => {
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param2',
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
+                    tags: {},
                 },
                 {
                     name: 'param3',
                     type: {
                         name: 'string',
                         options: null,
-                        kindName: 'StringKeyword'
+                        kindName: 'StringKeyword',
                     },
                     description: '',
                     default: null,
-                    tags: {}
-                }
+                    tags: {},
+                },
             ]);
         });
     });
@@ -864,7 +893,7 @@ describe('ng-parser', () => {
                  * Close dialog
                  **/
                 close(id?: string): void {}
-            }`
+            }`,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs.length).toBe(1);
@@ -879,12 +908,12 @@ describe('ng-parser', () => {
                         type: {
                             name: 'string',
                             options: null,
-                            kindName: 'StringKeyword'
+                            kindName: 'StringKeyword',
                         },
                         description: 'Parm1 desc',
                         default: null,
-                        tags: {}
-                    }
+                        tags: {},
+                    },
                 ],
                 methods: [
                     {
@@ -893,16 +922,16 @@ describe('ng-parser', () => {
                             {
                                 name: 'id',
                                 description: '',
-                                type: 'string'
-                            }
+                                type: 'string',
+                            },
                         ],
                         returnValue: {
                             type: 'void',
-                            description: ''
+                            description: '',
                         },
-                        description: 'Close dialog'
-                    }
-                ]
+                        description: 'Close dialog',
+                    },
+                ],
             });
         });
 
@@ -940,7 +969,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
     close(id?: string): void {}
 }`;
             const { ngDocParser, fsHost, ngParserHost } = createTestNgDocParser('button', {
-                '/dialog/dialog.ts': sourceText
+                '/dialog/dialog.ts': sourceText,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs.length).toBe(1);
@@ -955,23 +984,23 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                         type: {
                             name: 'string',
                             options: null,
-                            kindName: 'StringKeyword'
+                            kindName: 'StringKeyword',
                         },
                         description: 'Parm1 desc',
                         default: null,
-                        tags: {}
+                        tags: {},
                     },
                     {
                         name: 'parm2',
                         type: {
                             name: 'string',
                             options: null,
-                            kindName: 'StringKeyword'
+                            kindName: 'StringKeyword',
                         },
                         description: 'Parm2 desc',
                         default: null,
-                        tags: {}
-                    }
+                        tags: {},
+                    },
                 ],
                 methods: [
                     {
@@ -979,18 +1008,18 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                         parameters: [],
                         returnValue: {
                             type: 'void',
-                            description: ''
+                            description: '',
                         },
-                        description: ''
+                        description: '',
                     },
                     {
                         name: 'afterOpened',
                         parameters: [],
                         returnValue: {
                             type: 'Observable<void>',
-                            description: ''
+                            description: '',
                         },
-                        description: '模态框打开后的回调'
+                        description: '模态框打开后的回调',
                     },
                     {
                         name: 'close',
@@ -998,16 +1027,16 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                             {
                                 name: 'id',
                                 description: '',
-                                type: 'string'
-                            }
+                                type: 'string',
+                            },
                         ],
                         returnValue: {
                             type: 'void',
-                            description: ''
+                            description: '',
                         },
-                        description: 'Close dialog'
-                    }
-                ]
+                        description: 'Close dialog',
+                    },
+                ],
             });
         });
     });
@@ -1035,7 +1064,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                     transform(value: string): boolean {                   
                         return true;
                     }
-                }`
+                }`,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs.length).toBe(1);
@@ -1053,16 +1082,16 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                             {
                                 name: 'value',
                                 description: '输入值',
-                                type: 'string'
-                            }
+                                type: 'string',
+                            },
                         ],
                         returnValue: {
                             type: 'boolean',
-                            description: ''
+                            description: '',
                         },
-                        description: ''
-                    }
-                ]
+                        description: '',
+                    },
+                ],
             });
         });
 
@@ -1090,7 +1119,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
             }`;
 
             const { ngDocParser } = createTestNgDocParser('dialog', {
-                '/dialog/dialog.ts': sourceText
+                '/dialog/dialog.ts': sourceText,
             });
             const docs = ngDocParser.parse('/dialog/*');
             expect(docs[0].methods).toEqual([
@@ -1100,14 +1129,14 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                         {
                             name: 'input1',
                             description: '这是一个参数',
-                            type: 'number'
-                        }
+                            type: 'number',
+                        },
                     ],
                     returnValue: {
                         type: 'void',
-                        description: ''
+                        description: '',
                     },
-                    description: 'transform 重载方法1'
+                    description: 'transform 重载方法1',
                 },
                 {
                     name: 'transform',
@@ -1115,20 +1144,20 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                         {
                             name: 'input1',
                             description: '',
-                            type: 'number'
+                            type: 'number',
                         },
                         {
                             name: 'input2',
                             description: '',
-                            type: 'number'
-                        }
+                            type: 'number',
+                        },
                     ],
                     returnValue: {
                         type: 'void',
-                        description: ''
+                        description: '',
                     },
-                    description: 'transform 重载方法2'
-                }
+                    description: 'transform 重载方法2',
+                },
             ] as NgMethodDoc[]);
         });
     });
@@ -1162,29 +1191,29 @@ describe('#parser', () => {
         console.time('createProgram2');
         const options: ts.CompilerOptions = {};
         const host: ts.CompilerHost = {
-            fileExists: filePath => {
+            fileExists: (filePath) => {
                 return toolkit.fs.pathExistsSync(filePath);
             },
-            directoryExists: dirPath => dirPath === '/',
+            directoryExists: (dirPath) => dirPath === '/',
             getCurrentDirectory: () => '/',
             getDirectories: () => [],
-            getCanonicalFileName: fileName => fileName,
+            getCanonicalFileName: (fileName) => fileName,
             getNewLine: () => '\n',
             getDefaultLibFileName: () => '',
-            getSourceFile: filePath => {
+            getSourceFile: (filePath) => {
                 const text = toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
                 return ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest);
             },
-            readFile: filePath => {
+            readFile: (filePath) => {
                 return toolkit.fs.readFileSync(filePath, { encoding: 'utf-8' });
             },
             useCaseSensitiveFileNames: () => true,
-            writeFile: () => {}
+            writeFile: () => {},
         };
         const program2 = ts.createProgram({
             options,
             rootNames: filePaths,
-            host: host
+            host: host,
         });
         console.timeEnd('createProgram2');
 
@@ -1209,7 +1238,7 @@ describe('#parser', () => {
         console.time('TETHYS');
         const ngDocParser = new NgDocParser({ fileGlobs: `${tethysRootPath}/src/*/{*[!spec].ts,!(examples|api|test)/**/*[!spec].ts}` });
         let total = 0;
-        dirs.forEach(dir => {
+        dirs.forEach((dir) => {
             if (toolkit.fs.isDirectory(dir)) {
                 const docs = NgDocParser.parse(`${dir}/{*[!spec].ts,!(examples|api|test)/**/*[!spec].ts}`);
                 total += docs.length;
