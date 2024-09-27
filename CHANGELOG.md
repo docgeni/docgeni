@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.5](https://github.com/docgeni/docgeni/compare/v2.4.0-next.4...v2.4.0-next.5) (2024-09-27)
+
+
+### Features
+
+* support signals contains input, output and model ([#556](https://github.com/docgeni/docgeni/issues/556)) ([81128f4](https://github.com/docgeni/docgeni/commit/81128f4a5b806166c8f80e9fb20731db46a1d0df))
+
+
+
+
+
 # [2.4.0-next.4](https://github.com/docgeni/docgeni/compare/v2.4.0-next.3...v2.4.0-next.4) (2024-09-19)
 
 
