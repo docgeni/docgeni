@@ -236,8 +236,14 @@ export class NgDocParser {
                             if (propertyDeclaration.initializer?.kind === ts.SyntaxKind.CallExpression) {
                                 callInfo = getCallExpressionInfo(propertyDeclaration.initializer as ts.CallExpression);
                             }
+
                             if (signalApis.includes(callInfo?.name)) {
                                 property.kind = callInfo.name === 'output' ? 'Output' : 'Input';
+                                if ((callInfo?.argumentInfo[1] as { alias: string })?.alias) {
+                                    property.aliasName = (callInfo?.argumentInfo[1] as { alias: string }).alias;
+                                } else {
+                                    property.aliasName = '';
+                                }
                                 if (callInfo.name === 'input') {
                                     property.default = ts.displayPartsToString(tags.default?.text) || callInfo?.argumentInfo[0];
                                 }

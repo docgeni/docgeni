@@ -64,7 +64,7 @@ describe('ng-parser', () => {
                  * @type xs | sm | md | lg
                  * @default xs
                  */
-                param2 = input<'blur' | 'change'>('blur');
+                param2 = input<'blur' | 'change'>('blur', { alias: 'thyIconType' });
             `),
         });
         const docs = ngDocParser.parse('/button/*');
@@ -106,6 +106,7 @@ describe('ng-parser', () => {
                         },
                         description: '按钮大小',
                         default: 'xs',
+                        aliasName: 'thyIconType',
                         tags: {
                             type: {
                                 name: 'type',
