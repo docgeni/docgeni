@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.6](https://github.com/docgeni/docgeni/compare/v2.4.0-next.5...v2.4.0-next.6) (2024-09-29)
+
+
+### Bug Fixes
+
+* get signal input aliasName from argumentInfo ([#566](https://github.com/docgeni/docgeni/issues/566)) ([5bd80af](https://github.com/docgeni/docgeni/commit/5bd80af4f5a5e83638aec6e2307f28b195dd0c51))
+
+
+
+
+
 # [2.4.0-next.5](https://github.com/docgeni/docgeni/compare/v2.4.0-next.4...v2.4.0-next.5) (2024-09-27)
 
 

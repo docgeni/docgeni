@@ -1,6 +1,6 @@
 {
   "name": "create-docgeni",
-  "version": "2.4.0-next.5",
+  "version": "2.4.0-next.6",
   "description": "CLI template for Docgeni Create",
   "author": "why520crazy <why520crazy@163.com>",
   "homepage": "https://github.com/docgeni/docgeni#readme",
@@ -41,6 +41,6 @@
     "static site generator"
   ],
   "dependencies": {
-    "@docgeni/cli": "^2.4.0-next.5"
+    "@docgeni/cli": "^2.4.0-next.6"
   }
 }

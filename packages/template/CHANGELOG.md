@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.6](https://github.com/docgeni/docgeni/compare/v2.4.0-next.5...v2.4.0-next.6) (2024-09-29)
+
+**Note:** Version bump only for package @docgeni/template
+
+
+
+
+
 # [2.4.0-next.5](https://github.com/docgeni/docgeni/compare/v2.4.0-next.4...v2.4.0-next.5) (2024-09-27)
 
 **Note:** Version bump only for package @docgeni/template
