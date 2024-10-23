@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/docgeni/docgeni/compare/v2.4.0-next.6...v2.4.0) (2024-10-23)
+
+### Bug Fixes
+
+* get signal input aliasName from argumentInfo ([#566](https://github.com/docgeni/docgeni/issues/566)) ([5bd80af](https://github.com/docgeni/docgeni/commit/5bd80af4f5a5e83638aec6e2307f28b195dd0c51))
+
+
+### Features
+
+* support signals contains input, output and model ([#556](https://github.com/docgeni/docgeni/issues/556)) ([81128f4](https://github.com/docgeni/docgeni/commit/81128f4a5b806166c8f80e9fb20731db46a1d0df))
+* banner support dark theme #TINFR-585 ([#561](https://github.com/docgeni/docgeni/issues/561)) ([ccf0bed](https://github.com/docgeni/docgeni/commit/ccf0bedda8c86b4974bff9a9432f190d57edb9d5)), closes [#TINFR-585](https://github.com/docgeni/docgeni/issues/TINFR-585)
+* support config and switch light,dark,system themes #TINFR-412 ([#559](https://github.com/docgeni/docgeni/issues/559)) ([6c57638](https://github.com/docgeni/docgeni/commit/6c5763862c7aac7ab730f07942557e591b72e46c)), closes [#TINFR-412](https://github.com/docgeni/docgeni/issues/TINFR-412)
+* update angular.json use default application builder ([a936b05](https://github.com/docgeni/docgeni/commit/a936b055992ee67cefb1fb5d163307bed3586de6))
+* upgrade ng to 18 ([#554](https://github.com/docgeni/docgeni/issues/554)) ([279aed0](https://github.com/docgeni/docgeni/commit/279aed0acb6887353e8afb707a0f59ee2bf620b6))
+
+
+
 # [2.4.0-next.6](https://github.com/docgeni/docgeni/compare/v2.4.0-next.5...v2.4.0-next.6) (2024-09-29)
 
 
