@@ -11,6 +11,7 @@ let OFFSET = 60;
 @Component({
     selector: 'dg-toc',
     templateUrl: './toc.component.html',
+    standalone: false,
 })
 export class TableOfContentsComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-toc`) isToc = true;

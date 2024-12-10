@@ -13,7 +13,7 @@
     ],
     "styles": null,
     "exportAs": null,
-    "standalone": false,
+    "standalone": true,
     "properties": []
   },
   {
@@ -30,7 +30,7 @@
     ],
     "styles": null,
     "exportAs": "thyButton",
-    "standalone": false,
+    "standalone": true,
     "properties": [
       {
         "kind": "Input",
@@ -262,7 +262,7 @@
     "styleUrls": null,
     "styles": null,
     "exportAs": null,
-    "standalone": false,
+    "standalone": true,
     "properties": []
   },
   {

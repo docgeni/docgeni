@@ -5,6 +5,7 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
     selector: 'dg-doc-header',
     templateUrl: './doc-header.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DocHeaderComponent implements OnInit, OnDestroy {
     @Input() title!: string;

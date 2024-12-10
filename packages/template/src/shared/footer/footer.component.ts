@@ -5,13 +5,17 @@ import { GlobalContext } from '../../services/global-context';
     selector: 'dg-footer',
     templateUrl: './footer.component.html',
     host: {
-        class: 'dg-footer'
-    }
+        class: 'dg-footer',
+    },
+    standalone: false,
 })
 export class FooterComponent implements OnInit {
     @HostBinding(`class.dg-hidden`) isHide = true;
 
-    constructor(private global: GlobalContext, private elementRef: ElementRef) {}
+    constructor(
+        private global: GlobalContext,
+        private elementRef: ElementRef,
+    ) {}
 
     ngOnInit(): void {
         if (this.global.config.footer) {

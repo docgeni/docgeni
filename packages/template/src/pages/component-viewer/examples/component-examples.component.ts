@@ -4,7 +4,8 @@ import { NavigationService } from '../../../services/public-api';
 
 @Component({
     selector: 'dg-component-examples',
-    templateUrl: './component-examples.component.html'
+    templateUrl: './component-examples.component.html',
+    standalone: false,
 })
 export class ComponentExamplesComponent implements OnInit {
     @HostBinding('class.dg-examples') isComponentExamples = true;
@@ -13,8 +14,10 @@ export class ComponentExamplesComponent implements OnInit {
         return this.componentViewer.docItem.examples || [];
     }
 
-    constructor(public componentViewer: ComponentViewerComponent, public navigationService: NavigationService) {
-    }
+    constructor(
+        public componentViewer: ComponentViewerComponent,
+        public navigationService: NavigationService,
+    ) {}
 
     ngOnInit(): void {}
 }

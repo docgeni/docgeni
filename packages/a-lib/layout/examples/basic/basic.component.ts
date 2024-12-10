@@ -9,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'alib-layout-basic-example',
     templateUrl: './basic.component.html',
-    styleUrls: ['./basic.component.scss']
+    styleUrls: ['./basic.component.scss'],
+    standalone: false,
 })
 export class AlibLayoutBasicExampleComponent implements OnInit {
     constructor() {}

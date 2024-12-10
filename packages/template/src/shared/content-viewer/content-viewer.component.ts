@@ -27,6 +27,7 @@ import { TocService } from '../../services/toc.service';
     host: {
         class: 'dg-doc-content',
     },
+    standalone: false,
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     private portalHosts: DomPortalOutlet[] = [];

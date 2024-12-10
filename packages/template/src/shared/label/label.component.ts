@@ -7,6 +7,7 @@ const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
 @Component({
     selector: 'dg-label',
     templateUrl: './label.component.html',
+    standalone: false,
 })
 export class LabelComponent implements OnInit {
     @HostBinding(`class`) classList!: string[];

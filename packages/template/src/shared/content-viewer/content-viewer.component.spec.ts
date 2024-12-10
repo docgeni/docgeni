@@ -11,6 +11,7 @@ import { CONFIG_TOKEN } from '../../services/global-context';
 @Component({
     selector: 'my-label',
     template: 'my-label <ng-content></ng-content>',
+    standalone: false,
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
     @Input() type!: string;

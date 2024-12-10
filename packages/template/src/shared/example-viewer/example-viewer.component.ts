@@ -27,6 +27,7 @@ const nameOrdersMap: Record<string, number> = {
     host: {
         '[attr.id]': 'example?.key',
     },
+    standalone: false,
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;

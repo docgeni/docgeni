@@ -33,6 +33,7 @@ class Base {
     host: {
         class: 'dg-btn',
     },
+    standalone: false,
 })
 export class AlibButtonComponent extends Base implements OnInit {
     private type!: string;

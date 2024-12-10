@@ -27,7 +27,7 @@ export function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker) {
     return {
         name: symbol.getName(),
         description: ts.displayPartsToString(symbol.getDocumentationComment(checker)),
-        type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!))
+        type: checker.typeToString(checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)),
     };
 }
 
@@ -37,7 +37,7 @@ export function getNgDocItemType(name: string): NgDocItemType {
         Directive: 'directive',
         Injectable: 'service',
         Pipe: 'pipe',
-        Interface: 'interface'
+        Interface: 'interface',
     }[name] as NgDocItemType;
 }
 
@@ -51,7 +51,7 @@ export function getDirectiveMeta(args: ArgumentInfo[]): NgDirectiveMetadata {
               styleUrls: firstArg.styleUrls || null,
               styles: firstArg.styles || null,
               exportAs: firstArg.exportAs || null,
-              standalone: firstArg.standalone === 'true'
+              standalone: firstArg.standalone !== 'false',
           } as NgDirectiveMetadata)
         : undefined;
 }
@@ -62,7 +62,7 @@ export function getPipeMeta(args: ArgumentInfo[]): NgPipeMetadata {
         ? ({
               name: firstArg.name,
               pure: !(firstArg.pure === 'false'),
-              standalone: firstArg.standalone === 'true'
+              standalone: firstArg.standalone === 'true',
           } as NgPipeMetadata)
         : undefined;
 }
@@ -85,7 +85,7 @@ export function getTypeNodes(typeNodes: ts.NodeArray<ts.TypeNode>) {
 
 export function isExported<TNode extends ts.Node>(node: TNode): node is TNode {
     return ts.canHaveModifiers(node) && ts.getModifiers(node)
-        ? !!ts.getModifiers(node).find(modifier => {
+        ? !!ts.getModifiers(node).find((modifier) => {
               return ts.SyntaxKind.ExportKeyword === modifier.kind;
           })
         : false;
@@ -119,7 +119,7 @@ export function findNodes<T extends ts.Node>(
     node: ts.Node,
     kindOrGuard: ts.SyntaxKind | ((node: ts.Node) => node is T),
     max = Infinity,
-    recursive = false
+    recursive = false,
 ): T[] {
     if (!node || max === 0) {
         return [];
@@ -134,7 +134,7 @@ export function findNodes<T extends ts.Node>(
     }
     if (max > 0 && (recursive || !test(node))) {
         for (const child of node.getChildren()) {
-            findNodes(child, test, max, recursive).forEach(node => {
+            findNodes(child, test, max, recursive).forEach((node) => {
                 if (max > 0) {
                     arr.push(node);
                 }
@@ -211,7 +211,7 @@ export function getDocTagsBySymbol(symbol: ts.Symbol): [DocTagResult, Record<str
 export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)[]): [DocTagResult, Record<string, DocTagResult>] {
     const defaultLocaleTags: DocTagResult = {};
     const localeTags: Record<string, DocTagResult> = {};
-    tags.forEach(jsDocTag => {
+    tags.forEach((jsDocTag) => {
         if (jsDocTag.text && jsDocTag.text[0] && jsDocTag.text[0].text && jsDocTag.text[0].text.startsWith('.')) {
             const locale = jsDocTag.text[0].text.substring(1, jsDocTag.text[0].text.indexOf(' '));
             jsDocTag.text[0].text = jsDocTag.text[0].text.replace(`.${locale}`, '').trim();
@@ -226,7 +226,7 @@ export function parseJsDocTagsToDocTagResult(tags: (ts.JSDocTagInfo | undefined)
                 const paramName = jsDocTag.text[0].text;
                 const paramDesc = jsDocTag.text.length >= 3 ? jsDocTag.text[2].text : '';
 
-                defaultLocaleTags[jsDocTag.name] = defaultLocaleTags[jsDocTag.name] || (({} as unknown) as ts.JSDocTagInfo);
+                defaultLocaleTags[jsDocTag.name] = defaultLocaleTags[jsDocTag.name] || ({} as unknown as ts.JSDocTagInfo);
                 defaultLocaleTags[jsDocTag.name][paramName] = { name: paramName, text: [{ text: paramDesc, kind: 'text' }] };
             } else {
                 defaultLocaleTags[jsDocTag.name] = jsDocTag;
@@ -267,7 +267,7 @@ export function getDocTagsBySignature(symbol: ts.Signature): MethodDocTagResult 
 
                 result[item.name][paramName] = {
                     name: paramName,
-                    text: paramText
+                    text: paramText,
                 };
             } else {
                 throw new Error(`[${item.name}] param comment format error`);

@@ -5,8 +5,9 @@ import { CopierService } from '../copier/copier.service';
     selector: 'dg-copy,[dgCopy]',
     templateUrl: './copy.component.html',
     host: {
-        class: 'dg-copy'
-    }
+        class: 'dg-copy',
+    },
+    standalone: false,
 })
 export class CopyComponent implements OnInit {
     public icon = 'copy';

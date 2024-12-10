@@ -3,7 +3,8 @@ import { ComponentDocItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-component-viewer',
-    templateUrl: './component-viewer.component.html'
+    templateUrl: './component-viewer.component.html',
+    standalone: false,
 })
 export class ComponentViewerComponent implements OnInit {
     @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
@@ -17,9 +18,8 @@ export class ComponentViewerComponent implements OnInit {
 
 @Component({
     selector: 'dg-component-empty',
-    template: `
-        <p>Current component has not been documented.</p>
-    `
+    template: ` <p>Current component has not been documented.</p> `,
+    standalone: false,
 })
 export class ComponentEmptyComponent implements OnInit {
     @HostBinding(`class.dg-component-empty`) isDocEmpty = true;

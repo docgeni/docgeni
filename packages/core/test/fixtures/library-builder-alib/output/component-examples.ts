@@ -20,6 +20,6 @@ export const EXAMPLE_COMPONENTS = {
         ],
         "additionalFiles": [],
         "additionalComponents": [],
-        "standalone": false
+        "standalone": true
     }
 };

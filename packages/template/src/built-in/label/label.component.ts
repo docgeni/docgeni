@@ -7,9 +7,10 @@ export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
     selector: 'label',
     templateUrl: './label.component.html',
     host: {
-        class: 'dg-label'
+        class: 'dg-label',
     },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements OnInit {
     private internalType: DocgeniLabelType = 'primary';
@@ -34,5 +35,5 @@ export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements On
 
 export default {
     selector: 'label',
-    component: DocgeniLabelComponent
+    component: DocgeniLabelComponent,
 };

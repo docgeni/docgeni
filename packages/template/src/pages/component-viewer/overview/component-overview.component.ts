@@ -6,6 +6,7 @@ import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
 @Component({
     selector: 'dg-component-overview',
     templateUrl: './component-overview.component.html',
+    standalone: false,
 })
 export class ComponentOverviewComponent implements OnInit {
     contentUrl!: string;

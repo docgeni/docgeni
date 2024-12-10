@@ -3,12 +3,17 @@ import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef
 
 @Component({
     selector: 'dg-logo',
-    templateUrl: './logo.component.html'
+    templateUrl: './logo.component.html',
+    standalone: false,
 })
 export class LogoComponent implements OnInit {
     @ViewChild('logo', { static: true }) logoTemplate!: TemplateRef<HTMLElement>;
 
-    constructor(public global: GlobalContext, private elementRef: ElementRef, private viewContainerRef: ViewContainerRef) {}
+    constructor(
+        public global: GlobalContext,
+        private elementRef: ElementRef,
+        private viewContainerRef: ViewContainerRef,
+    ) {}
 
     ngOnInit(): void {
         this.viewContainerRef.createEmbeddedView(this.logoTemplate);

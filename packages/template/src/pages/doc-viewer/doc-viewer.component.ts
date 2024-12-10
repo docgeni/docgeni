@@ -11,6 +11,7 @@ import { TableOfContentsComponent } from '../../shared/toc/toc.component';
 @Component({
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html',
+    standalone: false,
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
@@ -94,6 +95,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 @Component({
     selector: 'doc-viewer-home',
     template: '',
+    standalone: false,
 })
 export class DocViewerHomeComponent implements OnDestroy {
     destroy$ = new Subject<void>();
