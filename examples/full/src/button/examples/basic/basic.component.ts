@@ -6,7 +6,7 @@ import { ButtonModule } from 'alib/button';
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.css'],
     standalone: true,
-    imports: [ButtonModule]
+    imports: [ButtonModule],
 })
 export class AlibButtonBasicExampleComponent {
     constructor() {}

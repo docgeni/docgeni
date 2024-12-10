@@ -40,7 +40,7 @@ $dg-theme-colors: map-merge(
         'warning': $dg-warning,
         'danger': $dg-danger,
         'light': $dg-gray-300,
-        'dark': $dg-gray-700
+        'dark': $dg-gray-700,
     ),
     $dg-theme-colors
 );
@@ -50,7 +50,7 @@ $dg-grid-breakpoints: (
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px
+    xl: 1200px,
 ) !default;
 
 $dg-spacer: 1rem !default;
@@ -60,18 +60,18 @@ $dg-spacers: map-merge(
     (
         0: 0,
         1: (
-            $dg-spacer * 0.25
+            $dg-spacer * 0.25,
         ),
         2: (
-            $dg-spacer * 0.5
+            $dg-spacer * 0.5,
         ),
         3: $dg-spacer,
         4: (
-            $dg-spacer * 1.5
+            $dg-spacer * 1.5,
         ),
         5: (
-            $dg-spacer * 3
-        )
+            $dg-spacer * 3,
+        ),
     ),
     $dg-spacers
 );
@@ -86,8 +86,19 @@ $dg-link-hover-decoration: none !default;
 // font
 // $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 //         'Segoe UI Symbol';
-$dg-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Helvetica Neue, Noto Sans, Noto Sans CJK SC,
-    Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif !default;
+$dg-font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    PingFang SC,
+    Helvetica Neue,
+    Noto Sans,
+    Noto Sans CJK SC,
+    Microsoft Yahei,
+    Arial,
+    Hiragino Sans GB,
+    sans-serif !default;
 $dg-font-size-base: 0.875rem !default; // 14px
 $dg-font-size-md: 1rem !default; // 16px
 $dg-font-size-lg: 1.25rem !default; // 20px
@@ -106,7 +117,10 @@ $dg-navbar-color-default: $dg-body-color;
 
 // angular theme
 $dg-navbar-background-angular: #3f51b5 !default;
-$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-box-shadow-angular:
+    0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
 $dg-hero-background: #dae6f3 !default;
@@ -492,7 +506,9 @@ $dg-btn-focus-width: 0.2rem !default;
         border-color: $hover-border;
         // Avoid using mixin so we can pass custom focus shadow properly
         @if $dg-enable-shadows {
-            box-shadow: $dg-btn-box-shadow, 0 0 0 $dg-btn-focus-width rgba(mix(dg-color-yiq($background), $border, 15%), 0.5);
+            box-shadow:
+                $dg-btn-box-shadow,
+                0 0 0 $dg-btn-focus-width rgba(mix(dg-color-yiq($background), $border, 15%), 0.5);
         } @else {
             box-shadow: 0 0 0 $dg-btn-focus-width rgba(mix(color-yiq($background), $border, 15%), 0.5);
         }
@@ -730,7 +746,9 @@ a:hover {
 
     .dg-doc-viewer-backdrop {
         position: absolute;
-        transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s 0.4s;
+        transition:
+            background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+            z-index 0s 0.4s;
         background-color: transparent;
         z-index: -1;
         top: 0;
@@ -756,7 +774,9 @@ a:hover {
 
         .dg-sidebar {
             z-index: 2;
-            transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s;
+            transition:
+                left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                background 0.4s;
             left: -300px;
         }
 
@@ -1352,7 +1372,7 @@ $dg-pipe-color: #546e7a;
 $dg-theme-colors: map-merge(
     (
         'default': $dg-gray-200,
-        'light': $dg-gray-700
+        'light': $dg-gray-700,
     ),
     $dg-theme-colors
 );
@@ -2378,7 +2398,7 @@ $dg-theme-colors: map-merge(
         'warning': $dg-warning,
         'danger': $dg-danger,
         'light': $dg-gray-300,
-        'dark': $dg-gray-700
+        'dark': $dg-gray-700,
     ),
     $dg-theme-colors
 );
@@ -2388,7 +2408,7 @@ $dg-grid-breakpoints: (
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px
+    xl: 1200px,
 ) !default;
 
 $dg-spacer: 1rem !default;
@@ -2398,18 +2418,18 @@ $dg-spacers: map-merge(
     (
         0: 0,
         1: (
-            $dg-spacer * 0.25
+            $dg-spacer * 0.25,
         ),
         2: (
-            $dg-spacer * 0.5
+            $dg-spacer * 0.5,
         ),
         3: $dg-spacer,
         4: (
-            $dg-spacer * 1.5
+            $dg-spacer * 1.5,
         ),
         5: (
-            $dg-spacer * 3
-        )
+            $dg-spacer * 3,
+        ),
     ),
     $dg-spacers
 );
@@ -2424,8 +2444,19 @@ $dg-link-hover-decoration: none !default;
 // font
 // $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 //         'Segoe UI Symbol';
-$dg-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Helvetica Neue, Noto Sans, Noto Sans CJK SC,
-    Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif !default;
+$dg-font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    PingFang SC,
+    Helvetica Neue,
+    Noto Sans,
+    Noto Sans CJK SC,
+    Microsoft Yahei,
+    Arial,
+    Hiragino Sans GB,
+    sans-serif !default;
 $dg-font-size-base: 0.875rem !default; // 14px
 $dg-font-size-md: 1rem !default; // 16px
 $dg-font-size-lg: 1.25rem !default; // 20px
@@ -2444,7 +2475,10 @@ $dg-navbar-color-default: $dg-body-color;
 
 // angular theme
 $dg-navbar-background-angular: #3f51b5 !default;
-$dg-navbar-box-shadow-angular: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
+$dg-navbar-box-shadow-angular:
+    0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 $dg-navbar-color-angular: $dg-white !default;
 
 $dg-hero-background: #dae6f3 !default;

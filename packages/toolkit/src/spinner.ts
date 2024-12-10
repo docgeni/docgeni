@@ -14,7 +14,7 @@ export class Spinner {
             // when the underlying process is sync.
             hideCursor: false,
             discardStdin: false,
-            isEnabled: isTTY()
+            isEnabled: isTTY(),
         });
     }
 

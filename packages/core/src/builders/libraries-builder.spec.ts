@@ -5,7 +5,7 @@ import {
     DEFAULT_TEST_ROOT_PATH,
     expectThrowAsync,
     FixtureResult,
-    loadFixture
+    loadFixture,
 } from '../testing';
 import { LibrariesBuilder } from './libraries-builder';
 import { DocgeniContext } from '../docgeni.interface';
@@ -20,7 +20,7 @@ class LibrariesBuilderSpectator {
     private spyLibWatches = new Map<LibraryBuilder, jasmine.Spy<() => Promise<void>>>();
 
     constructor(private librariesBuilder: LibrariesBuilder) {
-        librariesBuilder.libraries.forEach(libraryBuilder => {
+        librariesBuilder.libraries.forEach((libraryBuilder) => {
             const buildSpy = spyOn(libraryBuilder, 'build');
             buildSpy.and.callFake(() => {
                 return Promise.resolve();
@@ -42,25 +42,25 @@ class LibrariesBuilderSpectator {
     }
 
     assetBuildLibraries(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
-        libs.forEach(lib => {
+        libs.forEach((lib) => {
             expect(this.spyLibBuilds.get(lib)).toHaveBeenCalled();
         });
     }
 
     assetEmitLibraries(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
-        libs.forEach(lib => {
+        libs.forEach((lib) => {
             expect(this.spyLibEmits.get(lib)).toHaveBeenCalled();
         });
     }
 
     assetWatchLibrariesNotCalled(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
-        libs.forEach(lib => {
+        libs.forEach((lib) => {
             expect(this.spyLibWatches.get(lib)).not.toHaveBeenCalled();
         });
     }
 
     assetWatchLibrariesCalled(libs: LibraryBuilder[] = this.librariesBuilder.libraries) {
-        libs.forEach(lib => {
+        libs.forEach((lib) => {
             expect(this.spyLibWatches.get(lib)).toHaveBeenCalled();
         });
     }
@@ -80,20 +80,20 @@ describe('libraries-builder', () => {
                     title: '通用',
                     locales: {
                         'en-us': {
-                            title: 'General'
-                        }
-                    }
+                            title: 'General',
+                        },
+                    },
                 },
                 {
                     id: 'layout',
                     title: '布局',
                     locales: {
                         'en-us': {
-                            title: 'Layout'
-                        }
-                    }
-                }
-            ]
+                            title: 'Layout',
+                        },
+                    },
+                },
+            ],
         };
 
         let context: DocgeniContext;
@@ -101,7 +101,7 @@ describe('libraries-builder', () => {
 
         beforeAll(async () => {
             toolkit.initialize({
-                baseDir: systemPath.resolve(__dirname, '../')
+                baseDir: systemPath.resolve(__dirname, '../'),
             });
             fixture = await loadFixture('library-builder-alib');
         });
@@ -116,9 +116,9 @@ describe('libraries-builder', () => {
                     [`${libDirPath}/button/examples/basic/basic.component.html`]: fixture.src['button/examples/basic/basic.component.html'],
                     [`${libDirPath}/button/examples/basic/index.md`]: fixture.src['button/examples/basic/index.md'],
                     [`${libDirPath}/alert/doc/zh-cn.md`]: fixture.src['alert/doc/zh-cn.md'],
-                    [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts']
+                    [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts'],
                 },
-                watch: true
+                watch: true,
             });
         });
 
@@ -148,15 +148,12 @@ describe('libraries-builder', () => {
 
             const expectedFiles = {
                 [toolkit.path.resolve(context.paths.absSiteContentPath, 'index.ts')]: fixture.getOutputContent(`index.ts`),
-                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-modules.ts')]: fixture.getOutputContent(
-                    `example-modules.ts`
-                ),
-                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-loader.ts')]: fixture.getOutputContent(
-                    `example-loader.ts`
-                ),
-                [toolkit.path.resolve(context.paths.absSiteContentPath, 'component-examples.ts')]: fixture.getOutputContent(
-                    `component-examples.ts`
-                )
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-modules.ts')]:
+                    fixture.getOutputContent(`example-modules.ts`),
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'example-loader.ts')]:
+                    fixture.getOutputContent(`example-loader.ts`),
+                [toolkit.path.resolve(context.paths.absSiteContentPath, 'component-examples.ts')]:
+                    fixture.getOutputContent(`component-examples.ts`),
             };
             await assertExpectedFiles(context.host, expectedFiles, true);
         });
@@ -177,8 +174,8 @@ describe('libraries-builder', () => {
                 const context = createTestDocgeniContext({
                     libs: {
                         name: toolkit.utils.sample([null, undefined, '']),
-                        rootDir: './packages/mylib'
-                    } as DocgeniLibrary
+                        rootDir: './packages/mylib',
+                    } as DocgeniLibrary,
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -190,8 +187,8 @@ describe('libraries-builder', () => {
                 const context = createTestDocgeniContext({
                     libs: {
                         name: 'mylib',
-                        rootDir: toolkit.utils.sample([null, undefined, ''])
-                    } as DocgeniLibrary
+                        rootDir: toolkit.utils.sample([null, undefined, '']),
+                    } as DocgeniLibrary,
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -203,8 +200,8 @@ describe('libraries-builder', () => {
                 const context = createTestDocgeniContext({
                     libs: {
                         name: 'mylib',
-                        rootDir: 'not-found-lib-dir'
-                    }
+                        rootDir: 'not-found-lib-dir',
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -223,10 +220,10 @@ describe('libraries-builder', () => {
                         categories: [
                             {
                                 id: toolkit.utils.sample([null, undefined, '']),
-                                title: ''
-                            }
-                        ]
-                    }
+                                title: '',
+                            },
+                        ],
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -245,10 +242,10 @@ describe('libraries-builder', () => {
                         categories: [
                             {
                                 id: toolkit.strings.generateRandomId(),
-                                title: toolkit.utils.sample([null, undefined, ''])
-                            }
-                        ]
-                    }
+                                title: toolkit.utils.sample([null, undefined, '']),
+                            },
+                        ],
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -266,14 +263,14 @@ describe('libraries-builder', () => {
                         categories: [
                             {
                                 id: duplicateId,
-                                title: duplicateId
+                                title: duplicateId,
                             },
                             {
                                 id: duplicateId,
-                                title: duplicateId
-                            }
-                        ]
-                    }
+                                title: duplicateId,
+                            },
+                        ],
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -289,11 +286,11 @@ describe('libraries-builder', () => {
                         abbrName: 'alib',
                         rootDir: libDirPath,
                         apiMode: 'compatible',
-                        categories: []
+                        categories: [],
                     },
                     initialFiles: {
-                        [`${libDirPath}/app.module.ts`]: ''
-                    }
+                        [`${libDirPath}/app.module.ts`]: '',
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -309,11 +306,11 @@ describe('libraries-builder', () => {
                         abbrName: 'alib',
                         rootDir: libDirPath,
                         apiMode: 'automatic',
-                        categories: []
+                        categories: [],
                     },
                     initialFiles: {
-                        [`${libDirPath}/app.module.ts`]: ''
-                    }
+                        [`${libDirPath}/app.module.ts`]: '',
+                    },
                 });
                 const librariesBuilder = new LibrariesBuilder(context);
                 await librariesBuilder.initialize();
@@ -328,11 +325,11 @@ describe('libraries-builder', () => {
                     abbrName: 'alib',
                     rootDir: libDirPath,
                     apiMode: 'automatic',
-                    categories: []
+                    categories: [],
                 },
                 initialFiles: {
-                    [`${libDirPath}/tsconfig.lib.json`]: ''
-                }
+                    [`${libDirPath}/tsconfig.lib.json`]: '',
+                },
             });
             const librariesBuilder = new LibrariesBuilder(context);
             await librariesBuilder.initialize();

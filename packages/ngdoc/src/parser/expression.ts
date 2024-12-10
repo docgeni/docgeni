@@ -5,13 +5,13 @@ import { getNodeText, nodeToString } from './utils';
 
 export function getCallExpressionInfo(callExpression: ts.CallExpression) {
     return {
-        argumentInfo: callExpression.arguments.map(argument => parseArgument(argument)),
-        arguments: callExpression.arguments.map(argument => {
+        argumentInfo: callExpression.arguments.map((argument) => parseArgument(argument)),
+        arguments: callExpression.arguments.map((argument) => {
             return lineFeedPrinter.printNode(ts.EmitHint.Expression, argument, callExpression.getSourceFile());
         }),
         expression: callExpression,
         isCallExpression: true,
-        name: nodeToString(callExpression.expression)
+        name: nodeToString(callExpression.expression),
     };
 }
 
@@ -21,7 +21,7 @@ export function getObjectLiteralExpressionProperties(expression: ts.ObjectLitera
 
 export function parseProperties(properties: ts.NodeArray<ts.ObjectLiteralElementLike>): ArgumentInfo {
     const result: ArgumentInfo = {};
-    properties.forEach(property => {
+    properties.forEach((property) => {
         if (property.kind === ts.SyntaxKind.PropertyAssignment) {
             result[nodeToString(property.name!)] = parseArgument((property as ts.PropertyAssignment).initializer);
         }
@@ -34,7 +34,7 @@ export function parseArgument(argument: ts.Expression): ArgumentInfo {
         return parseProperties((argument as ts.ObjectLiteralExpression).properties);
     }
     if (ts.isArrayLiteralExpression(argument)) {
-        return (argument as ts.ArrayLiteralExpression).elements.map(element => {
+        return (argument as ts.ArrayLiteralExpression).elements.map((element) => {
             return getNodeText(element);
         });
     }
@@ -44,7 +44,7 @@ export function parseArgument(argument: ts.Expression): ArgumentInfo {
 export function parseCallExpressionIdentifiers(expression: ts.Expression): ts.Identifier[] {
     if (ts.isCallExpression(expression)) {
         const identifiers: ts.Identifier[] = [];
-        expression.arguments.map(argument => {
+        expression.arguments.map((argument) => {
             identifiers.push(...parseCallExpressionIdentifiers(argument));
         });
         return identifiers;

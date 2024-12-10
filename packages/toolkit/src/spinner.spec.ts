@@ -17,7 +17,7 @@ describe('#spinner', () => {
             succeed() {},
             info() {},
             warn() {},
-            fail() {}
+            fail() {},
         });
     }
 

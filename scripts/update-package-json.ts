@@ -8,13 +8,13 @@ async function updatePackageJson(packageName: string, settings: any) {
     Object.assign(packageJson, settings);
     await writeJsonFile(templatePackageJsonPath, packageJson, {
         detectIndent: true,
-        indent: 2
+        indent: 2,
     });
 }
 
 async function main() {
     await updatePackageJson('template', {
-        private: false
+        private: false,
     });
     toolkit.print.success(`update dist/template/package.json 's private to false success`);
     // await updatePackageJson('toolkit', {

@@ -8,7 +8,7 @@ export enum HostWatchEventType {
     Changed = 0,
     Created = 1,
     Deleted = 2,
-    Renamed = 3
+    Renamed = 3,
 }
 
 export interface HostWatchEvent {
@@ -30,34 +30,34 @@ export class FileSystemWatcher {
         this.events$.next({
             path: normalize(path),
             time: new Date(),
-            type: type
+            type: type,
         });
     }
 
     private initialize() {
         this.watcher
-            .on('change', path => {
+            .on('change', (path) => {
                 this.emitEvent(path, HostWatchEventType.Changed);
             })
-            .on('add', path => {
+            .on('add', (path) => {
                 this.emitEvent(path, HostWatchEventType.Created);
             })
-            .on('unlink', path => {
+            .on('unlink', (path) => {
                 this.emitEvent(path, HostWatchEventType.Deleted);
             });
     }
 
     watch(paths: string | string[]): Observable<HostWatchEvent> {
         // this.watcher.add(paths);
-        this.watcher.add(coerceArray(paths).map(path => getSystemPath(normalize(path))));
+        this.watcher.add(coerceArray(paths).map((path) => getSystemPath(normalize(path))));
         return this.events$.asObservable();
     }
 
     aggregated(aggregateInterval: number = 500): Observable<HostWatchEvent[]> {
-        return new Observable(subscribe => {
+        return new Observable((subscribe) => {
             let aggregatedEvents: HostWatchEvent[] = [];
             let aggregateTimeout: NodeJS.Timeout;
-            const subscription = this.events$.subscribe(event => {
+            const subscription = this.events$.subscribe((event) => {
                 if (aggregateTimeout) {
                     // eslint-disable-next-line no-restricted-globals
                     clearTimeout(aggregateTimeout);

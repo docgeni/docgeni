@@ -6,9 +6,9 @@ describe('#docgeni-scoped', () => {
     it('should resolve success without root', async () => {
         const docgeniScopedHost = new DocgeniScopedHost(
             new virtualFs.test.TestHost({
-                '/d/root/hello/hello.ts': 'hello'
+                '/d/root/hello/hello.ts': 'hello',
             }),
-            '/d/root'
+            '/d/root',
         );
         const exists = await docgeniScopedHost.exists(normalize('hello/hello.ts')).toPromise();
         expect(exists).toEqual(true);
@@ -17,9 +17,9 @@ describe('#docgeni-scoped', () => {
     it('should resolve success with root', async () => {
         const docgeniScopedHost = new DocgeniScopedHost(
             new virtualFs.test.TestHost({
-                '/d/root/hello/hello.ts': 'hello'
+                '/d/root/hello/hello.ts': 'hello',
             }),
-            '/d/root'
+            '/d/root',
         );
         const exists = await docgeniScopedHost.exists(normalize('/d/root/hello/hello.ts')).toPromise();
         expect(exists).toEqual(true);

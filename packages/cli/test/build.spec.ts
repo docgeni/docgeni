@@ -23,18 +23,18 @@ describe('#cli', () => {
             locales: [
                 {
                     key: 'zh-cn',
-                    name: '中文'
-                }
+                    name: '中文',
+                },
             ],
-            defaultLocale: 'zh-cn'
+            defaultLocale: 'zh-cn',
         };
         const docgeni = new Docgeni({
             cwd: basicFixturePath,
             config: {
                 ...config,
-                skipSite: true
+                skipSite: true,
             } as unknown,
-            progress: true
+            progress: true,
         });
         await docgeni.run();
         const expectConfig = { ...DEFAULT_CONFIG, ...config };
@@ -68,7 +68,7 @@ describe('#cli', () => {
                                     contentPath: 'docs/guide/intro/intro2.html',
                                     originPath: 'docs/guide/intro/intro2.md',
                                     toc: 'content',
-                                    headings: []
+                                    headings: [],
                                 },
                                 {
                                     id: 'intro1',
@@ -79,10 +79,10 @@ describe('#cli', () => {
                                     contentPath: 'docs/guide/intro/intro1.html',
                                     originPath: 'docs/guide/intro/intro1.md',
                                     toc: 'content',
-                                    headings: []
-                                }
+                                    headings: [],
+                                },
                             ],
-                            order: 1
+                            order: 1,
                         },
                         {
                             id: 'getting-started',
@@ -93,7 +93,7 @@ describe('#cli', () => {
                             contentPath: 'docs/guide/getting-started.html',
                             originPath: 'docs/guide/getting-started.md',
                             toc: 'content',
-                            headings: []
+                            headings: [],
                         },
                         {
                             id: 'installation',
@@ -104,11 +104,11 @@ describe('#cli', () => {
                             contentPath: 'docs/guide/installation.html',
                             originPath: 'docs/guide/installation.md',
                             toc: 'content',
-                            headings: []
-                        }
+                            headings: [],
+                        },
                     ],
-                    order: 1
-                }
+                    order: 1,
+                },
             ],
             docs: [
                 {
@@ -120,7 +120,7 @@ describe('#cli', () => {
                     contentPath: 'docs/guide/getting-started.html',
                     originPath: 'docs/guide/getting-started.md',
                     toc: 'content',
-                    headings: []
+                    headings: [],
                 },
                 {
                     id: 'installation',
@@ -131,7 +131,7 @@ describe('#cli', () => {
                     contentPath: 'docs/guide/installation.html',
                     originPath: 'docs/guide/installation.md',
                     toc: 'content',
-                    headings: []
+                    headings: [],
                 },
                 {
                     id: 'intro1',
@@ -142,7 +142,7 @@ describe('#cli', () => {
                     contentPath: 'docs/guide/intro/intro1.html',
                     originPath: 'docs/guide/intro/intro1.md',
                     toc: 'content',
-                    headings: []
+                    headings: [],
                 },
                 {
                     id: 'intro2',
@@ -153,16 +153,16 @@ describe('#cli', () => {
                     contentPath: 'docs/guide/intro/intro2.html',
                     originPath: 'docs/guide/intro/intro2.md',
                     toc: 'content',
-                    headings: []
-                }
+                    headings: [],
+                },
             ],
             homeMeta: {
-                contentPath: 'docs/index.html'
-            }
+                contentPath: 'docs/index.html',
+            },
         };
         await expect(JSON.parse(navigations)).toEqual(
             expectedNavigations,
-            `expected is:${EOL} ${JSON.stringify(expectedNavigations, null, 2)}, actual is:${EOL} ${navigations}`
+            `expected is:${EOL} ${JSON.stringify(expectedNavigations, null, 2)}, actual is:${EOL} ${navigations}`,
         );
 
         const contentPath = path.resolve(siteSrcPath, './app/content');

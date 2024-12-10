@@ -24,13 +24,13 @@ const COMPONENTS = [
     ComponentApiComponent,
     ComponentExamplesComponent,
     ComponentEmptyComponent,
-    ExampleIsolatedViewerComponent
+    ExampleIsolatedViewerComponent,
 ];
 @NgModule({
     declarations: [...COMPONENTS],
     imports: [DocgeniSharedModule],
     providers: [],
-    exports: [...COMPONENTS]
+    exports: [...COMPONENTS],
 })
 export class DocgeniPagesModule {
     constructor(public appRef: ApplicationRef) {}
@@ -47,5 +47,5 @@ export {
     ComponentOverviewComponent,
     ComponentApiComponent,
     ComponentExamplesComponent,
-    ComponentEmptyComponent
+    ComponentEmptyComponent,
 };

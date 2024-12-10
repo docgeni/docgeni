@@ -88,7 +88,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
 
     async copyFile(src: string, dest: string): Promise<void> {
         await copy(getSystemPath(normalize(src)), getSystemPath(normalize(dest)), {
-            overwrite: true
+            overwrite: true,
         });
     }
 
@@ -105,9 +105,9 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
         } else {
             const result = await this.list(src);
             await Promise.all(
-                result.map(item => {
+                result.map((item) => {
                     return this.copy(resolve(normalize(src), item), resolve(normalize(dest), item), options);
-                })
+                }),
             );
         }
     }
@@ -123,7 +123,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
     async getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
         options = {
             dot: false,
-            ...options
+            ...options,
         };
         const allPaths = (await this.list(path)) as string[];
         const subPaths: string[] = [];
@@ -132,12 +132,12 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
                 const isDirectory = await this.isDirectory(resolve(path, element));
                 if (isDirectory) {
                     const dir = resolve(path, element) as string;
-                    subPaths.push(...(await this.getDirsAndFiles(dir, options)).map(item => resolve(element, item)));
+                    subPaths.push(...(await this.getDirsAndFiles(dir, options)).map((item) => resolve(element, item)));
                 }
             }
         }
         allPaths.push(...subPaths);
-        return allPaths.filter(dir => {
+        return allPaths.filter((dir) => {
             if (options.exclude && matchGlob(dir, options.exclude)) {
                 return false;
             }

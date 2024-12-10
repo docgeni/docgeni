@@ -7,8 +7,8 @@ export const DOCGENI_INITIALIZER_PROVIDERS: Provider[] = [
         provide: APP_INITIALIZER,
         useFactory: initializeDocgeniSite,
         deps: [GlobalContext, RouterResetService],
-        multi: true
-    }
+        multi: true,
+    },
 ];
 
 export function initializeDocgeniSite(globalContext: GlobalContext, routerResetService: RouterResetService) {

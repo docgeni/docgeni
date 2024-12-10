@@ -55,9 +55,9 @@ export class DocsBuilder extends FileEmitter {
 
     public watch() {
         if (this.docgeni.watch) {
-            this.docgeni.host.watchAggregated(this.docgeni.paths.absDocsPath, { ignoreInitial: true }).subscribe(events => {
+            this.docgeni.host.watchAggregated(this.docgeni.paths.absDocsPath, { ignoreInitial: true }).subscribe((events) => {
                 const addDocs = [];
-                events.forEach(event => {
+                events.forEach((event) => {
                     let docFile = this.docFiles.get(event.path);
                     if (!docFile) {
                         docFile = this.createDocSourceFile(this.getLocaleByAbsPath(event.path), event.path);
@@ -74,14 +74,14 @@ export class DocsBuilder extends FileEmitter {
                 });
                 this.docgeni.compile({
                     docs: addDocs,
-                    changes: events
+                    changes: events,
                 });
             });
         }
     }
 
     private getLocaleByAbsPath(filePath: string) {
-        const locale = this.docgeni.config.locales.find(locale => {
+        const locale = this.docgeni.config.locales.find((locale) => {
             return filePath.startsWith(toolkit.path.resolve(this.docgeni.paths.absDocsPath, locale.key + '/'));
         });
         return locale ? locale.key : this.docgeni.config.defaultLocale;
@@ -96,7 +96,7 @@ export class DocsBuilder extends FileEmitter {
     private async initializeDocFiles() {
         const allFiles = toolkit.fs.globSync(`/**/*.md`, {
             dot: true,
-            root: toolkit.path.getSystemPath(this.docgeni.paths.absDocsPath)
+            root: toolkit.path.getSystemPath(this.docgeni.paths.absDocsPath),
         });
         // init all doc files
         for (const filepath of allFiles) {
@@ -112,9 +112,9 @@ export class DocsBuilder extends FileEmitter {
                 locale: locale,
                 cwd: this.docgeni.paths.cwd,
                 base: this.docgeni.paths.cwd,
-                path: absFilePath
+                path: absFilePath,
             },
-            this.docgeni.host
+            this.docgeni.host,
         );
     }
 }

@@ -21,7 +21,7 @@ export function normalizeLibConfig(lib: DocgeniLibrary): Library {
                       obj[item.id] = { text: item.text, color: item.color };
                       return obj;
                   }, {})
-                : lib.labels || {})
-        }
+                : lib.labels || {}),
+        },
     };
 }

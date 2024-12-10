@@ -23,7 +23,7 @@ function rgbColorMetadata(color: string) {
         ? {
               r: parseInt(result[1], 10),
               g: parseInt(result[2], 10),
-              b: parseInt(result[3], 10)
+              b: parseInt(result[3], 10),
           }
         : {};
 }

@@ -20,7 +20,7 @@ export interface DefaultNgParserHostOptions {
             extensions: readonly string[],
             excludes: readonly string[] | undefined,
             includes: readonly string[],
-            depth?: number
+            depth?: number,
         ) => readonly string[];
     };
 }
@@ -54,7 +54,7 @@ export class DefaultNgParserHost implements NgParserHost {
             this.rootFileNames,
             { ...this.compileOptions, types: [] },
             this.tsProgram ? undefined : this.createCompilerHost(),
-            this.tsProgram
+            this.tsProgram,
         );
         debug(`Program created, sourceFiles count: ${program.getSourceFiles().length}`, 'ng-parser');
         this.watchResolvedModules();
@@ -64,10 +64,10 @@ export class DefaultNgParserHost implements NgParserHost {
     private initialize() {
         if (!this.options.fsHost) {
             this.options.fsHost = {
-                fileExists: path => {
+                fileExists: (path) => {
                     return ts.sys.fileExists(path);
                 },
-                readFile: path => {
+                readFile: (path) => {
                     return ts.sys.readFile(path);
                 },
                 writeFile: (fileName, content) => {
@@ -75,7 +75,7 @@ export class DefaultNgParserHost implements NgParserHost {
                 },
                 readDirectory: (path, extensions, excludes, includes, depth) => {
                     return ts.sys.readDirectory(path, extensions, excludes, includes, depth);
-                }
+                },
             };
         }
         if (this.options.tsConfigPath) {
@@ -90,7 +90,7 @@ export class DefaultNgParserHost implements NgParserHost {
                     return currentDirectory;
                 },
                 readDirectory: this.options.fsHost.readDirectory,
-                onUnRecoverableConfigFileDiagnostic: () => {}
+                onUnRecoverableConfigFileDiagnostic: () => {},
             });
             if (parsedResult) {
                 this.rootFileNames = parsedResult.fileNames;
@@ -102,7 +102,7 @@ export class DefaultNgParserHost implements NgParserHost {
             this.compileOptions = {};
         }
         debug(`rootFileNames is ${this.rootFileNames}`, 'ng-parser');
-        this.rootFileNames.forEach(fileName => {
+        this.rootFileNames.forEach((fileName) => {
             this.allResolvedModules.push({ resolvedFileName: fileName });
         });
         if (this.options.rootDir) {
@@ -117,7 +117,7 @@ export class DefaultNgParserHost implements NgParserHost {
         }
         debug(`start watch resolvedModules, allResolvedModules: ${this.allResolvedModules.length}`, 'ng-parser');
         const allResolvedModulesMap = new Map<string, boolean>();
-        this.allResolvedModules.map(resolvedModule => {
+        this.allResolvedModules.map((resolvedModule) => {
             debug(`start resolvedModule: ${resolvedModule.resolvedFileName}, rootDir: ${this.rootDir}`, 'ng-parser');
             // ignore duplicate module, we will add rootFileNames to allResolvedModules at initialization
             if (allResolvedModulesMap.has(resolvedModule.resolvedFileName)) {
@@ -171,10 +171,10 @@ export class DefaultNgParserHost implements NgParserHost {
                 debug(`createCompilerHost currentDirectory is ${result}`, 'ng-parser');
                 return result;
             },
-            getDirectories: path => {
+            getDirectories: (path) => {
                 return ts.sys.getDirectories(path);
             },
-            getCanonicalFileName: fileName => (ts.sys.useCaseSensitiveFileNames ? fileName : fileName.toLowerCase()),
+            getCanonicalFileName: (fileName) => (ts.sys.useCaseSensitiveFileNames ? fileName : fileName.toLowerCase()),
             getNewLine: () => ts.sys.newLine,
             useCaseSensitiveFileNames: () => {
                 return ts.sys.useCaseSensitiveFileNames;
@@ -182,9 +182,9 @@ export class DefaultNgParserHost implements NgParserHost {
             fileExists: this.options.fsHost.fileExists,
             readFile: this.options.fsHost.readFile,
             resolveModuleNames: this.resolveModuleNames.bind(this),
-            directoryExists: dirPath => {
+            directoryExists: (dirPath) => {
                 return ts.sys.directoryExists(dirPath);
-            }
+            },
         };
     }
 
@@ -194,7 +194,7 @@ export class DefaultNgParserHost implements NgParserHost {
             // try to use standard resolution
             const result = ts.resolveModuleName(moduleName, containingFile, this.compileOptions, {
                 fileExists: this.options.fsHost.fileExists,
-                readFile: this.options.fsHost.readFile
+                readFile: this.options.fsHost.readFile,
             });
             if (result.resolvedModule) {
                 this.allResolvedModules.push(result.resolvedModule);

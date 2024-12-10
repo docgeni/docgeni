@@ -14,18 +14,18 @@ function addDependenciesToPackageJson() {
             {
                 type: NodeDependencyType.Dev,
                 name: '@docgeni/template',
-                version: VERSION
+                version: VERSION,
             },
             {
                 type: NodeDependencyType.Dev,
                 name: '@docgeni/cli',
-                version: VERSION
-            }
+                version: VERSION,
+            },
         ];
         const docgeniAngular = {
             type: NodeDependencyType.Dev,
             name: '@docgei/angular',
-            version: ANGULAR_VERSION
+            version: ANGULAR_VERSION,
         };
         if (host.exists('/package.json')) {
             const packageJsonContent = host.read('/package.json').toString();
@@ -37,7 +37,7 @@ function addDependenciesToPackageJson() {
             dependencies.push(docgeniAngular);
         }
 
-        dependencies.forEach(dependency => addPackageJsonDependency(host, dependency));
+        dependencies.forEach((dependency) => addPackageJsonDependency(host, dependency));
 
         context.addTask(new NodePackageInstallTask());
 
@@ -52,7 +52,7 @@ export default function main(options: NgAddSchema) {
             new InitDocgenirc(options).run(),
             new CreateDocs(options).run(),
             new AddCommand().run(),
-            new AddGitignore().run()
+            new AddGitignore().run(),
         ]);
     };
 }

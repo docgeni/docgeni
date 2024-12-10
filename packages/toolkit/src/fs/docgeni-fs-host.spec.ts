@@ -11,7 +11,7 @@ describe('#docgeni-host', () => {
             'file2.txt': 'file2 content',
             'folder/file1.txt': 'folder/file1.txt',
             'folder/file2.txt': 'folder/file2.txt',
-            'folder/subfolder/file1.txt': 'folder/subfolder/file1.txt'
+            'folder/subfolder/file1.txt': 'folder/subfolder/file1.txt',
         });
     });
 

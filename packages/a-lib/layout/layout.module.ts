@@ -6,6 +6,6 @@ import { AlibLayoutComponent } from './layout.component';
     declarations: [AlibLayoutComponent],
     imports: [CommonModule],
     exports: [AlibLayoutComponent],
-    providers: []
+    providers: [],
 })
 export class AlibLayoutModule {}

@@ -8,7 +8,7 @@ import { DOCGENI_SITE_PROVIDERS, IMPORT_MODULES, RootComponent } from './content
     declarations: [],
     imports: [BrowserModule, BrowserAnimationsModule, DocgeniTemplateModule, RouterModule.forRoot([]), ...IMPORT_MODULES],
     providers: [...DOCGENI_SITE_PROVIDERS],
-    bootstrap: [RootComponent]
+    bootstrap: [RootComponent],
 })
 export class AppModule {
     constructor() {}

@@ -31,7 +31,7 @@ describe('#fs-watcher', () => {
         fs.writeFileSync(file2Path, 'hello world');
 
         const allEvents: virtualFs.HostWatchEvent[] = [];
-        fsWatcher.watch([file1Path, file2Path]).subscribe(change => {
+        fsWatcher.watch([file1Path, file2Path]).subscribe((change) => {
             allEvents.push(change);
         });
         await toolkit.utils.wait(10);
@@ -55,7 +55,7 @@ describe('#fs-watcher', () => {
         fs.writeFileSync(file1Path, 'hello world');
 
         const allEvents: HostWatchEvent[] = [];
-        fsWatcher.watch(root + '/sub1').subscribe(change => {
+        fsWatcher.watch(root + '/sub1').subscribe((change) => {
             allEvents.push(change);
         });
         await toolkit.utils.wait(10);
@@ -81,7 +81,7 @@ describe('#fs-watcher', () => {
 
         let allEvents: HostWatchEvent[] = [];
         fsWatcher.watch(root + '/sub1');
-        fsWatcher.aggregated(3000).subscribe(value => {
+        fsWatcher.aggregated(3000).subscribe((value) => {
             allEvents = value;
         });
         await toolkit.utils.wait(10);

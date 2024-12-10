@@ -90,7 +90,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
         this.emitted = false;
         const content = await this.read();
         const result = Markdown.compile<TMeta>(content, {
-            absFilePath: this.path
+            absFilePath: this.path,
         });
         this.meta = result.meta;
         this.output = result.html;

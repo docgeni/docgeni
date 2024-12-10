@@ -96,7 +96,7 @@ export default {
                 { name: 'AlibButtonAdvance7Component', moduleSpecifier: './advance7.component.ts' },
                 { name: 'AlibButtonAdvance8Component', moduleSpecifier: './advance8.component.ts' },
                 { name: 'AlibButtonAdvance9Component', moduleSpecifier: './advance9.component.ts' },
-                { name: 'AlibButtonAdvance10Component', moduleSpecifier: './advance10.component.ts' }
+                { name: 'AlibButtonAdvance10Component', moduleSpecifier: './advance10.component.ts' },
             ]);
             // console.log(sourceFile.getText());
         }
@@ -107,9 +107,9 @@ export default {
     function generateExampleModuleSourceByMorph(
         sourceFile: SourceFile,
         moduleName: string,
-        components: { name: string; moduleSpecifier: string }[]
+        components: { name: string; moduleSpecifier: string }[],
     ) {
-        const exportAssignment = sourceFile.getExportAssignment(node => {
+        const exportAssignment = sourceFile.getExportAssignment((node) => {
             return Node.isObjectLiteralExpression(node.getExpression());
         });
         let expressionProperties: {
@@ -126,22 +126,22 @@ export default {
                 imports: string[];
             };
             expressionProperties.declarations = expressionProperties.declarations || [];
-            expressionProperties.declarations = [...expressionProperties.declarations, ...components.map(item => item.name)];
+            expressionProperties.declarations = [...expressionProperties.declarations, ...components.map((item) => item.name)];
             expressionProperties.exports = expressionProperties.declarations;
             ngModuleInsertIndex = exportAssignment.getChildIndex() + 1;
         } else {
             ngModuleInsertIndex = sourceFile.getChildren()[0].getChildren().length;
-            const declarations = components.map(item => {
+            const declarations = components.map((item) => {
                 return item.name;
             });
             expressionProperties = {
                 declarations: declarations,
                 exports: declarations,
-                imports: []
+                imports: [],
             };
         }
         const str = Object.keys(expressionProperties)
-            .map(key => {
+            .map((key) => {
                 return `${key}: [ ${expressionProperties[key].join(', ')} ]`;
             })
             .join(', ');
@@ -152,9 +152,9 @@ export default {
             decorators: [
                 {
                     name: 'NgModule',
-                    arguments: [`{ ${str} }`]
-                }
-            ]
+                    arguments: [`{ ${str} }`],
+                },
+            ],
         });
         const imports = [{ name: 'NgModule', moduleSpecifier: '@angular/core' }, ...components];
 
@@ -164,10 +164,10 @@ export default {
             return result;
         }, {});
         const insertImportDeclarations = new Map<string, string[]>();
-        imports.forEach(importItem => {
+        imports.forEach((importItem) => {
             if (moduleSpecifiersMap[importItem.moduleSpecifier]) {
                 const namedImports = moduleSpecifiersMap[importItem.moduleSpecifier].getNamedImports();
-                const hasNamedImport = namedImports.find(namedImport => {
+                const hasNamedImport = namedImports.find((namedImport) => {
                     return namedImport.getName() === importItem.name;
                 });
                 if (!hasNamedImport) {
@@ -186,9 +186,9 @@ export default {
             Array.from(insertImportDeclarations.entries()).map(([key, items]) => {
                 return {
                     moduleSpecifier: key,
-                    namedImports: items
+                    namedImports: items,
                 };
-            })
+            }),
         );
     }
 

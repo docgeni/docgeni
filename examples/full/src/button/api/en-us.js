@@ -7,8 +7,8 @@ module.exports = [
             {
                 name: 'alibType',
                 description: 'Button type',
-                type: 'string'
-            }
-        ]
-    }
+                type: 'string',
+            },
+        ],
+    },
 ];

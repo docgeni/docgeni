@@ -12,11 +12,11 @@ export function createTestNgParserFsHost(files: Record<string, string>) {
         extensions: readonly string[],
         excludes: readonly string[] | undefined,
         includes: readonly string[],
-        depth?: number
+        depth?: number,
     ) {
         const list = host.list(rootDir as Path);
         const result: string[] = [];
-        list.forEach(item => {
+        list.forEach((item) => {
             const itemPath = `${rootDir}/${item}`;
             if (host.isDirectory(itemPath as Path)) {
                 const files = readDirectory(itemPath, extensions, excludes, includes, depth);
@@ -45,37 +45,37 @@ export function createTestNgParserFsHost(files: Record<string, string>) {
         writeFile: (path: string, data: string, writeByteOrderMark?: boolean) => {
             host.write(path as Path, virtualFs.stringToFileBuffer(data));
         },
-        readDirectory: readDirectory
+        readDirectory: readDirectory,
     };
 }
 
 export function createTestNgParserHost(component: string, files: Record<string, string>) {
     const fsHost = createTestNgParserFsHost(files);
     const ngParserHost = createNgParserHost({
-        fsHost: fsHost
+        fsHost: fsHost,
     });
     return {
         ngParserHost,
-        fsHost
+        fsHost,
     };
 }
 
 export function createTestNgDocParser(
     component: string,
     files: Record<string, string>,
-    options: { sypGlobSync: boolean } = { sypGlobSync: true }
+    options: { sypGlobSync: boolean } = { sypGlobSync: true },
 ) {
     if (options && options.sypGlobSync) {
         spyGlobSync(Object.keys(files));
     }
     const { ngParserHost, fsHost } = createTestNgParserHost(component, files);
     const ngDocParser = new NgDocParser({
-        ngParserHost: ngParserHost
+        ngParserHost: ngParserHost,
     });
     return {
         ngDocParser,
         ngParserHost,
-        fsHost
+        fsHost,
     };
 }
 

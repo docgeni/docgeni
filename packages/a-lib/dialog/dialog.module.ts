@@ -6,6 +6,6 @@ import { AlibDialog } from './dialog.service';
     declarations: [],
     imports: [CommonModule],
     exports: [],
-    providers: [AlibDialog]
+    providers: [AlibDialog],
 })
 export class AlibDialogModule {}

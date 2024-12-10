@@ -9,8 +9,8 @@ export default class SitemapPlugin implements Plugin {
     generateUrls(docgeni: DocgeniContext, docItemsMap: Record<string, NavigationItem[]>): string[] {
         const allUrls: string[] = [];
         const host = docgeni.config.sitemap.host.endsWith('/') ? docgeni.config.sitemap.host : `${docgeni.config.sitemap.host}/`;
-        docgeni.config.locales.forEach(locale => {
-            (docItemsMap[locale.key] || []).forEach(item => {
+        docgeni.config.locales.forEach((locale) => {
+            (docItemsMap[locale.key] || []).forEach((item) => {
                 const path = item.channelPath ? `${item.channelPath}/${item.path}` : item.path;
                 if (path) {
                     if (allUrls.indexOf(`${host}${path}`) < 0) {
@@ -29,7 +29,7 @@ export default class SitemapPlugin implements Plugin {
             docgeni.hooks.navsEmitSucceed.tap(PLUGIN_NAME, async (navsBuild, config: Record<string, DocItem[]>) => {
                 const outputConfigPath = toolkit.path.resolve(docgeni.paths.absSitePath, 'src/sitemap.xml');
                 const content = toolkit.template.compile('sitemap-xml.hbs', {
-                    urls: this.generateUrls(docgeni, config)
+                    urls: this.generateUrls(docgeni, config),
                 });
 
                 await docgeni.host.writeFile(outputConfigPath, content);

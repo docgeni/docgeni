@@ -16,7 +16,7 @@ describe('color-metadata', () => {
             for (let g = 0; g < 255; g += 5) {
                 for (let b = 0; b < 255; b += 5) {
                     const result = colorMetadata(
-                        `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`
+                        `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`,
                     );
                     expect(result.r).toEqual(r);
                     expect(result.g).toEqual(g);

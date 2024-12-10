@@ -13,7 +13,7 @@ export const DEFAULT_COMPONENT_EXAMPLES_DIR = 'examples';
 export const DEFAULT_LABEL_CONFIG = {
     new: { text: 'New', color: '#73D897' },
     deprecated: { text: 'Deprecated', color: '#AAAAAA' },
-    experimental: { text: 'Experimental', color: '#F6C659' }
+    experimental: { text: 'Experimental', color: '#F6C659' },
 };
 
 export const EXAMPLE_META_FILE_NAME = 'index.md';

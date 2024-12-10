@@ -7,7 +7,7 @@ describe('#built-in-label', () => {
         const createComponent = createComponentFactory({
             component: DocgeniLabelComponent,
             imports: [],
-            declarations: [DocgeniLabelComponent]
+            declarations: [DocgeniLabelComponent],
         });
 
         beforeEach(() => {
@@ -21,7 +21,7 @@ describe('#built-in-label', () => {
         });
 
         it('should set type success', () => {
-            ['info', 'danger', 'warning', 'primary'].forEach(type => {
+            ['info', 'danger', 'warning', 'primary'].forEach((type) => {
                 spectator.setInput('type', type as DocgeniLabelType);
                 expect(spectator.element.classList.contains('dg-label')).toBeTruthy();
                 expect(spectator.element.classList.contains(`dg-label-${type}`)).toBeTruthy();
@@ -31,7 +31,7 @@ describe('#built-in-label', () => {
 
     describe('advance', () => {
         const createHost = createHostFactory({
-            component: DocgeniLabelComponent
+            component: DocgeniLabelComponent,
         });
 
         it('should set content success', () => {

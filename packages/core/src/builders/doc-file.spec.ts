@@ -24,9 +24,9 @@ describe('DocSourceFile', () => {
                     cwd: root,
                     path: `${root}/docs/getting-started.md`,
                     base: root,
-                    locale: 'zh-cn'
+                    locale: 'zh-cn',
                 },
-                docgeniHost
+                docgeniHost,
             );
         });
 
@@ -40,9 +40,9 @@ describe('DocSourceFile', () => {
                     cwd: root,
                     path: null,
                     base: root,
-                    locale: 'zh-cn'
+                    locale: 'zh-cn',
                 },
-                docgeniHost
+                docgeniHost,
             );
             expect(() => {
                 const name = docSourceFile.name;
@@ -79,9 +79,9 @@ describe('DocSourceFile', () => {
                     cwd: root,
                     path: `${root}/docs/getting-started.md`,
                     base: root,
-                    locale: 'zh-cn'
+                    locale: 'zh-cn',
                 },
-                docgeniHost
+                docgeniHost,
             );
         });
 
@@ -117,39 +117,39 @@ describe('DocSourceFile', () => {
     it('should build file success', async () => {
         await docgeniHost.writeFile(
             'docs/getting-started.md',
-            `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`
+            `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`,
         );
         const docSourceFile = new DocSourceFile(
             {
                 cwd: root,
                 path: 'docs/getting-started.md',
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         await docSourceFile.build();
         expect(docSourceFile.output).toContain(`<p>getting-started content</p>`);
         expect(docSourceFile.meta).toEqual({
             title: 'Title FrontMatter',
             order: 10,
-            path: '/custom/path'
+            path: '/custom/path',
         });
     });
 
     it('should rewrite file content', async () => {
         await docgeniHost.writeFile(
             'docs/getting-started.md',
-            `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`
+            `---${EOL}title: Title FrontMatter${EOL}order: 10${EOL}path: /custom/path${EOL}---${EOL}getting-started content`,
         );
         const docSourceFile = new DocSourceFile(
             {
                 cwd: root,
                 path: 'docs/getting-started.md',
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         await docSourceFile.build();
         await docSourceFile.rewrite(docSourceFile.content + 'append-content');
@@ -164,9 +164,9 @@ describe('DocSourceFile', () => {
                 cwd: root,
                 path: fileAbsPath,
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         await docSourceFile.build();
         await docSourceFile.emit('/D/dest/root');
@@ -186,9 +186,9 @@ describe('DocSourceFile', () => {
                 cwd: root,
                 path: fileAbsPath,
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         await docSourceFile.build();
         await docSourceFile.emit('/D/dest/root');
@@ -208,9 +208,9 @@ describe('DocSourceFile', () => {
                 cwd: root,
                 path: fileAbsPath,
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         await docSourceFile.build();
         await docSourceFile.emit('/D/dest/root');
@@ -230,9 +230,9 @@ describe('DocSourceFile', () => {
                 cwd: root,
                 path: fileAbsPath,
                 base: root,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
             },
-            docgeniHost
+            docgeniHost,
         );
         expect(docSourceFile.isEmpty()).toEqual(true);
         await docSourceFile.build();

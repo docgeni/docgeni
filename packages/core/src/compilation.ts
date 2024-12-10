@@ -23,12 +23,15 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
         emitFileSucceed: new SyncHook<EmitFile>(),
         emitFilesSucceed: new SyncHook<EmitFiles>(),
         seal: new SyncHook(),
-        finish: new SyncHook()
+        finish: new SyncHook(),
     };
 
     public increment: CompilationIncrement;
 
-    constructor(private docgeni: DocgeniContext, increment?: CompilationIncrement) {
+    constructor(
+        private docgeni: DocgeniContext,
+        increment?: CompilationIncrement,
+    ) {
         this.increment = increment;
     }
 
@@ -38,7 +41,7 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
             docs: [],
             components: [],
             componentFiles: {},
-            files: {}
+            files: {},
         };
         try {
             if (this.increment) {
@@ -67,7 +70,7 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
                 await this.docgeni.navsBuilder.run();
 
                 this.emits.components = [];
-                this.docgeni.librariesBuilder.libraries.forEach(libraryBuilder => {
+                this.docgeni.librariesBuilder.libraries.forEach((libraryBuilder) => {
                     this.emits.components.push(...libraryBuilder.components.values());
                 });
                 this.emits.docs = this.docgeni.docsBuilder.getDocs();

@@ -18,7 +18,7 @@ describe('normalize', () => {
                 examplesDir: 'examples',
                 categories: [],
                 labels: DEFAULT_LABEL_CONFIG,
-                apiMode: 'manual'
+                apiMode: 'manual',
             });
         });
 
@@ -38,13 +38,13 @@ describe('normalize', () => {
                         title: toolkit.strings.generateRandomId(),
                         locales: {
                             'zh-cn': {
-                                title: toolkit.strings.generateRandomId()
-                            }
-                        }
-                    }
+                                title: toolkit.strings.generateRandomId(),
+                            },
+                        },
+                    },
                 ],
                 labels: DEFAULT_LABEL_CONFIG,
-                apiMode: 'automatic'
+                apiMode: 'automatic',
             };
             const result = normalizeLibConfig(input);
             expect(result).toEqual(input);
@@ -55,25 +55,25 @@ describe('normalize', () => {
                 name: 'tethys',
                 rootDir: './packages/alib',
                 labels: {
-                    test: { text: 'test-text', color: '#ffffff' }
-                }
+                    test: { text: 'test-text', color: '#ffffff' },
+                },
             });
             expect(result.labels).toEqual({
                 ...DEFAULT_LABEL_CONFIG,
                 ...{
-                    test: { text: 'test-text', color: '#ffffff' }
-                }
+                    test: { text: 'test-text', color: '#ffffff' },
+                },
             });
             result = normalizeLibConfig({
                 name: 'tethys',
                 rootDir: './packages/alib',
-                labels: [{ id: 'test', text: 'test-text', color: '#ffffff' }]
+                labels: [{ id: 'test', text: 'test-text', color: '#ffffff' }],
             });
             expect(result.labels).toEqual({
                 ...DEFAULT_LABEL_CONFIG,
                 ...{
-                    test: { text: 'test-text', color: '#ffffff' }
-                }
+                    test: { text: 'test-text', color: '#ffffff' },
+                },
             });
         });
     });

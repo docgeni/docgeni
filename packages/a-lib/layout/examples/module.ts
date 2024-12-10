@@ -8,6 +8,6 @@ import { AlibLayoutModule } from '@docgeni/alib/layout';
     declarations: [AlibLayoutBasicExampleComponent, AlibLayoutAdvanceExampleComponent],
     imports: [CommonModule, AlibLayoutModule],
     exports: [AlibLayoutBasicExampleComponent, AlibLayoutAdvanceExampleComponent],
-    providers: []
+    providers: [],
 })
 export class AlibLayoutExamplesModule {}

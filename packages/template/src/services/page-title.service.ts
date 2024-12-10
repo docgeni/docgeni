@@ -20,5 +20,8 @@ export class PageTitleService {
         this.bodyTitle.setTitle(title);
     }
 
-    constructor(private bodyTitle: Title, private globalContext: GlobalContext) {}
+    constructor(
+        private bodyTitle: Title,
+        private globalContext: GlobalContext,
+    ) {}
 }

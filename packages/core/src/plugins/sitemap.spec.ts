@@ -13,14 +13,14 @@ describe('#sitemap-plugin', () => {
 
     beforeAll(async () => {
         toolkit.initialize({
-            baseDir: systemPath.resolve(__dirname, '../')
+            baseDir: systemPath.resolve(__dirname, '../'),
         });
         fixture = await loadFixture('default-site');
     });
 
     beforeEach(() => {
         context = createTestDocgeniContext({
-            initialFiles: {}
+            initialFiles: {},
         });
         sitemapPlugin = new SitemapPlugin();
         sitemapPlugin.apply(context);
@@ -28,14 +28,14 @@ describe('#sitemap-plugin', () => {
 
     it('should create sitemap.xml success', async () => {
         await context.hooks.navsEmitSucceed.call(null, {
-            'en-us': [{ path: 'front-matter', channelPath: 'configuration', id: 'front-matter', title: 'front-matter' }]
+            'en-us': [{ path: 'front-matter', channelPath: 'configuration', id: 'front-matter', title: 'front-matter' }],
         });
         await assertExpectedFiles(
             context.host,
             {
-                [`${DEFAULT_SITE_PATH}/src/sitemap.xml`]: fixture.src['sitemap.xml']
+                [`${DEFAULT_SITE_PATH}/src/sitemap.xml`]: fixture.src['sitemap.xml'],
             },
-            true
+            true,
         );
     });
 });

@@ -14,28 +14,28 @@ describe('#toolkit.fs', () => {
 
         it(`should get dirs and files exclude a`, async () => {
             const dirAndFiles = await toolkit.fs.getDirsAndFiles(basicPath, {
-                exclude: 'a'
+                exclude: 'a',
             });
             expect(dirAndFiles).deep.equals(['b', 'c.js']);
         });
 
         it(`should get dirs and files exclude a and c.js`, async () => {
             const dirAndFiles = await toolkit.fs.getDirsAndFiles(basicPath, {
-                exclude: ['a', 'c.js']
+                exclude: ['a', 'c.js'],
             });
             expect(dirAndFiles).deep.equals(['b']);
         });
 
         it(`should get empty exclude *`, async () => {
             const dirAndFiles = await toolkit.fs.getDirsAndFiles(basicPath, {
-                exclude: '*'
+                exclude: '*',
             });
             expect(dirAndFiles).deep.equals([]);
         });
 
         it(`should only get dirs exclude *.js`, async () => {
             const dirAndFiles = await toolkit.fs.getDirsAndFiles(basicPath, {
-                exclude: '*.js'
+                exclude: '*.js',
             });
             expect(dirAndFiles).deep.equals(['a', 'b']);
         });
@@ -49,21 +49,21 @@ describe('#toolkit.fs', () => {
 
         it(`should get dirs exclude a`, async () => {
             const dirAndFiles = await toolkit.fs.getDirs(basicPath, {
-                exclude: 'a'
+                exclude: 'a',
             });
             expect(dirAndFiles).deep.equals(['b']);
         });
 
         it(`should get empty exclude *`, async () => {
             const dirAndFiles = await toolkit.fs.getDirs(basicPath, {
-                exclude: '*'
+                exclude: '*',
             });
             expect(dirAndFiles).deep.equals([]);
         });
 
         it(`should only get dirs exclude ['a', 'b']`, async () => {
             const dirAndFiles = await toolkit.fs.getDirs(basicPath, {
-                exclude: ['a', 'b']
+                exclude: ['a', 'b'],
             });
             expect(dirAndFiles).deep.equals([]);
         });

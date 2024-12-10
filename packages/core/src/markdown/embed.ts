@@ -42,7 +42,7 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
                 type: 'embed',
                 raw: match[0],
                 src: match[1].trim().replace(rangeRule, ''),
-                tokens: []
+                tokens: [],
             };
             // eslint-disable-next-line dot-notation
             const absFilePath: string = this.lexer.options['absFilePath'];
@@ -53,7 +53,7 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
                 const content = toolkit.fs.readFileSync(nodeSystemAbsPath).toString();
                 this.lexer.blockTokens(
                     getEmbedBody(content, [parseInt(rangeMatch[2], 10), parseInt(rangeMatch[4], 10)], token.src),
-                    token.tokens
+                    token.tokens,
                 );
             } else {
                 token.message = `can't resolve path ${token.src}`;
@@ -63,5 +63,5 @@ export const embed: marked.TokenizerExtension | marked.RendererExtension = {
     },
     renderer(token: EmbedToken) {
         return `<div embed src="${token.src}">${token.message ? token.message : this.parser.parse(token.tokens)}</div>`;
-    }
+    },
 };

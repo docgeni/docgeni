@@ -7,7 +7,7 @@ const timespan = {
     HH: ['getHours', 2],
     mm: ['getMinutes', 2],
     ss: ['getSeconds', 2],
-    ms: ['getMilliseconds', 3]
+    ms: ['getMilliseconds', 3],
 };
 function timestamp(date?: Date): string;
 function timestamp(str: string, date?: Date, utc?: boolean): string;

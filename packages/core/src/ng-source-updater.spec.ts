@@ -19,7 +19,7 @@ export default {
         updater.insertImports([
             { name: 'Example', moduleSpecifier: './example' },
             { name: 'Example1', moduleSpecifier: './example1' },
-            { name: 'AppRootComponent', moduleSpecifier: './app.component' }
+            { name: 'AppRootComponent', moduleSpecifier: './app.component' },
         ]);
         const result = updater.update();
         expect(result).toContain(`import { Example } from './example';`);

@@ -3,5 +3,5 @@ import { myProviders } from './providers';
 
 export default {
     imports: [FormsModule],
-    providers: [...myProviders]
+    providers: [...myProviders],
 };

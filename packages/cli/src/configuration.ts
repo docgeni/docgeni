@@ -9,7 +9,7 @@ const searchPlaces = [
     `.${moduleName}rc.yaml`,
     `.${moduleName}rc.yml`,
     `.${moduleName}rc.js`,
-    `${moduleName}.config.js`
+    `${moduleName}.config.js`,
 ];
 
 export function getConfiguration(options?: OptionsSync): Partial<DocgeniConfig> {
@@ -20,8 +20,8 @@ export function getConfiguration(options?: OptionsSync): Partial<DocgeniConfig> 
         if (!result.config || typeof result.config !== 'object') {
             throw Error(
                 `[docgeni] Invalid configuration in ${searchPlaces.join(
-                    ','
-                )} provided. Expected an object but found ${typeof result.config}.`
+                    ',',
+                )} provided. Expected an object but found ${typeof result.config}.`,
             );
         }
         return result.config;

@@ -5,7 +5,11 @@ export const FIXTURES_PATH = path.resolve(__dirname, '../../test/fixtures');
 export const basicFixturePath = path.resolve(__dirname, '../../test/fixtures/basic');
 
 export class FixtureResult {
-    constructor(public rootPath: string, public src: Record<string, string>, public output: Record<string, string>) {}
+    constructor(
+        public rootPath: string,
+        public src: Record<string, string>,
+        public output: Record<string, string>,
+    ) {}
 
     getSrcPath(relativePath: string) {
         return toolkit.path.resolve(this.rootPath, relativePath ? `src/${relativePath}` : 'src');

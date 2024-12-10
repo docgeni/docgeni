@@ -39,8 +39,8 @@ describe('#colors', () => {
             'bgBlueBright',
             'bgMagentaBright',
             'bgCyanBright',
-            'bgWhiteBright'
-        ].forEach(key => {
+            'bgWhiteBright',
+        ].forEach((key) => {
             const result = colors[key]('text');
             expect(result).toEqual(chalk[key]('text'));
         });

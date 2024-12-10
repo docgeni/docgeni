@@ -40,7 +40,7 @@ describe('DocgeniNodeJsAsyncHost', () => {
         fs.writeFileSync(file1Path, 'hello world');
         const obs = host.watch(root + '/sub1', { recursive: true, ignoreInitial: true })!;
         expect(obs).not.toBeNull();
-        const subscription = obs.subscribe(event => {
+        const subscription = obs.subscribe((event) => {
             allEvents.push(event);
         });
         await utils.wait(10);

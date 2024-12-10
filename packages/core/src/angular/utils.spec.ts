@@ -13,39 +13,39 @@ describe('#ng-utils', () => {
                     ['not-found-url']: '/not-found/',
                     prod: true,
                     port: 1000,
-                    configuration: 'prod'
+                    configuration: 'prod',
                 },
-                ngBuildOptions
+                ngBuildOptions,
             );
             expect(result).toEqual({
                 ['deploy-url']: '/docgeni/',
                 prod: true,
                 port: 1000,
-                configuration: 'prod'
+                configuration: 'prod',
             });
         });
 
         it(`should extract angular command args 'deploy-url'`, () => {
             const result = extractAngularCommandArgs(
                 {
-                    ['deploy-url']: '/docgeni/'
+                    ['deploy-url']: '/docgeni/',
                 },
-                ngBuildOptions
+                ngBuildOptions,
             );
             expect(result).toEqual({
-                ['deploy-url']: '/docgeni/'
+                ['deploy-url']: '/docgeni/',
             });
         });
 
         it(`should extract angular command args 'deployUrl'`, () => {
             const result = extractAngularCommandArgs(
                 {
-                    ['deployUrl']: '/docgeni/'
+                    ['deployUrl']: '/docgeni/',
                 },
-                ngBuildOptions
+                ngBuildOptions,
             );
             expect(result).toEqual({
-                ['deploy-url']: '/docgeni/'
+                ['deploy-url']: '/docgeni/',
             });
         });
     });

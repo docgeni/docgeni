@@ -33,7 +33,7 @@ export function isUndefinedOrNull(value: any) {
 
 export function keyBy<T>(value: Array<T>, key: keyof T): { [key: string]: T } {
     const result: { [key: string]: T } = {};
-    (value || []).forEach(item => {
+    (value || []).forEach((item) => {
         result[item[`${key.toString()}`]] = item;
     });
     return result;
@@ -62,7 +62,7 @@ export function extractExtname(p: string, removeDot = false) {
 
 export function matchGlob(target: string, pattern: string | string[], options?: minimatch.IOptions): boolean {
     if (isArray(pattern)) {
-        return !!pattern.find(item => {
+        return !!pattern.find((item) => {
             return minimatch(target, item, options);
         });
     } else {
@@ -91,7 +91,7 @@ export function some<T>(collection: _.List<T>, predicate: _.ListIterateeCustom<T
 }
 
 export function wait(milliseconds: number): Promise<void> {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
             return resolve();

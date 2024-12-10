@@ -8,7 +8,12 @@ export class ComponentBuilder {
 
     public metadata: NgComponentMetadata;
 
-    constructor(private docgeniHost: fs.DocgeniFsHost, public name: string, public fullPath: string, distRootPath: string) {
+    constructor(
+        private docgeniHost: fs.DocgeniFsHost,
+        public name: string,
+        public fullPath: string,
+        distRootPath: string,
+    ) {
         this.entryComponentFullPath = toolkit.path.resolve(fullPath, `${name}.component.ts`);
         this.distPath = toolkit.path.resolve(distRootPath, name);
     }
@@ -27,7 +32,7 @@ export class ComponentBuilder {
             this.metadata = {
                 selector: exportDefault.selector,
                 name: exportDefault.component,
-                standalone: exportDefault.standalone === 'true'
+                standalone: exportDefault.standalone === 'true',
             };
         } else {
             const exportedComponents = componentFile.getExportedComponents();
@@ -35,7 +40,7 @@ export class ComponentBuilder {
                 this.metadata = {
                     selector: exportedComponents[0].selector,
                     name: exportedComponents[0].name,
-                    standalone: exportedComponents[0].standalone
+                    standalone: exportedComponents[0].standalone,
                 };
             } else {
                 this.metadata = null;

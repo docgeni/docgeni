@@ -6,6 +6,6 @@ import { AlibButtonComponent } from './button.component';
     declarations: [AlibButtonComponent],
     imports: [CommonModule],
     exports: [AlibButtonComponent],
-    providers: []
+    providers: [],
 })
 export class AlibButtonModule {}

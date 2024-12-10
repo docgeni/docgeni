@@ -20,24 +20,24 @@ interface CopyFile {
 const COPY_FILES: CopyFile[] = [
     {
         from: 'styles.scss',
-        to: 'src/styles.scss'
+        to: 'src/styles.scss',
     },
     {
         from: 'index.html',
-        to: 'src/index.html'
+        to: 'src/index.html',
     },
     {
         from: 'favicon.ico',
-        to: 'src/favicon.ico'
+        to: 'src/favicon.ico',
     },
     {
         from: '.browserslistrc',
-        to: '.browserslistrc'
+        to: '.browserslistrc',
     },
     {
         from: 'tsconfig.json',
-        to: 'tsconfig.app.json'
-    }
+        to: 'tsconfig.app.json',
+    },
 ];
 
 export class SiteBuilder {
@@ -111,7 +111,7 @@ export class SiteBuilder {
         const siteProject: SiteProject = {
             name: 'site',
             root: sitePath,
-            sourceRoot: toolkit.path.resolve(sitePath, 'src')
+            sourceRoot: toolkit.path.resolve(sitePath, 'src'),
         };
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
@@ -119,7 +119,7 @@ export class SiteBuilder {
         const angularJSONPath = toolkit.path.resolve(this.siteProject.root, './angular.json');
         const angularJSONContent = toolkit.template.compile('angular-json.hbs', {
             root: this.docgeni.config.siteDir,
-            outputPath: toolkit.path.normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir))
+            outputPath: toolkit.path.normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)),
         });
         await this.docgeni.host.writeFile(angularJSONPath, angularJSONContent);
         await this.syncTsconfig();
@@ -131,7 +131,7 @@ export class SiteBuilder {
             const packageJsonPath = this.docgeni.paths.getAbsPath(`${lib.rootDir}/package.json`);
             if (!(await this.docgeni.host.exists(packageJsonPath))) {
                 throw new ValidationError(
-                    `Can't find package.json in ${lib.name} lib's rootDir(${lib.rootDir}), please check the configuration of rootDir`
+                    `Can't find package.json in ${lib.name} lib's rootDir(${lib.rootDir}), please check the configuration of rootDir`,
                 );
             }
             const packageJson = await this.docgeni.host.readJSON<{ name: string }>(packageJsonPath);
@@ -140,9 +140,9 @@ export class SiteBuilder {
                     key: `${packageJson.name}/*`,
                     value: new Handlebars.SafeString(
                         [
-                            `"${toolkit.path.relative(this.siteProject.root, toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir))}/*"`
-                        ].join(',')
-                    )
+                            `"${toolkit.path.relative(this.siteProject.root, toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir))}/*"`,
+                        ].join(','),
+                    ),
                 },
                 {
                     key: packageJson.name,
@@ -150,20 +150,20 @@ export class SiteBuilder {
                         [
                             `"${toolkit.path.relative(
                                 this.siteProject.root,
-                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir)
+                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir),
                             )}/index.ts"`,
                             `"${toolkit.path.relative(
                                 this.siteProject.root,
-                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir)
-                            )}/public-api.ts"`
-                        ].join(',')
-                    )
-                }
+                                toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir),
+                            )}/public-api.ts"`,
+                        ].join(','),
+                    ),
+                },
             );
         }
         const tsconfigJsonPath = toolkit.path.resolve(this.siteProject.root, './tsconfig.app.json');
         const tsconfigJsonContent = toolkit.template.compile('tsconfig-app-json.hbs', {
-            paths: tsPaths
+            paths: tsPaths,
         });
         await this.docgeni.host.writeFile(tsconfigJsonPath, tsconfigJsonContent);
     }
@@ -209,7 +209,7 @@ export class SiteBuilder {
 
     private async watchSrcApp() {
         if (this.docgeni.watch && (await this.srcAppDirExists())) {
-            this.docgeni.host.watchAggregated(this.srcAppDirPath).subscribe(async events => {
+            this.docgeni.host.watchAggregated(this.srcAppDirPath).subscribe(async (events) => {
                 for (const event of events) {
                     const distPath = event.path.replace(this.srcAppDirPath, toolkit.path.resolve(this.siteProject.sourceRoot, 'app'));
                     if (event.type === toolkit.fs.HostWatchEventType.Deleted) {
@@ -240,10 +240,10 @@ export class SiteBuilder {
                         'BrowserAnimationsModule',
                         'DocgeniTemplateModule',
                         'RouterModule.forRoot([])',
-                        ' ...IMPORT_MODULES'
+                        ' ...IMPORT_MODULES',
                     ],
                     providers: ['...DOCGENI_SITE_PROVIDERS'],
-                    bootstrap: ['RootComponent']
+                    bootstrap: ['RootComponent'],
                 });
 
                 const updater = new NgSourceUpdater(ngSourceFile);
@@ -255,7 +255,7 @@ export class SiteBuilder {
                     { name: 'DocgeniTemplateModule', moduleSpecifier: '@docgeni/template' },
                     { name: 'DOCGENI_SITE_PROVIDERS', moduleSpecifier: './content/index' },
                     { name: 'IMPORT_MODULES', moduleSpecifier: './content/index' },
-                    { name: 'RootComponent', moduleSpecifier: './content/index' }
+                    { name: 'RootComponent', moduleSpecifier: './content/index' },
                 ]);
                 updater.insertNgModule('AppModule', metadata);
                 updater.removeDefaultExport();
@@ -263,7 +263,7 @@ export class SiteBuilder {
                 updater.update();
                 await this.docgeni.host.writeFile(
                     toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.module.ts'),
-                    updater.update()
+                    updater.update(),
                 );
             }
         }
@@ -275,13 +275,13 @@ export class SiteBuilder {
 
             const fromToMap = new Map<string, string>();
             const watchFilePaths: string[] = [];
-            COPY_FILES.forEach(copyFile => {
+            COPY_FILES.forEach((copyFile) => {
                 const fromPath = toolkit.path.resolve(this.publicDirPath, copyFile.from);
                 const toPath = toolkit.path.resolve(this.siteProject.root, copyFile.to);
                 fromToMap.set(fromPath, toPath);
                 watchFilePaths.push(fromPath);
             });
-            this.docgeni.host.watchAggregated([assetsPath, ...watchFilePaths]).subscribe(async events => {
+            this.docgeni.host.watchAggregated([assetsPath, ...watchFilePaths]).subscribe(async (events) => {
                 for (const event of events) {
                     let distPath: string;
                     if (fromToMap.get(event.path)) {
@@ -296,7 +296,7 @@ export class SiteBuilder {
                     }
                 }
                 const isStackBlitzDir = events.some(
-                    event => !toolkit.path.relative(toolkit.path.resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..')
+                    (event) => !toolkit.path.relative(toolkit.path.resolve(assetsPath, 'stack-blitz'), event.path).startsWith('..'),
                 );
                 if (isStackBlitzDir) {
                     this.updateShareExampleBundleJson(this.publicDirPath);
@@ -313,8 +313,8 @@ export class SiteBuilder {
         if (this.docgeni.watch) {
             const sourceRoot = toolkit.path.resolve(this.docgeni.paths.absSitePath, 'src');
             const assetsPath = toolkit.path.resolve(sourceRoot, 'assets');
-            this.docgeni.host.watchAggregated([`${assetsPath}/stack-blitz`]).subscribe(async events => {
-                const isStackBlitzDir = events.some(event => !event.path.endsWith('stack-blitz/bundle.json'));
+            this.docgeni.host.watchAggregated([`${assetsPath}/stack-blitz`]).subscribe(async (events) => {
+                const isStackBlitzDir = events.some((event) => !event.path.endsWith('stack-blitz/bundle.json'));
                 if (isStackBlitzDir) {
                     this.updateShareExampleBundleJson(sourceRoot);
                 }
@@ -330,12 +330,12 @@ export class SiteBuilder {
             const child = this.spawn('ng', commandArgs, {
                 stdio: 'inherit',
                 cwd: commandCwd,
-                shell: process.platform === 'win32' // 仅在当前运行环境为 Windows 时，才使用 shell
+                shell: process.platform === 'win32', // 仅在当前运行环境为 Windows 时，才使用 shell
             });
-            child.on('data', data => {
+            child.on('data', (data) => {
                 this.docgeni.logger.info(data);
             });
-            child.on('error', error => {
+            child.on('error', (error) => {
                 console.error(error);
             });
             child.on('exit', (code, signal) => {
@@ -353,7 +353,7 @@ export class SiteBuilder {
 
     private parseCommandOptionsToArgs(cmdOptions: AngularCommandOptions) {
         return Object.keys(cmdOptions)
-            .filter(key => {
+            .filter((key) => {
                 return !toolkit.utils.isUndefinedOrNull(cmdOptions[key]);
             })
             .reduce((result, key) => {
@@ -366,7 +366,7 @@ export class SiteBuilder {
         if (!(await this.docgeni.host.exists(sharedExampleDir))) {
             await this.docgeni.host.writeFile(
                 toolkit.path.resolve(this.siteProject.root, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
-                `[]`
+                `[]`,
             );
             return;
         }
@@ -381,7 +381,7 @@ export class SiteBuilder {
         const content = JSON.stringify(list);
         await this.docgeni.host.writeFile(
             toolkit.path.resolve(this.docgeni.paths.absSitePath, `${SITE_ASSETS_RELATIVE_PATH}/stack-blitz/bundle.json`),
-            content
+            content,
         );
     }
 }

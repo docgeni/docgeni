@@ -23,7 +23,10 @@ export class SearchService {
         return !!(this.global.config.algolia && this.global.config.algolia.apiKey && this.global.config.algolia.indexName);
     }
 
-    constructor(public global: GlobalContext, @Inject(DOCUMENT) private document: any) {}
+    constructor(
+        public global: GlobalContext,
+        @Inject(DOCUMENT) private document: any,
+    ) {}
 
     public initSearch(searchSelector: string) {
         if (this.hasAlgolia) {
@@ -39,17 +42,17 @@ export class SearchService {
             ? {
                   appId: algoliaConfig.appId,
                   apiKey: algoliaConfig.apiKey,
-                  indexName: algoliaConfig.indexName
+                  indexName: algoliaConfig.indexName,
               }
             : {
                   apiKey: algoliaConfig?.apiKey,
-                  indexName: algoliaConfig?.indexName
+                  indexName: algoliaConfig?.indexName,
               };
 
         (window as any).global = window;
 
         (window as any).process = {
-            env: { DEBUG: undefined }
+            env: { DEBUG: undefined },
         };
 
         // @ts-ignore
@@ -60,7 +63,7 @@ export class SearchService {
             inputSelector: searchSelector,
             algoliaOptions: {
                 hitsPerPage: 5,
-                facetFilters: [`lang: ${this.global.locale}`]
+                facetFilters: [`lang: ${this.global.locale}`],
             },
             transformData: (hits: any) => {
                 if (location.href.indexOf(this.global.locale) < 0) {
@@ -69,7 +72,7 @@ export class SearchService {
                     });
                 }
                 return hits;
-            }
+            },
             // debug: true
         });
     }
@@ -85,9 +88,9 @@ export class SearchService {
                         return searchContainer.value;
                     }),
                     distinctUntilChanged(),
-                    takeUntil(this.destroyed$)
+                    takeUntil(this.destroyed$),
                 )
-                .subscribe(value => {
+                .subscribe((value) => {
                     this.result = this.searchPages(value);
                 });
         } else {
@@ -97,21 +100,21 @@ export class SearchService {
 
     private generatePages() {
         this.allPages = [];
-        this.global.docItems.forEach(docItem => {
+        this.global.docItems.forEach((docItem) => {
             const path =
                 this.global.config.mode === 'full' && docItem.channelPath ? `${docItem.channelPath}/${docItem.path}` : docItem.path;
             const parentPage = {
                 title: `${docItem.title} ${docItem.subtitle ? docItem.subtitle : ''}`,
                 id: docItem.id,
-                path
+                path,
             };
             this.allPages.push(parentPage);
-            (docItem.headings || []).forEach(heading => {
+            (docItem.headings || []).forEach((heading) => {
                 this.allPages.push({
                     title: heading.name,
                     id: heading.id,
                     path: `${path}#${heading.id}`,
-                    parent: parentPage
+                    parent: parentPage,
                 });
             });
         });
@@ -120,7 +123,7 @@ export class SearchService {
     private searchPages(keywords: string) {
         const searchText = keywords?.trim().toLowerCase();
         if (searchText) {
-            return this.allPages.filter(item => {
+            return this.allPages.filter((item) => {
                 return item.title.toLowerCase().indexOf(searchText) > -1;
             });
         } else {

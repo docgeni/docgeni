@@ -26,8 +26,8 @@ export class NgSourceUpdater {
             new InsertChange(
                 this.sourceFile.origin.fileName,
                 defaultExportNode ? defaultExportNode.pos : this.sourceFile.length,
-                ngModuleText
-            )
+                ngModuleText,
+            ),
         );
         return this;
     }

@@ -7,16 +7,16 @@ import { VERSION } from './version';
 export const serveCommand: CommandModule = {
     command: ['serve'],
     describe: 'Serve documentation site for development',
-    builder: yargs => {
+    builder: (yargs) => {
         yargsOptionsGenerate(yargs, readNgServeOptions())
             .parserConfiguration({ 'dot-notation': false })
             .option('siteProjectName', {
                 desc: `Site project name`,
-                default: ''
+                default: '',
             })
             .option('progress', {
                 desc: `Build progress`,
-                default: true
+                default: true,
             })
             .config(getConfiguration())
             .pkgConf('docgeni');
@@ -30,8 +30,8 @@ export const serveCommand: CommandModule = {
             watch: true,
             config,
             version: VERSION,
-            progress: config.progress
+            progress: config.progress,
         });
         await docgeni.run();
-    }
+    },
 };

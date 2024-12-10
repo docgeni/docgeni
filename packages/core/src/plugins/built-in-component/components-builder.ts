@@ -28,7 +28,7 @@ export class ComponentsBuilder {
         const componentPath = name ? toolkit.path.resolve(this.componentsSourcePath, toolkit.path.normalize(name)) : null;
         return {
             name,
-            componentPath
+            componentPath,
         };
     }
 
@@ -37,7 +37,7 @@ export class ComponentsBuilder {
             return;
         }
         // toolkit.print.info(`Components: start watching ${this.componentsSourcePath}`);
-        return this.docgeni.host.watch(this.componentsSourcePath, { ignoreInitial: true, recursive: true }).subscribe(async item => {
+        return this.docgeni.host.watch(this.componentsSourcePath, { ignoreInitial: true, recursive: true }).subscribe(async (item) => {
             try {
                 if (item.path === this.modulePath) {
                     await this.emitEntryFile();
@@ -104,7 +104,7 @@ export class ComponentsBuilder {
             sourceFile = createNgSourceFile(this.modulePath, '');
         }
         // filter built-in components that source contains angular component
-        const components = Array.from(this.components.values()).filter(component => !!component.metadata);
+        const components = Array.from(this.components.values()).filter((component) => !!component.metadata);
         const moduleText = await generateBuiltInComponentsModule(sourceFile, components);
         await this.docgeni.host.writeFile(toolkit.path.resolve(this.componentsDistPath, 'index.ts'), moduleText);
     }

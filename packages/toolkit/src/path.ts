@@ -3,7 +3,7 @@ import {
     relative as relative_,
     resolve as resolve_,
     Path,
-    getSystemPath as getSystemPath_
+    getSystemPath as getSystemPath_,
 } from '@angular-devkit/core';
 
 export const directorySeparator = '/';

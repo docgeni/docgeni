@@ -2,11 +2,11 @@ import { ts } from '../typescript';
 import { getCallExpressionInfo, parseCallExpressionIdentifiers } from './expression';
 
 export function declarationIsPublic(
-    node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration | ts.PropertySignature
+    node: ts.PropertyDeclaration | ts.SetAccessorDeclaration | ts.MethodDeclaration | ts.PropertySignature,
 ) {
     return (
         !node.modifiers ||
-        !node.modifiers.some(item => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)
+        !node.modifiers.some((item) => item.kind === ts.SyntaxKind.PrivateKeyword || item.kind === ts.SyntaxKind.ProtectedKeyword)
     );
 }
 
@@ -24,21 +24,21 @@ export function getSymbolDeclaration(symbol: ts.Symbol): ts.Declaration | null {
 }
 
 export function getHeritageClauses(declaration: ts.Declaration): ts.HeritageClause[] {
-    return (((declaration as ts.ClassDeclaration).heritageClauses || []) as unknown) as ts.HeritageClause[];
+    return ((declaration as ts.ClassDeclaration).heritageClauses || []) as unknown as ts.HeritageClause[];
 }
 
 export function getHeritageDeclarations(declaration: ts.Declaration, checker: ts.TypeChecker): ts.Declaration[] {
     const heritageClauses = getHeritageClauses(declaration);
     const declarations: ts.Declaration[] = [];
-    heritageClauses.forEach(node => {
-        node.types.forEach(type => {
+    heritageClauses.forEach((node) => {
+        node.types.forEach((type) => {
             const identifiers: ts.Identifier[] = [];
             if (ts.isCallExpression(type.expression)) {
                 identifiers.push(...parseCallExpressionIdentifiers(type.expression));
             } else {
                 identifiers.push(type.expression as ts.Identifier);
             }
-            identifiers.forEach(identifier => {
+            identifiers.forEach((identifier) => {
                 const typeLocation = checker.getTypeAtLocation(identifier);
                 const declaration = getSymbolDeclaration(typeLocation.symbol);
                 if (declaration && (ts.isClassDeclaration(declaration) || ts.isInterfaceDeclaration(declaration))) {

@@ -35,7 +35,7 @@ export class Toolkit {
     static get template() {
         if (!this._template) {
             this._template = new Template({
-                baseDir: nodePath.resolve(this.config.baseDir, 'templates')
+                baseDir: nodePath.resolve(this.config.baseDir, 'templates'),
             });
         }
         return this._template;
@@ -60,7 +60,7 @@ export class Toolkit {
     static get print() {
         if (!this._print) {
             this._print = new Print({
-                timePrefix: false
+                timePrefix: false,
             });
         }
         return this._print;

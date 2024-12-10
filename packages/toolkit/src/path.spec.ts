@@ -21,5 +21,4 @@ describe('#path', () => {
             expect(normalizeSlashes(`D:\\a\\docgeni`)).toEqual('D:/a/docgeni');
         });
     });
-
 });

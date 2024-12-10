@@ -36,14 +36,14 @@ export class LibrariesBuilder extends FileEmitter {
      */
     public async initialize() {
         this.absDestSiteContentPath = this.docgeni.paths.absSiteContentPath;
-        const normalizedConfigs = this.config.libs.map(lib => {
+        const normalizedConfigs = this.config.libs.map((lib) => {
             const result = normalizeLibConfig(lib);
             return result;
         });
         for (const normalizedConfig of normalizedConfigs) {
             await this.verifyLibConfig(normalizedConfig);
         }
-        this.libraryBuilders = normalizedConfigs.map(normalizedConfig => {
+        this.libraryBuilders = normalizedConfigs.map((normalizedConfig) => {
             return new LibraryBuilderImpl(this.docgeni, normalizedConfig);
         });
         for (const libraryBuilder of this.libraryBuilders) {
@@ -89,7 +89,7 @@ export class LibrariesBuilder extends FileEmitter {
 
     public watch() {
         if (this.docgeni.watch) {
-            this.libraries.forEach(libraryBuilder => {
+            this.libraries.forEach((libraryBuilder) => {
                 libraryBuilder.watch();
             });
         }
@@ -129,7 +129,7 @@ export class LibrariesBuilder extends FileEmitter {
             const tsConfigExists = await this.docgeni.host.pathExists(this.docgeni.paths.getAbsPath(tsConfigPath));
             if (!tsConfigExists) {
                 throw new ValidationError(
-                    `${lib.name} lib's tsConfigPath(${tsConfigPath}) has not exists, should config it relative to rootDir(${lib.rootDir}) for apiMode: ${lib.apiMode}`
+                    `${lib.name} lib's tsConfigPath(${tsConfigPath}) has not exists, should config it relative to rootDir(${lib.rootDir}) for apiMode: ${lib.apiMode}`,
                 );
             }
         }
@@ -139,14 +139,14 @@ export class LibrariesBuilder extends FileEmitter {
         const { moduleKeys, liveExampleComponents } = this.getAllComponentsModulesAndExamples();
 
         const componentExamplesContent = toolkit.template.compile('component-examples.hbs', {
-            data: JSON.stringify(liveExampleComponents, null, 4)
+            data: JSON.stringify(liveExampleComponents, null, 4),
         });
         const componentExamplesPath = toolkit.path.resolve(this.absDestSiteContentPath, 'component-examples.ts');
         await this.docgeni.host.writeFile(componentExamplesPath, componentExamplesContent);
         this.addEmitFile(componentExamplesPath, componentExamplesContent);
         const exampleLoaderContent = toolkit.template.compile('example-loader.hbs', {
             moduleKeys,
-            enableIvy: this.docgeni.enableIvy
+            enableIvy: this.docgeni.enableIvy,
         });
         const exampleLoaderPath = toolkit.path.resolve(this.docgeni.paths.absSiteContentPath, 'example-loader.ts');
         await this.docgeni.host.writeFile(exampleLoaderPath, exampleLoaderContent);
@@ -159,11 +159,11 @@ export class LibrariesBuilder extends FileEmitter {
         for (const key of moduleKeys) {
             modules.push({
                 key,
-                name: toolkit.strings.pascalCase(key.replace('/', '-'))
+                name: toolkit.strings.pascalCase(key.replace('/', '-')),
             });
         }
         const exampleModulesContent = toolkit.template.compile('example-modules.hbs', {
-            modules
+            modules,
         });
         const exampleModulesPath = toolkit.path.resolve(this.docgeni.paths.absSiteContentPath, 'example-modules.ts');
         await this.docgeni.host.writeFile(exampleModulesPath, exampleModulesContent);
@@ -178,20 +178,20 @@ export class LibrariesBuilder extends FileEmitter {
     private getAllComponentsModulesAndExamples(): { moduleKeys: string[]; liveExampleComponents: Record<string, LiveExample> } {
         const moduleKeys: string[] = [];
         const liveExampleComponents: Record<string, LiveExample> = {};
-        this.libraryBuilders.forEach(libraryBuilder => {
-            libraryBuilder.components.forEach(component => {
+        this.libraryBuilders.forEach((libraryBuilder) => {
+            libraryBuilder.components.forEach((component) => {
                 // exclude components without examples
                 if (!toolkit.utils.isEmpty(component.examples)) {
                     moduleKeys.push(component.getModuleKey());
-                    component.examples.forEach(example => {
+                    component.examples.forEach((example) => {
                         liveExampleComponents[example.key] = {
                             ...example,
-                            sourceFiles: example.sourceFiles.map(sourceFile => {
+                            sourceFiles: example.sourceFiles.map((sourceFile) => {
                                 return {
                                     name: sourceFile.name,
-                                    highlightedPath: sourceFile.highlightedPath
+                                    highlightedPath: sourceFile.highlightedPath,
                                 };
-                            })
+                            }),
                         };
                     });
                 }
@@ -199,7 +199,7 @@ export class LibrariesBuilder extends FileEmitter {
         });
         return {
             moduleKeys,
-            liveExampleComponents
+            liveExampleComponents,
         };
     }
 }

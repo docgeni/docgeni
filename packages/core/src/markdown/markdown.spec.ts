@@ -19,7 +19,7 @@ describe('markdown', () => {
 
         it('should transform full marked success', () => {
             const output = Markdown.toHTML(fixture.src['hello.md'], {
-                absFilePath: fixture.getSrcPath('hello.md')
+                absFilePath: fixture.getSrcPath('hello.md'),
             });
             expect(output).toContain(`This is an <h1> tag`);
             expect(output).toContain(`This is an <h2> tag`);
@@ -78,7 +78,7 @@ describe('markdown', () => {
             expect(result.headings?.length).toEqual(2);
             expect(result.headings).toEqual([
                 { id: 'heading1', name: 'heading1', level: 1, type: 'h1' },
-                { id: 'heading2', name: 'heading2', level: 1, type: 'h1' }
+                { id: 'heading2', name: 'heading2', level: 1, type: 'h1' },
             ]);
         });
 
@@ -91,8 +91,8 @@ describe('markdown', () => {
                     id: 'heading1-%3Ca-href=%22https://example-com%22%3Elink%3C/a%3E',
                     name: 'heading1 <a href="https://example.com">Link</a>',
                     level: 1,
-                    type: 'h1'
-                }
+                    type: 'h1',
+                },
             ]);
         });
 

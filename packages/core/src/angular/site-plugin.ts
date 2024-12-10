@@ -20,7 +20,7 @@ export default class AngularSitePlugin implements Plugin {
             if (!skipSite) {
                 const ngCommandArgs = extractAngularCommandArgs(
                     context.config,
-                    context.watch ? readNgServeOptions() : readNgBuildOptions()
+                    context.watch ? readNgServeOptions() : readNgBuildOptions(),
                 );
                 await this.siteBuilder.runNgCommand(ngCommandArgs);
             }
