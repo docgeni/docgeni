@@ -1,8 +1,11 @@
+@use 'mixins/breakpoints';
+@use 'variables';
+
 .dg-main {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: $dg-navbar-height;
+    top: variables.$dg-navbar-height;
     bottom: 0;
     left: 0;
     right: 0;
@@ -21,9 +24,9 @@
         width: 300px;
         overflow: auto;
         padding-top: 20px;
-        border-right: 1px solid $dg-gray-300;
+        border-right: 1px solid variables.$dg-gray-300;
         position: fixed;
-        top: $dg-navbar-height;
+        top: variables.$dg-navbar-height;
         bottom: 0;
     }
 
@@ -51,12 +54,12 @@
         right: 0;
     }
 
-    @include dg-media-breakpoint-down('md') {
+    @include breakpoints.dg-media-breakpoint-down('md') {
         &.dg-sidebar-show {
             .dg-sidebar {
                 display: block;
                 left: 0;
-                background: $dg-gray-100;
+                background: variables.$dg-gray-100;
             }
 
             .dg-doc-viewer-backdrop {
@@ -88,7 +91,7 @@
     }
     .dg-layout {
         .dg-sidebar {
-            background: $dg-gray-100;
+            background: variables.$dg-gray-100;
             top: 0;
         }
     }

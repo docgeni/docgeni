@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use 'variables';
+
 .dg-toc {
     flex: 1;
     position: sticky;
@@ -51,14 +54,14 @@
             }
 
             a {
-                color: $dg-gray-700;
+                color: variables.$dg-gray-700;
             }
         }
     }
 
     .dg-link {
         padding: 6px 0px;
-        color: $dg-gray-700;
+        color: variables.$dg-gray-700;
         line-height: 16px;
         text-decoration: none;
         display: block;
@@ -68,7 +71,7 @@
         word-break: break-all;
 
         &::before {
-            border-left: 2px solid $dg-gray-300;
+            border-left: 2px solid variables.$dg-gray-300;
             bottom: 0;
             content: '';
             left: 0;
@@ -77,9 +80,9 @@
         }
 
         &.active {
-            color: darken($dg-primary, 10%);
+            color: color.adjust(variables.$dg-primary, $lightness: -10%);
             &::before {
-                border-color: $dg-primary;
+                border-color: variables.$dg-primary;
                 border-width: 2px;
             }
         }
@@ -100,7 +103,7 @@
                     height: 5px;
                     width: 5px;
                     border-radius: 50%;
-                    background: $dg-primary;
+                    background: variables.$dg-primary;
                     top: 12px;
                     left: -10px;
                 }

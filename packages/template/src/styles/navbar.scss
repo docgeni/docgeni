@@ -1,3 +1,6 @@
+@use 'mixins/breakpoints';
+@use 'variables';
+
 .dg-navbar {
     position: fixed;
     top: 0;
@@ -7,7 +10,7 @@
     align-items: center;
     padding: 0.719rem 1.25rem;
     justify-content: space-between;
-    font-size: $dg-font-size-md;
+    font-size: variables.$dg-font-size-md;
     z-index: 100;
 
     .nav.nav-spacer {
@@ -31,7 +34,7 @@
 
         .title {
             font-weight: 600;
-            color: $dg-white;
+            color: variables.$dg-white;
             text-decoration: none;
             &:hover {
                 text-decoration: none;
@@ -92,7 +95,7 @@
             outline: none;
 
             .dg-icon {
-                font-size: $dg-font-size-lg;
+                font-size: variables.$dg-font-size-lg;
             }
         }
 
@@ -101,7 +104,7 @@
         }
     }
 
-    @include dg-media-breakpoint-down('md') {
+    @include breakpoints.dg-media-breakpoint-down('md') {
         flex-wrap: wrap;
         justify-content: space-between;
 
@@ -162,12 +165,16 @@
 
 .dg-navbar-theme-angular {
     .dg-navbar {
-        @include dg-navbar-theme($dg-navbar-background-angular, $dg-navbar-box-shadow-angular, $dg-navbar-color-angular);
+        @include dg-navbar-theme(
+            variables.$dg-navbar-background-angular,
+            variables.$dg-navbar-box-shadow-angular,
+            variables.$dg-navbar-color-angular
+        );
 
         .nav {
             a {
                 &:hover {
-                    color: rgba($color: $dg-white, $alpha: 0.8); // $gray-200;
+                    color: rgba($color: variables.$dg-white, $alpha: 0.8); // $gray-200;
                 }
 
                 &.active {
@@ -178,7 +185,7 @@
 
         .action-items {
             .action-icon {
-                color: $dg-white;
+                color: variables.$dg-white;
                 &:hover,
                 &.active {
                     background-color: hsla(0, 0%, 100%, 0.15);
@@ -189,28 +196,32 @@
 }
 @mixin dg-navbar-theme-default() {
     .dg-navbar {
-        @include dg-navbar-theme($dg-navbar-background-default, $dg-navbar-box-shadow-default, $dg-navbar-color-default);
+        @include dg-navbar-theme(
+            variables.$dg-navbar-background-default,
+            variables.$dg-navbar-box-shadow-default,
+            variables.$dg-navbar-color-default
+        );
 
         .nav {
             a {
                 &:hover {
-                    color: $dg-primary;
+                    color: variables.$dg-primary;
                 }
 
                 &.active {
-                    color: $dg-primary;
-                    background: rgba($dg-primary, 0.12);
+                    color: variables.$dg-primary;
+                    background: rgba(variables.$dg-primary, 0.12);
                 }
             }
         }
 
         .action-items {
             .action-icon {
-                color: $dg-text-color;
+                color: variables.$dg-text-color;
 
                 &:hover,
                 &.active {
-                    background-color: $dg-navbar-action-bg-color;
+                    background-color: variables.$dg-navbar-action-bg-color;
                 }
             }
         }

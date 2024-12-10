@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@use '../../styles/variables.scss';
 
 .dg-home {
     display: block;
@@ -20,7 +20,7 @@
             .dg-launch-description {
                 margin-bottom: 20px;
                 font-size: 14px;
-                color: $dg-gray-600;
+                color: variables.$dg-gray-600;
             }
 
             .dg-launch-actions {
@@ -42,7 +42,7 @@
             bottom: 0;
             overflow: hidden;
             z-index: -1;
-            background: $dg-hero-background;
+            background: variables.$dg-hero-background;
 
             img {
                 object-fit: cover;
@@ -65,12 +65,12 @@
             padding-top: 0;
         }
         .dg-feature-title {
-            color: $dg-text-color;
+            color: variables.$dg-text-color;
             font-size: 16px;
             padding-bottom: 14px;
         }
         .dg-feature-description {
-            color: $dg-gray-600;
+            color: variables.$dg-gray-600;
             font-size: 16px;
             line-height: 1.5;
         }

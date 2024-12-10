@@ -1,5 +1,7 @@
+@use 'variables';
+
 @each $prop, $abbrev in (margin: m, padding: p) {
-    @each $size, $length in $dg-spacers {
+    @each $size, $length in variables.$dg-spacers {
         .dg-#{$abbrev}-#{$size} {
             #{$prop}: $length !important;
         }
@@ -24,6 +26,6 @@
 
 .dg-divider {
     border: 0;
-    border-top: 1px solid $dg-gray-200;
+    border-top: 1px solid variables.$dg-gray-200;
     margin-bottom: 0;
 }

@@ -1,3 +1,5 @@
+@use 'variables';
+
 .dg-menu {
     overflow-x: hidden;
 
@@ -8,8 +10,8 @@
             align-items: center;
             .group-title {
                 flex: 1 1 0;
-                padding: $dg-sidebar-menu-item-space-y 30px;
-                color: $dg-gray-600;
+                padding: variables.$dg-sidebar-menu-item-space-y 30px;
+                color: variables.$dg-gray-600;
                 padding-right: 0;
             }
             .group-arrow {
@@ -18,7 +20,7 @@
             }
         }
         .group-body {
-            margin-left: $dg-sidebar-item-indent;
+            margin-left: variables.$dg-sidebar-item-indent;
             max-height: 0;
             opacity: 0;
             overflow: hidden;
@@ -26,7 +28,7 @@
         }
 
         .menu-item {
-            margin-left: $dg-sidebar-item-indent;
+            margin-left: variables.$dg-sidebar-item-indent;
         }
         &.menu-group--open {
             & > .group-body {
@@ -41,20 +43,20 @@
 
     .menu-item {
         display: block;
-        padding: 0px $dg-sidebar-menu-item-space-x * 0.5 0 $dg-sidebar-menu-item-space-x;
+        padding: 0px variables.$dg-sidebar-menu-item-space-x * 0.5 0 variables.$dg-sidebar-menu-item-space-x;
 
         &.active {
-            padding-right: $dg-sidebar-menu-item-space-x * 0.5 - 3px;
+            padding-right: variables.$dg-sidebar-menu-item-space-x * 0.5 - 3px;
         }
 
         &.active {
-            border-right: 3px solid $dg-primary;
+            border-right: 3px solid variables.$dg-primary;
             .item-content {
-                background: rgba($dg-primary, 0.05);
-                color: $dg-primary;
+                background: rgba(variables.$dg-primary, 0.05);
+                color: variables.$dg-primary;
             }
             &::after {
-                background-color: $dg-primary;
+                background-color: variables.$dg-primary;
                 width: 3px;
             }
         }
@@ -63,8 +65,8 @@
             display: flex;
             align-items: center;
             margin: 0 -1000px;
-            padding: $dg-sidebar-menu-item-space-y 1000px;
-            color: $dg-text-color;
+            padding: variables.$dg-sidebar-menu-item-space-y 1000px;
+            color: variables.$dg-text-color;
             .external-icon {
                 margin-right: 5px;
             }
@@ -74,21 +76,21 @@
             }
             & > .item-content-label {
                 flex: 0 0 auto;
-                background-color: $dg-bg-color;
+                background-color: variables.$dg-bg-color;
                 display: flex;
                 border-radius: 4px;
             }
         }
 
         .subtitle {
-            color: $dg-gray-600;
-            font-size: $dg-font-size-sm;
+            color: variables.$dg-gray-600;
+            font-size: variables.$dg-font-size-sm;
             margin-left: 4px;
         }
 
         &:hover {
             .item-content {
-                color: $dg-primary;
+                color: variables.$dg-primary;
                 text-decoration: none;
             }
         }
@@ -101,7 +103,7 @@
         flex-direction: column;
         align-items: center;
         padding: 0px 0px 10px 0px;
-        border-bottom: 1px solid $dg-gray-200;
+        border-bottom: 1px solid variables.$dg-gray-200;
 
         .logo {
             width: 80px;
@@ -110,19 +112,19 @@
 
         .title {
             font-weight: 500;
-            color: $dg-text-color;
-            font-size: $dg-font-size-lg;
+            color: variables.$dg-text-color;
+            font-size: variables.$dg-font-size-lg;
             padding: 5px 0px;
         }
 
         .description {
-            color: $dg-gray-700;
+            color: variables.$dg-gray-700;
             padding: 5px 10px;
         }
     }
 
     .action-items {
-        border-top: 1px solid $dg-gray-200;
+        border-top: 1px solid variables.$dg-gray-200;
 
         .action-item {
             padding: 10px 30px;

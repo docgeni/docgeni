@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import '../../../packages/template/src/styles/index.scss';
+@use '../../../packages/template/src/styles/variables.scss';
+@use '../../../packages/template/src/styles/index.scss';
 
 .dg-home {
     .dg-hero {
@@ -9,7 +9,7 @@
             padding-left: 18%;
             text-align: unset;
             .dg-launch-title {
-                color: $dg-hero-launch-title-color;
+                color: variables.$dg-hero-launch-title-color;
             }
         }
     }

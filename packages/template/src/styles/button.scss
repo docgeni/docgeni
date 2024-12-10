@@ -1,25 +1,35 @@
+@use 'mixins/box-shadow';
+@use 'mixins/button';
+@use 'variables';
+
 .dg-btn {
     display: inline-block;
-    color: $dg-white;
+    color: variables.$dg-white;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     user-select: none;
     background-color: transparent;
-    border: $dg-btn-border-width solid transparent;
-    @include dg-button-size($dg-btn-padding-y, $dg-btn-padding-x, $dg-btn-font-size, $dg-btn-line-height, $dg-btn-border-radius);
+    border: variables.$dg-btn-border-width solid transparent;
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y,
+        variables.$dg-btn-padding-x,
+        variables.$dg-btn-font-size,
+        variables.$dg-btn-line-height,
+        variables.$dg-btn-border-radius
+    );
 
     &:focus,
     &.focus {
         outline: 0;
-        box-shadow: $dg-btn-focus-box-shadow;
+        box-shadow: variables.$dg-btn-focus-box-shadow;
     }
 
     // Disabled comes first so active can properly restyle
     &.disabled,
     &:disabled {
-        opacity: $dg-btn-disabled-opacity;
-        @include dg-box-shadow(none);
+        opacity: variables.$dg-btn-disabled-opacity;
+        @include box-shadow.dg-box-shadow(none);
     }
 }
 
@@ -30,12 +40,12 @@ fieldset:disabled a.btn {
 }
 
 // Alternate buttons
-@each $color, $value in $dg-theme-colors {
+@each $color, $value in variables.$dg-theme-colors {
     .dg-btn.dg-btn-outline-#{$color} {
-        @include dg-button-outline-variant($value, $value, $value);
+        @include button.dg-button-outline-variant($value, $value, $value);
     }
     .dg-btn.dg-btn-#{$color} {
-        @include dg-button-variant($value, $value);
+        @include button.dg-button-variant($value, $value);
         &:hover {
             box-shadow: 0 2px 5px 1px rgba($value, 0.6);
         }
@@ -43,67 +53,67 @@ fieldset:disabled a.btn {
 }
 
 .dg-btn-xsm {
-    @include dg-button-size(
-        $dg-btn-padding-y-xsm,
-        $dg-btn-padding-x-xsm,
-        $dg-btn-font-size-xsm,
-        $dg-btn-line-height-xsm,
-        $dg-btn-border-radius-xsm
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y-xsm,
+        variables.$dg-btn-padding-x-xsm,
+        variables.$dg-btn-font-size-xsm,
+        variables.$dg-btn-line-height-xsm,
+        variables.$dg-btn-border-radius-xsm
     );
     .dg-icon {
-        font-size: $dg-btn-font-size-xsm;
+        font-size: variables.$dg-btn-font-size-xsm;
     }
 }
 
 .dg-btn-sm {
-    @include dg-button-size(
-        $dg-btn-padding-y-sm,
-        $dg-btn-padding-x-sm,
-        $dg-btn-font-size-sm,
-        $dg-btn-line-height-sm,
-        $dg-btn-border-radius-sm
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y-sm,
+        variables.$dg-btn-padding-x-sm,
+        variables.$dg-btn-font-size-sm,
+        variables.$dg-btn-line-height-sm,
+        variables.$dg-btn-border-radius-sm
     );
     .dg-icon {
-        font-size: $dg-btn-font-size-sm;
+        font-size: variables.$dg-btn-font-size-sm;
     }
 }
 
 .dg-btn-md {
-    @include dg-button-size(
-        $dg-btn-padding-y-md,
-        $dg-btn-padding-x-md,
-        $dg-btn-font-size-md,
-        $dg-btn-line-height-md,
-        $dg-btn-border-radius-md
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y-md,
+        variables.$dg-btn-padding-x-md,
+        variables.$dg-btn-font-size-md,
+        variables.$dg-btn-line-height-md,
+        variables.$dg-btn-border-radius-md
     );
     .dg-icon {
-        font-size: $dg-btn-font-size-md;
+        font-size: variables.$dg-btn-font-size-md;
     }
 }
 
 .dg-btn-lg {
-    @include dg-button-size(
-        $dg-btn-padding-y-lg,
-        $dg-btn-padding-x-lg,
-        $dg-btn-font-size-lg,
-        $dg-btn-line-height-lg,
-        $dg-btn-border-radius-lg
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y-lg,
+        variables.$dg-btn-padding-x-lg,
+        variables.$dg-btn-font-size-lg,
+        variables.$dg-btn-line-height-lg,
+        variables.$dg-btn-border-radius-lg
     );
     .dg-icon {
-        font-size: $dg-btn-font-size-lg;
+        font-size: variables.$dg-btn-font-size-lg;
     }
 }
 
 .dg-btn-xlg {
-    @include dg-button-size(
-        $dg-btn-padding-y-xlg,
-        $dg-btn-padding-x-xlg,
-        $dg-btn-font-size-xlg,
-        $dg-btn-line-height-xlg,
-        $dg-btn-border-radius-xlg
+    @include button.dg-button-size(
+        variables.$dg-btn-padding-y-xlg,
+        variables.$dg-btn-padding-x-xlg,
+        variables.$dg-btn-font-size-xlg,
+        variables.$dg-btn-line-height-xlg,
+        variables.$dg-btn-border-radius-xlg
     );
     .dg-icon {
-        font-size: $dg-btn-font-size-xlg;
+        font-size: variables.$dg-btn-font-size-xlg;
     }
 }
 
@@ -117,5 +127,5 @@ input[type='button'] {
 }
 
 .dg-btn.dg-btn-round {
-    @include dg-button-radius-variant(8888px);
+    @include button.dg-button-radius-variant(8888px);
 }

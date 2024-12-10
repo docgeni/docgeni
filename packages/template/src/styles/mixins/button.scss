@@ -1,3 +1,9 @@
+@use '../variables';
+@use 'border-radius';
+@use 'box-shadow';
+@use 'gradients';
+@use 'hover';
+
 // Button variants
 @mixin dg-button-variant(
     $background,
@@ -7,14 +13,14 @@
     $active-background: $background,
     $active-border: $border
 ) {
-    color: $dg-white;
-    @include dg-gradient-bg($background);
+    color: variables.$dg-white;
+    @include gradients.dg-gradient-bg($background);
     border-color: $border;
-    @include dg-box-shadow($dg-btn-box-shadow);
+    @include box-shadow.dg-box-shadow(variables.$dg-btn-box-shadow);
 
-    @include hover() {
-        color: $dg-white;
-        @include dg-gradient-bg($hover-background);
+    @include hover.hover() {
+        color: variables.$dg-white;
+        @include gradients.dg-gradient-bg($hover-background);
         border-color: $hover-border;
     }
 
@@ -25,7 +31,7 @@
         background-color: $background;
         border-color: $border;
         // Remove CSS gradients if they're enabled
-        @if $dg-enable-gradients {
+        @if variables.$dg-enable-gradients {
             background-image: none;
         }
     }
@@ -35,7 +41,7 @@
     color: $color;
     border-color: $color;
 
-    @include hover() {
+    @include hover.hover() {
         color: $color-hover;
         border-color: $active-border;
     }
@@ -58,7 +64,7 @@
     font-size: $font-size;
     line-height: $line-height;
     // Manually declare to provide an override to the browser default
-    @include dg-border-radius($border-radius, 0);
+    @include border-radius.dg-border-radius($border-radius, 0);
 }
 
 @mixin dg-button-radius-variant($border-radius) {

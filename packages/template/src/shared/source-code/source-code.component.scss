@@ -1,7 +1,9 @@
+@use '../../styles/variables';
+
 .dg-source-code {
     display: block;
     padding: 10px 20px;
-    background: $dg-gray-100;
+    background: variables.$dg-gray-100;
     white-space: nowrap;
     margin: 0px;
     height: 0px;
@@ -10,16 +12,16 @@
     .dg-source-code-content {
         white-space: break-spaces;
         padding: 10px 0px;
-        font-size: $dg-font-size-base;
+        font-size: variables.$dg-font-size-base;
     }
 
     .dg-copy {
         position: absolute;
         top: 1em;
         right: 1.1em;
-        color: $dg-gray-500;
+        color: variables.$dg-gray-500;
         &:hover {
-            color: $dg-primary;
+            color: variables.$dg-primary;
         }
     }
 }

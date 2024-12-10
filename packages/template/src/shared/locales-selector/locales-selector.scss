@@ -1,3 +1,5 @@
+@use '../../styles/variables';
+
 .dg-locales-selector {
     position: relative;
 
@@ -13,25 +15,25 @@
         width: 100%;
         margin-top: 8px;
         padding: 8px 0;
-        background-color: $dg-bg-color;
+        background-color: variables.$dg-bg-color;
         border-radius: 4px;
-        border: 1px solid $dg-gray-200;
+        border: 1px solid variables.$dg-gray-200;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
 
         .locale {
             cursor: pointer;
-            font-size: $dg-font-size-base;
+            font-size: variables.$dg-font-size-base;
             padding: 0 8px;
             line-height: 36px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             &:hover {
-                background-color: $dg-gray-80;
+                background-color: variables.$dg-gray-80;
             }
             &.active {
-                color: $dg-primary;
+                color: variables.$dg-primary;
                 background-color: #6698ff1a;
             }
         }
@@ -58,9 +60,9 @@
 }
 
 .dg-navbar-theme-default {
-    @include dg-locales-selector-theme(inherit, rgba($color: $dg-text-color, $alpha: 0.8));
+    @include dg-locales-selector-theme(inherit, rgba($color: variables.$dg-text-color, $alpha: 0.8));
 }
 
 .dg-navbar-theme-angular {
-    @include dg-locales-selector-theme($dg-white, rgba($color: $dg-white, $alpha: 0.8));
+    @include dg-locales-selector-theme(variables.$dg-white, rgba($color: variables.$dg-white, $alpha: 0.8));
 }
