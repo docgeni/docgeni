@@ -5,10 +5,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
  */
 @Component({
     selector: 'alib-foo',
-    template: `
-        <ng-content></ng-content>
-    `,
-    standalone: true
+    template: ` <ng-content></ng-content> `,
+    standalone: true,
 })
 export class AlibFooComponent implements OnInit {
     /**

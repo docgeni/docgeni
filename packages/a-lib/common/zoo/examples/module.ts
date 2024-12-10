@@ -6,6 +6,6 @@ import { AlibZooBasicExampleComponent } from './basic/basic.component';
     declarations: [AlibZooBasicExampleComponent],
     imports: [CommonModule],
     exports: [AlibZooBasicExampleComponent],
-    providers: []
+    providers: [],
 })
 export class AlibZooExamplesModule {}

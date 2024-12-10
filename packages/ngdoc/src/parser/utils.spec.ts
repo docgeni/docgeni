@@ -33,20 +33,20 @@ describe('#utils', () => {
             const result = parseJsDocTagsToDocTagResult([
                 {
                     name: 'public',
-                    text: [{ text: '', kind: 'string' }]
+                    text: [{ text: '', kind: 'string' }],
                 },
                 {
                     name: 'order',
-                    text: [{ text: '10', kind: 'string' }]
-                }
+                    text: [{ text: '10', kind: 'string' }],
+                },
             ]);
 
             expect(result).toEqual([
                 {
                     public: { name: 'public', text: [{ text: '', kind: 'string' }] },
-                    order: { name: 'order', text: [{ text: '10', kind: 'string' }] }
+                    order: { name: 'order', text: [{ text: '10', kind: 'string' }] },
                 },
-                {}
+                {},
             ]);
         });
 
@@ -54,33 +54,33 @@ describe('#utils', () => {
             const result = parseJsDocTagsToDocTagResult([
                 {
                     name: 'description',
-                    text: [{ text: 'default description', kind: 'string' }]
+                    text: [{ text: 'default description', kind: 'string' }],
                 },
                 {
                     name: 'description',
-                    text: [{ text: '.zh-cn zh cn description', kind: 'string' }]
+                    text: [{ text: '.zh-cn zh cn description', kind: 'string' }],
                 },
                 {
                     name: 'name',
-                    text: [{ text: 'my name', kind: 'string' }]
+                    text: [{ text: 'my name', kind: 'string' }],
                 },
                 {
                     name: 'name',
-                    text: [{ text: '.zh-cn zh cn name', kind: 'string' }]
-                }
+                    text: [{ text: '.zh-cn zh cn name', kind: 'string' }],
+                },
             ]);
 
             expect(result).toEqual([
                 {
                     description: { name: 'description', text: [{ text: 'default description', kind: 'string' }] },
-                    name: { name: 'name', text: [{ text: 'my name', kind: 'string' }] }
+                    name: { name: 'name', text: [{ text: 'my name', kind: 'string' }] },
                 },
                 {
                     'zh-cn': {
                         description: { name: 'description', text: [{ text: 'zh cn description', kind: 'string' }] },
-                        name: { name: 'name', text: [{ text: 'zh cn name', kind: 'string' }] }
-                    }
-                }
+                        name: { name: 'name', text: [{ text: 'zh cn name', kind: 'string' }] },
+                    },
+                },
             ]);
         });
     });
@@ -88,21 +88,21 @@ describe('#utils', () => {
     describe('#hasPublicTag', () => {
         it('should get true for public tag', () => {
             const result = hasPublicTag({
-                public: { name: 'public', text: [] }
+                public: { name: 'public', text: [] },
             });
             expect(result).toBe(true);
         });
 
         it('should get true for publicApi tag', () => {
             const result = hasPublicTag({
-                publicApi: { name: 'publicApi', text: [] }
+                publicApi: { name: 'publicApi', text: [] },
             });
             expect(result).toBe(true);
         });
 
         it('should get false when have not publicApi or public tag', () => {
             const result = hasPublicTag({
-                order: { name: 'order', text: [] }
+                order: { name: 'order', text: [] },
             });
             expect(result).toBe(false);
         });

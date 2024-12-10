@@ -6,5 +6,5 @@ import { ts } from '../typescript';
  */
 export const lineFeedPrinter: ts.Printer = ts.createPrinter({
     newLine: ts.NewLineKind.LineFeed,
-    removeComments: true
+    removeComments: true,
 });

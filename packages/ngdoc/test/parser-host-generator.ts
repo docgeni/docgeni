@@ -4,11 +4,11 @@ const ngParserHost = createNgParserHost({
     tsConfigPath: 'tsconfig.json',
     fileGlobs: '',
     rootDir: process.cwd(),
-    watch: true
+    watch: true,
 });
 
 const ngParser = NgDocParser.create({
-    ngParserHost: ngParserHost
+    ngParserHost: ngParserHost,
 });
 
 const docs = ngParser.parse(__dirname + '/button/*.ts');

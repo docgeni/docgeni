@@ -12,7 +12,7 @@ export function yargsOptionsGenerate(yargs: yargs.Argv<{}>, list: NgOption[]) {
             boolean: item.type === NgOptionType.Boolean,
             description: item.description,
             demandOption: item.required,
-            type: item.type !== NgOptionType.Any && item.type !== NgOptionType.Array ? item.type : undefined
+            type: item.type !== NgOptionType.Any && item.type !== NgOptionType.Array ? item.type : undefined,
         });
     }
     return yargs;

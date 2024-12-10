@@ -34,7 +34,7 @@ export class InitDocgenirc {
                 title: 'Components',
                 path: 'components',
                 lib: projectName,
-                locales: {}
+                locales: {},
             });
             const include: string[] = [];
             const exclude: string[] = [];
@@ -60,7 +60,7 @@ export class InitDocgenirc {
                 include: include,
                 exclude: exclude,
                 apiMode: 'automatic',
-                categories: []
+                categories: [],
             });
         });
         this.addProperty('libs', libs as DocgeniLibrary[]);
@@ -95,13 +95,13 @@ export class InitDocgenirc {
                             stringify: (content: string, indent: number, parentIndent: number) => {
                                 return stringifyObject(content, { indent: ' '.repeat(indent) }).replace(
                                     /(\r\n|\n\r|\n|\r)/g,
-                                    `$1${' '.repeat(parentIndent)}`
+                                    `$1${' '.repeat(parentIndent)}`,
                                 );
-                            }
-                        }
+                            },
+                        },
                     }),
-                    renameTemplateFiles()
-                ])
+                    renameTemplateFiles(),
+                ]),
             );
         };
     }

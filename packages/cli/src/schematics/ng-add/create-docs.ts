@@ -8,10 +8,10 @@ export class CreateDocs {
             return mergeWith(
                 apply(url(`./template/docsDir`), [
                     template({
-                        docsDir: this.options.docsDir
+                        docsDir: this.options.docsDir,
                     }),
-                    renameTemplateFiles()
-                ])
+                    renameTemplateFiles(),
+                ]),
             );
         };
     }

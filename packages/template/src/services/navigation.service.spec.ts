@@ -21,7 +21,7 @@ const mockGlobalContext = {
                             channelPath: 'guides',
                             title: '介绍',
                             order: 10,
-                            contentPath: 'docs/guides/intro/index.html'
+                            contentPath: 'docs/guides/intro/index.html',
                         },
                         {
                             id: 'getting-started',
@@ -29,11 +29,11 @@ const mockGlobalContext = {
                             channelPath: 'guides',
                             title: '快速开始',
                             order: 30,
-                            contentPath: 'docs/guides/intro/getting-started.html'
-                        }
-                    ]
-                }
-            ]
+                            contentPath: 'docs/guides/intro/getting-started.html',
+                        },
+                    ],
+                },
+            ],
         },
         {
             id: 'configuration',
@@ -46,9 +46,9 @@ const mockGlobalContext = {
                     channel_path: 'configuration',
                     title: '全局配置',
                     order: 30,
-                    contentPath: 'docs/configuration/global.html'
-                }
-            ]
+                    contentPath: 'docs/configuration/global.html',
+                },
+            ],
         },
         {
             id: 'components',
@@ -70,7 +70,7 @@ const mockGlobalContext = {
                             overview: true,
                             api: true,
                             order: 1,
-                            category: 'general'
+                            category: 'general',
                         },
                         {
                             id: 'foo',
@@ -82,19 +82,19 @@ const mockGlobalContext = {
                             overview: true,
                             api: false,
                             order: 2,
-                            category: 'general'
-                        }
-                    ]
-                }
-            ]
+                            category: 'general',
+                        },
+                    ],
+                },
+            ],
         },
         {
             id: 'b-components',
             path: 'b-components',
             title: 'B Components',
             lib: 'blib',
-            items: []
-        }
+            items: [],
+        },
     ],
     docItems: [
         {
@@ -103,7 +103,7 @@ const mockGlobalContext = {
             channelPath: 'guides',
             title: '介绍',
             order: 10,
-            contentPath: 'docs/guides/intro/index.html'
+            contentPath: 'docs/guides/intro/index.html',
         },
         {
             id: 'getting-started',
@@ -111,7 +111,7 @@ const mockGlobalContext = {
             channelPath: 'guides',
             title: '快速开始',
             order: 30,
-            contentPath: 'docs/guides/intro/getting-started.html'
+            contentPath: 'docs/guides/intro/getting-started.html',
         },
         {
             id: 'global',
@@ -119,7 +119,7 @@ const mockGlobalContext = {
             channelPath: 'configuration',
             title: '全局配置',
             order: 30,
-            contentPath: 'docs/configuration/global.html'
+            contentPath: 'docs/configuration/global.html',
         },
         {
             id: 'button',
@@ -132,7 +132,7 @@ const mockGlobalContext = {
             overview: true,
             api: true,
             order: 1,
-            category: 'general'
+            category: 'general',
         },
         {
             id: 'foo',
@@ -145,12 +145,12 @@ const mockGlobalContext = {
             overview: true,
             api: false,
             order: 2,
-            category: 'general'
-        }
+            category: 'general',
+        },
     ],
     config: {
-        defaultLocale: 'zh-cn'
-    }
+        defaultLocale: 'zh-cn',
+    },
 };
 describe('NavigationService', () => {
     let spectator: SpectatorService<NavigationService>;
@@ -159,10 +159,10 @@ describe('NavigationService', () => {
         providers: [
             {
                 provide: GlobalContext,
-                useValue: mockGlobalContext
-            }
+                useValue: mockGlobalContext,
+            },
         ],
-        mocks: []
+        mocks: [],
     });
 
     beforeEach(() => {
@@ -201,7 +201,7 @@ describe('NavigationService', () => {
             channelPath: 'guides',
             title: '快速开始',
             order: 30,
-            contentPath: 'docs/guides/intro/getting-started.html'
+            contentPath: 'docs/guides/intro/getting-started.html',
         });
     });
 
@@ -215,9 +215,9 @@ describe('NavigationService', () => {
                 channelPath: 'configuration',
                 title: '快速开始',
                 order: 30,
-                contentPath: 'docs/guides/intro/getting-started.html'
+                contentPath: 'docs/guides/intro/getting-started.html',
             },
-            ...originalDocItems
+            ...originalDocItems,
         ];
         spectator.service.selectChannelByPath('guides');
         const docItem = spectator.service.getDocItemByPath('intro/getting-started');
@@ -227,7 +227,7 @@ describe('NavigationService', () => {
             channelPath: 'guides',
             title: '快速开始',
             order: 30,
-            contentPath: 'docs/guides/intro/getting-started.html'
+            contentPath: 'docs/guides/intro/getting-started.html',
         });
 
         mockGlobalContext.docItems = originalDocItems;
@@ -243,9 +243,9 @@ describe('NavigationService', () => {
                 channelPath: 'configuration',
                 title: '快速开始',
                 order: 30,
-                contentPath: 'docs/guides/intro/getting-started.html'
+                contentPath: 'docs/guides/intro/getting-started.html',
             },
-            ...originalDocItems
+            ...originalDocItems,
         ];
         spectator.service.selectChannelByPath('components');
         const docItem = spectator.service.getDocItemByPath('button');
@@ -260,7 +260,7 @@ describe('NavigationService', () => {
             overview: true,
             api: true,
             order: 1,
-            category: 'general'
+            category: 'general',
         });
 
         mockGlobalContext.docItems = originalDocItems;
@@ -279,9 +279,9 @@ describe('NavigationService', () => {
                 overview: true,
                 api: true,
                 order: 1,
-                category: 'general'
+                category: 'general',
             },
-            ...mockGlobalContext.docItems
+            ...mockGlobalContext.docItems,
         ];
         spectator.service.selectChannelByPath('components');
         const docItem = spectator.service.getDocItemByPath('button');
@@ -293,8 +293,8 @@ describe('NavigationService', () => {
                 subtitle: '按钮',
                 path: 'button',
                 importSpecifier: 'alib/button',
-                channelPath: 'components'
-            })
+                channelPath: 'components',
+            }),
         );
 
         spectator.service.selectChannelByPath('b-components');
@@ -307,8 +307,8 @@ describe('NavigationService', () => {
                 subtitle: '按钮',
                 path: 'button',
                 importSpecifier: 'b-lib/button',
-                channelPath: 'b-components'
-            })
+                channelPath: 'b-components',
+            }),
         );
     });
 });

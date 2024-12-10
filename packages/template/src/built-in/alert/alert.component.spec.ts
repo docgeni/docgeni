@@ -7,7 +7,7 @@ describe('#built-in-alert', () => {
         const createComponent = createComponentFactory({
             component: DocgeniAlertComponent,
             imports: [],
-            declarations: [DocgeniAlertComponent]
+            declarations: [DocgeniAlertComponent],
         });
 
         beforeEach(() => {
@@ -21,7 +21,7 @@ describe('#built-in-alert', () => {
         });
 
         it('should set type success', () => {
-            ['info', 'danger', 'warning', 'success'].forEach(type => {
+            ['info', 'danger', 'warning', 'success'].forEach((type) => {
                 spectator.setInput('type', type as DocgeniAlertType);
                 expect(spectator.element.classList.contains('dg-alert')).toBeTruthy();
                 expect(spectator.element.classList.contains(`dg-alert-${type}`)).toBeTruthy();
@@ -31,7 +31,7 @@ describe('#built-in-alert', () => {
 
     describe('advance', () => {
         const createHost = createHostFactory({
-            component: DocgeniAlertComponent
+            component: DocgeniAlertComponent,
         });
 
         it('should set content success', () => {

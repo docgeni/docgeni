@@ -11,7 +11,7 @@ import { AlibFooModule } from '@docgeni/alib/foo';
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss'],
     standalone: true,
-    imports: [AlibFooModule, CommonModule]
+    imports: [AlibFooModule, CommonModule],
 })
 export class AlibFooBasicExampleComponent implements OnInit {
     constructor() {}

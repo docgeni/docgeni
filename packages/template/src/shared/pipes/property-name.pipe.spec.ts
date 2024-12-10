@@ -5,7 +5,7 @@ describe('property-name', () => {
         const result = new PropertyNamePipe().transform({
             kind: 'Input',
             name: 'thyType',
-            type: 'string'
+            type: 'string',
         });
         expect(result).toEqual('thyType');
     });
@@ -15,7 +15,7 @@ describe('property-name', () => {
             kind: 'Input',
             name: 'thyType',
             type: 'string',
-            aliasName: 'thyTypeAlias'
+            aliasName: 'thyTypeAlias',
         });
         expect(result).toEqual('thyTypeAlias');
     });
@@ -24,7 +24,7 @@ describe('property-name', () => {
         const result = new PropertyNamePipe().transform({
             kind: 'Output',
             name: 'thyChange',
-            type: 'EventEmitter<boolean>'
+            type: 'EventEmitter<boolean>',
         });
         expect(result).toEqual('(thyChange)');
     });
@@ -34,7 +34,7 @@ describe('property-name', () => {
             kind: 'Output',
             name: 'thyChange',
             aliasName: 'thyChangeAlias',
-            type: 'EventEmitter<boolean>'
+            type: 'EventEmitter<boolean>',
         });
         expect(result).toEqual('(thyChangeAlias)');
     });
@@ -43,7 +43,7 @@ describe('property-name', () => {
         const result = new PropertyNamePipe().transform({
             kind: 'ContentChild',
             name: 'header',
-            type: 'TemplateRef<unknown>'
+            type: 'TemplateRef<unknown>',
         });
         expect(result).toEqual('#header');
     });
@@ -53,7 +53,7 @@ describe('property-name', () => {
             kind: 'ContentChild',
             name: 'header',
             aliasName: 'headerAlias',
-            type: 'TemplateRef<unknown>'
+            type: 'TemplateRef<unknown>',
         });
         expect(result).toEqual('#headerAlias');
     });
@@ -62,7 +62,7 @@ describe('property-name', () => {
         const result = new PropertyNamePipe().transform({
             kind: 'ContentChildren',
             name: 'header',
-            type: 'TemplateRef<unknown>'
+            type: 'TemplateRef<unknown>',
         });
         expect(result).toEqual('#header');
     });
@@ -72,7 +72,7 @@ describe('property-name', () => {
             kind: 'ContentChildren',
             name: 'header',
             aliasName: 'headerAlias',
-            type: 'TemplateRef<unknown>'
+            type: 'TemplateRef<unknown>',
         });
         expect(result).toEqual('#headerAlias');
     });

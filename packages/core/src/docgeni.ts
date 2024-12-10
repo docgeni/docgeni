@@ -48,7 +48,7 @@ export class Docgeni implements DocgeniContext {
             libraryBuildSucceed: new SyncHook<LibraryBuilder, LibraryComponent[]>(['libraryBuilder', 'components']),
             compilation: new SyncHook<DocgeniCompilation>(['compilation', 'compilationIncrement']),
             emit: new AsyncSeriesHook<void>([]),
-            navsEmitSucceed: new SyncHook<NavsBuilder, Record<string, DocItem[]>>(['navsBuilder', 'config'])
+            navsEmitSucceed: new SyncHook<NavsBuilder, Record<string, DocItem[]>>(['navsBuilder', 'config']),
         };
     }
 
@@ -67,7 +67,7 @@ export class Docgeni implements DocgeniContext {
             require.resolve('./plugins/config'),
             require.resolve('./angular/site-plugin'),
             require.resolve('./plugins/built-in-component/plugin'),
-            require.resolve('./plugins/sitemap')
+            require.resolve('./plugins/sitemap'),
         ];
         this.version = options.version;
 
@@ -123,11 +123,11 @@ export class Docgeni implements DocgeniContext {
     private initialize() {
         this.loadPresets();
         this.loadPlugins();
-        this.initialPlugins.forEach(plugin => {
+        this.initialPlugins.forEach((plugin) => {
             plugin.apply(this);
         });
         toolkit.initialize({
-            baseDir: __dirname
+            baseDir: __dirname,
         });
         if (this.options.progress) {
             this.progress.initialize();
@@ -147,7 +147,7 @@ export class Docgeni implements DocgeniContext {
             }
         }
 
-        const defaultLocaleObj = this.config.locales.find(item => {
+        const defaultLocaleObj = this.config.locales.find((item) => {
             return item.key === this.config.defaultLocale;
         });
         if (!defaultLocaleObj) {
@@ -166,8 +166,8 @@ export class Docgeni implements DocgeniContext {
             config.locales = [
                 {
                     name: config.defaultLocale,
-                    key: config.defaultLocale
-                }
+                    key: config.defaultLocale,
+                },
             ];
         }
         if (!config.libs) {
@@ -185,14 +185,14 @@ export class Docgeni implements DocgeniContext {
     }
 
     private loadPresets() {
-        this.presets.forEach(preset => {
+        this.presets.forEach((preset) => {
             const result = require(preset);
             result(this);
         });
     }
 
     private loadPlugins() {
-        this.plugins.map(name => {
+        this.plugins.map((name) => {
             try {
                 const pluginCtor = require(name);
                 if (pluginCtor) {

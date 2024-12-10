@@ -12,71 +12,74 @@ import { ActualRootComponent } from '../pages/root/root.component';
 const componentChildrenRoutes: Routes = [
     {
         path: '',
-        component: DocViewerHomeComponent
+        component: DocViewerHomeComponent,
     },
     {
         path: 'overview',
-        component: ComponentOverviewComponent
+        component: ComponentOverviewComponent,
     },
     {
         path: 'api',
-        component: ComponentApiComponent
+        component: ComponentApiComponent,
     },
     {
         path: 'examples',
-        component: ComponentExamplesComponent
+        component: ComponentExamplesComponent,
     },
     {
         path: 'empty',
-        component: ComponentEmptyComponent
+        component: ComponentEmptyComponent,
     },
     {
         path: '**',
-        component: ComponentExamplesComponent
-    }
+        component: ComponentExamplesComponent,
+    },
 ];
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class RouterResetService {
-    constructor(private router: Router, private global: GlobalContext) {}
+    constructor(
+        private router: Router,
+        private global: GlobalContext,
+    ) {}
 
     resetRoutes() {
         const config = this.router.config;
         const routes: Routes = [
             {
                 path: '',
-                component: HomeComponent
-            }
+                component: HomeComponent,
+            },
         ];
         const rootRoutes: Routes = [
-            ...this.global.config.locales!.map(locale => {
+            ...this.global.config.locales!.map((locale) => {
                 return {
                     path: locale.key,
                     component: ActualRootComponent,
-                    children: routes
+                    children: routes,
                 };
             }),
             {
                 path: '',
                 component: ActualRootComponent,
-                children: routes
+                children: routes,
             },
             {
                 path: '~examples/:name',
-                component: ExampleIsolatedViewerComponent
-            }
+                component: ExampleIsolatedViewerComponent,
+            },
         ];
 
         const channelPathToRoutes: Record<string, Route> = {};
         const channelPathToHomeRoutes: Record<string, Route> = {};
         let shouldRemoveHome = false;
         if (this.global.config.mode === 'full') {
-            const rootNavs = this.global.navs.filter(nav => {
+            const rootNavs = this.global.navs.filter((nav) => {
                 return !nav.isExternal;
             });
-            rootNavs.forEach(nav => {
+            rootNavs.forEach((nav) => {
                 if (nav.items) {
                     const route: Route = {
                         path: nav.path,
@@ -84,32 +87,32 @@ export class RouterResetService {
                         children: [
                             {
                                 path: '',
-                                component: ChannelHomeComponent
-                            }
-                        ]
+                                component: ChannelHomeComponent,
+                            },
+                        ],
                     };
                     channelPathToHomeRoutes[nav.path] = route.children![0];
                     if (nav.lib) {
                         route.children!.push({
                             path: ':id',
                             component: DocViewerComponent,
-                            children: componentChildrenRoutes
+                            children: componentChildrenRoutes,
                         });
                     }
                     routes.push(route);
                     channelPathToRoutes[nav.path] = route;
                 }
             });
-            this.global.docItems.forEach(docItem => {
+            this.global.docItems.forEach((docItem) => {
                 const route: Route = docItem.importSpecifier
                     ? {
                           path: docItem.path,
                           component: DocViewerComponent,
-                          children: componentChildrenRoutes
+                          children: componentChildrenRoutes,
                       }
                     : {
                           path: docItem.path,
-                          component: DocViewerComponent
+                          component: DocViewerComponent,
                       };
 
                 const channelRoute = channelPathToRoutes[docItem.channelPath!];
@@ -122,22 +125,22 @@ export class RouterResetService {
                 } else if (!docItem.importSpecifier) {
                     // 独立的页面，不属于任何频道
                     route.data = {
-                        single: true
+                        single: true,
                     };
                     routes.push(route);
                 }
             });
         } else {
-            this.global.docItems.forEach(docItem => {
+            this.global.docItems.forEach((docItem) => {
                 const route = docItem.importSpecifier
                     ? {
                           path: docItem.path,
                           component: DocViewerComponent,
-                          children: componentChildrenRoutes
+                          children: componentChildrenRoutes,
                       }
                     : {
                           path: docItem.path,
-                          component: DocViewerComponent
+                          component: DocViewerComponent,
                       };
                 // remove home when route path is ''
                 if (route.path === '') {

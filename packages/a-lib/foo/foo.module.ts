@@ -6,6 +6,6 @@ import { AlibFooComponent } from './foo.component';
     declarations: [],
     imports: [CommonModule, AlibFooComponent],
     exports: [AlibFooComponent],
-    providers: []
+    providers: [],
 })
 export class AlibFooModule {}

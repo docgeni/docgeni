@@ -11,8 +11,8 @@ describe('#components-builder', () => {
             initialFiles: {
                 [`${DEFAULT_TEST_ROOT_PATH}/docs/index.md`]: 'index',
                 [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/index.md`]: 'guides',
-                [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`]: 'hello'
-            }
+                [`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`]: 'hello',
+            },
         });
     });
 
@@ -21,9 +21,9 @@ describe('#components-builder', () => {
         const globSyncSyp = spyOn(toolkit.fs, 'globSync');
         const docFiles = ['index.md', 'guides/index.md', 'guides/hello.md'];
         globSyncSyp.and.returnValue(
-            docFiles.map(docFile => {
+            docFiles.map((docFile) => {
                 return `${DEFAULT_TEST_ROOT_PATH}/docs/${docFile}`;
-            })
+            }),
         );
         await docsBuilder.initialize();
         await docsBuilder.build();
@@ -45,13 +45,13 @@ describe('#components-builder', () => {
             {
                 type: fs.HostWatchEventType.Deleted,
                 path: toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/hello.md`),
-                time: new Date()
+                time: new Date(),
             },
             {
                 type: fs.HostWatchEventType.Created,
                 path: toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`),
-                time: new Date()
-            }
+                time: new Date(),
+            },
         ];
         const subject = new Subject<fs.HostWatchEvent[]>();
         watchAggregatedSpy.and.callFake((path, options) => {
@@ -66,7 +66,7 @@ describe('#components-builder', () => {
         expect(spyCompile).toHaveBeenCalled();
         expect(spyCompile).toHaveBeenCalledWith({
             docs: [docsBuilder.getDoc(toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/docs/guides/new.md`))],
-            changes: changes
+            changes: changes,
         });
     });
 });

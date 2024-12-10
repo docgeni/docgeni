@@ -78,7 +78,7 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
         component: ComponentType<T>,
         viewContainerRef?: ViewContainerRef | null,
         injector?: Injector | null,
-        componentFactoryResolver?: ComponentFactoryResolver | null
+        componentFactoryResolver?: ComponentFactoryResolver | null,
     ) {
         super();
         this.component = component;
@@ -99,7 +99,7 @@ export class DomPortalOutlet implements PortalOutlet {
         protected componentFactoryResolver: ComponentFactoryResolver,
         protected appRef: ApplicationRef,
         protected defaultInjector: Injector,
-        protected projectableNodes: any[][]
+        protected projectableNodes: any[][],
     ) {}
 
     attach<T>(portal: ComponentPortal<T>, replace: boolean = false): ComponentRef<T> {
@@ -116,7 +116,7 @@ export class DomPortalOutlet implements PortalOutlet {
                 componentFactory,
                 portal.viewContainerRef.length,
                 portal.injector || portal.viewContainerRef.injector,
-                this.projectableNodes
+                this.projectableNodes,
             );
 
             this.setDisposeFn(() => {

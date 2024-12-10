@@ -38,7 +38,7 @@ export function getNgPropertyOptions(node: ts.PropertyDeclaration, checker?: ts.
     } else if (ts.isTypeReferenceNode(node.type)) {
         const type = checker.getTypeAtLocation(node.type);
         if (type.isUnion()) {
-            return type.types.map(type => {
+            return type.types.map((type) => {
                 return normalizeNodeText(checker.typeToString(type));
             });
         }

@@ -7,7 +7,7 @@ import { AlibButtonModule } from '@docgeni/alib/button';
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss'],
     standalone: true,
-    imports: [AlibButtonModule, CommonModule]
+    imports: [AlibButtonModule, CommonModule],
 })
 export class AlibButtonBasicExampleComponent implements OnInit {
     constructor() {}

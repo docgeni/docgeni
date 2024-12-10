@@ -73,7 +73,7 @@ describe('#toolkit.string', () => {
 
         it('should get Hello World with delimiter is " "', () => {
             const result = toolkit.strings.headerCase('hello world', {
-                delimiter: ' '
+                delimiter: ' ',
             });
             expect(result).eq('Hello World');
         });

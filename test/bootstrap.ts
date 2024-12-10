@@ -9,11 +9,11 @@ async function main() {
         spec: {
             displayPending: true,
             displayErrorMessages: true,
-            displayStacktrace: StacktraceOption.PRETTY
+            displayStacktrace: StacktraceOption.PRETTY,
         },
         summary: {
-            displayDuration: false
-        }
+            displayDuration: false,
+        },
     });
     runner.env.clearReporters();
     runner.env.addReporter(reporter as any);

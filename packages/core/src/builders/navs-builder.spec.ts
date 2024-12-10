@@ -16,10 +16,10 @@ describe('#navs-builder', () => {
                     [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}index.md`]: fixture.src['index.md'],
                     [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}guides/index.md`]: fixture.src['guides/index.md'],
                     [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}guides/intro.md`]: fixture.src['guides/intro.md'],
-                    [`${DEFAULT_TEST_ROOT_PATH}/docs/zh-cn/guides/intro.md`]: fixture.src['guides/intro.md']
+                    [`${DEFAULT_TEST_ROOT_PATH}/docs/zh-cn/guides/intro.md`]: fixture.src['guides/intro.md'],
                 };
                 context = createTestDocgeniContext({
-                    initialFiles: initialFiles
+                    initialFiles: initialFiles,
                 });
             });
 
@@ -50,10 +50,10 @@ describe('#navs-builder', () => {
                                     order: 10,
                                     contentPath: `docs/${dir}guides/intro.html`,
                                     originPath: `docs/${dir}guides/intro.md`,
-                                    headings: []
-                                }
+                                    headings: [],
+                                },
                             ],
-                            order: 1
+                            order: 1,
                         },
                         {
                             id: 'index',
@@ -63,8 +63,8 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: `docs/${dir}index.html`,
                             originPath: `docs/${dir}index.md`,
-                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
-                        }
+                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }],
+                        },
                     ],
                     docs: [
                         {
@@ -75,7 +75,7 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: `docs/${dir}index.html`,
                             originPath: `docs/${dir}index.md`,
-                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
+                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }],
                         },
                         {
                             id: 'intro',
@@ -85,9 +85,9 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: `docs/${dir}guides/intro.html`,
                             originPath: `docs/${dir}guides/intro.md`,
-                            headings: []
-                        }
-                    ]
+                            headings: [],
+                        },
+                    ],
                 });
                 expect(JSON.parse(zhJSONStr)).toEqual({
                     navs: [
@@ -105,11 +105,11 @@ describe('#navs-builder', () => {
                                     order: 10,
                                     contentPath: 'docs/zh-cn/guides/intro.html',
                                     originPath: 'docs/zh-cn/guides/intro.md',
-                                    headings: []
-                                }
+                                    headings: [],
+                                },
                             ],
-                            order: 9007199254740991
-                        }
+                            order: 9007199254740991,
+                        },
                     ],
                     docs: [
                         {
@@ -120,15 +120,15 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: 'docs/zh-cn/guides/intro.html',
                             originPath: 'docs/zh-cn/guides/intro.md',
-                            headings: []
-                        }
-                    ]
+                            headings: [],
+                        },
+                    ],
                 });
             });
 
             it('should build success with one locale', async () => {
                 initialFiles = {
-                    [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}index.md`]: fixture.src['index.md']
+                    [`${DEFAULT_TEST_ROOT_PATH}/docs/${dir}index.md`]: fixture.src['index.md'],
                 };
                 spyOn(toolkit.fs, 'globSync').and.callFake((pattern, options) => {
                     expect(pattern).toEqual(`/**/*.md`);
@@ -152,8 +152,8 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: `docs/${dir}index.html`,
                             originPath: `docs/${dir}index.md`,
-                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
-                        }
+                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }],
+                        },
                     ],
                     docs: [
                         {
@@ -164,13 +164,13 @@ describe('#navs-builder', () => {
                             order: 10,
                             contentPath: `docs/${dir}index.html`,
                             originPath: `docs/${dir}index.md`,
-                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }]
-                        }
-                    ]
+                            headings: [{ id: 'installation', name: 'Installation', level: 2, type: 'h2' }],
+                        },
+                    ],
                 });
                 expect(JSON.parse(zhJSONStr)).toEqual({
                     navs: [],
-                    docs: []
+                    docs: [],
                 });
             });
         });

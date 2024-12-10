@@ -15,7 +15,10 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
     private componentsMap = new Map<string, LibraryComponent>();
     private ngDocParser: NgDocParser;
 
-    constructor(private docgeni: DocgeniContext, public lib: Library) {
+    constructor(
+        private docgeni: DocgeniContext,
+        public lib: Library,
+    ) {
         super();
         this.absLibPath = toolkit.path.resolve(this.docgeni.paths.cwd, lib.rootDir);
     }
@@ -46,7 +49,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             const dirExists = await this.docgeni.host.pathExists(includeAbsPath);
             if (dirExists) {
                 const subDirs = await this.docgeni.host.getDirs(includeAbsPath, { exclude: excludes });
-                subDirs.forEach(dir => {
+                subDirs.forEach((dir) => {
                     const absComponentPath = toolkit.path.resolve(includeAbsPath, dir);
                     const component = new LibraryComponentImpl(this.docgeni, this.lib, dir, absComponentPath);
                     this.componentsMap.set(absComponentPath, component);
@@ -80,10 +83,10 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                             this.docgeni.compile({
                                 libraryBuilder: this,
                                 libraryComponents: changedComponents,
-                                changes: [{ type: toolkit.fs.HostWatchEventType.Changed, path: filename as Path, time: new Date() }]
+                                changes: [{ type: toolkit.fs.HostWatchEventType.Changed, path: filename as Path, time: new Date() }],
                             });
                         }
-                    }
+                    },
                 });
                 this.ngDocParser = this.lib.ngDocParser = NgDocParser.create({ ngParserHost: parserHost });
             } else {
@@ -122,10 +125,10 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
             watchedDirs.push(component.absApiPath);
             watchedDirs.push(component.absExamplesPath);
         }
-        this.docgeni.host.watchAggregated(watchedDirs).subscribe(async changes => {
+        this.docgeni.host.watchAggregated(watchedDirs).subscribe(async (changes) => {
             const changeComponents = new Map<string, LibraryComponent>();
-            changes.forEach(change => {
-                const componentDir = componentDirs.find(componentDir => {
+            changes.forEach((change) => {
+                const componentDir = componentDirs.find((componentDir) => {
                     return change.path.startsWith(componentDir + '/');
                 });
                 if (componentDir && dirToComponent[componentDir]) {
@@ -136,14 +139,14 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                 this.docgeni.compile({
                     libraryBuilder: this,
                     libraryComponents: Array.from(changeComponents.values()),
-                    changes: changes
+                    changes: changes,
                 });
             }
         });
     }
 
     public generateDocsAndNavsForLocale(locale: string, rootNavs: NavigationItem[]): ComponentDocItem[] {
-        let channel: ChannelItem = rootNavs.find(nav => {
+        let channel: ChannelItem = rootNavs.find((nav) => {
             return nav.lib === this.lib.name;
         });
         const categories: CategoryItem[] = JSON.parse(JSON.stringify(this.localeCategoriesMap[locale]));
@@ -156,7 +159,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                 lib: this.lib.name,
                 path: this.lib.name,
                 title: toolkit.strings.titleCase(this.lib.name),
-                items: categories
+                items: categories,
             };
             // rootNavs.push(channel as NavigationItem);
         }
@@ -195,18 +198,18 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     private buildLocaleCategoriesMap(categories: CategoryItem[]): void {
         const localeCategories: Record<string, CategoryItem[]> = {};
-        this.docgeni.config.locales.forEach(locale => {
+        this.docgeni.config.locales.forEach((locale) => {
             localeCategories[locale.key] = [];
         });
 
-        categories.forEach(rawCategory => {
-            this.docgeni.config.locales.forEach(locale => {
+        categories.forEach((rawCategory) => {
+            this.docgeni.config.locales.forEach((locale) => {
                 const category: CategoryItem = {
                     id: rawCategory.id,
                     title: getItemLocaleProperty(rawCategory, locale.key, 'title'),
                     subtitle: getItemLocaleProperty(rawCategory, locale.key, 'subtitle'),
                     items: [],
-                    order: 0
+                    order: 0,
                 };
                 localeCategories[locale.key].push(category);
             });

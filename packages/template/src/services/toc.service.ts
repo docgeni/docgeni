@@ -29,7 +29,7 @@ export interface TocLink {
 let OFFSET = 0;
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class TocService {
     private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
@@ -49,7 +49,11 @@ export class TocService {
         return this.activeLinkSubject$.asObservable() as Observable<TocLink>;
     }
 
-    constructor(@Inject(DOCUMENT) private document: any, global: GlobalContext, private viewportScroller: ViewportScroller) {
+    constructor(
+        @Inject(DOCUMENT) private document: any,
+        global: GlobalContext,
+        private viewportScroller: ViewportScroller,
+    ) {
         if (global.config.mode === 'lite') {
             OFFSET = 0;
         }
@@ -67,11 +71,11 @@ export class TocService {
     generateToc(docViewerContent: HTMLElement, scrollContainer = '.dg-scroll-container') {
         const headers = Array.from<HTMLHeadingElement>(docViewerContent.querySelectorAll('h1, h2, h3, h4, dg-examples'));
         const links: TocLink[] = [];
-        headers.forEach(header => {
+        headers.forEach((header) => {
             if (header.tagName === 'DG-EXAMPLES') {
                 const allExamples = header.querySelectorAll('example');
                 const headerLevel = 2;
-                allExamples.forEach(example => {
+                allExamples.forEach((example) => {
                     links.push({
                         name: example.getAttribute('title') as string,
                         type: 'h2',
@@ -79,7 +83,7 @@ export class TocService {
                         id: example.getAttribute('name') as string,
                         active: false,
                         level: headerLevel,
-                        element: example as HTMLHeadingElement
+                        element: example as HTMLHeadingElement,
                     });
                 });
                 return;
@@ -95,7 +99,7 @@ export class TocService {
                 id: header.id,
                 active: false,
                 level: headerLevel,
-                element: header
+                element: header,
             });
             this.highestLevel = this.highestLevel && headerLevel > this.highestLevel ? this.highestLevel : headerLevel;
         });
@@ -122,7 +126,7 @@ export class TocService {
         if (scrollOffset! <= OFFSET + 1) {
             activeItem = this.links[0];
         } else {
-            const itemOffset = this.links.find(link => {
+            const itemOffset = this.links.find((link) => {
                 return link.element!.offsetTop >= scrollOffset!;
             });
             if (itemOffset) {
@@ -140,7 +144,7 @@ export class TocService {
             if (this.scrollContainer === this.document.window) {
                 this.viewportScroller.scrollToAnchor(urlFragment);
             } else {
-                const link = this.links.find(link => {
+                const link = this.links.find((link) => {
                     return link.id === urlFragment;
                 });
                 if (link) {

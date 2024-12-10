@@ -21,16 +21,16 @@ export interface GetDirsOrFilesOptions {
 }
 
 const DEFAULT_OPTIONS: GetDirsOrFilesOptions = {
-    dot: false
+    dot: false,
 };
 
 export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOptions) {
     options = {
         ...DEFAULT_OPTIONS,
-        ...options
+        ...options,
     };
     const dirs = await fsExtra.readdir(path);
-    return dirs.filter(dir => {
+    return dirs.filter((dir) => {
         if (options.exclude && matchGlob(dir, options.exclude)) {
             return false;
         }
@@ -44,7 +44,7 @@ export async function getDirsAndFiles(path: string, options?: GetDirsOrFilesOpti
 
 export async function getDirs(path: string, options?: GetDirsOrFilesOptions) {
     const dirs = await getDirsAndFiles(path, options);
-    return dirs.filter(dir => {
+    return dirs.filter((dir) => {
         return isDirectory(nodePath.resolve(path, dir));
     });
 }
@@ -52,13 +52,13 @@ export async function getDirs(path: string, options?: GetDirsOrFilesOptions) {
 export function globSync(pattern: string, options?: GetDirsOrFilesOptions & { root?: string }) {
     options = {
         ...DEFAULT_OPTIONS,
-        ...options
+        ...options,
     };
     const result = glob.sync(pattern, {
         dot: options.dot,
-        root: options.root
+        root: options.root,
     });
-    return result.filter(dir => {
+    return result.filter((dir) => {
         if (options.exclude && matchGlob(dir, options.exclude)) {
             return false;
         }
@@ -74,7 +74,7 @@ export async function readFileContent(filePath: string, encoding: string = 'UTF-
 export function watch(
     filename: fsExtra.PathLike,
     options: { encoding?: BufferEncoding; persistent?: boolean; recursive?: boolean } | BufferEncoding,
-    listener?: (event: string, filename: string) => void
+    listener?: (event: string, filename: string) => void,
 ): fsExtra.FSWatcher {
     return fsExtra.watch(filename, options, listener);
 }

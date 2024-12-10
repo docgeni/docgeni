@@ -35,19 +35,19 @@ describe('#ast-utils', () => {
             const changes = utils.insertImports(ngSourceFile, [
                 {
                     name: 'FormsModule',
-                    moduleSpecifier: '@angular/forms'
+                    moduleSpecifier: '@angular/forms',
                 },
                 {
                     name: 'TestComponent',
-                    moduleSpecifier: './test.component'
-                }
+                    moduleSpecifier: './test.component',
+                },
             ]);
             expect(changes.length).toBe(2);
             const allImports = ngSourceFile.getImportDeclarations();
             const pos = allImports[allImports.length - 1].getEnd();
             expect(changes).toEqual([
                 new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { FormsModule } from '@angular/forms';`),
-                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`)
+                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`),
             ]);
         });
 
@@ -56,18 +56,18 @@ describe('#ast-utils', () => {
             const changes = utils.insertImports(ngSourceFile, [
                 {
                     name: 'FormsModule',
-                    moduleSpecifier: '@angular/forms'
+                    moduleSpecifier: '@angular/forms',
                 },
                 {
                     name: 'TestComponent',
-                    moduleSpecifier: './test.component'
-                }
+                    moduleSpecifier: './test.component',
+                },
             ]);
             expect(changes.length).toBe(2);
 
             expect(changes).toEqual([
                 new InsertChange(ngSourceFile.origin.fileName, 0, `import { FormsModule } from '@angular/forms';`),
-                new InsertChange(ngSourceFile.origin.fileName, 0, `\nimport { TestComponent } from './test.component';`)
+                new InsertChange(ngSourceFile.origin.fileName, 0, `\nimport { TestComponent } from './test.component';`),
             ]);
         });
 
@@ -76,18 +76,18 @@ describe('#ast-utils', () => {
             const changes = utils.insertImports(ngSourceFile, [
                 {
                     name: 'CommonModule',
-                    moduleSpecifier: '@angular/common'
+                    moduleSpecifier: '@angular/common',
                 },
                 {
                     name: 'TestComponent',
-                    moduleSpecifier: './test.component'
-                }
+                    moduleSpecifier: './test.component',
+                },
             ]);
             expect(changes.length).toBe(1);
             const allImports = ngSourceFile.getImportDeclarations();
             const pos = allImports[allImports.length - 1].getEnd();
             expect(changes).toEqual([
-                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`)
+                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`),
             ]);
         });
 
@@ -96,19 +96,19 @@ describe('#ast-utils', () => {
             const changes = utils.insertImports(ngSourceFile, [
                 {
                     name: 'registerLocaleData',
-                    moduleSpecifier: '@angular/common'
+                    moduleSpecifier: '@angular/common',
                 },
                 {
                     name: 'TestComponent',
-                    moduleSpecifier: './test.component'
-                }
+                    moduleSpecifier: './test.component',
+                },
             ]);
             expect(changes.length).toBe(2);
             const allImports = ngSourceFile.getImportDeclarations();
             const pos = allImports[allImports.length - 1].getEnd();
             expect(changes).toEqual([
                 new InsertChange(ngSourceFile.origin.fileName, 26, `, registerLocaleData`),
-                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`)
+                new InsertChange(ngSourceFile.origin.fileName, pos, `\nimport { TestComponent } from './test.component';`),
             ]);
         });
     });
@@ -117,27 +117,27 @@ describe('#ast-utils', () => {
         it('when metadata and append has value', () => {
             const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['FormsModule'], providers: ['AppService'], bootstrap: ['RootComponent'] },
-                { imports: ['CommonModule'], declarations: ['AppComponent'] }
+                { imports: ['CommonModule'], declarations: ['AppComponent'] },
             );
             expect(combinedMetadata).toEqual({
                 declarations: ['AppComponent'],
                 providers: ['AppService'],
                 imports: ['FormsModule', 'CommonModule'],
                 exports: [],
-                bootstrap: ['RootComponent']
+                bootstrap: ['RootComponent'],
             });
         });
 
         it('when metadata and append has duplicate value', () => {
             const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['CommonModule', 'FormsModule'], providers: ['AppService'] },
-                { imports: ['CommonModule'], declarations: ['AppComponent'] }
+                { imports: ['CommonModule'], declarations: ['AppComponent'] },
             );
             expect(combinedMetadata).toEqual({
                 declarations: ['AppComponent'],
                 providers: ['AppService'],
                 imports: ['CommonModule', 'FormsModule'],
-                exports: []
+                exports: [],
             });
         });
 
@@ -147,7 +147,7 @@ describe('#ast-utils', () => {
                 declarations: [],
                 providers: ['AppService'],
                 imports: ['FormsModule'],
-                exports: []
+                exports: [],
             });
         });
 
@@ -157,7 +157,7 @@ describe('#ast-utils', () => {
                 declarations: [],
                 providers: ['AppService'],
                 imports: ['FormsModule'],
-                exports: []
+                exports: [],
             });
         });
 
@@ -167,14 +167,14 @@ describe('#ast-utils', () => {
                 declarations: [],
                 providers: [],
                 imports: [],
-                exports: []
+                exports: [],
             });
         });
 
         it('should get undefined when bootstrap metadata is empty', () => {
             const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['FormsModule'], providers: ['AppService'] },
-                { imports: ['CommonModule'], declarations: ['AppComponent'] }
+                { imports: ['CommonModule'], declarations: ['AppComponent'] },
             );
             expect(combinedMetadata.bootstrap).toEqual(undefined);
         });
@@ -182,7 +182,7 @@ describe('#ast-utils', () => {
         it('should get bootstrap when append bootstrap metadata has value', () => {
             const combinedMetadata = utils.combineNgModuleMetadata(
                 { imports: ['FormsModule'], providers: ['AppService'] },
-                { imports: ['CommonModule'], declarations: ['AppComponent'], bootstrap: ['RootComponent'] }
+                { imports: ['CommonModule'], declarations: ['AppComponent'], bootstrap: ['RootComponent'] },
             );
             expect(combinedMetadata.bootstrap).toEqual(['RootComponent']);
         });

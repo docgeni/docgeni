@@ -9,7 +9,7 @@ describe('git', () => {
             expect(command).toBe('git');
             expect(args).toEqual([`log`, `--pretty=format:"%at"`, '-n', '1', fileName]);
             return {
-                stdout: Buffer.from(`"${time}"`)
+                stdout: Buffer.from(`"${time}"`),
             } as any;
         });
         const result = lastUpdatedTime(fileName);
@@ -22,7 +22,7 @@ describe('git', () => {
             expect(command).toBe('git');
             expect(args).toEqual([`log`, `--pretty=format:"%at"`, '-n', '1', fileName]);
             return {
-                stdout: Buffer.from(`"${time}"`)
+                stdout: Buffer.from(`"${time}"`),
             } as any;
         });
         const result = lastUpdatedTime(fileName);
@@ -35,7 +35,7 @@ describe('git', () => {
             expect(args).toEqual([`log`, `--pretty=format:"%an"`, fileName]);
             return {
                 stdout: Buffer.from(`"a"
-"b"`)
+"b"`),
             } as any;
         });
         const result = contributors(fileName);

@@ -7,20 +7,20 @@ import { VERSION } from './version';
 export const buildCommand: CommandModule = {
     command: ['build'],
     describe: 'Build documentation site',
-    builder: yargs => {
+    builder: (yargs) => {
         yargsOptionsGenerate(yargs, readNgBuildOptions())
             .option('skip-site', {
                 desc: `skip build site`,
                 boolean: true,
-                default: false
+                default: false,
             })
             .option('siteProjectName', {
                 desc: `Site project name`,
-                default: ''
+                default: '',
             })
             .option('progress', {
                 desc: `Build progress`,
-                default: true
+                default: true,
             })
             .config(getConfiguration())
             .pkgConf('docgeni');
@@ -33,8 +33,8 @@ export const buildCommand: CommandModule = {
             watch: argv.watch,
             config,
             version: VERSION,
-            progress: config.progress
+            progress: config.progress,
         });
         await docgeni.run();
-    }
+    },
 };

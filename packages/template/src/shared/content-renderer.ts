@@ -32,12 +32,12 @@ export abstract class ContentRenderer {
             this.documentFetchSubscription.unsubscribe();
         }
         this.documentFetchSubscription = this.http.get(url, { responseType: 'text' }).subscribe(
-            response => {
+            (response) => {
                 this.updateDocument(response);
             },
-            error => {
+            (error) => {
                 this.showError(url, error);
-            }
+            },
         );
     }
 

@@ -20,17 +20,20 @@ class LibraryBuilderSpectator {
 
     spyComponentBuilds = new Map<LibraryComponent, jasmine.Spy<() => Promise<void>>>();
 
-    constructor(private libraryBuilder: LibraryBuilderImpl, context: DocgeniContext) {
+    constructor(
+        private libraryBuilder: LibraryBuilderImpl,
+        context: DocgeniContext,
+    ) {
         this.components = Array.from(libraryBuilder.components.values());
-        this.components.forEach(component => {
+        this.components.forEach((component) => {
             const spy = spyOn(component, 'build').and.returnValue(Promise.resolve());
             this.spyComponentBuilds.set(component, spy);
         });
 
-        context.hooks.componentBuild.tap('TestBuildComponent', component => {
+        context.hooks.componentBuild.tap('TestBuildComponent', (component) => {
             this.buildComponentCalls.push(component);
         });
-        context.hooks.componentBuildSucceed.tap('TestBuildComponentSuccess', component => {
+        context.hooks.componentBuildSucceed.tap('TestBuildComponentSuccess', (component) => {
             this.buildComponentSuccessCalls.push(component);
         });
 
@@ -43,7 +46,7 @@ class LibraryBuilderSpectator {
     }
 
     assertBuildNotCalled() {
-        this.spyComponentBuilds.forEach(spyComponentBuild => {
+        this.spyComponentBuilds.forEach((spyComponentBuild) => {
             expect(spyComponentBuild).not.toHaveBeenCalled();
         });
     }
@@ -51,7 +54,7 @@ class LibraryBuilderSpectator {
     assertBuildComponents(components = this.components) {
         this.assertBuildComponentsHooks(components);
         this.assertBuildHooks(components);
-        components.forEach(component => {
+        components.forEach((component) => {
             expect(this.spyComponentBuilds.get(component)).toHaveBeenCalled();
         });
         this.assertBuildComponentsSuccessHooks(components);
@@ -62,8 +65,8 @@ class LibraryBuilderSpectator {
         expect(this.buildCalls).toEqual([
             {
                 builder: this.libraryBuilder,
-                components: components
-            }
+                components: components,
+            },
         ]);
     }
 
@@ -71,8 +74,8 @@ class LibraryBuilderSpectator {
         expect(this.buildSuccessCalls).toEqual([
             {
                 builder: this.libraryBuilder,
-                components: components
-            }
+                components: components,
+            },
         ]);
     }
 
@@ -97,20 +100,20 @@ describe('#library-builder', () => {
                 title: '通用',
                 locales: {
                     'en-us': {
-                        title: 'General'
-                    }
-                }
+                        title: 'General',
+                    },
+                },
             },
             {
                 id: 'layout',
                 title: '布局',
                 locales: {
                     'en-us': {
-                        title: 'Layout'
-                    }
-                }
-            }
-        ]
+                        title: 'Layout',
+                    },
+                },
+            },
+        ],
     });
     const libDirPath = toolkit.path.normalize(`${DEFAULT_TEST_ROOT_PATH}/a-lib`);
 
@@ -119,7 +122,7 @@ describe('#library-builder', () => {
 
     beforeEach(async () => {
         toolkit.initialize({
-            baseDir: systemPath.resolve(__dirname, '../')
+            baseDir: systemPath.resolve(__dirname, '../'),
         });
         fixture = await loadFixture('library-builder-alib');
         context = createTestDocgeniContext({
@@ -130,10 +133,10 @@ describe('#library-builder', () => {
                 [`${libDirPath}/button/examples/basic/basic.component.html`]: fixture.src['button/examples/basic/basic.component.html'],
                 [`${libDirPath}/button/examples/basic/index.md`]: fixture.src['button/examples/basic/index.md'],
                 [`${libDirPath}/alert/doc/zh-cn.md`]: fixture.src['alert/doc/zh-cn.md'],
-                [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts']
+                [`${libDirPath}/alert/examples/module.ts`]: fixture.src['alert/examples/module.ts'],
             },
             libs: [library],
-            watch: true
+            watch: true,
         });
     });
 
@@ -207,12 +210,12 @@ describe('#library-builder', () => {
         expect(localeCategoriesMap).toEqual({
             'zh-cn': [
                 { id: 'general', title: '通用', subtitle: undefined, items: [], order: 0 },
-                { id: 'layout', title: '布局', subtitle: undefined, items: [], order: 0 }
+                { id: 'layout', title: '布局', subtitle: undefined, items: [], order: 0 },
             ],
             'en-us': [
                 { id: 'general', title: 'General', subtitle: undefined, items: [], order: 0 },
-                { id: 'layout', title: 'Layout', subtitle: undefined, items: [], order: 0 }
-            ]
+                { id: 'layout', title: 'Layout', subtitle: undefined, items: [], order: 0 },
+            ],
         });
     });
 
@@ -220,7 +223,7 @@ describe('#library-builder', () => {
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         await libraryBuilder.initialize();
         const components = Array.from(libraryBuilder.components.values());
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
         });
         const componentDocItems = {
@@ -228,17 +231,17 @@ describe('#library-builder', () => {
                 id: `alib/alert`,
                 path: `alert`,
                 title: 'Alert',
-                channelPath: 'components'
+                channelPath: 'components',
             },
             button: {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
                 category: 'general',
-                channelPath: 'components'
-            }
+                channelPath: 'components',
+            },
         };
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'getDocItem').and.returnValue(componentDocItems[component.name]);
         });
         await libraryBuilder.build();
@@ -247,15 +250,15 @@ describe('#library-builder', () => {
                 lib: 'alib',
                 id: 'alib',
                 title: 'Alib Components',
-                path: 'components'
-            }
+                path: 'components',
+            },
         ];
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
         expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
         expect(rootNavs[0].items as unknown).toEqual([
             { id: 'general', title: '通用', items: [componentDocItems.button], order: 0 },
             { id: 'layout', title: '布局', items: [], order: 0 },
-            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' }
+            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' },
         ]);
     });
 
@@ -264,7 +267,7 @@ describe('#library-builder', () => {
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         await libraryBuilder.initialize();
         const components = Array.from(libraryBuilder.components.values());
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
         });
         const componentDocItems = {
@@ -272,10 +275,10 @@ describe('#library-builder', () => {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
-                category: 'general'
-            }
+                category: 'general',
+            },
         };
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'getDocItem').and.returnValue(componentDocItems[component.name]);
         });
         await libraryBuilder.build();
@@ -283,7 +286,7 @@ describe('#library-builder', () => {
             lib: 'alib',
             id: 'alib',
             title: 'Alib Components',
-            path: 'components'
+            path: 'components',
         };
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', [channel]);
         expect(zhNavs).toEqual([{ ...componentDocItems.button, path: 'components/button' }]);
@@ -293,7 +296,7 @@ describe('#library-builder', () => {
         const libraryBuilder = new LibraryBuilderImpl(context, { ...library, categories: [] });
         await libraryBuilder.initialize();
         const components = Array.from(libraryBuilder.components.values());
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
         });
         const componentDocItems = {
@@ -301,17 +304,17 @@ describe('#library-builder', () => {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
-                channelPath: 'components'
+                channelPath: 'components',
             },
             alert: {
                 id: `alib/alert`,
                 path: `alert`,
                 title: 'Alert',
                 channelPath: 'components',
-                order: 10
-            }
+                order: 10,
+            },
         };
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'getDocItem').and.returnValue(componentDocItems[component.name]);
         });
         await libraryBuilder.build();
@@ -320,8 +323,8 @@ describe('#library-builder', () => {
                 lib: 'alib',
                 id: 'alib',
                 title: 'Alib Components',
-                path: 'components'
-            }
+                path: 'components',
+            },
         ];
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
         expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
@@ -331,8 +334,8 @@ describe('#library-builder', () => {
                 id: `alib/button`,
                 path: `button`,
                 title: 'Button',
-                channelPath: 'components'
-            }
+                channelPath: 'components',
+            },
         ]);
     });
 
@@ -340,18 +343,18 @@ describe('#library-builder', () => {
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         await libraryBuilder.initialize();
         const components = Array.from(libraryBuilder.components.values());
-        components.map(component => {
+        components.map((component) => {
             return spyOn(component, 'build').and.returnValue(Promise.resolve());
         });
         await libraryBuilder.build();
-        const spyComponentEmits = components.map(component => {
+        const spyComponentEmits = components.map((component) => {
             return spyOn(component, 'emit').and.returnValue(Promise.resolve({}));
         });
-        spyComponentEmits.forEach(spyComponentEmit => {
+        spyComponentEmits.forEach((spyComponentEmit) => {
             expect(spyComponentEmit).not.toHaveBeenCalled();
         });
         await libraryBuilder.emit();
-        spyComponentEmits.forEach(spyComponentEmit => {
+        spyComponentEmits.forEach((spyComponentEmit) => {
             expect(spyComponentEmit).toHaveBeenCalled();
         });
     });
@@ -369,7 +372,7 @@ describe('#library-builder', () => {
         ngParserSpectator.toHaveBeenCalled({
             tsConfigPath: tsconfig,
             rootDir: libDirPath,
-            watch: true
+            watch: true,
         });
         expect(libraryBuilder.getNgDocParser()).toEqual(ngParserSpectator.mockNgParser);
     });
@@ -387,7 +390,7 @@ describe('#library-builder', () => {
         ngParserSpectator.toHaveBeenCalled({
             tsConfigPath: tsconfig,
             rootDir: libDirPath,
-            watch: true
+            watch: true,
         });
         expect(libraryBuilder.getNgDocParser()).toEqual(ngParserSpectator.mockNgParser);
     });
@@ -411,9 +414,9 @@ describe('#library-builder', () => {
             changes: [
                 jasmine.objectContaining({
                     type: toolkit.fs.HostWatchEventType.Changed,
-                    path: toolkit.path.resolve(libDirPath, './button/button.component.ts')
-                })
-            ]
+                    path: toolkit.path.resolve(libDirPath, './button/button.component.ts'),
+                }),
+            ],
         });
     });
 
@@ -426,22 +429,22 @@ describe('#library-builder', () => {
                 {
                     type: toolkit.fs.HostWatchEventType.Created,
                     path: toolkit.path.normalize(`${libDirPath}/button/examples/basic/module.ts`),
-                    time: new Date()
+                    time: new Date(),
                 },
                 {
                     type: toolkit.fs.HostWatchEventType.Changed,
                     path: toolkit.path.normalize(`${libDirPath}/button/examples/basic/basic.component.ts`),
-                    time: new Date()
-                }
+                    time: new Date(),
+                },
             ];
-            watchAggregatedSpy.and.callFake(paths => {
+            watchAggregatedSpy.and.callFake((paths) => {
                 expect(paths).toEqual([
                     `${libDirPath}/button/doc`,
                     `${libDirPath}/button/api`,
                     `${libDirPath}/button/examples`,
                     `${libDirPath}/alert/doc`,
                     `${libDirPath}/alert/api`,
-                    `${libDirPath}/alert/examples`
+                    `${libDirPath}/alert/examples`,
                 ]);
                 return of(changes);
             });
@@ -454,7 +457,7 @@ describe('#library-builder', () => {
             expect(spyCompile).toHaveBeenCalledWith({
                 libraryBuilder: libraryBuilder,
                 libraryComponents: [libraryBuilder.components.get(`${libDirPath}/button`)],
-                changes: changes
+                changes: changes,
             });
         });
 
@@ -469,10 +472,10 @@ describe('#library-builder', () => {
                 {
                     type: toolkit.fs.HostWatchEventType.Created,
                     path: toolkit.path.normalize(`${libDirPath}/button1/examples/basic/module.ts`),
-                    time: new Date()
-                }
+                    time: new Date(),
+                },
             ];
-            watchAggregatedSpy.and.callFake(paths => {
+            watchAggregatedSpy.and.callFake((paths) => {
                 return of(changes);
             });
             const spyCompile = spyOn(context, 'compile');
@@ -481,7 +484,7 @@ describe('#library-builder', () => {
             expect(spyCompile).toHaveBeenCalledWith({
                 libraryBuilder: libraryBuilder,
                 libraryComponents: [libraryBuilder.components.get(`${libDirPath}/button1`)],
-                changes: changes
+                changes: changes,
             });
         });
 

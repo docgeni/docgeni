@@ -16,8 +16,8 @@ describe('#navs-builder', () => {
             navBuilder = new NavsBuilder({
                 config: {
                     title: '',
-                    navs: []
-                }
+                    navs: [],
+                },
             } as DocgeniContext);
         });
 

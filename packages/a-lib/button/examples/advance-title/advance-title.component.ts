@@ -6,7 +6,7 @@ import { AlibButtonModule } from '@docgeni/alib/button';
     selector: 'alib-button-advance-title-example',
     templateUrl: './advance-title.component.html',
     standalone: true,
-    imports: [AlibButtonModule, CommonModule]
+    imports: [AlibButtonModule, CommonModule],
 })
 export class AlibButtonAdvanceTitleExampleComponent implements OnInit {
     constructor() {}

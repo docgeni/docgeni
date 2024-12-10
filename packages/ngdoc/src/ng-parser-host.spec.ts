@@ -10,7 +10,7 @@ describe('#ng-parser-host', () => {
     it('should create default NgParserHost success', () => {
         const tsConfigPath = toolkit.path.resolve(fixtureRootDir, './tsconfig.json');
         const parserHost = createNgParserHost({
-            tsConfigPath: tsConfigPath
+            tsConfigPath: tsConfigPath,
         });
         expect(parserHost).toBeTruthy();
         expect(parserHost.program).toBeTruthy();
@@ -19,10 +19,10 @@ describe('#ng-parser-host', () => {
         expect(sourceFiles).toBeTruthy();
         const publicAPISourceFilePath = toolkit.path.getTSSystemPath(toolkit.path.resolve(fixtureRootDir, 'src/public-api.ts'));
         const buttonSourceFilePath = toolkit.path.getTSSystemPath(toolkit.path.resolve(fixtureRootDir, 'src/button/button.component.ts'));
-        const publicAPISourceFile = sourceFiles.find(sourceFile => {
+        const publicAPISourceFile = sourceFiles.find((sourceFile) => {
             return sourceFile.fileName === publicAPISourceFilePath;
         });
-        const buttonSourceFile = sourceFiles.find(sourceFile => {
+        const buttonSourceFile = sourceFiles.find((sourceFile) => {
             return sourceFile.fileName === buttonSourceFilePath;
         });
         expect(publicAPISourceFile).toBeTruthy();
@@ -33,7 +33,7 @@ describe('#ng-parser-host', () => {
     it('should getSourceFileByPath', () => {
         const tsConfigPath = toolkit.path.resolve(fixtureRootDir, './tsconfig.json');
         const parserHost = createNgParserHost({
-            tsConfigPath: tsConfigPath
+            tsConfigPath: tsConfigPath,
         });
         const buttonPath = toolkit.path.getSystemPath(toolkit.path.resolve(fixtureRootDir, 'src/button/*.ts'));
         const filePaths = toolkit.fs.globSync(buttonPath);
@@ -51,7 +51,7 @@ describe('#ng-parser-host', () => {
             tsConfigPath: tsConfigPath,
             watch: true,
             rootDir: fixtureRootDir,
-            watcher: (event, filename) => {}
+            watcher: (event, filename) => {},
         });
         expect(parserHost).toBeTruthy();
         expect(parserHost.program).toBeTruthy();
@@ -80,7 +80,7 @@ describe('#ng-parser-host', () => {
             tsConfigPath: tsConfigPath,
             watch: true,
             rootDir: fixtureRootDir,
-            watcher: parserHostWatcherSpy
+            watcher: parserHostWatcherSpy,
         });
         expect(parserHost).toBeTruthy();
         expect(parserHost.program).toBeTruthy();

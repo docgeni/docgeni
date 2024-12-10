@@ -18,8 +18,8 @@ export default {
         const components: ComponentBuilder[] = [
             {
                 name: 'alib',
-                metadata: { selector: 'a-lib', name: 'AlibComponent' }
-            } as ComponentBuilder
+                metadata: { selector: 'a-lib', name: 'AlibComponent' },
+            } as ComponentBuilder,
         ];
 
         const moduleText = `

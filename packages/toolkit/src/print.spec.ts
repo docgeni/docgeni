@@ -26,9 +26,9 @@ describe('#print', () => {
             success: 'green',
             debug: 'cyan',
             warn: 'yellow',
-            error: 'red'
+            error: 'red',
         };
-        Object.keys(levelColors).forEach(key => {
+        Object.keys(levelColors).forEach((key) => {
             print[key]('text');
             expect(logSpy).toHaveBeenCalledWith(chalk[levelColors[key]]('text'));
         });
@@ -68,7 +68,7 @@ describe('#print', () => {
         const print = new Print({
             prefix: () => {
                 return 'hello';
-            }
+            },
         });
         print.fancy('text');
         const text: string = logSpy.calls.argsFor(0)[0];

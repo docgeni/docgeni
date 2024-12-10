@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'alib-bar-basic-example',
     templateUrl: './basic.component.html',
-    styleUrls: ['./basic.component.scss']
+    styleUrls: ['./basic.component.scss'],
 })
 export class AlibBarBasicExampleComponent implements OnInit {
     constructor() {}

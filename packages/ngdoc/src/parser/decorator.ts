@@ -5,7 +5,7 @@ import { getCallExpressionInfo } from './expression';
 
 export function getDecorators(declaration: ts.Declaration): NgParsedDecorator[] {
     if (ts.canHaveDecorators(declaration) && ts.getDecorators(declaration)) {
-        return ts.getDecorators(declaration).map(decorator => {
+        return ts.getDecorators(declaration).map((decorator) => {
             const callExpression = getCallExpression(decorator);
             if (callExpression) {
                 return getCallExpressionInfo(callExpression);
@@ -13,7 +13,7 @@ export function getDecorators(declaration: ts.Declaration): NgParsedDecorator[] 
                 return {
                     expression: decorator as ts.Decorator,
                     isCallExpression: false,
-                    name: nodeToString(decorator.expression)
+                    name: nodeToString(decorator.expression),
                 };
             }
         });
@@ -22,11 +22,11 @@ export function getDecorators(declaration: ts.Declaration): NgParsedDecorator[] 
 
 export function getNgDecorator(
     declaration: ts.ClassDeclaration,
-    decoratorNames: string[] = ['Component', 'Directive', 'Pipe', 'Injectable']
+    decoratorNames: string[] = ['Component', 'Directive', 'Pipe', 'Injectable'],
 ): NgParsedDecorator {
     const decorators = getDecorators(declaration);
     const decorator = decorators
-        ? decorators.find(decorator => {
+        ? decorators.find((decorator) => {
               return decoratorNames.includes(decorator.name);
           })
         : undefined;
@@ -36,7 +36,7 @@ export function getNgDecorator(
 export function getNgPropertyDecorator(declaration: ts.Declaration) {
     const decorators = getDecorators(declaration);
     const decorator = decorators
-        ? decorators.find(decorator => {
+        ? decorators.find((decorator) => {
               return ['Input', 'Output', 'ContentChild', 'ContentChildren'].includes(decorator.name);
           })
         : undefined;
@@ -45,7 +45,7 @@ export function getNgPropertyDecorator(declaration: ts.Declaration) {
         const argument: Record<string, string> = decorator.argumentInfo[0] as Record<string, string>;
         return {
             ...decorator,
-            ...argument
+            ...argument,
         };
     }
     return decorator;

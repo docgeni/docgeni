@@ -6,13 +6,13 @@ import { EOL } from 'os';
 describe('#toolkit.template', () => {
     beforeEach(() => {
         toolkit.initialize({
-            baseDir: path.resolve(__dirname)
+            baseDir: path.resolve(__dirname),
         });
     });
 
     it('should compile success', () => {
         const result = toolkit.template.compile('module.hbs', {
-            name: 'First Name'
+            name: 'First Name',
         });
         expect(result).eq(`This is template First Name${EOL}`);
     });
@@ -26,13 +26,13 @@ describe('#toolkit.template', () => {
                     navs: [
                         {
                             title: 'getting started',
-                            path: 'getting-started'
-                        }
-                    ]
+                            path: 'getting-started',
+                        },
+                    ],
                 },
                 null,
-                4
-            )
+                4,
+            ),
         });
         const expected = `export const config = {
     "title": "Title",

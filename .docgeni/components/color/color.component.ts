@@ -7,7 +7,7 @@ import { DocgeniBuiltInComponent } from '@docgeni/template';
     selector: 'my-color',
     templateUrl: './color.component.html',
     standalone: true,
-    imports: [FormsModule, CommonModule]
+    imports: [FormsModule, CommonModule],
 })
 export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
     @Input() set color(value: string) {

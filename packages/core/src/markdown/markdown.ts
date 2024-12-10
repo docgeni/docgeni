@@ -13,7 +13,7 @@ marked.use({
     smartLists: true,
     smartypants: false,
     xhtml: false,
-    extensions: [embed]
+    extensions: [embed],
 });
 
 export interface MarkdownParseResult<TAttributes = unknown> {
@@ -30,14 +30,14 @@ export class Markdown {
             renderer,
             highlight,
             gfm: true,
-            ...options
+            ...options,
         });
         return content;
     }
 
     static compile<TMate>(
         src: string,
-        options?: MarkdownRendererOptions
+        options?: MarkdownRendererOptions,
     ): {
         html: string;
         headings?: HeadingLink[];
@@ -49,12 +49,12 @@ export class Markdown {
             renderer,
             highlight,
             gfm: true,
-            ...options
+            ...options,
         });
         return {
             html: html,
             meta: result.attributes as TMate,
-            headings: renderer.headingLinks
+            headings: renderer.headingLinks,
         };
     }
 

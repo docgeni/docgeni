@@ -23,7 +23,7 @@ type DialogRole = 'dialog';
 type OverlayPosition = 'left' | 'top';
 enum DialogSizes {
     lg = 'lg',
-    'sm' = 'sm'
+    'sm' = 'sm',
 }
 /**
  * Alib Dialog Config
@@ -70,9 +70,9 @@ export class AlibDialog {
      */
     open<T, TData = unknown, TResult = unknown>(
         componentOrTemplateRef: Type<T> | TemplateRef<T>,
-        config?: AlibDialogConfig
+        config?: AlibDialogConfig,
     ): AlibDialogRef<T, TResult> {
-        return (undefined as unknown) as AlibDialogRef<T, TResult>;
+        return undefined as unknown as AlibDialogRef<T, TResult>;
     }
 
     /**

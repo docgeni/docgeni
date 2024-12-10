@@ -11,10 +11,10 @@ export class NgParserSpectator {
         this.createNgParserHostSpy = spyOn(DefaultNgParserHost, 'create');
         this.createNgParserSpy = spyOn(NgDocParser, 'create');
         this.mockNgParserHost = {
-            program: ({} as unknown) as ts.Program
+            program: {} as unknown as ts.Program,
         };
-        this.mockNgParser = ({} as unknown) as NgDocParser;
-        this.createNgParserHostSpy.and.callFake(options => {
+        this.mockNgParser = {} as unknown as NgDocParser;
+        this.createNgParserHostSpy.and.callFake((options) => {
             this.ngParserHostOptions = options;
             return this.mockNgParserHost;
         });
@@ -29,7 +29,7 @@ export class NgParserSpectator {
     toHaveBeenCalled(expected: { tsConfigPath?: string; rootDir?: string; watch?: boolean }) {
         expect(this.createNgParserHostSpy).toHaveBeenCalled();
         expect(this.createNgParserSpy).toHaveBeenCalledWith({
-            ngParserHost: this.mockNgParserHost
+            ngParserHost: this.mockNgParserHost,
         });
         const args = this.createNgParserHostSpy.calls.argsFor(0);
         expect(args[0]).toBeTruthy();

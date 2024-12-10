@@ -14,9 +14,9 @@ export function contributors(filePath: string | string[]): string[] {
                   result
                       .toString()
                       .split('\n')
-                      .filter(item => item)
-                      .map(item => JSON.parse(item))
-              )
+                      .filter((item) => item)
+                      .map((item) => JSON.parse(item)),
+              ),
           )
         : [];
 }

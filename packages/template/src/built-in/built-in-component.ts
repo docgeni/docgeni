@@ -17,14 +17,14 @@ export abstract class DocgeniBuiltInComponent {
 
     updateHostClass(classes: string[]) {
         if (this.classes) {
-            this.classes.forEach(className => {
+            this.classes.forEach((className) => {
                 if (!this.classes.includes(className)) {
                     this.removeClass(className);
                 }
             });
         }
         const newClasses: string[] = [];
-        classes.forEach(className => {
+        classes.forEach((className) => {
             if (className) {
                 newClasses.push(className);
                 if (!this.classes.includes(className)) {

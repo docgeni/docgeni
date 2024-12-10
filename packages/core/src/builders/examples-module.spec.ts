@@ -20,11 +20,11 @@ export default {
             declarations: ['AppComponent', 'AlibComponent'],
             providers: ['AppService'],
             imports: ['CommonModule'],
-            exports: ['AlibComponent']
+            exports: ['AlibComponent'],
         };
 
         const moduleMetadataArgs = Object.keys(metaData)
-            .map(key => {
+            .map((key) => {
                 return `${key}: [ ${metaData[key].join(', ')} ]`;
             })
             .join(',\n    ');

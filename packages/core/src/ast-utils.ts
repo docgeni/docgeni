@@ -20,7 +20,7 @@ export function insertImports(sourceFile: NgSourceFile, importStructures: { name
             let addPos = 0;
             if (importDeclaration.importClause.namedBindings) {
                 if (ts.isNamedImports(importDeclaration.importClause.namedBindings)) {
-                    const hasNamed = !!importDeclaration.importClause.namedBindings.elements.find(element => {
+                    const hasNamed = !!importDeclaration.importClause.namedBindings.elements.find((element) => {
                         return element.name.getText() === structure.name;
                     });
                     addPos = importDeclaration.importClause.namedBindings.getLastToken().pos;
@@ -36,8 +36,8 @@ export function insertImports(sourceFile: NgSourceFile, importStructures: { name
                 new InsertChange(
                     sourceFile.origin.fileName,
                     newImportPos,
-                    `${insertAtBeginning ? '' : '\n'}import { ${structure.name} } from '${structure.moduleSpecifier}';`
-                )
+                    `${insertAtBeginning ? '' : '\n'}import { ${structure.name} } from '${structure.moduleSpecifier}';`,
+                ),
             );
         }
     });
@@ -45,7 +45,7 @@ export function insertImports(sourceFile: NgSourceFile, importStructures: { name
 }
 
 export function getNgModuleMetadataFromDefaultExport(sourceFile: NgSourceFile): NgModuleMetadata {
-    return ((sourceFile.getDefaultExports() || {}) as unknown) as NgModuleMetadata;
+    return (sourceFile.getDefaultExports() || {}) as unknown as NgModuleMetadata;
 }
 
 export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetadata: NgModuleMetadata): NgModuleMetadata {
@@ -53,7 +53,7 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
         declarations: [],
         providers: [],
         imports: [],
-        exports: []
+        exports: [],
     };
 
     metadata = { ...defaultModuleMetadata, ...metadata };
@@ -62,7 +62,7 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
         declarations: combineSymbolMetadata(metadata.declarations, appendMetadata?.declarations),
         providers: combineSymbolMetadata(metadata.providers, appendMetadata.providers),
         imports: combineSymbolMetadata(metadata.imports, appendMetadata?.imports),
-        exports: combineSymbolMetadata(metadata.exports, appendMetadata.exports)
+        exports: combineSymbolMetadata(metadata.exports, appendMetadata.exports),
     };
 
     if (metadata.bootstrap || appendMetadata.bootstrap) {
@@ -74,7 +74,7 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
 function combineSymbolMetadata(origin: string | string[], append?: string | string[]) {
     const result: string[] = [];
     if (toolkit.utils.isArray(origin)) {
-        origin.forEach(item => {
+        origin.forEach((item) => {
             result.push(item);
         });
     } else if (origin) {
@@ -82,7 +82,7 @@ function combineSymbolMetadata(origin: string | string[], append?: string | stri
     }
     if (append) {
         if (toolkit.utils.isArray(append)) {
-            append.forEach(item => {
+            append.forEach((item) => {
                 if (!result.includes(item)) {
                     result.push(item);
                 }
@@ -104,7 +104,7 @@ export function applyChanges(filePath: string, originContent: string, changes: C
 
 export function generateNgModuleText(ngModuleName: string, moduleMetadata: NgModuleMetadata) {
     const moduleMetadataArgs = Object.keys(moduleMetadata)
-        .map(key => {
+        .map((key) => {
             return (
                 `${key}:` +
                 (toolkit.utils.isArray(moduleMetadata[key]) ? ` [ ${moduleMetadata[key].join(', ')} ]` : ` ${moduleMetadata[key]}`)

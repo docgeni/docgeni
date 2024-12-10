@@ -11,11 +11,11 @@ describe('#footer', () => {
                 provide: GlobalContext,
                 useValue: {
                     config: {
-                        footer: 'My Footer Content'
-                    }
-                }
-            }
-        ]
+                        footer: 'My Footer Content',
+                    },
+                },
+            },
+        ],
     });
 
     it('should get correct footer', () => {
@@ -32,11 +32,11 @@ describe('#footer', () => {
                     provide: GlobalContext,
                     useValue: {
                         config: {
-                            footer: undefined
-                        }
-                    }
-                }
-            ]
+                            footer: undefined,
+                        },
+                    },
+                },
+            ],
         });
         expect(spectator.element.classList.contains('dg-footer')).toBeTruthy();
         expect(spectator.element.classList.contains('dg-hidden')).toBeTruthy();

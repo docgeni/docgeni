@@ -13,13 +13,13 @@ describe('router-reset.service', () => {
         providers: [
             {
                 provide: GlobalContext,
-                useFactory: function() {
+                useFactory: function () {
                     return mockGlobal;
-                }
-            }
+                },
+            },
         ],
         imports: [RouterModule.forRoot([], {})],
-        mocks: []
+        mocks: [],
     });
 
     beforeEach(() => {
@@ -29,14 +29,14 @@ describe('router-reset.service', () => {
                 locales: [
                     {
                         key: 'zh-cn',
-                        name: 'ZH'
+                        name: 'ZH',
                     },
                     {
                         key: 'en-us',
-                        name: 'EN'
-                    }
+                        name: 'EN',
+                    },
                 ],
-                mode: 'full'
+                mode: 'full',
             },
             navs: [
                 {
@@ -48,12 +48,12 @@ describe('router-reset.service', () => {
                             id: '/guides/getting-started',
                             path: 'getting-started',
                             title: 'Getting Started',
-                            items: []
-                        }
-                    ]
-                }
+                            items: [],
+                        },
+                    ],
+                },
             ],
-            docItems: []
+            docItems: [],
         };
     });
 
@@ -71,8 +71,8 @@ describe('router-reset.service', () => {
     });
 
     function assertRoutes(routes: Routes, paths: string[]) {
-        paths.forEach(path => {
-            const route = routes.find(route => {
+        paths.forEach((path) => {
+            const route = routes.find((route) => {
                 return route.path === path;
             });
             expect(route).toBeTruthy(`${path} route is not found`);

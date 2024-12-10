@@ -7,19 +7,19 @@ module.exports = [
                 name: 'alibType',
                 type: 'string',
                 default: 'null',
-                description: '类型'
+                description: '类型',
             },
             {
                 name: 'alibSize',
                 type: 'string',
-                description: '大小'
-            }
-        ]
+                description: '大小',
+            },
+        ],
     },
     {
         type: 'component',
         name: 'alib-bar-divider',
         description: '分割线',
-        properties: []
-    }
+        properties: [],
+    },
 ];

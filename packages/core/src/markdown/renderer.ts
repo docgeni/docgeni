@@ -36,7 +36,7 @@ export class DocsMarkdownRenderer extends Renderer<any> {
                 id: encodedHeadingId,
                 name: label,
                 level: level,
-                type: `h${level}`
+                type: `h${level}`,
             });
             return `
         <h${level} id="${encodedHeadingId}" class="docs-header-link">

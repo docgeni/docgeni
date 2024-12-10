@@ -4,7 +4,7 @@
  */
 @Component({
     selector: 'alib-button,[alibButton]',
-    template: '<ng-content></ng-content>'
+    template: '<ng-content></ng-content>',
 })
 export class AlibButtonComponent implements OnInit {
     @HostBinding(`class.dg-btn`) isBtn = true;

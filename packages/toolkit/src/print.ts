@@ -15,7 +15,7 @@ export enum Levels {
     debug,
     warn,
     error,
-    success
+    success,
 }
 
 export class Print {

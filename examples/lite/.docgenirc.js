@@ -11,8 +11,8 @@ module.exports = {
         {
             title: 'GitHub',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
-        }
+            isExternal: true,
+        },
     ],
-    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self'
+    footer: 'Open-source MIT Licensed | Copyright © 2020-present Powered by self',
 };

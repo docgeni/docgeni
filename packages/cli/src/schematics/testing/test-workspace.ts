@@ -23,9 +23,9 @@ export class TestWorkspaceFactory {
                 name: 'test-workspace',
                 version: '14.2.10',
                 newProjectRoot: 'projects',
-                ...options
+                ...options,
             },
-            this.hostTree
+            this.hostTree,
         );
         return this.tree;
     }

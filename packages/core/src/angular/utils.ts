@@ -6,7 +6,7 @@ export enum NgOptionType {
     Array = 'array',
     Boolean = 'boolean',
     Number = 'number',
-    String = 'string'
+    String = 'string',
 }
 /**
  * An option description. This is exposed when using `ng --help=json`.
@@ -41,22 +41,22 @@ const EXTRA_NG_OPTIONS = {
         description:
             'One or more named builder configurations as a comma-separated list as specified in the "configurations" section of angular.json.\nThe builder uses the named configurations to run the given target.\nFor more information, see https://angular.io/guide/workspace-config#alternate-build-configurations.\nSetting this explicitly overrides the "--prod" flag.',
         type: NgOptionType.String,
-        aliases: ['c']
+        aliases: ['c'],
     },
     prod: {
         name: 'prod',
         description: 'Target to build.',
         type: NgOptionType.Boolean,
         required: false,
-        aliases: []
+        aliases: [],
     },
     port: {
         name: 'port',
         description: 'Target to build.',
         type: NgOptionType.String,
         required: false,
-        aliases: []
-    }
+        aliases: [],
+    },
 };
 
 export function readNgBuildOptions(): NgOption[] {
@@ -71,7 +71,7 @@ export function extractAngularCommandArgs(argv: any, options: NgOption[]): Recor
     const optionsNameMap = toolkit.utils.keyBy(options, 'name');
     Object.assign(optionsNameMap, EXTRA_NG_OPTIONS);
     return Object.keys(argv)
-        .filter(key => {
+        .filter((key) => {
             return optionsNameMap[key] || optionsNameMap[toolkit.strings.camelCase(key)];
         })
         .reduce((result, item) => {

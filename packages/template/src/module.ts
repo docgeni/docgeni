@@ -12,10 +12,10 @@ import { DocgeniBuiltInModule } from './built-in/built-in.module';
     providers: [
         {
             provide: CONFIG_TOKEN,
-            useValue: DEFAULT_CONFIG
+            useValue: DEFAULT_CONFIG,
         },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
+        provideHttpClient(withInterceptorsFromDi()),
+    ],
 })
 export class DocgeniTemplateModule {
     constructor() {}

@@ -7,7 +7,7 @@ import {
     getNodeText,
     getObjectLiteralExpressionProperties,
     isExported,
-    isExportedClassDeclaration
+    isExportedClassDeclaration,
 } from './parser';
 import { ts } from './typescript';
 import { lineFeedPrinter } from './parser/line-feed-printer';
@@ -45,12 +45,12 @@ export class NgSourceFile {
     public getExportedComponents(): NgComponentMetadata[] {
         const components: NgComponentMetadata[] = [];
         const classDeclarations = findNodes<ts.ClassDeclaration>(this.sourceFile, isExportedClassDeclaration);
-        classDeclarations.forEach(classDeclaration => {
+        classDeclarations.forEach((classDeclaration) => {
             const ngDecorator = getNgDecorator(classDeclaration, ['Component']);
             if (ngDecorator) {
                 components.push({
                     name: classDeclaration.name.getText(),
-                    ...getDirectiveMeta(ngDecorator.argumentInfo)
+                    ...getDirectiveMeta(ngDecorator.argumentInfo),
                 });
             }
         });
@@ -62,7 +62,7 @@ export class NgSourceFile {
         if (components) {
             if (keywords) {
                 const normalizedKeywords = toolkit.strings.camelCase(keywords).toLowerCase();
-                const component = components.find(component => {
+                const component = components.find((component) => {
                     return component.name.toLowerCase().includes(normalizedKeywords);
                 });
                 return component;
@@ -76,12 +76,12 @@ export class NgSourceFile {
 
     public getExportedNgModule(): NgModuleInfo {
         let ngModule: NgModuleInfo = null;
-        ts.forEachChild(this.sourceFile, node => {
+        ts.forEachChild(this.sourceFile, (node) => {
             if (isExportedClassDeclaration(node)) {
                 const ngDecorator = getNgDecorator(node, ['NgModule']);
                 if (ngDecorator) {
                     ngModule = {
-                        name: node.name.getText()
+                        name: node.name.getText(),
                     };
                 }
             }
@@ -91,17 +91,17 @@ export class NgSourceFile {
 
     public getDefaultExports<TResult>(): TResult {
         let exports: ArgumentInfo;
-        ts.forEachChild(this.sourceFile, node => {
+        ts.forEachChild(this.sourceFile, (node) => {
             if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
                 exports = getObjectLiteralExpressionProperties(node.expression);
             }
         });
-        return (exports as unknown) as TResult;
+        return exports as unknown as TResult;
     }
 
     public getDefaultExportNode(): ts.Node {
         let result: ts.Node;
-        ts.forEachChild(this.sourceFile, node => {
+        ts.forEachChild(this.sourceFile, (node) => {
             if (ts.isExportAssignment(node) && ts.isObjectLiteralExpression(node.expression)) {
                 result = node;
             }

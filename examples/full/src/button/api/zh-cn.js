@@ -7,8 +7,8 @@ module.exports = [
             {
                 name: 'alibType',
                 description: '按钮类型',
-                type: 'string'
-            }
-        ]
-    }
+                type: 'string',
+            },
+        ],
+    },
 ];

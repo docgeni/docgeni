@@ -7,12 +7,12 @@ export default async function main() {
     const list = [
         {
             generatePath: 'packages/core/src/angular/ng-build-options.json',
-            filePath: 'node_modules/@angular-devkit/build-angular/src/browser/schema.json'
+            filePath: 'node_modules/@angular-devkit/build-angular/src/browser/schema.json',
         },
         {
             generatePath: 'packages/core/src/angular/ng-serve-options.json',
-            filePath: 'node_modules/@angular-devkit/build-angular/src/dev-server/schema.json'
-        }
+            filePath: 'node_modules/@angular-devkit/build-angular/src/dev-server/schema.json',
+        },
     ];
     for (const item of list) {
         const options = await parseJsonSchemaToOptions(registry, require(path.resolve(process.cwd(), item.filePath)));

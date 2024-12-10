@@ -3,13 +3,13 @@ import { isUndefinedOrNull, keyBy, random, some, sortByOrder, sortByOrderMap, un
 describe('#utils', () => {
     describe('isUndefinedOrNull', () => {
         it('should get truly', () => {
-            [undefined, null].forEach(value => {
+            [undefined, null].forEach((value) => {
                 expect(isUndefinedOrNull(value)).toBe(true);
             });
         });
 
         it('should get falsely', () => {
-            [{}, true, ''].forEach(value => {
+            [{}, true, ''].forEach((value) => {
                 expect(isUndefinedOrNull(value)).toBe(false);
             });
         });
@@ -64,7 +64,7 @@ describe('#utils', () => {
 
     describe('keyBy', () => {
         it('keyBy undefined', () => {
-            const result = keyBy((undefined as unknown) as Array<{ id: string }>, 'id');
+            const result = keyBy(undefined as unknown as Array<{ id: string }>, 'id');
             expect(result).toEqual({});
         });
 
@@ -78,7 +78,7 @@ describe('#utils', () => {
                 obj1: obj1,
                 obj2: obj2,
                 obj3: obj3,
-                obj4: obj4
+                obj4: obj4,
             });
         });
     });

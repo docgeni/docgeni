@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'alib-button',
     templateUrl: './button.component.html',
-    styles: []
+    styles: [],
 })
 export class ButtonComponent implements OnInit {
     /**

@@ -20,12 +20,12 @@ export class DocgeniProgress extends Spinner {
 
     initialize() {
         let originalLog: (message: string) => void;
-        this.docgeni.hooks.compilation.tap('DocgeniProgress', compilation => {
+        this.docgeni.hooks.compilation.tap('DocgeniProgress', (compilation) => {
             if (!this.isSpinning) {
                 this.start('\nStart building...');
             }
             originalLog = this.docgeni.logger.log;
-            this.docgeni.logger.log = message => {
+            this.docgeni.logger.log = (message) => {
                 this.info(message);
             };
             const startTime = new Date().getTime();
@@ -39,15 +39,15 @@ export class DocgeniProgress extends Spinner {
                 this.text = 'Start building docs...';
             });
 
-            compilation.hooks.docsBuildSucceed.tap(this.name, builder => {
+            compilation.hooks.docsBuildSucceed.tap(this.name, (builder) => {
                 this.text = `Build docs successfully(total: ${totalDoc})`;
             });
 
-            compilation.hooks.docBuildSucceed.tap(this.name, docFile => {
+            compilation.hooks.docBuildSucceed.tap(this.name, (docFile) => {
                 this.text = `Building docs (${++currentDoc}/${totalDoc}) ${getSummaryStr(docFile.path)}`;
             });
 
-            compilation.hooks.libraryBuild.tap(this.name, lib => {
+            compilation.hooks.libraryBuild.tap(this.name, (lib) => {
                 totalComponent += lib.components.size;
                 this.text = `Start building library(${lib.lib.name})...`;
             });
@@ -57,7 +57,7 @@ export class DocgeniProgress extends Spinner {
                 this.text = `Library(${lib.lib.name}) build successfully(total: ${components ? components.length : lib.components.size})`;
             });
 
-            compilation.hooks.componentBuildSucceed.tap(this.name, component => {
+            compilation.hooks.componentBuildSucceed.tap(this.name, (component) => {
                 this.text = `Building components ${++currentComponent}/${totalComponent} ${getSummaryStr(component.absPath)}`;
             });
 
@@ -82,23 +82,23 @@ export class DocgeniProgress extends Spinner {
     private toStringByCompilationResult(emits: CompilationResult, time: number) {
         const table = textTable(
             [
-                ['Module Name', 'Emit Count'].map(item => {
+                ['Module Name', 'Emit Count'].map((item) => {
                     return colors.bold(item);
                 }),
                 ['Docs', colors.green(emits.docs.length)],
                 ['Components', colors.green(emits.components.length)],
-                ['Total Emit Files', colors.green(this.getEmitFilesCount(emits))]
+                ['Total Emit Files', colors.green(this.getEmitFilesCount(emits))],
                 // ['Total', colors.green(result.docs.length + result.components.length)]
             ],
-            { align: ['l', 'l'], hsep: toolkit.print.chalk.gray(' | '), stringLength: s => removeColor(s).length }
+            { align: ['l', 'l'], hsep: toolkit.print.chalk.gray(' | '), stringLength: (s) => removeColor(s).length },
         );
 
         const info = [
             ['Build at', toolkit.utils.timestamp(`YYYY/MM/DD HH:mm:ss`)],
             ['Time', `${time}ms`],
-            ['Version', this.docgeni.version]
+            ['Version', this.docgeni.version],
         ]
-            .map(item => {
+            .map((item) => {
                 return `${item[0]}: ${colors.bold(item[1])}`;
             })
             .join(' - ');

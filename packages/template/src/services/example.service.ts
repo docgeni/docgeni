@@ -7,7 +7,7 @@ export abstract class ExampleService {
             this.generateAppModuleTs(module, component),
             this.generateIndexHtml(),
             this.generateMainTs(),
-            this.generateAppComponentTs(component.selector)
+            this.generateAppComponentTs(component.selector),
         ];
     }
     private generateAppModuleTs(module: { name: string; importSpecifier: string }, component: { name: string }) {
@@ -26,7 +26,7 @@ import { AppComponent } from './app.component'
 export class AppModule {
     constructor() {}
 }
-`
+`,
         };
     }
     private generateMainTs() {
@@ -36,7 +36,7 @@ export class AppModule {
 import { AppModule } from './app.module';
 import 'zone.js';
 platformBrowserDynamic().bootstrapModule(AppModule);
-            `
+            `,
         };
     }
     private generateIndexHtml() {
@@ -55,7 +55,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
     <app-root></app-root>
   </body>
 </html>
-`
+`,
         };
     }
     private generateAppComponentTs(selector: string) {
@@ -66,7 +66,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
   selector: 'app-root',
   template: '<${selector}></${selector}>',
 })
-export class AppComponent {}`
+export class AppComponent {}`,
         };
     }
 }
