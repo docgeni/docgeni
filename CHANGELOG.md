@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.0](https://github.com/docgeni/docgeni/compare/v2.4.0...v2.5.0-next.0) (2024-12-10)
+
+
+### Features
+
+* upgrade ng to 19 and set default standalone to true ([#572](https://github.com/docgeni/docgeni/issues/572)) ([7858059](https://github.com/docgeni/docgeni/commit/7858059aadfd1cbdd0debb68267dba704917f625))
+
+
+
+
+
 # [2.4.0](https://github.com/docgeni/docgeni/compare/v2.4.0-next.6...v2.4.0) (2024-10-23)
 
 ### Bug Fixes
