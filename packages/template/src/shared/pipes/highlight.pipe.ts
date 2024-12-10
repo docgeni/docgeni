@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
-    name: 'highlight'
+    name: 'highlight',
+    standalone: false,
 })
 export class HighlightPipe implements PipeTransform {
     constructor(private domSanitizer: DomSanitizer) {}
@@ -12,7 +13,7 @@ export class HighlightPipe implements PipeTransform {
         const chunks = title.split(reg);
 
         let formatTitle = '';
-        chunks.forEach(chunk => {
+        chunks.forEach((chunk) => {
             if (chunk) {
                 formatTitle =
                     formatTitle + (chunk.toLocaleLowerCase() === keywords ? `<span class="dg-word-highlight">${chunk}</span>` : chunk);

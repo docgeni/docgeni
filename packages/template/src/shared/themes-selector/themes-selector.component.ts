@@ -5,6 +5,7 @@ import { DocgeniTheme } from '../../interfaces';
 @Component({
     selector: 'dg-themes-selector',
     templateUrl: './themes-selector.component.html',
+    standalone: false,
 })
 export class ThemesSelectorComponent implements OnInit {
     @HostBinding('class.dg-themes-selector') isNavbar = true;

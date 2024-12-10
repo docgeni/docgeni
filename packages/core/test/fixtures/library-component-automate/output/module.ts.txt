@@ -4,9 +4,9 @@ import { AlibButtonOtherExampleComponent } from './basic/other.component';
 import { AlibButtonBasicExampleComponent } from './basic/basic.component';
 import { NgModule } from '@angular/core';
 @NgModule({
-    declarations: [ AlibButtonOtherExampleComponent, AlibButtonBasicExampleComponent ],
+    declarations: [ AlibButtonOtherExampleComponent ],
     providers: [  ],
-    imports: [ CommonModule, AlibButtonModule ],
+    imports: [ CommonModule, AlibButtonModule, AlibButtonBasicExampleComponent ],
     exports: [ AlibButtonBasicExampleComponent ]
 })
 export class AlibButtonExamplesModule {}

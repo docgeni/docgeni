@@ -7,9 +7,10 @@ export type DocgeniAlertType = 'primary' | 'info' | 'success' | 'warning' | 'dan
     selector: 'alert',
     templateUrl: './alert.component.html',
     host: {
-        class: 'dg-alert'
+        class: 'dg-alert',
     },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DocgeniAlertComponent extends DocgeniBuiltInComponent implements OnInit {
     private internalType: DocgeniAlertType = 'info';
@@ -34,5 +35,5 @@ export class DocgeniAlertComponent extends DocgeniBuiltInComponent implements On
 
 export default {
     selector: 'alert',
-    component: DocgeniAlertComponent
+    component: DocgeniAlertComponent,
 };

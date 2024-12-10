@@ -21,7 +21,10 @@ const TRANSLATES: Record<string, Record<string, string>> = {
         SEARCH: 'Search',
     },
 };
-@Pipe({ name: 'dgTranslate' })
+@Pipe({
+    name: 'dgTranslate',
+    standalone: false,
+})
 export class TranslatePipe implements PipeTransform {
     constructor(private global: GlobalContext) {}
 

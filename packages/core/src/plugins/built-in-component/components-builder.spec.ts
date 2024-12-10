@@ -33,16 +33,16 @@ describe('#components-builder', () => {
             templateUrl: './heart-standalone.component.html',
             standalone: true
         }) export class HeartStandaloneComponent {};`,
-        [`${COMPONENTS_ROOT_PATH}/heart-standalone/heart-standalone.component.html`]: 'heart'
+        [`${COMPONENTS_ROOT_PATH}/heart-standalone/heart-standalone.component.html`]: 'heart',
     };
 
     beforeEach(() => {
         context = createTestDocgeniContext({
-            initialFiles
+            initialFiles,
         });
 
         toolkit.initialize({
-            baseDir: systemPath.resolve(__dirname, '../')
+            baseDir: systemPath.resolve(__dirname, '../'),
         });
 
         componentsDistPath = toolkit.path.resolve(context.paths.absSiteContentPath, 'components/custom');
@@ -66,7 +66,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.metadata).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
-                standalone: false
+                standalone: false,
             });
 
             expect(entryContent).toEqual(moduleText);
@@ -81,7 +81,7 @@ describe('#components-builder', () => {
             await componentsBuilder.build();
             await componentsBuilder.emit();
             const helloComponentContent = await context.host.readFile(
-                toolkit.path.resolve(componentsDistPath, 'world-standalone/world-standalone.component.ts')
+                toolkit.path.resolve(componentsDistPath, 'world-standalone/world-standalone.component.ts'),
             );
             expect(helloComponentContent).toEqual(initialFiles[`${COMPONENTS_ROOT_PATH}/world-standalone/world-standalone.component.ts`]);
             const entryContent = await context.host.readFile(toolkit.path.resolve(componentsDistPath, 'index.ts'));
@@ -91,7 +91,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/world-standalone`)!.metadata).toEqual({
                 selector: 'world-standalone',
                 name: 'WorldStandaloneComponent',
-                standalone: true
+                standalone: true,
             });
 
             expect(entryContent).toEqual(moduleText);
@@ -111,7 +111,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/color`)!.metadata).toEqual({
                 selector: 'my-color',
                 name: 'ColorComponent',
-                standalone: false
+                standalone: true,
             });
         });
 
@@ -129,7 +129,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/heart-standalone`)!.metadata).toEqual({
                 selector: 'my-heart-standalone',
                 name: 'HeartStandaloneComponent',
-                standalone: true
+                standalone: true,
             });
         });
 
@@ -149,7 +149,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.metadata).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
-                standalone: false
+                standalone: false,
             });
 
             expect(entryContent).toEqual(moduleText);
@@ -192,7 +192,7 @@ describe('#components-builder', () => {
             await context.host.writeFile(toolkit.path.resolve(COMPONENTS_ROOT_PATH, './hello/hello.component.ts'), newHelloComponentSource);
             await toolkit.utils.wait(0);
             expect(await context.host.readFile(toolkit.path.resolve(componentsDistPath, 'hello/hello.component.ts'))).toEqual(
-                newHelloComponentSource
+                newHelloComponentSource,
             );
 
             const latestEntryContent = await context.host.readFile(toolkit.path.resolve(componentsDistPath, 'index.ts'));
@@ -208,7 +208,7 @@ describe('#components-builder', () => {
             const hello1Text = `class Hello1Component {}; export default { selector: "hello1", component: Hello1Component }`;
             await context.host.writeFile(
                 toolkit.path.resolve(newComponentPath, 'hello1.component.ts'),
-                'class Hello1Component {}; export default { selector: "hello1", component: Hello1Component }'
+                'class Hello1Component {}; export default { selector: "hello1", component: Hello1Component }',
             );
 
             await toolkit.utils.wait(0);

@@ -6,10 +6,9 @@ import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@an
  */
 @Component({
     selector: 'alib-layout, [alibLayout]',
-    template: `
-        <ng-content></ng-content>
-    `,
-    exportAs: 'alibLayout'
+    template: ` <ng-content></ng-content> `,
+    exportAs: 'alibLayout',
+    standalone: false,
 })
 export class AlibLayoutComponent implements OnInit {
     @HostBinding(`class.alib-layout`) isLayout = true;
@@ -36,10 +35,9 @@ export class AlibLayoutComponent implements OnInit {
  */
 @Component({
     selector: 'alib-sidebar, [alibSidebar]',
-    template: `
-        <ng-content></ng-content>
-    `,
-    exportAs: 'alibSidebar'
+    template: ` <ng-content></ng-content> `,
+    exportAs: 'alibSidebar',
+    standalone: false,
 })
 export class AlibSidebarComponent implements OnInit {
     /**

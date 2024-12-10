@@ -5,7 +5,8 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
 
 @Component({
     selector: 'dg-channel',
-    templateUrl: './channel.component.html'
+    templateUrl: './channel.component.html',
+    standalone: false,
 })
 export class ChannelComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-layout`) isLayout = true;
@@ -22,7 +23,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         public navigationService: NavigationService,
-        public global: GlobalContext
+        public global: GlobalContext,
     ) {}
 
     ngOnInit(): void {
@@ -37,14 +38,15 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
 @Component({
     selector: 'dg-channel-home',
-    template: ``
+    template: ``,
+    standalone: false,
 })
 export class ChannelHomeComponent implements OnInit {
     constructor(
         private router: Router,
         public navigationService: NavigationService,
         public global: GlobalContext,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
     ) {}
 
     ngOnInit(): void {

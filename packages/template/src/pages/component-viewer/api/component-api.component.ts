@@ -13,6 +13,7 @@ import { TocService } from '../../../services/toc.service';
     host: {
         class: 'dg-component-api',
     },
+    standalone: false,
 })
 export class ComponentApiComponent implements OnInit {
     apiDeclarations!: ApiDeclaration[];

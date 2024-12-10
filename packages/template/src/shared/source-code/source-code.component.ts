@@ -6,8 +6,9 @@ import { ContentRenderer } from '../content-renderer';
     selector: 'dg-source-code, [dgSourceCode]',
     templateUrl: './source-code.component.html',
     host: {
-        class: 'dg-source-code'
-    }
+        class: 'dg-source-code',
+    },
+    standalone: false,
 })
 export class SourceCodeComponent extends ContentRenderer implements OnInit {
     @ViewChild('codeContent', { static: true, read: ElementRef }) codeContent!: ElementRef;

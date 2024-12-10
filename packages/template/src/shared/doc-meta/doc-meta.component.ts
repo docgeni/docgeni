@@ -13,8 +13,9 @@ interface GitHubCommieInfo {
     selector: 'dg-doc-meta',
     templateUrl: './doc-meta.component.html',
     host: {
-        class: 'dg-doc-meta'
-    }
+        class: 'dg-doc-meta',
+    },
+    standalone: false,
 })
 export class DocMetaComponent implements OnChanges {
     @HostBinding(`class.dg-d-none`) hideDocMeta = true;
@@ -22,17 +23,20 @@ export class DocMetaComponent implements OnChanges {
     lastUpdatedTime: Date | undefined;
     contributors: string[] | undefined;
 
-    constructor(private http: HttpClient, private globalContext: GlobalContext) {}
+    constructor(
+        private http: HttpClient,
+        private globalContext: GlobalContext,
+    ) {}
 
     ngOnChanges(): void {
         if (this.docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
             this.http
                 .get<GitHubCommieInfo[]>(`https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`, {
-                    params: { path: this.docItem.originPath }
+                    params: { path: this.docItem.originPath },
                 })
-                .pipe(filter(result => !!result.length))
+                .pipe(filter((result) => !!result.length))
                 .subscribe((result: GitHubCommieInfo[]) => {
-                    this.contributors = Array.from(new Set(result.map(item => item.author.login)));
+                    this.contributors = Array.from(new Set(result.map((item) => item.author.login)));
                     this.lastUpdatedTime = new Date(result[0].commit.author.date);
                     this.hideDocMeta = false;
                 });

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'dgIsLite' })
+@Pipe({ name: 'dgIsLite', standalone: false })
 export class IsModeLitePipe implements PipeTransform {
     constructor() {}
 
@@ -9,7 +9,7 @@ export class IsModeLitePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'dgIsFull' })
+@Pipe({ name: 'dgIsFull', standalone: false })
 export class IsModeFullPipe implements PipeTransform {
     constructor() {}
 

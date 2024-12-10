@@ -6,8 +6,9 @@ import { GlobalContext } from '../../services/global-context';
     selector: 'dg-doc-pages-links',
     templateUrl: './doc-pages-links.component.html',
     host: {
-        class: 'dg-pages-link'
-    }
+        class: 'dg-pages-link',
+    },
+    standalone: false,
 })
 export class DocPagesLinksComponent implements OnInit {
     @Input() docPages!: {

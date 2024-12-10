@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { HeroAction } from '../../interfaces';
 
-@Pipe({ name: 'dgHeroActionClass' })
+@Pipe({ name: 'dgHeroActionClass', standalone: false })
 export class HeroActionClassPipe implements PipeTransform {
     constructor() {}
 

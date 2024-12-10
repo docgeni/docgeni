@@ -5,6 +5,7 @@ import { ExampleLoader } from '../../services/example-loader';
 @Component({
     selector: 'dg-example-renderer, [dgExampleRenderer]',
     templateUrl: './example-renderer.component.html',
+    standalone: false,
 })
 export class ExampleRendererComponent implements OnInit {
     /** Component type for the current example. */

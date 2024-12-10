@@ -5,6 +5,7 @@ import { GlobalContext } from '../../services/public-api';
 @Component({
     selector: 'dg-root-actual',
     templateUrl: './root.component.html',
+    standalone: false,
 })
 export class ActualRootComponent {
     @HostBinding(`class.dg-main`) isMain = true;
@@ -26,6 +27,7 @@ export class ActualRootComponent {
 @Component({
     selector: 'dg-root',
     template: '<router-outlet></router-outlet>',
+    standalone: false,
 })
 export class RootComponent {
     constructor(

@@ -81,7 +81,7 @@ describe('ng-parser', () => {
                 styleUrls: null,
                 styles: null,
                 exportAs: null,
-                standalone: false,
+                standalone: true,
                 properties: [
                     {
                         kind: 'Input',
@@ -1057,12 +1057,12 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                 })
                 export class UpperCasePipe implements PipeTransform {
                     constructor() {}
-                
+
                     /**
                      * @param {string} value 输入值
                      * @returns  {boolean}
                      */
-                    transform(value: string): boolean {                   
+                    transform(value: string): boolean {
                         return true;
                     }
                 }`,
@@ -1104,7 +1104,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
             })
             export class LowerCasePipe implements PipeTransform {
                 constructor() {}
-            
+
                 /**
                  * @description transform 重载方法1
                  * @param input1 这是一个参数

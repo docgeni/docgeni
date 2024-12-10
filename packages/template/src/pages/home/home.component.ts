@@ -8,6 +8,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
     selector: 'dg-home',
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class HomeComponent implements OnInit {
     @HostBinding(`class.dg-home`) isHome = true;

@@ -4,7 +4,8 @@ import { SearchPageInfo, SearchService } from '../../services/search.service';
 
 @Component({
     selector: 'dg-search',
-    templateUrl: './search.component.html'
+    templateUrl: './search.component.html',
+    standalone: false,
 })
 export class SearchComponent implements OnInit, AfterViewInit {
     public searchText!: string;
@@ -13,7 +14,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
     public hasSearchText!: boolean;
 
-    constructor(public searchService: SearchService, private router: Router) {}
+    constructor(
+        public searchService: SearchService,
+        private router: Router,
+    ) {}
 
     ngOnInit(): void {}
 

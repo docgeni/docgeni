@@ -4,12 +4,16 @@ import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'dg-example-isolated-viewer',
-    templateUrl: './example.component.html'
+    templateUrl: './example.component.html',
+    standalone: false,
 })
 export class ExampleIsolatedViewerComponent implements OnInit {
     public name!: string | null;
 
-    constructor(private route: ActivatedRoute, private pageTitle: PageTitleService) {}
+    constructor(
+        private route: ActivatedRoute,
+        private pageTitle: PageTitleService,
+    ) {}
 
     ngOnInit(): void {
         this.name = this.route.snapshot.paramMap.get('name');

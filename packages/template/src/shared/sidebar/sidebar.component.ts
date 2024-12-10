@@ -6,7 +6,8 @@ import { GlobalContext } from '../../services/global-context';
 
 @Component({
     selector: 'dg-sidebar',
-    templateUrl: './sidebar.component.html'
+    templateUrl: './sidebar.component.html',
+    standalone: false,
 })
 export class SidebarComponent implements OnInit, OnChanges {
     @HostBinding(`class.dg-sidebar`) isSidebar = true;
@@ -17,10 +18,14 @@ export class SidebarComponent implements OnInit, OnChanges {
 
     readonly initDisplay = true;
 
-    constructor(public global: GlobalContext, private router: Router, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        public global: GlobalContext,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+    ) {}
 
     ngOnInit(): void {
-        this.router.events.pipe(filter(item => item instanceof NavigationEnd)).subscribe(() => {
+        this.router.events.pipe(filter((item) => item instanceof NavigationEnd)).subscribe(() => {
             this.updateGroupsCollapseStates();
         });
     }
@@ -54,7 +59,7 @@ export class SidebarComponent implements OnInit, OnChanges {
                 break;
             }
         }
-        ancestors.forEach(menu => {
+        ancestors.forEach((menu) => {
             this.setMenuOpen(menu, true);
         });
     }

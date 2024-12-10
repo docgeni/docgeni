@@ -4,7 +4,8 @@ import { ChannelItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-navbar',
-    templateUrl: './navbar.component.html'
+    templateUrl: './navbar.component.html',
+    standalone: false,
 })
 export class NavbarComponent implements OnInit {
     @HostBinding('class.dg-navbar') isNavbar = true;
@@ -13,7 +14,11 @@ export class NavbarComponent implements OnInit {
 
     channels!: ChannelItem[];
 
-    constructor(public global: GlobalContext, public navigationService: NavigationService, private elementRef: ElementRef<HTMLElement>) {}
+    constructor(
+        public global: GlobalContext,
+        public navigationService: NavigationService,
+        private elementRef: ElementRef<HTMLElement>,
+    ) {}
 
     ngOnInit(): void {
         this.channels = this.navigationService.getChannels();
