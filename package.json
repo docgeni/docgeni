@@ -91,7 +91,7 @@
     "@commitlint/config-angular": "^19.3.0",
     "@eslint/compat": "^1.1.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@ngneat/spectator": "^19.0.0",
+    "@ngneat/spectator": "^19.1.2",
     "@types/chai": "^4.2.11",
     "@types/jasmine": "~5.1.4",
     "@types/jasminewd2": "~2.0.13",
