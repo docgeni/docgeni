@@ -1,13 +1,15 @@
+@use 'variables';
+
 .algolia-autocomplete {
     .ds-dropdown-menu {
         border: none;
-        box-shadow: 0 0 24px rgba($dg-black, 0.18);
+        box-shadow: 0 0 24px rgba(variables.$dg-black, 0.18);
 
         [class^='ds-dataset-'] {
-            background: $dg-bg-color;
+            background: variables.$dg-bg-color;
             border: none;
             .algolia-docsearch-suggestion {
-                background: $dg-bg-color;
+                background: variables.$dg-bg-color;
             }
         }
 
@@ -17,11 +19,11 @@
     }
 
     .algolia-docsearch-suggestion--title {
-        color: $dg-text-color;
+        color: variables.$dg-text-color;
     }
 
     .algolia-docsearch-suggestion--highlight {
-        color: $dg-primary;
+        color: variables.$dg-primary;
     }
     .page-wrapper-rtl & {
         direction: rtl !important;
@@ -31,6 +33,6 @@
         .ds-suggestion.ds-cursor
         .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
         .algolia-docsearch-suggestion--content {
-        background-color: rgba($dg-primary, 0.05);
+        background-color: rgba(variables.$dg-primary, 0.05);
     }
 }

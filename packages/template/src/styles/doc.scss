@@ -1,6 +1,9 @@
-$dg-heading-color: $dg-text-color;
-$dg-table-border-color: $dg-gray-200;
-$dg-table-header-bg-color: $dg-gray-80;
+@use 'mixins/breakpoints';
+@use 'variables';
+
+$dg-heading-color: variables.$dg-text-color;
+$dg-table-border-color: variables.$dg-gray-200;
+$dg-table-header-bg-color: variables.$dg-gray-80;
 
 $dg-directive-color: #d81b60;
 $dg-component-color: #348fe4;
@@ -26,26 +29,26 @@ $dg-pipe-color: #546e7a;
             }
 
             &:hover {
-                background: $dg-primary;
-                color: $dg-white;
+                background: variables.$dg-primary;
+                color: variables.$dg-white;
             }
         }
 
-        @include dg-media-breakpoint-down('md') {
+        @include breakpoints.dg-media-breakpoint-down('md') {
             .sidebar-toggler {
                 display: block;
             }
         }
 
         .title {
-            font-size: $dg-font-size-xlg;
+            font-size: variables.$dg-font-size-xlg;
             font-weight: 700;
         }
 
         .subtitle {
             margin-left: 10px;
-            font-size: $dg-font-size-xlg;
-            color: $dg-gray-700;
+            font-size: variables.$dg-font-size-xlg;
+            color: variables.$dg-gray-700;
             font-weight: normal;
         }
     }
@@ -100,13 +103,13 @@ $dg-pipe-color: #546e7a;
 
                 .name {
                     margin: 0;
-                    font-size: $dg-font-size-lg;
+                    font-size: variables.$dg-font-size-lg;
                     font-weight: 500;
                 }
 
                 .type-label {
                     background-color: rgba($color: $dg-component-color, $alpha: 0.8);
-                    font-size: $dg-font-size-sm;
+                    font-size: variables.$dg-font-size-sm;
                     font-weight: 400;
                     text-transform: uppercase;
                     margin-left: 8px;
@@ -132,9 +135,9 @@ $dg-pipe-color: #546e7a;
             }
 
             .dg-api-description {
-                color: $dg-gray-700;
+                color: variables.$dg-gray-700;
                 margin: 6px 0px 6px 0px;
-                font-size: $dg-font-size-base;
+                font-size: variables.$dg-font-size-base;
             }
 
             .dg-section {
@@ -224,14 +227,14 @@ $dg-pipe-color: #546e7a;
                 }
 
                 .dg-api-method-parameter-type {
-                    background-color: $dg-code-bg-color;
-                    color: $dg-text-color;
+                    background-color: variables.$dg-code-bg-color;
+                    color: variables.$dg-text-color;
                     border-radius: 4px;
                     padding: 2px 4px;
                 }
 
                 .dg-api-method-parameter-head {
-                    color: $dg-text-color;
+                    color: variables.$dg-text-color;
                 }
 
                 .dg-api-method-parameter {
@@ -250,7 +253,7 @@ $dg-pipe-color: #546e7a;
         }
     }
 
-    @include dg-media-breakpoint-down('md') {
+    @include breakpoints.dg-media-breakpoint-down('md') {
         .dg-doc-viewer-inner-content {
             width: 100%;
             max-width: 100%;
@@ -281,13 +284,13 @@ $dg-pipe-color: #546e7a;
         margin-top: 0 !important;
     }
     @include content-child-selector(h1) {
-        font-size: $dg-font-size-xlg;
+        font-size: variables.$dg-font-size-xlg;
         margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
 
     @include content-child-selector(h2) {
-        font-size: $dg-font-size-lg;
+        font-size: variables.$dg-font-size-lg;
         margin: 30px 0px 16px 0px;
         color: $dg-heading-color;
     }
@@ -319,21 +322,21 @@ $dg-pipe-color: #546e7a;
         display: inline-block;
         padding: 0px 4px;
         margin: 0px 2px;
-        background: $dg-code-bg-color;
-        border-radius: $dg-border-radius;
-        color: $dg-text-color;
+        background: variables.$dg-code-bg-color;
+        border-radius: variables.$dg-border-radius;
+        color: variables.$dg-text-color;
     }
 
     @include content-child-selector(pre) {
         padding: 1em;
-        color: $dg-gray-700;
-        background: $dg-gray-100;
-        border-radius: $dg-border-radius;
+        color: variables.$dg-gray-700;
+        background: variables.$dg-gray-100;
+        border-radius: variables.$dg-border-radius;
         overflow: auto;
         code {
             padding: 0px;
             background: transparent;
-            font-size: $dg-font-size-base;
+            font-size: variables.$dg-font-size-base;
         }
     }
 
@@ -341,7 +344,7 @@ $dg-pipe-color: #546e7a;
         line-height: 26px;
         margin-top: 0;
         margin-bottom: 8px;
-        font-size: $dg-font-size-md;
+        font-size: variables.$dg-font-size-md;
 
         code {
             line-height: 24px;
@@ -354,8 +357,8 @@ $dg-pipe-color: #546e7a;
 
     @include content-child-selector(blockquote) {
         margin-left: 0px;
-        border-left: 2px solid $dg-gray-300;
-        color: $dg-gray-600;
+        border-left: 2px solid variables.$dg-gray-300;
+        color: variables.$dg-gray-600;
         font-size: 14px;
         margin-bottom: 5px;
         margin-top: 5px;
@@ -371,7 +374,7 @@ $dg-pipe-color: #546e7a;
         word-break: keep-all;
         width: 100%;
         max-width: 100%;
-        font-size: $dg-font-size-base;
+        font-size: variables.$dg-font-size-base;
         th,
         td {
             border: 1px solid $dg-table-border-color;
@@ -398,7 +401,7 @@ $dg-pipe-color: #546e7a;
     flex: 0 0 auto;
     align-items: center;
     padding: 25px 0px;
-    border-top: 1px solid $dg-gray-200;
+    border-top: 1px solid variables.$dg-gray-200;
 
     .dg-contributor-avatar-list {
         display: flex;
@@ -406,7 +409,7 @@ $dg-pipe-color: #546e7a;
         margin-right: 8px;
     }
     .dg-contributor-avatar {
-        box-shadow: 0 0 0 2px $dg-white;
+        box-shadow: 0 0 0 2px variables.$dg-white;
         width: 30px;
         height: 30px;
         border-radius: 30px;
@@ -431,11 +434,11 @@ $dg-pipe-color: #546e7a;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $dg-gray-500;
-        background-color: $dg-gray-100;
+        color: variables.$dg-gray-500;
+        background-color: variables.$dg-gray-100;
     }
     .dg-contribution-last-time {
-        color: $dg-gray-500;
+        color: variables.$dg-gray-500;
     }
 }
 
@@ -448,22 +451,22 @@ $dg-pipe-color: #546e7a;
         a {
             padding: 16px;
             border-radius: 3px;
-            color: $dg-text-color;
-            border: 1px solid $dg-gray-200;
+            color: variables.$dg-text-color;
+            border: 1px solid variables.$dg-gray-200;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
             width: 100%;
             display: flex;
             &:hover {
                 text-decoration: none;
-                color: $dg-primary;
-                border-color: $dg-primary;
+                color: variables.$dg-primary;
+                border-color: variables.$dg-primary;
                 cursor: pointer;
                 .dg-page-link-icon {
-                    color: $dg-primary;
+                    color: variables.$dg-primary;
                 }
             }
             .dg-page-link-icon {
-                color: $dg-gray-500;
+                color: variables.$dg-gray-500;
                 flex: 1 1 0;
                 align-self: center;
                 dg-icon {
@@ -495,7 +498,7 @@ $dg-pipe-color: #546e7a;
 
         .dg-page-link-label {
             font-size: 12px;
-            color: $dg-gray-600;
+            color: variables.$dg-gray-600;
             font-weight: 400;
             line-height: 1.625;
         }

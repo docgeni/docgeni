@@ -1,3 +1,4 @@
+@use 'sass:map';
 $dg-primary: #6698ff !default;
 $dg-primary-light: #246eff;
 $dg-success: #73d897 !default;
@@ -33,7 +34,7 @@ $dg-border-color: $dg-gray-200 !default;
 $dg-border-radius: 4px !default;
 
 $dg-theme-colors: () !default;
-$dg-theme-colors: map-merge(
+$dg-theme-colors: map.merge(
     (
         'primary': $dg-primary,
         'primary-light': $dg-primary-light,
@@ -58,7 +59,7 @@ $dg-grid-breakpoints: (
 $dg-spacer: 1rem !default;
 $dg-spacers: () !default;
 // // stylelint-disable-next-line scss/dollar-variable-default
-$dg-spacers: map-merge(
+$dg-spacers: map.merge(
     (
         0: 0,
         1: (

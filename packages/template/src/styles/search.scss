@@ -1,7 +1,9 @@
+@use 'variables';
+
 .dg-search-container {
     position: relative;
-    line-height: $dg-font-size-base;
-    font-size: $dg-font-size-base;
+    line-height: variables.$dg-font-size-base;
+    font-size: variables.$dg-font-size-base;
 
     .search-icon {
         position: absolute;
@@ -9,18 +11,18 @@
         left: 10px;
         transform: translateY(-50%);
         z-index: 1;
-        color: $dg-gray-500;
+        color: variables.$dg-gray-500;
         pointer-events: none;
-        font-size: $dg-font-size-base;
+        font-size: variables.$dg-font-size-base;
     }
 
     .search {
         padding: 0.532rem 10px 0.532rem 30px;
         width: 100%;
         outline: none;
-        color: $dg-text-color;
-        background-color: $dg-bg-color;
-        border: 1px solid $dg-gray-200;
+        color: variables.$dg-text-color;
+        background-color: variables.$dg-bg-color;
+        border: 1px solid variables.$dg-gray-200;
         border-radius: 18px;
         -webkit-appearance: none;
         box-sizing: border-box;
@@ -38,9 +40,9 @@
         max-height: 230px;
         padding: 6px 0;
         z-index: 10;
-        background-color: $dg-bg-color;
+        background-color: variables.$dg-bg-color;
         border-radius: 4px;
-        border: 1px solid $dg-gray-200;
+        border: 1px solid variables.$dg-gray-200;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
         overflow-y: auto;
@@ -63,10 +65,10 @@
         .search-result {
             display: block;
             padding: 6px 20px;
-            color: $dg-gray-700;
-            font-size: $dg-font-size-base;
+            color: variables.$dg-gray-700;
+            font-size: variables.$dg-font-size-base;
             text-decoration: none;
-            line-height: $dg-line-height;
+            line-height: variables.$dg-line-height;
             transition: background-color 0.2s;
             white-space: nowrap;
             overflow: hidden;
@@ -74,11 +76,11 @@
             cursor: pointer;
 
             &:hover {
-                background-color: $dg-gray-80;
-                color: $dg-primary;
+                background-color: variables.$dg-gray-80;
+                color: variables.$dg-primary;
             }
             .dg-word-highlight {
-                background-color: rgba($dg-warning, 0.4);
+                background-color: rgba(variables.$dg-warning, 0.4);
             }
         }
     }

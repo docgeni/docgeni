@@ -1,3 +1,5 @@
+@use 'variables';
+
 $dg-alert-bg-alpha: 0.05;
 
 .dg-alert {
@@ -8,7 +10,7 @@ $dg-alert-bg-alpha: 0.05;
     margin: 10px 0px;
     padding: 10px 20px;
     border-left: 0px;
-    background: $dg-gray-80;
+    background: variables.$dg-gray-80;
     border-radius: 1px;
 
     &::after {
@@ -23,7 +25,7 @@ $dg-alert-bg-alpha: 0.05;
     }
 }
 
-@each $name, $color in $dg-theme-colors {
+@each $name, $color in variables.$dg-theme-colors {
     .dg-alert-#{$name} {
         background-color: rgba($color: $color, $alpha: $dg-alert-bg-alpha);
         &::after {

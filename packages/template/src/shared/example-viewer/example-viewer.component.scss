@@ -1,3 +1,5 @@
+@use '../../styles/variables';
+
 @mixin top-show-title-variant() {
     position: relative;
     margin-top: 6px;
@@ -8,9 +10,9 @@
         left: 1em;
         margin-left: -4px;
         padding: 0 4px;
-        color: $dg-gray-700;
+        color: variables.$dg-gray-700;
         font-weight: 500;
-        background-color: $dg-bg-color;
+        background-color: variables.$dg-bg-color;
         transform: translateY(-50%);
     }
 }
@@ -21,7 +23,7 @@
 
     &:target {
         .dg-example-viewer-wrapper {
-            border-color: $dg-primary;
+            border-color: variables.$dg-primary;
         }
     }
     &.dg-example-viewer-inline {
@@ -41,18 +43,18 @@
     }
 
     .dg-example-viewer-wrapper {
-        border: 1px solid $dg-border-color;
+        border: 1px solid variables.$dg-border-color;
         border-radius: 2px;
     }
 
     .dg-example-viewer-header {
-        border-bottom: 1px solid $dg-border-color;
+        border-bottom: 1px solid variables.$dg-border-color;
         padding: 5px 20px;
-        background: $dg-gray-100;
-        color: $dg-gray-700;
+        background: variables.$dg-gray-100;
+        color: variables.$dg-gray-700;
 
         .title {
-            font-size: $dg-font-size-lg;
+            font-size: variables.$dg-font-size-lg;
             font-weight: bold;
         }
     }
@@ -66,30 +68,30 @@
     }
 
     .dg-example-viewer-intro {
-        border-top: 1px solid $dg-border-color;
+        border-top: 1px solid variables.$dg-border-color;
         padding: 20px;
         @include top-show-title-variant();
     }
 
     .dg-example-viewer-actions {
-        border-top: 1px dashed $dg-border-color;
+        border-top: 1px dashed variables.$dg-border-color;
         padding: 10px;
         text-align: center;
         clear: both;
         .action-item {
-            color: $dg-gray-500;
+            color: variables.$dg-gray-500;
             padding: 5px;
             margin-right: 10px;
             cursor: pointer;
             &:hover {
-                color: $dg-primary;
+                color: variables.$dg-primary;
                 font-weight: 500;
             }
         }
     }
 
     .dg-example-viewer-sources {
-        border-top: 1px solid $dg-border-color;
+        border-top: 1px solid variables.$dg-border-color;
         display: block;
         flex-direction: column;
         transition: opacity 1s;

@@ -1,3 +1,7 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../variables';
+
 // Breakpoint viewport sizes and media queries.
 //
 // Breakpoints are defined as a map of (name: minimum width), order from small to large:
@@ -14,17 +18,17 @@
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
 //    md
-@function dg-breakpoint-next($name, $breakpoints: $dg-grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
-    $n: index($breakpoint-names, $name);
-    @return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+@function dg-breakpoint-next($name, $breakpoints: variables.$dg-grid-breakpoints, $breakpoint-names: map.keys($breakpoints)) {
+    $n: list.index($breakpoint-names, $name);
+    @return if($n != null and $n < list.length($breakpoint-names), list.nth($breakpoint-names, $n + 1), null);
 }
 
 // Minimum breakpoint width. Null for the smallest (first) breakpoint.
 //
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
-@function dg-breakpoint-min($name, $breakpoints: $dg-grid-breakpoints) {
-    $min: map-get($breakpoints, $name);
+@function dg-breakpoint-min($name, $breakpoints: variables.$dg-grid-breakpoints) {
+    $min: map.get($breakpoints, $name);
     @return if($min != 0, $min, null);
 }
 
@@ -37,7 +41,7 @@
 //
 //    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    767.98px
-@function dg-breakpoint-max($name, $breakpoints: $dg-grid-breakpoints) {
+@function dg-breakpoint-max($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $next: dg-breakpoint-next($name, $breakpoints);
     @return if($next, dg-breakpoint-min($next, $breakpoints) - 0.02, null);
 }
@@ -49,13 +53,13 @@
 //    ""  (Returns a blank string)
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
-@function dg-breakpoint-infix($name, $breakpoints: $dg-grid-breakpoints) {
+@function dg-breakpoint-infix($name, $breakpoints: variables.$dg-grid-breakpoints) {
     @return if(dg-breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
-@mixin dg-media-breakpoint-up($name, $breakpoints: $dg-grid-breakpoints) {
+@mixin dg-media-breakpoint-up($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $min: dg-breakpoint-min($name, $breakpoints);
     @if $min {
         @media (min-width: $min) {
@@ -68,7 +72,7 @@
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
-@mixin dg-media-breakpoint-down($name, $breakpoints: $dg-grid-breakpoints) {
+@mixin dg-media-breakpoint-down($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $max: dg-breakpoint-max($name, $breakpoints);
     @if $max {
         @media (max-width: $max) {
@@ -81,7 +85,7 @@
 
 // Media that spans multiple breakpoint widths.
 // Makes the @content apply between the min and max breakpoints
-@mixin dg-media-breakpoint-between($lower, $upper, $breakpoints: $dg-grid-breakpoints) {
+@mixin dg-media-breakpoint-between($lower, $upper, $breakpoints: variables.$dg-grid-breakpoints) {
     $min: dg-breakpoint-min($lower, $breakpoints);
     $max: dg-breakpoint-max($upper, $breakpoints);
 
@@ -103,7 +107,7 @@
 // Media between the breakpoint's minimum and maximum widths.
 // No minimum for the smallest breakpoint, and no maximum for the largest one.
 // Makes the @content apply only to the given breakpoint, not viewports any wider or narrower.
-@mixin dg-media-breakpoint-only($name, $breakpoints: $dg-grid-breakpoints) {
+@mixin dg-media-breakpoint-only($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $min: breakpoint-min($name, $breakpoints);
     $max: breakpoint-max($name, $breakpoints);
 

@@ -1,7 +1,9 @@
+@use 'variables';
+
 .dg-tab-links {
     position: relative;
     display: flex;
-    border-bottom: 1px solid $dg-border-color;
+    border-bottom: 1px solid variables.$dg-border-color;
     .dg-tab-link {
         display: inline-flex;
         justify-content: center;
@@ -10,13 +12,13 @@
         padding: 8px 30px;
         margin-right: 20px;
         transform: translateY(1px);
-        color: $dg-gray-700;
+        color: variables.$dg-gray-700;
         border-bottom: 2px solid transparent;
         font-weight: 500;
         &:hover,
         &.active {
-            color: $dg-primary;
-            border-bottom: 2px solid $dg-primary;
+            color: variables.$dg-primary;
+            border-bottom: 2px solid variables.$dg-primary;
             text-decoration: none;
         }
     }

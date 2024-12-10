@@ -1,3 +1,5 @@
+@use 'variables';
+
 html,
 body {
     box-sizing: border-box;
@@ -16,11 +18,11 @@ html {
 }
 
 body {
-    font-family: $dg-font-family;
-    font-size: $dg-font-size-base;
-    color: $dg-text-color;
-    background-color: $dg-bg-color;
-    line-height: $dg-line-height;
+    font-family: variables.$dg-font-family;
+    font-size: variables.$dg-font-size-base;
+    color: variables.$dg-text-color;
+    background-color: variables.$dg-bg-color;
+    line-height: variables.$dg-line-height;
 }
 
 h1,
@@ -39,8 +41,8 @@ p {
 a,
 a:visited,
 a:hover {
-    color: $dg-primary;
-    text-decoration: $dg-link-hover-decoration;
+    color: variables.$dg-primary;
+    text-decoration: variables.$dg-link-hover-decoration;
 }
 
 .dg-hidden {

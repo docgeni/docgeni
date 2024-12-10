@@ -1,32 +1,36 @@
+@use 'sass:map';
+@use 'mixins/label';
+@use 'variables';
+
 .dg-label {
     display: inline-flex;
     align-items: center;
-    color: $dg-white;
+    color: variables.$dg-white;
     padding: 4px 10px;
     border-radius: 4px;
-    font-size: $dg-font-size-base;
+    font-size: variables.$dg-font-size-base;
     margin-bottom: 0px;
-    font-size: $dg-font-size-sm;
+    font-size: variables.$dg-font-size-sm;
     line-height: 1;
 }
 
-$dg-theme-colors: map-merge(
+variables.$dg-theme-colors: map.merge(
     (
-        'default': $dg-gray-200,
-        'light': $dg-gray-700,
+        'default': variables.$dg-gray-200,
+        'light': variables.$dg-gray-700,
     ),
-    $dg-theme-colors
+    variables.$dg-theme-colors
 );
 
-@each $name, $color in $dg-theme-colors {
+@each $name, $color in variables.$dg-theme-colors {
     .dg-label-#{$name} {
         background-color: $color;
     }
 }
 
-@each $name, $color in $dg-theme-colors {
+@each $name, $color in variables.$dg-theme-colors {
     .dg-label-outline-#{$name} {
-        @include label-outline($color);
+        @include label.label-outline($color);
     }
 }
 
@@ -34,10 +38,10 @@ $dg-theme-colors: map-merge(
 .dg-label-light,
 .dg-label-outline-default,
 .dg-label-outline-light {
-    color: $dg-gray-700;
+    color: variables.$dg-gray-700;
 }
 
 .dg-label-sm {
     padding: 2px 8px;
-    font-size: $dg-font-size-sm;
+    font-size: variables.$dg-font-size-sm;
 }
