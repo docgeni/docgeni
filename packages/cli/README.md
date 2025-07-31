@@ -12,4 +12,4 @@ yarn add @docgeni/cli -D
 
 ## Getting Started
 
-https://docgeni.org/guides/intro/getting-started
+http://docgeni.com/guides/intro/getting-started
