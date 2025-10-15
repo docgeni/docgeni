@@ -6,6 +6,7 @@ export function normalizeLibConfig(lib: DocgeniLibrary): Library {
     return {
         name: lib.name,
         rootDir: lib.rootDir || '',
+        tsConfig: lib.tsConfig || 'tsconfig.lib.json',
         abbrName: lib.abbrName || lib.name,
         include: lib.include || [],
         exclude: lib.exclude || [],

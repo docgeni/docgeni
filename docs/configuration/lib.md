@@ -49,6 +49,14 @@ toc: menu
 
 `Docgeni` 默认会把 `rootDir` 下所有的文件夹当作组件进行扫描，如果某些文件夹不是组件，可以手动设置排除，支持 `glob` 格式。
 
+## tsConfig
+
+- 类型：`string`
+- 默认：`tsconfig.lib.json`
+
+tsconfig 文件名，默认是`tsconfig.lib.json`，NgDoc 生成 API 文档时需要根据`rootDir`和`tsConfig`组合`tsConfigPath`
+
+
 ## labels <label>1.1.0+</label>
 - 类型：`{[id: string]: { text: string; color: string }} | Array<LabelDef>`
 - 默认：`[{ id: 'new', ... }, { id: 'deprecated', ... }, { id: 'experimental', ... }]`

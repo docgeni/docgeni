@@ -5,6 +5,10 @@ export interface DocgeniLibrary {
     name: string;
     abbrName?: string;
     rootDir: string;
+    /**
+     * default is `tsconfig.lib.json`
+     */
+    tsConfig?: string;
     apiMode?: 'compatible' | 'manual' | 'automatic';
     categories?: {
         id?: string;

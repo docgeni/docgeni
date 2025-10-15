@@ -49,6 +49,14 @@ Such as configuration: `include:'common'`, `Docgeni` will find all first-level f
 
 `Docgeni` will scan all folders under rootDir as components by default. If some folders are not components, you can manually set exclusions and support `glob` format.
 
+## tsConfig
+
+- type: `string`
+- Default: `tsconfig.lib.json`
+
+tsconfig file name，when generating API documentation with NgDoc, it is necessary to combine `rootDir` and `tsConfig` with `tsConfigPath`.
+
+
 ## labels <label>1.1.0+</label>
 - Type：`{[id: string]: { text: string; color: string }} | Array<LabelDef>`
 - Default：`[{ id: 'new', ... }, { id: 'deprecated', ... }, { id: 'experimental', ... }]`

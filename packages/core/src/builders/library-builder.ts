@@ -63,7 +63,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
 
     private async initializeNgDocParser() {
         if (this.lib.apiMode !== 'manual') {
-            const tsConfigPath = this.docgeni.paths.getAbsPath(toolkit.path.resolve(this.lib.rootDir, 'tsconfig.lib.json'));
+            const tsConfigPath = this.docgeni.paths.getAbsPath(toolkit.path.resolve(this.lib.rootDir, this.lib.tsConfig));
             debug(`[${this.lib.name}] apiMode is ${this.lib.apiMode}, tsConfigPath is ${tsConfigPath}`, NAMESPACE);
             if (await this.docgeni.host.exists(tsConfigPath)) {
                 const absRootDir = this.docgeni.paths.getAbsPath(this.lib.rootDir);
@@ -91,6 +91,7 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
                 this.ngDocParser = this.lib.ngDocParser = NgDocParser.create({ ngParserHost: parserHost });
             } else {
                 debug(`[${this.lib.name}] tsConfigPath is not exists`, NAMESPACE);
+                throw new Error(`tsConfigPath [${tsConfigPath}] is not exists`);
             }
         }
     }

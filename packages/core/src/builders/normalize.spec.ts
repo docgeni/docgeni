@@ -10,6 +10,7 @@ describe('normalize', () => {
             expect(result).toEqual({
                 name: 'tethys',
                 rootDir: './packages/alib',
+                tsConfig: 'tsconfig.lib.json',
                 abbrName: 'tethys',
                 include: [],
                 exclude: [],
@@ -26,6 +27,7 @@ describe('normalize', () => {
             const input: DocgeniLibrary = {
                 name: toolkit.strings.generateRandomId(),
                 rootDir: toolkit.strings.generateRandomId(),
+                tsConfig: toolkit.strings.generateRandomId(),
                 abbrName: toolkit.strings.generateRandomId(),
                 include: toolkit.strings.generateRandomId(),
                 exclude: toolkit.strings.generateRandomId(),

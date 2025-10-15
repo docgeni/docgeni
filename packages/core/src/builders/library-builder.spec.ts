@@ -127,6 +127,7 @@ describe('#library-builder', () => {
         fixture = await loadFixture('library-builder-alib');
         context = createTestDocgeniContext({
             initialFiles: {
+                [`${libDirPath}/tsconfig.lib.json`]: fixture.src['tsconfig.lib.json'],
                 [`${libDirPath}/button/doc/zh-cn.md`]: fixture.src['button/doc/zh-cn.md'],
                 [`${libDirPath}/button/examples/module.ts`]: fixture.src['button/examples/module.ts'],
                 [`${libDirPath}/button/examples/basic/basic.component.ts`]: fixture.src['button/examples/basic/basic.component.ts'],
