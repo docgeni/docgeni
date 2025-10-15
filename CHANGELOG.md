@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
+
+
+### Features
+
+* add tsConfig for lib ([#588](https://github.com/docgeni/docgeni/issues/588)) ([6f64de4](https://github.com/docgeni/docgeni/commit/6f64de4d5bd91e2ec781c87a0878c31c1342bf58))
+
+
+
+
+
 # [2.5.0-next.0](https://github.com/docgeni/docgeni/compare/v2.4.0...v2.5.0-next.0) (2024-12-10)
 
 

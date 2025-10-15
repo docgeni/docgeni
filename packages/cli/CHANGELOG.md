@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
+
+**Note:** Version bump only for package @docgeni/cli
+
+
+
+
+
 # [2.5.0-next.0](https://github.com/docgeni/docgeni/compare/v2.4.0...v2.5.0-next.0) (2024-12-10)
 
 **Note:** Version bump only for package @docgeni/cli
