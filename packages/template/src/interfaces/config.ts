@@ -15,7 +15,7 @@ export interface HomeDocMeta {
         title: string;
         description: string;
         banner: string | string[];
-        actions: HeroAction;
+        actions: HeroAction[];
         backgroundColor?: string;
     };
     features: {

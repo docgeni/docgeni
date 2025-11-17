@@ -1,5 +1,5 @@
-import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { fromEvent, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { GlobalContext } from './global-context';

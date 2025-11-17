@@ -1,37 +1,36 @@
-<div class="dg-example-viewer-wrapper" *ngIf="example">
-  <div class="dg-example-viewer-header">
-    <span class="title">{{ example.title }}</span>
-  </div>
-  <div
-    class="dg-example-viewer-body"
-    [style.background]="example.background"
-    [class.dg-example-viewer-compact]="example.compact"
-    [class]="example.className"
-    dgExampleRenderer
-    [exampleModuleType]="exampleModuleType"
-    [exampleComponentType]="exampleComponentType"
-  ></div>
-  <div class="dg-example-viewer-actions" title="{{ example.title }}">
-    <a class="action-item" title="Copy source code" href="javascript:;" [dgCopy]="sourceCode?.textContent"></a>
-    <a class="action-item" title="Toggle source code" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
-    <a class="action-item" title="Open example in new tab" target="_blank" [href]="'~examples/' + name"
-      ><dg-icon iconName="external"></dg-icon
-    ></a>
-    <a class="action-item" title="Open example in StackBlitz" target="_blank" (click)="openStackBlitz()"
-      ><dg-icon iconName="stackBlitz"></dg-icon
-    ></a>
-  </div>
-  <div class="dg-example-viewer-sources" [ngClass]="{ 'dg-sources-show': showSource }">
-    <div class="dg-tab-links">
-      <a
-        *ngFor="let tab of exampleTabs"
-        [ngClass]="{ active: tab === selectedTab }"
-        class="dg-tab-link"
-        href="javascript:;"
-        (click)="selectExampleTab(tab)"
-        >{{ tab.name }}</a
-      >
+@if (example) {
+  <div class="dg-example-viewer-wrapper">
+    <div class="dg-example-viewer-header">
+      <span class="title">{{ example.title }}</span>
     </div>
-    <pre #sourceCode dgSourceCode [url]="selectedTab?.path"></pre>
+    <div
+      class="dg-example-viewer-body"
+      [style.background]="example.background"
+      [class.dg-example-viewer-compact]="example.compact"
+      [class]="example.className"
+      dgExampleRenderer
+      [exampleModuleType]="exampleModuleType"
+      [exampleComponentType]="exampleComponentType"
+    ></div>
+    <div class="dg-example-viewer-actions" title="{{ example.title }}">
+      <a class="action-item" title="Copy source code" href="javascript:;" [dgCopy]="sourceCode?.textContent"></a>
+      <a class="action-item" title="Toggle source code" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
+      <a class="action-item" title="Open example in new tab" target="_blank" [href]="'~examples/' + name"
+        ><dg-icon iconName="external"></dg-icon
+      ></a>
+      <a class="action-item" title="Open example in StackBlitz" target="_blank" (click)="openStackBlitz()"
+        ><dg-icon iconName="stackBlitz"></dg-icon
+      ></a>
+    </div>
+    <div class="dg-example-viewer-sources" [ngClass]="{ 'dg-sources-show': showSource }">
+      <div class="dg-tab-links">
+        @for (tab of exampleTabs; track tab.name) {
+          <a [ngClass]="{ active: tab === selectedTab }" class="dg-tab-link" href="javascript:;" (click)="selectExampleTab(tab)">{{
+            tab.name
+          }}</a>
+        }
+      </div>
+      <pre #sourceCode dgSourceCode [url]="selectedTab?.path"></pre>
+    </div>
   </div>
-</div>
+}

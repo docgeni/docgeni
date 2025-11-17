@@ -1,2 +1,4 @@
 <dg-content-viewer class="dg-doc-viewer-inner-content" [url]="contentUrl"> </dg-content-viewer>
-<dg-toc #toc *ngIf="componentViewer.docItem.toc === 'content'"></dg-toc>
+@if (componentViewer.docItem.toc === 'content') {
+  <dg-toc #toc></dg-toc>
+}

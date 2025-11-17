@@ -20,6 +20,14 @@ export interface PropertyDeclaration {
     >;
 }
 
+export interface MethodDeclaration {
+    name?: string;
+    params?: Record<string, { type: string; description: string; comment?: string }>;
+    parameters?: { name: string; type: string; description: string; comment?: string }[];
+    returnValue?: { type: string; description: string };
+    description?: string | null;
+}
+
 export interface ApiDeclaration {
     type: 'directive' | 'component' | 'service' | 'interface' | 'class' | 'pipe';
     name: string;
@@ -28,4 +36,5 @@ export interface ApiDeclaration {
     exportAs: string;
     description?: string;
     properties?: Array<PropertyDeclaration>;
+    methods?: Array<MethodDeclaration>;
 }

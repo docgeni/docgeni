@@ -1,99 +1,110 @@
 <!-- <dg-content-viewer [url]="contentUrl"> </dg-content-viewer> -->
-<ng-container *ngIf="apiDeclarations; else loading">
+@if (apiDeclarations) {
   <div class="dg-component-api-content dg-doc-content">
-    <ng-container *ngFor="let apiDeclaration of apiDeclarations">
+    @for (apiDeclaration of apiDeclarations; track apiDeclaration.name) {
       <div class="dg-api-header">
         <h1 class="name" id="{{ apiDeclaration.name }}">{{ apiDeclaration.name }}</h1>
         <label class="type-label dg-label {{ apiDeclaration.type }}">{{ apiDeclaration.type }}</label>
       </div>
-      <div *ngIf="apiDeclaration.description" class="dg-api-description" [innerHTML]="apiDeclaration.description"></div>
-
+      @if (apiDeclaration.description) {
+        <div class="dg-api-description" [innerHTML]="apiDeclaration.description"></div>
+      }
       <!-- <div *ngIf="apiDeclaration.selector">Selector: <code>{{apiDeclaration.selector}}</code></div>
       <div *ngIf="apiDeclaration.exportAs">Exported as: {{apiDeclaration.exportAs}}</div> -->
-
-      <div class="dg-section" *ngIf="apiDeclaration.properties && apiDeclaration.properties.length">
-        <div class="section-title">Properties</div>
-        <table class="dg-api-property-table">
-          <thead>
-            <tr class="dg-api-property-header-row">
-              <th class="dg-api-property-name-th">Name</th>
-              <th class="dg-api-property-type-th">Type</th>
-              <th class="dg-api-property-default-th">Default</th>
-              <th class="dg-api-property-description-th">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="dg-api-property-row" *ngFor="let property of apiDeclaration.properties">
-              <td class="dg-api-property-name-cell">
-                <label>{{ property | dgPropertyName }}</label>
-              </td>
-              <td class="dg-api-property-type-cell">
-                <label>{{ property.type.name || property.type }}</label>
-              </td>
-              <td class="dg-api-property-default-cell">
-                {{ property.default || '-' }}
-              </td>
-              <td class="dg-api-property-description-cell" [innerHTML]="property.description"></td>
-            </tr>
-            <tr *ngIf="!apiDeclaration.properties || apiDeclaration.properties.length === 0">
-              <td colspan="4">None</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="dg-section" *ngIf="apiDeclaration.methods && apiDeclaration.methods.length">
-        <div class="section-title">Methods</div>
-        <table class="dg-api-methods-table">
-          <thead>
-            <tr class="dg-api-property-header-row">
-              <th class="dg-api-property-name-th">Name</th>
-              <th class="dg-api-methods-type-th">Type</th>
-              <th class="dg-api-property-description-th">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="dg-api-property-row" *ngFor="let method of apiDeclaration.methods">
-              <td class="dg-api-property-name-cell">
-                <label>{{ method.name }}</label>
-              </td>
-              <td class="dg-api-property-type-cell">
-                <div class="dg-api-method-parameter">
-                  <div class="dg-api-method-parameter-head">Parameters:</div>
-
-                  <div class="dg-api-method-parameter-list">
-                    <ng-container *ngIf="method.parameters && method.parameters.length; else noParametersTemplate">
-                      <div *ngFor="let item of method.parameters" class="dg-api-method-parameter-item">
-                        <span class="dg-api-method-parameter-type">{{ item.name }}: {{ item.type }}</span>
-                        <span class="dg-api-method-parameter-description" *ngIf="item.description || item.comment">{{
-                          item.description || item.comment
-                        }}</span>
+      @if (apiDeclaration.properties && apiDeclaration.properties.length) {
+        <div class="dg-section">
+          <div class="section-title">Properties</div>
+          <table class="dg-api-property-table">
+            <thead>
+              <tr class="dg-api-property-header-row">
+                <th class="dg-api-property-name-th">Name</th>
+                <th class="dg-api-property-type-th">Type</th>
+                <th class="dg-api-property-default-th">Default</th>
+                <th class="dg-api-property-description-th">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (property of apiDeclaration.properties; track property.name) {
+                <tr class="dg-api-property-row">
+                  <td class="dg-api-property-name-cell">
+                    <label>{{ property | dgPropertyName }}</label>
+                  </td>
+                  <td class="dg-api-property-type-cell">
+                    <label>{{ property.type }}</label>
+                  </td>
+                  <td class="dg-api-property-default-cell">
+                    {{ property.default || '-' }}
+                  </td>
+                  <td class="dg-api-property-description-cell" [innerHTML]="property.description"></td>
+                </tr>
+              }
+              @if (!apiDeclaration.properties || apiDeclaration.properties.length === 0) {
+                <tr>
+                  <td colspan="4">None</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+      @if (apiDeclaration.methods && apiDeclaration.methods.length) {
+        <div class="dg-section">
+          <div class="section-title">Methods</div>
+          <table class="dg-api-methods-table">
+            <thead>
+              <tr class="dg-api-property-header-row">
+                <th class="dg-api-property-name-th">Name</th>
+                <th class="dg-api-methods-type-th">Type</th>
+                <th class="dg-api-property-description-th">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (method of apiDeclaration.methods; track method.name) {
+                <tr class="dg-api-property-row">
+                  <td class="dg-api-property-name-cell">
+                    <label>{{ method.name }}</label>
+                  </td>
+                  <td class="dg-api-property-type-cell">
+                    <div class="dg-api-method-parameter">
+                      <div class="dg-api-method-parameter-head">Parameters:</div>
+                      <div class="dg-api-method-parameter-list">
+                        @if (method.parameters && method.parameters.length) {
+                          @for (item of method.parameters; track item.name) {
+                            <div class="dg-api-method-parameter-item">
+                              <span class="dg-api-method-parameter-type">{{ item.name }}: {{ item.type }}</span>
+                              @if (item.description || item.comment) {
+                                <span class="dg-api-method-parameter-description">{{ item.description || item.comment }}</span>
+                              }
+                            </div>
+                          }
+                        } @else {
+                          <div class="dg-api-no-method-parameter">None</div>
+                        }
                       </div>
-                    </ng-container>
-                  </div>
-                </div>
-
-                <div class="dg-api-method-parameter">
-                  <div class="dg-api-method-parameter-head">Return:</div>
-                  <div class="dg-api-method-return-value">
-                    <span class="dg-api-method-parameter-type">{{ method.returnValue.type }}</span>
-                    <span class="dg-api-method-parameter-description">{{ method.returnValue.description }}</span>
-                  </div>
-                </div>
-              </td>
-              <td class="dg-api-property-description-cell" [innerHTML]="method.description"></td>
-            </tr>
-            <tr *ngIf="!apiDeclaration.methods || apiDeclaration.methods.length === 0">
-              <td colspan="3">None</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </ng-container>
+                    </div>
+                    <div class="dg-api-method-parameter">
+                      <div class="dg-api-method-parameter-head">Return:</div>
+                      <div class="dg-api-method-return-value">
+                        <span class="dg-api-method-parameter-type">{{ method.returnValue.type }}</span>
+                        <span class="dg-api-method-parameter-description">{{ method.returnValue.description }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="dg-api-property-description-cell" [innerHTML]="method.description"></td>
+                </tr>
+              }
+              @if (!apiDeclaration.methods || apiDeclaration.methods.length === 0) {
+                <tr>
+                  <td colspan="3">None</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
   </div>
   <dg-toc #toc class="dg-component-api-toc"></dg-toc>
-</ng-container>
-<ng-template #noParametersTemplate>
-  <div class="dg-api-no-method-parameter">None</div>
-</ng-template>
-
-<ng-template #loading> <div class="dg-doc-content">Loading...</div></ng-template>
+} @else {
+  <div class="dg-doc-content">Loading...</div>
+}
