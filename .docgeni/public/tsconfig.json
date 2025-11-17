@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "importHelpers": true,
     "target": "ES2022",
     "useDefineForClassFields": false,

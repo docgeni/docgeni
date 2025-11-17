@@ -1,5 +1,5 @@
 import { CoreSchemaRegistry } from '@angular-devkit/core/src/json/schema/registry';
-import { parseJsonSchemaToOptions } from '@angular/cli/utilities/json-schema';
+import { parseJsonSchemaToOptions } from '@angular/cli/src/command-builder/utilities/json-schema';
 import * as path from 'path';
 import * as fs from 'fs';
 export default async function main() {
@@ -7,11 +7,11 @@ export default async function main() {
     const list = [
         {
             generatePath: 'packages/core/src/angular/ng-build-options.json',
-            filePath: 'node_modules/@angular-devkit/build-angular/src/browser/schema.json',
+            filePath: 'node_modules/@angular/build/src/browser/schema.json',
         },
         {
             generatePath: 'packages/core/src/angular/ng-serve-options.json',
-            filePath: 'node_modules/@angular-devkit/build-angular/src/dev-server/schema.json',
+            filePath: 'node_modules/@angular/build/src/dev-server/schema.json',
         },
     ];
     for (const item of list) {

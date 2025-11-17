@@ -1,8 +1,8 @@
-import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal } from '@angular/core';
+import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal, DOCUMENT } from '@angular/core';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
-import { DOCUMENT, Location } from '@angular/common';
+import { Location } from '@angular/common';
 
 export const CONFIG_TOKEN = new InjectionToken('DOC_SITE_CONFIG');
 

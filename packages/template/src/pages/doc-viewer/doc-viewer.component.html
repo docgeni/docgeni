@@ -1,20 +1,22 @@
-<ng-container *ngIf="docItem$ | async as docItem">
-  <ng-container *ngIf="docItem | dgIsComponentDoc; else general">
+@if (docItem$ | async; as docItem) {
+  @if (docItem | dgIsComponentDoc) {
     <dg-component-viewer [docItem]="docItem"></dg-component-viewer>
-  </ng-container>
-
-  <ng-template #general>
+  } @else {
     <div class="dg-doc-viewer-inner">
       <div class="dg-doc-viewer-inner-content">
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
         <dg-content-viewer [url]="docItem.contentPath | dgAssetsContentPath"> </dg-content-viewer>
-        <dg-doc-pages-links *ngIf="docPages$ | async as docPages" [docPages]="docPages"></dg-doc-pages-links>
+        @if (docPages$ | async; as docPages) {
+          <dg-doc-pages-links [docPages]="docPages"></dg-doc-pages-links>
+        }
         <dg-doc-meta class="dg-mt-4" [docItem]="docItem"></dg-doc-meta>
       </div>
-      <dg-toc *ngIf="hasContentToc"></dg-toc>
+      @if (hasContentToc) {
+        <dg-toc></dg-toc>
+      }
     </div>
-  </ng-template>
+  }
   <div class="dg-spring"></div>
   <dg-footer></dg-footer>
-</ng-container>
+}
 <div class="dg-doc-viewer-backdrop" (click)="close()"></div>

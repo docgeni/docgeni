@@ -1,1 +1,3 @@
-<dg-example-viewer *ngFor="let example of examples" [name]="example"></dg-example-viewer>
+@for (example of examples; track example) {
+  <dg-example-viewer [name]="example"></dg-example-viewer>
+}

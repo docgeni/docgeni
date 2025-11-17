@@ -1,36 +1,41 @@
-<div class="dg-hero" *ngIf="global.homeMeta?.hero">
-  <div class="dg-hero-launch">
-    <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
-    <p class="dg-launch-description">{{ global.homeMeta.hero.description }}</p>
-    <div class="dg-launch-actions">
-      <a
-        class="dg-launch-action dg-btn"
-        [ngClass]="item | dgHeroActionClass"
-        [href]="item.link"
-        *ngFor="let item of global.homeMeta.hero.actions"
-      >
-        {{ item.text }}
-      </a>
+@if (global.homeMeta?.hero) {
+  <div class="dg-hero">
+    <div class="dg-hero-launch">
+      <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
+      <p class="dg-launch-description">{{ global.homeMeta.hero.description }}</p>
+      <div class="dg-launch-actions">
+        @for (item of global.homeMeta.hero.actions; track item.text) {
+          <a class="dg-launch-action dg-btn" [ngClass]="item | dgHeroActionClass" [href]="item.link">
+            {{ item.text }}
+          </a>
+        }
+      </div>
+    </div>
+    <div class="dg-hero-banner" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
+      @if (bannerImgSrc) {
+        <img [src]="bannerImgSrc" />
+      }
     </div>
   </div>
-  <div class="dg-hero-banner" [style.backgroundColor]="global.homeMeta.hero.backgroundColor">
-    @if (bannerImgSrc) {
-      <img [src]="bannerImgSrc" />
+}
+
+@if (global.homeMeta?.features && global.homeMeta?.features.length > 0) {
+  <div class="dg-features">
+    @for (item of global.homeMeta.features; track item.title) {
+      <div class="dg-feature">
+        <img [src]="item.icon" alt="" />
+        <div class="dg-feature-title">
+          {{ item.title }}
+        </div>
+        <div class="dg-feature-description" [innerHTML]="item.description"></div>
+      </div>
     }
   </div>
-</div>
-
-<div class="dg-features" *ngIf="global.homeMeta?.features && global.homeMeta?.features.length > 0">
-  <div class="dg-feature" *ngFor="let item of global.homeMeta.features">
-    <img [src]="item.icon" alt="" />
-    <div class="dg-feature-title">
-      {{ item.title }}
-    </div>
-    <div class="dg-feature-description" [innerHTML]="item.description"></div>
+}
+@if (global.homeMeta?.contentPath) {
+  <div class="dg-extra-content">
+    <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
   </div>
-</div>
-<div class="dg-extra-content" *ngIf="global.homeMeta?.contentPath">
-  <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
-</div>
+}
 
 <dg-footer></dg-footer>
