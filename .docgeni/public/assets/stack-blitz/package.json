@@ -1,19 +1,19 @@
 {
   "dependencies": {
-    "@angular/animations": "~16.2.10",
-    "@angular/common": "~16.2.10",
-    "@angular/compiler": "~16.2.10",
-    "@angular/core": "~16.2.10",
-    "@angular/forms": "~16.2.10",
-    "@angular/platform-browser": "~16.2.10",
-    "@angular/platform-browser-dynamic": "~16.2.10",
+    "@angular/animations": "~20.3.12",
+    "@angular/common": "~20.3.12",
+    "@angular/compiler": "~20.3.12",
+    "@angular/core": "~20.3.12",
+    "@angular/forms": "~20.3.12",
+    "@angular/platform-browser": "~20.3.12",
+    "@angular/platform-browser-dynamic": "~20.3.12",
     "rxjs": "~7.8.1",
     "zone.js": "~0.13.3",
     "@docgeni/alib": "0.0.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.10",
-    "@angular/cli": "^16.2.10",
+    "@angular/build": "^20.3.12",
+    "@angular/cli": "^20.3.12",
     "@angular/compiler-cli": "^16.2.12"
   }
 }
