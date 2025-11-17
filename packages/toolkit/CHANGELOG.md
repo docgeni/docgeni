@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.0](https://github.com/docgeni/docgeni/compare/v2.5.1...v2.6.0-next.0) (2025-11-17)
+
+
+### Features
+
+* upgrade angular v20 ([2062096](https://github.com/docgeni/docgeni/commit/206209635de8dced27d4f6744f1b4e34880a1ea3))
+
+
+
+
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 **Note:** Version bump only for package @docgeni/toolkit
