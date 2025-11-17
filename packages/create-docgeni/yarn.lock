@@ -60,16 +60,16 @@
     js-tokens "^4.0.0"
     picocolors "^1.0.0"
 
-"@docgeni/cli@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/@docgeni/cli/-/cli-2.5.0.tgz#d1b7e6463ca9133681ef1ccbaf53a84371265bec"
-  integrity sha512-p72pu6Q20ZXAC58tzsPWLj0fXM4pZkHBM87YK0KR5BkzI45vTw5cr0bi+aNQWbentD9IMYnPV0hN326KOaHdHQ==
+"@docgeni/cli@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@docgeni/cli/-/cli-2.5.1.tgz#672bdfdc8cd9177d57b740efb5029ebbfafd4d89"
+  integrity sha512-w/jj9OTqf4OmCpTr0HKsTGoTgeJZ0ix2D4yCozQSRGi5gyz6a8u/E15QkIRO2G8ZtBnY16ck74w1tV6ArisVYA==
   dependencies:
     "@angular-devkit/schematics" "^18.2.0"
     "@angular-devkit/schematics-cli" "^18.2.0"
-    "@docgeni/core" "^2.5.0"
-    "@docgeni/template" "^2.5.0"
-    "@docgeni/toolkit" "^2.5.0"
+    "@docgeni/core" "^2.5.1"
+    "@docgeni/template" "^2.5.1"
+    "@docgeni/toolkit" "^2.5.1"
     "@schematics/angular" "^18.2.0"
     chokidar "^3.3.1"
     cosmiconfig "^6.0.0"
@@ -82,15 +82,15 @@
     yargs "15.3.1"
     zone.js "^0.10.2"
 
-"@docgeni/core@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/@docgeni/core/-/core-2.5.0.tgz#397863cb876b3afe015a943dcbcce844fb90f7c7"
-  integrity sha512-/E77N4AO15eCEiglZV1ZyGzLcC3jx3Z1VdMzDNoCXdqqyfKJcvHS3+GIe5Q6BLA1ysmDmGQ90Lyn5UA856bE7A==
+"@docgeni/core@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@docgeni/core/-/core-2.5.1.tgz#57843cf581dafa6abe0dcdae1187f269fee864f7"
+  integrity sha512-7RRmWQXpGueyWIXeFleFoLIvm+++HoaptZViuSvGRMFZEUxlA8JI5URMVKeZbgQF+d8oDxiZ62LFr5RmBAEKoQ==
   dependencies:
     "@angular-devkit/core" "^18.2.0"
     "@angular-devkit/schematics" "^18.2.0"
-    "@docgeni/ngdoc" "^2.5.0"
-    "@docgeni/toolkit" "^2.5.0"
+    "@docgeni/ngdoc" "^2.5.1"
+    "@docgeni/toolkit" "^2.5.1"
     "@schematics/angular" "^18.2.0"
     "@types/text-table" "^0.2.2"
     ansi-colors "^4.1.1"
@@ -112,27 +112,27 @@
     vinyl "^2.2.0"
     vinyl-fs "^3.0.3"
 
-"@docgeni/ngdoc@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/@docgeni/ngdoc/-/ngdoc-2.5.0.tgz#161a40bb55b77f1710b71294c2dc7effd4186651"
-  integrity sha512-ZiO944tqxqPe0d+riB/yLdC5aOXbiv5gc0u+zretJKxdHBDbj2YiO6e/ZJlT/jXChxfWwb6dgciduDwaq9CzmQ==
+"@docgeni/ngdoc@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@docgeni/ngdoc/-/ngdoc-2.5.1.tgz#1036188136a46e156ea360bb9f3157fd00e401d9"
+  integrity sha512-dtSPnG7zNFOcMrypmerevbUS9CLq911v5I3Y5EKkOpTpD9BPjndtBdPuwoCd0ovfPwS6ZllUwUN8pMdky9+x6w==
   dependencies:
-    "@docgeni/toolkit" "^2.5.0"
+    "@docgeni/toolkit" "^2.5.1"
     ts-morph "12.1.0"
     typescript "5.5.4"
 
-"@docgeni/template@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/@docgeni/template/-/template-2.5.0.tgz#72917439225a5f12dd52873bce9155b155d2912b"
-  integrity sha512-h0ND3zkjPKbhw3JD5bZi/T3N8+BD+pCCxyvnfARPexoPDPcb8zuHxIeX8aCQhA5yzXZRzn4n5f+ADtF5vcvkSQ==
+"@docgeni/template@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@docgeni/template/-/template-2.5.1.tgz#b41311913ec2f55181e9d2a07bc3fd9d7cb373c6"
+  integrity sha512-GjVKkc0YCwQngftw3Lq/0DrctTGbsZ6zXfyBgTqSxlQucIMB71C37pjL/MB0AJIEOL2Jl03SYT/s3BAnIwrRtQ==
   dependencies:
     docsearch.js "2.6.3"
     tslib "^2.3.0"
 
-"@docgeni/toolkit@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/@docgeni/toolkit/-/toolkit-2.5.0.tgz#a5311d4aeda1a784c09aa764437e87bd2e16aefe"
-  integrity sha512-7C7Xl5IhqZWerOnd4jK0LAFkCWIAKOXIbyRlFx+/tQwqz+fFIRkoLlzgveP+/4Nc5bAzrpTtI1lGTb/c5KSnxA==
+"@docgeni/toolkit@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@docgeni/toolkit/-/toolkit-2.5.1.tgz#3176f8bd1145ddb26a0d89eaea8052b7418da8dc"
+  integrity sha512-8D09m9xciXkvo6Z8cj3bFy1NzkB7ERuzi3wbNuwrnapJEvuihdNHhit88+ub0MWHAyPHwyjBl4RunilZvd1fgA==
   dependencies:
     "@angular-devkit/core" "^18.2.0"
     camelcase "^6.0.0"
@@ -1759,9 +1759,9 @@ mimic-fn@^2.1.0:
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
 min-document@^2.19.0:
-  version "2.19.0"
-  resolved "https://registry.npmjs.org/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
-  integrity sha512-9Wy1B3m3f66bPPmU5hdA4DR4PB2OfDU/+GS3yAB7IQozE3tqXaVv2zOjgla7MEGSRv95+ILmOuvhLkOK6wJtCQ==
+  version "2.19.2"
+  resolved "https://registry.npmjs.org/min-document/-/min-document-2.19.2.tgz#f95db44639eaae3ac8ea85ae6809ae85ff7e3b81"
+  integrity sha512-8S5I8db/uZN8r9HSLFVWPdJCvYOejMcEC82VIzNUc6Zkklf/d1gg2psfE79/vyhWOj4+J8MtwmoOz3TmvaGu5A==
   dependencies:
     dom-walk "^0.1.0"
 
