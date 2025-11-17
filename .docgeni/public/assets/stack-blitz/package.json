@@ -12,8 +12,8 @@
     "@docgeni/alib": "0.0.1"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.12",
-    "@angular/cli": "^20.3.12",
+    "@angular/build": "^20.3.10",
+    "@angular/cli": "^20.3.10",
     "@angular/compiler-cli": "^16.2.12"
   }
 }
