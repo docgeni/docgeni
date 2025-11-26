@@ -156,18 +156,6 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/core@^18.2.0":
-  version "18.2.21"
-  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-18.2.21.tgz#f35dfad27b58669d7d1244325043946a49aeee18"
-  integrity sha512-Lno6GNbJME85wpc/uqn+wamBxvfZJZFYSH8+oAkkyjU/hk8r5+X8DuyqsKAa0m8t46zSTUsonHsQhVe5vgrZeQ==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/schematics-cli@^20.3.10":
   version "20.3.10"
   resolved "https://registry.npmjs.org/@angular-devkit/schematics-cli/-/schematics-cli-20.3.10.tgz#fff8b235ce24ee6d72584bcdacebd3aefb43f1f0"
@@ -256,9 +244,9 @@
     zod "3.25.76"
 
 "@angular/common@^20.3.12":
-  version "20.3.12"
-  resolved "https://registry.npmjs.org/@angular/common/-/common-20.3.12.tgz#e1fce79dbdc53f6600ad2e983190eff6c902547a"
-  integrity sha512-rFcDfe67ffrb435C6t2lc27WGbizeOcgce30tUhH0iezwEvU+kHHWezXXX6Ylx3TFgqGkhcxL0fliuFYrpM1Vw==
+  version "20.3.14"
+  resolved "https://registry.npmjs.org/@angular/common/-/common-20.3.14.tgz#62d7e693ae70d3ac41aa424c602c490c0e8d46c5"
+  integrity sha512-OOUvjTtnpktJLsNupA+GFT2q5zNocPdpOENA8aSrXvAheNybLjgi+otO3U3sQsvB1VwaoEZ9GT5O3lZlstnA/A==
   dependencies:
     tslib "^2.3.0"
 
@@ -805,32 +793,6 @@
   integrity sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
-
-"@docgeni/toolkit@^2.1.0":
-  version "2.5.1"
-  resolved "https://registry.npmjs.org/@docgeni/toolkit/-/toolkit-2.5.1.tgz#3176f8bd1145ddb26a0d89eaea8052b7418da8dc"
-  integrity sha512-8D09m9xciXkvo6Z8cj3bFy1NzkB7ERuzi3wbNuwrnapJEvuihdNHhit88+ub0MWHAyPHwyjBl4RunilZvd1fgA==
-  dependencies:
-    "@angular-devkit/core" "^18.2.0"
-    camelcase "^6.0.0"
-    chalk "^3.0.0"
-    change-case "^4.1.1"
-    chokidar "^3.3.1"
-    debug "^4.3.3"
-    fancy-log "^1.3.3"
-    front-matter "^3.1.0"
-    fs-extra "^9.0.0"
-    glob "^7.1.6"
-    handlebars "^4.7.3"
-    lodash "^4.17.21"
-    minimatch "3.0.5"
-    ora "^5.4.1"
-    param-case "^3.0.2"
-    pluralize "^8.0.0"
-    shelljs "0.8.5"
-    tapable "^1.1.3"
-    time-stamp "^2.2.0"
-    title-case "^3.0.2"
 
 "@dsherret/to-absolute-glob@^2.0.2":
   version "2.0.2"
@@ -10465,11 +10427,6 @@ picocolors@^1.1.0, picocolors@^1.1.1:
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz"
   integrity sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==
 
-picomatch@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/picomatch/-/picomatch-4.0.2.tgz#77c742931e8f3b8820946c76cd0c1f13730d1dab"
-  integrity sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==
-
 picomatch@4.0.3, picomatch@^4.0.2, picomatch@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz#796c76136d1eead715db1e7bad785dedd695a042"
@@ -11377,17 +11334,17 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@7.8.1, rxjs@^7.5.5, rxjs@^7.8.1:
-  version "7.8.1"
-  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
-  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
-  dependencies:
-    tslib "^2.1.0"
-
 rxjs@7.8.2, rxjs@^7.8.2:
   version "7.8.2"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
   integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.5.5, rxjs@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
+  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
   dependencies:
     tslib "^2.1.0"
 
@@ -11861,11 +11818,6 @@ source-map-url@^0.4.0:
   version "0.4.1"
   resolved "https://registry.npmjs.org/source-map-url/-/source-map-url-0.4.1.tgz"
   integrity sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
-
-source-map@0.7.4:
-  version "0.7.4"
-  resolved "https://registry.npmjs.org/source-map/-/source-map-0.7.4.tgz#a9bbe705c9d8846f4e08ff6765acf0f1b0898656"
-  integrity sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==
 
 source-map@0.7.6:
   version "0.7.6"
