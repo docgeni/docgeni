@@ -5,13 +5,12 @@ import { NavigationService } from '../../../services/public-api';
 @Component({
     selector: 'dg-component-examples',
     templateUrl: './component-examples.component.html',
+    host: { class: 'dg-examples' },
     standalone: false,
 })
 export class ComponentExamplesComponent implements OnInit {
-    @HostBinding('class.dg-examples') isComponentExamples = true;
-
     get examples() {
-        return this.componentViewer.docItem.examples || [];
+        return this.componentViewer.docItem().examples || [];
     }
 
     constructor(

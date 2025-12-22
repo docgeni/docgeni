@@ -6,12 +6,13 @@ import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
 @Component({
     selector: 'dg-component-overview',
     templateUrl: './component-overview.component.html',
+    host: {
+        class: 'dg-component-overview',
+    },
     standalone: false,
 })
 export class ComponentOverviewComponent implements OnInit {
     contentUrl!: string;
-
-    @HostBinding('class.dg-component-overview') contentClass = true;
 
     @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
@@ -22,7 +23,7 @@ export class ComponentOverviewComponent implements OnInit {
 
     ngOnInit(): void {
         this.contentUrl = this.global.getAssetsContentPath(
-            `overviews/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`,
+            `overviews/${this.componentViewer.docItem().importSpecifier}/${this.global.locale}.html`,
         );
     }
 }

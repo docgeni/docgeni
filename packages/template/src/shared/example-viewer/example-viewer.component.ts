@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Type } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, input } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
@@ -26,32 +26,19 @@ const nameOrdersMap: Record<string, number> = {
     templateUrl: './example-viewer.component.html',
     host: {
         '[attr.id]': 'example?.key',
+        class: 'dg-example-viewer',
+        'class.dg-example-viewer-inline': 'inline()',
     },
     standalone: false,
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;
 
-    @HostBinding('class.dg-example-viewer') isExampleViewer = true;
+    readonly name = input.required<string>();
 
-    /**
-     * @deprecated please use name
-     */
-    @Input() set exampleName(name: string) {
-        this.name = name;
-    }
-
-    @Input() name!: string;
-
-    @HostBinding('class.dg-example-viewer-inline')
-    @Input()
-    get inline(): boolean {
-        return this._inline;
-    }
-
-    set inline(value: boolean) {
-        this._inline = coerceBooleanProperty(value);
-    }
+    readonly inline = input(false, {
+        transform: coerceBooleanProperty,
+    });
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -86,7 +73,7 @@ export class ExampleViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.exampleLoader.load(this.name).then((result) => {
+        this.exampleLoader.load(this.name()).then((result) => {
             this.exampleModuleType = result.moduleType;
             this.exampleComponentType = result.componentType;
             this.example = result.example;

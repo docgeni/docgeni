@@ -6,18 +6,13 @@ import { GlobalContext } from '../../services/public-api';
     selector: 'dg-root-actual',
     templateUrl: './root.component.html',
     standalone: false,
+    host: {
+        class: 'dg-main dg-layout',
+        [`class.dg-scroll-container`]: "global.config.mode === 'lite'",
+        [`class.dg-sidebar-show`]: 'navigationService.showSidebar',
+    },
 })
 export class ActualRootComponent {
-    @HostBinding(`class.dg-main`) isMain = true;
-
-    @HostBinding(`class.dg-layout`) isLayout = true;
-
-    @HostBinding(`class.dg-scroll-container`) isScrollContainer = this.global.config.mode === 'lite';
-
-    @HostBinding(`class.dg-sidebar-show`) get showSidebar() {
-        return this.navigationService.showSidebar;
-    }
-
     constructor(
         public global: GlobalContext,
         public navigationService: NavigationService,

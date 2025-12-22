@@ -1,4 +1,4 @@
-import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, signal, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,14 +12,18 @@ import { TableOfContentsComponent } from '../../shared/toc/toc.component';
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html',
     standalone: false,
+    host: {
+        [`class.dg-doc-viewer--single`]: 'isSingle()',
+        [`class.dg-doc-viewer--toc`]: 'hasContentToc()',
+    },
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
 
     // 独立展示的页面，不属于任何频道
-    @HostBinding(`class.dg-doc-viewer--single`) isSingle = false;
+    readonly isSingle = signal(false);
 
-    @HostBinding(`class.dg-doc-viewer--toc`) hasContentToc = false;
+    readonly hasContentToc = signal(false);
 
     /** Component type for the current example. */
     exampleComponentType: Type<any> | null = null;
@@ -50,7 +54,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.route.snapshot.data) {
-            this.isSingle = this.route.snapshot.data.single;
+            this.isSingle.set(this.route.snapshot.data.single);
         }
         this.route.paramMap.subscribe((params) => {
             const id = params.get('id');
@@ -76,7 +80,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         combineLatest([this.navigationService.docItem$, this.tocService.links$])
             .pipe(takeUntil(this.destroyed))
             .subscribe((result) => {
-                this.hasContentToc = result[0]!.toc === 'content' && result[1].length > 0;
+                this.hasContentToc.set(result[0]!.toc === 'content' && result[1].length > 0);
             });
     }
 

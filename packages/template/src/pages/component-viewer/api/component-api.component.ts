@@ -32,7 +32,7 @@ export class ComponentApiComponent implements OnInit {
         //     `api-docs/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.html`
         // );
         const apiUrl = this.global.getAssetsContentPath(
-            `api-docs/${this.componentViewer.docItem.importSpecifier}/${this.global.locale}.json`,
+            `api-docs/${this.componentViewer.docItem().importSpecifier}/${this.global.locale}.json`,
         );
         this.http.get<ApiDeclaration[]>(apiUrl).subscribe({
             next: (data) => {

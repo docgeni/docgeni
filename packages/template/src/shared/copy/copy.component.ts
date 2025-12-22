@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, input, Input, OnInit } from '@angular/core';
 import { CopierService } from '../copier/copier.service';
 
 @Component({
@@ -12,11 +12,7 @@ import { CopierService } from '../copier/copier.service';
 export class CopyComponent implements OnInit {
     public icon = 'copy';
 
-    @Input() text!: string;
-
-    @Input('dgCopy') set dgCopy(text: string) {
-        this.text = text;
-    }
+    public readonly dgCopy = input<string>('');
 
     constructor(private copier: CopierService) {}
 
@@ -24,7 +20,7 @@ export class CopyComponent implements OnInit {
 
     @HostListener('click', ['$event'])
     copy($event: Event) {
-        this.copier.copyText(this.text);
+        this.copier.copyText(this.dgCopy());
         this.icon = 'check';
         /* eslint-disable no-restricted-globals */
         setTimeout(() => {

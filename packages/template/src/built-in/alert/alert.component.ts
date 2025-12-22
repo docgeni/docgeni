@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ChangeDetectionStrategy, input, effect } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
 export type DocgeniAlertType = 'primary' | 'info' | 'success' | 'warning' | 'danger';
@@ -13,24 +13,18 @@ export type DocgeniAlertType = 'primary' | 'info' | 'success' | 'warning' | 'dan
     standalone: false,
 })
 export class DocgeniAlertComponent extends DocgeniBuiltInComponent implements OnInit {
-    private internalType: DocgeniAlertType = 'info';
-
-    get type(): DocgeniAlertType {
-        return this.internalType;
-    }
-
-    @Input() set type(value: DocgeniAlertType) {
-        this.internalType = value;
-        this.updateHostClass([`dg-alert-${this.type}`]);
-    }
+    readonly type = input<DocgeniAlertType>('info');
 
     constructor(elementRef: ElementRef<unknown>) {
         super(elementRef);
+        effect(() => {
+            if (this.type()) {
+                this.updateHostClass([`dg-alert-${this.type()}`]);
+            }
+        });
     }
 
-    ngOnInit(): void {
-        this.updateHostClass([`dg-alert-${this.type}`]);
-    }
+    ngOnInit(): void {}
 }
 
 export default {

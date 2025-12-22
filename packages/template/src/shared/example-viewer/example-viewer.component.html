@@ -15,7 +15,7 @@
     <div class="dg-example-viewer-actions" title="{{ example.title }}">
       <a class="action-item" title="Copy source code" href="javascript:;" [dgCopy]="sourceCode?.textContent"></a>
       <a class="action-item" title="Toggle source code" href="javascript:;" (click)="toggleSource()"><dg-icon iconName="code"></dg-icon></a>
-      <a class="action-item" title="Open example in new tab" target="_blank" [href]="'~examples/' + name"
+      <a class="action-item" title="Open example in new tab" target="_blank" [href]="'~examples/' + name()"
         ><dg-icon iconName="external"></dg-icon
       ></a>
       <a class="action-item" title="Open example in StackBlitz" target="_blank" (click)="openStackBlitz()"

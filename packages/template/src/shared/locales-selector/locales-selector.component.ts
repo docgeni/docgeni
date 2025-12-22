@@ -6,10 +6,11 @@ import { NavigationService, GlobalContext } from '../../services/public-api';
     selector: 'dg-locales-selector',
     templateUrl: './locales-selector.component.html',
     standalone: false,
+    host: {
+        class: 'dg-locales-selector',
+    },
 })
 export class LocalesSelectorComponent implements OnInit {
-    @HostBinding('class.dg-locales-selector') isNavbar = true;
-
     locale!: string;
 
     isDropdownOpen = false;
