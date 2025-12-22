@@ -9,23 +9,23 @@
     (blur)="blur()"
     (focus)="focus()"
   />
-  <div
-    class="search-results-container"
-    *ngIf="!searchService.hasAlgolia"
-    [class.is-searching]="hasSearchText && isFocus"
-    [class.result-empty]="searchService.result?.length === 0"
-  >
-    <a
-      class="search-result"
-      *ngFor="let item of searchService.result; trackBy: searchService.trackByFn"
-      [href]="item.path"
-      (click)="toRoute($event, item)"
+  @if (!searchService.hasAlgolia) {
+    <div
+      class="search-results-container"
+      [class.is-searching]="hasSearchText && isFocus"
+      [class.result-empty]="searchService.result?.length === 0"
     >
-      <ng-container *ngIf="item.parent"> {{ item.parent?.title }} &gt; </ng-container>
-      <span [innerHtml]="searchText | highlight: item.title"></span>
-    </a>
-    <ng-container *ngIf="hasSearchText && searchService.result.length === 0">
-      <dg-icon class="empty-icon" iconName="empty"></dg-icon>
-    </ng-container>
-  </div>
+      @for (item of searchService.result; track searchService.trackByFn($index, item)) {
+        <a class="search-result" [href]="item.path" (click)="toRoute($event, item)">
+          @if (item.parent) {
+            {{ item.parent?.title }} &gt;
+          }
+          <span [innerHtml]="searchText | highlight: item.title"></span>
+        </a>
+      }
+      @if (hasSearchText && searchService.result.length === 0) {
+        <dg-icon class="empty-icon" iconName="empty"></dg-icon>
+      }
+    </div>
+  }
 </div>

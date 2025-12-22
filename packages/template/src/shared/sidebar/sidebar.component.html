@@ -1,40 +1,54 @@
-<div class="dg-sidebar-header" *ngIf="global.config.mode | dgIsLite">
-  <dg-logo></dg-logo>
-  <a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
-  <span class="description" *ngIf="global.config.description">{{ global.config.description }}</span>
-</div>
-<dg-search *ngIf="global.config.mode | dgIsLite"></dg-search>
+@if (global.config.mode | dgIsLite) {
+  <div class="dg-sidebar-header">
+    <dg-logo></dg-logo>
+    <a [routerLink]="['/']" class="title">{{ global.config.title }}</a>
+    @if (global.config.description) {
+      <span class="description">{{ global.config.description }}</span>
+    }
+  </div>
+}
+@if (global.config.mode | dgIsLite) {
+  <dg-search></dg-search>
+}
 <div class="dg-menu">
-  <ng-container *ngFor="let menu of menus" class="menu-item">
-    <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
-  </ng-container>
-  <ng-container *ngIf="global.config.mode | dgIsLite">
+  @for (menu of menus; track menu) {
+    <ng-container class="menu-item">
+      <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
+    </ng-container>
+  }
+  @if (global.config.mode | dgIsLite) {
     <ng-container *ngTemplateOutlet="changeLanguageTemplate"></ng-container>
-  </ng-container>
+  }
 
   <ng-template let-menu #navTemplate>
-    <ng-container *ngIf="menu.items; else item">
-      <div class="menu-group" *ngIf="menu.items.length > 0" [class.menu-group--open]="menuDisplayMap.get(menu)">
-        <div class="group-header" (click)="toggle(menu)">
-          <div class="group-title" *ngIf="menu.title">
-            {{ menu.title }}
+    @if (menu.items) {
+      @if (menu.items.length > 0) {
+        <div class="menu-group" [class.menu-group--open]="menuDisplayMap.get(menu)">
+          <div class="group-header" (click)="toggle(menu)">
+            @if (menu.title) {
+              <div class="group-title">
+                {{ menu.title }}
+              </div>
+            }
+            @if (menu.items && menu.items.length) {
+              <div class="group-arrow"><dg-icon [iconName]="'angleRight'"></dg-icon></div>
+            }
           </div>
-          <div *ngIf="menu.items && menu.items.length" class="group-arrow"><dg-icon [iconName]="'angleRight'"></dg-icon></div>
+          <div class="group-body">
+            @for (menu of menu.items; track menu) {
+              <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
+            }
+          </div>
         </div>
-        <div class="group-body">
-          <ng-container *ngFor="let menu of menu.items">
-            <ng-container *ngTemplateOutlet="navTemplate; context: { $implicit: menu }"></ng-container>
-          </ng-container>
+      }
+    } @else {
+      @if (menu.isExternal) {
+        <div class="menu-item">
+          <a class="item-content" href="{{ menu.path }}" target="_blank">
+            <dg-icon class="external-icon" iconName="external"></dg-icon> {{ menu.title }}
+          </a>
         </div>
-      </div>
-    </ng-container>
-    <ng-template #item>
-      <div class="menu-item" *ngIf="menu.isExternal; else docItemMenu">
-        <a class="item-content" href="{{ menu.path }}" target="_blank">
-          <dg-icon class="external-icon" iconName="external"></dg-icon> {{ menu.title }}
-        </a>
-      </div>
-      <ng-template #docItemMenu>
+      } @else {
         <div
           class="menu-item"
           #routerLinkActive="routerLinkActive"
@@ -43,23 +57,32 @@
         >
           <a class="item-content" [routerLink]="['./' + menu.path]">
             <div class="item-content-title">
-              {{ menu.title }} <span *ngIf="menu.subtitle" class="subtitle">{{ menu.subtitle }}</span>
+              {{ menu.title }}
+              @if (menu.subtitle) {
+                <span class="subtitle">{{ menu.subtitle }}</span>
+              }
             </div>
             <div class="item-content-label">
-              <dg-label *ngIf="menu.label" [labelType]="menu.label.color">{{ menu.label.text }}</dg-label>
+              @if (menu.label) {
+                <dg-label [labelType]="menu.label.color">{{ menu.label.text }}</dg-label>
+              }
             </div>
           </a>
         </div>
-        <dg-toc *ngIf="menu.toc === 'menu' && routerLinkActive.isActive" class="dg-toc-menu"></dg-toc>
-      </ng-template>
-    </ng-template>
+        @if (menu.toc === 'menu' && routerLinkActive.isActive) {
+          <dg-toc class="dg-toc-menu"></dg-toc>
+        }
+      }
+    }
   </ng-template>
 </div>
 
 <ng-template #changeLanguageTemplate>
-  <div class="action-items" *ngIf="global.config.locales && global.config.locales.length > 1">
-    <div class="action-item">
-      <dg-locales-selector></dg-locales-selector>
+  @if (global.config.locales && global.config.locales.length > 1) {
+    <div class="action-items">
+      <div class="action-item">
+        <dg-locales-selector></dg-locales-selector>
+      </div>
     </div>
-  </div>
+  }
 </ng-template>

@@ -1,20 +1,16 @@
-<button
-  *ngIf="global.config.locales && global.config.locales.length > 1"
-  type="button"
-  class="action-icon"
-  [ngClass]="{ active: !!isDropdownOpen }"
->
-  <dg-icon iconName="locale"></dg-icon>
-</button>
-<div *ngIf="!!isDropdownOpen" class="locales-container">
-  <div class="locales-menu">
-    <div
-      *ngFor="let item of global.config.locales"
-      class="locale"
-      [ngClass]="{ active: item.key === locale }"
-      (click)="selectLocale(item.key)"
-    >
-      {{ item.name }}
+@if (global.config.locales && global.config.locales.length > 1) {
+  <button type="button" class="action-icon" [ngClass]="{ active: !!isDropdownOpen }">
+    <dg-icon iconName="locale"></dg-icon>
+  </button>
+}
+@if (!!isDropdownOpen) {
+  <div class="locales-container">
+    <div class="locales-menu">
+      @for (item of global.config.locales; track item) {
+        <div class="locale" [ngClass]="{ active: item.key === locale }" (click)="selectLocale(item.key)">
+          {{ item.name }}
+        </div>
+      }
     </div>
   </div>
-</div>
+}
