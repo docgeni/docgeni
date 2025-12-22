@@ -1,4 +1,4 @@
 <dg-content-viewer class="dg-doc-viewer-inner-content" [url]="contentUrl"> </dg-content-viewer>
-@if (componentViewer.docItem.toc === 'content') {
+@if (componentViewer.docItem().toc === 'content') {
   <dg-toc #toc></dg-toc>
 }

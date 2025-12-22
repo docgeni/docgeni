@@ -5,15 +5,13 @@
     <div class="dg-doc-viewer-inner">
       <div class="dg-doc-viewer-inner-content">
         <dg-doc-header [title]="docItem.title" [subtitle]="docItem.subtitle"></dg-doc-header>
-        <dg-content-viewer [url]="docItem.contentPath | dgAssetsContentPath"> </dg-content-viewer>
+        <dg-content-viewer [url]="docItem.contentPath! | dgAssetsContentPath"> </dg-content-viewer>
         @if (docPages$ | async; as docPages) {
           <dg-doc-pages-links [docPages]="docPages"></dg-doc-pages-links>
         }
         <dg-doc-meta class="dg-mt-4" [docItem]="docItem"></dg-doc-meta>
       </div>
-      @if (hasContentToc) {
-        <dg-toc></dg-toc>
-      }
+      @if (hasContentToc) {}
     </div>
   }
   <div class="dg-spring"></div>

@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, input } from '@angular/core';
 import { ComponentDocItem } from '../../interfaces/public-api';
 
 @Component({
     selector: 'dg-component-viewer',
     templateUrl: './component-viewer.component.html',
+    host: {
+        class: 'dg-component-viewer',
+    },
     standalone: false,
 })
 export class ComponentViewerComponent implements OnInit {
-    @HostBinding(`class.dg-component-viewer`) isDocViewer = true;
-
-    @Input() docItem!: ComponentDocItem;
+    readonly docItem = input.required<ComponentDocItem>();
 
     constructor() {}
 
@@ -19,11 +20,12 @@ export class ComponentViewerComponent implements OnInit {
 @Component({
     selector: 'dg-component-empty',
     template: ` <p>Current component has not been documented.</p> `,
+    host: {
+        class: 'dg-component-empty',
+    },
     standalone: false,
 })
 export class ComponentEmptyComponent implements OnInit {
-    @HostBinding(`class.dg-component-empty`) isDocEmpty = true;
-
     constructor() {}
 
     ngOnInit(): void {}

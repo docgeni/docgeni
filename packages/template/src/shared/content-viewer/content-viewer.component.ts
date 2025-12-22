@@ -11,6 +11,7 @@ import {
     Type,
     ChangeDetectorRef,
     ChangeDetectionStrategy,
+    reflectComponentType,
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
@@ -83,15 +84,29 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
             const exampleViewerRef = portalHost.attach<any>(examplePortal, replace);
             // 循环设置属性
+            const compMetadata = reflectComponentType(componentClass);
+            const inputsOfKey =
+                compMetadata?.inputs.reduce(
+                    (result, item) => {
+                        result[item.templateName] = item;
+                        return result;
+                    },
+                    {} as Record<string, any>,
+                ) || {};
+
             for (const attributeKey in element.attributes) {
                 if (Object.prototype.hasOwnProperty.call(element.attributes, attributeKey)) {
                     const attribute = element.attributes[attributeKey];
+                    const qualifiedName = attribute.nodeName;
                     // eslint-disable-next-line dot-notation
                     const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'];
+                    if (inputsOfKey[attribute.nodeName]) {
+                        exampleViewerRef.setInput(qualifiedName, element.getAttribute(qualifiedName));
+                    }
                     if (setAttributeFn) {
-                        setAttributeFn.call(exampleViewerRef.instance, attribute.nodeName, element.getAttribute(attribute.nodeName) || '');
+                        setAttributeFn.call(exampleViewerRef.instance, qualifiedName, element.getAttribute(qualifiedName) || '');
                     } else {
-                        exampleViewerRef.instance[attribute.nodeName] = element.getAttribute(attribute.nodeName);
+                        exampleViewerRef.instance[qualifiedName] = element.getAttribute(qualifiedName);
                     }
                 }
             }

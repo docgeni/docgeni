@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostBinding, input } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -16,7 +16,7 @@ let OFFSET = 60;
 export class TableOfContentsComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-toc`) isToc = true;
 
-    @Input() container: string = '.dg-scroll-container';
+    readonly container = input<string>('.dg-scroll-container');
 
     links: TocLink[] = [];
 
