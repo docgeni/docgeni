@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class IsModeLitePipe implements PipeTransform {
     constructor() {}
 
-    transform(mode: 'lite' | 'full'): boolean {
+    transform(mode?: 'lite' | 'full'): boolean {
         return mode === 'lite';
     }
 }
@@ -13,7 +13,7 @@ export class IsModeLitePipe implements PipeTransform {
 export class IsModeFullPipe implements PipeTransform {
     constructor() {}
 
-    transform(mode: 'lite' | 'full'): boolean {
+    transform(mode?: 'lite' | 'full'): boolean {
         return mode === 'full';
     }
 }
