@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding, NgModuleFactory, Type, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, NgModuleFactory, Type, ElementRef, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService, GlobalContext } from '../../services/public-api';
@@ -16,15 +16,11 @@ export class ChannelComponent implements OnInit, OnDestroy {
     exampleComponentType: Type<any> | null = null;
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
+    private route = inject(ActivatedRoute);
+    public navigationService = inject(NavigationService);
+    public global = inject(GlobalContext);
 
-    constructor(
-        private http: HttpClient,
-        private elementRef: ElementRef<HTMLElement>,
-        private route: ActivatedRoute,
-        private router: Router,
-        public navigationService: NavigationService,
-        public global: GlobalContext,
-    ) {}
+    constructor() {}
 
     ngOnInit(): void {
         const path = this.route.snapshot.routeConfig?.path!;

@@ -1,5 +1,5 @@
 import { NavigationService } from './../../services/navigation.service';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { GlobalContext } from '../../services/public-api';
 
 @Component({
@@ -13,10 +13,10 @@ import { GlobalContext } from '../../services/public-api';
     },
 })
 export class ActualRootComponent {
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService,
-    ) {}
+    public global = inject(GlobalContext);
+    public navigationService = inject(NavigationService);
+
+    constructor() {}
 }
 
 @Component({
@@ -25,8 +25,8 @@ export class ActualRootComponent {
     standalone: false,
 })
 export class RootComponent {
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService,
-    ) {}
+    public global = inject(GlobalContext);
+    public navigationService = inject(NavigationService);
+
+    constructor() {}
 }

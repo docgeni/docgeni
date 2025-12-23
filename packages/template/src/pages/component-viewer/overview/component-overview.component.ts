@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, inject } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
@@ -16,10 +16,11 @@ export class ComponentOverviewComponent implements OnInit {
 
     @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
-    constructor(
-        public componentViewer: ComponentViewerComponent,
-        private global: GlobalContext,
-    ) {}
+    protected componentViewer = inject(ComponentViewerComponent);
+
+    private global: GlobalContext = inject(GlobalContext);
+
+    constructor() {}
 
     ngOnInit(): void {
         this.contentUrl = this.global.getAssetsContentPath(

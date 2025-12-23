@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, inject } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { NavigationService } from '../../../services/public-api';
 
@@ -13,10 +13,11 @@ export class ComponentExamplesComponent implements OnInit {
         return this.componentViewer.docItem().examples || [];
     }
 
-    constructor(
-        public componentViewer: ComponentViewerComponent,
-        public navigationService: NavigationService,
-    ) {}
+    protected componentViewer = inject(ComponentViewerComponent);
+
+    protected navigationService = inject(NavigationService);
+
+    constructor() {}
 
     ngOnInit(): void {}
 }

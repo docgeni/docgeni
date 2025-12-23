@@ -34,7 +34,6 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     private portalHosts: DomPortalOutlet[] = [];
 
     constructor(
-        http: HttpClient,
         public elementRef: ElementRef<HTMLElement>,
         private appRef: ApplicationRef,
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -44,7 +43,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         private tocService: TocService,
         private cdr: ChangeDetectorRef,
     ) {
-        super(http);
+        super();
     }
 
     ngOnInit(): void {}

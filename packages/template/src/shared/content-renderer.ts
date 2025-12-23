@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Directive()
@@ -24,7 +24,9 @@ export abstract class ContentRenderer {
 
     abstract showError(url: string, error: Error): void;
 
-    constructor(protected http: HttpClient) {}
+    protected http: HttpClient = inject(HttpClient);
+
+    constructor() {}
 
     protected fetchDocument(url: string) {
         // Cancel previous pending request

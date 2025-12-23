@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef, inject } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { ApiDeclaration } from '../../../interfaces';
@@ -17,15 +17,14 @@ import { TocService } from '../../../services/toc.service';
 })
 export class ComponentApiComponent implements OnInit {
     apiDeclarations!: ApiDeclaration[];
+    componentViewer = inject(ComponentViewerComponent);
+    private global: GlobalContext = inject(GlobalContext);
+    private http: HttpClient = inject(HttpClient);
+    private ngZone: NgZone = inject(NgZone);
+    private elementRef: ElementRef = inject(ElementRef);
+    private tocService: TocService = inject(TocService);
 
-    constructor(
-        public componentViewer: ComponentViewerComponent,
-        private global: GlobalContext,
-        private http: HttpClient,
-        private ngZone: NgZone,
-        private elementRef: ElementRef,
-        private tocService: TocService,
-    ) {}
+    constructor() {}
 
     ngOnInit(): void {
         // this.contentUrl = this.global.getAssetsContentPath(

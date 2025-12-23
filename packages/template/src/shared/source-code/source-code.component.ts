@@ -17,10 +17,6 @@ export class SourceCodeComponent extends ContentRenderer implements OnInit {
         return this.codeContent.nativeElement?.textContent;
     }
 
-    constructor(http: HttpClient) {
-        super(http);
-    }
-
     ngOnInit(): void {}
 
     updateDocument(content: string): void {

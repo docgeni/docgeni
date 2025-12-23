@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
 
@@ -9,11 +9,10 @@ import { PageTitleService } from '../../services/page-title.service';
 })
 export class ExampleIsolatedViewerComponent implements OnInit {
     public name!: string | null;
+    private route = inject(ActivatedRoute);
+    private pageTitle = inject(PageTitleService);
 
-    constructor(
-        private route: ActivatedRoute,
-        private pageTitle: PageTitleService,
-    ) {}
+    constructor() {}
 
     ngOnInit(): void {
         this.name = this.route.snapshot.paramMap.get('name');
