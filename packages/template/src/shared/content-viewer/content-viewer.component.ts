@@ -103,11 +103,10 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
                     if (inputsOfKey[attribute.nodeName]) {
                         exampleViewerRef.setInput(qualifiedName, element.getAttribute(qualifiedName));
                     } else {
-                        if (setAttributeFn) {
-                            setAttributeFn.call(exampleViewerRef.instance, qualifiedName, element.getAttribute(qualifiedName) || '');
-                        } else {
-                            exampleViewerRef.instance[qualifiedName] = element.getAttribute(qualifiedName);
-                        }
+                        exampleViewerRef.instance[qualifiedName] = element.getAttribute(qualifiedName);
+                    }
+                    if (setAttributeFn) {
+                        setAttributeFn.call(exampleViewerRef.instance, qualifiedName, element.getAttribute(qualifiedName) || '');
                     }
                 }
             }
