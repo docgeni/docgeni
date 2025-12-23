@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 /**
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'alib-bar-basic-example',
     templateUrl: './basic.component.html',
     styleUrls: ['./basic.component.scss'],
+    standalone: false,
 })
 export class AlibBarBasicExampleComponent implements OnInit {
     constructor() {}

@@ -102,11 +102,12 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
                     const setAttributeFn: (qualifiedName: string, value: string) => void = exampleViewerRef.instance['setAttribute'];
                     if (inputsOfKey[attribute.nodeName]) {
                         exampleViewerRef.setInput(qualifiedName, element.getAttribute(qualifiedName));
-                    }
-                    if (setAttributeFn) {
-                        setAttributeFn.call(exampleViewerRef.instance, qualifiedName, element.getAttribute(qualifiedName) || '');
                     } else {
-                        exampleViewerRef.instance[qualifiedName] = element.getAttribute(qualifiedName);
+                        if (setAttributeFn) {
+                            setAttributeFn.call(exampleViewerRef.instance, qualifiedName, element.getAttribute(qualifiedName) || '');
+                        } else {
+                            exampleViewerRef.instance[qualifiedName] = element.getAttribute(qualifiedName);
+                        }
                     }
                 }
             }

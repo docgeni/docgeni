@@ -8,8 +8,8 @@ import { GlobalContext } from '../../services/public-api';
     standalone: false,
     host: {
         class: 'dg-main dg-layout',
-        [`class.dg-scroll-container`]: "global.config.mode === 'lite'",
-        [`class.dg-sidebar-show`]: 'navigationService.showSidebar',
+        '[class.dg-scroll-container]': "global.config.mode === 'lite'",
+        '[class.dg-sidebar-show]': 'navigationService.showSidebar',
     },
 })
 export class ActualRootComponent {

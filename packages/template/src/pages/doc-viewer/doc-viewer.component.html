@@ -11,7 +11,9 @@
         }
         <dg-doc-meta class="dg-mt-4" [docItem]="docItem"></dg-doc-meta>
       </div>
-      @if (hasContentToc) {}
+      @if (hasContentToc()) {
+        <dg-toc></dg-toc>
+      }
     </div>
   }
   <div class="dg-spring"></div>

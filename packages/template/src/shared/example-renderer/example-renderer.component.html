@@ -1,6 +1,3 @@
-@if (enableIvy && componentType && exampleModuleFactory) {
-  <ng-template [ngComponentOutlet]="componentType" [ngComponentOutletNgModuleFactory]="exampleModuleFactory"></ng-template>
-}
-@if (!enableIvy && componentType) {
+@if (componentType) {
   <ng-template [ngComponentOutlet]="componentType"></ng-template>
 }

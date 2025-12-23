@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostBinding, input } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostBinding, input, signal } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -12,6 +12,9 @@ let OFFSET = 60;
     selector: 'dg-toc',
     templateUrl: './toc.component.html',
     standalone: false,
+    host: {
+        '[class.dg-d-none]': 'hideToc()',
+    },
 })
 export class TableOfContentsComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-toc`) isToc = true;
@@ -24,7 +27,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     rootUrl = this.locationStrategy.path(false);
 
-    @HostBinding('class.dg-d-none') hideToc = true;
+    protected readonly hideToc = signal(true);
 
     private destroyed = new Subject<void>();
 
@@ -55,8 +58,8 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
         });
 
         this.tocService.links$.pipe(takeUntil(this.destroyed)).subscribe((links) => {
-            this.hideToc = !links || links.length === 0;
-            if (!this.hideToc) {
+            this.hideToc.set(!links || links.length === 0);
+            if (!this.hideToc()) {
                 this.tocService.scrollToAnchor(this.urlFragment);
             }
         });

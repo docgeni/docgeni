@@ -13,13 +13,12 @@ import { TableOfContentsComponent } from '../../shared/toc/toc.component';
     templateUrl: './doc-viewer.component.html',
     standalone: false,
     host: {
-        [`class.dg-doc-viewer--single`]: 'isSingle()',
-        [`class.dg-doc-viewer--toc`]: 'hasContentToc()',
+        '[class.dg-doc-viewer]': 'true',
+        '[class.dg-doc-viewer--single]': 'isSingle()',
+        '[class.dg-doc-viewer--toc]': 'hasContentToc()',
     },
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
-    @HostBinding(`class.dg-doc-viewer`) isDocViewer = true;
-
     // 独立展示的页面，不属于任何频道
     readonly isSingle = signal(false);
 
