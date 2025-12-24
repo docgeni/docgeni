@@ -58,8 +58,10 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
         this.cdr.markForCheck();
 
         this.ngZone.run(() => {
-            this.contentRendered.emit(this.elementRef.nativeElement);
-            this.updateTableOfContents(this.elementRef.nativeElement);
+            setTimeout(() => {
+                this.contentRendered.emit(this.elementRef.nativeElement);
+                this.updateTableOfContents(this.elementRef.nativeElement);
+            });
         });
     }
 
