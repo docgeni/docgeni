@@ -1,20 +1,20 @@
-@if (contributors) {
+@if (contributors()) {
   <div class="dg-contributor-avatar-list">
-    @for (item of contributors | slice: 0 : 3; track item; let i = $index) {
+    @for (item of contributors() | slice: 0 : 3; track item; let i = $index) {
       <div class="dg-contributor-avatar" [title]="item">
         <img src="https://avatars.githubusercontent.com/{{ item }}" />
       </div>
     }
-    @if ((contributors | slice: 3).length) {
+    @if ((contributors()! | slice: 3).length) {
       <div class="dg-contributor-avatar dg-contributor-other">
-        {{ (contributors | slice: 3).length }}
+        {{ (contributors()! | slice: 3).length }}
       </div>
     }
   </div>
 }
-@if (lastUpdatedTime) {
+@if (lastUpdatedTime()) {
   <div class="dg-contribution-last-time">
     {{ 'LAST_UPDATED_TIME' | dgTranslate }}
-    {{ lastUpdatedTime | date: 'yyyy/MM/dd' }}
+    {{ lastUpdatedTime() | date: 'yyyy/MM/dd' }}
   </div>
 }

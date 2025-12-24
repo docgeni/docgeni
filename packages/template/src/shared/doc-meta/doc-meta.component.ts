@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, HostBinding, OnChanges } from '@angular/core';
+import { Component, Input, HostBinding, OnChanges, inject, signal, input, effect, untracked } from '@angular/core';
 import { DocItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
@@ -14,36 +14,45 @@ interface GitHubCommieInfo {
     templateUrl: './doc-meta.component.html',
     host: {
         class: 'dg-doc-meta',
+        '[class.dg-d-none]': 'hideDocMeta()',
     },
     standalone: false,
 })
 export class DocMetaComponent implements OnChanges {
-    @HostBinding(`class.dg-d-none`) hideDocMeta = true;
-    @Input() docItem!: DocItem;
-    lastUpdatedTime: Date | undefined;
-    contributors: string[] | undefined;
+    protected readonly hideDocMeta = signal(false);
+    lastUpdatedTime = signal<Date | undefined>(undefined);
+    contributors = signal<string[] | undefined>(undefined);
+    private http = inject(HttpClient);
+    private globalContext = inject(GlobalContext);
 
-    constructor(
-        private http: HttpClient,
-        private globalContext: GlobalContext,
-    ) {}
+    docItem = input.required<DocItem>();
 
-    ngOnChanges(): void {
-        if (this.docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
-            this.http
-                .get<GitHubCommieInfo[]>(`https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`, {
-                    params: { path: this.docItem.originPath },
-                })
-                .pipe(filter((result) => !!result.length))
-                .subscribe((result: GitHubCommieInfo[]) => {
-                    this.contributors = Array.from(new Set(result.map((item) => item.author.login)));
-                    this.lastUpdatedTime = new Date(result[0].commit.author.date);
-                    this.hideDocMeta = false;
-                });
-        } else {
-            this.contributors = undefined;
-            this.lastUpdatedTime = undefined;
-            this.hideDocMeta = true;
-        }
+    constructor() {
+        effect(() => {
+            const docItem = this.docItem();
+            untracked(() => {
+                if (docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
+                    this.http
+                        .get<GitHubCommieInfo[]>(
+                            `https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`,
+                            {
+                                params: { path: docItem.originPath },
+                            },
+                        )
+                        .pipe(filter((result) => !!result.length))
+                        .subscribe((result) => {
+                            this.contributors.set(Array.from(new Set(result.map((item) => item.author.login))));
+                            this.lastUpdatedTime.set(new Date(result[0].commit.author.date));
+                            this.hideDocMeta.set(false);
+                        });
+                } else {
+                    this.contributors.set(undefined);
+                    this.lastUpdatedTime.set(undefined);
+                    this.hideDocMeta.set(true);
+                }
+            });
+        });
     }
+
+    ngOnChanges(): void {}
 }

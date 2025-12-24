@@ -1,4 +1,4 @@
-import { Component, HostBinding, NgModuleFactory, OnDestroy, OnInit, signal, Type, ViewChild } from '@angular/core';
+import { Component, HostBinding, inject, NgModuleFactory, OnDestroy, OnInit, signal, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +19,12 @@ import { TableOfContentsComponent } from '../../shared/toc/toc.component';
     },
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
+    private navigationService = inject(NavigationService);
+    private pageTitle = inject(PageTitleService);
+    private tocService = inject(TocService);
+
     // 独立展示的页面，不属于任何频道
     readonly isSingle = signal(false);
 
@@ -43,17 +49,11 @@ export class DocViewerComponent implements OnInit, OnDestroy {
         return this.navigationService.channel;
     }
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private navigationService: NavigationService,
-        private pageTitle: PageTitleService,
-        private tocService: TocService,
-    ) {}
+    constructor() {}
 
     ngOnInit(): void {
         if (this.route.snapshot.data) {
-            this.isSingle.set(this.route.snapshot.data.single);
+            this.isSingle.set(this.route.snapshot.data['single']);
         }
         this.route.paramMap.subscribe((params) => {
             const id = params.get('id');

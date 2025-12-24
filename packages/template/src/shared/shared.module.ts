@@ -42,7 +42,6 @@ const COMPONENTS = [
     ContentViewerComponent,
     SourceCodeComponent,
     LabelComponent,
-    TableOfContentsComponent,
     LocalesSelectorComponent,
     ThemesSelectorComponent,
     AssetsContentPathPipe,
@@ -62,8 +61,8 @@ const COMPONENTS = [
 ];
 @NgModule({
     declarations: [...COMPONENTS],
-    exports: [CommonModule, FormsModule, RouterModule, ...COMPONENTS],
-    imports: [CommonModule, FormsModule, RouterModule],
+    exports: [CommonModule, FormsModule, RouterModule, ...COMPONENTS, TableOfContentsComponent],
+    imports: [CommonModule, FormsModule, RouterModule, TableOfContentsComponent],
     providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class DocgeniSharedModule {}

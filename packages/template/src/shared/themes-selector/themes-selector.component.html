@@ -1,5 +1,5 @@
 <button type="button" class="action-icon" [ngClass]="{ active: !!isDropdownOpen }" (click)="toggleTheme()">
-  <dg-icon [iconName]="themesMap[theme]?.icon" [ngClass]="{ system: theme === docgeniTheme.system }"></dg-icon>
+  <dg-icon [iconName]="themesMap[theme]?.icon!" [ngClass]="{ system: theme === docgeniTheme.system }"></dg-icon>
 </button>
 
 @if (!!isDropdownOpen) {
