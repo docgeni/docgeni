@@ -1,4 +1,4 @@
 @if (navigationService.channel) {
-  <dg-sidebar [menus]="navigationService.channel.items"></dg-sidebar>
+  <dg-sidebar [menus]="menus()"></dg-sidebar>
   <router-outlet></router-outlet>
 }

@@ -13,12 +13,12 @@
     <div
       class="search-results-container"
       [class.is-searching]="hasSearchText && isFocus"
-      [class.result-empty]="searchService.result?.length === 0"
+      [class.result-empty]="searchService.result.length === 0"
     >
       @for (item of searchService.result; track searchService.trackByFn($index, item)) {
         <a class="search-result" [href]="item.path" (click)="toRoute($event, item)">
           @if (item.parent) {
-            {{ item.parent?.title }} &gt;
+            {{ item.parent.title }} &gt;
           }
           <span [innerHtml]="searchText | highlight: item.title"></span>
         </a>

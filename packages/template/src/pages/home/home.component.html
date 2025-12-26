@@ -1,4 +1,4 @@
-@if (global.homeMeta?.hero) {
+@if (global.homeMeta.hero) {
   <div class="dg-hero">
     <div class="dg-hero-launch">
       <h1 class="dg-launch-title">{{ global.homeMeta.hero.title }}</h1>
@@ -19,7 +19,7 @@
   </div>
 }
 
-@if (global.homeMeta?.features && global.homeMeta?.features.length > 0) {
+@if (global.homeMeta.features && global.homeMeta.features.length > 0) {
   <div class="dg-features">
     @for (item of global.homeMeta.features; track item.title) {
       <div class="dg-feature">
@@ -32,7 +32,7 @@
     }
   </div>
 }
-@if (global.homeMeta?.contentPath) {
+@if (global.homeMeta.contentPath) {
   <div class="dg-extra-content">
     <dg-content-viewer [url]="global.homeMeta.contentPath | dgAssetsContentPath"></dg-content-viewer>
   </div>
