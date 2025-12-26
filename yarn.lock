@@ -156,18 +156,6 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/core@^20.3.10":
-  version "20.3.10"
-  resolved "https://registry.npmjs.org/@angular-devkit/core/-/core-20.3.10.tgz#82b1686b1772f9c318b97ada9500b25a8bae3318"
-  integrity sha512-COOT2eVebDwHhwENk12VR6m0wjL8D7p0dncEHF15zaBt1IXEnVhGESjSrs5klnPnt5T55qCBKyCTaeK7i/cS8Q==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.3"
-    rxjs "7.8.2"
-    source-map "0.7.6"
-
 "@angular-devkit/schematics-cli@^21.0.4":
   version "21.0.4"
   resolved "https://registry.npmjs.org/@angular-devkit/schematics-cli/-/schematics-cli-21.0.4.tgz#a2d92fa09a0e5df7f67fdf47c9860a188551dc02"
