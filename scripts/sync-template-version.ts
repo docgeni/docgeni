@@ -9,7 +9,7 @@ async function sync() {
     if (version) {
         const corePackageJsonPath = path.resolve(process.cwd(), './packages/cli/package.json');
         const corePackageJson = await toolkit.fs.readJson(corePackageJsonPath);
-        const toVersion = `^version`;
+        const toVersion = `^${version}`;
         corePackageJson.dependencies['@docgeni/template'] = toVersion;
         // corePackageJson.peerDependencies['@docgeni/template'] = toVersion;
         await writeJsonFile(corePackageJsonPath, corePackageJson, {
