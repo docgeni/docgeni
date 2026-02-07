@@ -1,7 +1,6 @@
 import * as yargs from 'yargs';
 import { buildCommand } from './build';
 import { serveCommand } from './serve';
-import { DEFAULT_CONFIG } from '@docgeni/core';
 import { initCommand } from './init';
 
 async function main() {
