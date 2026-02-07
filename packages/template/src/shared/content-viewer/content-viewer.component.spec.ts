@@ -72,6 +72,7 @@ describe('#content-viewer', () => {
         expect(req.request.method).toEqual('GET');
         expect(req.request.responseType).toEqual('text');
         req.flush('<div>content</div>');
+        flush();
         httpTestingController.verify();
         expect(contentRenderedSpy).toHaveBeenCalled();
         expect(contentRenderedSpy).toHaveBeenCalledWith(spectator.element);
