@@ -1,5 +1,6 @@
 import { CommandModule } from 'yargs';
 import { main } from '@angular-devkit/schematics-cli/bin/schematics';
+
 export const initCommand: CommandModule = {
     command: ['init', '$0'],
     describe: 'Init config',

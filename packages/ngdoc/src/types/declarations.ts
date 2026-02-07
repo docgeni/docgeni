@@ -1,4 +1,4 @@
-import { NgDocItemType, NgPropertyKind } from './enums';
+import { NgPropertyKind } from './enums';
 
 export interface NgPropertyType {
     name: string;
