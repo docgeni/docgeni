@@ -74,7 +74,7 @@ export function combineNgModuleMetadata(metadata: NgModuleMetadata, appendMetada
 function combineSymbolMetadata(origin: string | string[], append?: string | string[]) {
     const result: string[] = [];
     if (toolkit.utils.isArray(origin)) {
-        origin.forEach((item) => {
+        (origin as string[]).forEach((item) => {
             result.push(item);
         });
     } else if (origin) {
@@ -82,7 +82,7 @@ function combineSymbolMetadata(origin: string | string[], append?: string | stri
     }
     if (append) {
         if (toolkit.utils.isArray(append)) {
-            append.forEach((item) => {
+            (append as string[]).forEach((item) => {
                 if (!result.includes(item)) {
                     result.push(item);
                 }
