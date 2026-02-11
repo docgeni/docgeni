@@ -226,6 +226,10 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
                 (item.properties || []).forEach((property) => {
                     property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '';
                     property.description = property.description ? Markdown.toHTML(property.description) : '';
+                    // Extract the type's name from the PropertyType object
+                    if (property.type && typeof property.type === 'object' && property.type.name) {
+                        property.type = property.type.name;
+                    }
                 });
             });
         });
