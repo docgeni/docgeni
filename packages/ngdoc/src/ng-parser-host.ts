@@ -25,6 +25,12 @@ export interface DefaultNgParserHostOptions {
     };
 }
 
+const VIRTUAL_MODULE_PREFIX = '\0docgeni-virtual\0';
+
+function escapeModuleNameForDeclare(name: string): string {
+    return name.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
 export class DefaultNgParserHost implements NgParserHost {
     private rootFileNames: string[] = [];
     private compileOptions: ts.CompilerOptions;
@@ -33,6 +39,7 @@ export class DefaultNgParserHost implements NgParserHost {
     private moduleWatchersMap = new Map<string, FSWatcher>();
     private latestFileContents = new Map<string, string>();
     private rootDir: string;
+    private virtualModules = new Map<string, string>();
 
     static create(options: DefaultNgParserHostOptions): NgParserHost {
         return new DefaultNgParserHost(options);
@@ -52,7 +59,7 @@ export class DefaultNgParserHost implements NgParserHost {
     private createProgram() {
         const program = ts.createProgram(
             this.rootFileNames,
-            { ...this.compileOptions, types: [] },
+            { ...this.compileOptions, types: [], skipLibCheck: true },
             this.tsProgram ? undefined : this.createCompilerHost(),
             this.tsProgram,
         );
@@ -156,6 +163,11 @@ export class DefaultNgParserHost implements NgParserHost {
     }
 
     private getSourceFile(fileName: string, languageVersion: ts.ScriptTarget, onError?: (message: string) => void) {
+        const virtualModuleName = this.virtualModules.get(fileName);
+        if (virtualModuleName !== undefined) {
+            const sourceText = `declare module "${escapeModuleNameForDeclare(virtualModuleName)}" {}`;
+            return ts.createSourceFile(fileName, sourceText, languageVersion);
+        }
         const sourceText = this.options.fsHost.readFile(fileName);
         this.latestFileContents.set(fileName, sourceText);
         return sourceText !== undefined ? ts.createSourceFile(fileName, sourceText, languageVersion) : undefined;
@@ -179,7 +191,7 @@ export class DefaultNgParserHost implements NgParserHost {
             useCaseSensitiveFileNames: () => {
                 return ts.sys.useCaseSensitiveFileNames;
             },
-            fileExists: this.options.fsHost.fileExists,
+            fileExists: (path) => this.virtualModules.has(path) || this.options.fsHost.fileExists(path),
             readFile: this.options.fsHost.readFile,
             resolveModuleNames: this.resolveModuleNames.bind(this),
             directoryExists: (dirPath) => {
@@ -191,7 +203,6 @@ export class DefaultNgParserHost implements NgParserHost {
     private resolveModuleNames(moduleNames: string[], containingFile: string): ts.ResolvedModule[] {
         const resolvedModules: ts.ResolvedModule[] = [];
         for (const moduleName of moduleNames) {
-            // try to use standard resolution
             const result = ts.resolveModuleName(moduleName, containingFile, this.compileOptions, {
                 fileExists: this.options.fsHost.fileExists,
                 readFile: this.options.fsHost.readFile,
@@ -200,7 +211,15 @@ export class DefaultNgParserHost implements NgParserHost {
                 this.allResolvedModules.push(result.resolvedModule);
                 resolvedModules.push(result.resolvedModule);
             } else {
-                console.log(`can't resolve ${moduleName}`);
+                debug(`can't resolve ${moduleName}, using virtual stub`, 'ng-parser');
+                const virtualPath = `${VIRTUAL_MODULE_PREFIX}${moduleName}.d.ts`;
+                this.virtualModules.set(virtualPath, moduleName);
+                const stub: ts.ResolvedModule = {
+                    resolvedFileName: virtualPath,
+                    isExternalLibraryImport: true,
+                };
+                this.allResolvedModules.push(stub);
+                resolvedModules.push(stub);
             }
         }
         return resolvedModules;
