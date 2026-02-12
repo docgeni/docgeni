@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "module": "esnext"
   },
   // "files": ["./src/public-api.ts"]
   "include": ["src/"]

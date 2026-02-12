@@ -99,7 +99,10 @@ export class DefaultNgParserHost implements NgParserHost {
             }
         } else {
             this.rootFileNames = toolkit.fs.globSync(this.options.fileGlobs);
-            this.compileOptions = {};
+            this.compileOptions = {
+                moduleResolution: ts.ModuleResolutionKind.Bundler,
+                module: ts.ModuleKind.ESNext,
+            };
         }
         debug(`rootFileNames is ${this.rootFileNames}`, 'ng-parser');
         this.rootFileNames.forEach((fileName) => {
