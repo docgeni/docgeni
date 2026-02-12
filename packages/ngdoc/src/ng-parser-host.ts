@@ -188,8 +188,8 @@ export class DefaultNgParserHost implements NgParserHost {
         };
     }
 
-    private resolveModuleNames(moduleNames: string[], containingFile: string): ts.ResolvedModule[] {
-        const resolvedModules: ts.ResolvedModule[] = [];
+    private resolveModuleNames(moduleNames: string[], containingFile: string): (ts.ResolvedModule | undefined)[] {
+        const resolvedModules: (ts.ResolvedModule | undefined)[] = [];
         for (const moduleName of moduleNames) {
             // try to use standard resolution
             const result = ts.resolveModuleName(moduleName, containingFile, this.compileOptions, {
@@ -200,7 +200,10 @@ export class DefaultNgParserHost implements NgParserHost {
                 this.allResolvedModules.push(result.resolvedModule);
                 resolvedModules.push(result.resolvedModule);
             } else {
-                console.log(`can't resolve ${moduleName}`);
+                debug(`can't resolve ${moduleName}`, 'ng-parser');
+                // You must return one item (ResolvedModule | undefined) for each moduleName, otherwise TypeScript will report a Debug Failure.
+                //  For example, in Angular 21+, @angular/core uses exports subpaths (such as primitives/di), which may not be resolved in older moduleResolution versions.
+                resolvedModules.push(undefined);
             }
         }
         return resolvedModules;
