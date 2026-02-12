@@ -1,22 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Directive, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Directive, effect, EventEmitter, inject, input, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Directive()
 export abstract class ContentRenderer {
     private documentFetchSubscription!: Subscription;
 
-    @Input() set url(value: string) {
-        if (value) {
-            this.fetchDocument(value);
-        }
-    }
+    url = input<string>();
 
-    @Input() set content(value: string) {
-        if (value) {
-            this.updateDocument(value);
-        }
-    }
+    content = input<string>();
 
     @Output() contentRendered = new EventEmitter<HTMLElement>();
 
@@ -26,7 +18,19 @@ export abstract class ContentRenderer {
 
     protected http: HttpClient = inject(HttpClient);
 
-    constructor() {}
+    constructor() {
+        effect(() => {
+            if (this.url()) {
+                this.fetchDocument(this.url()!);
+            }
+        });
+
+        effect(() => {
+            if (this.content()) {
+                this.updateDocument(this.content()!);
+            }
+        });
+    }
 
     protected fetchDocument(url: string) {
         // Cancel previous pending request

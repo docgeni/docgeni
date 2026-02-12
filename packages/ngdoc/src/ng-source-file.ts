@@ -32,9 +32,9 @@ export class NgSourceFile {
     constructor(filePath: string, sourceText: string);
     constructor(filePathOrSourceFile: string | ts.SourceFile, sourceText?: string) {
         if (toolkit.utils.isString(filePathOrSourceFile)) {
-            this.sourceFile = ts.createSourceFile(filePathOrSourceFile, sourceText, ts.ScriptTarget.Latest, true);
+            this.sourceFile = ts.createSourceFile(filePathOrSourceFile as string, sourceText!, ts.ScriptTarget.Latest, true);
         } else {
-            this.sourceFile = filePathOrSourceFile;
+            this.sourceFile = filePathOrSourceFile as ts.SourceFile;
         }
     }
 
@@ -120,10 +120,10 @@ export function createNgSourceFile(filePathOrSourceFile?: string | ts.SourceFile
     if (toolkit.utils.isString(filePathOrSourceFile)) {
         let finalSourceText = sourceText;
         if (sourceText === undefined || sourceText === null) {
-            finalSourceText = toolkit.fs.readFileSync(filePathOrSourceFile, { encoding: 'utf-8' });
+            finalSourceText = toolkit.fs.readFileSync(filePathOrSourceFile as string, { encoding: 'utf-8' });
         }
-        return new NgSourceFile(filePathOrSourceFile, finalSourceText);
+        return new NgSourceFile(filePathOrSourceFile as string, finalSourceText);
     } else {
-        return new NgSourceFile(filePathOrSourceFile);
+        return new NgSourceFile(filePathOrSourceFile as ts.SourceFile);
     }
 }

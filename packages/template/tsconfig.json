@@ -4,7 +4,6 @@
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
     "declaration": true,
-    "inlineSources": true,
     "strict": true,
     "types": [],
     "lib": [
@@ -13,9 +12,10 @@
     ]
   },
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
+   "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "include": [
     "**/*.ts",

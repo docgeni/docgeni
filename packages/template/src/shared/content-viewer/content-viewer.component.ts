@@ -57,11 +57,8 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
 
         this.cdr.markForCheck();
 
-        // Resolving and creating components dynamically in Angular happens synchronously, but since
-        // we want to emit the output if the components are actually rendered completely, we wait
-        // until the Angular zone becomes stable.
-        this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-            this.ngZone.run(() => {
+        this.ngZone.run(() => {
+            setTimeout(() => {
                 this.contentRendered.emit(this.elementRef.nativeElement);
                 this.updateTableOfContents(this.elementRef.nativeElement);
             });
