@@ -11,5 +11,6 @@
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false,
-  "reporter": "jasmine-ts-console-reporter"
+  "reporter": "jasmine-ts-console-reporter",
+  "jsLoader": "require"
 }
