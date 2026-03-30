@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.1](https://github.com/docgeni/docgeni/compare/v2.7.0-next.0...v2.7.0-next.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* **core:** should display the type in the API documentation correctly #NEXUS-193 ([06e6bbd](https://github.com/docgeni/docgeni/commit/06e6bbd326e8fe12868de5624c987978ebafd2eb)), closes [#NEXUS-193](https://github.com/docgeni/docgeni/issues/NEXUS-193)
+* resolve type errors #NEXUS-186 ([0d577fd](https://github.com/docgeni/docgeni/commit/0d577fde1f44aaa2534c614fe51540e603197038)), closes [#NEXUS-186](https://github.com/docgeni/docgeni/issues/NEXUS-186)
+
+
+
+
+
 # [2.7.0-next.0](https://github.com/docgeni/docgeni/compare/v2.6.0...v2.7.0-next.0) (2025-12-26)
 
 
