@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.2](https://github.com/HandsomeButterball/docgeni/compare/v2.7.0-next.1...v2.7.0-next.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* update "moduleResolution" to "bundler" ([13fb2f3](https://github.com/HandsomeButterball/docgeni/commit/13fb2f3b6139f2048b2c58bdd25ebd51b520ef59))
+
+
+
+
+
 # [2.7.0-next.1](https://github.com/docgeni/docgeni/compare/v2.7.0-next.0...v2.7.0-next.1) (2026-03-30)
 
 
