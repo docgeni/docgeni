@@ -10,7 +10,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@angular-devkit/build-angular": "^20.3.10",
+    "@angular-devkit/build-angular": "^20.3.18",
     "@docgeni/angular": "19.0.0",
     "@docgeni/cli": "2.5.1",
     "@docgeni/template": "2.5.1"
