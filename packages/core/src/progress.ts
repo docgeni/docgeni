@@ -20,13 +20,14 @@ export class DocgeniProgress extends Spinner {
 
     initialize() {
         let originalLog: (message: string) => void;
+        const spinner = this as Spinner;
         this.docgeni.hooks.compilation.tap('DocgeniProgress', (compilation) => {
-            if (!this.isSpinning) {
-                this.start('\nStart building...');
+            if (!spinner.isSpinning) {
+                spinner.start('\nStart building...');
             }
             originalLog = this.docgeni.logger.log;
             this.docgeni.logger.log = (message) => {
-                this.info(message);
+                spinner.info(message);
             };
             const startTime = new Date().getTime();
             let currentDoc = 0;
@@ -36,33 +37,33 @@ export class DocgeniProgress extends Spinner {
 
             compilation.hooks.docsBuild.tap(this.name, (docsBuilder, docs) => {
                 totalDoc = docs.length;
-                this.text = 'Start building docs...';
+                spinner.text = 'Start building docs...';
             });
 
             compilation.hooks.docsBuildSucceed.tap(this.name, (builder) => {
-                this.text = `Build docs successfully(total: ${totalDoc})`;
+                spinner.text = `Build docs successfully(total: ${totalDoc})`;
             });
 
             compilation.hooks.docBuildSucceed.tap(this.name, (docFile) => {
-                this.text = `Building docs (${++currentDoc}/${totalDoc}) ${getSummaryStr(docFile.path)}`;
+                spinner.text = `Building docs (${++currentDoc}/${totalDoc}) ${getSummaryStr(docFile.path)}`;
             });
 
             compilation.hooks.libraryBuild.tap(this.name, (lib) => {
                 totalComponent += lib.components.size;
-                this.text = `Start building library(${lib.lib.name})...`;
+                spinner.text = `Start building library(${lib.lib.name})...`;
             });
 
             compilation.hooks.libraryBuildSucceed.tap(this.name, (lib, components) => {
                 totalComponent += lib.components.size;
-                this.text = `Library(${lib.lib.name}) build successfully(total: ${components ? components.length : lib.components.size})`;
+                spinner.text = `Library(${lib.lib.name}) build successfully(total: ${components ? components.length : lib.components.size})`;
             });
 
             compilation.hooks.componentBuildSucceed.tap(this.name, (component) => {
-                this.text = `Building components ${++currentComponent}/${totalComponent} ${getSummaryStr(component.absPath)}`;
+                spinner.text = `Building components ${++currentComponent}/${totalComponent} ${getSummaryStr(component.absPath)}`;
             });
 
             compilation.hooks.finish.tap(this.name, () => {
-                this.stop();
+                spinner.stop();
                 this.docgeni.logger.log = originalLog;
                 if (compilation.increment && compilation.increment.changes) {
                     this.docgeni.logger.fancy(`\n${compilation.increment.changes.length} files changes\n`);
@@ -70,7 +71,7 @@ export class DocgeniProgress extends Spinner {
                 const finishTime = new Date().getTime();
                 const result = compilation.getResult();
                 this.docgeni.logger.fancy(this.toStringByCompilationResult(result, finishTime - startTime));
-                this.succeed('Docgeni compiled successfully.');
+                spinner.succeed('Docgeni compiled successfully.');
             });
         });
     }

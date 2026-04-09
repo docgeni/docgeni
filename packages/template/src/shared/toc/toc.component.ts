@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, HostBinding, input, signal } from '@angular/core';
-import { LocationStrategy } from '@angular/common';
+import { Component, OnDestroy, OnInit, HostBinding, input, signal, inject } from '@angular/core';
+import { LocationStrategy, AsyncPipe } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,13 +11,18 @@ let OFFSET = 60;
 @Component({
     selector: 'dg-toc',
     templateUrl: './toc.component.html',
-    standalone: false,
+    imports: [AsyncPipe],
     host: {
+        class: 'dg-toc',
         '[class.dg-d-none]': 'hideToc()',
     },
 })
 export class TableOfContentsComponent implements OnInit, OnDestroy {
-    @HostBinding(`class.dg-toc`) isToc = true;
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
+    global = inject(GlobalContext);
+    private locationStrategy = inject(LocationStrategy);
+    public tocService = inject(TocService);
 
     readonly container = input<string>('.dg-scroll-container');
 
@@ -33,14 +38,8 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     private urlFragment = '';
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        global: GlobalContext,
-        private locationStrategy: LocationStrategy,
-        public tocService: TocService,
-    ) {
-        if (global.config.mode === 'lite') {
+    constructor() {
+        if (this.global.config.mode === 'lite') {
             OFFSET = 0;
         }
         this.router.events.pipe(takeUntil(this.destroyed)).subscribe((event) => {

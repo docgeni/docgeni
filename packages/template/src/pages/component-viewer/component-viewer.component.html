@@ -1,10 +1,10 @@
 @if (docItem()) {
-  <dg-doc-header [title]="docItem().title" [subtitle]="docItem().subtitle"></dg-doc-header>
+  <dg-doc-header [title]="docItem().title!" [subtitle]="docItem().subtitle!"></dg-doc-header>
   <div class="dg-tab-links">
     @if (docItem().overview) {
       <a class="dg-tab-link" [routerLink]="['./overview']" routerLinkActive="active">{{ 'OVERVIEW' | dgTranslate }}</a>
     }
-    @if (docItem().examples?.length > 0) {
+    @if (docItem().examples!.length > 0) {
       <a class="dg-tab-link" [routerLink]="['./examples']" routerLinkActive="active">{{ 'EXAMPLES' | dgTranslate }}</a>
     }
     @if (docItem().api) {

@@ -20,7 +20,11 @@
 //    md
 @function dg-breakpoint-next($name, $breakpoints: variables.$dg-grid-breakpoints, $breakpoint-names: map.keys($breakpoints)) {
     $n: list.index($breakpoint-names, $name);
-    @return if($n != null and $n < list.length($breakpoint-names), list.nth($breakpoint-names, $n + 1), null);
+    @if $n != null and $n < list.length($breakpoint-names) {
+        @return list.nth($breakpoint-names, $n + 1);
+    } @else {
+        @return null;
+    }
 }
 
 // Minimum breakpoint width. Null for the smallest (first) breakpoint.
@@ -29,7 +33,11 @@
 //    576px
 @function dg-breakpoint-min($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $min: map.get($breakpoints, $name);
-    @return if($min != 0, $min, null);
+    @if $min != 0 {
+        @return $min;
+    } @else {
+        @return null;
+    }
 }
 
 // Maximum breakpoint width. Null for the largest (last) breakpoint.
@@ -43,7 +51,11 @@
 //    767.98px
 @function dg-breakpoint-max($name, $breakpoints: variables.$dg-grid-breakpoints) {
     $next: dg-breakpoint-next($name, $breakpoints);
-    @return if($next, dg-breakpoint-min($next, $breakpoints) - 0.02, null);
+    @if $next {
+        @return dg-breakpoint-min($next, $breakpoints) - 0.02;
+    } @else {
+        @return null;
+    }
 }
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash in front.
@@ -54,7 +66,11 @@
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
 @function dg-breakpoint-infix($name, $breakpoints: variables.$dg-grid-breakpoints) {
-    @return if(dg-breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+    @if dg-breakpoint-min($name, $breakpoints) == null {
+        @return '';
+    } @else {
+        @return '-#{$name}';
+    }
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.

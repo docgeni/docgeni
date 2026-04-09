@@ -2,18 +2,17 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc/site",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
     "experimentalDecorators": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
     "importHelpers": true,
     "target": "ES2022",
-    "useDefineForClassFields": false,
-    "noImplicitOverride": true,
-    "strict": true,
+    "module": "preserve",
     "lib": [
       "es2018",
       "dom"
@@ -35,6 +34,12 @@
         "../../packages/a-lib/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "files": [
     "src/main.ts"

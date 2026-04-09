@@ -1,4 +1,16 @@
-import { Component, EventEmitter, Input, NgModuleFactory, OnInit, Output, Type, ɵNgModuleFactory } from '@angular/core';
+import {
+    Component,
+    effect,
+    EventEmitter,
+    input,
+    linkedSignal,
+    NgModuleFactory,
+    OnInit,
+    Output,
+    signal,
+    Type,
+    ɵNgModuleFactory,
+} from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
 import { ExampleLoader } from '../../services/example-loader';
 
@@ -9,21 +21,17 @@ import { ExampleLoader } from '../../services/example-loader';
 })
 export class ExampleRendererComponent implements OnInit {
     /** Component type for the current example. */
-    componentType: Type<any> | null = null;
+    componentType = linkedSignal(() => {
+        return this.exampleComponentType();
+    });
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    @Input() set name(name: string) {
-        this.load(name);
-    }
+    name = input<string>();
 
-    @Input() set exampleModuleType(type: Type<any>) {
-        this.exampleModuleFactory = new ɵNgModuleFactory(type);
-    }
+    exampleModuleType = input<Type<any> | null>(null);
 
-    @Input() set exampleComponentType(type: Type<any>) {
-        this.componentType = type;
-    }
+    exampleComponentType = input<Type<any>>();
 
     @Output() exampleLoadSuccess = new EventEmitter<LiveExample>();
 
@@ -31,14 +39,21 @@ export class ExampleRendererComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader) {}
+    constructor(private exampleLoader: ExampleLoader) {
+        effect(() => {
+            const name = this.name();
+            if (name) {
+                this.load(name);
+            }
+        });
+    }
 
     ngOnInit(): void {}
 
     load(name: string) {
         this.exampleLoader.load(name).then((result) => {
             this.exampleModuleFactory = new ɵNgModuleFactory(result.moduleType);
-            this.componentType = result.componentType;
+            this.componentType.set(result.componentType);
             this.exampleLoadSuccess.emit(result.example);
         });
     }

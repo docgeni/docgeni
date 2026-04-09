@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.2](https://github.com/HandsomeButterball/docgeni/compare/v2.7.0-next.1...v2.7.0-next.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* update "moduleResolution" to "bundler" ([13fb2f3](https://github.com/HandsomeButterball/docgeni/commit/13fb2f3b6139f2048b2c58bdd25ebd51b520ef59))
+
+
+
+
+
+# [2.7.0-next.1](https://github.com/docgeni/docgeni/compare/v2.7.0-next.0...v2.7.0-next.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* **core:** should display the type in the API documentation correctly #NEXUS-193 ([06e6bbd](https://github.com/docgeni/docgeni/commit/06e6bbd326e8fe12868de5624c987978ebafd2eb)), closes [#NEXUS-193](https://github.com/docgeni/docgeni/issues/NEXUS-193)
+* resolve type errors #NEXUS-186 ([0d577fd](https://github.com/docgeni/docgeni/commit/0d577fde1f44aaa2534c614fe51540e603197038)), closes [#NEXUS-186](https://github.com/docgeni/docgeni/issues/NEXUS-186)
+* run test error 'can not resolve @angular/core/primitives/di' #NEXUS-184 ([6a7fafa](https://github.com/docgeni/docgeni/commit/6a7fafaa6dba0e15c20c629fa8be5bc1c559d8a8)), closes [#NEXUS-184](https://github.com/docgeni/docgeni/issues/NEXUS-184)
+* update compilationMode to partial ([a9f9d50](https://github.com/docgeni/docgeni/commit/a9f9d503ae1881e91868c67b1ad48a79608f46d0))
+
+
+
+
+
+# [2.7.0-next.0](https://github.com/docgeni/docgeni/compare/v2.6.0...v2.7.0-next.0) (2025-12-26)
+
+
+### Bug Fixes
+
+* remove ngComponentOutletNgModuleFactory ([d45cc88](https://github.com/docgeni/docgeni/commit/d45cc88b7029eb581e404d3a8456a61e747bd7a5))
+
+
+### Features
+
+* upgrade ng to 21 and support zoneless app ([c65e9fb](https://github.com/docgeni/docgeni/commit/c65e9fbf51f9d0892ad08cbe0c4c13ca5595c610))
+
+
+
+
+
 # [2.6.0](https://github.com/docgeni/docgeni/compare/v2.6.0-next.0...v2.6.0) (2025-11-26)
 
 **Note:** Version bump only for package docgeni

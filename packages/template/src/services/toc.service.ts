@@ -1,5 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { fromEvent, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { GlobalContext } from './global-context';
@@ -21,7 +22,7 @@ export interface TocLink {
     top: number;
 
     /** level of the section */
-    level?: number;
+    level: number;
 
     element?: HTMLHeadingElement;
 }
@@ -41,9 +42,7 @@ export class TocService {
         return this.linksSubject$.asObservable();
     }
 
-    public get links() {
-        return this.linksSubject$.value;
-    }
+    readonly links = toSignal(this.links$);
 
     public get activeLink$(): Observable<TocLink> {
         return this.activeLinkSubject$.asObservable() as Observable<TocLink>;
@@ -124,15 +123,15 @@ export class TocService {
         const scrollOffset = this.getScrollOffset();
         let activeItem: TocLink;
         if (scrollOffset! <= OFFSET + 1) {
-            activeItem = this.links[0];
+            activeItem = this.links()![0];
         } else {
-            const itemOffset = this.links.find((link) => {
+            const itemOffset = this.links()!.find((link) => {
                 return link.element!.offsetTop >= scrollOffset!;
             });
             if (itemOffset) {
                 activeItem = itemOffset;
             } else {
-                activeItem = this.links[this.links.length - 1];
+                activeItem = this.links()![this.links()!.length - 1];
             }
         }
 
@@ -144,7 +143,7 @@ export class TocService {
             if (this.scrollContainer === this.document.window) {
                 this.viewportScroller.scrollToAnchor(urlFragment);
             } else {
-                const link = this.links.find((link) => {
+                const link = this.links()!.find((link) => {
                     return link.id === urlFragment;
                 });
                 if (link) {

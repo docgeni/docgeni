@@ -1,7 +1,7 @@
 <!-- <dg-content-viewer [url]="contentUrl"> </dg-content-viewer> -->
-@if (apiDeclarations) {
+@if (apiDeclarations()) {
   <div class="dg-component-api-content dg-doc-content">
-    @for (apiDeclaration of apiDeclarations; track apiDeclaration.name) {
+    @for (apiDeclaration of apiDeclarations(); track apiDeclaration.name) {
       <div class="dg-api-header">
         <h1 class="name" id="{{ apiDeclaration.name }}">{{ apiDeclaration.name }}</h1>
         <label class="type-label dg-label {{ apiDeclaration.type }}">{{ apiDeclaration.type }}</label>
@@ -85,8 +85,8 @@
                     <div class="dg-api-method-parameter">
                       <div class="dg-api-method-parameter-head">Return:</div>
                       <div class="dg-api-method-return-value">
-                        <span class="dg-api-method-parameter-type">{{ method.returnValue.type }}</span>
-                        <span class="dg-api-method-parameter-description">{{ method.returnValue.description }}</span>
+                        <span class="dg-api-method-parameter-type">{{ method.returnValue?.type }}</span>
+                        <span class="dg-api-method-parameter-description">{{ method.returnValue?.description }}</span>
                       </div>
                     </div>
                   </td>

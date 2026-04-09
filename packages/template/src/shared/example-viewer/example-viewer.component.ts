@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Type, input } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, input, inject, signal } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
@@ -25,7 +25,7 @@ const nameOrdersMap: Record<string, number> = {
     selector: 'dg-example-viewer',
     templateUrl: './example-viewer.component.html',
     host: {
-        '[attr.id]': 'example?.key',
+        '[attr.id]': 'example()?.key',
         class: 'dg-example-viewer',
         'class.dg-example-viewer-inline': 'inline()',
     },
@@ -33,6 +33,10 @@ const nameOrdersMap: Record<string, number> = {
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;
+    private exampleLoader = inject(ExampleLoader);
+    private globalContext = inject(GlobalContext);
+    private http = inject(HttpClient);
+    private stackblitzExampleService = inject(StackblitzExampleService);
 
     readonly name = input.required<string>();
 
@@ -41,11 +45,11 @@ export class ExampleViewerComponent implements OnInit {
     });
 
     /** Component type for the current example. */
-    exampleComponentType: Type<any> | null = null;
+    exampleComponentType!: Type<any>;
 
-    exampleModuleType: Type<any> | null = null;
+    exampleModuleType!: Type<any>;
 
-    example!: LiveExample;
+    example = signal<LiveExample | undefined>(undefined);
 
     showSource = false;
 
@@ -57,12 +61,7 @@ export class ExampleViewerComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(
-        private exampleLoader: ExampleLoader,
-        private globalContext: GlobalContext,
-        private http: HttpClient,
-        private stackblitzExampleService: StackblitzExampleService,
-    ) {}
+    constructor() {}
 
     // Use short name such as TS, HTML, CSS replace exampleName.component.*, we need to transform
     // the file name to match the exampleName.component.* that displays main source files.
@@ -76,15 +75,16 @@ export class ExampleViewerComponent implements OnInit {
         this.exampleLoader.load(this.name()).then((result) => {
             this.exampleModuleType = result.moduleType;
             this.exampleComponentType = result.componentType;
-            this.example = result.example;
+            const example = result.example;
+            this.example.set(example);
             const rootDir = this.globalContext.getAssetsContentPath(
-                `${EXAMPLES_HIGHLIGHTED_PATH}/${this.example.module.importSpecifier}/${this.example.name}`,
+                `${EXAMPLES_HIGHLIGHTED_PATH}/${example.module.importSpecifier}/${example.name}`,
             );
 
-            this.exampleTabs = this.example.sourceFiles
+            this.exampleTabs = example.sourceFiles
                 .map((file) => {
                     return {
-                        name: this.transformFileName(file.name, this.example.name),
+                        name: this.transformFileName(file.name, example.name),
                         path: `${rootDir}/${file.highlightedPath}`,
                     };
                 })
@@ -109,7 +109,7 @@ export class ExampleViewerComponent implements OnInit {
     openStackBlitz() {
         forkJoin({
             examplesSources: this.http.get<{ path: string; content: string }[]>(
-                `assets/content/examples-source-bundle/${this.example.module.importSpecifier}/bundle.json`,
+                `assets/content/examples-source-bundle/${this.example()!.module.importSpecifier}/bundle.json`,
             ),
             sharedFiles: this.http.get<{ path: string; content: string }[]>(`assets/stack-blitz/bundle.json`),
         }).subscribe(
@@ -125,10 +125,10 @@ export class ExampleViewerComponent implements OnInit {
                         }),
                         ...sharedFiles,
                     ],
-                    this.example.module,
+                    this.example()!.module,
                     {
-                        name: this.example.componentName,
-                        selector: this.example.key,
+                        name: this.example()!.componentName,
+                        selector: this.example()!.key,
                     },
                 );
             },

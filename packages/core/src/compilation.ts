@@ -80,7 +80,7 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
             this.hooks.buildSucceed.call();
             for (const path in this.preparedEmitFiles) {
                 const file = this.preparedEmitFiles[path];
-                await this.docgeni.host.writeFile(path, toolkit.utils.isString(file) ? file : file.content);
+                await this.docgeni.host.writeFile(path, toolkit.utils.isString(file) ? file : (file as EmitFile).content);
             }
         } catch (error) {
             this.docgeni.logger.error(error);
@@ -103,7 +103,9 @@ export class DocgeniCompilationImpl implements DocgeniCompilation {
     addEmitFiles(files: EmitFiles): void;
     addEmitFiles(path: string | EmitFiles, content?: string | EmitFile): void {
         if (toolkit.utils.isString(path)) {
-            this.preparedEmitFiles[path] = content;
+            if (content !== undefined) {
+                this.preparedEmitFiles[path as string] = content;
+            }
         } else {
             Object.assign(this.preparedEmitFiles, path);
         }
