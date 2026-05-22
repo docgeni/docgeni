@@ -1,0 +1,44 @@
+@use '../../styles/variables';
+
+.dg-tabs-host {
+    display: block;
+    margin: 16px 0;
+}
+
+.dg-tabs {
+    border: 1px solid variables.$dg-border-color;
+    border-radius: variables.$dg-border-radius;
+    overflow: hidden;
+
+    .dg-tab-links {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+        background: variables.$dg-gray-80;
+        overflow-x: auto;
+
+        .dg-tab-link {
+            border: none;
+            // background: transparent;
+            cursor: pointer;
+            margin-right: 0px;
+            padding-right: 20px;
+        }
+    }
+
+    .dg-tab-panels {
+        padding: 16px;
+        background: variables.$dg-white;
+        font-size: variables.$dg-font-size-md;
+        line-height: 26px;
+
+        .dg-tab-panel {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
