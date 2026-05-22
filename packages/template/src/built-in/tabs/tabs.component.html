@@ -1,0 +1,28 @@
+@if (tabs().length) {
+  <div class="dg-tab-links" role="tablist">
+    @for (tab of tabs(); track tab.label; let i = $index) {
+      <a
+        class="dg-tab-link"
+        role="tab"
+        [class.active]="activeIndex() === i"
+        [attr.aria-selected]="activeIndex() === i"
+        (click)="selectTab(i)"
+      >
+        {{ tab.label }}
+      </a>
+    }
+  </div>
+  <div class="dg-tab-panels">
+    @for (tab of tabs(); track tab.label; let i = $index) {
+      <div
+        class="dg-tab-panel"
+        role="tabpanel"
+        [class.active]="activeIndex() === i"
+        [hidden]="activeIndex() !== i"
+        [innerHTML]="tab.contentHtml"
+      ></div>
+    }
+  </div>
+}
+
+<ng-content></ng-content>

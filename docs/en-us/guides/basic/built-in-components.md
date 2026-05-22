@@ -73,6 +73,24 @@ Use `alert` to create a alert box. the type can be `primary`, `info`, `success`,
 
 ```
 
+## Tabs
+
+Use `tabs` and `tab` to create switchable tab panels. Set the tab title with the `label` attribute:
+
+<tabs>
+  <tab label="Apple">This is an 🍎</tab>
+  <tab label="Orange">This is an 🍊</tab>
+  <tab label="Banana">This is an 🍌</tab>
+</tabs>
+
+```html
+<tabs>
+  <tab label="Apple">This is an 🍎</tab>
+  <tab label="Orange">This is an 🍊</tab>
+  <tab label="Banana">This is an 🍌</tab>
+</tabs>
+```
+
 ## Embed
 
 The `embed` component can embed the contents of another markdown document in one markdown document:

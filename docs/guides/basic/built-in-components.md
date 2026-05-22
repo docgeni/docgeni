@@ -72,6 +72,30 @@ order: 50
 
 ```
 
+## Tabs
+
+使用 `tabs` 与 `tab` 标签创建可切换的 Tab 内容区，`label` 属性为 Tab 标题：
+
+<tabs>
+  <tab label="苹果">
+    这是一个 🍎
+  </tab>
+  <tab label="橘子">
+    这是一个 🍊
+  </tab>
+  <tab label="香蕉">
+    这是一个 🍌
+  </tab>
+</tabs>
+
+```html
+<tabs>
+  <tab label="苹果">这是一个 🍎</tab>
+  <tab label="橘子">这是一个 🍊</tab>
+  <tab label="香蕉">这是一个 🍌</tab>
+</tabs>
+```
+
 ## Embed
 
 Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的内容：
