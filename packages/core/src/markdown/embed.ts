@@ -1,7 +1,8 @@
 import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
 import fm from 'front-matter';
-import { marked } from 'marked';
+import { Token, TokenizerAndRendererExtension } from 'marked';
+import { MarkdownRendererOptions } from './renderer';
 
 const LINE_SEPARATE = /\r\n|\n|\r/;
 export function getEmbedBody(input: string, range: [number, number], url: string) {
@@ -21,40 +22,42 @@ export interface EmbedToken {
     type: 'embed';
     raw: string;
     src: string;
-    tokens: [];
+    tokens: Token[];
     message?: string;
 }
 
-export const embed: marked.TokenizerExtension | marked.RendererExtension = {
+export const embed: TokenizerAndRendererExtension = {
     name: 'embed',
     level: 'block',
     start(src: string) {
         return src.match(/<embed/)?.index;
     },
-    tokenizer(src: string, tokens: any[]) {
-        const rule = /^<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/gi; // Regex for the complete token
+    tokenizer(src: string) {
+        const rule = /^<embed\W*src=['"]([^"']*)\W*\/?>(<\/embed>?)/gi;
         const match = rule.exec(src);
         if (match) {
             const rangeRule = /(#L(\d+)(-L(\d+))?)?$/;
             const rangeMatch = rangeRule.exec(match[1].trim());
             const token: EmbedToken = {
-                // Token to generate
                 type: 'embed',
                 raw: match[0],
                 src: match[1].trim().replace(rangeRule, ''),
                 tokens: [],
             };
-            // eslint-disable-next-line dot-notation
-            const absFilePath: string = this.lexer.options['absFilePath'];
-            const absDirPath = path.dirname(absFilePath);
-            const nodeAbsPath = toolkit.path.resolve(absDirPath, token.src);
-            const nodeSystemAbsPath = toolkit.path.getSystemPath(nodeAbsPath);
-            if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeSystemAbsPath)) {
-                const content = toolkit.fs.readFileSync(nodeSystemAbsPath).toString();
-                this.lexer.blockTokens(
-                    getEmbedBody(content, [parseInt(rangeMatch[2], 10), parseInt(rangeMatch[4], 10)], token.src),
-                    token.tokens,
-                );
+            const absFilePath = (this.lexer.options as MarkdownRendererOptions).absFilePath;
+            if (absFilePath) {
+                const absDirPath = path.dirname(absFilePath);
+                const nodeAbsPath = toolkit.path.resolve(absDirPath, token.src);
+                const nodeSystemAbsPath = toolkit.path.getSystemPath(nodeAbsPath);
+                if (nodeAbsPath !== absFilePath && toolkit.fs.pathExistsSync(nodeSystemAbsPath)) {
+                    const content = toolkit.fs.readFileSync(nodeSystemAbsPath).toString();
+                    this.lexer.blockTokens(
+                        getEmbedBody(content, [parseInt(rangeMatch[2], 10), parseInt(rangeMatch[4], 10)], token.src),
+                        token.tokens,
+                    );
+                } else {
+                    token.message = `can't resolve path ${token.src}`;
+                }
             } else {
                 token.message = `can't resolve path ${token.src}`;
             }

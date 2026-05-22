@@ -78,7 +78,7 @@
     "cosmiconfig": "^9.0.0",
     "docsearch.js": "2.6.3",
     "fancy-log": "^2.0.0",
-    "marked": "^4.0.12",
+    "marked": "18.0.4",
     "rxjs": "^7.8.2",
     "tslib": "^2.6.3",
     "zone.js": "~0.15.0"
@@ -96,7 +96,6 @@
     "@types/chai": "^4.2.11",
     "@types/jasmine": "~5.1.4",
     "@types/jasminewd2": "~2.0.13",
-    "@types/marked": "^4.0.2",
     "@types/node": "^24.10.0",
     "@types/watchpack": "^2.4.4",
     "@types/yargs": "^17.0.33",
