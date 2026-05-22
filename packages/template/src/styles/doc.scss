@@ -328,13 +328,82 @@ $dg-pipe-color: #546e7a;
     }
 
     @include content-child-selector(pre) {
+        position: relative;
         padding: 1em;
         color: variables.$dg-gray-700;
         background: variables.$dg-gray-100;
         border-radius: variables.$dg-border-radius;
         overflow: auto;
-        code {
-            padding: 0px;
+
+        > .code-block-actions {
+            position: absolute;
+            top: 1em;
+            right: 1.1em;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            width: fit-content;
+            height: fit-content;
+            pointer-events: none;
+
+            .lang,
+            code-copy,
+            .dg-code-copy {
+                grid-area: 1 / 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: auto;
+            }
+
+            .lang {
+                font-size: 12px;
+                line-height: 1;
+                color: variables.$dg-gray-500;
+                text-transform: lowercase;
+                user-select: none;
+                opacity: 1;
+                transition: opacity 0.15s ease;
+            }
+
+            code-copy,
+            .dg-code-copy {
+                color: variables.$dg-gray-500;
+                cursor: pointer;
+                opacity: 0;
+                pointer-events: none;
+                transition:
+                    opacity 0.15s ease,
+                    color 0.15s ease;
+
+                &:hover {
+                    color: variables.$dg-primary;
+                }
+
+                svg {
+                    width: 1em;
+                    height: 1em;
+                    fill: currentColor;
+                }
+            }
+        }
+
+        &:hover > .code-block-actions {
+            .lang {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            code-copy,
+            .dg-code-copy {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        > code {
+            display: block;
+            padding: 0;
             background: transparent;
             font-size: variables.$dg-font-size-base;
         }

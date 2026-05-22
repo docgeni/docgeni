@@ -13,9 +13,8 @@ import {
     ChangeDetectionStrategy,
     reflectComponentType,
 } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
-import { take } from 'rxjs/operators';
 import { ComponentPortal, DomPortalOutlet } from '../../services/dom-portal-outlet';
 import { getBuiltInComponents } from '../../built-in/built-in-components';
 import { ContentRenderer } from '../content-renderer';
@@ -49,6 +48,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     ngOnInit(): void {}
 
     updateDocument(content: string) {
+        this.clearLiveExamples();
         this.elementRef.nativeElement.innerHTML = content;
         this.loadComponents('example', ExampleViewerComponent);
         getBuiltInComponents().forEach((item) => {
@@ -79,7 +79,6 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
             ]);
             const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
             const exampleViewerRef = portalHost.attach<any>(examplePortal, replace);
-            // 循环设置属性
             const compMetadata = reflectComponentType(componentClass);
             const inputsOfKey =
                 compMetadata?.inputs.reduce(

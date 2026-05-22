@@ -92,12 +92,12 @@ export class DocsMarkdownRenderer extends Renderer {
         }
 
         const content = isEscaped ? code : escapeHtml(code);
+        const langClass = language ? `language-${language}` : '';
+        const preClassAttr = langClass ? ` class="${langClass}"` : '';
+        const codeClassAttr = langClass ? ` class="${langClass}"` : '';
+        const langLabel = language ? `<span class="lang">${escapeHtml(language)}</span>` : '';
+        const codeActions = `<span class="code-block-actions">${langLabel}<code-copy></code-copy></span>`;
 
-        if (!language) {
-            return `<pre><code>${content}</code></pre>\n`;
-        }
-
-        const langClass = `language-${language}`;
-        return `<pre class="${langClass}"><code class="${langClass}">${content}</code></pre>\n`;
+        return `<pre${preClassAttr}>${codeActions}<code${codeClassAttr}>${content}</code></pre>\n`;
     }
 }

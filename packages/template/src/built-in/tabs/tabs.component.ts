@@ -1,13 +1,4 @@
-import {
-    afterNextRender,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    OnInit,
-    signal,
-} from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, signal } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
 export interface DocgeniTabItem {
@@ -39,9 +30,7 @@ export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnI
         });
     }
 
-    ngOnInit(): void {
-        // this.updateHostClass(['dg-tabs']);
-    }
+    ngOnInit(): void {}
 
     selectTab(index: number): void {
         this.activeIndex.set(index);

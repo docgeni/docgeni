@@ -10,6 +10,15 @@ describe('markdown', () => {
         expect(result).toContain(`<span class="token function">ng</span>`);
     });
 
+    it('should render language label and code-copy inside code-block-actions', () => {
+        const result = Markdown.toHTML(['```typescript', 'const a = 1;', '```'].join('\n'));
+        expect(result).toContain('<span class="code-block-actions">');
+        expect(result).toContain('<span class="lang">typescript');
+        expect(result).toContain('<code-copy></code-copy>');
+        expect(result).toContain('<pre class="language-typescript">');
+        expect(result).toContain('<code class="language-typescript">');
+    });
+
     describe('full', () => {
         let fixture: FixtureResult;
 
