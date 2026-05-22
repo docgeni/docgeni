@@ -86,6 +86,8 @@ order: 50
   <tab label="香蕉">
     这是一个 🍌
   </tab>
+  <tab label="代码段">
+  </tab>
 </tabs>
 
 ```html
