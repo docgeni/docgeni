@@ -6,15 +6,28 @@ import { embed } from './embed';
 import { HeadingLink } from '../interfaces';
 
 marked.use({
-    pedantic: false,
     gfm: true,
     breaks: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
-    xhtml: false,
+    pedantic: false,
     extensions: [embed],
 });
+
+function parseMarkdown(src: string, options?: MarkdownRendererOptions): { html: string; renderer: DocsMarkdownRenderer } {
+    const renderer = new DocsMarkdownRenderer({ highlight });
+    const { absFilePath, ...markedOptions } = options ?? {};
+
+    const html = marked.parse(src, {
+        gfm: true,
+        breaks: false,
+        pedantic: false,
+        async: false,
+        renderer,
+        ...markedOptions,
+        ...(absFilePath ? { absFilePath } : {}),
+    } as MarkdownRendererOptions & { async: false }) as string;
+
+    return { html, renderer };
+}
 
 export interface MarkdownParseResult<TAttributes = unknown> {
     attributes: TAttributes;
@@ -25,14 +38,7 @@ export interface MarkdownParseResult<TAttributes = unknown> {
 
 export class Markdown {
     static toHTML(src: string, options?: MarkdownRendererOptions) {
-        const renderer = new DocsMarkdownRenderer();
-        const content = marked(src, {
-            renderer,
-            highlight,
-            gfm: true,
-            ...options,
-        });
-        return content;
+        return parseMarkdown(src, options).html;
     }
 
     static compile<TMate>(
@@ -43,14 +49,8 @@ export class Markdown {
         headings?: HeadingLink[];
         meta: TMate;
     } {
-        const result = this.parse(src);
-        const renderer = new DocsMarkdownRenderer();
-        const html = marked(result.body, {
-            renderer,
-            highlight,
-            gfm: true,
-            ...options,
-        });
+        const result = this.frontMatter(src);
+        const { html, renderer } = parseMarkdown(result.body, options);
         return {
             html: html,
             meta: result.attributes as TMate,
@@ -58,7 +58,7 @@ export class Markdown {
         };
     }
 
-    static parse<TAttributes>(content: string): MarkdownParseResult<TAttributes> {
+    private static frontMatter<TAttributes>(content: string): MarkdownParseResult<TAttributes> {
         const result = fm(content);
         return result as MarkdownParseResult<TAttributes>;
     }
