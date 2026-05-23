@@ -1,5 +1,17 @@
-import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, signal } from '@angular/core';
+import {
+    afterNextRender,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    effect,
+    ElementRef,
+    input,
+    OnInit,
+    signal,
+} from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
+
+export type DocgeniTabsMode = 'simple' | 'code-group';
 
 export interface DocgeniTabItem {
     label: string;
@@ -18,12 +30,18 @@ export interface DocgeniTabItem {
 export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnInit {
     readonly tabs = signal<DocgeniTabItem[]>([]);
     readonly activeIndex = signal(0);
+    readonly mode = input<DocgeniTabsMode>('simple');
 
     constructor(
         elementRef: ElementRef<HTMLElement>,
         private cdr: ChangeDetectorRef,
     ) {
         super(elementRef);
+
+        effect(() => {
+            const mode = this.mode();
+            this.updateHostClass(mode ? [`dg-tabs-mode-${mode}`] : []);
+        });
 
         afterNextRender(() => {
             this.parseTabsFromHost();

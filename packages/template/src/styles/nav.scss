@@ -15,6 +15,7 @@
         color: variables.$dg-gray-700;
         border-bottom: 2px solid transparent;
         font-weight: 500;
+        cursor: pointer;
         &:hover,
         &.active {
             color: variables.$dg-primary;

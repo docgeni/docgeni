@@ -326,6 +326,13 @@ $dg-pipe-color: #546e7a;
         border-radius: variables.$dg-border-radius;
         color: variables.$dg-text-color;
     }
+    @include content-child-selector(hr) {
+        color: variables.$dg-border-color;
+        background: variables.$dg-border-color;
+        border: none;
+        height: 1px;
+        margin: 0;
+    }
 
     @include content-child-selector(pre) {
         position: relative;
