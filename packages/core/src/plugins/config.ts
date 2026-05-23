@@ -22,6 +22,7 @@ export class ConfigPlugin implements Plugin {
                     repoUrl: docgeni.config.repoUrl,
                     footer: docgeni.config.footer,
                     algolia: docgeni.config.algolia,
+                    renderMode: docgeni.config.renderMode,
                 };
                 const outputConfigPath = toolkit.path.resolve(docgeni.paths.absSiteContentPath, 'config.ts');
                 const content = toolkit.template.compile('config.hbs', {

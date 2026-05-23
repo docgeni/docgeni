@@ -28,6 +28,8 @@ export interface HomeDocMeta {
 
 export type DocgeniMode = 'full' | 'lite';
 
+export type DocgeniRenderMode = 'csr' | 'ssg' | 'ssr';
+
 export enum DocgeniTheme {
     light = 'light',
     dark = 'dark',
@@ -110,6 +112,8 @@ export interface DocgeniConfig {
     sitemap?: DocgeniSitemapConfig;
     /** Progress */
     progress?: boolean;
+    /** Site render mode, default is csr */
+    renderMode?: DocgeniRenderMode;
 }
 
 // For Angular Template
@@ -144,4 +148,6 @@ export interface DocgeniSiteConfig {
     footer?: string;
     /** algolia config */
     algolia?: DocgeniAlgoliaConfig;
+    /** Site render mode, default is csr */
+    renderMode?: DocgeniRenderMode;
 }

@@ -1,4 +1,5 @@
-import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal, DOCUMENT } from '@angular/core';
+import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal, DOCUMENT, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
 import { languageCompare } from '../utils/language-compare';
@@ -34,11 +35,16 @@ export class GlobalContext {
     theme: WritableSignal<DocgeniTheme> = signal(DocgeniTheme.light);
 
     isDarkTheme: Signal<boolean> = computed(() => {
+        if (!this.isBrowser) {
+            return this.theme() === DocgeniTheme.dark;
+        }
         return (
             (this.theme() === DocgeniTheme.system && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
             this.theme() === DocgeniTheme.dark
         );
     });
+
+    private isBrowser: boolean;
 
     get isDefaultLocale() {
         return this.locale === this.config.defaultLocale;
@@ -49,7 +55,9 @@ export class GlobalContext {
         private http: HttpClient,
         @Inject(DOCUMENT) private document: any,
         private location: Location,
+        @Inject(PLATFORM_ID) platformId: object,
     ) {
+        this.isBrowser = isPlatformBrowser(platformId);
         this.setup();
     }
 
@@ -58,7 +66,7 @@ export class GlobalContext {
         if (localeKeyFromUrl) {
             return localeKeyFromUrl;
         } else {
-            const cacheLocale = window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '';
+            const cacheLocale = this.isBrowser ? window.localStorage.getItem(DOCGENI_LOCALE_KEY) || window.navigator.language || '' : '';
             const locale = (this.config.locales || []).find((locale) => {
                 return languageCompare(locale.key, cacheLocale);
             });
@@ -74,12 +82,14 @@ export class GlobalContext {
         this.setLocale(this.getLocaleKey());
         this.setTheme(this.getTheme());
 
-        const cacheMode = window.localStorage.getItem(DOCGENI_MODE_KEY);
+        const cacheMode = this.isBrowser ? window.localStorage.getItem(DOCGENI_MODE_KEY) : null;
         if (cacheMode && ['lite', 'full'].includes(cacheMode)) {
             this.config.mode = cacheMode as DocgeniMode;
         }
 
-        document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-navbar-theme-${this.config.theme}`);
+        if (this.isBrowser) {
+            document.body.classList.add(`dg-mode-${this.config.mode}`, `dg-navbar-theme-${this.config.theme}`);
+        }
         if (this.config.repoUrl) {
             const pattern = /https:\/\/github.com\/([^\/]*)\/([^\/]*)/.exec(this.config.repoUrl);
             if (pattern && pattern.length === 3) {
@@ -98,11 +108,13 @@ export class GlobalContext {
 
     public setLocale(locale: string) {
         this.locale = locale;
-        window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
+        if (this.isBrowser) {
+            window.localStorage.setItem(DOCGENI_LOCALE_KEY, locale);
+        }
     }
 
     private getTheme(): DocgeniTheme {
-        const cacheTheme = window.localStorage.getItem(DOCGENI_THEME_KEY) as DocgeniTheme;
+        const cacheTheme = this.isBrowser ? (window.localStorage.getItem(DOCGENI_THEME_KEY) as DocgeniTheme) : null;
         if (cacheTheme && [DocgeniTheme.light, DocgeniTheme.dark, DocgeniTheme.system].includes(cacheTheme)) {
             return cacheTheme;
         } else {
@@ -112,7 +124,13 @@ export class GlobalContext {
 
     public setTheme(theme: DocgeniTheme) {
         this.theme.set(theme);
-        window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+        if (this.isBrowser) {
+            window.localStorage.setItem(DOCGENI_THEME_KEY, theme);
+        }
+
+        if (!this.isBrowser) {
+            return;
+        }
 
         if (this.isDarkTheme()) {
             document.documentElement.setAttribute('theme', DocgeniTheme.dark);

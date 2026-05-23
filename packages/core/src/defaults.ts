@@ -14,4 +14,5 @@ export const DEFAULT_CONFIG: Partial<DocgeniConfig> = {
     defaultLocale: 'en-us',
     switchTheme: false,
     toc: 'content',
+    renderMode: 'csr',
 };

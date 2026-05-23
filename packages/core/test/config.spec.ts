@@ -49,6 +49,7 @@ describe('#config', () => {
                 libs: [],
                 navs: [],
                 toc: 'content',
+                renderMode: 'csr',
             });
         });
 
@@ -125,6 +126,7 @@ describe('#config', () => {
 
             expect(docgeni.config).toEqual({
                 ...customConfig,
+                renderMode: 'csr',
             });
         });
 
@@ -232,6 +234,18 @@ describe('#config', () => {
                 });
                 await docgeni.verifyConfig();
             }, `mode must be full or lite, current is full1`);
+        });
+
+        it('should throw error when renderMode is not match', async () => {
+            await expectThrowAsync(async () => {
+                const docgeni = new Docgeni({
+                    config: {
+                        renderMode: 'isr' as any,
+                    },
+                    host: docgeniHost,
+                });
+                await docgeni.verifyConfig();
+            }, `renderMode must be csr, ssg or ssr, current is isr`);
         });
     });
 });

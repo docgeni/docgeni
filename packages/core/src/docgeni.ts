@@ -141,6 +141,10 @@ export class Docgeni implements DocgeniContext {
             throw new ValidationError(`mode must be full or lite, current is ${this.config.mode}`);
         }
 
+        if (!['csr', 'ssg', 'ssr'].includes(this.config.renderMode!)) {
+            throw new ValidationError(`renderMode must be csr, ssg or ssr, current is ${this.config.renderMode}`);
+        }
+
         if (this.config.docsDir) {
             const absDocsPath = toolkit.path.resolve(this.paths.cwd, this.config.docsDir);
             const docsDosExists = await this.host.pathExists(absDocsPath);
@@ -163,6 +167,7 @@ export class Docgeni implements DocgeniContext {
         config.mode = config.mode || DEFAULT_CONFIG.mode;
         config.theme = config.theme || DEFAULT_CONFIG.theme;
         config.toc = config.toc || DEFAULT_CONFIG.toc;
+        config.renderMode = config.renderMode || DEFAULT_CONFIG.renderMode;
         // set locales from defaultLocale
         if (!config.locales || toolkit.utils.isEmpty(config.locales)) {
             config.locales = [

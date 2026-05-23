@@ -28,6 +28,7 @@ describe('GlobalContext', () => {
             TestBed.inject(HttpClient),
             document,
             TestBed.inject(Location),
+            'browser',
         );
         return globalContext;
     }
