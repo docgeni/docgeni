@@ -347,38 +347,41 @@ $dg-pipe-color: #546e7a;
             top: 1em;
             right: 1.1em;
             z-index: 1;
-            display: grid;
-            place-items: center;
-            width: fit-content;
-            height: fit-content;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-height: 1.5em;
             pointer-events: none;
 
-            .lang,
-            code-copy,
-            .dg-code-copy {
-                grid-area: 1 / 1;
+            .lang {
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
-                pointer-events: auto;
-            }
-
-            .lang {
                 font-size: 12px;
                 line-height: 1;
                 color: variables.$dg-gray-500;
                 text-transform: lowercase;
                 user-select: none;
                 opacity: 1;
+                pointer-events: auto;
                 transition: opacity 0.15s ease;
             }
 
             code-copy,
             .dg-code-copy {
+                position: absolute;
+                // right: 0;
+                // top: 50%;
+                // transform: translateY(-50%);
+                // display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: content-box;
                 color: variables.$dg-gray-500;
                 cursor: pointer;
                 opacity: 0;
                 pointer-events: none;
+                padding: 6px;
+                margin: -6px;
                 transition:
                     opacity 0.15s ease,
                     color 0.15s ease;

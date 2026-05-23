@@ -8,8 +8,9 @@ describe('tabs markdown extension', () => {
         expect(html).toContain('<tabs>');
         expect(html).toContain('<tab label="代码">');
         expect(html).toContain('<pre class="language-typescript">');
+        expect(html).toContain('<span class="code-block-actions">');
         expect(html).toContain('<code-copy></code-copy>');
-        expect(html).toContain('const value = 1;');
+        expect(html).toContain('<span class="token keyword">const</span>');
     });
 
     it('should parse paragraph markdown inside tab content', () => {

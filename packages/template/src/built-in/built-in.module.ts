@@ -7,8 +7,8 @@ import { DocgeniCodeCopyComponent } from './code-copy/code-copy.component';
 import { loadBuiltInComponents } from './loader';
 
 @NgModule({
-    declarations: [DocgeniLabelComponent, DocgeniAlertComponent, DocgeniTabsComponent, DocgeniCodeCopyComponent],
-    imports: [CommonModule],
+    declarations: [],
+    imports: [CommonModule, DocgeniTabsComponent, DocgeniLabelComponent, DocgeniAlertComponent, DocgeniCodeCopyComponent],
     exports: [],
     providers: [],
 })

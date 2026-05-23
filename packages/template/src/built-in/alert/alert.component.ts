@@ -10,7 +10,6 @@ export type DocgeniAlertType = 'primary' | 'info' | 'success' | 'warning' | 'dan
         class: 'dg-alert',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class DocgeniAlertComponent extends DocgeniBuiltInComponent implements OnInit {
     readonly type = input<DocgeniAlertType>('info');

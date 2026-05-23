@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    Directive,
     effect,
     ElementRef,
     input,
@@ -15,7 +16,24 @@ export type DocgeniTabsMode = 'simple' | 'code-group';
 
 export interface DocgeniTabItem {
     label: string;
-    contentHtml: string;
+    contentElement: Element;
+}
+
+@Directive({
+    selector: '[appendChildrenDom]',
+})
+export class AppendChildrenDom {
+    element = input<Element>(undefined, { alias: 'appendChildrenDom' });
+
+    constructor(private elementRef: ElementRef<HTMLElement>) {
+        effect(() => {
+            if (this.element()) {
+                this.element()?.childNodes.forEach((child) => {
+                    this.elementRef.nativeElement.appendChild(child);
+                });
+            }
+        });
+    }
 }
 
 @Component({
@@ -25,7 +43,8 @@ export interface DocgeniTabItem {
         class: 'dg-tabs-host dg-tabs',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
+    standalone: true,
+    imports: [AppendChildrenDom],
 })
 export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnInit {
     readonly tabs = signal<DocgeniTabItem[]>([]);
@@ -62,7 +81,7 @@ export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnI
 
         const items: DocgeniTabItem[] = tabElements.map((element, index) => ({
             label: element.getAttribute('label')?.trim() || `Tab ${index + 1}`,
-            contentHtml: element.innerHTML.trim(),
+            contentElement: element,
         }));
 
         tabElements.forEach((element) => element.remove());

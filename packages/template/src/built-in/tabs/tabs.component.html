@@ -16,10 +16,10 @@
     @for (tab of tabs(); track tab.label; let i = $index) {
       <div
         class="dg-tab-panel"
+        [appendChildrenDom]="tab.contentElement"
         role="tabpanel"
         [class.active]="activeIndex() === i"
         [hidden]="activeIndex() !== i"
-        [innerHTML]="tab.contentHtml"
       ></div>
     }
   </div>
