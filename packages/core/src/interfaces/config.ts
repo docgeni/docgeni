@@ -1,3 +1,4 @@
+import { Marked } from 'marked';
 import { DocgeniLibrary } from './library';
 import { Locale } from './locale';
 import { DocItemToc } from './navigation-item';
@@ -110,6 +111,11 @@ export interface DocgeniConfig {
     sitemap?: DocgeniSitemapConfig;
     /** Progress */
     progress?: boolean;
+    markdown?: DocgeniMarkdownOptions;
+}
+
+export interface DocgeniMarkdownOptions {
+    config?: (marked: Marked) => void;
 }
 
 // For Angular Template

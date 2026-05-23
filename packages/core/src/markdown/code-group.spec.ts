@@ -1,6 +1,10 @@
 import { Markdown } from './markdown';
 
 describe('code-group markdown extension', () => {
+    beforeAll(() => {
+        Markdown.initializeConfig();
+    });
+
     const src = [
         ':::code-group',
         '',
@@ -19,16 +23,16 @@ describe('code-group markdown extension', () => {
         ':::',
     ].join('\n');
 
-    it('should render code-group as tabs with code-group mode', () => {
-        const html = Markdown.toHTML(src);
+    it('should render code-group as tabs with code-group mode', async () => {
+        const html = await Markdown.toHTML(src);
         expect(html).toContain('<tabs mode="code-group">');
         expect(html).toContain('<tab label="npm">');
         expect(html).toContain('<tab label="yarn">');
         expect(html).toContain('<tab label="pnpm">');
     });
 
-    it('should parse fenced code blocks inside code-group', () => {
-        const html = Markdown.toHTML(src);
+    it('should parse fenced code blocks inside code-group', async () => {
+        const html = await Markdown.toHTML(src);
         expect(html).toContain('<pre class="language-bash">');
         expect(html).toContain('<span class="code-block-actions">');
         expect(html).toContain('<code-copy></code-copy>');

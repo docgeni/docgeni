@@ -36,5 +36,5 @@ Docgeni 同时支持普通文档和组件文档的生成，满足上述一和二
 <alert type="primary">对于一些纯文档的场景，使用 Docgeni 只生成 Markdown 普通文档也是可以的。</alert>
 
 # 参与贡献
-欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni
+欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni :heart: :tada:
 
