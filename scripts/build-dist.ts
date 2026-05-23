@@ -4,6 +4,8 @@ import writeJsonFile from 'write-json-file';
 
 const LIB_PACKAGES = ['cli', 'core', 'ngdoc', 'toolkit'] as const;
 const COPY_FILES = ['package.json', 'README.md', 'CHANGELOG.md'] as const;
+const WORKSPACE_PACKAGE_PATHS = ['packages/toolkit', 'packages/ngdoc', 'packages/core', 'packages/cli', 'packages/template'] as const;
+const DEPENDENCY_FIELDS = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'] as const;
 
 const PACKAGE_EXPORTS = {
     '.': {
@@ -14,12 +16,43 @@ const PACKAGE_EXPORTS = {
     },
 };
 
-async function updateDistPackageJson(distRoot: string) {
+async function loadWorkspacePackageVersions(): Promise<Record<string, string>> {
+    const versions: Record<string, string> = {};
+    for (const packagePath of WORKSPACE_PACKAGE_PATHS) {
+        const packageJsonPath = path.resolve(process.cwd(), packagePath, 'package.json');
+        const packageJson = await toolkit.fs.readJson(packageJsonPath);
+        versions[packageJson['name']] = packageJson['version'];
+    }
+    return versions;
+}
+
+function syncWorkspaceDependencies(packageJson: Record<string, any>, workspaceVersions: Record<string, string>) {
+    for (const field of DEPENDENCY_FIELDS) {
+        const deps = packageJson[field];
+        if (!deps || typeof deps !== 'object') {
+            continue;
+        }
+        for (const [name, currentVersion] of Object.entries(deps)) {
+            const latestVersion = workspaceVersions[name];
+            if (!latestVersion) {
+                continue;
+            }
+            const toVersion = `^${latestVersion}`;
+            if (currentVersion !== toVersion) {
+                toolkit.print.info(`sync ${packageJson['name']} ${field}.${name}: ${currentVersion} -> ${toVersion}`);
+                deps[name] = toVersion;
+            }
+        }
+    }
+}
+
+async function updateDistPackageJson(distRoot: string, workspaceVersions: Record<string, string>) {
     const packageJsonPath = path.resolve(distRoot, './package.json');
     const packageJson = await toolkit.fs.readJson(packageJsonPath);
 
     packageJson.types = 'index.d.ts';
     packageJson.exports = PACKAGE_EXPORTS;
+    syncWorkspaceDependencies(packageJson, workspaceVersions);
 
     await writeJsonFile(packageJsonPath, packageJson, {
         detectIndent: true,
@@ -27,7 +60,7 @@ async function updateDistPackageJson(distRoot: string) {
     });
 }
 
-async function copyLibPackageToDist(libName: (typeof LIB_PACKAGES)[number]) {
+async function copyLibPackageToDist(libName: (typeof LIB_PACKAGES)[number], workspaceVersions: Record<string, string>) {
     const packageRoot = path.resolve(process.cwd(), `./packages/${libName}`);
     const distRoot = path.resolve(process.cwd(), `./dist/${libName}`);
     const libPath = path.resolve(packageRoot, './lib');
@@ -47,7 +80,7 @@ async function copyLibPackageToDist(libName: (typeof LIB_PACKAGES)[number]) {
         }
     }
 
-    await updateDistPackageJson(distRoot);
+    await updateDistPackageJson(distRoot, workspaceVersions);
 
     toolkit.print.success(`copy @docgeni/${libName} to dist/${libName} success`);
 }
@@ -66,8 +99,9 @@ async function updateTemplatePackageJson() {
 }
 
 async function main() {
+    const workspaceVersions = await loadWorkspacePackageVersions();
     for (const libName of LIB_PACKAGES) {
-        await copyLibPackageToDist(libName);
+        await copyLibPackageToDist(libName, workspaceVersions);
     }
     await updateTemplatePackageJson();
 }
