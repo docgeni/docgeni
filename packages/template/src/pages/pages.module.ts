@@ -13,7 +13,6 @@ import { ExampleIsolatedViewerComponent } from './example/example.component';
 
 const COMPONENTS = [
     ActualRootComponent,
-    RootComponent,
     HomeComponent,
     ChannelComponent,
     ChannelHomeComponent,
@@ -28,9 +27,9 @@ const COMPONENTS = [
 ];
 @NgModule({
     declarations: [...COMPONENTS],
-    imports: [DocgeniSharedModule],
+    imports: [DocgeniSharedModule, RootComponent],
     providers: [],
-    exports: [...COMPONENTS],
+    exports: [...COMPONENTS, RootComponent],
 })
 export class DocgeniPagesModule {
     constructor(public appRef: ApplicationRef) {}

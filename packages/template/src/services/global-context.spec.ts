@@ -6,6 +6,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('GlobalContext', () => {
     let spectator: SpectatorHttp<GlobalContext>;
@@ -28,7 +29,7 @@ describe('GlobalContext', () => {
             TestBed.inject(HttpClient),
             document,
             TestBed.inject(Location),
-            'browser',
+            TestBed.inject(PLATFORM_ID),
         );
         return globalContext;
     }

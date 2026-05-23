@@ -161,11 +161,11 @@ export class SiteBuilder {
                 },
             );
         }
-        const tsconfigJsonPath = toolkit.path.resolve(this.siteProject.root, './tsconfig.app.json');
-        const tsconfigJsonContent = toolkit.template.compile('tsconfig-app-json.hbs', {
+        const tsconfigAppJsonPath = toolkit.path.resolve(this.siteProject.root, './tsconfig.app.json');
+        const tsconfigAppJsonContent = toolkit.template.compile('tsconfig-app-json.hbs', {
             paths: tsPaths,
         });
-        await this.docgeni.host.writeFile(tsconfigJsonPath, tsconfigJsonContent);
+        await this.docgeni.host.writeFile(tsconfigAppJsonPath, tsconfigAppJsonContent);
     }
 
     private async publicDirExists() {
@@ -203,7 +203,7 @@ export class SiteBuilder {
     private async syncSrcApp() {
         if (await this.srcAppDirExists()) {
             await this.docgeni.host.copy(this.srcAppDirPath, toolkit.path.resolve(this.siteProject.sourceRoot, 'app'));
-            await this.buildAppModule();
+            await this.buildAppConfig();
         }
     }
 
@@ -218,14 +218,14 @@ export class SiteBuilder {
                         await this.docgeni.host.copy(event.path, distPath);
                     }
                     if (event.path.includes(toolkit.path.resolve(this.srcAppDirPath, 'module.ts'))) {
-                        this.buildAppModule();
+                        this.buildAppConfig();
                     }
                 }
             });
         }
     }
 
-    private async buildAppModule() {
+    private async buildAppConfig() {
         const modulePath = toolkit.path.resolve(this.srcAppDirPath, './module.ts');
         if (await this.docgeni.host.pathExists(modulePath)) {
             const moduleText = await this.docgeni.host.readFile(modulePath);
@@ -234,35 +234,41 @@ export class SiteBuilder {
             const defaultExportNode = ngSourceFile.getDefaultExportNode();
             if (defaultExportNode) {
                 const metadata = combineNgModuleMetadata(defaultExports, {
-                    declarations: [],
-                    imports: [
-                        'BrowserModule',
-                        'BrowserAnimationsModule',
-                        'DocgeniTemplateModule',
-                        'RouterModule.forRoot([])',
-                        ' ...IMPORT_MODULES',
-                    ],
+                    imports: ['DocgeniTemplateModule', ' ...IMPORT_MODULES'],
                     providers: ['...DOCGENI_SITE_PROVIDERS'],
-                    bootstrap: ['RootComponent'],
                 });
+                const importModules = toolkit.utils.isArray(metadata.imports)
+                    ? metadata.imports
+                    : metadata.imports
+                      ? [metadata.imports]
+                      : [];
+                const providers = toolkit.utils.isArray(metadata.providers)
+                    ? metadata.providers
+                    : metadata.providers
+                      ? [metadata.providers]
+                      : [];
+                const providerEntries = [
+                    'provideRouter([])',
+                    'provideAnimations()',
+                    `importProvidersFrom(${importModules.join(', ')})`,
+                    ...providers,
+                ];
 
                 const updater = new NgSourceUpdater(ngSourceFile);
                 updater.insertImports([
-                    { name: 'NgModule', moduleSpecifier: '@angular/core' },
-                    { name: 'RouterModule', moduleSpecifier: '@angular/router' },
-                    { name: 'BrowserModule', moduleSpecifier: '@angular/platform-browser' },
-                    { name: 'BrowserAnimationsModule', moduleSpecifier: '@angular/platform-browser/animations' },
+                    { name: 'ApplicationConfig', moduleSpecifier: '@angular/core' },
+                    { name: 'importProvidersFrom', moduleSpecifier: '@angular/core' },
+                    { name: 'provideRouter', moduleSpecifier: '@angular/router' },
+                    { name: 'provideAnimations', moduleSpecifier: '@angular/platform-browser/animations' },
                     { name: 'DocgeniTemplateModule', moduleSpecifier: '@docgeni/template' },
                     { name: 'DOCGENI_SITE_PROVIDERS', moduleSpecifier: './content/index' },
                     { name: 'IMPORT_MODULES', moduleSpecifier: './content/index' },
-                    { name: 'RootComponent', moduleSpecifier: './content/index' },
                 ]);
-                updater.insertNgModule('AppModule', metadata);
+                updater.insertAppConfigByText(providerEntries);
                 updater.removeDefaultExport();
 
-                updater.update();
                 await this.docgeni.host.writeFile(
-                    toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.module.ts'),
+                    toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.config.ts'),
                     updater.update(),
                 );
             }

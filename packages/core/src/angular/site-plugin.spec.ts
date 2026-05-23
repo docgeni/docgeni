@@ -15,6 +15,7 @@ import * as systemPath from 'path';
 import { of, Subject } from 'rxjs';
 import { EventEmitter } from 'stream';
 import { SpawnOptions } from 'child_process';
+import { parse as parseJsonc } from 'jsonc-parser';
 
 const SITE_TEMPLATE_PATH = toolkit.path.resolve(__dirname, '../site-template');
 
@@ -40,7 +41,7 @@ describe('#site-plugin', () => {
                 [`${DEFAULT_TEST_ROOT_PATH}/node_modules/@angular/core/package.json`]: fixture.src['package.json'],
                 [`${DEFAULT_TEST_ROOT_PATH}/angular.json`]: fixture.src['angular.json'],
                 [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts',
-                [`${SITE_TEMPLATE_PATH}/src/app/app.module.ts`]: fixture.src['app/app.module.ts'],
+                [`${SITE_TEMPLATE_PATH}/src/app/app.config.ts`]: fixture.getOutputContent('app/app.config.ts'),
             },
         });
         ngSitePlugin = new AngularSitePlugin();
@@ -55,7 +56,7 @@ describe('#site-plugin', () => {
                 [`${DEFAULT_SITE_PATH}/angular.json`]: fixture.getOutputContent('angular.json'),
                 [`${DEFAULT_SITE_PATH}/tsconfig.app.json`]: fixture.getOutputContent('tsconfig.app.json'),
                 [`${DEFAULT_SITE_PATH}/src/main.ts`]: 'main.ts',
-                [`${DEFAULT_SITE_PATH}/src/app/app.module.ts`]: fixture.getOutputContent('app/app.module.ts'),
+                [`${DEFAULT_SITE_PATH}/src/app/app.config.ts`]: fixture.getOutputContent('app/app.config.ts'),
             },
             true,
         );
@@ -196,7 +197,7 @@ describe('#site-plugin', () => {
         expect(await context.host.exists(`${DEFAULT_SITE_PATH}/tsconfig.app.json`)).toBeFalsy();
     });
 
-    it('should add lib paths to tsconfig.json', async () => {
+    it('should add lib paths to tsconfig.app.json', async () => {
         updateContextConfig(context, {
             libs: [
                 {
@@ -210,7 +211,8 @@ describe('#site-plugin', () => {
         });
         await context.hooks.beforeRun.promise();
         expect(await context.host.exists(`${DEFAULT_SITE_PATH}/tsconfig.app.json`));
-        const tsConfig = await context.host.readJSON<any>(`${DEFAULT_SITE_PATH}/tsconfig.app.json`);
+        const tsConfigContent = await context.host.readFile(`${DEFAULT_SITE_PATH}/tsconfig.app.json`);
+        const tsConfig = parseJsonc(tsConfigContent);
         expect(tsConfig.compilerOptions.paths).toEqual({
             '@test/lib1/*': ['../../lib1-src/*'],
             '@test/lib1': ['../../lib1-src/index.ts', '../../lib1-src/public-api.ts'],
@@ -262,7 +264,7 @@ describe('#site-plugin', () => {
     });
 
     describe('src/app', () => {
-        it('should generate new ng module and copy other source files in ".docgeni/app" dir', async () => {
+        it('should generate new app config and copy other source files in ".docgeni/app" dir', async () => {
             const moduleText = `export default { providers: [ AClass ] }`;
             await writeFilesToHost(context.host, {
                 [`${SRC_APP_PATH}/module.ts`]: moduleText,
@@ -278,8 +280,9 @@ describe('#site-plugin', () => {
                 },
                 true,
             );
-            const appModule = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.module.ts`);
-            expect(appModule).toContain(`providers: [ AClass, ...DOCGENI_SITE_PROVIDERS ]`);
+            const appConfig = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.config.ts`);
+            expect(appConfig).toContain(`AClass`);
+            expect(appConfig).toContain(`...DOCGENI_SITE_PROVIDERS`);
         });
 
         it('should copy new files when ".docgeni/app" dir files changed', async () => {
@@ -330,7 +333,7 @@ describe('#site-plugin', () => {
             );
         });
 
-        it('should rebuild app module when module.ts changed', async () => {
+        it('should rebuild app config when module.ts changed', async () => {
             const moduleText = `export default { providers: [ AClass ] }`;
             await writeFilesToHost(context.host, {
                 [`${SRC_APP_PATH}/module.ts`]: moduleText,
@@ -342,8 +345,9 @@ describe('#site-plugin', () => {
                 return watchAggregated$.asObservable();
             });
             await context.hooks.beforeRun.promise();
-            const appModule = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
-            expect(appModule).toContain(`providers: [ AClass, ...DOCGENI_SITE_PROVIDERS ],`);
+            const appConfig = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.config.ts'));
+            expect(appConfig).toContain(`AClass`);
+            expect(appConfig).toContain(`...DOCGENI_SITE_PROVIDERS`);
 
             const newModuleText = `export default { providers: [ NewClass ] }`;
             await writeFilesToHost(context.host, {
@@ -359,8 +363,9 @@ describe('#site-plugin', () => {
             ]);
 
             await toolkit.utils.wait(2000);
-            const newAppModule = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.module.ts'));
-            expect(newAppModule).toContain(`providers: [ NewClass, ...DOCGENI_SITE_PROVIDERS ],`);
+            const newAppConfig = await context.host.readFile(toolkit.path.resolve(DEFAULT_SITE_PATH, './src/app/app.config.ts'));
+            expect(newAppConfig).toContain(`NewClass`);
+            expect(newAppConfig).toContain(`...DOCGENI_SITE_PROVIDERS`);
         });
     });
 });

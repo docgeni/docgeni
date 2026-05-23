@@ -1,5 +1,6 @@
 import { NavigationService } from './../../services/navigation.service';
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { GlobalContext } from '../../services/public-api';
 
 @Component({
@@ -22,7 +23,8 @@ export class ActualRootComponent {
 @Component({
     selector: 'dg-root',
     template: '<router-outlet></router-outlet>',
-    standalone: false,
+    standalone: true,
+    imports: [RouterOutlet],
 })
 export class RootComponent {
     public global = inject(GlobalContext);
