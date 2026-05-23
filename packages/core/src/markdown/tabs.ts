@@ -8,10 +8,11 @@ export interface TabItemToken {
 export interface TabsToken {
     type: 'tabs';
     raw: string;
+    attrs: string;
     tabs: TabItemToken[];
 }
 
-const TABS_BLOCK_RULE = /^<tabs>\s*([\s\S]*?)\s*<\/tabs>/i;
+const TABS_BLOCK_RULE = /^<tabs(\s[^>]*)?>\s*([\s\S]*?)\s*<\/tabs>/i;
 const TAB_ITEM_RULE = /<tab\s+label=(['"])(.*?)\1\s*>([\s\S]*?)<\/tab>/gi;
 
 function escapeAttr(value: string): string {
@@ -30,7 +31,7 @@ export const tabs: TokenizerAndRendererExtension = {
             return;
         }
 
-        const inner = match[1];
+        const inner = match[2];
         const tabItems: TabItemToken[] = [];
         let tabMatch: RegExpExecArray | null;
         TAB_ITEM_RULE.lastIndex = 0;
@@ -54,12 +55,17 @@ export const tabs: TokenizerAndRendererExtension = {
         const token: TabsToken = {
             type: 'tabs',
             raw: match[0],
+            attrs: match[1] || '',
             tabs: tabItems,
         };
         return token;
     },
     renderer(token: TabsToken) {
-        const tabsHtml = token.tabs.map((tab) => `<tab label="${escapeAttr(tab.label)}">${this.parser.parse(tab.tokens)}</tab>`).join('');
-        return `<tabs>${tabsHtml}</tabs>\n`;
+        const tabsHtml = token.tabs
+            .map((tab) => {
+                return `<tab label="${escapeAttr(tab.label)}">${this.parser.parse(tab.tokens)}</tab>`;
+            })
+            .join('');
+        return `<tabs${token.attrs}>${tabsHtml}</tabs>\n`;
     },
 };

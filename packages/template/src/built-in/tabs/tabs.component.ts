@@ -28,9 +28,7 @@ export class AppendChildrenDom {
     constructor(private elementRef: ElementRef<HTMLElement>) {
         effect(() => {
             if (this.element()) {
-                this.element()?.childNodes.forEach((child) => {
-                    this.elementRef.nativeElement.appendChild(child);
-                });
+                this.elementRef.nativeElement.appendChild(this.element()!);
             }
         });
     }
@@ -84,7 +82,7 @@ export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnI
             contentElement: element,
         }));
 
-        tabElements.forEach((element) => element.remove());
+        // tabElements.forEach((element) => element.remove());
         this.tabs.set(items);
         this.activeIndex.set(0);
     }

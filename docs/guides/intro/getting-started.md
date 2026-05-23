@@ -14,13 +14,23 @@ v10.0.0
 # 脚手架初始化
 切换到已有的项目中，执行如下命令：
 
+<tabs mode="code-group">
+ <tab label="npx">
 ```bash
-$ npx @docgeni/cli init
-# 或者 
-$ docgeni init 
-# 或者
-$ ng add @docgeni/cli
+npx @docgeni/cli init
 ```
+ </tab>
+  <tab label="docgeni">
+```bash
+docgeni init 
+```
+ </tab>
+ <tab label="ng">
+```bash
+ng add @docgeni/cli
+```
+ </tab>
+</tabs>
 
 <alert>使用`docgeni init`初始化需要全局安装 @docgeni/cli `npm install -g @docgeni/cli`<br>
 使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`</alert>
