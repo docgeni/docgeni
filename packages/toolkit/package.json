@@ -6,7 +6,7 @@
   "homepage": "https://github.com/docgeni/docgeni#readme",
   "license": "MIT",
   "main": "index.js",
-  "types": "lib/index.d.ts",
+  "types": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },

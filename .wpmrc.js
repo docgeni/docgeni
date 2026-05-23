@@ -1,25 +1,41 @@
 module.exports = {
     allowBranch: ['master', 'next', 'v1.0.*'],
-    bumpFiles: [
-        'package.json',
-        './packages/site/package.json',
+    packages: [
         {
-            filename: './packages/template/package.json',
-            type: 'json',
+            path: './packages/cli',
+            bumpFiles: [
+                'package.json',
+                {
+                    filename: './src/version.ts',
+                    type: 'code',
+                },
+            ],
         },
         {
-            filename: './packages/cli/src/version.ts',
-            type: 'code',
+            path: './packages/core',
+            bumpFiles: ['package.json'],
+        },
+        {
+            path: './packages/toolkit',
+            bumpFiles: ['package.json'],
+        },
+        {
+            path: './packages/ngdoc',
+            bumpFiles: ['package.json'],
+        },
+        {
+            path: './packages/template',
+            bumpFiles: ['package.json'],
         },
     ],
+    bumpFiles: ['package.json'],
     skip: {
         changelog: true,
-        branch: true,
-        commit: true,
+        branch: false,
+        commit: false,
     },
     commitAll: true,
     hooks: {
         prepublish: 'yarn run build',
-        postbump: 'yarn sync-template-version --version {{version}} && yarn lerna version {{version}} && git add .',
     },
 };
