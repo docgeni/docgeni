@@ -137,6 +137,44 @@ yarn add -D @docgeni/cli
   </tab>
 </tabs>
 
+## CodeGroup
+需要将多代码块合并成一个分组进行展示时，可以使用 CodeGroup 语法，例如：
+
+<pre><code>:::code-group
+
+```bash [npm]
+npm install -D @docgeni/cli
+```
+
+````bash [yarn]
+yarn add -D @docgeni/cli
+```
+
+```bash [pnpm]
+pnpm add -D @docgeni/cli
+```
+
+:::</code></pre>
+
+将会被渲染为：
+
+::: code-group
+
+```bash [npm]
+npm install -D @docgeni/cli
+```
+
+````bash [yarn]
+yarn add -D @docgeni/cli
+```
+
+```bash [pnpm]
+pnpm add -D @docgeni/cli
+```
+
+:::
+
+可以理解为这是 Tabs 的 Markdown 写法。
 
 ## Embed
 

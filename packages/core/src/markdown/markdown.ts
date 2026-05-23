@@ -3,6 +3,7 @@ import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
 import { highlight } from '../utils';
 import { embed } from './embed';
+import { codeGroup } from './code-group';
 import { tabs } from './tabs';
 import { HeadingLink } from '../interfaces';
 
@@ -10,7 +11,7 @@ marked.use({
     gfm: true,
     breaks: false,
     pedantic: false,
-    extensions: [embed, tabs],
+    extensions: [embed, codeGroup, tabs],
 });
 
 function parseMarkdown(src: string, options?: MarkdownRendererOptions): { html: string; renderer: DocsMarkdownRenderer } {
