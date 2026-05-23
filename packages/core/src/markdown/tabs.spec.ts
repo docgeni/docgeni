@@ -1,8 +1,21 @@
+import { loadFixture, FixtureResult } from '../testing/fixture-loader';
+import { strings } from '@docgeni/toolkit';
 import { Markdown } from './markdown';
 
 describe('tabs markdown extension', () => {
+    let fixture: FixtureResult;
+
+    beforeAll(async () => {
+        fixture = await loadFixture('markdown-tabs');
+    });
+
+    it('should transform tabs markdown success', () => {
+        const output = Markdown.toHTML(fixture.src['get.md']);
+        expect(strings.compatibleNormalize(output).trim()).toEqual(fixture.getOutputContent('get.html', true));
+    });
+
     it('should parse markdown inside tab content', () => {
-        const src = ['<tabs>', '  <tab label="代码">', '```typescript', 'const value = 1;', '```', '  </tab>', '</tabs>'].join('\n');
+        const src = ['<tabs>', '  <tab label="代码">', '\n```typescript\n', 'const value = 1;', '\n```\n', '  </tab>', '</tabs>'].join('');
 
         const html = Markdown.toHTML(src);
         expect(html).toContain('<tabs>');

@@ -13,13 +13,24 @@ v10.0.0
 # Scaffold initialization
 Switch to the existing project and run the following command:
 
+<tabs mode="code-group">
+ <tab label="npx">
 ```bash
-$ npx @docgeni/cli init
-# or 
-$ docgeni init 
-# or 
-$ ng add @docgeni/cli
+npx @docgeni/cli init
 ```
+ </tab>
+  <tab label="docgeni">
+```bash
+docgeni init 
+```
+ </tab>
+ <tab label="ng">
+```bash
+ng add @docgeni/cli
+```
+ </tab>
+</tabs>
+
 <alert>Initialization with `docgeni init` requires global installation of @docgeni/cli `npm install -g @docgeni/cli`<br>
   Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`</alert>
 
