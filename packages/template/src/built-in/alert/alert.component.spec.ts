@@ -6,8 +6,8 @@ describe('#built-in-alert', () => {
         let spectator: Spectator<DocgeniAlertComponent>;
         const createComponent = createComponentFactory({
             component: DocgeniAlertComponent,
-            imports: [],
-            declarations: [DocgeniAlertComponent],
+            imports: [DocgeniAlertComponent],
+            declarations: [],
         });
 
         beforeEach(() => {

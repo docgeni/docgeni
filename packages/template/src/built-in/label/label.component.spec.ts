@@ -6,8 +6,8 @@ describe('#built-in-label', () => {
         let spectator: Spectator<DocgeniLabelComponent>;
         const createComponent = createComponentFactory({
             component: DocgeniLabelComponent,
-            imports: [],
-            declarations: [DocgeniLabelComponent],
+            imports: [DocgeniLabelComponent],
+            declarations: [],
         });
 
         beforeEach(() => {
