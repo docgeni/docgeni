@@ -24,6 +24,9 @@
       "@docgeni/toolkit/*": [
         "packages/toolkit/src/*"
       ],
+      "@docgeni/core": [
+        "packages/core/src/index.ts"
+      ],
       "@docgeni/core/*": [
         "packages/core/src/*"
       ],

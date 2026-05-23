@@ -166,7 +166,7 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
         for (const locale of this.docgeni.config.locales) {
             const localeKey = locale.key;
             const realAbsApiPath = toolkit.path.getSystemPath(this.absApiPath);
-            const explorer = cosmiconfig.call(cosmiconfig, localeKey, {
+            const explorer = cosmiconfig(localeKey, {
                 searchPlaces: [
                     localeKey,
                     `${localeKey}.json`,
