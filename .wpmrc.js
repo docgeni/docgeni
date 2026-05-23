@@ -34,7 +34,7 @@ module.exports = {
     ],
     bumpFiles: ['package.json'],
     skip: {
-        changelog: true,
+        changelog: false,
         branch: false,
         commit: false,
     },
