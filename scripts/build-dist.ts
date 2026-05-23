@@ -80,6 +80,14 @@ async function copyLibPackageToDist(libName: (typeof LIB_PACKAGES)[number], work
         }
     }
 
+    if (libName === 'cli') {
+        const binPath = path.resolve(packageRoot, './bin');
+        if (!(await toolkit.fs.pathExists(binPath))) {
+            throw new Error(`${binPath} has not exists, please check @docgeni/cli bin folder`);
+        }
+        await toolkit.fs.copy(binPath, path.resolve(distRoot, './bin'));
+    }
+
     await updateDistPackageJson(distRoot, workspaceVersions);
 
     toolkit.print.success(`copy @docgeni/${libName} to dist/${libName} success`);
