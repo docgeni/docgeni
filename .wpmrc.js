@@ -27,6 +27,10 @@ module.exports = {
             path: './packages/template',
             bumpFiles: ['package.json'],
         },
+        {
+            path: './packages/create-docgeni',
+            bumpFiles: ['package.json'],
+        },
     ],
     bumpFiles: ['package.json'],
     skip: {

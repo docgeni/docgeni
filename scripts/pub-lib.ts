@@ -2,7 +2,15 @@ import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
 import yargs from 'yargs-parser';
 
-const PUBLISH_PACKAGES = ['toolkit', 'ngdoc', 'core', 'template', 'cli'] as const;
+const PUBLISH_PACKAGES = [
+    { name: 'toolkit', root: './dist/toolkit' },
+    { name: 'ngdoc', root: './dist/ngdoc' },
+    { name: 'core', root: './dist/core' },
+    { name: 'template', root: './dist/template' },
+    { name: 'cli', root: './dist/cli' },
+    { name: 'create-docgeni', root: './packages/create-docgeni' },
+] as const;
+
 const VALID_TAGS = ['latest', 'next'] as const;
 
 type PublishTag = (typeof VALID_TAGS)[number];
@@ -15,8 +23,8 @@ function resolvePublishTag(args: yargs.Arguments): PublishTag {
     return tag as PublishTag;
 }
 
-async function publishPackage(libName: (typeof PUBLISH_PACKAGES)[number], tag: PublishTag) {
-    const distRoot = path.resolve(process.cwd(), `./dist/${libName}`);
+async function publishPackage(packageRoot: string, tag: PublishTag) {
+    const distRoot = path.resolve(process.cwd(), packageRoot);
     const packageJsonPath = path.resolve(distRoot, './package.json');
 
     if (!(await toolkit.fs.pathExists(packageJsonPath))) {
@@ -32,7 +40,7 @@ async function publishPackage(libName: (typeof PUBLISH_PACKAGES)[number], tag: P
     toolkit.print.info(`Publishing ${packageJson.name}@${packageJson.version} with tag ${tag}...`);
     const result = toolkit.shell.spawnSync('npm', publishArgs, { cwd: distRoot, stdio: 'inherit' });
     if (result.status !== 0) {
-        throw new Error(`Failed to publish ${packageJson.name}@${packageJson.version} ${result.output}`);
+        throw new Error(`Failed to publish ${packageJson.name}@${packageJson.version}`);
     }
     toolkit.print.success(`Publish ${packageJson.name}@${packageJson.version} success`);
 }
@@ -40,8 +48,8 @@ async function publishPackage(libName: (typeof PUBLISH_PACKAGES)[number], tag: P
 async function main() {
     const tag = resolvePublishTag(yargs(process.argv));
 
-    for (const libName of PUBLISH_PACKAGES) {
-        await publishPackage(libName, tag);
+    for (const pkg of PUBLISH_PACKAGES) {
+        await publishPackage(pkg.root, tag);
     }
 }
 
