@@ -1,10 +1,16 @@
 {
   "spec_dir": "packages",
   "spec_files": [
-    "cli/**/*[sS]pec.ts",
-    "core/**/*[sS]pec.ts",
-    "toolkit/**/*[sS]pec.ts",
-    "ngdoc/**/*[sS]pec.ts"
+    "cli/src/**/*[sS]pec.ts",
+    "cli/test/**/*[sS]pec.ts",
+    "core/src/**/*[sS]pec.ts",
+    "core/test/**/*[sS]pec.ts",
+    "toolkit/src/**/*[sS]pec.ts",
+    "toolkit/test/**/*[sS]pec.ts",
+    "ngdoc/src/**/*[sS]pec.ts"
+  ],
+  "exclude": [
+    "**/node_modules/**"
   ],
   "helpers": [
     "helpers/**/*.js"

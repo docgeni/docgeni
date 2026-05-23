@@ -74,9 +74,9 @@ order: 50
 
 ## Tabs
 
-使用 `tabs` 与 `tab` 标签创建可切换的 Tab 内容区，`label` 属性为 Tab 标题：
+使用 `tabs` 与 `tab` 标签创建可切换的 Tab 内容区，`label` 属性为 Tab 标题。`tabs` 支持 `mode` 属性，可选 `simple` 或 `code-group`，分别对应不同的风格。
 
-<tabs>
+<tabs mode="simple">
   <tab label="苹果">
     这是一个 🍎
   </tab>
@@ -87,16 +87,56 @@ order: 50
     这是一个 🍌
   </tab>
   <tab label="代码段">
+
+```typescript
+const value = 1;
+```
   </tab>
 </tabs>
 
 ```html
-<tabs>
-  <tab label="苹果">这是一个 🍎</tab>
-  <tab label="橘子">这是一个 🍊</tab>
-  <tab label="香蕉">这是一个 🍌</tab>
+<tabs mode="simple">
+  <tab label="苹果">
+    这是一个 🍎
+  </tab>
+  <tab label="橘子">
+    这是一个 🍊
+  </tab>
+  <tab label="香蕉">
+    这是一个 🍌
+  </tab>
+  <tab label="代码段">
+```typescript
+const value = 1;
+\```
+  </tab>
 </tabs>
 ```
+
+<tabs mode="code-group">
+  <tab label="npm">
+
+```bash
+npm install -D @docgeni/cli
+```
+
+  </tab>
+  <tab label="pnpm">
+
+```bash
+pnpm add -D @docgeni/cli
+```
+
+  </tab>
+  <tab label="yarn">
+
+```bash
+yarn add -D @docgeni/cli
+```
+
+  </tab>
+</tabs>
+
 
 ## Embed
 

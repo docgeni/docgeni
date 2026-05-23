@@ -5,5 +5,5 @@ import tabs from './tabs/tabs.component';
 import codeCopy from './code-copy/code-copy.component';
 
 export function loadBuiltInComponents() {
-    setBuiltInComponents([label, alert, tabs, codeCopy]);
+    setBuiltInComponents([tabs, label, alert, codeCopy]);
 }

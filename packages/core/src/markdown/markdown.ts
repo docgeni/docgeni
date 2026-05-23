@@ -3,13 +3,14 @@ import { DocsMarkdownRenderer, MarkdownRendererOptions } from './renderer';
 import fm from 'front-matter';
 import { highlight } from '../utils';
 import { embed } from './embed';
+import { tabs } from './tabs';
 import { HeadingLink } from '../interfaces';
 
 marked.use({
     gfm: true,
     breaks: false,
     pedantic: false,
-    extensions: [embed],
+    extensions: [embed, tabs],
 });
 
 function parseMarkdown(src: string, options?: MarkdownRendererOptions): { html: string; renderer: DocsMarkdownRenderer } {

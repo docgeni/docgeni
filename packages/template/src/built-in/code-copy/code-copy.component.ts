@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, effect, ElementRef, HostBinding, HostListener, signal } from '@angular/core';
+import { effect, ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, signal } from '@angular/core';
 import { BUILTIN_SVGS } from '../../shared/icon/svgs';
 import { CopierService } from '../../shared/copier/copier.service';
 import { DocgeniBuiltInComponent } from '../built-in-component';
@@ -12,7 +12,6 @@ import { DocgeniBuiltInComponent } from '../built-in-component';
         tabindex: '0',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
     readonly icon = signal<'copy' | 'check'>('copy');
@@ -28,10 +27,6 @@ export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
         private copier: CopierService,
     ) {
         super(elementRef);
-
-        afterNextRender(() => {
-            this.renderIcon();
-        });
 
         effect(() => {
             this.icon();
