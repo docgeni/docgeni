@@ -1,7 +1,6 @@
-/**
- * @type {import('@docgeni/core').DocgeniConfig}
- */
-module.exports = {
+import type { DocgeniConfig } from '@docgeni/core';
+
+export default {
     mode: 'full',
     title: 'Docgeni',
     description: '为 Angular 组件开发场景而生的文档工具',
@@ -87,4 +86,4 @@ module.exports = {
     },
     footer: `Open-source MIT Licensed | Copyright © 2020-present Powered by <a href="https://pingcode.com" target="_blank">PingCode</a><br />
     <div class="beian"><a href="https://beian.miit.gov.cn/" target="_blank" class="beian-icp">京ICP备13017353号-13</a><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802034808" class="beian-public-security"><img src="assets/images/obtain-icp.png"> 京公网安备 11010802034808号 </a></div>`,
-};
+} satisfies DocgeniConfig;

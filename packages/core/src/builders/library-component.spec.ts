@@ -1,6 +1,7 @@
 import { NgDocParser } from '@docgeni/ngdoc';
 import { toolkit, fs } from '@docgeni/toolkit';
 import { cosmiconfig, Options as CosmiconfigOptions } from 'cosmiconfig';
+import * as cosmiconfigModule from 'cosmiconfig';
 import * as systemPath from 'path';
 import { DocgeniContext } from '../docgeni.interface';
 import { ApiDeclaration } from '../interfaces';
@@ -18,13 +19,7 @@ export class LibraryComponentSpectator {
         private component: LibraryComponentImpl,
         apiDocsDefinitions: Record<string, ApiDeclaration[]>,
     ) {
-        const cosmiconfigSpy = spyOn(
-            cosmiconfig as unknown as {
-                call: (_: unknown, moduleName: string, options: CosmiconfigOptions) => Explorer;
-            },
-            'call',
-        );
-        cosmiconfigSpy.and.callFake((_, moduleName, options) => {
+        spyOn(cosmiconfigModule, 'cosmiconfig').and.callFake((moduleName, options) => {
             this.cosmiconfigOptions.push(options);
             return {
                 search: async (path: string) => {
