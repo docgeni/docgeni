@@ -75,21 +75,108 @@ Use `alert` to create a alert box. the type can be `primary`, `info`, `success`,
 
 ## Tabs
 
-Use `tabs` and `tab` to create switchable tab panels. Set the tab title with the `label` attribute:
+Use `tabs` and `tab` to create switchable tab panels. The `label` attribute sets the tab title. The `tabs` element supports a `mode` attribute with `simple` or `code-group` for different styles.
 
-<tabs>
-  <tab label="Apple">This is an 🍎</tab>
-  <tab label="Orange">This is an 🍊</tab>
-  <tab label="Banana">This is an 🍌</tab>
+<tabs mode="simple">
+  <tab label="Apple">
+    This is an 🍎
+  </tab>
+  <tab label="Orange">
+    This is an 🍊
+  </tab>
+  <tab label="Banana">
+    This is an 🍌
+  </tab>
+  <tab label="Code">
+
+```typescript
+const value = 1;
+```
+  </tab>
 </tabs>
 
 ```html
-<tabs>
-  <tab label="Apple">This is an 🍎</tab>
-  <tab label="Orange">This is an 🍊</tab>
-  <tab label="Banana">This is an 🍌</tab>
+<tabs mode="simple">
+  <tab label="Apple">
+    This is an 🍎
+  </tab>
+  <tab label="Orange">
+    This is an 🍊
+  </tab>
+  <tab label="Banana">
+    This is an 🍌
+  </tab>
+  <tab label="Code">
+```typescript
+const value = 1;
+\```
+  </tab>
 </tabs>
 ```
+
+<tabs mode="code-group">
+  <tab label="npm">
+
+```bash
+npm install -D @docgeni/cli
+```
+
+  </tab>
+  <tab label="pnpm">
+
+```bash
+pnpm add -D @docgeni/cli
+```
+
+  </tab>
+  <tab label="yarn">
+
+```bash
+yarn add -D @docgeni/cli
+```
+
+  </tab>
+</tabs>
+
+## CodeGroup
+
+When you need to group multiple code blocks into a single panel, use the CodeGroup syntax, for example:
+
+<pre><code>:::code-group
+
+```bash [npm]
+npm install -D @docgeni/cli
+```
+
+````bash [yarn]
+yarn add -D @docgeni/cli
+```
+
+```bash [pnpm]
+pnpm add -D @docgeni/cli
+```
+
+:::</code></pre>
+
+This will be rendered as:
+
+:::code-group
+
+```bash [npm]
+npm install -D @docgeni/cli
+```
+
+````bash [yarn]
+yarn add -D @docgeni/cli
+```
+
+```bash [pnpm]
+pnpm add -D @docgeni/cli
+```
+
+:::
+
+You can think of this as the Markdown syntax for Tabs.
 
 ## Embed
 
