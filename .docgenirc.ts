@@ -1,4 +1,5 @@
 import type { DocgeniConfig } from '@docgeni/core';
+import { markedEmoji } from 'marked-emoji';
 
 export default {
     mode: 'full',
@@ -11,6 +12,19 @@ export default {
     //     apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
     //     indexName: 'docgeni'
     // },
+    markdown: {
+        config: (marked) => {
+            marked.use(
+                markedEmoji({
+                    emojis: {
+                        heart: '❤️',
+                        tada: '🎉',
+                    },
+                    renderer: (token) => token.emoji,
+                }),
+            );
+        },
+    },
     navs: [
         null,
         {

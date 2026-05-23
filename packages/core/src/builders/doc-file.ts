@@ -89,7 +89,7 @@ export class DocSourceFile<TMeta extends DocMeta = DocMeta> {
     public async build() {
         this.emitted = false;
         const content = await this.read();
-        const result = Markdown.compile<TMeta>(content, {
+        const result = await Markdown.compile<TMeta>(content, {
             absFilePath: this.path,
         });
         this.meta = result.meta;

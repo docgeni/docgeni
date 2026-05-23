@@ -8031,6 +8031,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+marked-emoji@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/marked-emoji/-/marked-emoji-2.0.3.tgz#0bc26f8237f005b0417a512f691f76fbbe0fb2cf"
+  integrity sha512-fChW/AfUqCHgoEC1nFDgiw3OR/qsi71/QXH/HTo05yd6B5+T+VHh1SqCpn/HpeGLDxkA+MK4+hr4eULB2/A8Jw==
+
 marked@18.0.4:
   version "18.0.4"
   resolved "https://registry.npmjs.org/marked/-/marked-18.0.4.tgz#7a54421f506c8729db32f852719972d2f939a77b"

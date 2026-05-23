@@ -13,6 +13,7 @@ import { DocsBuilder, DocSourceFile, LibrariesBuilder, NavsBuilder } from './bui
 import { DocgeniProgress } from './progress';
 import { DocgeniCompilationImpl } from './compilation';
 import { CompilationIncrement, DocgeniCompilation, LibraryBuilder, LibraryComponent } from './types';
+import { Markdown } from './markdown';
 
 export class Docgeni implements DocgeniContext {
     watch: boolean;
@@ -129,6 +130,7 @@ export class Docgeni implements DocgeniContext {
         toolkit.initialize({
             baseDir: __dirname,
         });
+        Markdown.initializeConfig(this.config.markdown);
         if (this.options.progress) {
             this.progress.initialize();
         }

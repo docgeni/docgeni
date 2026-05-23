@@ -219,20 +219,26 @@ export class LibraryComponentImpl extends FileEmitter implements LibraryComponen
             this.localeApiDocsMap = await this.tryGetApiDocsByManual();
         }
 
-        this.docgeni.config.locales.forEach((locale) => {
-            const apiDocs = this.localeApiDocsMap[locale.key];
-            (apiDocs || []).forEach((item) => {
-                item.description = item.description ? Markdown.toHTML(item.description) : '';
-                (item.properties || []).forEach((property) => {
-                    property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '';
-                    property.description = property.description ? Markdown.toHTML(property.description) : '';
-                    // Extract the type's name from the PropertyType object
-                    if (property.type && typeof property.type === 'object' && property.type.name) {
-                        property.type = property.type.name;
-                    }
-                });
-            });
-        });
+        await Promise.all(
+            this.docgeni.config.locales.map(async (locale) => {
+                const apiDocs = this.localeApiDocsMap[locale.key];
+                await Promise.all(
+                    (apiDocs || []).map(async (item) => {
+                        item.description = item.description ? await Markdown.toHTML(item.description) : '';
+                        await Promise.all(
+                            (item.properties || []).map(async (property) => {
+                                property.default = !toolkit.utils.isUndefinedOrNull(property.default) ? property.default : '';
+                                property.description = property.description ? await Markdown.toHTML(property.description) : '';
+                                // Extract the type's name from the PropertyType object
+                                if (property.type && typeof property.type === 'object' && property.type.name) {
+                                    property.type = property.type.name;
+                                }
+                            }),
+                        );
+                    }),
+                );
+            }),
+        );
     }
 
     private async buildExamples(): Promise<void> {
