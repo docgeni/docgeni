@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
+
+
+### Features
+
+* add tabs built-in component ([64e2d16](https://github.com/docgeni/docgeni/commit/64e2d16528b1e56960ad6b68767ada63e89cdb04))
+* show lang  and add copy for code snippet ([3b14a3b](https://github.com/docgeni/docgeni/commit/3b14a3baa9d84ebb08bfec7f851b516c572b0bbe))
+* support markdown in tabs and simple/code-group mode ([#670](https://github.com/docgeni/docgeni/issues/670)) ([c66f08d](https://github.com/docgeni/docgeni/commit/c66f08d43d99a86f76db3626a82a7594e768c9a1))
+
+
+
+
+
 # [2.7.0](https://github.com/docgeni/docgeni/compare/v2.7.0-next.2...v2.7.0) (2026-04-09)
 
 **Note:** Version bump only for package @docgeni/template
