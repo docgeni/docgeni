@@ -1,6 +1,6 @@
 import { NgSourceFile } from '@docgeni/ngdoc';
 import { Change, InsertChange, RemoveChange } from '@schematics/angular/utility/change';
-import { applyChanges, generateNgModuleText, insertImports } from './ast-utils';
+import { applyChanges, generateAppConfigText, generateNgModuleText, insertImports } from './ast-utils';
 import { NgModuleMetadata } from './types/module';
 
 export class NgSourceUpdater {
@@ -35,6 +35,11 @@ export class NgSourceUpdater {
     insertNgModule(moduleName: string, metadata: NgModuleMetadata) {
         const moduleText = generateNgModuleText(moduleName, metadata);
         this.insertNgModuleByText(moduleText);
+        return this;
+    }
+
+    insertAppConfigByText(providerEntries: string[]) {
+        this.insertNgModuleByText(generateAppConfigText(providerEntries));
         return this;
     }
 

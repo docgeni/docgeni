@@ -118,3 +118,13 @@ export function generateNgModuleText(ngModuleName: string, moduleMetadata: NgMod
 export class ${ngModuleName} {}
 `;
 }
+
+export function generateAppConfigText(providerEntries: string[]) {
+    return `
+export const appConfig: ApplicationConfig = {
+    providers: [
+        ${providerEntries.join(',\n        ')},
+    ],
+};
+`;
+}
