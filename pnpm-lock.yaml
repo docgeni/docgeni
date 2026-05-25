@@ -43,9 +43,6 @@ importers:
             fancy-log:
                 specifier: ^2.0.0
                 version: 2.0.0
-            globals:
-                specifier: ^17.6.0
-                version: 17.6.0
             marked:
                 specifier: 18.0.4
                 version: 18.0.4
@@ -143,6 +140,9 @@ importers:
             eslint-plugin-no-null:
                 specifier: ^1.0.2
                 version: 1.0.2(eslint@9.9.0(jiti@2.6.1))
+            globals:
+                specifier: ^17.6.0
+                version: 17.6.0
             husky:
                 specifier: ^9.1.4
                 version: 9.1.7
