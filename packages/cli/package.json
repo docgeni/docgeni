@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
     "build-only": "tsc -b",
-    "build": "yarn clean && yarn build-only && yarn copy:schematics",
+    "build": "pnpm run clean && pnpm run build-only && pnpm run copy:schematics",
     "copy:schematics": "cpx \"./src/schematics/**/{.*,*}.{json,template}\" ./lib/schematics/ -v",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },

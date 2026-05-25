@@ -98,16 +98,16 @@ Add a README badge to show it via:
 ## 💻 Development
 
 ```bash
-yarn   // install dependencies for all packages
+pnpm install   // install dependencies for all packages
 ```
 
 ```bash
-yarn start              // build docs, watch docs change and start site project
-yarn build              // build all packages
-yarn build-deps         // build all deps packages
-yarn build:docs         // build docs & site project
+pnpm start              // build docs, watch docs change and start site project
+pnpm build              // build all packages
+pnpm build-deps         // build all deps packages
+pnpm build:docs         // build docs & site project
 
-yarn test               // run test cases
+pnpm test               // run test cases
 ```
 
 ## 💼 Packages

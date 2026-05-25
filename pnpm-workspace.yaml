@@ -1,0 +1,7 @@
+packages:
+    - 'packages/cli'
+    - 'packages/core'
+    - 'packages/toolkit'
+    - 'packages/template'
+    - 'packages/ngdoc'
+    - 'packages/create-docgeni'

@@ -95,16 +95,16 @@
 ## 💻 开发
 
 ```bash
-yarn   // 安装所有依赖
+pnpm install   // 安装所有依赖
 ```
 
 ```bash
-yarn start              // 启动站点，监控文档和组件文件夹的修改重新生成站点
-yarn build              // 构建所有的包
-yarn build-deps         // 构建所有底层依赖的包
-yarn build:docs         // 构建文档站点
+pnpm start              // 启动站点，监控文档和组件文件夹的修改重新生成站点
+pnpm build              // 构建所有的包
+pnpm build-deps         // 构建所有底层依赖的包
+pnpm build:docs         // 构建文档站点
 
-yarn test               // 执行单元测试
+pnpm test               // 执行单元测试
 ```
 
 ## 💼 包

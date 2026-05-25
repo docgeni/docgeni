@@ -28,7 +28,7 @@ async function publishPackage(packageRoot: string, tag: PublishTag) {
     const packageJsonPath = path.resolve(distRoot, './package.json');
 
     if (!(await toolkit.fs.pathExists(packageJsonPath))) {
-        throw new Error(`${packageJsonPath} has not exists, please run yarn build first`);
+        throw new Error(`${packageJsonPath} has not exists, please run pnpm build first`);
     }
 
     const packageJson = await toolkit.fs.readJson(packageJsonPath);
