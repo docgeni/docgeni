@@ -9,7 +9,6 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - checkout
-            - run: corepack enable
             - restore_cache:
                   key: docgeni-{{ .Branch }}-{{ checksum "pnpm-lock.yaml" }}
             - run: pnpm install --frozen-lockfile
