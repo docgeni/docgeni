@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding, ChangeDetectionStrategy, inject } from 
 import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { translateByLocale } from '../../shared/pipes/translate.pipe';
 import { NgClass } from '@angular/common';
 import { ContentViewerComponent } from '../../shared/content-viewer/content-viewer.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
             }
             return;
         }
-        this.pageTitle.title = new TranslatePipe(this.global).transform('HOME');
+        this.pageTitle.title = translateByLocale('HOME', this.global.locale);
         this.hasHome = true;
     }
 

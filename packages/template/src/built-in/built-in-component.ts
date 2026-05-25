@@ -1,14 +1,20 @@
-import { Directive, ElementRef, WritableSignal, Type, isSignal } from '@angular/core';
+import { Directive, ElementRef, WritableSignal, Type, isSignal, inject } from '@angular/core';
 
 @Directive()
 export abstract class DocgeniBuiltInComponent {
+    protected elementRef = inject(ElementRef);
+
     private classes: string[] = [];
 
     get hostElement(): HTMLElement {
         return this.elementRef.nativeElement;
     }
 
-    constructor(protected elementRef: ElementRef) {}
+    constructor(elementRef?: ElementRef) {
+        if (elementRef) {
+            this.elementRef = elementRef;
+        }
+    }
 
     setAttribute(qualifiedName: string, value: string) {
         // const attr = (this as any)[qualifiedName];

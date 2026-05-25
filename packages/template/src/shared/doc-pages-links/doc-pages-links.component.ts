@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { NavigationItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { RouterLink } from '@angular/router';
@@ -14,13 +14,14 @@ import { TranslatePipe } from '../pipes/translate.pipe';
     imports: [RouterLink, IconComponent, TranslatePipe],
 })
 export class DocPagesLinksComponent implements OnInit {
+    private globalContext = inject(GlobalContext);
+
     @Input() docPages!: {
         pre: NavigationItem;
         next: NavigationItem;
     };
     preRouterLink!: string;
     nextRouterLink!: string;
-    constructor(private globalContext: GlobalContext) {}
 
     ngOnInit(): void {
         if (this.docPages.pre) {

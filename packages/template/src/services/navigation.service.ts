@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal, inject } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
 
@@ -6,6 +6,8 @@ import { GlobalContext } from './global-context';
     providedIn: 'root',
 })
 export class NavigationService {
+    private global = inject(GlobalContext);
+
     readonly channel = signal<ChannelItem | null>(null);
 
     readonly docItem = signal<NavigationItem | null>(null);
@@ -20,8 +22,6 @@ export class NavigationService {
     readonly docItems = computed(() => this.global.docItems ?? []);
 
     readonly channels = computed(() => this.buildChannels(this.navs()));
-
-    constructor(private global: GlobalContext) {}
 
     getChannel(path: string): ChannelItem {
         return this.channels().find((nav) => nav.path === path) as ChannelItem;

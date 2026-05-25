@@ -1,4 +1,4 @@
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, inject } from '@angular/core';
 
 import { ComponentViewerComponent, ComponentEmptyComponent } from './component-viewer/component-viewer.component';
 import { DocViewerComponent, DocViewerHomeComponent } from './doc-viewer/doc-viewer.component';
@@ -31,7 +31,7 @@ const COMPONENTS = [
     exports: [...COMPONENTS, RootComponent],
 })
 export class DocgeniPagesModule {
-    constructor(public appRef: ApplicationRef) {}
+    appRef = inject(ApplicationRef);
 }
 
 export {

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, OnChanges, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
@@ -29,6 +29,10 @@ import { IsModeLitePipe } from '../pipes/mode.pipe';
     ],
 })
 export class SidebarComponent implements OnInit, OnChanges {
+    global = inject(GlobalContext);
+    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
+
     @HostBinding(`class.dg-sidebar`) isSidebar = true;
 
     @Input() menus!: NavigationItem[];
@@ -36,12 +40,6 @@ export class SidebarComponent implements OnInit, OnChanges {
     menuDisplayMap = new Map<CategoryItem, boolean>();
 
     readonly initDisplay = true;
-
-    constructor(
-        public global: GlobalContext,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-    ) {}
 
     ngOnInit(): void {
         this.router.events.pipe(filter((item) => item instanceof NavigationEnd)).subscribe(() => {

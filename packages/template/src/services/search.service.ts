@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { GlobalContext } from './global-context';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent, Subject } from 'rxjs';
@@ -13,6 +13,9 @@ export interface SearchPageInfo {
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
+    global = inject(GlobalContext);
+    private document = inject(DOCUMENT);
+
     private allPages: SearchPageInfo[] = [];
 
     private destroyed$ = new Subject();
@@ -22,11 +25,6 @@ export class SearchService {
     public get hasAlgolia() {
         return !!(this.global.config.algolia && this.global.config.algolia.apiKey && this.global.config.algolia.indexName);
     }
-
-    constructor(
-        public global: GlobalContext,
-        @Inject(DOCUMENT) private document: any,
-    ) {}
 
     public initSearch(searchSelector: string) {
         if (this.hasAlgolia) {
@@ -79,7 +77,7 @@ export class SearchService {
 
     private initInnerSearch(searchSelector: string) {
         this.generatePages();
-        const searchContainer = this.document.querySelector(searchSelector);
+        const searchContainer = this.document.querySelector(searchSelector) as HTMLInputElement | null;
         if (searchContainer) {
             fromEvent(searchContainer, 'input')
                 .pipe(

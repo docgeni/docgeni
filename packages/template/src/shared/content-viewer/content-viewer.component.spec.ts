@@ -4,7 +4,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { createComponentFactory, createHostFactory, Spectator, SpectatorHost, createHttpFactory } from '@ngneat/spectator';
 import { ContentViewerComponent } from './content-viewer.component';
 import { DocgeniBuiltInComponent } from '../../built-in/built-in-component';
-import { Component, ElementRef, NgZone, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { setBuiltInComponents } from '../../built-in/built-in-components';
 import { CONFIG_TOKEN } from '../../services/global-context';
 
@@ -14,10 +14,6 @@ import { CONFIG_TOKEN } from '../../services/global-context';
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
     readonly type = input.required<string>();
-
-    constructor(elementRef: ElementRef<unknown>) {
-        super(elementRef);
-    }
 }
 
 setBuiltInComponents([

@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { GlobalContext } from './global-context';
 
 @Injectable({ providedIn: 'root' })
 export class PageTitleService {
+    private bodyTitle = inject(Title);
+    private globalContext = inject(GlobalContext);
+
     private innerTitle = '';
 
     get title(): string {
@@ -19,9 +22,4 @@ export class PageTitleService {
         }
         this.bodyTitle.setTitle(title);
     }
-
-    constructor(
-        private bodyTitle: Title,
-        private globalContext: GlobalContext,
-    ) {}
 }

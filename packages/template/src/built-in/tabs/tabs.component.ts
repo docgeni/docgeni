@@ -9,6 +9,7 @@ import {
     input,
     OnInit,
     signal,
+    inject,
 } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
@@ -23,9 +24,11 @@ export interface DocgeniTabItem {
     selector: '[appendChildrenDom]',
 })
 export class AppendChildrenDom {
+    private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     element = input<Element>(undefined, { alias: 'appendChildrenDom' });
 
-    constructor(private elementRef: ElementRef<HTMLElement>) {
+    constructor() {
         effect(() => {
             if (this.element()) {
                 this.elementRef.nativeElement.appendChild(this.element()!);
@@ -45,16 +48,14 @@ export class AppendChildrenDom {
     imports: [AppendChildrenDom],
 })
 export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnInit {
+    private cdr = inject(ChangeDetectorRef);
+
     readonly tabs = signal<DocgeniTabItem[]>([]);
     readonly activeIndex = signal(0);
     readonly mode = input<DocgeniTabsMode>('simple');
 
-    constructor(
-        elementRef: ElementRef<HTMLElement>,
-        private cdr: ChangeDetectorRef,
-    ) {
-        super(elementRef);
-
+    constructor() {
+        super();
         effect(() => {
             const mode = this.mode();
             this.updateHostClass(mode ? [`dg-tabs-mode-${mode}`] : []);

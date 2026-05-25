@@ -1,4 +1,4 @@
-import { effect, ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, signal } from '@angular/core';
+import { effect, ChangeDetectionStrategy, Component, HostBinding, HostListener, signal, inject } from '@angular/core';
 import { BUILTIN_SVGS } from '../../shared/icon/svgs';
 import { CopierService } from '../../shared/copier/copier.service';
 import { DocgeniBuiltInComponent } from '../built-in-component';
@@ -15,6 +15,8 @@ import { DocgeniBuiltInComponent } from '../built-in-component';
     standalone: true,
 })
 export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
+    private copier = inject(CopierService);
+
     readonly icon = signal<'copy' | 'check'>('copy');
 
     @HostBinding('attr.title')
@@ -23,12 +25,8 @@ export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
     @HostBinding('attr.aria-label')
     ariaLabel = 'Copy';
 
-    constructor(
-        elementRef: ElementRef<HTMLElement>,
-        private copier: CopierService,
-    ) {
-        super(elementRef);
-
+    constructor() {
+        super();
         effect(() => {
             this.icon();
             this.renderIcon();

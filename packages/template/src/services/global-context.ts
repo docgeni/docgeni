@@ -1,4 +1,4 @@
-import { Injectable, Inject, InjectionToken, Signal, computed, WritableSignal, signal, DOCUMENT, PLATFORM_ID } from '@angular/core';
+import { Injectable, InjectionToken, Signal, computed, WritableSignal, signal, DOCUMENT, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DocgeniSiteConfig, NavigationItem, DocgeniMode, HomeDocMeta, CategoryItem, DocgeniTheme } from '../interfaces/public-api';
 import { HttpClient } from '@angular/common/http';
@@ -20,6 +20,10 @@ const DOCGENI_THEME_KEY = 'docgeni-theme';
     providedIn: 'root',
 })
 export class GlobalContext {
+    config = inject<DocgeniSiteConfig>(CONFIG_TOKEN);
+    private http = inject(HttpClient);
+    private location = inject(Location);
+
     locale!: string;
 
     navs!: NavigationItem[];
@@ -50,13 +54,9 @@ export class GlobalContext {
         return this.locale === this.config.defaultLocale;
     }
 
-    constructor(
-        @Inject(CONFIG_TOKEN) public config: DocgeniSiteConfig,
-        private http: HttpClient,
-        @Inject(DOCUMENT) private document: any,
-        private location: Location,
-        @Inject(PLATFORM_ID) platformId: object,
-    ) {
+    constructor() {
+        const platformId = inject(PLATFORM_ID);
+
         this.isBrowser = isPlatformBrowser(platformId);
         this.setup();
     }

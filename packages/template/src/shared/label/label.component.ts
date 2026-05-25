@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2, inject } from '@angular/core';
 import { colorMetadata } from '../../utils/color-metadata';
 type LabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
 const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
@@ -8,6 +8,9 @@ const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
     templateUrl: './label.component.html',
 })
 export class LabelComponent implements OnInit {
+    private elementRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+
     @HostBinding(`class`) classList!: string[];
 
     @Input() set labelType(value: LabelType) {
@@ -19,11 +22,6 @@ export class LabelComponent implements OnInit {
             this.renderer.setStyle(this.elementRef.nativeElement, 'color', value);
         }
     }
-
-    constructor(
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-    ) {}
 
     ngOnInit(): void {}
 

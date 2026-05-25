@@ -23,23 +23,22 @@ describe('GlobalContext', () => {
         mocks: [],
     });
 
-    function createGlobalContext(config: Partial<DocgeniSiteConfig>) {
-        const globalContext = new GlobalContext(
-            config as DocgeniSiteConfig,
-            TestBed.inject(HttpClient),
-            document,
-            TestBed.inject(Location),
-            TestBed.inject(PLATFORM_ID),
-        );
-        return globalContext;
-    }
-
-    beforeEach(() => {
+    function createGlobalContext(config: Partial<DocgeniSiteConfig>, options?: { url?: string }) {
+        TestBed.resetTestingModule();
         TestBed.configureTestingModule({
             imports: [],
-            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+            providers: [
+                GlobalContext,
+                { provide: CONFIG_TOKEN, useValue: config },
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting(),
+            ],
         });
-    });
+        if (options?.url) {
+            TestBed.inject(Location).go(options.url);
+        }
+        return TestBed.inject(GlobalContext);
+    }
 
     afterEach(() => {
         window.localStorage.setItem('docgeni-locale', '');
@@ -97,14 +96,16 @@ describe('GlobalContext', () => {
         });
 
         it(`should use url locale`, () => {
-            TestBed.inject(Location).go('/en-us/hello');
-            const globalContext = createGlobalContext({
-                defaultLocale: 'zh-cn',
-                locales: [
-                    { key: 'zh-cn', name: '中文' },
-                    { key: 'en-us', name: 'EN' },
-                ],
-            } as DocgeniSiteConfig);
+            const globalContext = createGlobalContext(
+                {
+                    defaultLocale: 'zh-cn',
+                    locales: [
+                        { key: 'zh-cn', name: '中文' },
+                        { key: 'en-us', name: 'EN' },
+                    ],
+                } as DocgeniSiteConfig,
+                { url: '/en-us/hello' },
+            );
             expect(globalContext.locale).toBe('en-us');
         });
     });

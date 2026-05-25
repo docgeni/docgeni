@@ -1,5 +1,5 @@
 import { Location, NgClass } from '@angular/common';
-import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, inject } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { IconComponent } from '../icon/icon.component';
 
@@ -12,15 +12,13 @@ import { IconComponent } from '../icon/icon.component';
     imports: [NgClass, IconComponent],
 })
 export class LocalesSelectorComponent implements OnInit {
+    global = inject(GlobalContext);
+    navigationService = inject(NavigationService);
+    private location = inject(Location);
+
     locale!: string;
 
     isDropdownOpen = false;
-
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService,
-        private location: Location,
-    ) {}
 
     ngOnInit(): void {
         this.locale = this.global.locale;

@@ -43,12 +43,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
     template: ``,
 })
 export class ChannelHomeComponent implements OnInit {
-    constructor(
-        private router: Router,
-        public navigationService: NavigationService,
-        public global: GlobalContext,
-        private route: ActivatedRoute,
-    ) {}
+    private router = inject(Router);
+    navigationService = inject(NavigationService);
+    global = inject(GlobalContext);
+    private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
         const firstDocItem = this.navigationService.getChannelFirstDocItem();

@@ -1,5 +1,5 @@
 import { GlobalContext } from './../../services/global-context';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 
 const TRANSLATES: Record<string, Record<string, string>> = {
     'zh-cn': {
@@ -21,12 +21,17 @@ const TRANSLATES: Record<string, Record<string, string>> = {
         SEARCH: 'Search',
     },
 };
+
+export function translateByLocale(key: string, locale: string): string {
+    const langTranslates: Record<string, string> = TRANSLATES[locale.toLowerCase()] || TRANSLATES['en-us'];
+    return langTranslates[key] ?? key;
+}
+
 @Pipe({ name: 'dgTranslate' })
 export class TranslatePipe implements PipeTransform {
-    constructor(private global: GlobalContext) {}
+    private global = inject(GlobalContext);
 
     transform(key: string): string {
-        const langTranslates: Record<string, string> = TRANSLATES[this.global.locale.toLowerCase()] || TRANSLATES['en-us'];
-        return langTranslates[key] ? langTranslates[key] : key;
+        return translateByLocale(key, this.global.locale);
     }
 }

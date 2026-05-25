@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchPageInfo, SearchService } from '../../services/search.service';
 import { IconComponent } from '../icon/icon.component';
@@ -12,16 +12,14 @@ import { HighlightPipe } from '../pipes/highlight.pipe';
     imports: [IconComponent, FormsModule, TranslatePipe, HighlightPipe],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
+    searchService = inject(SearchService);
+    private router = inject(Router);
+
     public searchText!: string;
 
     public isFocus!: boolean;
 
     public hasSearchText!: boolean;
-
-    constructor(
-        public searchService: SearchService,
-        private router: Router,
-    ) {}
 
     ngOnInit(): void {}
 

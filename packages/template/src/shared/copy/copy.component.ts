@@ -1,4 +1,4 @@
-import { Component, HostListener, input, Input, OnInit } from '@angular/core';
+import { Component, HostListener, input, Input, OnInit, inject } from '@angular/core';
 import { CopierService } from '../copier/copier.service';
 import { IconComponent } from '../icon/icon.component';
 @Component({
@@ -10,11 +10,11 @@ import { IconComponent } from '../icon/icon.component';
     imports: [IconComponent],
 })
 export class CopyComponent implements OnInit {
+    private copier = inject(CopierService);
+
     public icon = 'copy';
 
     public readonly dgCopy = input<string>('');
-
-    constructor(private copier: CopierService) {}
 
     ngOnInit(): void {}
 
