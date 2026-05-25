@@ -152,10 +152,12 @@ export class NavsBuilder {
                 const entryFile = this.tryGetEntryFile(absDocPath);
                 const currentPath = this.getCurrentRoutePath(dirname, entryFile);
                 const fullRoutePath = this.getFullRoutePath(currentPath, parentItem);
+                // 当 parent item 的 path 为空时，说明有子频道，父频道就是一个分组
+                const parentIsActualChannel = parentItem && parentItem.path;
                 const navItem: NavigationItem = {
                     id: fullRoutePath,
                     path: fullRoutePath,
-                    channelPath: parentItem ? parentItem.channelPath : fullRoutePath,
+                    channelPath: parentIsActualChannel ? parentItem.channelPath : fullRoutePath,
                     title: getDocTitle(entryFile && entryFile.meta.title, dirname),
                     subtitle: entryFile && entryFile.meta.subtitle,
                     hidden: entryFile && entryFile.meta.hidden,

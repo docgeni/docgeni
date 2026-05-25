@@ -8,9 +8,27 @@
 
 <button class="navbar-toggler dg-btn dg-btn-primary" (click)="toggleNavbar()"><dg-icon iconName="list"></dg-icon></button>
 <div class="nav">
-  @for (channel of channels; track channel) {
+  @for (channel of navigationService.navs(); track channel) {
     @if (channel.isExternal) {
       <a href="{{ channel.path }}" target="_blank">{{ channel.title }} <dg-icon iconName="external"></dg-icon> </a>
+    } @else if (!channel.path && channel.items?.length) {
+      <div dgDropdown class="nav-dropdown" routerLinkActive="active">
+        <span class="nav-dropdown-trigger">
+          {{ channel.title }}
+          <dg-icon iconName="angleRight" class="nav-dropdown-icon"></dg-icon>
+        </span>
+        <dg-dropdown-menu>
+          @for (child of channel.items; track child) {
+            @if ($any(child).isExternal) {
+              <a class="dg-dropdown-item" href="{{ child.path }}" target="_blank">
+                {{ child.title }} <dg-icon iconName="external"></dg-icon>
+              </a>
+            } @else {
+              <a class="dg-dropdown-item" [routerLink]="[child.path]" routerLinkActive="active">{{ child.title }}</a>
+            }
+          }
+        </dg-dropdown-menu>
+      </div>
     } @else {
       <a [routerLink]="channel.path" routerLinkActive="active">{{ channel.title }}</a>
     }

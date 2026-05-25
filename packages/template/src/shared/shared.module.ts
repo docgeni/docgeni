@@ -30,6 +30,8 @@ import { HighlightPipe } from './pipes/highlight.pipe';
 import { IsNgContentChildKindPipe } from './pipes/ng-kind.pipe';
 import { PropertyNamePipe } from './pipes/property-name.pipe';
 import { ThemesSelectorComponent } from './themes-selector/themes-selector.component';
+import { DropdownDirective } from './dropdown/dropdown.directive';
+import { DropdownMenuComponent } from './dropdown/dropdown-menu.component';
 
 const COMPONENTS = [
     NavbarComponent,
@@ -44,6 +46,7 @@ const COMPONENTS = [
     LabelComponent,
     LocalesSelectorComponent,
     ThemesSelectorComponent,
+    DropdownMenuComponent,
     AssetsContentPathPipe,
     LogoComponent,
     CopyComponent,
@@ -58,6 +61,7 @@ const COMPONENTS = [
     DocPagesLinksComponent,
     SearchComponent,
     HighlightPipe,
+    DropdownDirective,
 ];
 @NgModule({
     declarations: [...COMPONENTS],

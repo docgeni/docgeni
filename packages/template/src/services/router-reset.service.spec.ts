@@ -2,6 +2,7 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { DocgeniSiteConfig, NavigationItem } from '../interfaces';
 import { GlobalContext } from './global-context';
+import { NavigationService } from './navigation.service';
 import { RouterResetService } from './router-reset.service';
 
 describe('router-reset.service', () => {
@@ -11,6 +12,7 @@ describe('router-reset.service', () => {
     const createService = createServiceFactory({
         service: RouterResetService,
         providers: [
+            NavigationService,
             {
                 provide: GlobalContext,
                 useFactory: function () {

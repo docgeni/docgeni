@@ -1,6 +1,7 @@
 import { NavigationService } from './navigation.service';
 import { createServiceFactory, createHttpFactory, SpectatorService, HttpMethod } from '@ngneat/spectator';
 import { GlobalContext } from './global-context';
+import { NavigationItem } from '../interfaces';
 
 const mockGlobalContext = {
     navs: [
@@ -95,7 +96,7 @@ const mockGlobalContext = {
             lib: 'blib',
             items: [],
         },
-    ],
+    ] as NavigationItem[],
     docItems: [
         {
             id: 'index',
@@ -189,6 +190,38 @@ describe('NavigationService', () => {
         it('should get channel fail', () => {
             const channel = spectator.service.getChannel('guide-01');
             expect(channel).toBeFalsy();
+        });
+
+        it('should get nested channel from nav group', () => {
+            const originalNavs = mockGlobalContext.navs;
+            mockGlobalContext.navs = [
+                {
+                    id: 'nav-group-0',
+                    title: 'Docs',
+                    channelPath: '',
+                    path: '',
+                    items: [
+                        {
+                            id: 'guides',
+                            path: 'guides',
+                            title: 'Guide',
+                            items: [],
+                            channelPath: '',
+                        },
+                    ],
+                },
+            ];
+            const nestedSpectator = createService();
+            const channel = nestedSpectator.service.getChannel('guides');
+            expect(channel).toBeTruthy();
+            expect(channel.path).toEqual('guides');
+            expect(nestedSpectator.service.channels()).toEqual([
+                jasmine.objectContaining({
+                    path: 'guides',
+                    title: 'Guide',
+                }),
+            ]);
+            mockGlobalContext.navs = originalNavs;
         });
     });
 

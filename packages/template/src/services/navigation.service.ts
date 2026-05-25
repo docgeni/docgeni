@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
 import { BehaviorSubject } from 'rxjs';
@@ -13,6 +13,13 @@ export class NavigationService {
     docPages$ = new BehaviorSubject<{ pre: NavigationItem; next: NavigationItem } | null>(null);
     /** Responsive layout, sidebar default is hide */
     showSidebar = false;
+
+    navs = computed(() => this.global.navs ?? []);
+
+    docItems = computed(() => this.global.docItems ?? []);
+
+    channels = computed(() => this.buildChannels(this.navs()));
+
     get channel() {
         return this.channel$.value;
     }
@@ -21,53 +28,40 @@ export class NavigationService {
         return this.docItem$.value;
     }
 
-    get navs() {
-        return this.global.navs;
-    }
-
-    get docItems() {
-        return this.global.docItems;
-    }
-
     constructor(private global: GlobalContext) {}
 
-    getChannels(): ChannelItem[] {
-        return this.navs as ChannelItem[];
-    }
-
     getChannel(path: string): ChannelItem {
-        return this.navs.find((nav) => {
-            return nav.path === path;
-        }) as ChannelItem;
+        return this.channels().find((nav) => nav.path === path) as ChannelItem;
     }
 
     getDocItemByPath(path: string) {
+        const docItems = this.docItems();
         let index: number;
         if (this.channel) {
             // 类库频道
             if (this.channel.lib) {
-                index = this.docItems.findIndex((docItem) => {
+                index = docItems.findIndex((docItem) => {
                     return docItem.path === path && docItem.channelPath === this.channel!.path && !!docItem.importSpecifier;
                 });
             } else {
-                index = this.docItems.findIndex((docItem) => {
+                index = docItems.findIndex((docItem) => {
                     return docItem.path === path && docItem.channelPath === this.channel!.path;
                 });
             }
         } else {
-            index = this.docItems.findIndex((docItem) => {
+            index = docItems.findIndex((docItem) => {
                 return docItem.path === path && (this.global.config.mode === 'lite' ? true : !docItem.channelPath);
             });
         }
         if (index > -1) {
-            const preDocItem = index ? this.docItems[index - 1] : undefined;
-            const nextDocItem = this.docItems.length - 1 === index ? undefined : this.docItems[index + 1];
+            const preDocItem = index ? docItems[index - 1] : undefined;
+            const nextDocItem = docItems.length - 1 === index ? undefined : docItems[index + 1];
             this.docPages$.next({
                 pre: preDocItem!,
                 next: nextDocItem!,
             });
         }
-        return this.docItems[index];
+        return docItems[index];
     }
 
     selectChannelByPath(path: string) {
@@ -92,7 +86,7 @@ export class NavigationService {
         return null;
     }
 
-    searchFirstDocItem(items: NavigationItem[] = this.navs) {
+    searchFirstDocItem(items: NavigationItem[] = this.channels() as NavigationItem[]) {
         let docItem: DocItem;
         for (const nav of items) {
             if (this.isDocItem(nav)) {
@@ -128,6 +122,19 @@ export class NavigationService {
 
     resetShowSidebar() {
         this.showSidebar = false;
+    }
+
+    private buildChannels(navs: NavigationItem[]): ChannelItem[] {
+        const channels: ChannelItem[] = [];
+        for (const nav of navs) {
+            const channel = nav as ChannelItem;
+            if (!channel.path && channel.items?.length) {
+                channels.push(...(channel.items as ChannelItem[]));
+            } else {
+                channels.push(channel);
+            }
+        }
+        return channels;
     }
 
     private isCategoryItem(category: CategoryItem | DocItem): category is CategoryItem {

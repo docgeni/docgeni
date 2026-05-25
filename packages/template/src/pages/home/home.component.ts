@@ -53,9 +53,10 @@ export class HomeComponent implements OnInit {
     constructor() {
         if (!this.global.homeMeta) {
             if (this.global.config.mode === 'full') {
-                const channels = this.navigationService.getChannels();
-                if (channels && channels[0].path && !channels[0].isExternal) {
-                    this.router.navigateByUrl(channels[0].path, {
+                const channels = this.navigationService.channels();
+                const firstChannel = channels.find((channel) => channel.path && !channel.isExternal);
+                if (firstChannel) {
+                    this.router.navigateByUrl(firstChannel.path!, {
                         replaceUrl: true,
                     });
                 }

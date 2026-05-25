@@ -1,4 +1,5 @@
 import { GlobalContext } from './global-context';
+import { NavigationService } from './navigation.service';
 import { Injectable } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
 import { ChannelComponent, ChannelHomeComponent } from '../pages/channel/channel.component';
@@ -43,6 +44,7 @@ export class RouterResetService {
     constructor(
         private router: Router,
         private global: GlobalContext,
+        private navigationService: NavigationService,
     ) {}
 
     resetRoutes() {
@@ -76,13 +78,12 @@ export class RouterResetService {
         const channelPathToHomeRoutes: Record<string, Route> = {};
         let shouldRemoveHome = false;
         if (this.global.config.mode === 'full') {
-            const rootNavs = this.global.navs.filter((nav) => {
-                return !nav.isExternal;
-            });
-            rootNavs.forEach((nav) => {
-                if (nav.items) {
+            this.navigationService
+                .channels()
+                .filter((channel) => !channel.isExternal && channel.path)
+                .forEach((channel) => {
                     const route: Route = {
-                        path: nav.path,
+                        path: channel.path!,
                         component: ChannelComponent,
                         children: [
                             {
@@ -91,8 +92,8 @@ export class RouterResetService {
                             },
                         ],
                     };
-                    channelPathToHomeRoutes[nav.path] = route.children![0];
-                    if (nav.lib) {
+                    channelPathToHomeRoutes[channel.path!] = route.children![0];
+                    if (channel.lib) {
                         route.children!.push({
                             path: ':id',
                             component: DocViewerComponent,
@@ -100,9 +101,8 @@ export class RouterResetService {
                         });
                     }
                     routes.push(route);
-                    channelPathToRoutes[nav.path] = route;
-                }
-            });
+                    channelPathToRoutes[channel.path!] = route;
+                });
             this.global.docItems.forEach((docItem) => {
                 const route: Route = docItem.importSpecifier
                     ? {
