@@ -21,6 +21,9 @@
       "@docgeni/template/*": [
         "packages/template/src/*"
       ],
+      "@docgeni/toolkit": [
+        "packages/toolkit/src/index.ts"
+      ],
       "@docgeni/toolkit/*": [
         "packages/toolkit/src/*"
       ],

@@ -104,6 +104,9 @@ importers:
             '@types/yargs':
                 specifier: ^17.0.33
                 version: 17.0.35
+            '@types/yargs-parser':
+                specifier: ^21.0.3
+                version: 21.0.3
             '@typescript-eslint/eslint-plugin':
                 specifier: 8.1.0
                 version: 8.1.0(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@2.6.1))(typescript@5.9.3))(eslint@9.9.0(jiti@2.6.1))(typescript@5.9.3)
@@ -206,6 +209,12 @@ importers:
             typescript:
                 specifier: 5.9.3
                 version: 5.9.3
+            write-json-file:
+                specifier: ^7.0.0
+                version: 7.0.0
+            yargs-parser:
+                specifier: ^22.0.0
+                version: 22.0.0
 
     packages/cli:
         dependencies:
@@ -3252,6 +3261,10 @@ packages:
         resolution: { integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA== }
         engines: { node: '>=8' }
 
+    detect-indent@7.0.2:
+        resolution: { integrity: sha512-y+8xyqdGLL+6sh0tVeHcfP/QDd8gUgbasolJJpY7NgeQGSZ739bDtSiaiDgtoicy+mtYB81dKLxO9xRhCyIB3A== }
+        engines: { node: '>=12.20' }
+
     detect-libc@2.1.2:
         resolution: { integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ== }
         engines: { node: '>=8' }
@@ -4450,6 +4463,10 @@ packages:
     is-plain-obj@2.1.0:
         resolution: { integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA== }
         engines: { node: '>=8' }
+
+    is-plain-obj@4.1.0:
+        resolution: { integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg== }
+        engines: { node: '>=12' }
 
     is-plain-object@2.0.4:
         resolution: { integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og== }
@@ -6176,6 +6193,10 @@ packages:
         resolution: { integrity: sha512-aUYIEU/UviqPgc8mHR6IW1EGxkAXpeRETYcrzg8cLAvUPZcpAlleSXHV2mY7G12GphSH6Gzv+4MMVSSkbdteHg== }
         engines: { node: '>=8' }
 
+    sort-keys@6.0.0:
+        resolution: { integrity: sha512-ueSlHJMwpIw42CJ4B11Uxzh/S0p0AlOyiNktlv2KOu5e1JpUE6DlC4AAUjXqesHdBRv/g0wC9Q4vwq0NP2pA9w== }
+        engines: { node: '>=20' }
+
     source-map-js@1.2.1:
         resolution: { integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA== }
         engines: { node: '>=0.10.0' }
@@ -6845,9 +6866,17 @@ packages:
     write-file-atomic@3.0.3:
         resolution: { integrity: sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q== }
 
+    write-file-atomic@6.0.0:
+        resolution: { integrity: sha512-GmqrO8WJ1NuzJ2DrziEI2o57jKAVIQNf8a18W3nCYU3H7PNWqCCVTeH6/NQE93CIllIgQS98rrmVkYgTX9fFJQ== }
+        engines: { node: ^18.17.0 || >=20.5.0 }
+
     write-json-file@4.3.0:
         resolution: { integrity: sha512-PxiShnxf0IlnQuMYOPPhPkhExoCQuTUNPOa/2JWCYTmBquU9njyyDuwRKN26IZBlp4yn1nt+Agh2HOOBl+55HQ== }
         engines: { node: '>=8.3' }
+
+    write-json-file@7.0.0:
+        resolution: { integrity: sha512-rj8As6LkachKauGxvZkFzCEd6hIRTi9FKtCNKOa4SaH5vPOiACbGcmPUEJXgkhTHwzNsYmcSbD3C9a6whBfyOg== }
+        engines: { node: '>=20' }
 
     ws@8.20.1:
         resolution: { integrity: sha512-It4dO0K5v//JtTXuPkfEOaI3uUN87iYPnqo/ZzqCoG3g8uhA66QUMs/SrM0YK7/NAu+r4LMh/9dq2A7k+rHs+w== }
@@ -9821,6 +9850,8 @@ snapshots:
 
     detect-indent@6.1.0: {}
 
+    detect-indent@7.0.2: {}
+
     detect-libc@2.1.2:
         optional: true
 
@@ -11239,6 +11270,8 @@ snapshots:
     is-plain-obj@1.1.0: {}
 
     is-plain-obj@2.1.0: {}
+
+    is-plain-obj@4.1.0: {}
 
     is-plain-object@2.0.4:
         dependencies:
@@ -13307,6 +13340,10 @@ snapshots:
         dependencies:
             is-plain-obj: 2.1.0
 
+    sort-keys@6.0.0:
+        dependencies:
+            is-plain-obj: 4.1.0
+
     source-map-js@1.2.1: {}
 
     source-map-resolve@0.5.3:
@@ -14025,6 +14062,11 @@ snapshots:
             signal-exit: 3.0.7
             typedarray-to-buffer: 3.1.5
 
+    write-file-atomic@6.0.0:
+        dependencies:
+            imurmurhash: 0.1.4
+            signal-exit: 4.1.0
+
     write-json-file@4.3.0:
         dependencies:
             detect-indent: 6.1.0
@@ -14033,6 +14075,13 @@ snapshots:
             make-dir: 3.1.0
             sort-keys: 4.2.0
             write-file-atomic: 3.0.3
+
+    write-json-file@7.0.0:
+        dependencies:
+            detect-indent: 7.0.2
+            is-plain-obj: 4.1.0
+            sort-keys: 6.0.0
+            write-file-atomic: 6.0.0
 
     ws@8.20.1: {}
 
