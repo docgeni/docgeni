@@ -1,4 +1,5 @@
 import { GlobalContext } from './global-context';
+import { NavigationService } from './navigation.service';
 import { Injectable } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
 import { ChannelComponent, ChannelHomeComponent } from '../pages/channel/channel.component';
@@ -43,6 +44,7 @@ export class RouterResetService {
     constructor(
         private router: Router,
         private global: GlobalContext,
+        private navigationService: NavigationService,
     ) {}
 
     resetRoutes() {
@@ -76,54 +78,31 @@ export class RouterResetService {
         const channelPathToHomeRoutes: Record<string, Route> = {};
         let shouldRemoveHome = false;
         if (this.global.config.mode === 'full') {
-            const rootNavs = this.global.navs.filter((nav) => {
-                return !nav.isExternal;
-            });
-            rootNavs.forEach((nav) => {
-                if (nav.items) {
-                    // 频道没有 path，则将子频道作为频道
-                    if (!nav.path) {
-                        nav.items!.forEach((subNav) => {
-                            if (subNav.path) {
-                                const route: Route = {
-                                    path: subNav.path,
-                                    component: ChannelComponent,
-                                    children: [
-                                        {
-                                            path: '',
-                                            component: ChannelHomeComponent,
-                                        },
-                                    ],
-                                };
-                                channelPathToHomeRoutes[subNav.path!] = route.children![0];
-                                routes.push(route);
-                                channelPathToRoutes[subNav.path!] = route;
-                            }
+            this.navigationService
+                .channels()
+                .filter((channel) => !channel.isExternal && channel.path)
+                .forEach((channel) => {
+                    const route: Route = {
+                        path: channel.path!,
+                        component: ChannelComponent,
+                        children: [
+                            {
+                                path: '',
+                                component: ChannelHomeComponent,
+                            },
+                        ],
+                    };
+                    channelPathToHomeRoutes[channel.path!] = route.children![0];
+                    if (channel.lib) {
+                        route.children!.push({
+                            path: ':id',
+                            component: DocViewerComponent,
+                            children: componentChildrenRoutes,
                         });
-                    } else {
-                        const route: Route = {
-                            path: nav.path,
-                            component: ChannelComponent,
-                            children: [
-                                {
-                                    path: '',
-                                    component: ChannelHomeComponent,
-                                },
-                            ],
-                        };
-                        channelPathToHomeRoutes[nav.path] = route.children![0];
-                        if (nav.lib) {
-                            route.children!.push({
-                                path: ':id',
-                                component: DocViewerComponent,
-                                children: componentChildrenRoutes,
-                            });
-                        }
-                        routes.push(route);
-                        channelPathToRoutes[nav.path] = route;
                     }
-                }
-            });
+                    routes.push(route);
+                    channelPathToRoutes[channel.path!] = route;
+                });
             this.global.docItems.forEach((docItem) => {
                 const route: Route = docItem.importSpecifier
                     ? {
