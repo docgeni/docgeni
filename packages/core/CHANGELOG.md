@@ -86,6 +86,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
 
+## 2.8.0-next.4 (2026-05-25)
+
+* build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
+* feat: support code-group markdown syntax ([7a7b730](https://github.com/docgeni/docgeni/commit/7a7b730))
+* feat: support custom markdown plugin ([b5228d4](https://github.com/docgeni/docgeni/commit/b5228d4))
+* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
+* feat: support ts config (#677) ([92ffe48](https://github.com/docgeni/docgeni/commit/92ffe48)), closes [#677](https://github.com/docgeni/docgeni/issues/677)
+* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
+* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 

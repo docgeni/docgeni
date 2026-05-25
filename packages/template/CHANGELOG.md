@@ -83,6 +83,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
 
+## 2.8.0-next.4 (2026-05-25)
+
+* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
+* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
+* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
+* refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 **Note:** Version bump only for package @docgeni/template
