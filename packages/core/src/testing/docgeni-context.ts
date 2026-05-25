@@ -3,7 +3,7 @@ import { normalize } from '@angular-devkit/core';
 import { DocgeniPaths } from '../docgeni-paths';
 import { DocgeniContext } from '../docgeni.interface';
 import { DocgeniConfig, DocgeniLibrary, DocgeniTheme } from '../interfaces';
-import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
+import { createTestDocgeniFsHost } from '../../../toolkit/src/testing';
 import { DocsBuilder, LibrariesBuilder } from '../builders';
 import { Docgeni } from '../docgeni';
 

@@ -24,7 +24,8 @@
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/toolkit": "^2.7.0",
+    "@docgeni/toolkit": "workspace:*",
+    "@angular-devkit/core": "^21.0.4",
     "ts-morph": "12.1.0",
     "typescript": "5.9.3"
   }
