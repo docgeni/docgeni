@@ -43,6 +43,9 @@ importers:
             fancy-log:
                 specifier: ^2.0.0
                 version: 2.0.0
+            globals:
+                specifier: ^17.6.0
+                version: 17.6.0
             marked:
                 specifier: 18.0.4
                 version: 18.0.4
@@ -4024,6 +4027,10 @@ packages:
 
     globals@14.0.0:
         resolution: { integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ== }
+        engines: { node: '>=18' }
+
+    globals@17.6.0:
+        resolution: { integrity: sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA== }
         engines: { node: '>=18' }
 
     globalthis@1.0.4:
@@ -11122,6 +11129,8 @@ snapshots:
             process: 0.11.10
 
     globals@14.0.0: {}
+
+    globals@17.6.0: {}
 
     globalthis@1.0.4:
         dependencies:
