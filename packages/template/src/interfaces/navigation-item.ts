@@ -40,6 +40,7 @@ export interface CategoryItem {
     id?: string;
     title: string;
     subtitle?: string;
+    path?: string;
     items?: Array<DocItem | ComponentDocItem | CategoryItem>;
     locales?: {
         [key: string]: {
@@ -54,7 +55,7 @@ export interface CategoryItem {
 export interface ChannelItem {
     id: string;
     title: string;
-    path: string;
+    path?: string;
     fullPath?: string;
     isExternal?: boolean;
     lib?: string;

@@ -1,0 +1,67 @@
+@use '../../styles/variables';
+
+.dg-dropdown {
+    position: relative;
+    display: inline-flex;
+    margin-right: 8px;
+}
+
+.dg-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 160px;
+    padding: 6px 0;
+    border-radius: 6px;
+    z-index: 101;
+    background: variables.$dg-bg-color;
+    border: 1px solid variables.$dg-border-color;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 0;
+        right: 0;
+        height: 8px;
+    }
+
+    &.dg-dropdown-menu-open {
+        display: flex;
+    }
+}
+
+.dg-dropdown-item {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    margin: 0;
+    text-decoration: none;
+    white-space: nowrap;
+    color: variables.$dg-text-color;
+
+    &:hover {
+        color: variables.$dg-primary;
+    }
+
+    &.active {
+        color: variables.$dg-primary;
+        background: rgba(variables.$dg-primary, 0.12);
+    }
+}
+
+a.dg-dropdown-item {
+    &,
+    &:visited {
+        color: variables.$dg-text-color;
+    }
+
+    &:hover,
+    &.active {
+        color: variables.$dg-primary;
+    }
+}

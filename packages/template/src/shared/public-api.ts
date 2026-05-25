@@ -1,3 +1,5 @@
+export * from './dropdown/dropdown.directive';
+export * from './dropdown/dropdown-menu.component';
 export * from './doc-meta/doc-meta.component';
 export * from './doc-pages-links/doc-pages-links.component';
 export * from './locales-selector/locales-selector.component';

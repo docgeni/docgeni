@@ -81,26 +81,47 @@ export class RouterResetService {
             });
             rootNavs.forEach((nav) => {
                 if (nav.items) {
-                    const route: Route = {
-                        path: nav.path,
-                        component: ChannelComponent,
-                        children: [
-                            {
-                                path: '',
-                                component: ChannelHomeComponent,
-                            },
-                        ],
-                    };
-                    channelPathToHomeRoutes[nav.path] = route.children![0];
-                    if (nav.lib) {
-                        route.children!.push({
-                            path: ':id',
-                            component: DocViewerComponent,
-                            children: componentChildrenRoutes,
+                    // 频道没有 path，则将子频道作为频道
+                    if (!nav.path) {
+                        nav.items!.forEach((subNav) => {
+                            if (subNav.path) {
+                                const route: Route = {
+                                    path: subNav.path,
+                                    component: ChannelComponent,
+                                    children: [
+                                        {
+                                            path: '',
+                                            component: ChannelHomeComponent,
+                                        },
+                                    ],
+                                };
+                                channelPathToHomeRoutes[subNav.path!] = route.children![0];
+                                routes.push(route);
+                                channelPathToRoutes[subNav.path!] = route;
+                            }
                         });
+                    } else {
+                        const route: Route = {
+                            path: nav.path,
+                            component: ChannelComponent,
+                            children: [
+                                {
+                                    path: '',
+                                    component: ChannelHomeComponent,
+                                },
+                            ],
+                        };
+                        channelPathToHomeRoutes[nav.path] = route.children![0];
+                        if (nav.lib) {
+                            route.children!.push({
+                                path: ':id',
+                                component: DocViewerComponent,
+                                children: componentChildrenRoutes,
+                            });
+                        }
+                        routes.push(route);
+                        channelPathToRoutes[nav.path] = route;
                     }
-                    routes.push(route);
-                    channelPathToRoutes[nav.path] = route;
                 }
             });
             this.global.docItems.forEach((docItem) => {

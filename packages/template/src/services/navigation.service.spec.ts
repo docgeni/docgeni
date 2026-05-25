@@ -190,6 +190,35 @@ describe('NavigationService', () => {
             const channel = spectator.service.getChannel('guide-01');
             expect(channel).toBeFalsy();
         });
+
+        it('should get nested channel from nav group', () => {
+            const originalNavs = mockGlobalContext.navs;
+            mockGlobalContext.navs = [
+                {
+                    id: 'nav-group-0',
+                    title: 'Docs',
+                    items: [
+                        {
+                            id: 'guides',
+                            path: 'guides',
+                            title: 'Guide',
+                            items: [],
+                        },
+                    ],
+                },
+            ];
+            const nestedSpectator = createService();
+            const channel = nestedSpectator.service.getChannel('guides');
+            expect(channel).toBeTruthy();
+            expect(channel.path).toEqual('guides');
+            expect(nestedSpectator.service.channels()).toEqual([
+                jasmine.objectContaining({
+                    path: 'guides',
+                    title: 'Guide',
+                }),
+            ]);
+            mockGlobalContext.navs = originalNavs;
+        });
     });
 
     it('should get doc item by path [intro/getting-started] success', () => {

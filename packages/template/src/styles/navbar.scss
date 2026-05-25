@@ -49,7 +49,8 @@
 
     .nav {
         display: flex;
-        a {
+        > a,
+        .nav-dropdown-trigger {
             padding: 6px 18px;
             margin-right: 8px;
             text-decoration: none;
@@ -61,6 +62,29 @@
 
             &:hover {
                 text-decoration: none !important;
+            }
+        }
+
+        .nav-dropdown {
+            margin-right: 0;
+
+            .nav-dropdown-trigger {
+                display: inline-flex;
+                align-items: center;
+                cursor: default;
+            }
+
+            .nav-dropdown-icon {
+                margin-left: 8px;
+                transition: transform 0.2s;
+                margin-top: 2px;
+                transform: rotate(90deg);
+            }
+
+            &.dg-dropdown-open {
+                .nav-dropdown-icon {
+                    transform: rotate(-90deg);
+                }
             }
         }
     }
@@ -148,7 +172,8 @@
     box-shadow: $box-shadow;
 
     .nav {
-        a {
+        > a,
+        .nav-dropdown-trigger {
             color: $color;
         }
     }
@@ -172,7 +197,8 @@
         );
 
         .nav {
-            a {
+            > a,
+            .nav-dropdown-trigger {
                 &:hover {
                     color: rgba($color: variables.$dg-white, $alpha: 0.8); // $gray-200;
                 }
@@ -180,6 +206,21 @@
                 &.active {
                     background: hsla(0, 0%, 100%, 0.15);
                 }
+            }
+
+            .nav-dropdown.active {
+                .nav-dropdown-trigger {
+                    background: hsla(0, 0%, 100%, 0.15);
+
+                    .nav-dropdown-icon,
+                    .dg-icon {
+                        color: variables.$dg-primary;
+                    }
+                }
+            }
+
+            .dg-dropdown-menu {
+                background: variables.$dg-white;
             }
         }
 
@@ -203,7 +244,8 @@
         );
 
         .nav {
-            a {
+            > a,
+            .nav-dropdown-trigger {
                 &:hover {
                     color: variables.$dg-primary;
                 }
@@ -211,6 +253,18 @@
                 &.active {
                     color: variables.$dg-primary;
                     background: rgba(variables.$dg-primary, 0.12);
+                }
+            }
+
+            .nav-dropdown.active {
+                .nav-dropdown-trigger {
+                    color: variables.$dg-primary;
+                    background: rgba(variables.$dg-primary, 0.12);
+
+                    .nav-dropdown-icon,
+                    .dg-icon {
+                        color: variables.$dg-primary;
+                    }
                 }
             }
         }
