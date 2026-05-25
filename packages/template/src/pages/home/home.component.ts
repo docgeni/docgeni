@@ -3,6 +3,11 @@ import { GlobalContext, NavigationService } from '../../services/public-api';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { NgClass } from '@angular/common';
+import { ContentViewerComponent } from '../../shared/content-viewer/content-viewer.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { AssetsContentPathPipe } from '../../shared/pipes/assets-content-path.pipe';
+import { HeroActionClassPipe } from '../../shared/pipes/hero.pipe';
 
 @Component({
     selector: 'dg-home',
@@ -11,7 +16,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
     host: {
         class: 'dg-home',
     },
-    standalone: false,
+    imports: [NgClass, ContentViewerComponent, FooterComponent, AssetsContentPathPipe, HeroActionClassPipe],
 })
 export class HomeComponent implements OnInit {
     public global = inject(GlobalContext);

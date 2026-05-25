@@ -1,14 +1,15 @@
-import { Location } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'dg-locales-selector',
     templateUrl: './locales-selector.component.html',
-    standalone: false,
     host: {
         class: 'dg-locales-selector',
     },
+    imports: [NgClass, IconComponent],
 })
 export class LocalesSelectorComponent implements OnInit {
     locale!: string;

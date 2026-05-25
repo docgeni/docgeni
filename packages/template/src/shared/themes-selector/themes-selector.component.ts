@@ -1,11 +1,13 @@
 import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { DocgeniTheme } from '../../interfaces';
+import { NgClass } from '@angular/common';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'dg-themes-selector',
     templateUrl: './themes-selector.component.html',
-    standalone: false,
+    imports: [NgClass, IconComponent],
 })
 export class ThemesSelectorComponent implements OnInit {
     @HostBinding('class.dg-themes-selector') isNavbar = true;

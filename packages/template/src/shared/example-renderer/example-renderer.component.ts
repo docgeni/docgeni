@@ -13,11 +13,12 @@ import {
 } from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
 import { ExampleLoader } from '../../services/example-loader';
+import { NgComponentOutlet } from '@angular/common';
 
 @Component({
     selector: 'dg-example-renderer, [dgExampleRenderer]',
     templateUrl: './example-renderer.component.html',
-    standalone: false,
+    imports: [NgComponentOutlet],
 })
 export class ExampleRendererComponent implements OnInit {
     /** Component type for the current example. */

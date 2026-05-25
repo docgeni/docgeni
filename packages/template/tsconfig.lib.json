@@ -14,9 +14,8 @@
     "strictTemplates": true,
     "compilationMode": "partial"
   },
-  "files": [
-    // "src/**/&.ts",
-    // "src/**/*.d.ts"
+  "include": [
+    "src/**/*.ts"
   ],
   "exclude": [
     "src/test.ts",

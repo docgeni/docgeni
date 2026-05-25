@@ -5,6 +5,8 @@ import { GlobalContext } from '../../../services/public-api';
 import { ApiDeclaration } from '../../../interfaces';
 import { take } from 'rxjs/operators';
 import { TocService } from '../../../services/toc.service';
+import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
+import { PropertyNamePipe } from '../../../shared/pipes/property-name.pipe';
 
 @Component({
     selector: 'dg-component-api',
@@ -13,7 +15,7 @@ import { TocService } from '../../../services/toc.service';
     host: {
         class: 'dg-component-api',
     },
-    standalone: false,
+    imports: [TableOfContentsComponent, PropertyNamePipe],
 })
 export class ComponentApiComponent implements OnInit {
     apiDeclarations = signal<ApiDeclaration[] | undefined>(undefined);

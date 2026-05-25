@@ -1,13 +1,13 @@
 import { Component, HostListener, input, Input, OnInit } from '@angular/core';
 import { CopierService } from '../copier/copier.service';
-
+import { IconComponent } from '../icon/icon.component';
 @Component({
     selector: 'dg-copy,[dgCopy]',
     templateUrl: './copy.component.html',
     host: {
         class: 'dg-copy',
     },
-    standalone: false,
+    imports: [IconComponent],
 })
 export class CopyComponent implements OnInit {
     public icon = 'copy';

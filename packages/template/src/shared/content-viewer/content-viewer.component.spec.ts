@@ -11,7 +11,6 @@ import { CONFIG_TOKEN } from '../../services/global-context';
 @Component({
     selector: 'my-label',
     template: 'my-label <ng-content></ng-content>',
-    standalone: false,
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
     readonly type = input.required<string>();
@@ -32,7 +31,7 @@ describe('#content-viewer', () => {
     let spectator: Spectator<ContentViewerComponent>;
     const createComponent = createComponentFactory({
         component: ContentViewerComponent,
-        imports: [],
+        imports: [MyLabelComponent],
         providers: [
             {
                 provide: CONFIG_TOKEN,
@@ -43,7 +42,6 @@ describe('#content-viewer', () => {
             provideHttpClient(withInterceptorsFromDi()),
             provideHttpClientTesting(),
         ],
-        declarations: [MyLabelComponent],
     });
 
     beforeEach(() => {

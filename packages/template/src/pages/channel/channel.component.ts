@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy, HostBinding, NgModuleFactory, Type, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { NavigationItem } from '../../interfaces';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 @Component({
     selector: 'dg-channel',
     templateUrl: './channel.component.html',
-    standalone: false,
+    imports: [SidebarComponent, RouterOutlet],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
     @HostBinding(`class.dg-layout`) isLayout = true;
@@ -40,7 +41,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
 @Component({
     selector: 'dg-channel-home',
     template: ``,
-    standalone: false,
 })
 export class ChannelHomeComponent implements OnInit {
     constructor(

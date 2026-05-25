@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
+import { RouterLink } from '@angular/router';
+import { IconComponent } from '../icon/icon.component';
+import { TranslatePipe } from '../pipes/translate.pipe';
 
 @Component({
     selector: 'dg-doc-pages-links',
@@ -8,7 +11,7 @@ import { GlobalContext } from '../../services/global-context';
     host: {
         class: 'dg-pages-link',
     },
-    standalone: false,
+    imports: [RouterLink, IconComponent, TranslatePipe],
 })
 export class DocPagesLinksComponent implements OnInit {
     @Input() docPages!: {

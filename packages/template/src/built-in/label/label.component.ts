@@ -10,6 +10,7 @@ export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
         class: 'dg-label',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements OnInit {
     readonly type = input<DocgeniLabelType>('primary');

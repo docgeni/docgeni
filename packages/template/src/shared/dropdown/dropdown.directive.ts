@@ -3,7 +3,6 @@ import { DropdownMenuComponent } from './dropdown-menu.component';
 
 @Directive({
     selector: '[dgDropdown]',
-    standalone: false,
     host: {
         class: 'dg-dropdown',
     },

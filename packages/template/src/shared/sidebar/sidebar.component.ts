@@ -1,13 +1,32 @@
 import { Component, OnInit, HostBinding, Input, OnChanges } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
 import { GlobalContext } from '../../services/global-context';
+import { LogoComponent } from '../logo/logo.component';
+import { SearchComponent } from '../search/search.component';
+import { NgTemplateOutlet } from '@angular/common';
+import { IconComponent } from '../icon/icon.component';
+import { LabelComponent } from '../label/label.component';
+import { TableOfContentsComponent } from '../toc/toc.component';
+import { LocalesSelectorComponent } from '../locales-selector/locales-selector.component';
+import { IsModeLitePipe } from '../pipes/mode.pipe';
 
 @Component({
     selector: 'dg-sidebar',
     templateUrl: './sidebar.component.html',
-    standalone: false,
+    imports: [
+        LogoComponent,
+        RouterLink,
+        SearchComponent,
+        NgTemplateOutlet,
+        IconComponent,
+        RouterLinkActive,
+        LabelComponent,
+        TableOfContentsComponent,
+        LocalesSelectorComponent,
+        IsModeLitePipe,
+    ],
 })
 export class SidebarComponent implements OnInit, OnChanges {
     @HostBinding(`class.dg-sidebar`) isSidebar = true;

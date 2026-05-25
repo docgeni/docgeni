@@ -2,10 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { PropertyDeclaration } from '../../interfaces';
 import { IsNgContentChildKindPipe } from './ng-kind.pipe';
 
-@Pipe({
-    name: 'dgPropertyName',
-    standalone: false,
-})
+@Pipe({ name: 'dgPropertyName' })
 export class PropertyNamePipe implements PipeTransform {
     constructor() {}
 

@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
+import { ExampleRendererComponent } from '../../shared/example-renderer/example-renderer.component';
 
 @Component({
     selector: 'dg-example-isolated-viewer',
     templateUrl: './example.component.html',
-    standalone: false,
+    imports: [ExampleRendererComponent],
 })
 export class ExampleIsolatedViewerComponent implements OnInit {
     public name = signal<string>('');
