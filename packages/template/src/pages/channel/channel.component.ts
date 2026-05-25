@@ -23,7 +23,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     public global = inject(GlobalContext);
 
     menus = computed(() => {
-        return this.navigationService.channel?.items as NavigationItem[];
+        return this.navigationService.channel()?.items as NavigationItem[];
     });
 
     constructor() {}

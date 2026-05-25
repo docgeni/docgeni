@@ -1,5 +1,5 @@
 <header class="dg-doc-header">
-  @if (((global.config.mode | dgIsFull) && navigationService.channel) || (global.config.mode | dgIsLite)) {
+  @if (((global.config.mode | dgIsFull) && navigationService.channel()) || (global.config.mode | dgIsLite)) {
     <a class="sidebar-toggler" href="javascript:;" (click)="toggleSidebar($event)"><dg-icon iconName="list"></dg-icon></a>
   }
 

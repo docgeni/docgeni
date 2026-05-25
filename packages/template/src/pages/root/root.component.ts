@@ -12,7 +12,7 @@ import { IsModeLitePipe, IsModeFullPipe } from '../../shared/pipes/mode.pipe';
     host: {
         class: 'dg-main dg-layout',
         '[class.dg-scroll-container]': "global.config.mode === 'lite'",
-        '[class.dg-sidebar-show]': 'navigationService.showSidebar',
+        '[class.dg-sidebar-show]': 'navigationService.showSidebar()',
     },
     imports: [NavbarComponent, SidebarComponent, RouterOutlet, IsModeLitePipe, IsModeFullPipe],
 })

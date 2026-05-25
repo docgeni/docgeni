@@ -1,32 +1,25 @@
-import { computed, Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { NavigationItem, DocItem, ChannelItem, CategoryItem } from '../interfaces/public-api';
 import { GlobalContext } from './global-context';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class NavigationService {
-    channel$ = new BehaviorSubject<ChannelItem | null>(null);
+    readonly channel = signal<ChannelItem | null>(null);
 
-    docItem$ = new BehaviorSubject<NavigationItem | null>(null);
-    docPages$ = new BehaviorSubject<{ pre: NavigationItem; next: NavigationItem } | null>(null);
+    readonly docItem = signal<NavigationItem | null>(null);
+
+    readonly docPages = signal<{ pre: NavigationItem; next: NavigationItem } | null>(null);
+
     /** Responsive layout, sidebar default is hide */
-    showSidebar = false;
+    readonly showSidebar = signal(false);
 
-    navs = computed(() => this.global.navs ?? []);
+    readonly navs = computed(() => this.global.navs ?? []);
 
-    docItems = computed(() => this.global.docItems ?? []);
+    readonly docItems = computed(() => this.global.docItems ?? []);
 
-    channels = computed(() => this.buildChannels(this.navs()));
-
-    get channel() {
-        return this.channel$.value;
-    }
-
-    get docItem() {
-        return this.docItem$.value;
-    }
+    readonly channels = computed(() => this.buildChannels(this.navs()));
 
     constructor(private global: GlobalContext) {}
 
@@ -36,16 +29,17 @@ export class NavigationService {
 
     getDocItemByPath(path: string) {
         const docItems = this.docItems();
+        const channel = this.channel();
         let index: number;
-        if (this.channel) {
+        if (channel) {
             // 类库频道
-            if (this.channel.lib) {
+            if (channel.lib) {
                 index = docItems.findIndex((docItem) => {
-                    return docItem.path === path && docItem.channelPath === this.channel!.path && !!docItem.importSpecifier;
+                    return docItem.path === path && docItem.channelPath === channel.path && !!docItem.importSpecifier;
                 });
             } else {
                 index = docItems.findIndex((docItem) => {
-                    return docItem.path === path && docItem.channelPath === this.channel!.path;
+                    return docItem.path === path && docItem.channelPath === channel.path;
                 });
             }
         } else {
@@ -56,7 +50,7 @@ export class NavigationService {
         if (index > -1) {
             const preDocItem = index ? docItems[index - 1] : undefined;
             const nextDocItem = docItems.length - 1 === index ? undefined : docItems[index + 1];
-            this.docPages$.next({
+            this.docPages.set({
                 pre: preDocItem!,
                 next: nextDocItem!,
             });
@@ -66,22 +60,23 @@ export class NavigationService {
 
     selectChannelByPath(path: string) {
         const channel = this.getChannel(path);
-        this.channel$.next(channel);
+        this.channel.set(channel);
         return channel;
     }
 
     clearChannel() {
-        this.channel$.next(null);
+        this.channel.set(null);
     }
 
     selectDocItem(path: string) {
         const docItem = this.getDocItemByPath(path);
-        this.docItem$.next(docItem);
+        this.docItem.set(docItem);
     }
 
     getChannelFirstDocItem() {
-        if (this.channel && this.channel.items) {
-            return this.searchFirstDocItem(this.channel.items as NavigationItem[]);
+        const channel = this.channel();
+        if (channel && channel.items) {
+            return this.searchFirstDocItem(channel.items as NavigationItem[]);
         }
         return null;
     }
@@ -117,11 +112,11 @@ export class NavigationService {
     }
 
     toggleSidebar() {
-        this.showSidebar = !this.showSidebar;
+        this.showSidebar.update((open) => !open);
     }
 
     resetShowSidebar() {
-        this.showSidebar = false;
+        this.showSidebar.set(false);
     }
 
     private buildChannels(navs: NavigationItem[]): ChannelItem[] {

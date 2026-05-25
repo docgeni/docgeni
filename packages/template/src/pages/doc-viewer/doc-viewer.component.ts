@@ -1,8 +1,5 @@
-import { Component, HostBinding, inject, NgModuleFactory, OnDestroy, OnInit, signal, Type, ViewChild } from '@angular/core';
+import { Component, effect, inject, NgModuleFactory, OnInit, signal, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { NavigationItem } from '../../interfaces/public-api';
 import { PageTitleService } from '../../services/page-title.service';
 import { NavigationService } from '../../services/public-api';
 import { TocService } from '../../services/toc.service';
@@ -13,7 +10,6 @@ import { ContentViewerComponent } from '../../shared/content-viewer/content-view
 import { DocPagesLinksComponent } from '../../shared/doc-pages-links/doc-pages-links.component';
 import { DocMetaComponent } from '../../shared/doc-meta/doc-meta.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { AsyncPipe } from '@angular/common';
 import { AssetsContentPathPipe } from '../../shared/pipes/assets-content-path.pipe';
 import { IsComponentDocPipe } from '../../shared/pipes/nav.pipe';
 
@@ -33,15 +29,14 @@ import { IsComponentDocPipe } from '../../shared/pipes/nav.pipe';
         DocMetaComponent,
         TableOfContentsComponent,
         FooterComponent,
-        AsyncPipe,
         AssetsContentPathPipe,
         IsComponentDocPipe,
     ],
 })
-export class DocViewerComponent implements OnInit, OnDestroy {
+export class DocViewerComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private router = inject(Router);
-    private navigationService = inject(NavigationService);
+    protected navigationService = inject(NavigationService);
     private pageTitle = inject(PageTitleService);
     private tocService = inject(TocService);
 
@@ -55,21 +50,19 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
     exampleModuleFactory: NgModuleFactory<any> | null = null;
 
-    docItem$: Observable<NavigationItem | null> = this.navigationService.docItem$.asObservable();
-    docPages$: Observable<{
-        pre: NavigationItem;
-        next: NavigationItem;
-    } | null> = this.navigationService.docPages$.asObservable();
+    readonly docItem = this.navigationService.docItem;
+
+    readonly docPages = this.navigationService.docPages;
 
     @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
 
-    private destroyed = new Subject<void>();
-
-    get channel() {
-        return this.navigationService.channel;
+    constructor() {
+        effect(() => {
+            const docItem = this.navigationService.docItem();
+            const links = this.tocService.links();
+            this.hasContentToc.set(docItem?.toc === 'content' && (links?.length ?? 0) > 0);
+        });
     }
-
-    constructor() {}
 
     ngOnInit(): void {
         if (this.route.snapshot.data) {
@@ -86,8 +79,9 @@ export class DocViewerComponent implements OnInit, OnDestroy {
                 const path = this.route.snapshot.routeConfig?.path;
                 this.navigationService.selectDocItem(path!);
             }
-            if (this.navigationService.docItem) {
-                this.pageTitle.title = '' + this.navigationService.docItem.title;
+            const docItem = this.navigationService.docItem();
+            if (docItem) {
+                this.pageTitle.title = '' + docItem.title;
             } else {
                 const firstDoc = this.navigationService.searchFirstDocItem();
                 if (firstDoc) {
@@ -95,23 +89,12 @@ export class DocViewerComponent implements OnInit, OnDestroy {
                 }
             }
         });
-
-        combineLatest([this.navigationService.docItem$, this.tocService.links$])
-            .pipe(takeUntil(this.destroyed))
-            .subscribe((result) => {
-                this.hasContentToc.set(result[0]!.toc === 'content' && result[1].length > 0);
-            });
     }
 
     close() {
-        if (this.navigationService.showSidebar) {
+        if (this.navigationService.showSidebar()) {
             this.navigationService.toggleSidebar();
         }
-    }
-
-    ngOnDestroy() {
-        this.destroyed.next();
-        this.destroyed.complete();
     }
 }
 
@@ -119,11 +102,14 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     selector: 'doc-viewer-home',
     template: '',
 })
-export class DocViewerHomeComponent implements OnDestroy {
-    destroy$ = new Subject<void>();
+export class DocViewerHomeComponent {
+    private navigationService = inject(NavigationService);
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
 
-    constructor(navigationService: NavigationService, route: ActivatedRoute, router: Router) {
-        navigationService.docItem$.pipe(takeUntil(this.destroy$)).subscribe((docItem) => {
+    constructor() {
+        effect(() => {
+            const docItem = this.navigationService.docItem();
             if (docItem) {
                 let redirectTo = './empty';
                 if (docItem.overview) {
@@ -134,14 +120,9 @@ export class DocViewerHomeComponent implements OnDestroy {
                     redirectTo = './api';
                 }
                 if (redirectTo) {
-                    router.navigate([redirectTo], { relativeTo: route, replaceUrl: true });
+                    this.router.navigate([redirectTo], { relativeTo: this.route, replaceUrl: true });
                 }
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 }
