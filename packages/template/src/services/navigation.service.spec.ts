@@ -1,6 +1,7 @@
 import { NavigationService } from './navigation.service';
 import { createServiceFactory, createHttpFactory, SpectatorService, HttpMethod } from '@ngneat/spectator';
 import { GlobalContext } from './global-context';
+import { NavigationItem } from '../interfaces';
 
 const mockGlobalContext = {
     navs: [
@@ -95,7 +96,7 @@ const mockGlobalContext = {
             lib: 'blib',
             items: [],
         },
-    ],
+    ] as NavigationItem[],
     docItems: [
         {
             id: 'index',
@@ -197,12 +198,15 @@ describe('NavigationService', () => {
                 {
                     id: 'nav-group-0',
                     title: 'Docs',
+                    channelPath: '',
+                    path: '',
                     items: [
                         {
                             id: 'guides',
                             path: 'guides',
                             title: 'Guide',
                             items: [],
+                            channelPath: '',
                         },
                     ],
                 },
