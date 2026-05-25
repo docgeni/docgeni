@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding, inject } from '@angular/core';
 import { BUILTIN_SVGS } from './svgs';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -7,16 +7,14 @@ import { DomSanitizer } from '@angular/platform-browser';
     templateUrl: './icon.component.html',
 })
 export class IconComponent implements OnInit, AfterViewInit {
+    private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private domSanitizer = inject(DomSanitizer);
+
     @HostBinding('class.dg-icon') isIcon = true;
 
     @Input() set iconName(name: string) {
         this.setSvg(name);
     }
-
-    constructor(
-        private elementRef: ElementRef<HTMLElement>,
-        private domSanitizer: DomSanitizer,
-    ) {}
 
     ngOnInit(): void {}
 

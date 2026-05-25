@@ -1,18 +1,16 @@
 import { GlobalContext } from './../../services/global-context';
-import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef, inject } from '@angular/core';
 
 @Component({
     selector: 'dg-logo',
     templateUrl: './logo.component.html',
 })
 export class LogoComponent implements OnInit {
-    @ViewChild('logo', { static: true }) logoTemplate!: TemplateRef<HTMLElement>;
+    global = inject(GlobalContext);
+    private elementRef = inject(ElementRef);
+    private viewContainerRef = inject(ViewContainerRef);
 
-    constructor(
-        public global: GlobalContext,
-        private elementRef: ElementRef,
-        private viewContainerRef: ViewContainerRef,
-    ) {}
+    @ViewChild('logo', { static: true }) logoTemplate!: TemplateRef<HTMLElement>;
 
     ngOnInit(): void {
         this.viewContainerRef.createEmbeddedView(this.logoTemplate);

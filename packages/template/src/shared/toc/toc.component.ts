@@ -26,9 +26,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     readonly container = input<string>('.dg-scroll-container');
 
-    links: TocLink[] = [];
-
-    activeLink!: TocLink;
+    readonly activeLink = this.tocService.activeLink;
 
     rootUrl = this.locationStrategy.path(false);
 
@@ -61,10 +59,6 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
             if (!this.hideToc()) {
                 this.tocService.scrollToAnchor(this.urlFragment);
             }
-        });
-
-        this.tocService.activeLink$.pipe(takeUntil(this.destroyed)).subscribe((activeLink) => {
-            this.activeLink = activeLink;
         });
     }
 

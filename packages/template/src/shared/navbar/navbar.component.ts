@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, signal } from '@angular/core';
+import { Component, OnInit, ElementRef, signal, inject } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { LogoComponent } from '../logo/logo.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -31,13 +31,11 @@ import { IsModeFullPipe } from '../pipes/mode.pipe';
     },
 })
 export class NavbarComponent implements OnInit {
-    readonly showNav = signal(false);
+    global = inject(GlobalContext);
+    navigationService = inject(NavigationService);
+    private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService,
-        private elementRef: ElementRef<HTMLElement>,
-    ) {}
+    readonly showNav = signal(false);
 
     ngOnInit(): void {
         this.elementRef.nativeElement.classList.add(this.global.config.theme!);

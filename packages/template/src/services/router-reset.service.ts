@@ -1,6 +1,6 @@
 import { GlobalContext } from './global-context';
 import { NavigationService } from './navigation.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
 import { ChannelComponent, ChannelHomeComponent } from '../pages/channel/channel.component';
 import { DocViewerComponent, DocViewerHomeComponent } from '../pages/doc-viewer/doc-viewer.component';
@@ -41,11 +41,9 @@ const componentChildrenRoutes: Routes = [
     providedIn: 'root',
 })
 export class RouterResetService {
-    constructor(
-        private router: Router,
-        private global: GlobalContext,
-        private navigationService: NavigationService,
-    ) {}
+    private router = inject(Router);
+    private global = inject(GlobalContext);
+    private navigationService = inject(NavigationService);
 
     resetRoutes() {
         const config = this.router.config;

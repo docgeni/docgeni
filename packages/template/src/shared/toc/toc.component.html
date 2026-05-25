@@ -4,7 +4,7 @@
       <li class="dg-level-{{ link.type }}" [attr.data-level]="link.level - tocService.highestLevel + 1">
         <a
           class="dg-link"
-          [class.active]="link === activeLink"
+          [class.active]="link === activeLink()"
           (click)="onLinkClick($event, link)"
           [href]="rootUrl + '#' + link.id"
           [attr.data-level]="link.level - tocService.highestLevel + 1"

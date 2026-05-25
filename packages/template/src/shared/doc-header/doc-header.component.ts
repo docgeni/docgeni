@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy, inject } from '@angular/core';
 import { GlobalContext, NavigationService } from '../../services/public-api';
 import { IconComponent } from '../icon/icon.component';
 import { IsModeLitePipe, IsModeFullPipe } from '../pipes/mode.pipe';
@@ -10,14 +10,12 @@ import { IsModeLitePipe, IsModeFullPipe } from '../pipes/mode.pipe';
     imports: [IconComponent, IsModeLitePipe, IsModeFullPipe],
 })
 export class DocHeaderComponent implements OnInit, OnDestroy {
+    navigationService = inject(NavigationService);
+    global = inject(GlobalContext);
+
     @Input() title!: string;
 
     @Input() subtitle!: string;
-
-    constructor(
-        public navigationService: NavigationService,
-        public global: GlobalContext,
-    ) {}
 
     ngOnInit(): void {}
 

@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Inject, Injectable, DOCUMENT } from '@angular/core';
+import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { fromEvent, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -33,10 +33,13 @@ let OFFSET = 0;
     providedIn: 'root',
 })
 export class TocService {
+    private document = inject(DOCUMENT);
+    private viewportScroller = inject(ViewportScroller);
+
     private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
     private activeLinkSubject$ = new BehaviorSubject<TocLink | null>(null);
     private destroyed$ = new Subject<TocLink[] | null>();
-    private scrollContainer!: HTMLElement & Window;
+    private scrollContainer!: HTMLElement | Window;
     public highestLevel!: number;
     public get links$(): Observable<TocLink[]> {
         return this.linksSubject$.asObservable();
@@ -44,15 +47,15 @@ export class TocService {
 
     readonly links = toSignal(this.links$);
 
-    public get activeLink$(): Observable<TocLink> {
-        return this.activeLinkSubject$.asObservable() as Observable<TocLink>;
+    public get activeLink$(): Observable<TocLink | null> {
+        return this.activeLinkSubject$.asObservable();
     }
 
-    constructor(
-        @Inject(DOCUMENT) private document: any,
-        global: GlobalContext,
-        private viewportScroller: ViewportScroller,
-    ) {
+    readonly activeLink = toSignal(this.activeLink$, { initialValue: null });
+
+    constructor() {
+        const global = inject(GlobalContext);
+
         if (global.config.mode === 'lite') {
             OFFSET = 0;
         }
@@ -107,7 +110,7 @@ export class TocService {
     }
 
     initializeScrollContainer(scrollContainerSelector: string) {
-        this.scrollContainer = scrollContainerSelector ? this.document.querySelectorAll(scrollContainerSelector)[0] : window;
+        this.scrollContainer = scrollContainerSelector ? (this.document.querySelector(scrollContainerSelector) as HTMLElement) : window;
 
         Promise.resolve().then(() => {
             if (this.scrollContainer) {
@@ -140,29 +143,26 @@ export class TocService {
 
     scrollToAnchor(urlFragment: string) {
         if (this.scrollContainer) {
-            if (this.scrollContainer === this.document.window) {
+            if (this.scrollContainer === window) {
                 this.viewportScroller.scrollToAnchor(urlFragment);
             } else {
                 const link = this.links()!.find((link) => {
                     return link.id === urlFragment;
                 });
-                if (link) {
-                    this.scrollContainer.scrollTop = link.element!.offsetTop - 10;
+                if (link && this.scrollContainer !== window) {
+                    (this.scrollContainer as HTMLElement).scrollTop = link.element!.offsetTop - 10;
                 }
             }
         }
     }
 
     private getScrollOffset(): number {
-        if (this.scrollContainer) {
-            if (typeof this.scrollContainer.scrollTop !== 'undefined') {
-                return this.scrollContainer.scrollTop + OFFSET;
-            } else if (typeof this.scrollContainer.pageYOffset !== 'undefined') {
-                return this.scrollContainer.pageYOffset + OFFSET;
-            }
-            return 0;
-        } else {
+        if (!this.scrollContainer) {
             return 0;
         }
+        if (this.scrollContainer === window) {
+            return window.pageYOffset + OFFSET;
+        }
+        return (this.scrollContainer as HTMLElement).scrollTop + OFFSET;
     }
 }

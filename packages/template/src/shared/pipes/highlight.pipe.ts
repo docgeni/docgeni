@@ -1,9 +1,9 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({ name: 'highlight' })
 export class HighlightPipe implements PipeTransform {
-    constructor(private domSanitizer: DomSanitizer) {}
+    private domSanitizer = inject(DomSanitizer);
 
     highlightTitle(keywords: string, title: string) {
         const reg = new RegExp(`(${keywords})`, 'gi');

@@ -10,6 +10,7 @@ import {
     signal,
     Type,
     ɵNgModuleFactory,
+    inject,
 } from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
 import { ExampleLoader } from '../../services/example-loader';
@@ -21,6 +22,8 @@ import { NgComponentOutlet } from '@angular/common';
     imports: [NgComponentOutlet],
 })
 export class ExampleRendererComponent implements OnInit {
+    private exampleLoader = inject(ExampleLoader);
+
     /** Component type for the current example. */
     componentType = linkedSignal(() => {
         return this.exampleComponentType();
@@ -40,7 +43,7 @@ export class ExampleRendererComponent implements OnInit {
         return this.exampleLoader.enableIvy;
     }
 
-    constructor(private exampleLoader: ExampleLoader) {
+    constructor() {
         effect(() => {
             const name = this.name();
             if (name) {

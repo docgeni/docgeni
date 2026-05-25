@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef, inject } from '@angular/core';
 import { GlobalContext } from '../../services/global-context';
 
 @Component({
@@ -9,12 +9,10 @@ import { GlobalContext } from '../../services/global-context';
     },
 })
 export class FooterComponent implements OnInit {
-    @HostBinding(`class.dg-hidden`) isHide = true;
+    private global = inject(GlobalContext);
+    private elementRef = inject(ElementRef);
 
-    constructor(
-        private global: GlobalContext,
-        private elementRef: ElementRef,
-    ) {}
+    @HostBinding(`class.dg-hidden`) isHide = true;
 
     ngOnInit(): void {
         if (this.global.config.footer) {

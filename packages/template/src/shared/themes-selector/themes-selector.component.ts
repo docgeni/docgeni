@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, inject } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { DocgeniTheme } from '../../interfaces';
 import { NgClass } from '@angular/common';
@@ -10,6 +10,9 @@ import { IconComponent } from '../icon/icon.component';
     imports: [NgClass, IconComponent],
 })
 export class ThemesSelectorComponent implements OnInit {
+    global = inject(GlobalContext);
+    navigationService = inject(NavigationService);
+
     @HostBinding('class.dg-themes-selector') isNavbar = true;
 
     cacheKey = 'docgeni-theme';
@@ -27,11 +30,6 @@ export class ThemesSelectorComponent implements OnInit {
     };
 
     themes = [this.themesMap[DocgeniTheme.light], this.themesMap[DocgeniTheme.dark], this.themesMap[DocgeniTheme.system]];
-
-    constructor(
-        public global: GlobalContext,
-        public navigationService: NavigationService,
-    ) {}
 
     @HostListener('mouseenter')
     openDropdown() {

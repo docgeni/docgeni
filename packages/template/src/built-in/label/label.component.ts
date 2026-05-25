@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, input, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, OnInit } from '@angular/core';
 import { DocgeniBuiltInComponent } from '../built-in-component';
 
 export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
@@ -15,8 +15,8 @@ export type DocgeniLabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
 export class DocgeniLabelComponent extends DocgeniBuiltInComponent implements OnInit {
     readonly type = input<DocgeniLabelType>('primary');
 
-    constructor(elementRef: ElementRef<unknown>) {
-        super(elementRef);
+    constructor() {
+        super();
         effect(() => {
             if (this.type()) {
                 this.updateHostClass([`dg-label-${this.type()}`]);

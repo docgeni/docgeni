@@ -12,6 +12,7 @@ import {
     ChangeDetectorRef,
     ChangeDetectionStrategy,
     reflectComponentType,
+    inject,
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ExampleViewerComponent } from '../example-viewer/example-viewer.component';
@@ -29,20 +30,16 @@ import { TocService } from '../../services/toc.service';
     },
 })
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
-    private portalHosts: DomPortalOutlet[] = [];
+    elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private appRef = inject(ApplicationRef);
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+    private injector = inject(Injector);
+    private viewContainerRef = inject(ViewContainerRef);
+    private ngZone = inject(NgZone);
+    private tocService = inject(TocService);
+    private cdr = inject(ChangeDetectorRef);
 
-    constructor(
-        public elementRef: ElementRef<HTMLElement>,
-        private appRef: ApplicationRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private injector: Injector,
-        private viewContainerRef: ViewContainerRef,
-        private ngZone: NgZone,
-        private tocService: TocService,
-        private cdr: ChangeDetectorRef,
-    ) {
-        super();
-    }
+    private portalHosts: DomPortalOutlet[] = [];
 
     ngOnInit(): void {}
 
