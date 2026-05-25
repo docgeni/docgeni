@@ -7,16 +7,36 @@ import { PageTitleService } from '../../services/page-title.service';
 import { NavigationService } from '../../services/public-api';
 import { TocService } from '../../services/toc.service';
 import { TableOfContentsComponent } from '../../shared/toc/toc.component';
+import { ComponentViewerComponent } from '../component-viewer/component-viewer.component';
+import { DocHeaderComponent } from '../../shared/doc-header/doc-header.component';
+import { ContentViewerComponent } from '../../shared/content-viewer/content-viewer.component';
+import { DocPagesLinksComponent } from '../../shared/doc-pages-links/doc-pages-links.component';
+import { DocMetaComponent } from '../../shared/doc-meta/doc-meta.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { AsyncPipe } from '@angular/common';
+import { AssetsContentPathPipe } from '../../shared/pipes/assets-content-path.pipe';
+import { IsComponentDocPipe } from '../../shared/pipes/nav.pipe';
 
 @Component({
     selector: 'dg-doc-viewer',
     templateUrl: './doc-viewer.component.html',
-    standalone: false,
     host: {
         '[class.dg-doc-viewer]': 'true',
         '[class.dg-doc-viewer--single]': 'isSingle()',
         '[class.dg-doc-viewer--toc]': 'hasContentToc()',
     },
+    imports: [
+        ComponentViewerComponent,
+        DocHeaderComponent,
+        ContentViewerComponent,
+        DocPagesLinksComponent,
+        DocMetaComponent,
+        TableOfContentsComponent,
+        FooterComponent,
+        AsyncPipe,
+        AssetsContentPathPipe,
+        IsComponentDocPipe,
+    ],
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
     private route = inject(ActivatedRoute);
@@ -98,7 +118,6 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 @Component({
     selector: 'doc-viewer-home',
     template: '',
-    standalone: false,
 })
 export class DocViewerHomeComponent implements OnDestroy {
     destroy$ = new Subject<void>();

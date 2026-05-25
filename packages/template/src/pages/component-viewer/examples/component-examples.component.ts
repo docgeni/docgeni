@@ -1,12 +1,13 @@
 import { Component, OnInit, HostBinding, inject } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { NavigationService } from '../../../services/public-api';
+import { ExampleViewerComponent } from '../../../shared/example-viewer/example-viewer.component';
 
 @Component({
     selector: 'dg-component-examples',
     templateUrl: './component-examples.component.html',
     host: { class: 'dg-examples' },
-    standalone: false,
+    imports: [ExampleViewerComponent],
 })
 export class ComponentExamplesComponent implements OnInit {
     get examples() {

@@ -1,10 +1,30 @@
 import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
+import { LogoComponent } from '../logo/logo.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IconComponent } from '../icon/icon.component';
+import { DropdownDirective } from '../dropdown/dropdown.directive';
+import { DropdownMenuComponent } from '../dropdown/dropdown-menu.component';
+import { SearchComponent } from '../search/search.component';
+import { LocalesSelectorComponent } from '../locales-selector/locales-selector.component';
+import { ThemesSelectorComponent } from '../themes-selector/themes-selector.component';
+import { IsModeFullPipe } from '../pipes/mode.pipe';
 
 @Component({
     selector: 'dg-navbar',
     templateUrl: './navbar.component.html',
-    standalone: false,
+    imports: [
+        LogoComponent,
+        RouterLink,
+        IconComponent,
+        DropdownDirective,
+        RouterLinkActive,
+        DropdownMenuComponent,
+        SearchComponent,
+        LocalesSelectorComponent,
+        ThemesSelectorComponent,
+        IsModeFullPipe,
+    ],
 })
 export class NavbarComponent implements OnInit {
     @HostBinding('class.dg-navbar') isNavbar = true;

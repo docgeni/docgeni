@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'dgIsContentChildKind',
-    standalone: false,
-})
+@Pipe({ name: 'dgIsContentChildKind' })
 export class IsNgContentChildKindPipe implements PipeTransform {
     constructor() {}
 

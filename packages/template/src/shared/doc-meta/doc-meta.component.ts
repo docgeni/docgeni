@@ -3,6 +3,8 @@ import { Component, Input, HostBinding, OnChanges, inject, signal, input, effect
 import { DocItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
+import { SlicePipe, DatePipe } from '@angular/common';
+import { TranslatePipe } from '../pipes/translate.pipe';
 
 interface GitHubCommieInfo {
     author: { avatar_url: string; login: string };
@@ -16,7 +18,7 @@ interface GitHubCommieInfo {
         class: 'dg-doc-meta',
         '[class.dg-d-none]': 'hideDocMeta()',
     },
-    standalone: false,
+    imports: [SlicePipe, DatePipe, TranslatePipe],
 })
 export class DocMetaComponent implements OnChanges {
     protected readonly hideDocMeta = signal(false);

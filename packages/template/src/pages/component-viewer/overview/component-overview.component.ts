@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding, ViewChild, inject } from '@angular/core
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
+import { ContentViewerComponent } from '../../../shared/content-viewer/content-viewer.component';
 
 @Component({
     selector: 'dg-component-overview',
@@ -9,7 +10,7 @@ import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
     host: {
         class: 'dg-component-overview',
     },
-    standalone: false,
+    imports: [ContentViewerComponent, TableOfContentsComponent],
 })
 export class ComponentOverviewComponent implements OnInit {
     contentUrl!: string;

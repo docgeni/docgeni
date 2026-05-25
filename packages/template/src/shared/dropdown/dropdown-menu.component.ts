@@ -4,7 +4,6 @@ import { DropdownDirective } from './dropdown.directive';
 @Component({
     selector: 'dg-dropdown-menu',
     templateUrl: './dropdown-menu.component.html',
-    standalone: false,
     host: {
         class: 'dg-dropdown-menu',
     },

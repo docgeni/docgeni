@@ -1,5 +1,9 @@
 import { Component, OnInit, HostBinding, input } from '@angular/core';
 import { ComponentDocItem } from '../../interfaces/public-api';
+import { DocHeaderComponent } from '../../shared/doc-header/doc-header.component';
+import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { DocMetaComponent } from '../../shared/doc-meta/doc-meta.component';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
     selector: 'dg-component-viewer',
@@ -7,7 +11,7 @@ import { ComponentDocItem } from '../../interfaces/public-api';
     host: {
         class: 'dg-component-viewer',
     },
-    standalone: false,
+    imports: [DocHeaderComponent, RouterLinkActive, RouterLink, RouterOutlet, DocMetaComponent, TranslatePipe],
 })
 export class ComponentViewerComponent implements OnInit {
     readonly docItem = input.required<ComponentDocItem>();
@@ -23,7 +27,6 @@ export class ComponentViewerComponent implements OnInit {
     host: {
         class: 'dg-component-empty',
     },
-    standalone: false,
 })
 export class ComponentEmptyComponent implements OnInit {
     constructor() {}

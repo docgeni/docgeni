@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild, computed, viewChild } from '@angular/core';
 import { ContentRenderer } from '../content-renderer';
+import { CopyComponent } from '../copy/copy.component';
 
 @Component({
     selector: 'dg-source-code, [dgSourceCode]',
@@ -8,7 +9,7 @@ import { ContentRenderer } from '../content-renderer';
     host: {
         class: 'dg-source-code',
     },
-    standalone: false,
+    imports: [CopyComponent],
 })
 export class SourceCodeComponent extends ContentRenderer implements OnInit {
     codeContent = viewChild('codeContent', { read: ElementRef });

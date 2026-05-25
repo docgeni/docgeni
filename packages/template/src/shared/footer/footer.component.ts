@@ -7,7 +7,6 @@ import { GlobalContext } from '../../services/global-context';
     host: {
         class: 'dg-footer',
     },
-    standalone: false,
 })
 export class FooterComponent implements OnInit {
     @HostBinding(`class.dg-hidden`) isHide = true;

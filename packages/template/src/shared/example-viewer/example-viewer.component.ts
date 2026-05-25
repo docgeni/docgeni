@@ -6,6 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { StackblitzExampleService } from '../../services/stackblitz-example.service';
 import { forkJoin } from 'rxjs';
 import { coerceBooleanProperty } from '../../utils';
+import { ExampleRendererComponent } from '../example-renderer/example-renderer.component';
+import { CopyComponent } from '../copy/copy.component';
+import { IconComponent } from '../icon/icon.component';
+import { NgClass } from '@angular/common';
+import { SourceCodeComponent } from '../source-code/source-code.component';
 
 const EXAMPLES_HIGHLIGHTED_PATH = `examples-highlighted`;
 
@@ -29,7 +34,7 @@ const nameOrdersMap: Record<string, number> = {
         class: 'dg-example-viewer',
         'class.dg-example-viewer-inline': 'inline()',
     },
-    standalone: false,
+    imports: [ExampleRendererComponent, CopyComponent, IconComponent, NgClass, SourceCodeComponent],
 })
 export class ExampleViewerComponent implements OnInit {
     private _inline = false;

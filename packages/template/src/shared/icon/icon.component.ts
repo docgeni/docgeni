@@ -5,7 +5,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'dg-icon',
     templateUrl: './icon.component.html',
-    standalone: false,
 })
 export class IconComponent implements OnInit, AfterViewInit {
     @HostBinding('class.dg-icon') isIcon = true;

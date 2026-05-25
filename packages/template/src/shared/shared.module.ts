@@ -64,9 +64,8 @@ const COMPONENTS = [
     DropdownDirective,
 ];
 @NgModule({
-    declarations: [...COMPONENTS],
     exports: [CommonModule, FormsModule, RouterModule, ...COMPONENTS, TableOfContentsComponent],
-    imports: [CommonModule, FormsModule, RouterModule, TableOfContentsComponent],
+    imports: [CommonModule, FormsModule, RouterModule, TableOfContentsComponent, ...COMPONENTS],
     providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class DocgeniSharedModule {}

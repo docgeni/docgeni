@@ -1,11 +1,15 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchPageInfo, SearchService } from '../../services/search.service';
+import { IconComponent } from '../icon/icon.component';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../pipes/translate.pipe';
+import { HighlightPipe } from '../pipes/highlight.pipe';
 
 @Component({
     selector: 'dg-search',
     templateUrl: './search.component.html',
-    standalone: false,
+    imports: [IconComponent, FormsModule, TranslatePipe, HighlightPipe],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
     public searchText!: string;

@@ -12,6 +12,7 @@ import { DocgeniBuiltInComponent } from '../built-in-component';
         tabindex: '0',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
     readonly icon = signal<'copy' | 'check'>('copy');

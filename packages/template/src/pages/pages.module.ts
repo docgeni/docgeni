@@ -26,8 +26,7 @@ const COMPONENTS = [
     ExampleIsolatedViewerComponent,
 ];
 @NgModule({
-    declarations: [...COMPONENTS],
-    imports: [DocgeniSharedModule, RootComponent],
+    imports: [DocgeniSharedModule, RootComponent, ...COMPONENTS],
     providers: [],
     exports: [...COMPONENTS, RootComponent],
 })
