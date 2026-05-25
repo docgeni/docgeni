@@ -1,6 +1,6 @@
 import { toolkit } from '@docgeni/toolkit';
 import * as path from 'path';
-import writeJsonFile from 'write-json-file';
+import { writeJsonFile } from 'write-json-file';
 
 const LIB_PACKAGES = ['cli', 'core', 'ngdoc', 'toolkit'] as const;
 const COPY_FILES = ['package.json', 'README.md', 'CHANGELOG.md'] as const;
