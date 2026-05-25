@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, signal } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { LogoComponent } from '../logo/logo.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -25,11 +25,13 @@ import { IsModeFullPipe } from '../pipes/mode.pipe';
         ThemesSelectorComponent,
         IsModeFullPipe,
     ],
+    host: {
+        class: 'dg-navbar',
+        '[class.show]': 'showNav()',
+    },
 })
 export class NavbarComponent implements OnInit {
-    @HostBinding('class.dg-navbar') isNavbar = true;
-
-    @HostBinding('class.show') showNav = false;
+    readonly showNav = signal(false);
 
     constructor(
         public global: GlobalContext,
@@ -42,6 +44,6 @@ export class NavbarComponent implements OnInit {
     }
 
     toggleNavbar() {
-        this.showNav = !this.showNav;
+        this.showNav.update((open) => !open);
     }
 }

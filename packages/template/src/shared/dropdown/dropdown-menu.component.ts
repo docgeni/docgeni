@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, Optional, signal } from '@angular/core';
 import { DropdownDirective } from './dropdown.directive';
 
 @Component({
@@ -6,12 +6,14 @@ import { DropdownDirective } from './dropdown.directive';
     templateUrl: './dropdown-menu.component.html',
     host: {
         class: 'dg-dropdown-menu',
+        '[class.dg-dropdown-menu-open]': 'isOpen()',
     },
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownMenuComponent {
-    @HostBinding('class.dg-dropdown-menu-open') isOpen = false;
+    readonly isOpen = signal(false);
 
-    constructor(@Optional() private dropdown: DropdownDirective) {}
+    private dropdown = inject(DropdownDirective, { optional: true });
 
     @HostListener('mouseenter')
     onMouseEnter() {
@@ -33,10 +35,10 @@ export class DropdownMenuComponent {
     }
 
     open() {
-        this.isOpen = true;
+        this.isOpen.set(true);
     }
 
     close() {
-        this.isOpen = false;
+        this.isOpen.set(false);
     }
 }

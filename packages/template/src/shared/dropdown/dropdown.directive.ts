@@ -1,18 +1,19 @@
-import { ContentChild, Directive, ElementRef, HostBinding, HostListener } from '@angular/core';
+import { contentChild, Directive, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { DropdownMenuComponent } from './dropdown-menu.component';
 
 @Directive({
     selector: '[dgDropdown]',
     host: {
         class: 'dg-dropdown',
+        '[class.dg-dropdown-open]': 'isOpen()',
     },
 })
 export class DropdownDirective {
-    @ContentChild(DropdownMenuComponent) menu?: DropdownMenuComponent;
+    readonly isOpen = signal(false);
 
-    @HostBinding('class.dg-dropdown-open') isOpen = false;
+    readonly menu = contentChild(DropdownMenuComponent);
 
-    constructor(private elementRef: ElementRef<HTMLElement>) {}
+    private elementRef = inject(ElementRef<HTMLElement>);
 
     @HostListener('mouseenter')
     onMouseEnter() {
@@ -28,8 +29,8 @@ export class DropdownDirective {
     }
 
     close() {
-        this.isOpen = false;
-        this.menu?.close();
+        this.isOpen.set(false);
+        this.menu()?.close();
     }
 
     contains(node: Node): boolean {
@@ -37,8 +38,8 @@ export class DropdownDirective {
     }
 
     private open() {
-        this.isOpen = true;
-        this.menu?.open();
+        this.isOpen.set(true);
+        this.menu()?.open();
     }
 
     private isMovingToMenu(event: MouseEvent): boolean {
