@@ -40,6 +40,6 @@ module.exports = {
     },
     commitAll: true,
     hooks: {
-        prepublish: 'yarn run build',
+        prepublish: 'pnpm run build',
     },
 };

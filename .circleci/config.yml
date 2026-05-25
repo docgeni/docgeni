@@ -10,13 +10,13 @@ jobs:
             - browser-tools/install-chrome
             - checkout
             - restore_cache:
-                  key: docgeni-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - run: yarn
+                  key: docgeni-{{ .Branch }}-{{ checksum "pnpm-lock.yaml" }}
+            - run: pnpm install --frozen-lockfile
             - save_cache:
-                  key: yarn install --frozen-lockfile --cache-folder node_modules
+                  key: pnpm install --frozen-lockfile
                   paths:
                       - 'node_modules'
-            - run: yarn lint
-            - run: yarn test-coverage
-            - run: yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
-            - run: yarn report-coverage
+            - run: pnpm lint
+            - run: pnpm test-coverage
+            - run: pnpm test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
+            - run: pnpm report-coverage

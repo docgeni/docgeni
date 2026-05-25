@@ -23,11 +23,13 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
             - name: Use Node.js ${{ matrix.node_version }}
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node_version }}
-            - run: yarn --frozen-lockfile
-            - run: yarn test-coverage
-            - run: yarn test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
-            - run: yarn report-coverage
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm test-coverage
+            - run: pnpm test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
+            - run: pnpm report-coverage

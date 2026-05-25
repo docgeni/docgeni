@@ -8,7 +8,7 @@
 ```bash
 npm run install-examples
 // or
-yarn install-examples
+pnpm install-examples
 ```
 
 ## Run 

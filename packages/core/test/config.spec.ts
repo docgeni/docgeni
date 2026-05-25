@@ -1,9 +1,8 @@
 import { Docgeni, DEFAULT_CONFIG, DocgeniConfig } from '../src';
 import { toolkit, fs } from '@docgeni/toolkit';
-import { createTestDocgeniFsHost } from '@docgeni/toolkit/src/testing';
+import { createTestDocgeniFsHost } from '../../toolkit/src/testing';
 import { expectThrowAsync } from '../src/testing';
 import { normalize, getSystemPath } from '@angular-devkit/core';
-import { DocgeniTheme } from '../src/interfaces';
 
 describe('#config', () => {
     let docgeniHost: fs.DocgeniFsHost;

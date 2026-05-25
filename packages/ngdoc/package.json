@@ -17,14 +17,15 @@
   "scripts": {
     "clean": "rimraf ./lib && rimraf ./tsconfig.tsbuildinfo",
     "build-only": "tsc -b",
-    "build": "yarn clean && yarn build-only",
+    "build": "pnpm run clean && pnpm run build-only",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/docgeni/docgeni/issues"
   },
   "dependencies": {
-    "@docgeni/toolkit": "^2.7.0",
+    "@docgeni/toolkit": "workspace:*",
+    "@angular-devkit/core": "^21.0.4",
     "ts-morph": "12.1.0",
     "typescript": "5.9.3"
   }

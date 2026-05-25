@@ -41,6 +41,6 @@
     "static site generator"
   ],
   "dependencies": {
-    "@docgeni/cli": "^2.8.0-next.0"
+    "@docgeni/cli": "workspace:*"
   }
 }

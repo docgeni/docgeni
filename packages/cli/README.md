@@ -7,7 +7,7 @@
 ```
 npm i @docgeni/cli --save-dev
 // or 
-yarn add @docgeni/cli -D
+pnpm add @docgeni/cli -D
 ```
 
 ## Getting Started
