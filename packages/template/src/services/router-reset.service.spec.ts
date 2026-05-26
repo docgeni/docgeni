@@ -48,14 +48,20 @@ describe('router-reset.service', () => {
                     items: [
                         {
                             id: '/guides/getting-started',
-                            path: 'getting-started',
+                            path: 'guides/getting-started',
                             title: 'Getting Started',
-                            items: [],
                         },
                     ],
                 },
             ],
-            docItems: [],
+            docItems: [
+                {
+                    id: '/guides/getting-started',
+                    path: 'guides/getting-started',
+                    channelPath: 'guides',
+                    title: 'Getting Started',
+                },
+            ],
         };
     });
 
@@ -69,7 +75,43 @@ describe('router-reset.service', () => {
         spectator = createService();
         spectator.service.resetRoutes();
         assertRoutes(spectator.inject(Router).config, ['zh-cn', 'en-us', '', '~examples/:name', '**']);
-        assertRoutes(spectator.inject(Router).config[0].children!, ['guides']);
+        assertRoutes(spectator.inject(Router).config[0].children!, ['', 'guides', 'guides/getting-started']);
+    });
+
+    it('should register lib channel with :id route and skip component doc routes', () => {
+        mockGlobal.navs = [
+            {
+                id: 'components',
+                path: 'components',
+                title: 'Components',
+                lib: 'alib',
+                items: [
+                    {
+                        id: 'button',
+                        path: 'components/button',
+                        title: 'Button',
+                    },
+                ],
+            },
+        ];
+        mockGlobal.docItems = [
+            {
+                id: 'button',
+                path: 'components/button',
+                channelPath: 'components',
+                title: 'Button',
+                importSpecifier: 'alib/button',
+            },
+        ];
+        spectator = createService();
+        spectator.service.resetRoutes();
+        const routes = spectator.inject(Router).config[0].children!;
+        expect(routes.find((route) => route.path === 'button')).toBeFalsy();
+        const libRoute = routes.find((route) => route.path === 'components/:id');
+        expect(libRoute).toBeTruthy();
+        expect(libRoute!.children!.map((route) => route.path)).toEqual(['', 'overview', 'api', 'examples', 'empty', '**']);
+        const channelRoute = routes.find((route) => route.path === 'components');
+        expect(channelRoute!.redirectTo).toEqual('components/button');
     });
 
     function assertRoutes(routes: Routes, paths: string[]) {

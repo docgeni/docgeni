@@ -124,13 +124,13 @@ export class NavsBuilder {
                     homeMeta,
                 };
 
-                if (this.docgeni.config.mode === 'full') {
-                    docItems.forEach((docItem) => {
-                        if (docItem.channelPath) {
-                            docItem.path = docItem.path.replace(docItem.channelPath + '/', '');
-                        }
-                    });
-                }
+                // if (this.docgeni.config.mode === 'full') {
+                //     docItems.forEach((docItem) => {
+                //         if (docItem.channelPath) {
+                //             docItem.path = docItem.path.replace(docItem.channelPath + '/', '');
+                //         }
+                //     });
+                // }
             }
         }
         this.localesDocsNavsMap = localesDocsDataMap;

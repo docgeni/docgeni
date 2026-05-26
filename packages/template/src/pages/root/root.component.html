@@ -1,7 +1,7 @@
 @if (global.config.mode | dgIsFull) {
   <dg-navbar></dg-navbar>
 }
-@if (global.config.mode | dgIsLite) {
-  <dg-sidebar [menus]="navigationService.navs()"></dg-sidebar>
+@if (sidebarMenus()) {
+  <dg-sidebar [menus]="sidebarMenus()!"></dg-sidebar>
 }
 <router-outlet></router-outlet>

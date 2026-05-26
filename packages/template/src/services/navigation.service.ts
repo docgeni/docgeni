@@ -27,6 +27,13 @@ export class NavigationService {
         return this.channels().find((nav) => nav.path === path) as ChannelItem;
     }
 
+    isLibComponentDocItem(docItem: NavigationItem): boolean {
+        if (!docItem.importSpecifier || !docItem.channelPath) {
+            return false;
+        }
+        return !!this.getChannel(docItem.channelPath)?.lib;
+    }
+
     getDocItemByPath(path: string) {
         const docItems = this.docItems();
         const channel = this.channel();

@@ -259,12 +259,11 @@ describe('#library-builder', () => {
         expect(rootNavs[0].items as unknown).toEqual([
             { id: 'general', title: '通用', items: [componentDocItems.button], order: 0 },
             { id: 'layout', title: '布局', items: [], order: 0 },
-            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components' },
+            { id: 'alib/alert', path: 'components/alert', title: 'Alert', channelPath: 'components' },
         ]);
     });
 
-    it('should generate locale navs with channel path when mode is lite', async () => {
-        context.config.mode = 'lite';
+    it('should generate locale navs with channel path', async () => {
         const libraryBuilder = new LibraryBuilderImpl(context, library);
         await libraryBuilder.initialize();
         const components = Array.from(libraryBuilder.components.values());
@@ -330,10 +329,10 @@ describe('#library-builder', () => {
         const zhNavs = libraryBuilder.generateDocsAndNavsForLocale('zh-cn', rootNavs);
         expect(zhNavs).toEqual([componentDocItems.button, componentDocItems.alert]);
         expect(rootNavs[0].items).toEqual([
-            { id: 'alib/alert', path: 'alert', title: 'Alert', channelPath: 'components', order: 10 },
+            { id: 'alib/alert', path: 'components/alert', title: 'Alert', channelPath: 'components', order: 10 },
             {
                 id: `alib/button`,
-                path: `button`,
+                path: `components/button`,
                 title: 'Button',
                 channelPath: 'components',
             },
