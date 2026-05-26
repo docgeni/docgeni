@@ -96,6 +96,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
 * refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
 
+## 2.8.0-next.5 (2026-05-26)
+
+* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
+* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
+* refactor: auto merge app.config.ts from custom module.ts and template app.config ([650dbb0](https://github.com/docgeni/docgeni/commit/650dbb0))
+* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 

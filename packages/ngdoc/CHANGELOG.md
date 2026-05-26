@@ -72,6 +72,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
 
+## 2.8.0-next.5 (2026-05-26)
+
+* refactor: auto merge app.config.ts from custom module.ts and template app.config ([650dbb0](https://github.com/docgeni/docgeni/commit/650dbb0))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 **Note:** Version bump only for package @docgeni/ngdoc
