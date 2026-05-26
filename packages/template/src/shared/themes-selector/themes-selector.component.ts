@@ -8,12 +8,14 @@ import { IconComponent } from '../icon/icon.component';
     selector: 'dg-themes-selector',
     templateUrl: './themes-selector.component.html',
     imports: [NgClass, IconComponent],
+    host: {
+        class: 'dg-themes-selector',
+    },
 })
 export class ThemesSelectorComponent implements OnInit {
     global = inject(GlobalContext);
-    navigationService = inject(NavigationService);
 
-    @HostBinding('class.dg-themes-selector') isNavbar = true;
+    navigationService = inject(NavigationService);
 
     cacheKey = 'docgeni-theme';
 

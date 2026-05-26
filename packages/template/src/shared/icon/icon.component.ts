@@ -5,12 +5,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'dg-icon',
     templateUrl: './icon.component.html',
+    host: {
+        class: 'dg-icon',
+    },
 })
 export class IconComponent implements OnInit, AfterViewInit {
     private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
     private domSanitizer = inject(DomSanitizer);
-
-    @HostBinding('class.dg-icon') isIcon = true;
 
     @Input() set iconName(name: string) {
         this.setSvg(name);

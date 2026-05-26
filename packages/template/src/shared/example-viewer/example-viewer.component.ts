@@ -32,12 +32,11 @@ const nameOrdersMap: Record<string, number> = {
     host: {
         '[attr.id]': 'example()?.key',
         class: 'dg-example-viewer',
-        'class.dg-example-viewer-inline': 'inline()',
+        '[class.dg-example-viewer-inline]': 'inline()',
     },
     imports: [ExampleRendererComponent, CopyComponent, IconComponent, NgClass, SourceCodeComponent],
 })
 export class ExampleViewerComponent implements OnInit {
-    private _inline = false;
     private exampleLoader = inject(ExampleLoader);
     private globalContext = inject(GlobalContext);
     private http = inject(HttpClient);
