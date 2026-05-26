@@ -192,6 +192,17 @@ describe('NavigationService', () => {
             expect(channel).toBeFalsy();
         });
 
+        it('should select channel when path starts with channel path', () => {
+            spectator.service.selectChannelByPath('guides/intro/getting-started');
+            expect(spectator.service.channel()?.path).toEqual('guides');
+
+            spectator.service.selectChannelByPath('components/button/overview');
+            expect(spectator.service.channel()?.path).toEqual('components');
+
+            spectator.service.selectChannelByPath('/');
+            expect(spectator.service.channel()).toBeNull();
+        });
+
         it('should get nested channel from nav group', () => {
             const originalNavs = mockGlobalContext.navs;
             mockGlobalContext.navs = [

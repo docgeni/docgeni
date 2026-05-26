@@ -47,29 +47,8 @@ export class ActualRootComponent {
             if (this.global.config.mode !== 'full') {
                 return;
             }
-            const channelPath = this.getChannelPathFromUrl(this.url() ?? this.router.url);
-            if (channelPath) {
-                this.navigationService.selectChannelByPath(channelPath);
-            } else {
-                this.navigationService.clearChannel();
-            }
+            this.navigationService.selectChannelByPath(this.url() ?? this.router.url);
         });
-    }
-
-    private getChannelPathFromUrl(url: string): string | null {
-        const segments = url.split('?')[0].split('#')[0].split('/').filter(Boolean);
-        const localeKeys = this.global.config.locales?.map((locale) => locale.key) ?? [];
-        if (segments.length && localeKeys.includes(segments[0])) {
-            segments.shift();
-        }
-        if (!segments.length) {
-            return null;
-        }
-        const channel = this.navigationService.getChannel(segments[0]);
-        if (channel && !channel.isExternal && channel.path) {
-            return segments[0];
-        }
-        return null;
     }
 }
 

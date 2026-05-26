@@ -66,9 +66,22 @@ export class NavigationService {
     }
 
     selectChannelByPath(path: string) {
-        const channel = this.getChannel(path);
-        this.channel.set(channel);
-        return channel;
+        const routePath = this.normalizeRoutePath(path);
+        const channel = this.channels()
+            .filter((item) => !item.isExternal && item.path)
+            .sort((a, b) => b.path!.length - a.path!.length)
+            .find((item) => routePath === item.path || routePath.startsWith(`${item.path}/`));
+        this.channel.set(channel ?? null);
+        return channel ?? null;
+    }
+
+    private normalizeRoutePath(path: string): string {
+        const segments = path.split('?')[0].split('#')[0].split('/').filter(Boolean);
+        const localeKeys = this.global.config.locales?.map((locale) => locale.key) ?? [];
+        if (segments.length && localeKeys.includes(segments[0])) {
+            segments.shift();
+        }
+        return segments.join('/');
     }
 
     clearChannel() {
