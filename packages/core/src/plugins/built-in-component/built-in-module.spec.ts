@@ -42,4 +42,24 @@ export class CustomComponentsModule {
         expect(output).toContain(`import { addBuiltInComponents } from '@docgeni/template';`);
         expect(output).not.toContain(`export default {`);
     });
+
+    it('should put standalone components in imports instead of declarations', async () => {
+        const components: ComponentBuilder[] = [
+            {
+                name: 'color',
+                metadata: { selector: 'my-color', name: 'MyColorComponent', standalone: true },
+            } as ComponentBuilder,
+            {
+                name: 'legacy',
+                metadata: { selector: 'legacy', name: 'LegacyComponent', standalone: false },
+            } as ComponentBuilder,
+        ];
+
+        const output = await generateBuiltInComponentsModule(ngSourceFile, components);
+
+        expect(output).toContain('declarations: [ AppComponent, LegacyComponent ]');
+        expect(output).toContain('imports: [ CommonModule, MyColorComponent ]');
+        expect(output).toContain('exports: [ LegacyComponent, MyColorComponent ]');
+        expect(output).not.toContain('declarations: [ AppComponent, LegacyComponent, MyColorComponent ]');
+    });
 });

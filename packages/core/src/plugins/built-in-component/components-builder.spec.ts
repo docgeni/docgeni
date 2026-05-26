@@ -97,6 +97,34 @@ describe('#components-builder', () => {
             expect(entryContent).toEqual(moduleText);
         });
 
+        it('should generate module with standalone component in imports when export default omits standalone', async () => {
+            await writeFilesToHost(context.host, {
+                [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }',
+                [`${COMPONENTS_ROOT_PATH}/color/color.component.ts`]: `@Component({
+            selector: 'my-color',
+            templateUrl: './color.component.html',
+            standalone: true
+        })
+        export class MyColorComponent extends DocgeniBuiltInComponent {}
+
+        export default {
+            selector: 'my-color',
+            component: MyColorComponent,
+        };`,
+            });
+
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+            await componentsBuilder.emit();
+
+            const entryContent = await context.host.readFile(toolkit.path.resolve(componentsDistPath, 'index.ts'));
+            expect(entryContent).toContain('imports: [ CommonModule, MyColorComponent');
+            expect(entryContent).toContain('declarations: [');
+            expect(entryContent).not.toContain('declarations: [ MyColorComponent');
+            expect(entryContent).toContain('exports: [');
+            expect(entryContent).toContain('MyColorComponent');
+        });
+
         it('should build components success when has`t export default', async () => {
             await writeFilesToHost(context.host, { [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }' });
             const builtInModuleSpy = spyOn(builtInModule, 'generateBuiltInComponentsModule');
