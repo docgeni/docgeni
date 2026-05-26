@@ -35,6 +35,33 @@ export default {
         expect(result).not.toContain(`export default {`);
     });
 
+    it('should insert providers into app config template', () => {
+        const appConfigText = `
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { DocgeniTemplateModule } from '@docgeni/template';
+import { DOCGENI_SITE_PROVIDERS, IMPORT_MODULES } from './content/index';
+
+export const appConfig: ApplicationConfig = {
+    providers: [
+        provideRouter([]),
+        provideAnimations(),
+        importProvidersFrom(DocgeniTemplateModule, ...IMPORT_MODULES),
+        ...DOCGENI_SITE_PROVIDERS,
+    ],
+};
+        `;
+        const ngSourceFile = createNgSourceFile('app.config.ts', appConfigText);
+        const updater = new NgSourceUpdater(ngSourceFile);
+        updater.insertProviders(['FormsModule'], 'imports');
+        updater.insertProviders(['...myProviders'], 'providers');
+        const result = updater.update();
+        expect(result).toContain('importProvidersFrom(FormsModule, DocgeniTemplateModule, ...IMPORT_MODULES)');
+        expect(result).toContain('...myProviders');
+        expect(result).toMatch(/\.\.\.myProviders,\s*\n\s*\.\.\.DOCGENI_SITE_PROVIDERS/);
+    });
+
     it('should insert ngModule by text', () => {
         const ngSourceFile = createNgSourceFile('module.ts', sourceText);
         const updater = new NgSourceUpdater(ngSourceFile);

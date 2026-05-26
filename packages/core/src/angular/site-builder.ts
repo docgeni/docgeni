@@ -8,8 +8,7 @@ import { ValidationError } from '../errors';
 import semver from 'semver';
 import { spawn } from 'child_process';
 import { SITE_ASSETS_RELATIVE_PATH } from '../constants';
-import { NgModuleMetadata } from '../types/module';
-import { combineNgModuleMetadata } from '../ast-utils';
+import { getNgModuleMetadataFromDefaultExport } from '../ast-utils';
 import { NgSourceUpdater } from '../ng-source-updater';
 
 interface CopyFile {
@@ -256,52 +255,27 @@ export class SiteBuilder {
 
     private async buildAppConfig() {
         const modulePath = toolkit.path.resolve(this.srcAppDirPath, './module.ts');
-        if (await this.docgeni.host.pathExists(modulePath)) {
-            const moduleText = await this.docgeni.host.readFile(modulePath);
-            const ngSourceFile = createNgSourceFile(modulePath, moduleText);
-            const defaultExports = ngSourceFile.getDefaultExports() as NgModuleMetadata;
-            const defaultExportNode = ngSourceFile.getDefaultExportNode();
-            if (defaultExportNode) {
-                const metadata = combineNgModuleMetadata(defaultExports, {
-                    imports: ['DocgeniTemplateModule', ' ...IMPORT_MODULES'],
-                    providers: ['...DOCGENI_SITE_PROVIDERS'],
-                });
-                const importModules = toolkit.utils.isArray(metadata.imports)
-                    ? metadata.imports
-                    : metadata.imports
-                      ? [metadata.imports]
-                      : [];
-                const providers = toolkit.utils.isArray(metadata.providers)
-                    ? metadata.providers
-                    : metadata.providers
-                      ? [metadata.providers]
-                      : [];
-                const providerEntries = [
-                    'provideRouter([])',
-                    'provideAnimations()',
-                    `importProvidersFrom(${importModules.join(', ')})`,
-                    ...providers,
-                ];
-
-                const updater = new NgSourceUpdater(ngSourceFile);
-                updater.insertImports([
-                    { name: 'ApplicationConfig', moduleSpecifier: '@angular/core' },
-                    { name: 'importProvidersFrom', moduleSpecifier: '@angular/core' },
-                    { name: 'provideRouter', moduleSpecifier: '@angular/router' },
-                    { name: 'provideAnimations', moduleSpecifier: '@angular/platform-browser/animations' },
-                    { name: 'DocgeniTemplateModule', moduleSpecifier: '@docgeni/template' },
-                    { name: 'DOCGENI_SITE_PROVIDERS', moduleSpecifier: './content/index' },
-                    { name: 'IMPORT_MODULES', moduleSpecifier: './content/index' },
-                ]);
-                updater.insertAppConfigByText(providerEntries);
-                updater.removeDefaultExport();
-
-                await this.docgeni.host.writeFile(
-                    toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.config.ts'),
-                    updater.update(),
-                );
-            }
+        if (!(await this.docgeni.host.pathExists(modulePath))) {
+            return;
         }
+
+        const siteTemplateAppConfigPath = toolkit.path.resolve(__dirname, '../site-template/src/app/app.config.ts');
+        const templateText = await this.docgeni.host.readFile(siteTemplateAppConfigPath);
+        const templateSourceFile = createNgSourceFile(siteTemplateAppConfigPath, templateText);
+
+        const moduleText = await this.docgeni.host.readFile(modulePath);
+        const moduleSourceFile = createNgSourceFile(modulePath, moduleText);
+        const moduleMetadata = getNgModuleMetadataFromDefaultExport(moduleSourceFile);
+        if (!moduleSourceFile.getDefaultExportNode()) {
+            return;
+        }
+
+        const updater = new NgSourceUpdater(templateSourceFile);
+        updater.insertImports(moduleSourceFile.getImportStructures());
+        updater.insertProviders(moduleMetadata.imports, 'imports');
+        updater.insertProviders(moduleMetadata.providers, 'providers');
+
+        await this.docgeni.host.writeFile(toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.config.ts'), updater.update());
     }
 
     private async watchPublic() {
