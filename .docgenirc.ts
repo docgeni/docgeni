@@ -12,6 +12,7 @@ export default {
     //     apiKey: 'd5ade9b542071796c2a4e9bea5e73063',
     //     indexName: 'docgeni'
     // },
+    // renderMode: '',
     markdown: {
         config: (marked) => {
             marked.use(

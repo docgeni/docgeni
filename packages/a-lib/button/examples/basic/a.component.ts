@@ -1,6 +1,6 @@
 // this is empty file for test
 class Test {
-    name: string;
+    name!: string;
 
     constructor() {}
 

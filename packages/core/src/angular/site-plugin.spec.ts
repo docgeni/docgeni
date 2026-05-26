@@ -65,6 +65,31 @@ describe('#site-plugin', () => {
         expect(context.enableIvy).toBeTruthy();
     });
 
+    it('should create site with ssg renderMode', async () => {
+        updateContextConfig(context, { renderMode: 'ssg' });
+        await context.hooks.beforeRun.promise();
+        const angularJson = parseJsonc(await context.host.readFile(`${DEFAULT_SITE_PATH}/angular.json`));
+        const buildOptions = angularJson.projects.site.architect.build.options;
+        expect(buildOptions.server).toBe('src/main.server.ts');
+        expect(buildOptions.outputMode).toBe('static');
+        expect(buildOptions.ssr).toBeUndefined();
+        const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
+        expect(serverRoutes).toContain('RenderMode.Prerender');
+    });
+
+    it('should create site with ssr renderMode', async () => {
+        updateContextConfig(context, { renderMode: 'ssr' });
+        await context.hooks.beforeRun.promise();
+        const angularJson = parseJsonc(await context.host.readFile(`${DEFAULT_SITE_PATH}/angular.json`));
+        const buildOptions = angularJson.projects.site.architect.build.options;
+        expect(buildOptions.server).toBe('src/main.server.ts');
+        expect(buildOptions.outputMode).toBe('server');
+        expect(buildOptions.outputPath.browser).toBe('browser');
+        expect(buildOptions.ssr.entry).toBe('src/server.ts');
+        const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
+        expect(serverRoutes).toContain('RenderMode.Server');
+    });
+
     it('should use custom site', async () => {
         context.config.siteProjectName = 'customSite';
         await context.hooks.beforeRun.promise();

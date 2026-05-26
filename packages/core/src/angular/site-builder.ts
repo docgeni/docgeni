@@ -116,13 +116,42 @@ export class SiteBuilder {
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
         await this.docgeni.host.copy(toolkit.path.resolve(__dirname, '../site-template'), sitePath);
+        await this.writeSiteAngularConfig();
+        await this.syncTsconfig();
+    }
+
+    private getRenderMode() {
+        return this.docgeni.config.renderMode || 'csr';
+    }
+
+    private getSiteRenderModeOptions() {
+        const renderMode = this.getRenderMode();
+        return {
+            renderMode,
+            enableServer: renderMode === 'ssg' || renderMode === 'ssr',
+            isSsg: renderMode === 'ssg',
+            isSsr: renderMode === 'ssr',
+            isCsr: renderMode === 'csr',
+        };
+    }
+
+    private async writeSiteAngularConfig() {
+        const renderModeOptions = this.getSiteRenderModeOptions();
         const angularJSONPath = toolkit.path.resolve(this.siteProject.root, './angular.json');
         const angularJSONContent = toolkit.template.compile('angular-json.hbs', {
             root: this.docgeni.config.siteDir,
             outputPath: toolkit.path.normalize(path.relative(this.docgeni.config.siteDir, this.docgeni.config.outputDir)),
+            ...renderModeOptions,
         });
         await this.docgeni.host.writeFile(angularJSONPath, angularJSONContent);
-        await this.syncTsconfig();
+
+        if (renderModeOptions.enableServer) {
+            const serverRoutesPath = toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.routes.server.ts');
+            const serverRoutesContent = toolkit.template.compile('app-routes-server.hbs', {
+                serverRenderMode: renderModeOptions.isSsg ? 'Prerender' : 'Server',
+            });
+            await this.docgeni.host.writeFile(serverRoutesPath, serverRoutesContent);
+        }
     }
 
     private async syncTsconfig() {
