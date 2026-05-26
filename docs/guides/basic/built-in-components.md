@@ -207,30 +207,33 @@ Embed 组件可以在一个 Markdown 文档中嵌入另一个 Markdown 文档的
     │   ├── color.component.html
     ├── module.ts
 ```
-自定义组件需要继承`DocgeniBuiltInComponent`基类并在构造函数注入`ElementRef`并通过调用`supper(elementRef)`传入父类。
+自定义组件需继承 `DocgeniBuiltInComponent`，**推荐使用 Signal `input()`**。更多目录与站点集成说明见 [自定义站点](/guides/advance/customize#自定义内置组件)。
+
 <alert type="info">Markdown 中使用的渲染组件默认取文件中定义的第一个组件，使用的选择器为组件的 selector，如需自定义，可以通过 `export default { selector: '', component: xx}` 自定义设置。</alert>
 
 ```ts
-import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { DocgeniBuiltInComponent } from '@docgeni/template';
 
 @Component({
     selector: 'my-color',
-    templateUrl: './color.component.html'
+    templateUrl: './color.component.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
-    @Input() set color(value: string) {
-        this.hostElement.style.color = value;
-    }
+export class MyColorComponent extends DocgeniBuiltInComponent {
+    readonly color = input<string>('');
 
-    constructor(elementRef: ElementRef<unknown>) {
-        super(elementRef);
-    }
+    private readonly colorEffect = effect(() => {
+        if (this.color()) {
+            this.hostElement.style.color = this.color();
+        }
+    });
 }
 
 export default {
     selector: 'my-color',
-    component: MyColorComponent
+    component: MyColorComponent,
 };
 ```
 在 Markdown 中使用组件的选择器`my-color`编写如下语法：

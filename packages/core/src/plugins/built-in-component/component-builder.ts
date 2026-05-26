@@ -1,6 +1,12 @@
 import { createNgSourceFile, NgComponentMetadata } from '@docgeni/ngdoc';
 import { fs, toolkit } from '@docgeni/toolkit';
 
+interface BuiltInComponentDefaultExport {
+    selector: string;
+    component: string;
+    standalone?: string;
+}
+
 export class ComponentBuilder {
     public entryComponentFullPath: string;
     private distPath: string;
@@ -26,13 +32,16 @@ export class ComponentBuilder {
         }
         const componentText = await this.docgeniHost.readFile(this.entryComponentFullPath);
         const componentFile = createNgSourceFile(this.entryComponentFullPath, componentText);
-        const exportDefault = componentFile.getDefaultExports<{ selector: string; component: string; standalone: string }>();
+        const exportDefault = componentFile.getDefaultExports<BuiltInComponentDefaultExport>();
 
         if (exportDefault) {
+            const exportedComponents = componentFile.getExportedComponents();
+            const matchedComponent = exportedComponents.find((item) => item.name === exportDefault.component) ?? exportedComponents[0];
+
             this.metadata = {
-                selector: exportDefault.selector,
-                name: exportDefault.component,
-                standalone: exportDefault.standalone === 'true',
+                selector: exportDefault.selector ?? matchedComponent?.selector,
+                name: exportDefault.component ?? matchedComponent?.name,
+                standalone: this.resolveStandalone(exportDefault, matchedComponent),
             };
         } else {
             const exportedComponents = componentFile.getExportedComponents();
@@ -73,5 +82,15 @@ export class ComponentBuilder {
 
     async clear() {
         await this.docgeniHost.delete(this.distPath);
+    }
+
+    private resolveStandalone(exportDefault: BuiltInComponentDefaultExport, component?: NgComponentMetadata): boolean {
+        if (exportDefault.standalone === 'true') {
+            return true;
+        }
+        if (exportDefault.standalone === 'false') {
+            return false;
+        }
+        return component?.standalone ?? true;
     }
 }

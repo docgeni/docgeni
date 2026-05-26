@@ -213,32 +213,33 @@ Create custom built-in components in the default dir `.docgeni/components`, such
     ├── module.ts
 ```
 
-Custom components need to inherit the 'DocgeniBuiltInComponent' base class, inject `elementRef` into the constructor, and pass in the parent class by calling `super (elementRef)`.
+Custom components extend `DocgeniBuiltInComponent`. Prefer **Signal `input()`**. See [Customize site](/en-us/guides/advance/customize#custom-built-in-components) for folder layout and site integration.
 
 <alert type="info">The rendering component used in markdown takes the first component defined in the file by default, and the selector is the component's selector. If you need to customize, you can customize the settings through `export default { selector: '', component: xx}`.</alert>
 
-
 ```ts
-import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { DocgeniBuiltInComponent } from '@docgeni/template';
 
 @Component({
     selector: 'my-color',
-    templateUrl: './color.component.html'
+    templateUrl: './color.component.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
-    @Input() set color(value: string) {
-        this.hostElement.style.color = value;
-    }
+export class MyColorComponent extends DocgeniBuiltInComponent {
+    readonly color = input<string>('');
 
-    constructor(elementRef: ElementRef<unknown>) {
-        super(elementRef);
-    }
+    private readonly colorEffect = effect(() => {
+        if (this.color()) {
+            this.hostElement.style.color = this.color();
+        }
+    });
 }
 
 export default {
     selector: 'my-color',
-    component: MyColorComponent
+    component: MyColorComponent,
 };
 ```
 

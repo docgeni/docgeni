@@ -12,7 +12,6 @@ import { DocgeniBuiltInComponent } from '../built-in-component';
         tabindex: '0',
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
 })
 export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
     private copier = inject(CopierService);
@@ -25,13 +24,10 @@ export class DocgeniCodeCopyComponent extends DocgeniBuiltInComponent {
     @HostBinding('attr.aria-label')
     ariaLabel = 'Copy';
 
-    constructor() {
-        super();
-        effect(() => {
-            this.icon();
-            this.renderIcon();
-        });
-    }
+    private readonly iconEffect = effect(() => {
+        this.icon();
+        this.renderIcon();
+    });
 
     private renderIcon(): void {
         this.hostElement.innerHTML = BUILTIN_SVGS[this.icon()] ?? '';

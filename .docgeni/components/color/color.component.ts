@@ -1,28 +1,22 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { DocgeniBuiltInComponent } from '@docgeni/template';
 
 @Component({
     selector: 'my-color',
     templateUrl: './color.component.html',
-    standalone: true,
-    imports: [FormsModule, CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyColorComponent extends DocgeniBuiltInComponent implements OnInit {
-    @Input() set color(value: string) {
-        this.hostElement.style.color = value;
-    }
+export class MyColorComponent extends DocgeniBuiltInComponent {
+    readonly color = input<string>('');
 
-    constructor(elementRef: ElementRef<unknown>) {
-        super(elementRef);
-    }
-
-    ngOnInit(): void {}
+    private readonly colorEffect = effect(() => {
+        if (this.color()) {
+            this.hostElement.style.color = this.color();
+        }
+    });
 }
 
-// export default {
-//     selector: 'my-color',
-//     component: MyColorComponent,
-//     standalone: true
-// };
+export default {
+    selector: 'my-color',
+    component: MyColorComponent,
+};

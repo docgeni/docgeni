@@ -8,7 +8,6 @@ import {
     effect,
     ElementRef,
     input,
-    OnInit,
     PLATFORM_ID,
     signal,
     inject,
@@ -49,7 +48,7 @@ export class AppendChildrenDom {
     standalone: true,
     imports: [AppendChildrenDom],
 })
-export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnInit {
+export class DocgeniTabsComponent extends DocgeniBuiltInComponent {
     private cdr = inject(ChangeDetectorRef);
     private platformId = inject(PLATFORM_ID);
     private isBrowser = isPlatformBrowser(this.platformId);
@@ -58,19 +57,14 @@ export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnI
     readonly activeIndex = signal(0);
     readonly mode = input<DocgeniTabsMode>('simple');
 
-    constructor() {
-        super();
-        effect(() => {
-            const mode = this.mode();
-            this.updateHostClass(mode ? [`dg-tabs-mode-${mode}`] : []);
-        });
+    private readonly modeClassEffect = effect(() => {
+        const mode = this.mode();
+        this.updateHostClass(mode ? [`dg-tabs-mode-${mode}`] : []);
+    });
 
-        afterNextRender(() => {
-            this.parseTabsFromHost();
-        });
-    }
-
-    ngOnInit(): void {}
+    private readonly parseTabsEffect = afterNextRender(() => {
+        this.parseTabsFromHost();
+    });
 
     selectTab(index: number): void {
         this.activeIndex.set(index);
