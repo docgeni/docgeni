@@ -2,7 +2,7 @@ import { GlobalContext } from './global-context';
 import { NavigationService } from './navigation.service';
 import { Injectable, inject } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
-import { ChannelComponent, ChannelHomeComponent } from '../pages/channel/channel.component';
+import { NavigationItem } from '../interfaces';
 import { DocViewerComponent, DocViewerHomeComponent } from '../pages/doc-viewer/doc-viewer.component';
 import { ComponentOverviewComponent } from '../pages/component-viewer/overview/component-overview.component';
 import { ComponentApiComponent, ComponentEmptyComponent, ComponentExamplesComponent } from '../pages/component-viewer';
@@ -72,36 +72,37 @@ export class RouterResetService {
             },
         ];
 
-        const channelPathToRoutes: Record<string, Route> = {};
-        const channelPathToHomeRoutes: Record<string, Route> = {};
         let shouldRemoveHome = false;
         if (this.global.config.mode === 'full') {
             this.navigationService
                 .channels()
                 .filter((channel) => !channel.isExternal && channel.path)
                 .forEach((channel) => {
-                    const route: Route = {
-                        path: channel.path!,
-                        component: ChannelComponent,
-                        children: [
-                            {
-                                path: '',
-                                component: ChannelHomeComponent,
-                            },
-                        ],
-                    };
-                    channelPathToHomeRoutes[channel.path!] = route.children![0];
+                    const firstDocItem = channel.items?.length
+                        ? this.navigationService.searchFirstDocItem(channel.items as NavigationItem[])
+                        : null;
+                    const hasChannelIndexDoc = this.global.docItems.some(
+                        (docItem) => docItem.channelPath === channel.path && docItem.path === channel.path,
+                    );
+                    if (firstDocItem?.path && !hasChannelIndexDoc && firstDocItem.path !== channel.path) {
+                        routes.push({
+                            path: channel.path!,
+                            redirectTo: firstDocItem.path,
+                            pathMatch: 'full',
+                        });
+                    }
                     if (channel.lib) {
-                        route.children!.push({
-                            path: ':id',
+                        routes.push({
+                            path: `${channel.path}/:id`,
                             component: DocViewerComponent,
                             children: componentChildrenRoutes,
                         });
                     }
-                    routes.push(route);
-                    channelPathToRoutes[channel.path!] = route;
                 });
             this.global.docItems.forEach((docItem) => {
+                if (this.navigationService.isLibComponentDocItem(docItem)) {
+                    return;
+                }
                 const route: Route = docItem.importSpecifier
                     ? {
                           path: docItem.path,
@@ -113,13 +114,8 @@ export class RouterResetService {
                           component: DocViewerComponent,
                       };
 
-                const channelRoute = channelPathToRoutes[docItem.channelPath!];
-                if (channelRoute) {
-                    // remove chanel home when has route path is ''
-                    if (route.path === '' && channelRoute.children!.includes(channelPathToHomeRoutes[channelRoute.path!])) {
-                        channelRoute.children!.splice(0, 1);
-                    }
-                    channelRoute.children!.push(route);
+                if (docItem.channelPath) {
+                    routes.push(route);
                 } else if (!docItem.importSpecifier) {
                     // 独立的页面，不属于任何频道
                     route.data = {

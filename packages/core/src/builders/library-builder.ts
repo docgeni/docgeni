@@ -169,11 +169,8 @@ export class LibraryBuilderImpl extends FileEmitter implements LibraryBuilder {
         for (const component of this.componentsMap.values()) {
             const docItem = component.getDocItem(locale);
             if (docItem && !docItem.hidden) {
-                if (this.docgeni.config.mode === 'lite') {
-                    docItem.path = `${channel.path}/${docItem.path}`;
-                } else {
-                    docItem.channelPath = channel.path;
-                }
+                docItem.channelPath = channel.path;
+                docItem.path = `${channel.path}/${docItem.path}`;
                 if (categoriesMap[docItem.category]) {
                     categoriesMap[docItem.category].items.push(docItem);
                 } else {

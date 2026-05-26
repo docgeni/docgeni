@@ -25,16 +25,10 @@ export class DocPagesLinksComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.docPages.pre) {
-            this.preRouterLink =
-                this.globalContext.config.mode === 'lite'
-                    ? `/${this.docPages.pre.path}`
-                    : `/${this.docPages.pre.channelPath}/${this.docPages.pre.path}`;
+            this.preRouterLink = `/${this.docPages.pre.path}`;
         }
         if (this.docPages.next) {
-            this.nextRouterLink =
-                this.globalContext.config.mode === 'lite'
-                    ? `/${this.docPages.next.path}`
-                    : `/${this.docPages.next.channelPath}/${this.docPages.next.path}`;
+            this.nextRouterLink = `/${this.docPages.next.path}`;
         }
     }
 }

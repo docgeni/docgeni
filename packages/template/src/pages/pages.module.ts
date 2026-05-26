@@ -4,7 +4,6 @@ import { ComponentViewerComponent, ComponentEmptyComponent } from './component-v
 import { DocViewerComponent, DocViewerHomeComponent } from './doc-viewer/doc-viewer.component';
 import { DocgeniSharedModule } from '../shared/shared.module';
 import { HomeComponent } from './home/home.component';
-import { ChannelComponent, ChannelHomeComponent } from './channel/channel.component';
 import { ActualRootComponent, RootComponent } from './root/root.component';
 import { ComponentOverviewComponent } from './component-viewer/overview/component-overview.component';
 import { ComponentApiComponent } from './component-viewer/api/component-api.component';
@@ -14,8 +13,6 @@ import { ExampleIsolatedViewerComponent } from './example/example.component';
 const COMPONENTS = [
     ActualRootComponent,
     HomeComponent,
-    ChannelComponent,
-    ChannelHomeComponent,
     DocViewerComponent,
     DocViewerHomeComponent,
     ComponentViewerComponent,
@@ -38,7 +35,6 @@ export {
     ActualRootComponent,
     RootComponent,
     HomeComponent,
-    ChannelComponent,
     DocViewerComponent,
     DocViewerHomeComponent,
     ComponentViewerComponent,

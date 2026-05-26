@@ -99,8 +99,7 @@ export class SearchService {
     private generatePages() {
         this.allPages = [];
         this.global.docItems.forEach((docItem) => {
-            const path =
-                this.global.config.mode === 'full' && docItem.channelPath ? `${docItem.channelPath}/${docItem.path}` : docItem.path;
+            const path = docItem.path;
             const parentPage = {
                 title: `${docItem.title} ${docItem.subtitle ? docItem.subtitle : ''}`,
                 id: docItem.id,

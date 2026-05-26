@@ -72,7 +72,9 @@ export class DocViewerComponent implements OnInit {
             const id = params.get('id');
             // component doc
             if (id) {
-                this.navigationService.selectDocItem(id);
+                const channel = this.navigationService.channel();
+                const docPath = channel?.path ? `${channel.path}/${id}` : id;
+                this.navigationService.selectDocItem(docPath);
                 this.navigationService.resetShowSidebar();
             } else {
                 // doc

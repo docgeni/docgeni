@@ -61,7 +61,7 @@ describe('#cli', () => {
                             items: [
                                 {
                                     id: 'intro2',
-                                    path: 'intro/intro2',
+                                    path: 'guide/intro/intro2',
                                     channelPath: 'guide',
                                     title: 'Intro 2',
                                     order: 1,
@@ -72,7 +72,7 @@ describe('#cli', () => {
                                 },
                                 {
                                     id: 'intro1',
-                                    path: 'intro/intro1',
+                                    path: 'guide/intro/intro1',
                                     channelPath: 'guide',
                                     title: 'Intro 1',
                                     order: 2,
@@ -86,7 +86,7 @@ describe('#cli', () => {
                         },
                         {
                             id: 'getting-started',
-                            path: 'getting-started',
+                            path: 'guide/getting-started',
                             channelPath: 'guide',
                             title: '快速开始',
                             order: 2,
@@ -97,7 +97,7 @@ describe('#cli', () => {
                         },
                         {
                             id: 'installation',
-                            path: 'installation',
+                            path: 'guide/installation',
                             channelPath: 'guide',
                             title: '安装',
                             order: 2,
@@ -113,7 +113,7 @@ describe('#cli', () => {
             docs: [
                 {
                     id: 'getting-started',
-                    path: 'getting-started',
+                    path: 'guide/getting-started',
                     channelPath: 'guide',
                     title: '快速开始',
                     order: 2,
@@ -124,7 +124,7 @@ describe('#cli', () => {
                 },
                 {
                     id: 'installation',
-                    path: 'installation',
+                    path: 'guide/installation',
                     channelPath: 'guide',
                     title: '安装',
                     order: 2,
@@ -135,7 +135,7 @@ describe('#cli', () => {
                 },
                 {
                     id: 'intro1',
-                    path: 'intro/intro1',
+                    path: 'guide/intro/intro1',
                     channelPath: 'guide',
                     title: 'Intro 1',
                     order: 2,
@@ -146,7 +146,7 @@ describe('#cli', () => {
                 },
                 {
                     id: 'intro2',
-                    path: 'intro/intro2',
+                    path: 'guide/intro/intro2',
                     channelPath: 'guide',
                     title: 'Intro 2',
                     order: 1,

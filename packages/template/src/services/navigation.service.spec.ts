@@ -65,7 +65,7 @@ const mockGlobalContext = {
                             id: 'button',
                             title: 'Button',
                             subtitle: '按钮',
-                            path: 'button',
+                            path: 'components/button',
                             importSpecifier: 'alib/button',
                             examples: ['alib-button-basic-example', 'alib-button-advance-title-example', 'alib-button-advance-example'],
                             overview: true,
@@ -77,7 +77,7 @@ const mockGlobalContext = {
                             id: 'foo',
                             title: 'Foo',
                             subtitle: '测试',
-                            path: 'foo',
+                            path: 'components/foo',
                             importSpecifier: 'alib/foo',
                             examples: ['alib-foo-advance-example', 'alib-foo-basic-example'],
                             overview: true,
@@ -126,7 +126,7 @@ const mockGlobalContext = {
             id: 'button',
             title: 'Button',
             subtitle: '按钮',
-            path: 'button',
+            path: 'components/button',
             importSpecifier: 'alib/button',
             channelPath: 'components',
             examples: ['alib-button-basic-example', 'alib-button-advance-title-example', 'alib-button-advance-example'],
@@ -139,7 +139,7 @@ const mockGlobalContext = {
             id: 'foo',
             title: 'Foo',
             subtitle: '测试',
-            path: 'foo',
+            path: 'components/foo',
             importSpecifier: 'alib/foo',
             channelPath: 'components',
             examples: ['alib-foo-advance-example', 'alib-foo-basic-example'],
@@ -190,6 +190,17 @@ describe('NavigationService', () => {
         it('should get channel fail', () => {
             const channel = spectator.service.getChannel('guide-01');
             expect(channel).toBeFalsy();
+        });
+
+        it('should select channel when path starts with channel path', () => {
+            spectator.service.selectChannelByPath('guides/intro/getting-started');
+            expect(spectator.service.channel()?.path).toEqual('guides');
+
+            spectator.service.selectChannelByPath('components/button/overview');
+            expect(spectator.service.channel()?.path).toEqual('components');
+
+            spectator.service.selectChannelByPath('/');
+            expect(spectator.service.channel()).toBeNull();
         });
 
         it('should get nested channel from nav group', () => {
@@ -281,12 +292,12 @@ describe('NavigationService', () => {
             ...originalDocItems,
         ];
         spectator.service.selectChannelByPath('components');
-        const docItem = spectator.service.getDocItemByPath('button');
+        const docItem = spectator.service.getDocItemByPath('components/button');
         expect(docItem).toEqual({
             id: 'button',
             title: 'Button',
             subtitle: '按钮',
-            path: 'button',
+            path: 'components/button',
             importSpecifier: 'alib/button',
             channelPath: 'components',
             examples: ['alib-button-basic-example', 'alib-button-advance-title-example', 'alib-button-advance-example'],
@@ -305,7 +316,7 @@ describe('NavigationService', () => {
                 id: 'button',
                 title: 'Button',
                 subtitle: '按钮',
-                path: 'button',
+                path: 'b-components/button',
                 importSpecifier: 'b-lib/button',
                 channelPath: 'b-components',
                 examples: [],
@@ -317,28 +328,28 @@ describe('NavigationService', () => {
             ...mockGlobalContext.docItems,
         ];
         spectator.service.selectChannelByPath('components');
-        const docItem = spectator.service.getDocItemByPath('button');
+        const docItem = spectator.service.getDocItemByPath('components/button');
 
         expect(docItem).toEqual(
             jasmine.objectContaining({
                 id: 'button',
                 title: 'Button',
                 subtitle: '按钮',
-                path: 'button',
+                path: 'components/button',
                 importSpecifier: 'alib/button',
                 channelPath: 'components',
             }),
         );
 
         spectator.service.selectChannelByPath('b-components');
-        const bDocItem = spectator.service.getDocItemByPath('button');
+        const bDocItem = spectator.service.getDocItemByPath('b-components/button');
 
         expect(bDocItem).toEqual(
             jasmine.objectContaining({
                 id: 'button',
                 title: 'Button',
                 subtitle: '按钮',
-                path: 'button',
+                path: 'b-components/button',
                 importSpecifier: 'b-lib/button',
                 channelPath: 'b-components',
             }),
