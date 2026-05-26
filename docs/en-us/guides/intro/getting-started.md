@@ -2,16 +2,22 @@
 title: Getting Started
 path: 'getting-started'
 order: 30
+toc: menu
 ---
-# Environment setup
-You should have [Node](https://nodejs.org/en/) and NPM, Node >= 10.0.0.
-```
-$ node -v
-v10.0.0
+
+This page shows how to run a Docgeni doc site in an existing or new project. See other guides for advanced configuration.
+
+## Requirements
+
+Install [Node.js](https://nodejs.org/) (LTS recommended) and npm, **≥ 10**:
+
+```bash
+node -v
 ```
 
-# Scaffold initialization
-Switch to the existing project and run the following command:
+## Option 1: CLI init (recommended)
+
+In an **existing Angular project** or empty folder, run one of:
 
 <tabs mode="code-group">
  <tab label="npx">
@@ -21,7 +27,7 @@ npx @docgeni/cli init
  </tab>
   <tab label="docgeni">
 ```bash
-docgeni init 
+docgeni init
 ```
  </tab>
  <tab label="ng">
@@ -31,50 +37,74 @@ ng add @docgeni/cli
  </tab>
 </tabs>
 
-<alert>Initialization with `docgeni init` requires global installation of @docgeni/cli `npm install -g @docgeni/cli`<br>
-  Initialization with `ng add @docgeni/cli` requires global installation of Angular CLI `npm install -g @angular/cli`</alert>
+<alert>`docgeni init` requires a global CLI: `npm install -g @docgeni/cli`<br>
+`ng add @docgeni/cli` requires global Angular CLI: `npm install -g @angular/cli`</alert>
 
-After executing any of the above command, the initial configuration of docgeni will be automatically completed, including generating configuration files, NPM startup scripts, and default documents ,etc.
-- The first step is to select the document site mode: `full` or `lite` (default `lite`)
-- The second step is to enter the document directory (default `docs`)
+You will typically:
+
+1. Choose site mode: `full` (home page) or `lite` (default, docs only)
+2. Set the docs folder (default `docs`)
 
 <img class="mb-2" width="90%" style="padding-left: 5%;" src="./assets/images/cli-init.png?4" />
 
-After initialization, use `npm run start:docs` to start the documentation site, and open `http://127.0.0.1:4600` in the browser to access it.
+Then:
 
-The preview effect of Lite mode is as follows:
-![](assets/images/lite-preview.png)
-
-# Template repository initialization
-We provide a built-in GitHub template repository [docgeni-template](https://github.com/docgeni/docgeni-template).The template repository uses the `full` mode by default, and has a built-in `alib` component library and some initial configurations.Go to the [template repository homepage](https://github.com/docgeni/docgeni-template),then click the "Use this template" button in the upper right corner.
-<img class="mt-2" src="./assets/images/use-docgeni-template.png" />
-
-The preview effect is as follows:
-![](assets/images/template-preview.png)
-
-# Manual initialization
-## Installation
-Create a new directory, or switch to an existing project, execute the following command to install Docgeni CLI and template:
 ```bash
-$ npm i @docgeni/cli @docgeni/template --save-dev
-# or 
-$ yarn add @docgeni/cli @docgeni/template -D
+npm run start:docs
 ```
 
-After installation, add the following script to the `package.json`:
+Open [http://127.0.0.1:4600](http://127.0.0.1:4600).
+
+Lite mode preview:
+
+![](assets/images/lite-preview.png)
+
+<alert type="info">The site you are reading now (official Docgeni docs) runs in `full` mode. The screenshot above shows `lite` mode only.</alert>
+
+## Option 2: GitHub template
+
+For a full demo out of the box, use [docgeni-template](https://github.com/docgeni/docgeni-template) (`full` mode, sample library `alib`):
+
+1. Open the [template repo](https://github.com/docgeni/docgeni-template)
+2. Click **Use this template**
+3. Clone, `npm install`, then `npm run start:docs`
+
+<img class="mt-2" src="./assets/images/use-docgeni-template.png" />
+
+![](assets/images/template-preview.png)
+
+## Option 3: Manual setup
+
+For full control over dependencies and config.
+
+### Install
+
+::: code-group
+
+```bash [npm]
+npm i @docgeni/cli @docgeni/template --save-dev
+```
+
+```bash [yarn]
+yarn add @docgeni/cli @docgeni/template -D
+```
+
+:::
+
+Add scripts to `package.json`:
 
 ```json
 {
   "scripts": {
-    ...
     "start:docs": "docgeni serve --port 4600",
     "build:docs": "docgeni build"
-    ...
   }
 }
 ```
-## Configuration
-Create a new `.docgenirc.js` configuration file in the root directory and copy the following configuration code:
+
+### Configuration
+
+Create a config file at the project root. Supported names include `.docgenirc.js`, `.docgenirc.ts`, `.docgenirc.yaml`, `.docgenirc.yml`, `.docgenirc.json`, and more—use any one format. Example with `.docgenirc.js`:
 
 ```ts
 /**
@@ -89,39 +119,50 @@ module.exports = {
         {
             title: 'GitHub',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
-        }
-    ]
-}
-```
-## Start writing docs
-
-By default, Docgeni will automatically watch the Markdown files in the `docs` directory, we can create the simplest document at first.
-
-```base
-$ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
+            isExternal: true,
+        },
+    ],
+};
 ```
 
-Execute `npm run start:docs` and open your browser to `http://127.0.0.1:4600` 
+### Start writing docs
 
-## .gitignore add `.docgeni/site`
-By default, Docgeni will generate documentation sites in the `.docgeni/site` folder. To avoid conflicts, please add the `.docgeni/site` folder to .gitignore.
+By default, Docgeni watches Markdown files in the `docs` directory. Create a minimal page first:
 
+```bash
+mkdir -p docs
+echo '# Hello Docgeni' > docs/getting-started.md
+```
 
-# Component documentation
-Docgeni initial scaffold will automatically detect and add the libraries in the current Angular project. If the components of the library have not been written with documentation and examples, they will not be displayed. Follow [Component documentation](guides/basic/component) to add overview, examples, and API. For example: there is a `button` component under the component root directory,create an `en-us.md` document(Attention to be named after the default multi-language Key) under the `button/doc` and enter the following:
+Run `npm run start:docs` and open [http://127.0.0.1:4600](http://127.0.0.1:4600).
+
+### Ignore generated output
+
+Add to `.gitignore`:
 
 ```
+.docgeni/site
+```
+
+## Component documentation
+
+If your repo has an Angular library, init will try to wire it in. **Components without overview or examples are hidden from the nav.**
+
+Minimal example: for a `button` folder, add `button/doc/{locale}.md` (match your `defaultLocale`, e.g. `en-us.md`):
+
+```markdown
 ---
-title: 按钮
+title: Button
 subtitle: Button
 ---
 
-## When To Use
-A button means an immediate operation.
+## When to use
+
+A button triggers an immediate action.
 ```
-As shown below:
+
+Preview:
 
 ![Component](assets/images/component-button.png)
 
-See [Component documentation](guides/basic/component) for details.
+See [Component documentation](../basic/component) for overview, examples, `api`, and `<example />`.

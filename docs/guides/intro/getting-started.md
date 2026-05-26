@@ -4,15 +4,21 @@ path: 'getting-started'
 order: 30
 toc: menu
 ---
+
+本文介绍如何在现有或新建项目中跑起 Docgeni 文档站。更完整的配置见各指南章节。
+
 # 环境准备
+
 确保本地成功安装了 [Node](https://nodejs.org/en/) 和 NPM，Node >= 10.0.0。
+
 ```
 $ node -v
 v10.0.0
 ```
 
-# 脚手架初始化
-切换到已有的项目中，执行如下命令：
+## 方式一：CLI 初始化（推荐）
+
+在**已有 Angular 项目**或空目录中执行以下任一命令：
 
 <tabs mode="code-group">
  <tab label="npx">
@@ -22,7 +28,7 @@ npx @docgeni/cli init
  </tab>
   <tab label="docgeni">
 ```bash
-docgeni init 
+docgeni init
 ```
  </tab>
  <tab label="ng">
@@ -32,52 +38,74 @@ ng add @docgeni/cli
  </tab>
 </tabs>
 
-<alert>使用`docgeni init`初始化需要全局安装 @docgeni/cli `npm install -g @docgeni/cli`<br>
-使用`ng add @docgeni/cli`初始化需要全局安装 Angular CLI `npm install -g @angular/cli`</alert>
+<alert>使用 `docgeni init` 需先全局安装 CLI：`npm install -g @docgeni/cli`<br>
+使用 `ng add @docgeni/cli` 需先全局安装 Angular CLI：`npm install -g @angular/cli`</alert>
 
-执行上述任意一个命令后将自动完成 docgeni 的初始化配置，包括生成配置文件、NPM 启动脚本、默认文档等工作。
-- 第一步选择文档站点模式: `full`或者`lite`(默认`lite`)
-- 第二步输入文档目录 (默认`docs`)
+交互过程中一般会：
+
+1. 选择站点模式：`full`（带首页）或 `lite`（默认，直接进入文档）
+2. 指定文档目录（默认 `docs`）
 
 <img class="mb-2" width="90%" style="padding-left: 5%;" src="./assets/images/cli-init.png?4" />
 
-初始化后，使用`npm run start:docs`启动文档站点，浏览器打开`http://127.0.0.1:4600` 即可访问。
+完成后执行：
 
-Lite 模式的预览效果如下：
+```bash
+npm run start:docs
+```
+
+浏览器访问 [http://127.0.0.1:4600](http://127.0.0.1:4600)。
+
+`lite` 模式预览效果：
+
 ![](assets/images/lite-preview.png)
 
-# 模板仓储初始化
-我们提供了一个内置的 GitHub 模板仓储 [docgeni-template](https://github.com/docgeni/docgeni-template)。模板仓储默认使用`full`模式，且内置了一个`alib`组件库以及一些初始化配置，进入 [仓储模板首页](https://github.com/docgeni/docgeni-template) 点击右上角 "Use this template" 按钮。
+<alert type="info">你正在浏览的本站（docgeni 官方文档）使用的是 `full` 模式；上图仅为 `lite` 模式界面示意。</alert>
+
+## 方式二：GitHub 模板
+
+想快速体验完整能力，可使用官方模板 [docgeni-template](https://github.com/docgeni/docgeni-template)（默认 `full` 模式，内置示例类库 `alib`）：
+
+1. 打开 [模板仓库](https://github.com/docgeni/docgeni-template)
+2. 点击 **Use this template** 生成自己的仓库
+3. 克隆后 `npm install`，再 `npm run start:docs`
 
 <img class="mt-2" src="./assets/images/use-docgeni-template.png" />
 
-预览效果如下：
 ![](assets/images/template-preview.png)
 
-# 手动初始化
-## 安装
-新建一个文件夹，或者切换到已有的项目中，执行下面命令安装 Docgeni CLI 和模版：
+## 方式三：手动安装
 
-```bash
-$ npm i @docgeni/cli @docgeni/template --save-dev
-# 或者
-$ yarn add @docgeni/cli @docgeni/template -D
+适合需要完全掌控依赖与配置的场景。
+
+### 安装依赖
+
+::: code-group
+
+```bash [npm]
+npm i @docgeni/cli @docgeni/template --save-dev
 ```
 
-安装后在`package.json`文件中添加如下脚本：
+```bash [yarn]
+yarn add @docgeni/cli @docgeni/template -D
+```
+
+:::
+
+在 `package.json` 增加脚本：
 
 ```json
 {
   "scripts": {
-    ...
     "start:docs": "docgeni serve --port 4600",
     "build:docs": "docgeni build"
-    ...
   }
 }
 ```
-## 配置
-在根目录新建 `.docgenirc.js` 配置文件，拷贝如下配置代码:
+
+### 配置
+
+在根目录创建配置文件即可，支持 `.docgenirc.js`、`.docgenirc.ts`、`.docgenirc.yaml`、`.docgenirc.yml`、`.docgenirc.json` 等格式，任选其一。下面以 `.docgenirc.js` 为例：
 
 ```ts
 /**
@@ -92,39 +120,49 @@ module.exports = {
         {
             title: 'GitHub',
             path: 'https://github.com/docgeni/docgeni',
-            isExternal: true
-        }
-    ]
-}
-```
-## 开始写文档
-
-Docgeni 默认会扫描`docs`目录下的 Markdown 文件，我们可以先创建一个最简单的文档。
-
-```base
-$ mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
+            isExternal: true,
+        },
+    ],
+};
 ```
 
-执行 `npm run start:docs` 运行并打开 `http://127.0.0.1:4600` 地址访问试试
+### 开始写文档
 
-## .gitignore 忽略`.docgeni/site`
-Docgeni 默认会在`.docgeni/site`文件夹下生成文档站点，为了避免冲突，请把`.docgeni/site`文件夹添加到 .gitignore 中。
+Docgeni 默认会扫描 `docs` 目录下的 Markdown 文件，我们可以先创建一个最简单的文档。
 
+```bash
+mkdir docs && echo 'Hello Docgeni!' > docs/getting-started.md
+```
 
-# 组件文档
-Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可按 [组件文档](basic/component) 编写概览、示例与 API，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的Key命名），输入如下内容：
+执行 `npm run start:docs` 运行并打开 `http://127.0.0.1:4600` 地址访问试试。
+
+### 忽略生成目录
+
+构建会在 `.docgeni/site` 生成临时 Angular 站点，建议加入 `.gitignore`：
 
 ```
+.docgeni/site
+```
+
+## 编写组件文档
+
+若项目中有 Angular 类库，初始化时 Docgeni 会尝试自动接入。**没有概览或示例的组件不会出现在导航中**。
+
+最小示例：类库下有 `button` 组件，在 `button/doc` 中创建默认语言文件（如 `zh-cn.md` 或 `en-us.md`，文件名与 `defaultLocale` 一致）：
+
+```markdown
 ---
 title: 按钮
 subtitle: Button
 ---
 
 ## 何时使用
-按钮用于开始一个即时操作。
+
+按钮用于触发一个即时操作。
 ```
-展示效果如下:
+
+效果示意：
 
 ![Component](assets/images/component-button.png)
 
-更多说明见 [组件文档](basic/component)。
+概览、示例目录、`api`、`<example />` 等说明见 [组件文档](../basic/component)。

@@ -5,36 +5,38 @@ order: 10
 toc: hidden
 ---
 
-# 什么是 Docgeni？
+## 什么是 Docgeni？
 
-`Docgeni`是一款为 Angular 组件开发场景而生的文档工具，支持组件文档和普通的 Markdown 文档生成。
+Docgeni 是面向 **Angular 组件库与文档站** 的静态站点生成工具。你可以用它做两件事：
 
-`Docgeni`会自动根据目录结构和 FrontMatter 生成对应的文档导航、菜单和路由，同时支持配置一级导航和路由以满足自定义需求；另外，为了便于开发组件和展示组件示例，Docgeni 支持在 Markdown 语法中导入示例。
+- 写普通的 **Markdown 文档**（指南、配置说明等）
+- 为组件库生成 **概览、在线示例、API** 页面，并在文档里嵌入可运行的 Example
 
-# 特性
-- 📦 开箱即用，让你快速开启文档编写和组件开发
-- 🏡 独立的 Angular 组件预览体验，包含：组件概览，示例，API
-- 📋 对 Markdown 语法进行扩展，在文档中直接导入 Example
-- 💻 多语言支持
-- 🎨 两种模式(`full`和`lite`)以及多种风格(`default`和`angular`)支持
-- 🚀 强大的自定义能力
+把 Markdown 放在约定好的目录里，配置好 `.docgenirc.js`，Docgeni 会根据目录结构和 Front Matter **自动生成导航、侧边菜单和路由**。也支持自定义顶部导航、多语言，以及在 Markdown 里用 `<example />` 引用组件示例。
 
-# 动机
-2018年，[Worktile](https://worktile.com/?utm_source=docgeni) 开始使用 Angular 搭建自己的组件库，经过了2-3年的时间我们的组件库已经有50+个组件了。 那么对于组件库开发来说，文档和示例是非常重要的一环，我们一开始也是和其他组件库一样直接在仓储中写一个 Demo 站点作为文档和示例展示，每当新增一个组件就需要在示例中新增这个组件对应的示例模块，示例组件等等，写组件的示例和文档非常的繁琐，同时加上我们2019年开始搭建业务组件库，意味着同样的示例基础功能我还要再次写一遍，特别麻烦，另外就是之前的文档站点很不专业，所以就开始寻找 一款 Angular 组件开发生成文档和组件示例的工具。
+## 主要特性
 
-寻找和研究了很多组件文档生成工具，发现 React 和 Vue 框架的方案有很多，Angular 框架居然没有一个开箱即用的组件文档的生成工具，大家比较熟悉的 Angular 组件库（比如：[Material Design](https://github.com/angular/components)、[ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd)、[ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap) 等）都是在仓储内部搭建的示例站点，无法直接被其他组件库复用，所以最终就萌生了我们要自己写一个为 Angular 组件开发而生的文档工具的想法。
+- 📦 **开箱即用**：CLI 初始化即可本地预览文档站
+- 🏡 **组件预览**：独立示例区，支持概览、示例、API
+- 📋 **Markdown 扩展**：代码组、Embed、内置组件、示例引用等
+- 💻 **多语言**：文档与配置项均可按语言拆分
+- 🎨 **两种模式**：`full`（含首页）与 `lite`；主题支持 `default` / `angular`
+- 🚀 **可扩展**：`public`、`components`、`app` 等目录覆盖站点能力
 
-[awesome-docgen](https://github.com/docgeni/awesome-docgen) 这个仓储列举出了我们当时调研的一些文档生成工具，[storybook](https://github.com/storybookjs/storybook) 可能是唯一一个支持 Angular 框架的文档生成工具，但是它的展示形态和写法挺繁琐了，最终没有选择使用它。
+## 为什么做 Docgeni？
 
-# 文档工具的场景
-对于文档工具，无外乎有三种场景：
-1. 普通文档：纯 Markdown 语法的文档，前后端通用，主要展示入门指南，配置说明文档使用，这样的工具有很多
-1. 组件文档：基本和前端框架绑定，展示组件的使用说明，组件的参数，组件的示例（Examples）
-1. API文档：类似 Angular 官方的 API，纯类库的项目，对于大部分组件库而言是不需要这个功能的
+2018 年起，[Worktile](https://worktile.com/?utm_source=docgeni) 用 Angular 搭建内部组件库，几年间组件数量超过 50 个。当时和其他库一样，在仓库里维护一个 Demo 站：每加一个组件就要手写示例模块、路由和文档页，成本高；2019 年再做业务组件库时，同类工作又要重复一遍，且站点形态也不够统一。
 
-Docgeni 同时支持普通文档和组件文档的生成，满足上述一和二两种场景。
-<alert type="primary">对于一些纯文档的场景，使用 Docgeni 只生成 Markdown 普通文档也是可以的。</alert>
+调研后发现，React / Vue 生态文档工具很多，而 **Angular 缺少一款可直接复用的「组件库文档站」方案**。Material、ng-zorro、ngx-bootstrap 等多在仓库内自建示例站，难以抽成通用工具。[Storybook](https://github.com/storybookjs/storybook) 虽支持 Angular，但与我们希望的「类文档站 + 目录驱动」体验差异较大。因此我们做了 Docgeni，调研记录见 [awesome-docgen](https://github.com/docgeni/awesome-docgen)。
 
-# 参与贡献
-欢迎一起参与贡献 Docgeni: https://github.com/docgeni/docgeni :heart: :tada:
+## 适用场景
 
+| 类型 | 说明 | Docgeni 是否支持 |
+| --- | --- | --- |
+| 普通文档 | 入门、配置、changelog 等 Markdown | ✅ 支持 |
+| 组件文档 | 用法说明、参数、可运行示例 | ✅ 支持 |
+| 独立 API 站 | 类似 angular.io 的纯 API 浏览 | 非主要场景；组件 API 随组件页生成 |
+
+## 参与贡献
+
+欢迎参与共建：[github.com/docgeni/docgeni](https://github.com/docgeni/docgeni) :heart: :tada:

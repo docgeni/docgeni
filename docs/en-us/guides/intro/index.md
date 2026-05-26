@@ -1,36 +1,42 @@
 ---
-title: Introduce
+title: Introduction
 path: 'intro'
 order: 10
+toc: hidden
 ---
 
-# What is Docgeni？
+## What is Docgeni?
 
-`Docgeni` is a document generator for angular component lib development scenarios, which supports the generation of component documents and markdown documents.
+Docgeni is a static site generator for **Angular component libraries and documentation sites**. You can use it to:
 
-`Docgeni` will automatically generate the corresponding document navigation, menu and route according to the directory structure and FrontMatter, and it also supports the configuration of first-level navigation and route to meet the custom requirements. In addition, in order to facilitate the development of component and display component example, Docgeni supports the import of example in markdown syntax.
+- Write regular **Markdown** guides and configuration docs
+- Generate **overview, live examples, and API** pages for components, and embed examples in Markdown
 
-# Features
-- 📦 Out of the box, let you quickly open the document writing and component development
-- 🏡 Independent angular component preview experience, including:component overview, examples, and API
-- 📋 Extend the markdown syntax and import examples directly into the document
-- 💻 Multi-language support
-- 🎨 Two modes(`full` and `lite`) and multiple themes(`default` and `angular`) support
-- 🚀 Powerful customization site ability (HTML, Browser support, Assets ...)
+Place files in the expected folders, configure `.docgenirc.js`, and Docgeni **builds navigation, sidebar menus, and routes** from your directory structure and Front Matter. It also supports custom top nav, locales, and `<example />` tags in Markdown.
 
-# Motivation
-In 2018, [Worktile](https://worktile.com/?utm_source=docgeni) started to build our own component library using Angular, and after 2-3 years our component library already has 50+ components. So for component library development, documentation and examples is a very important part. At the beginning, we wrote a Demo site directly in the repository as documentation and examples display  like other component libraries. Whenever a new component is added, the sample module, sample component and so on which corresponding to this component need to be added to the example. It is very cumbersome to write component examples and documents. At the same time, we started to build a business component library in 2019, which means that I have to write the same basic function of the example again, which is particularly troublesome. In addition, the previous documentation site is very unprofessional, so we  began to look for a tool for Angular component development to generate documentation and component examples.
+## Features
 
-After looking for and studying many component document generation tools, we found that there are many solutions for React and Vue frameworks, but Angular framework does not have an out-of-the-box component document generation tool, and the more familiar Angular component libraries (such as [Material Design](https://github.com/angular/components), [ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd), [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap), etc.) are sample sites built inside the repository and cannot be directly reused by other component libraries, so the idea of writing our own documentation tool for Angular component development eventually emerged.
+- 📦 **Out of the box**: CLI init and local preview
+- 🏡 **Component preview**: Overview, examples, and API in one place
+- 📋 **Markdown extensions**: Code groups, embed, built-in components, example tags
+- 💻 **i18n**: Split docs and config by locale
+- 🎨 **Two modes**: `full` (with home page) and `lite`; themes `default` / `angular`
+- 🚀 **Extensible**: Override the site via `public`, `components`, `app`, and more
 
-The [awesome-docgen](https://github.com/docgeni/awesome-docgen) repository lists some of the document generation tools we researched at the time. [storybook](https://github.com/storybookjs/storybook) may be the only document generation tool that supports the Angular framework, but its presentation and writing method are quite cumbersome, so we didn't choose to use it in the end.
+## Why we built it
 
-# Categories of documentation tools
-For documentation tools, there are three types:
-1. Common documents: pure Markdown syntax documents, common to both front and back ends, mainly showing getting started guide, configuration instructions for the use of documents, there are countless such tools
-1. Component documentation: it binds front-end framework basically, showing component instructions for use, component parameters, component examples (Examples)
-1. API documentation: similar to the official Angular API. Of course, most component libraries don’t need this feature
+Since 2018, [Worktile](https://worktile.com/?utm_source=docgeni) has maintained a large Angular component library (50+ components). Like many teams, we hosted a custom demo app in the repo—every new component meant more example modules, routes, and doc pages. A second business library in 2019 duplicated that work, and the result still did not feel like a unified doc product.
 
-Docgeni supports the generation of common documents and component documents. Of course, for some pure document scenarios, it is also possible to use Docgeni to generate only common Markdown documents.
-# Contributing
-Welcome to contribute together Docgeni: https://github.com/docgeni/docgeni
+React and Vue have many doc tools; **Angular lacked a reusable “component library doc site” generator**. Libraries such as Material, ng-zorro, and ngx-bootstrap mostly ship in-repo demo apps. [Storybook](https://github.com/storybookjs/storybook) supports Angular but did not match the directory-driven doc-site workflow we wanted. Docgeni was our answer; prior research is listed in [awesome-docgen](https://github.com/docgeni/awesome-docgen).
+
+## Use cases
+
+| Type | Description | Docgeni |
+| --- | --- | --- |
+| General docs | Guides, config, changelog | ✅ |
+| Component docs | Usage, API, runnable examples | ✅ |
+| Standalone API site | angular.io-style API only | Not the main focus; API ships with component pages |
+
+## Contributing
+
+Contributions are welcome: [github.com/docgeni/docgeni](https://github.com/docgeni/docgeni)
