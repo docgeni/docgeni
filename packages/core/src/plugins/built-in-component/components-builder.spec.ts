@@ -66,7 +66,7 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.metadata).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
-                standalone: false,
+                standalone: true,
             });
 
             expect(entryContent).toEqual(moduleText);
@@ -98,31 +98,34 @@ describe('#components-builder', () => {
         });
 
         it('should generate module with standalone component in imports when export default omits standalone', async () => {
-            await writeFilesToHost(context.host, {
-                [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }',
-                [`${COMPONENTS_ROOT_PATH}/color/color.component.ts`]: `@Component({
+            const colorOnlyContext = createTestDocgeniContext({
+                initialFiles: {
+                    [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }',
+                    [`${COMPONENTS_ROOT_PATH}/color/color.component.ts`]: `@Component({
             selector: 'my-color',
             templateUrl: './color.component.html',
             standalone: true
         })
-        export class MyColorComponent extends DocgeniBuiltInComponent {}
+        export class MyColorComponent {}
 
         export default {
             selector: 'my-color',
             component: MyColorComponent,
         };`,
+                    [`${COMPONENTS_ROOT_PATH}/color/color.component.html`]: 'color',
+                },
             });
+            const colorDistPath = toolkit.path.resolve(colorOnlyContext.paths.absSiteContentPath, 'components/custom');
 
-            const componentsBuilder = new ComponentsBuilder(context);
+            const componentsBuilder = new ComponentsBuilder(colorOnlyContext);
             await componentsBuilder.build();
             await componentsBuilder.emit();
 
-            const entryContent = await context.host.readFile(toolkit.path.resolve(componentsDistPath, 'index.ts'));
-            expect(entryContent).toContain('imports: [ CommonModule, MyColorComponent');
-            expect(entryContent).toContain('declarations: [');
+            const entryContent = await colorOnlyContext.host.readFile(toolkit.path.resolve(colorDistPath, 'index.ts'));
+            expect(entryContent).toContain('imports: [ CommonModule, MyColorComponent ]');
+            expect(entryContent).toContain('declarations: [  ]');
+            expect(entryContent).toContain('exports: [ MyColorComponent ]');
             expect(entryContent).not.toContain('declarations: [ MyColorComponent');
-            expect(entryContent).toContain('exports: [');
-            expect(entryContent).toContain('MyColorComponent');
         });
 
         it('should build components success when has`t export default', async () => {
@@ -177,10 +180,29 @@ describe('#components-builder', () => {
             expect(components.get(`${COMPONENTS_ROOT_PATH}/hello`)!.metadata).toEqual({
                 selector: 'hello',
                 name: 'HelloComponent',
-                standalone: false,
+                standalone: true,
             });
 
             expect(entryContent).toEqual(moduleText);
+        });
+
+        it('should treat export default standalone false as non-standalone', async () => {
+            await writeFilesToHost(context.host, {
+                [`${COMPONENTS_ROOT_PATH}/module.ts`]: 'export default { imports: [] }',
+                [`${COMPONENTS_ROOT_PATH}/legacy/legacy.component.ts`]: `export class LegacyComponent {}
+export default { selector: 'legacy', component: LegacyComponent, standalone: false }`,
+                [`${COMPONENTS_ROOT_PATH}/legacy/legacy.component.html`]: 'legacy',
+            });
+
+            const componentsBuilder = new ComponentsBuilder(context);
+            await componentsBuilder.build();
+
+            const components = (componentsBuilder as any).components as Map<string, ComponentBuilder>;
+            expect(components.get(`${COMPONENTS_ROOT_PATH}/legacy`)!.metadata).toEqual({
+                selector: 'legacy',
+                name: 'LegacyComponent',
+                standalone: false,
+            });
         });
 
         it('should ignore without exported components when generating entry module', async () => {
