@@ -39,7 +39,7 @@
 
 ### 高级
 - [自定义站点](http://docgeni.com/guides/advance/customize)
-- [多语言](http://docgeni.com/guides/advance/locales)
+- [国际化](http://docgeni.com/guides/basic/i18n)
 
 ## 谁在使用 Docgeni?
 <table style="margin-top: 20px;">

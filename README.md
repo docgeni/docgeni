@@ -39,7 +39,7 @@ Get started with Docgeni, learn the fundamentals and explore advanced topics on 
 
 ### Advanced
 - [Customize Site](http://docgeni.com/guides/advance/customize)
-- [Multi-language](http://docgeni.com/guides/advance/locales)
+- [I18n](http://docgeni.com/guides/basic/i18n)
 
 ## Who are using Docgeni?
 

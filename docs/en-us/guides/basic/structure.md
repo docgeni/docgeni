@@ -15,10 +15,10 @@ hidden: true
 │   ├── guides
 │   │   ├── basic
 │   │   │   ├── index.md
-│   │   │   └── structure.md
+│   │   │   ├── structure.md
+│   │   │   └── i18n.md
 │   │   ├── advance
-│   │   │   ├── index.md
-│   │   │   └── locales.md
+│   │   │   └── index.md
 │   └── index.md
 ├── .docgenirc.js
 ├── package.json
