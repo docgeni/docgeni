@@ -1,5 +1,5 @@
 ---
-title: Overview & API & Examples
+title: Component documentation
 path: 'component'
 order: 40
 ---

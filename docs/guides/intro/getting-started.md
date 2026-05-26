@@ -112,7 +112,7 @@ Docgeni 默认会在`.docgeni/site`文件夹下生成文档站点，为了避免
 
 
 # 组件文档
-Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可以按照 [组件文档、API和示例](basic/component) 文档要求编写组件文档、API和示例，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的Key命名），输入如下内容：
+Docgeni 初始化脚手架会自动检测并添加当前 Angular 项目中的类库，类库的组件如果没有编写文档和示例，则不会显示，可按 [组件文档](basic/component) 编写概览、示例与 API，比如：组件根目录下有一个`button`组件，在`button/doc`下创建一个`en-us.md`文档（注意需要以默认多语言的Key命名），输入如下内容：
 
 ```
 ---
@@ -127,4 +127,4 @@ subtitle: Button
 
 ![Component](assets/images/component-button.png)
 
-关于组件文档更多的配置参考：[组件文档、API和示例](guides/basic/component)
+更多说明见 [组件文档](basic/component)。

@@ -109,7 +109,7 @@ By default, Docgeni will generate documentation sites in the `.docgeni/site` fol
 
 
 # Component documentation
-Docgeni initial scaffold will automatically detect and add the libraries in the current Angular project. If the components of the library have not been written with documentation and examples, they will not be displayed. You can write component documentation,API,and examples according to the rules of the [Overview & API & Examples](basic/component). For example: there is a `button` component under the component root directory,create an `en-us.md` document(Attention to be named after the default multi-language Key) under the `button/doc` and enter the following:
+Docgeni initial scaffold will automatically detect and add the libraries in the current Angular project. If the components of the library have not been written with documentation and examples, they will not be displayed. Follow [Component documentation](guides/basic/component) to add overview, examples, and API. For example: there is a `button` component under the component root directory,create an `en-us.md` document(Attention to be named after the default multi-language Key) under the `button/doc` and enter the following:
 
 ```
 ---
@@ -124,4 +124,4 @@ As shown below:
 
 ![Component](assets/images/component-button.png)
 
-For more component documentation configuration,please refer to the [Overview & API & Examples](guides/basic/component).
+See [Component documentation](guides/basic/component) for details.
