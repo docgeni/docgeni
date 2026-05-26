@@ -16,8 +16,10 @@ import { of, Subject } from 'rxjs';
 import { EventEmitter } from 'stream';
 import { SpawnOptions } from 'child_process';
 import { parse as parseJsonc } from 'jsonc-parser';
+import { readFileSync } from 'fs';
 
 const SITE_TEMPLATE_PATH = toolkit.path.resolve(__dirname, '../site-template');
+const SITE_TEMPLATE_SERVER_ROUTES = readFileSync(systemPath.resolve(__dirname, '../site-template/src/app/app.routes.server.ts'), 'utf-8');
 
 const PUBLIC_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/public`;
 const DEFAULT_SITE_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`;
@@ -42,6 +44,7 @@ describe('#site-plugin', () => {
                 [`${DEFAULT_TEST_ROOT_PATH}/angular.json`]: fixture.src['angular.json'],
                 [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts',
                 [`${SITE_TEMPLATE_PATH}/src/app/app.config.ts`]: fixture.getOutputContent('app/app.config.ts'),
+                [`${SITE_TEMPLATE_PATH}/src/app/app.routes.server.ts`]: SITE_TEMPLATE_SERVER_ROUTES,
             },
         });
         ngSitePlugin = new AngularSitePlugin();
