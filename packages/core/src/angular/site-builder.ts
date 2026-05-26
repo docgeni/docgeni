@@ -143,14 +143,6 @@ export class SiteBuilder {
             ...renderModeOptions,
         });
         await this.docgeni.host.writeFile(angularJSONPath, angularJSONContent);
-
-        if (renderModeOptions.enableServer) {
-            const serverRoutesPath = toolkit.path.resolve(this.siteProject.sourceRoot, './app/app.routes.server.ts');
-            const serverRoutesContent = toolkit.template.compile('app-routes-server.hbs', {
-                serverRenderMode: renderModeOptions.isSsg ? 'Prerender' : 'Server',
-            });
-            await this.docgeni.host.writeFile(serverRoutesPath, serverRoutesContent);
-        }
     }
 
     private async syncTsconfig() {

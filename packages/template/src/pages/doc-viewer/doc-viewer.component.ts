@@ -68,20 +68,16 @@ export class DocViewerComponent implements OnInit {
         if (this.route.snapshot.data) {
             this.isSingle.set(this.route.snapshot.data['single']);
         }
-        this.route.paramMap.subscribe((params) => {
-            const id = params.get('id');
-            // component doc
-            if (id) {
-                const channel = this.navigationService.channel();
-                const docPath = channel?.path ? `${channel.path}/${id}` : id;
-                this.navigationService.selectDocItem(docPath);
-                this.navigationService.resetShowSidebar();
-            } else {
-                // doc
-                const path = this.route.snapshot.routeConfig?.path;
-                this.navigationService.selectDocItem(path!);
+        this.route.paramMap.subscribe(() => {
+            const path = this.route.snapshot.routeConfig?.path;
+            if (!path) {
+                return;
             }
+            this.navigationService.selectDocItem(path);
             const docItem = this.navigationService.docItem();
+            if (docItem?.importSpecifier) {
+                this.navigationService.resetShowSidebar();
+            }
             if (docItem) {
                 this.pageTitle.title = '' + docItem.title;
             } else {

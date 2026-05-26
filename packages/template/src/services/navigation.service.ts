@@ -27,28 +27,14 @@ export class NavigationService {
         return this.channels().find((nav) => nav.path === path) as ChannelItem;
     }
 
-    isLibComponentDocItem(docItem: NavigationItem): boolean {
-        if (!docItem.importSpecifier || !docItem.channelPath) {
-            return false;
-        }
-        return !!this.getChannel(docItem.channelPath)?.lib;
-    }
-
     getDocItemByPath(path: string) {
         const docItems = this.docItems();
         const channel = this.channel();
         let index: number;
         if (channel) {
-            // 类库频道
-            if (channel.lib) {
-                index = docItems.findIndex((docItem) => {
-                    return docItem.path === path && docItem.channelPath === channel.path && !!docItem.importSpecifier;
-                });
-            } else {
-                index = docItems.findIndex((docItem) => {
-                    return docItem.path === path && docItem.channelPath === channel.path;
-                });
-            }
+            index = docItems.findIndex((docItem) => {
+                return docItem.path === path && docItem.channelPath === channel.path;
+            });
         } else {
             index = docItems.findIndex((docItem) => {
                 return docItem.path === path && (this.global.config.mode === 'lite' ? true : !docItem.channelPath);

@@ -91,18 +91,8 @@ export class RouterResetService {
                             pathMatch: 'full',
                         });
                     }
-                    if (channel.lib) {
-                        routes.push({
-                            path: `${channel.path}/:id`,
-                            component: DocViewerComponent,
-                            children: componentChildrenRoutes,
-                        });
-                    }
                 });
             this.global.docItems.forEach((docItem) => {
-                if (this.navigationService.isLibComponentDocItem(docItem)) {
-                    return;
-                }
                 const route: Route = docItem.importSpecifier
                     ? {
                           path: docItem.path,
