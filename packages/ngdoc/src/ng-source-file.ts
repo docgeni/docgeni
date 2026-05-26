@@ -12,6 +12,11 @@ import {
 import { ts } from './typescript';
 import { lineFeedPrinter } from './parser/line-feed-printer';
 
+export interface FlatImportStructure {
+    name: string;
+    moduleSpecifier: string;
+}
+
 export interface ImportDeclarationStructure {
     moduleSpecifier?: string;
     namedImports?: { name: string }[];
@@ -111,6 +116,60 @@ export class NgSourceFile {
 
     public getImportDeclarations(): ts.ImportDeclaration[] {
         return findNodes(this.sourceFile, ts.SyntaxKind.ImportDeclaration) as ts.ImportDeclaration[];
+    }
+
+    public getImportStructures(): FlatImportStructure[] {
+        const structures: FlatImportStructure[] = [];
+        this.getImportDeclarations().forEach((importDeclaration) => {
+            const moduleSpecifier = getNodeText(importDeclaration.moduleSpecifier).replace(/['"]/g, '');
+            if (importDeclaration.importClause?.namedBindings && ts.isNamedImports(importDeclaration.importClause.namedBindings)) {
+                importDeclaration.importClause.namedBindings.elements.forEach((element) => {
+                    structures.push({ name: element.name.text, moduleSpecifier });
+                });
+            } else if (importDeclaration.importClause?.name) {
+                structures.push({ name: importDeclaration.importClause.name.text, moduleSpecifier });
+            }
+        });
+        return structures;
+    }
+
+    public getExportedConstMetadata(constName: string): ArgumentInfo {
+        const initializer = this.getExportedConstInitializer(constName);
+        return initializer ? getObjectLiteralExpressionProperties(initializer) : {};
+    }
+
+    public getExportedConstArrayLiteral(constName: string, propertyName: string): ts.ArrayLiteralExpression | undefined {
+        const initializer = this.getExportedConstInitializer(constName);
+        if (!initializer) {
+            return undefined;
+        }
+        const property = initializer.properties.find((item) => {
+            return ts.isPropertyAssignment(item) && item.name.getText() === propertyName;
+        }) as ts.PropertyAssignment | undefined;
+        if (property?.initializer && ts.isArrayLiteralExpression(property.initializer)) {
+            return property.initializer;
+        }
+        return undefined;
+    }
+
+    private getExportedConstInitializer(constName: string): ts.ObjectLiteralExpression | undefined {
+        let initializer: ts.ObjectLiteralExpression | undefined;
+        ts.forEachChild(this.sourceFile, (node) => {
+            if (!ts.isVariableStatement(node) || !isExported(node)) {
+                return;
+            }
+            const declaration = node.declarationList.declarations[0];
+            if (
+                declaration &&
+                ts.isIdentifier(declaration.name) &&
+                declaration.name.text === constName &&
+                declaration.initializer &&
+                ts.isObjectLiteralExpression(declaration.initializer)
+            ) {
+                initializer = declaration.initializer;
+            }
+        });
+        return initializer;
     }
 }
 

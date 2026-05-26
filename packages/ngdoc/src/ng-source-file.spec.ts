@@ -71,6 +71,38 @@ describe('#ng-source-file', () => {
         expect(defaultExports).toEqual(undefined);
     });
 
+    it('should get import structures', () => {
+        const sourceText = `
+        import { CommonModule } from '@angular/common';
+        import { FormsModule, FormControl } from '@angular/forms';
+        import myProviders from './providers';
+        `;
+        const ngSourceFile = createNgSourceFile('test.ts', sourceText);
+        expect(ngSourceFile.getImportStructures()).toEqual([
+            { name: 'CommonModule', moduleSpecifier: '@angular/common' },
+            { name: 'FormsModule', moduleSpecifier: '@angular/forms' },
+            { name: 'FormControl', moduleSpecifier: '@angular/forms' },
+            { name: 'myProviders', moduleSpecifier: './providers' },
+        ]);
+    });
+
+    it('should get exported const array literal', () => {
+        const sourceText = `
+        export const appConfig = {
+            providers: [
+                provideRouter([]),
+                importProvidersFrom(DocgeniTemplateModule),
+            ],
+        };
+        `;
+        const ngSourceFile = createNgSourceFile('app.config.ts', sourceText);
+        const providersArray = ngSourceFile.getExportedConstArrayLiteral('appConfig', 'providers');
+        expect(providersArray?.elements.length).toBe(2);
+        expect(ngSourceFile.getExportedConstMetadata('appConfig')).toEqual({
+            providers: ['provideRouter([])', 'importProvidersFrom(DocgeniTemplateModule)'],
+        });
+    });
+
     xit('should generate example module source success by ts-morph', () => {
         console.time('tsMorph');
         const sourceText = `
