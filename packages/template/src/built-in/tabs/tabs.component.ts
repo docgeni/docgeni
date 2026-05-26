@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
     afterNextRender,
     ChangeDetectionStrategy,
@@ -8,6 +9,7 @@ import {
     ElementRef,
     input,
     OnInit,
+    PLATFORM_ID,
     signal,
     inject,
 } from '@angular/core';
@@ -49,6 +51,8 @@ export class AppendChildrenDom {
 })
 export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnInit {
     private cdr = inject(ChangeDetectorRef);
+    private platformId = inject(PLATFORM_ID);
+    private isBrowser = isPlatformBrowser(this.platformId);
 
     readonly tabs = signal<DocgeniTabItem[]>([]);
     readonly activeIndex = signal(0);
@@ -73,6 +77,10 @@ export class DocgeniTabsComponent extends DocgeniBuiltInComponent implements OnI
     }
 
     private parseTabsFromHost(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
         const tabElements = Array.from(this.hostElement.querySelectorAll('tab'));
         if (tabElements.length === 0) {
             return;

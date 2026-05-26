@@ -22,10 +22,22 @@
           "options": {
             "outputPath": {
               "base": "{{ outputPath }}",
-              "browser": ""
+              "browser": {{#if isSsr}}"browser"{{else}}""{{/if}}
             },
             "index": "src/index.html",
             "browser": "src/main.ts",
+{{#if enableServer}}
+            "server": "src/main.server.ts",
+{{#if isSsg}}
+            "outputMode": "static",
+{{/if}}
+{{#if isSsr}}
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            },
+{{/if}}
+{{/if}}
             "polyfills": [
               "zone.js"
             ],

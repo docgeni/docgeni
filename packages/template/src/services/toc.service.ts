@@ -1,5 +1,5 @@
-import { ViewportScroller } from '@angular/common';
-import { Injectable, DOCUMENT, inject } from '@angular/core';
+import { isPlatformBrowser, ViewportScroller } from '@angular/common';
+import { Injectable, DOCUMENT, PLATFORM_ID, inject, Renderer2 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { fromEvent, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -34,7 +34,10 @@ let OFFSET = 0;
 })
 export class TocService {
     private document = inject(DOCUMENT);
+    private platformId = inject(PLATFORM_ID);
     private viewportScroller = inject(ViewportScroller);
+
+    private isBrowser = isPlatformBrowser(this.platformId);
 
     private linksSubject$ = new BehaviorSubject<TocLink[]>([]);
     private activeLinkSubject$ = new BehaviorSubject<TocLink | null>(null);
@@ -71,6 +74,9 @@ export class TocService {
     }
 
     generateToc(docViewerContent: HTMLElement, scrollContainer = '.dg-scroll-container') {
+        if (!this.isBrowser) {
+            return;
+        }
         const headers = Array.from<HTMLHeadingElement>(docViewerContent.querySelectorAll('h1, h2, h3, h4, dg-examples'));
         const links: TocLink[] = [];
         headers.forEach((header) => {
@@ -81,7 +87,7 @@ export class TocService {
                     links.push({
                         name: example.getAttribute('title') as string,
                         type: 'h2',
-                        top: example.getBoundingClientRect().top,
+                        top: this.getElementTop(example as HTMLElement),
                         id: example.getAttribute('name') as string,
                         active: false,
                         level: headerLevel,
@@ -92,7 +98,7 @@ export class TocService {
             }
             // remove the 'TocLink' icon name from the inner text
             const name = header.innerText.trim().replace(/^TocLink/, '');
-            const { top } = header.getBoundingClientRect();
+            const top = this.getElementTop(header);
             const headerLevel = parseInt(header.tagName[1], 10);
             links.push({
                 name,
@@ -154,6 +160,13 @@ export class TocService {
                 }
             }
         }
+    }
+
+    private getElementTop(element: HTMLElement): number {
+        if (!isPlatformBrowser(this.platformId)) {
+            return 0;
+        }
+        return element.getBoundingClientRect().top;
     }
 
     private getScrollOffset(): number {
