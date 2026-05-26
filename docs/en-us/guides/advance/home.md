@@ -3,72 +3,145 @@ title: Customize Home
 order: 30
 ---
 
-when `mode` is `full`, it includes the home page, which includes three parts:
-- Hero area: show the title, one sentence description and quick operation links of the current site, and supports the setting of banner
-- Feature area: show what features are available, each with a name, description, and icon 
-- Content area: show markdown content like markdown doc
+In **`full` mode**, visiting `/` shows a dedicated home page instead of jumping straight into a doc. Use it to introduce your project and link to important pages. This page explains how to set it up.
 
+## What does the home page include?
 
-`index.md` file on root directory is the markdown content of the home page, and the hero and features are configured through the `FrontMatter` of the home page.
+The home page has three sections, top to bottom:
+
+| Section | Purpose | How to configure |
+| --- | --- | --- |
+| **Hero** | Main title, tagline, background image, action buttons | `hero` in Front Matter |
+| **Features** | Grid of highlight cards | `features` in Front Matter |
+| **Body** | Regular Markdown, same as any doc page | Content below `---` in `index.md` |
+
+Layout sketch:
+
+```
+┌─────────────────────────────────────┐
+│  Hero: title + description + CTAs   │  ← hero
+├─────────────────────────────────────┤
+│  Features: icon + title + blurb     │  ← features
+├─────────────────────────────────────┤
+│  Body: Markdown (e.g. Quick start)  │  ← file body
+└─────────────────────────────────────┘
+```
+
+<alert type="info">`lite` mode has no separate home page; the site opens on the doc list instead.</alert>
+
+## Which file do I edit?
+
+The home page is **`docs/index.md`**. For multiple locales, use `docs/index.md` for the default locale and `docs/{locale-key}/index.md` for others (e.g. `docs/en-us/index.md`).
+
+- **Hero & features**: YAML Front Matter between the opening and closing `---`
+- **Body**: Everything after the closing `---`, using normal Markdown
+
+This site’s [home page](/en-us/) is built from `docs/en-us/index.md` and `docs/index.md`—you can copy from those files.
 
 ## Preview
 
 ![](assets/images/home-preview.png)
 
+## Hero configuration
 
-## Hero
+`hero` controls the large banner at the top.
 
-- `title:` title of site
-- `description:` description of site
-- `banner:` the background image, title and description are centered by default. If the background image is obscured, the position can be modified through custom styles
-- `backgroundColor`: background color, default is `#dae6f3`
-- `actions:` shortcut button actions
-- `actions.text:` button text for every action
-- `actions.link:` button link for every action
-- `actions.btnShape:` button shape，can be set to `round | square`，default is `square`
-- `actions.btnType:` button type for every action, can be set to `primary | primary-light | success | danger`，default is `primary-light`, outline style needs add prefix `outline`, e.g. `outline-primary-light`
+| Field | Description |
+| --- | --- |
+| `title` | Main heading |
+| `description` | Subtitle or one-line pitch |
+| `banner` | Background image path. Use a string, or an array `[lightImage, darkImage]` for theme switching |
+| `backgroundColor` | Fallback color, default `#dae6f3`; more visible when `banner` is omitted |
+| `actions` | List of buttons; each item has `text`, `link`, and optional `btnShape`, `btnType` |
+
+**Per-button fields (inside each `actions` item):**
+
+| Field | Description |
+| --- | --- |
+| `text` | Button label |
+| `link` | Target URL, e.g. `/guides/intro/getting-started` |
+| `btnShape` | `round` or `square` (default `square`) |
+| `btnType` | `primary`, `primary-light`, `success`, `danger`, etc. (default `primary-light`). Prefix with `outline-` for outline style, e.g. `outline-primary-light` |
 
 Example:
-```
+
+```yaml
 ---
 hero:
   title: Docgeni
-  description: Out of the box angular component document generation tool
-  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
+  description: Out-of-the-box Angular component documentation
+  banner:
+    - ./assets/images/home/banner.png
+    - ./assets/images/home/dark-banner.png
+  backgroundColor: '#dae6f3'
   actions:
-    - text: Getting Started
+    - text: Getting started
       link: /guides/intro/getting-started
-      btnShape: round,
+      btnShape: round
+    - text: Introduction
+      link: /guides/intro
       btnType: outline-primary-light
+      btnShape: square
 ---
 ```
 
-## Features
-- `title:` title of feature
-- `description:` description of feature
-- `icon:` icon url of feature
+Image paths are relative to the **`docs`** folder. If text covers the banner, adjust styles via [site customization](/en-us/guides/advance/customize).
+
+## Features configuration
+
+`features` is an array; each entry is one card:
+
+| Field | Description |
+| --- | --- |
+| `icon` | Icon path (relative to `docs`) |
+| `title` | Feature name |
+| `description` | Short explanation |
 
 Example:
-```
+
+```yaml
 ---
 features:
   - icon: ./assets/images/home/feature1.png
     title: Out of the box
-    description: Automatically generate navigation and menus according to the directory structure, and help developers get started at zero cost through command-line tools, so that you can quickly start  writing document and development component
+    description: Auto navigation and menus from your folder structure; CLI to get started quickly
   - icon: ./assets/images/home/feature2.png
-    title: Born for Angular Component Development
-    description: Independent angular component preview experience that contains component overview, examples, APIs and rich markdown extensions make it easier to write documents and support multiple libraries at one site
+    title: Built for Angular components
+    description: Overview, live examples, APIs, and Markdown extensions in one place
   - icon: ./assets/images/home/feature3.png
-    title: Two modes and multiple styles support
-    description: Full and Lite modes are supported to meet different needs. At the same time, default and angular styles are supported to allow users to choose their own themes
-  - icon: ./assets/images/home/feature4.png
-    title: Powerful Customization
-    description: It provides publicDir to realize features such as custom HTML, resources and styles, and supports fully customized site
-  - icon: ./assets/images/home/feature5.png
-    title: Automatic Generation of Component API (WIP)
-    description: Automatically generate component APIs based on typescript type definitions and comments, and maintain the consistency of code and documents
-  - icon: ./assets/images/home/feature6.png
-    title: Multilingual
-    description: Support flexible multilingual configuration
+    title: Modes and themes
+    description: Full and lite modes; default and Angular visual styles
 ---
 ```
+
+There is no fixed limit on cards; three to six usually reads best.
+
+## Full example
+
+Hero, features, and body in one file:
+
+```yaml
+---
+title: Home
+hero:
+  title: My component library
+  description: Internal UI docs for our team
+  banner: ./assets/images/home/banner.png
+  actions:
+    - text: Read the docs
+      link: /guides/intro/getting-started
+features:
+  - icon: ./assets/images/home/feature1.png
+    title: Consistent design
+    description: All components follow the same design system
+  - icon: ./assets/images/home/feature2.png
+    title: Live preview
+    description: Run examples inside the docs
+---
+
+## Quick start
+
+Run `npx @docgeni/cli init`, then `npm run start:docs` to preview locally.
+```
+
+Rebuild or refresh the dev server to see changes in the browser.

@@ -1,73 +1,147 @@
 ---
 title: 自定义首页
-order: 30
+order: 10
 ---
 
-`mode`为`full`模式时包含首页，首页包含三部分内容，分别为：
-- Hero 区域: 展示当前站点的标题和一句话描述以及快速操作链接，同时支持`banner`图设置
-- 功能区域: 展示有哪些特性，每个特性包含名称、描述和图标
-- 内容区域: 和普通的文档一样，展示 Markdown 内容
+在 **`full` 模式**下，访问站点根路径 `/` 时会展示首页，而不是直接进入某篇文档。首页适合用来介绍产品、放快速入口，下面说明如何配置。
 
-根目录下的`index.md`为首页的 Markdown 内容，通过首页文档的`FrontMatter`配置 Hero 和特性。
+## 首页由哪几个部分组成？
 
-## 首页预览
+从上到下，首页大致分为三块：
+
+| 区域 | 作用 | 配置方式 |
+| --- | --- | --- |
+| **Hero** | 大标题、一句话介绍、背景图、操作按钮 | Front Matter 里的 `hero` |
+| **特性（Features）** | 多列卡片，展示产品亮点 | Front Matter 里的 `features` |
+| **正文** | 和普通文档一样的 Markdown 内容 | `index.md` 中 `---` 以下的正文 |
+
+示意：
+
+```
+┌─────────────────────────────────────┐
+│  Hero：标题 + 描述 + 按钮 + 背景图   │  ← hero
+├─────────────────────────────────────┤
+│  Features：图标 + 标题 + 说明        │  ← features
+├─────────────────────────────────────┤
+│  正文：Markdown（如「快速上手」）     │  ← 文件正文
+└─────────────────────────────────────┘
+```
+
+<alert type="info">`lite` 模式没有独立首页，打开站点会直接进入文档列表。</alert>
+
+## 从哪个文件改？
+
+首页对应 **`docs/index.md`**（多语言时，默认语言用 `docs/index.md`，其他语言用 `docs/{语言 key}/index.md`，例如 `docs/en-us/index.md`）。
+
+- **Hero、特性**：写在文件顶部的 YAML Front Matter（`---` 之间）
+- **正文**：写在第二个 `---` 之后，语法与普通 `.md` 文档相同
+
+本仓库的 [首页示例](/) 就是 `docs/index.md`，可直接对照修改。
+
+## 预览效果
 
 ![](assets/images/home-preview.png)
 
+## 配置 Hero
 
-## Hero
+`hero` 控制页面最上方的大图区域。
 
-- `title:` 标题
-- `description:` 描述
-- `banner:` 背景图，标题和描述默认居中，如果遮住了背景图，可以通过自定义样式修改位置
-- `backgroundColor:` 背景色，默认为`#dae6f3`
-- `actions:` 快捷按钮列表
-- `actions.text:` 按钮文字
-- `actions.link:` 按钮链接
-- `actions.btnShape:` 按钮形状，可以设置为`round | square`，默认为`square`
-- `actions.btnType:` 按钮类型，可以设置为`primary | primary-light | success | danger`，默认为`primary-light`，线框按钮需要加前缀 `outline`，比如 `outline-primary-light`
+| 字段 | 说明 |
+| --- | --- |
+| `title` | 主标题 |
+| `description` | 副标题 / 一句话介绍 |
+| `banner` | 背景图路径。可写字符串，或写数组 `[浅色图, 深色图]` 以适配主题切换 |
+| `backgroundColor` | 背景色，默认 `#dae6f3`；未设置 `banner` 时更明显 |
+| `actions` | 按钮列表，每项包含 `text`、`link`，以及可选的 `btnShape`、`btnType` |
 
-示例:
-```
+**按钮相关字段（写在每个 `actions` 项里）：**
+
+| 字段 | 说明 |
+| --- | --- |
+| `text` | 按钮文字 |
+| `link` | 跳转地址，站内路径如 `/guides/intro/getting-started` |
+| `btnShape` | 形状：`round`（圆角）或 `square`（方角），默认 `square` |
+| `btnType` | 样式：`primary`、`primary-light`、`success`、`danger` 等，默认 `primary-light`；线框样式加前缀 `outline-`，如 `outline-primary-light` |
+
+示例：
+
+```yaml
 ---
 hero:
   title: Docgeni
   description: 开箱即用的 Angular 组件文档生成工具
-  banner: [./assets/images/home/banner.png, ./assets/images/home/dark-banner.png]
+  banner:
+    - ./assets/images/home/banner.png
+    - ./assets/images/home/dark-banner.png
+  backgroundColor: '#dae6f3'
   actions:
     - text: 快速上手
       link: /guides/intro/getting-started
-      btnShape: round,
+      btnShape: round
+    - text: 介绍
+      link: /guides/intro
       btnType: outline-primary-light
+      btnShape: square
 ---
 ```
 
-## 特性
-- `title:` 特性标题
-- `description:` 特性描述
-- `icon:` 特性图标地址
+图片路径相对于 **`docs` 目录**。若标题挡住背景图，可通过 [自定义样式](/guides/advance/customize) 覆盖 Hero 区域样式。
 
-示例:
-```
+## 配置特性（Features）
+
+`features` 是一个数组，每一项展示一张「特性卡片」：
+
+| 字段 | 说明 |
+| --- | --- |
+| `icon` | 图标路径（相对 `docs` 目录） |
+| `title` | 特性名称 |
+| `description` | 简短说明 |
+
+示例：
+
+```yaml
 ---
 features:
   - icon: ./assets/images/home/feature1.png
-    title: Out of the box
-    description: Automatically generate navigation and menus according to the directory structure, and help developers get started at zero cost through command-line tools, so that you can quickly start  writing document and development component
+    title: 开箱即用
+    description: 根据目录结构自动生成导航和菜单，通过命令行零成本上手
   - icon: ./assets/images/home/feature2.png
-    title: Born for Angular Component Development
-    description: Independent angular component preview experience that contains component overview, examples, APIs and rich markdown extensions make it easier to write documents and support multiple libraries at one site
+    title: 为 Angular 组件开发而生
+    description: 组件概览、示例、API 与 Markdown 扩展，让文档更好写
   - icon: ./assets/images/home/feature3.png
-    title: Two modes and multiple styles support
-    description: Full and Lite modes are supported to meet different needs. At the same time, default and angular styles are supported to allow users to choose their own themes
-  - icon: ./assets/images/home/feature4.png
-    title: Powerful Customization
-    description: It provides publicDir to realize features such as custom HTML, resources and styles, and supports fully customized site
-  - icon: ./assets/images/home/feature5.png
-    title: Automatic Generation of Component API (WIP)
-    description: Automatically generate component APIs based on typescript type definitions and comments, and maintain the consistency of code and documents
-  - icon: ./assets/images/home/feature6.png
-    title: Multilingual
-    description: Support flexible multilingual configuration
+    title: 两种模式与多种风格
+    description: 支持 full / lite 模式，以及默认与 Angular 两套主题风格
 ---
 ```
+
+卡片数量没有硬性限制，一般 3～6 个为宜，过多会显得拥挤。
+
+## 完整示例
+
+下面把 Hero、特性和正文写在一起（正文在 Front Matter 之后）：
+
+```yaml
+---
+title: 首页
+hero:
+  title: 我的组件库
+  description: 团队内部 UI 组件文档
+  banner: ./assets/images/home/banner.png
+  actions:
+    - text: 查看文档
+      link: /guides/intro/getting-started
+features:
+  - icon: ./assets/images/home/feature1.png
+    title: 设计统一
+    description: 所有组件遵循同一套设计规范
+  - icon: ./assets/images/home/feature2.png
+    title: 在线预览
+    description: 文档内直接运行示例，所见即所得
+---
+
+## 快速开始
+
+在项目中执行 `npx @docgeni/cli init`，然后运行 `npm run start:docs` 即可本地预览。
+```
+
+保存后重新构建或刷新开发服务器，即可在浏览器中看到更新后的首页。
