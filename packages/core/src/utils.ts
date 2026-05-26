@@ -1,4 +1,3 @@
-import { NavigationItem, Locale } from './interfaces';
 import { toolkit } from '@docgeni/toolkit';
 import * as Prism from 'node-prismjs';
 // import { highlight as prismjsHighlight, languages } from 'prismjs';
@@ -29,29 +28,6 @@ export function getItemLocaleProperty<
     } else {
         return (item as any)[property];
     }
-}
-
-export function buildNavsForLocale(locale: Locale, navs: NavigationItem[]): NavigationItem[] {
-    return (navs || []).map((rawNav) => {
-        const nav: NavigationItem = {
-            ...rawNav,
-            title: getItemLocaleProperty(rawNav, locale.key, 'title'),
-            subtitle: getItemLocaleProperty(rawNav, locale.key, 'subtitle'),
-        };
-        if (rawNav.items) {
-            nav.items = buildNavsForLocale(locale, rawNav.items);
-        }
-        delete nav.locales;
-        return nav;
-    });
-}
-
-export function buildNavsMapForLocales(locales: Locale[], navs: NavigationItem[]): Record<string, NavigationItem[]> {
-    const localeNavsMap: Record<string, NavigationItem[]> = {};
-    locales.forEach((locale) => {
-        localeNavsMap[locale.key] = buildNavsForLocale(locale, navs);
-    });
-    return localeNavsMap;
 }
 
 export function getDocTitle(metaTitle: string, name: string) {

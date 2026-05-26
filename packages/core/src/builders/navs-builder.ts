@@ -1,18 +1,16 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../docgeni.interface';
-import { ChannelItem, ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '../interfaces';
-import { ascendingSortByOrder, buildNavsMapForLocales, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
+import { ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '../interfaces';
+import { ascendingSortByOrder, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
+import { ConfigNavsPreparer } from './navs/config-navs-preparer';
 import * as path from 'path';
 
 export class NavsBuilder {
-    private localeNavsMap: Record<string, NavigationItem[]> = {};
-    /* The navs that generate by docs dir insertion location  */
-    private docsNavInsertIndex: number;
+    private configNavsPreparer?: ConfigNavsPreparer;
     private get config() {
         return this.docgeni.config;
     }
-    private rootNavs: NavigationItem[];
     private localesDocsNavsMap: Record<
         string,
         {
@@ -25,21 +23,21 @@ export class NavsBuilder {
     constructor(private docgeni: DocgeniContext) {}
 
     public async run() {
-        this.setRootNavs();
-        this.localeNavsMap = buildNavsMapForLocales(this.config.locales, this.rootNavs);
+        this.prepareConfigNavs();
         await this.build();
         await this.emit();
     }
 
     public async emit() {
-        const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.localeNavsMap));
+        this.ensureConfigNavsPrepared();
+        const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.configNavsPreparer!.configNavsByLocale));
         const localeDocItemsMap: Record<string, DocItem[]> = {};
         for (const locale of this.docgeni.config.locales) {
             const navsForLocale = this.getLocaleDocsNavs(locale.key);
             const docItems = this.getLocaleDocsItems(locale.key);
             localeDocItemsMap[locale.key] = docItems;
             let componentDocItems: ComponentDocItem[] = [];
-            localeNavsMap[locale.key].splice(this.docsNavInsertIndex, 0, ...navsForLocale);
+            localeNavsMap[locale.key].splice(this.configNavsPreparer!.docsNavInsertIndex, 0, ...navsForLocale);
             this.docgeni.librariesBuilder.libraries.forEach((libraryBuilder) => {
                 componentDocItems = componentDocItems.concat(
                     libraryBuilder.generateDocsAndNavsForLocale(locale.key, localeNavsMap[locale.key]),
@@ -74,18 +72,15 @@ export class NavsBuilder {
         return (this.localesDocsNavsMap[locale] && this.localesDocsNavsMap[locale].docItems) || [];
     }
 
-    private async setRootNavs() {
-        let navs = this.config.navs;
-        let docsNavInsertIndex = navs.indexOf(null);
-        if (docsNavInsertIndex >= 0) {
-            navs = this.config.navs.filter((item) => {
-                return !!item;
-            });
-        } else {
-            docsNavInsertIndex = navs.length;
+    private prepareConfigNavs() {
+        this.configNavsPreparer = new ConfigNavsPreparer(this.config.locales);
+        this.configNavsPreparer.prepare(this.config.navs as Array<NavigationItem | null>);
+    }
+
+    private ensureConfigNavsPrepared() {
+        if (!this.configNavsPreparer) {
+            this.prepareConfigNavs();
         }
-        this.docsNavInsertIndex = docsNavInsertIndex;
-        this.rootNavs = navs as NavigationItem[];
     }
 
     public async build() {
