@@ -78,7 +78,7 @@ describe('router-reset.service', () => {
         assertRoutes(spectator.inject(Router).config[0].children!, ['', 'guides', 'guides/getting-started']);
     });
 
-    it('should register lib channel with :id route and skip component doc routes', () => {
+    it('should register lib component doc routes with children', () => {
         mockGlobal.navs = [
             {
                 id: 'components',
@@ -106,8 +106,8 @@ describe('router-reset.service', () => {
         spectator = createService();
         spectator.service.resetRoutes();
         const routes = spectator.inject(Router).config[0].children!;
-        expect(routes.find((route) => route.path === 'button')).toBeFalsy();
-        const libRoute = routes.find((route) => route.path === 'components/:id');
+        expect(routes.find((route) => route.path === 'components/:id')).toBeFalsy();
+        const libRoute = routes.find((route) => route.path === 'components/button');
         expect(libRoute).toBeTruthy();
         expect(libRoute!.children!.map((route) => route.path)).toEqual(['', 'overview', 'api', 'examples', 'empty', '**']);
         const channelRoute = routes.find((route) => route.path === 'components');

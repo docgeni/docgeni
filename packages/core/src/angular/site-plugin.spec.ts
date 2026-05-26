@@ -74,6 +74,8 @@ describe('#site-plugin', () => {
         expect(buildOptions.outputMode).toBe('static');
         expect(buildOptions.ssr).toBeUndefined();
         const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
+        expect(serverRoutes).toContain(`path: '~examples/:name'`);
+        expect(serverRoutes).toContain('RenderMode.Client');
         expect(serverRoutes).toContain('RenderMode.Prerender');
     });
 
@@ -87,7 +89,9 @@ describe('#site-plugin', () => {
         expect(buildOptions.outputPath.browser).toBe('browser');
         expect(buildOptions.ssr.entry).toBe('src/server.ts');
         const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
-        expect(serverRoutes).toContain('RenderMode.Server');
+        expect(serverRoutes).toContain(`path: '~examples/:name'`);
+        expect(serverRoutes).toContain('RenderMode.Client');
+        expect(serverRoutes).toContain('RenderMode.Prerender');
     });
 
     it('should use custom site', async () => {

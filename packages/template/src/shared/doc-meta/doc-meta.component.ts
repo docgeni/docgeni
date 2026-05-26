@@ -3,7 +3,7 @@ import { Component, Input, HostBinding, OnChanges, inject, signal, input, effect
 import { DocItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
-import { SlicePipe, DatePipe } from '@angular/common';
+import { DOCUMENT, SlicePipe, DatePipe } from '@angular/common';
 import { TranslatePipe } from '../pipes/translate.pipe';
 
 interface GitHubCommieInfo {
@@ -26,14 +26,16 @@ export class DocMetaComponent implements OnChanges {
     contributors = signal<string[] | undefined>(undefined);
     private http = inject(HttpClient);
     private globalContext = inject(GlobalContext);
+    private document = inject(DOCUMENT);
 
     docItem = input.required<DocItem>();
 
     constructor() {
+        const isLocal = this.document.location.hostname.includes('localhost');
         effect(() => {
             const docItem = this.docItem();
             untracked(() => {
-                if (docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
+                if (!isLocal && docItem.originPath && this.globalContext.owner && this.globalContext.repo) {
                     this.http
                         .get<GitHubCommieInfo[]>(
                             `https://api.github.com/repos/${this.globalContext.owner}/${this.globalContext.repo}/commits`,

@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "docgeni": "cross-env DOCGENI_ENV=development NODE_ENV=development ts-node --project ./packages/cli/tsconfig.json ./packages/cli/bin/docgeni",
-    "start": "pnpm run start:docs",
-    "start:docs": "pnpm docgeni serve",
+    "start": "pnpm run start-docs",
+    "start-docs": "pnpm docgeni serve",
     "build:a-lib": "ng build a-lib --configuration production",
     "build": "pnpm run build:deps && pnpm run build:cli && pnpm run build:template && pnpm run build:dist",
     "build:template": "ng build template && pnpm run build-styles",
