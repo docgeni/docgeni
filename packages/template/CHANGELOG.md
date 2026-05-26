@@ -90,6 +90,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
 * refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
 
+## 2.8.0-next.5 (2026-05-26)
+
+* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
+* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
+* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
+* refactor: standalone component ([558bce3](https://github.com/docgeni/docgeni/commit/558bce3))
+* refactor: update some property to signal for NavigationService ([4216247](https://github.com/docgeni/docgeni/commit/4216247))
+* refactor: use inject function ([c454e66](https://github.com/docgeni/docgeni/commit/c454e66))
+* refactor: use signal for navbar and dropdown ([39b34a7](https://github.com/docgeni/docgeni/commit/39b34a7))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 **Note:** Version bump only for package @docgeni/template

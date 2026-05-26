@@ -77,6 +77,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
 * feat: support ts config (#677) ([92ffe48](https://github.com/docgeni/docgeni/commit/92ffe48)), closes [#677](https://github.com/docgeni/docgeni/issues/677)
 
+## 2.8.0-next.5 (2026-05-26)
+
+* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
+
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
 **Note:** Version bump only for package @docgeni/cli
