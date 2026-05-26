@@ -9,33 +9,33 @@ toc: menu
 - Type: `string`
 - Default: `folder name, file name`
 
-The title of the channel, category, page or component, will use `titleCase` nomenclature to convert the folder name or file name by default.
+The title of the top-level nav, category, page or component, will use `titleCase` nomenclature to convert the folder name or file name by default.
 
 ## subtitle
 
 - Type: `string`
 - Default: `null`
 
-The subtitle of the channel, category, page or component, will be displayed behind the title. 
+The subtitle of the top-level nav, category, page or component, will be displayed behind the title. 
 
 ## order
 
 - Type: `number`
 - Default: `null`
 
-The sorting of channels, categories, pages or components, is in ascending order of numbers.
+The sorting of top-level nav entries, categories, pages or components, is in ascending order of numbers.
 
 ## path
 - Type: `string`
 - Default: `folder name, file name`
 
-The routing of the channel or page or component, will use `paramCase` nomenclature to convert the folder name or file name by default, the actual access route of the document will bring the path of the category and channel.
+The routing of the top-level nav, page or component, will use `paramCase` nomenclature to convert the folder name or file name by default. The actual access route includes the category and top-level nav path.
 
 ## hidden
 - Type: `boolean`
 - Default: `false`
 
-Whether to hide the current channel, category, component or page, generally used for documents in drafts.
+Whether to hide the current top-level nav, category, component or page, generally used for documents in drafts.
 
 ## name
 - Type: `string`

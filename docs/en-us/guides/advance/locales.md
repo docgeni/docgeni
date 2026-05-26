@@ -15,7 +15,7 @@ The supported multi-languages and default languages are configured through the `
 
 # Multilingual documentation
 
-All pages in the `docs` directory are pages in the default language. If you need to add documents in other languages, you need to create a separate folder named with the multilingual `key`, such as the contents of the following `en-us` folder will be automatically generated into English documents, including channels, categories and pages.
+All pages in the `docs` directory are pages in the default language. If you need to add documents in other languages, you need to create a separate folder named with the multilingual `key`, such as the contents of the following `en-us` folder will be automatically generated into English documents, including top-level nav entries, categories and pages.
 ```
 ├── en-us
 │   ├── guides

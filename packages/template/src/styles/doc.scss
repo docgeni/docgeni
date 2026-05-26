@@ -445,6 +445,7 @@ $dg-pipe-color: #546e7a;
     }
 
     @include content-child-selector(table) {
+        margin: 10px 0px;
         border-collapse: collapse;
         border-spacing: 0;
         display: table;

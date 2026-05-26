@@ -34,7 +34,7 @@ English | [中文文档](https://github.com/docgeni/docgeni/blob/master/README.z
 Get started with Docgeni, learn the fundamentals and explore advanced topics on our documentation website.
 - [Introduce](http://docgeni.com/guides/intro)
 - [Getting Started](http://docgeni.com/guides/getting-started)
-- [Route & Nav & Menu](http://docgeni.com/guides/route-nav-menu)
+- [Navigation & Menu](http://docgeni.com/guides/basic/nav-menu)
 - [Configuration](http://docgeni.com/guides/configuration)
 
 ### Advanced

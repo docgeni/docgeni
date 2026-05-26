@@ -50,7 +50,7 @@ Github repository URL of the library.
 - Type: `string`
 - Default: `docs`
 
-Markdown document directory URL, Docgeni will scan the folders and Markdown files in this directory, and generate channels, menus and page documents according to certain rules.
+Markdown document directory URL, Docgeni will scan the folders and Markdown files in this directory, and generate top-level nav entries, menus and page documents according to certain rules.
 
 ## siteDir
 - Type: `string`
@@ -112,7 +112,7 @@ Supported multi-language, if you don't need to support multiple languages, no co
 - Type: `Array<NavigationItem>`
 - Default: `[]`
 
-This configuration item is used to customize the display of the navigation bar and menu, and generally configure some external links and library channels, such as:
+This configuration item is used to customize the display of the navigation bar and menu, and generally configure some external links and library top-level nav entries, such as:
 ```ts
 module.exports = {
     ...
@@ -132,7 +132,7 @@ module.exports = {
     ...
 }
 ```
-> Here are some things to note, the automatically recognized channel under the `docs` folder will be inserted at the bottom of the configured `navs` array by default. If you want to control the display position, you can insert a `null` as a placeholder. As the above example, the automatically generated channel will be inserted to the top navigation.
+> Here are some things to note, the automatically recognized top-level nav under the `docs` folder will be inserted at the bottom of the configured `navs` array by default. If you want to control the display position, you can insert a `null` as a placeholder. As the above example, the automatically generated top-level nav will be inserted at the top of the navbar.
 
 ## libs
 - Type: `Array<DocgeniLibrary>`

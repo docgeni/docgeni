@@ -34,7 +34,7 @@
 开始使用 Docgeni，可以去官网学习基础知识并搜索高级功能。
 - [介绍](http://docgeni.com/guides/intro)
 - [快速开始](http://docgeni.com/guides/getting-started)
-- [路由导航和菜单](http://docgeni.com/guides/route-nav-menu)
+- [导航与菜单](http://docgeni.com/guides/basic/nav-menu)
 - [配置](http://docgeni.com/guides/configuration)
 
 ### 高级
