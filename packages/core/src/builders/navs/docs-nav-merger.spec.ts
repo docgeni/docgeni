@@ -1,6 +1,10 @@
 import { NavigationItem } from '../../interfaces';
 import { mergeDocsNavs } from './docs-nav-merger';
 
+function cloneNavs(navs: NavigationItem[]): NavigationItem[] {
+    return JSON.parse(JSON.stringify(navs));
+}
+
 describe('#docs-nav-merger', () => {
     it('should merge docs nav into top-level config nav with same path', () => {
         const configNavs: NavigationItem[] = [
@@ -28,13 +32,13 @@ describe('#docs-nav-merger', () => {
             },
         ];
 
-        const navs = mergeDocsNavs(configNavs, docsNavs, 0);
+        const navs = mergeDocsNavs(cloneNavs(configNavs), docsNavs, 0);
 
         expect(configNavs[0].items).toEqual([]);
-        expect(navs[0].title).toBe('指南');
-        expect(navs[0].items).toEqual([{ id: 'intro', path: 'guides/intro', title: 'Intro', items: [] }]);
-        expect(navs[0].channelPath).toBe('guides');
-        expect(navs[1].path).toBe('reference');
+        expect(navs[0].path).toBe('reference');
+        expect(navs[1].title).toBe('指南');
+        expect(navs[1].items).toEqual([{ id: 'intro', path: 'guides/intro', title: 'Intro', items: [] }]);
+        expect(navs[1].channelPath).toBe('guides');
     });
 
     it('should merge docs nav into dropdown config nav children when parent path is empty', () => {
@@ -73,13 +77,13 @@ describe('#docs-nav-merger', () => {
             },
         ];
 
-        const navs = mergeDocsNavs(configNavs, docsNavs, 0);
+        const navs = mergeDocsNavs(cloneNavs(configNavs), docsNavs, 0);
 
-        expect(navs[0].path).toBe('');
-        expect(navs[0].items[0].title).toBe('指南');
-        expect(navs[0].items[0].items).toEqual([{ id: 'intro', path: 'guides/intro', title: 'Intro', items: [] }]);
-        expect(navs[0].items[1].items).toEqual([{ id: 'cli', path: 'reference/cli', title: 'CLI', items: [] }]);
-        expect(navs[1].path).toBe('configuration');
+        expect(navs[0].path).toBe('configuration');
+        expect(navs[1].path).toBe('');
+        expect(navs[1].items[0].title).toBe('指南');
+        expect(navs[1].items[0].items).toEqual([{ id: 'intro', path: 'guides/intro', title: 'Intro', items: [] }]);
+        expect(navs[1].items[1].items).toEqual([{ id: 'cli', path: 'reference/cli', title: 'CLI', items: [] }]);
     });
 
     it('should prefer config nav values when properties conflict', () => {
@@ -103,7 +107,7 @@ describe('#docs-nav-merger', () => {
             },
         ];
 
-        const navs = mergeDocsNavs(configNavs, docsNavs, 0);
+        const navs = mergeDocsNavs(cloneNavs(configNavs), docsNavs, 0);
 
         expect(navs.length).toBe(1);
         expect(navs[0].id).toBe('guides-config');
@@ -138,7 +142,7 @@ describe('#docs-nav-merger', () => {
             },
         ];
 
-        const navs = mergeDocsNavs(configNavs, docsNavs, 1);
+        const navs = mergeDocsNavs(cloneNavs(configNavs), docsNavs, 1);
 
         expect(navs[0].items).toEqual([]);
         expect(navs[1].path).toBe('components');
