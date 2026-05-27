@@ -1,5 +1,10 @@
 name: Publish Docgeni
 
+# wpm publish 需要 push tag，需开启 contents 写权限（仓库 Settings → Actions → Workflow permissions → Read and write）
+permissions:
+    contents: write
+    pull-requests: write
+
 on:
     pull_request:
         types:
@@ -15,7 +20,7 @@ on:
 
 jobs:
     autoApprove:
-        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        if: startsWith(github.head_ref, 'release-auto')
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
@@ -25,21 +30,19 @@ jobs:
                   review-message: 'Auto approve sync PRs to auto merge them'
 
     publish:
-        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        if: startsWith(github.head_ref, 'release-auto')
         needs: [autoApprove]
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
         steps:
             - name: Checkout
               uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Setup pnpm
               uses: pnpm/action-setup@v4
-              with:
-                  version: 9
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -53,19 +56,25 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+            - name: Configure git for push tag
+              run: |
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+
             - name: Publish (stable)
               if: startsWith(github.head_ref, 'release-auto-v')
-              run: |
-                  pnpm run pub
+              run: pnpm run pub
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Publish (next)
               if: startsWith(github.head_ref, 'release-auto-next-v')
-              run: |
-                  pnpm run pub-next
+              run: pnpm run pub-next
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Read package.json
               id: read-version
@@ -82,12 +91,9 @@ jobs:
             #     body: '{ "version": "${{ steps.read-version.outputs.prop }}", "name": "@docgeni/cli" }'
 
     autoMerge:
-        if: startsWith(github.head_ref, 'release-auto-docgeni-')
+        if: startsWith(github.head_ref, 'release-auto-')
         needs: [publish]
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pull-requests: write
         steps:
             - name: Auto merge PR
               uses: pascalgn/automerge-action@v0.15.5
