@@ -20,6 +20,12 @@ import { readFileSync } from 'fs';
 
 const SITE_TEMPLATE_PATH = toolkit.path.resolve(__dirname, '../site-template');
 const SITE_TEMPLATE_SERVER_ROUTES = readFileSync(systemPath.resolve(__dirname, '../site-template/src/app/app.routes.server.ts'), 'utf-8');
+const SITE_TEMPLATE_MAIN_SERVER = readFileSync(systemPath.resolve(__dirname, '../site-template/src/main.server.ts'), 'utf-8');
+const SITE_TEMPLATE_SERVER = readFileSync(systemPath.resolve(__dirname, '../site-template/src/server.ts'), 'utf-8');
+const SITE_TEMPLATE_APP_CONFIG_SERVER = readFileSync(
+    systemPath.resolve(__dirname, '../site-template/src/app/app.config.server.ts'),
+    'utf-8',
+);
 
 const PUBLIC_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/public`;
 const DEFAULT_SITE_PATH = `${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`;
@@ -43,7 +49,10 @@ describe('#site-plugin', () => {
                 [`${DEFAULT_TEST_ROOT_PATH}/node_modules/@angular/core/package.json`]: fixture.src['package.json'],
                 [`${DEFAULT_TEST_ROOT_PATH}/angular.json`]: fixture.src['angular.json'],
                 [`${SITE_TEMPLATE_PATH}/src/main.ts`]: 'main.ts',
+                [`${SITE_TEMPLATE_PATH}/src/main.server.ts`]: SITE_TEMPLATE_MAIN_SERVER,
+                [`${SITE_TEMPLATE_PATH}/src/server.ts`]: SITE_TEMPLATE_SERVER,
                 [`${SITE_TEMPLATE_PATH}/src/app/app.config.ts`]: fixture.getOutputContent('app/app.config.ts'),
+                [`${SITE_TEMPLATE_PATH}/src/app/app.config.server.ts`]: SITE_TEMPLATE_APP_CONFIG_SERVER,
                 [`${SITE_TEMPLATE_PATH}/src/app/app.routes.server.ts`]: SITE_TEMPLATE_SERVER_ROUTES,
             },
         });
@@ -66,6 +75,10 @@ describe('#site-plugin', () => {
         expect(context.paths.absSitePath).toEqual(`${DEFAULT_TEST_ROOT_PATH}/.docgeni/site`);
         expect(context.paths.absSiteContentPath).toEqual(`${DEFAULT_SITE_PATH}/src/app/content`);
         expect(context.enableIvy).toBeTruthy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/app/app.config.server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`)).toBeFalsy();
     });
 
     it('should create site with ssg renderMode', async () => {
@@ -76,6 +89,8 @@ describe('#site-plugin', () => {
         expect(buildOptions.server).toBe('src/main.server.ts');
         expect(buildOptions.outputMode).toBe('static');
         expect(buildOptions.ssr).toBeUndefined();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeTruthy();
         const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
         expect(serverRoutes).toContain(`path: '~examples/:name'`);
         expect(serverRoutes).toContain('RenderMode.Client');
@@ -91,6 +106,8 @@ describe('#site-plugin', () => {
         expect(buildOptions.outputMode).toBe('server');
         expect(buildOptions.outputPath.browser).toBe('browser');
         expect(buildOptions.ssr.entry).toBe('src/server.ts');
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeTruthy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeTruthy();
         const serverRoutes = await context.host.readFile(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`);
         expect(serverRoutes).toContain(`path: '~examples/:name'`);
         expect(serverRoutes).toContain('RenderMode.Client');

@@ -16,6 +16,12 @@ interface CopyFile {
     to: string;
 }
 
+/** SSG / SSR 共用的服务端模板文件 */
+const SITE_TEMPLATE_SERVER_FILES = ['**/main.server.ts', '**/app.config.server.ts', '**/app.routes.server.ts'];
+
+/** 仅 SSR 需要的模板文件 */
+const SITE_TEMPLATE_SSR_ONLY_FILES = ['**/server.ts'];
+
 const COPY_FILES: CopyFile[] = [
     {
         from: 'styles.scss',
@@ -114,13 +120,30 @@ export class SiteBuilder {
         };
         this.siteProject = siteProject;
         this.docgeni.paths.setSitePaths(sitePath, siteProject.sourceRoot);
-        await this.docgeni.host.copy(toolkit.path.resolve(__dirname, '../site-template'), sitePath);
+        await this.copySiteTemplate(sitePath);
         await this.writeSiteAngularConfig();
         await this.syncTsconfig();
     }
 
     private getRenderMode() {
         return this.docgeni.config.renderMode || 'csr';
+    }
+
+    private getSiteTemplateCopyExclude(): string[] | undefined {
+        const renderMode = this.getRenderMode();
+        if (renderMode === 'csr') {
+            return [...SITE_TEMPLATE_SERVER_FILES, ...SITE_TEMPLATE_SSR_ONLY_FILES];
+        }
+        if (renderMode === 'ssg') {
+            return SITE_TEMPLATE_SSR_ONLY_FILES;
+        }
+        return undefined;
+    }
+
+    private async copySiteTemplate(sitePath: string) {
+        const siteTemplatePath = toolkit.path.resolve(__dirname, '../site-template');
+        const exclude = this.getSiteTemplateCopyExclude();
+        await this.docgeni.host.copy(siteTemplatePath, sitePath, exclude ? { exclude } : undefined);
     }
 
     private getSiteRenderModeOptions() {
