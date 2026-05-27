@@ -37,7 +37,7 @@ function syncWorkspaceDependencies(packageJson: Record<string, any>, workspaceVe
             if (!latestVersion) {
                 continue;
             }
-            const toVersion = `^${latestVersion}`;
+            const toVersion = `${latestVersion}`;
             if (currentVersion !== toVersion) {
                 toolkit.print.info(`sync ${packageJson['name']} ${field}.${name}: ${currentVersion} -> ${toVersion}`);
                 deps[name] = toVersion;

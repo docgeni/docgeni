@@ -140,9 +140,24 @@ export class SiteBuilder {
         return undefined;
     }
 
+    private async removeExcludedSiteTemplateFiles(sitePath: string, exclude: string[]) {
+        if (!(await this.docgeni.host.exists(sitePath))) {
+            return;
+        }
+        const files = await this.docgeni.host.getFiles(sitePath, { recursively: true });
+        await Promise.all(
+            files
+                .filter((file) => toolkit.utils.matchGlob(file, exclude))
+                .map((file) => this.docgeni.host.delete(toolkit.path.resolve(sitePath, file))),
+        );
+    }
+
     private async copySiteTemplate(sitePath: string) {
         const siteTemplatePath = toolkit.path.resolve(__dirname, '../site-template');
         const exclude = this.getSiteTemplateCopyExclude();
+        if (exclude) {
+            await this.removeExcludedSiteTemplateFiles(sitePath, exclude);
+        }
         await this.docgeni.host.copy(siteTemplatePath, sitePath, exclude ? { exclude } : undefined);
     }
 

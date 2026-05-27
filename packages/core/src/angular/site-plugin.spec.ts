@@ -114,6 +114,26 @@ describe('#site-plugin', () => {
         expect(serverRoutes).toContain('RenderMode.Prerender');
     });
 
+    it('should remove stale server template files when renderMode changes', async () => {
+        updateContextConfig(context, { renderMode: 'ssr' });
+        await context.hooks.beforeRun.promise();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeTruthy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeTruthy();
+
+        updateContextConfig(context, { renderMode: 'csr' });
+        await context.hooks.beforeRun.promise();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/app/app.config.server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/app/app.routes.server.ts`)).toBeFalsy();
+
+        updateContextConfig(context, { renderMode: 'ssg' });
+        await context.hooks.beforeRun.promise();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/server.ts`)).toBeFalsy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/main.server.ts`)).toBeTruthy();
+        expect(await context.host.exists(`${DEFAULT_SITE_PATH}/src/app/app.config.server.ts`)).toBeTruthy();
+    });
+
     it('should use custom site', async () => {
         context.config.siteProjectName = 'customSite';
         await context.hooks.beforeRun.promise();
