@@ -22,6 +22,8 @@ jobs:
     autoApprove:
         if: startsWith(github.head_ref, 'release-auto')
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
         steps:
             - uses: hmarr/auto-approve-action@v3
               with:
