@@ -14,6 +14,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * fix: remove related server files when render mode is changed ([8190d0c](https://github.com/docgeni/docgeni/commit/8190d0c))
 
+## 2.8.0-next.8 (2026-05-27)
+
+* fix: remove baseUrl and moduleResolution from tsconfig.app.json ([0732c78](https://github.com/docgeni/docgeni/commit/0732c78))
+
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
 
