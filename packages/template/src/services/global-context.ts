@@ -30,7 +30,7 @@ export class GlobalContext {
 
     docItems!: NavigationItem[];
 
-    homeMeta!: HomeDocMeta;
+    homeMeta?: HomeDocMeta;
 
     owner!: string;
 
@@ -151,10 +151,10 @@ export class GlobalContext {
                 .get<{
                     navs: NavigationItem[];
                     docs: NavigationItem[];
-                    homeMeta: HomeDocMeta;
+                    homeMeta?: HomeDocMeta;
                 }>(`assets/content/navigations-${this.locale}.json?t=${this.getNowTimestamp()}`)
                 .subscribe({
-                    next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta: HomeDocMeta }) => {
+                    next: (response: { navs: NavigationItem[]; docs: NavigationItem[]; homeMeta?: HomeDocMeta }) => {
                         this.homeMeta = response.homeMeta;
                         this.navs = response.navs;
                         this.docItems = this.sortDocItems(this.navs);

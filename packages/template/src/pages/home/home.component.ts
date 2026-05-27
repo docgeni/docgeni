@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     hasHome = false;
 
     get bannerImgSrc() {
-        const banner = this.global.homeMeta.hero.banner;
+        const banner = this.global.homeMeta?.hero?.banner;
 
         if (banner) {
             if (typeof banner === 'string') {
