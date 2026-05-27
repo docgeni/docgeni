@@ -14,6 +14,7 @@ const PACKAGE_EXPORTS = {
         require: './index.js',
         default: './index.js',
     },
+    './package.json': './package.json',
 };
 
 async function loadWorkspacePackageVersions(): Promise<Record<string, string>> {
