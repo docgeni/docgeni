@@ -15,7 +15,7 @@ on:
 
 jobs:
     autoApprove:
-        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        if: startsWith(github.head_ref, 'release-auto')
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
@@ -25,7 +25,7 @@ jobs:
                   review-message: 'Auto approve sync PRs to auto merge them'
 
     publish:
-        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        if: startsWith(github.head_ref, 'release-auto')
         needs: [autoApprove]
         runs-on: ubuntu-latest
         permissions:
@@ -82,7 +82,7 @@ jobs:
             #     body: '{ "version": "${{ steps.read-version.outputs.prop }}", "name": "@docgeni/cli" }'
 
     autoMerge:
-        if: startsWith(github.head_ref, 'release-auto-docgeni-')
+        if: startsWith(github.head_ref, 'release-auto-')
         needs: [publish]
         runs-on: ubuntu-latest
         permissions:
