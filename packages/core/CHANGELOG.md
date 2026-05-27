@@ -10,6 +10,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * feat: add config navs and extract buildLocalNavs buildLocalNavItems and buildLocalDocItem methods (# ([7b5bf8d](https://github.com/docgeni/docgeni/commit/7b5bf8d)), closes [#691](https://github.com/docgeni/docgeni/issues/691)
 * feat: support custom standalone component for BuiltIn and refactor customize docs/ ([6a55bc6](https://github.com/docgeni/docgeni/commit/6a55bc6))
 
+## 2.8.0-next.7 (2026-05-27)
+
+* fix: remove related server files when render mode is changed ([8190d0c](https://github.com/docgeni/docgeni/commit/8190d0c))
+
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
 
