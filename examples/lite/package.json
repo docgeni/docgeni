@@ -12,7 +12,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^20.3.10",
     "@docgeni/angular": "19.0.0",
-    "@docgeni/cli": "2.5.1",
+    "@docgeni/cli": "2.7.0",
     "@docgeni/template": "2.5.1"
   }
 }
