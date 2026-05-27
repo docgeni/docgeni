@@ -1,11 +1,11 @@
 import { toolkit } from '@docgeni/toolkit';
-import { DocgeniContext } from '../docgeni.interface';
-import { ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '../interfaces';
-import { ascendingSortByOrder, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
-import { DocSourceFile } from './doc-file';
-import { ConfigNavsPreparer } from './navs/config-navs-preparer';
-import { mergeDocsNavs } from './navs/docs-nav-merger';
-import { LocaleNavigationArtifact } from './navs/navigation-types';
+import { DocgeniContext } from '../../docgeni.interface';
+import { ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '../../interfaces';
+import { ascendingSortByOrder, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../../utils';
+import { DocSourceFile } from '../doc-file';
+import { ConfigNavsPreparer } from './config-navs-preparer';
+import { mergeDocsNavs } from './docs-nav-merger';
+import { LocaleNavigationArtifact } from './navigation-types';
 import * as path from 'path';
 
 export class NavsBuilder {

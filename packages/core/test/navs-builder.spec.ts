@@ -1,7 +1,7 @@
 import { toolkit } from '@docgeni/toolkit';
 import { DocgeniContext } from '../src/docgeni.interface';
 import { DocItem } from '../src/interfaces';
-import { NavsBuilder } from './../src/builders/navs-builder';
+import { NavsBuilder } from './../src/builders/navs/navs-builder';
 import { expect } from 'chai';
 
 function generateDocItem(path = toolkit.strings.generateRandomId()): DocItem {
@@ -18,7 +18,7 @@ describe('#navs-builder', () => {
                     title: '',
                     navs: [],
                 },
-            } as DocgeniContext);
+            } as unknown as DocgeniContext);
         });
 
         it('should get correct path with parent and current', () => {
