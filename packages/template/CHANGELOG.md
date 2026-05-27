@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.8.0-next.6 (2026-05-27)
+
+* fix: add dg-example-viewer-inline when example is inline mode ([b7f3a2e](https://github.com/docgeni/docgeni/commit/b7f3a2e))
+* feat: support custom standalone component for BuiltIn and refactor customize docs/ ([6a55bc6](https://github.com/docgeni/docgeni/commit/6a55bc6))
+* docs: merge route-nav and lib-nav to nav-menu ([29a17ce](https://github.com/docgeni/docgeni/commit/29a17ce))
+
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
 
