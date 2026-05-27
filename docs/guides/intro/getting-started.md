@@ -7,7 +7,7 @@ toc: menu
 
 本文介绍如何在现有或新建项目中跑起 Docgeni 文档站。更完整的配置见各指南章节。
 
-# 环境准备
+## 环境准备
 
 确保本地成功安装了 [Node](https://nodejs.org/en/) 和 NPM，Node >= 10.0.0。
 

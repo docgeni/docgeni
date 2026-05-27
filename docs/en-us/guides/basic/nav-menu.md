@@ -118,9 +118,18 @@ Set `isExternal: true` and use a full URL in `path`:
 }
 ```
 
-### Dropdown navigation
+### Dropdown navigation <label>2.8.0+</label>
 
-To group several top-level nav entries under one navbar item, leave the parent `path` empty and list children in `items`. The navbar renders a dropdown; each child keeps its own route.
+To group several top-level entries under one navbar item, set the parent `path` to an empty string and list children in `items`. The navbar treats this as a dropdown: the parent is display-only with no route; each child keeps its own route.
+
+A nav item renders as a dropdown when:
+
+- `path` is `''` (or unset in a way that does not resolve to a routable path)
+- `items` has at least one child
+
+#### Configure in `navs`
+
+Declare the parent and children in `.docgenirc.ts` `navs`. Docs-derived top-level navs are appended by default; with a `null` placeholder, unmatched docs navs insert at that position. Docs navs whose `path` matches a child in `items` are **merged** into that child (subfolders and pages; config fields such as `title` win on conflict).
 
 ```ts
 export default {
@@ -154,6 +163,26 @@ Notes:
 - The parent is display-only and **has no route**, so `path` must be empty (`''` or omitted)
 - Each item in `items` uses the same shape as a regular top-level nav and needs a valid `path`
 - Child items also support `isExternal`, `locales`, and other fields
+
+#### Generate from the `docs` folder
+
+In `full` mode, a **first-level** folder under `docs` can set `path: ""` in its `index.md` front matter. The build emits a top-level nav with an empty `path` and puts subfolders and pages in `items`, which the navbar renders as a dropdown.
+
+Example [`docs/reference/index.md`](../../../reference/index.md):
+
+```markdown
+---
+title: Reference
+path: ""
+order: 30
+---
+```
+
+Subfolders such as `cli` and `manifest` under `reference` become dropdown children; routing follows the same rules as other top-level navs (folder name in Param Case by default, overridable per `index.md`).
+
+Without `path: ""`, the folder becomes a normal top-level nav with its own route (e.g. `path: reference`).
+
+#### External links in a dropdown
 
 External link inside a dropdown:
 
