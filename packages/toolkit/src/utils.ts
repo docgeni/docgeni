@@ -1,6 +1,6 @@
 import { timestamp } from './timestamp';
 import path from 'path';
-import minimatch from 'minimatch';
+import { minimatch, type MinimatchOptions } from 'minimatch';
 import _ from 'lodash';
 
 export function isString(value: any): value is string {
@@ -60,7 +60,7 @@ export function extractExtname(p: string, removeDot = false) {
     return removeDot ? extname.replace('.', '') : extname;
 }
 
-export function matchGlob(target: string, pattern: string | string[], options?: minimatch.IOptions): boolean {
+export function matchGlob(target: string, pattern: string | string[], options?: MinimatchOptions): boolean {
     if (isArray(pattern)) {
         return !!pattern.find((item) => {
             return minimatch(target, item, options);

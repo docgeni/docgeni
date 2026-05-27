@@ -93,7 +93,7 @@ export class DocgeniFsHostImpl implements DocgeniFsHost {
     }
 
     async copy(src: string, dest: string, options?: DocgeniFsCopyOptions): Promise<void> {
-        if (options?.exclude && matchGlob(src, options.exclude)) {
+        if (options?.exclude && matchGlob(src, options.exclude, { dot: true })) {
             return;
         }
         const stat = await this.stat(src);

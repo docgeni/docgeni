@@ -1,4 +1,4 @@
-import { isUndefinedOrNull, keyBy, random, some, sortByOrder, sortByOrderMap, uniq } from './utils';
+import { isUndefinedOrNull, keyBy, matchGlob, random, some, sortByOrder, sortByOrderMap, uniq } from './utils';
 
 describe('#utils', () => {
     describe('isUndefinedOrNull', () => {
@@ -59,6 +59,24 @@ describe('#utils', () => {
             const number = random(1, 100);
             expect(number >= 1).toBe(true);
             expect(number <= 100).toBe(true);
+        });
+    });
+
+    describe('matchGlob', () => {
+        it('should match dot path segment when dot is true', () => {
+            const target = 'a/.d/b';
+            const pattern = 'a/**/b';
+
+            expect(matchGlob(target, pattern)).toBe(false);
+            expect(matchGlob(target, pattern, { dot: true })).toBe(true);
+        });
+
+        it('should match any pattern in array when dot is true', () => {
+            const target = 'a/.d/b';
+            const patterns = ['z/**/w', 'a/**/b'];
+
+            expect(matchGlob(target, patterns)).toBe(false);
+            expect(matchGlob(target, patterns, { dot: true })).toBe(true);
         });
     });
 
