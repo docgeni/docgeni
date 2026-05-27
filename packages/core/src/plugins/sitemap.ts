@@ -1,17 +1,17 @@
 import { Plugin } from './plugin';
 import { DocgeniContext } from '../docgeni.interface';
 import { toolkit } from '@docgeni/toolkit';
-import { DocItem, NavigationItem } from '../interfaces';
+import { DocItem } from '../interfaces';
 
 const PLUGIN_NAME = 'SitemapPlugin';
 
 export default class SitemapPlugin implements Plugin {
-    generateUrls(docgeni: DocgeniContext, docItemsMap: Record<string, NavigationItem[]>): string[] {
+    generateUrls(docgeni: DocgeniContext, docItemsMap: Record<string, DocItem[]>): string[] {
         const allUrls: string[] = [];
         const host = docgeni.config.sitemap.host.endsWith('/') ? docgeni.config.sitemap.host : `${docgeni.config.sitemap.host}/`;
         docgeni.config.locales.forEach((locale) => {
             (docItemsMap[locale.key] || []).forEach((item) => {
-                const path = item.channelPath ? `${item.channelPath}/${item.path}` : item.path;
+                const path = item.path;
                 if (path) {
                     if (allUrls.indexOf(`${host}${path}`) < 0) {
                         allUrls.push(`${host}${path}`);

@@ -4,72 +4,53 @@ import { ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '
 import { ascendingSortByOrder, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
 import { ConfigNavsPreparer } from './navs/config-navs-preparer';
+import { LocaleNavigationArtifact } from './navs/navigation-types';
 import * as path from 'path';
 
 export class NavsBuilder {
     private configNavsPreparer?: ConfigNavsPreparer;
+    private navigationArtifact: Record<string, LocaleNavigationArtifact> = {};
+
     private get config() {
         return this.docgeni.config;
     }
-    private localesDocsNavsMap: Record<
-        string,
-        {
-            navs: NavigationItem[];
-            docItems: DocItem[];
-            homeMeta?: HomeDocMeta;
-        }
-    > = {};
 
     constructor(private docgeni: DocgeniContext) {}
 
     public async run() {
-        this.prepareConfigNavs();
         await this.build();
         await this.emit();
     }
 
     public async emit() {
-        this.ensureConfigNavsPrepared();
-        const localeNavsMap: Record<string, NavigationItem[]> = JSON.parse(JSON.stringify(this.configNavsPreparer!.configNavsByLocale));
-        const localeDocItemsMap: Record<string, DocItem[]> = {};
-        for (const locale of this.docgeni.config.locales) {
-            const navsForLocale = this.getLocaleDocsNavs(locale.key);
-            const docItems = this.getLocaleDocsItems(locale.key);
-            localeDocItemsMap[locale.key] = docItems;
-            let componentDocItems: ComponentDocItem[] = [];
-            localeNavsMap[locale.key].splice(this.configNavsPreparer!.docsNavInsertIndex, 0, ...navsForLocale);
-            this.docgeni.librariesBuilder.libraries.forEach((libraryBuilder) => {
-                componentDocItems = componentDocItems.concat(
-                    libraryBuilder.generateDocsAndNavsForLocale(locale.key, localeNavsMap[locale.key]),
-                );
-            });
+        const navsByLocale: Record<string, NavigationItem[]> = {};
+        const docItemsByLocale: Record<string, DocItem[]> = {};
+
+        for (const localeKey of Object.keys(this.navigationArtifact)) {
+            const artifact = this.navigationArtifact[localeKey];
+            navsByLocale[localeKey] = artifact.navs;
+            docItemsByLocale[localeKey] = artifact.docs;
 
             await this.docgeni.host.writeFile(
-                `${this.docgeni.paths.absSiteAssetsContentPath}/navigations-${locale.key}.json`,
+                `${this.docgeni.paths.absSiteAssetsContentPath}/navigations-${localeKey}.json`,
                 JSON.stringify(
                     {
-                        navs: localeNavsMap[locale.key],
-                        docs: docItems.concat(componentDocItems),
-                        homeMeta: this.localesDocsNavsMap[locale.key].homeMeta,
+                        navs: artifact.navs,
+                        docs: artifact.docs,
+                        homeMeta: artifact.homeMeta,
                     },
                     null,
                     2,
                 ),
             );
         }
+
         await this.docgeni.host.writeFile(
             `${this.docgeni.paths.absSiteContentPath}/navigations.json`,
-            JSON.stringify(localeNavsMap, null, 2),
+            JSON.stringify(navsByLocale, null, 2),
         );
-        this.docgeni.hooks.navsEmitSucceed.call(this, localeDocItemsMap);
-    }
 
-    private getLocaleDocsNavs(locale: string) {
-        return (this.localesDocsNavsMap[locale] && this.localesDocsNavsMap[locale].navs) || [];
-    }
-
-    private getLocaleDocsItems(locale: string) {
-        return (this.localesDocsNavsMap[locale] && this.localesDocsNavsMap[locale].docItems) || [];
+        this.docgeni.hooks.navsEmitSucceed.call(this, docItemsByLocale);
     }
 
     private prepareConfigNavs() {
@@ -84,37 +65,38 @@ export class NavsBuilder {
     }
 
     public async build() {
-        const localeKeys = this.config.locales.map((locale) => {
-            return locale.key;
-        });
+        this.ensureConfigNavsPrepared();
+        this.navigationArtifact = {};
 
-        const localesDocsDataMap: Record<
-            string,
-            {
-                navs: NavigationItem[];
-                docItems: DocItem[];
-                homeMeta?: HomeDocMeta;
-            }
-        > = {};
+        const localeKeys = this.config.locales.map((locale) => locale.key);
+
         for (const locale of this.config.locales) {
+            const artifact: LocaleNavigationArtifact = {
+                locale: locale.key,
+                navs: JSON.parse(JSON.stringify(this.configNavsPreparer!.configNavsByLocale[locale.key])),
+                docs: [],
+            };
+
             const isDefaultLocale = locale.key === this.config.defaultLocale;
             const localeDocsPath = await this.getLocaleDocsPath(locale);
-            localesDocsDataMap[locale.key] = {
-                navs: [],
-                docItems: [],
-            };
             if (await this.docgeni.host.pathExists(localeDocsPath)) {
-                const docItems: DocItem[] = [];
-                const { navs, homeMeta } = await this.buildLocalNavs(localeDocsPath, docItems, isDefaultLocale ? localeKeys : []);
-
-                localesDocsDataMap[locale.key] = {
-                    navs,
-                    docItems,
-                    homeMeta,
-                };
+                const { navs: docsNavs, homeMeta } = await this.buildLocalNavs(
+                    localeDocsPath,
+                    artifact.docs,
+                    isDefaultLocale ? localeKeys : [],
+                );
+                artifact.navs.splice(this.configNavsPreparer!.docsNavInsertIndex, 0, ...docsNavs);
+                artifact.homeMeta = homeMeta;
             }
+
+            let componentDocItems: ComponentDocItem[] = [];
+            this.docgeni.librariesBuilder.libraries.forEach((libraryBuilder) => {
+                componentDocItems = componentDocItems.concat(libraryBuilder.generateDocsAndNavsForLocale(locale.key, artifact.navs));
+            });
+
+            artifact.docs = artifact.docs.concat(componentDocItems);
+            this.navigationArtifact[locale.key] = artifact;
         }
-        this.localesDocsNavsMap = localesDocsDataMap;
     }
 
     private async buildLocalNavs(dirPath: string, docItems: DocItem[], excludeDirs?: string[]) {
