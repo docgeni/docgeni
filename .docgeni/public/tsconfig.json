@@ -1,8 +1,8 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc/site",
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -14,11 +14,8 @@
     "target": "ES2022",
     "module": "preserve",
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
-    ],
-    "types": [
-      "node"
     ],
     "paths": {
       "@docgeni/template": [
@@ -45,7 +42,7 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "src/assets",
-    "test.ts"
+    "src/**/*.spec.ts",
+    "src/assets"
   ]
 }
