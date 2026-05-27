@@ -126,8 +126,8 @@ importers:
                 specifier: 8.1.0
                 version: 8.1.0(eslint@9.9.0(jiti@2.6.1))(typescript@5.9.3)
             '@worktile/pkg-manager':
-                specifier: ^0.2.0-next.4
-                version: 0.2.0-next.4(@types/node@24.12.4)(conventional-changelog-angular@7.0.0)(conventional-commits-filter@5.0.0)(typescript@5.9.3)
+                specifier: ^0.2.0-next.5
+                version: 0.2.0-next.5(@types/node@24.12.4)(conventional-changelog-angular@7.0.0)(conventional-commits-filter@5.0.0)(typescript@5.9.3)
             chai:
                 specifier: ^4.2.0
                 version: 4.5.0
@@ -2376,8 +2376,8 @@ packages:
         peerDependencies:
             vite: ^6.0.0 || ^7.0.0
 
-    '@worktile/pkg-manager@0.2.0-next.4':
-        resolution: { integrity: sha512-rsbGu1lLKg7DnMa+viQMEf86Nb0lU1jeZ9O70X7s92GH5hDj3U9jy4JDP55l437+n6ThNPlUdznB91LYmTZwwQ== }
+    '@worktile/pkg-manager@0.2.0-next.5':
+        resolution: { integrity: sha512-UTdV2k3jra1Y2J4kyI0qvb+vQ28DsilNOSCwRDJpIRiF5MioJ8dPsqTNJUJUXbOFkOxtKKxlnm+vnjB7t3v+Jg== }
         engines: { node: ^12.20.0 || >=14.0.0 }
         hasBin: true
         peerDependencies:
@@ -7234,7 +7234,7 @@ snapshots:
             tslib: 2.8.1
             typescript: 5.9.3
             undici: 7.24.4
-            vite: 7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.100.0)(yaml@2.9.0)
+            vite: 7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.97.3)(yaml@2.9.0)
             watchpack: 2.5.1
         optionalDependencies:
             '@angular/core': 21.2.14(@angular/compiler@21.2.14)(rxjs@7.8.2)(zone.js@0.15.1)
@@ -8851,9 +8851,9 @@ snapshots:
 
     '@vitejs/plugin-basic-ssl@2.1.4(vite@7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.97.3)(yaml@2.9.0))':
         dependencies:
-            vite: 7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.100.0)(yaml@2.9.0)
+            vite: 7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.97.3)(yaml@2.9.0)
 
-    '@worktile/pkg-manager@0.2.0-next.4(@types/node@24.12.4)(conventional-changelog-angular@7.0.0)(conventional-commits-filter@5.0.0)(typescript@5.9.3)':
+    '@worktile/pkg-manager@0.2.0-next.5(@types/node@24.12.4)(conventional-changelog-angular@7.0.0)(conventional-commits-filter@5.0.0)(typescript@5.9.3)':
         dependencies:
             '@docgeni/toolkit': 2.7.0
             '@types/shelljs': 0.8.17
@@ -14061,7 +14061,7 @@ snapshots:
             remove-trailing-separator: 1.1.0
             replace-ext: 1.0.1
 
-    vite@7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.100.0)(yaml@2.9.0):
+    vite@7.3.2(@types/node@24.12.4)(jiti@2.6.1)(less@4.6.4)(sass@1.97.3)(yaml@2.9.0):
         dependencies:
             esbuild: 0.27.3
             fdir: 6.5.0(picomatch@4.0.4)
@@ -14074,7 +14074,7 @@ snapshots:
             fsevents: 2.3.3
             jiti: 2.6.1
             less: 4.6.4
-            sass: 1.100.0
+            sass: 1.97.3
             yaml: 2.9.0
 
     void-elements@2.0.1: {}
