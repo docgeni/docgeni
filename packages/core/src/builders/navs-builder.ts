@@ -4,6 +4,7 @@ import { ComponentDocItem, DocItem, HomeDocMeta, Locale, NavigationItem } from '
 import { ascendingSortByOrder, DOCS_ENTRY_FILE_NAMES, getDocTitle, isEntryDoc } from '../utils';
 import { DocSourceFile } from './doc-file';
 import { ConfigNavsPreparer } from './navs/config-navs-preparer';
+import { mergeDocsNavs } from './navs/docs-nav-merger';
 import { LocaleNavigationArtifact } from './navs/navigation-types';
 import * as path from 'path';
 
@@ -73,20 +74,23 @@ export class NavsBuilder {
         for (const locale of this.config.locales) {
             const artifact: LocaleNavigationArtifact = {
                 locale: locale.key,
-                navs: JSON.parse(JSON.stringify(this.configNavsPreparer!.configNavsByLocale[locale.key])),
+                navs: [],
                 docs: [],
             };
 
             const isDefaultLocale = locale.key === this.config.defaultLocale;
             const localeDocsPath = await this.getLocaleDocsPath(locale);
+            const configNavs = this.configNavsPreparer!.cloneNavsForLocale(locale.key);
             if (await this.docgeni.host.pathExists(localeDocsPath)) {
                 const { navs: docsNavs, homeMeta } = await this.buildLocalNavs(
                     localeDocsPath,
                     artifact.docs,
                     isDefaultLocale ? localeKeys : [],
                 );
-                artifact.navs.splice(this.configNavsPreparer!.docsNavInsertIndex, 0, ...docsNavs);
+                artifact.navs = mergeDocsNavs(configNavs, docsNavs, this.configNavsPreparer!.docsNavInsertIndex);
                 artifact.homeMeta = homeMeta;
+            } else {
+                artifact.navs = configNavs;
             }
 
             let componentDocItems: ComponentDocItem[] = [];

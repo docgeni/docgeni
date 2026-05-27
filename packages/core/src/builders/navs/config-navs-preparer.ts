@@ -8,6 +8,14 @@ export class ConfigNavsPreparer {
 
     constructor(private locales: Locale[]) {}
 
+    cloneNavs(navs: NavigationItem[]): NavigationItem[] {
+        return JSON.parse(JSON.stringify(navs));
+    }
+
+    cloneNavsForLocale(locale: string): NavigationItem[] {
+        return this.cloneNavs(this.configNavsByLocale[locale] || []);
+    }
+
     prepare(rawNavs: Array<NavigationItem | null>): void {
         let navs = rawNavs;
         let docsNavInsertIndex = navs.indexOf(null);
