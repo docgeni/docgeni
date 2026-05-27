@@ -9,6 +9,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * feat: support custom standalone component for BuiltIn and refactor customize docs/ ([6a55bc6](https://github.com/docgeni/docgeni/commit/6a55bc6))
 * docs: merge route-nav and lib-nav to nav-menu ([29a17ce](https://github.com/docgeni/docgeni/commit/29a17ce))
 
+## 2.8.0-next.7 (2026-05-27)
+
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
 
