@@ -1,5 +1,5 @@
 module.exports = {
-    allowBranch: ['master', 'next', 'v1.0.*'],
+    allowBranch: ['master', 'release-auto-*', 'v1.0.*'],
     packages: [
         {
             path: './packages/cli',
