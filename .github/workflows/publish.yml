@@ -1,0 +1,100 @@
+name: Publish Docgeni
+
+on:
+    pull_request:
+        types:
+            - opened
+            - reopened
+    pull_request_review:
+        types:
+            - submitted
+    check_suite:
+        types:
+            - completed
+    status: {}
+
+jobs:
+    autoApprove:
+        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+        steps:
+            - uses: hmarr/auto-approve-action@v3
+              with:
+                  review-message: 'Auto approve sync PRs to auto merge them'
+
+    publish:
+        if: startsWith(github.head_ref, 'release-auto-docgeni')
+        needs: [autoApprove]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.head_ref }}
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 9
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://registry.npmjs.org/
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish (stable)
+              if: startsWith(github.head_ref, 'release-auto-v')
+              run: |
+                  pnpm run pub
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish (next)
+              if: startsWith(github.head_ref, 'release-auto-next-v')
+              run: |
+                  pnpm run pub-next
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Read package.json
+              id: read-version
+              uses: notiz-dev/github-action-json-property@release
+              with:
+                  path: packages/cli/package.json
+                  prop_path: version
+
+            # 如需通知，将 url 替换为你们的 webhook 地址
+            # - name: Send message to webhook
+            #   uses: joelwmale/webhook-action@master
+            #   with:
+            #     url: ${{ secrets.RELEASE_WEBHOOK_URL }}
+            #     body: '{ "version": "${{ steps.read-version.outputs.prop }}", "name": "@docgeni/cli" }'
+
+    autoMerge:
+        if: startsWith(github.head_ref, 'release-auto-docgeni-')
+        needs: [publish]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - name: Auto merge PR
+              uses: pascalgn/automerge-action@v0.15.5
+              env:
+                  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+                  MERGE_METHOD: 'squash'
+                  MERGE_LABELS: ''
+                  MERGE_FORKS: 'false'
+                  MERGE_RETRIES: '20'
+                  MERGE_RETRY_SLEEP: '60000'
