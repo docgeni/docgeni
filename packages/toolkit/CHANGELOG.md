@@ -9,6 +9,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * fix: copy support path contains dot ([d4722a4](https://github.com/docgeni/docgeni/commit/d4722a4))
 
+## 2.8.0-next.8 (2026-05-27)
+
 # [2.7.0](https://github.com/docgeni/docgeni/compare/v2.7.0-next.2...v2.7.0) (2026-04-09)
 
 **Note:** Version bump only for package @docgeni/toolkit
