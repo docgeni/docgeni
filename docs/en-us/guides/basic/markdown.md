@@ -95,7 +95,7 @@ console.log(greeting);
 
 The block shows a language label and copy button. Supported languages depend on your [Prism](https://prismjs.com/) setup.
 
-## Code group
+## Code group <label>2.8.0+</label>
 
 Wrap multiple fenced blocks in a `code-group` container. Add `[Tab label]` after the language on each fence:
 

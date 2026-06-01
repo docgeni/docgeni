@@ -67,6 +67,24 @@ Markdown 文档目录地址，Docgeni 会扫描该目录下的文件夹和 Markd
 
 站点构建输出目录，当`siteProjectName`设置后以自定义站点的输出目录为主，此配置无效。
 
+## renderMode <label>2.8.0+</label>
+- 类型：`csr` | `ssg` | `ssr`
+- 默认：`csr`
+
+配置文档站点的渲染模式，Docgeni 会根据该配置生成对应的 Angular 站点构建选项：
+
+- `csr`：客户端渲染（Client-Side Rendering），页面在浏览器端渲染，构建产物为纯静态文件，适合纯 CDN 部署。
+- `ssg`：静态站点生成（Static Site Generation），构建时预渲染所有文档页面为 HTML，有利于 SEO 与首屏加载。
+- `ssr`：服务端渲染（Server-Side Rendering），需要在 Node.js 环境中运行服务端，适合需要动态服务端能力的场景。
+
+```ts
+module.exports = {
+    renderMode: 'ssg',
+};
+```
+
+> 切换 `renderMode` 后需重新执行 `docgeni build`，Docgeni 会自动同步站点模板与 Angular 构建配置。
+
 ## publicDir
 - 类型：`string`
 - 默认：`.docgeni/public`

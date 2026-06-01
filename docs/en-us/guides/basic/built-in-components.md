@@ -73,7 +73,7 @@ Use `alert` to create a alert box. the type can be `primary`, `info`, `success`,
 
 ```
 
-## Tabs
+## Tabs <label>2.8.0+</label>
 
 Use `tabs` and `tab` to create switchable tab panels. The `label` attribute sets the tab title. The `tabs` element supports a `mode` attribute with `simple` or `code-group` for different styles.
 
@@ -138,7 +138,7 @@ yarn add -D @docgeni/cli
   </tab>
 </tabs>
 
-## CodeGroup
+## CodeGroup <label>2.8.0+</label>
 
 When you need to group multiple code blocks into a single panel, use the CodeGroup syntax, for example:
 

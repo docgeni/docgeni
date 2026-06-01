@@ -72,7 +72,7 @@ order: 50
 
 ```
 
-## Tabs
+## Tabs <label>2.8.0+</label>
 
 使用 `tabs` 与 `tab` 标签创建可切换的 Tab 内容区，`label` 属性为 Tab 标题。`tabs` 支持 `mode` 属性，可选 `simple` 或 `code-group`，分别对应不同的风格。
 
@@ -137,7 +137,7 @@ yarn add -D @docgeni/cli
   </tab>
 </tabs>
 
-## CodeGroup
+## CodeGroup <label>2.8.0+</label>
 需要将多代码块合并成一个分组进行展示时，可以使用 CodeGroup 语法，例如：
 
 <pre><code>:::code-group

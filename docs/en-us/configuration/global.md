@@ -64,6 +64,24 @@ Automatically generated site directory. Docgeni will copy the generated componen
 
 The output directory of site construction. When the `siteProjectName` is set, the output directory of the custom site is the main one. This configuration is invalid.
 
+## renderMode <label>2.8.0+</label>
+- Type: `csr` | `ssg` | `ssr`
+- Default: `csr`
+
+Sets how the documentation site is rendered. Docgeni generates the corresponding Angular build options based on this value:
+
+- `csr`: Client-Side Rendering. Pages render in the browser. The build output is static files only, suitable for CDN deployment.
+- `ssg`: Static Site Generation. All documentation pages are pre-rendered to HTML at build time, which improves SEO and first paint.
+- `ssr`: Server-Side Rendering. Requires a Node.js server at runtime, suitable when you need dynamic server capabilities.
+
+```ts
+module.exports = {
+    renderMode: 'ssg',
+};
+```
+
+> After changing `renderMode`, run `docgeni build` again. Docgeni will sync the site template and Angular build configuration automatically.
+
 ## publicDir
 - Type: `string`
 - Default: `.docgeni/public`

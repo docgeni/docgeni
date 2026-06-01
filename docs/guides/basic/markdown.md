@@ -95,7 +95,7 @@ console.log(greeting);
 
 代码块右上角会显示语言标签与复制按钮。支持的语言取决于 [Prism](https://prismjs.com/) 主题配置。
 
-## 代码组（code-group）
+## 代码组（code-group）<label>2.8.0+</label>
 
 需要将多段代码以 Tab 形式分组展示时，可使用 `code-group` 容器。语法为用 `::: code-group` 包裹多个围栏代码块，在语言标识后用 `[标签名]` 指定 Tab 标题：
 
