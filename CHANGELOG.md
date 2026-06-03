@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.8.0-next.8 (2026-05-27)
+
+* fix: remove baseUrl and moduleResolution from tsconfig.app.json ([0732c78](https://github.com/docgeni/docgeni/commit/0732c78))
+
+## 2.8.0-next.7 (2026-05-27)
+
+* fix: copy support path contains dot ([d4722a4](https://github.com/docgeni/docgeni/commit/d4722a4))
+* fix: remove related server files when render mode is changed ([8190d0c](https://github.com/docgeni/docgeni/commit/8190d0c))
+
 ## 2.8.0-next.6 (2026-05-27)
 
 * fix: add dg-example-viewer-inline when example is inline mode ([b7f3a2e](https://github.com/docgeni/docgeni/commit/b7f3a2e))
@@ -12,14 +21,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * feat: support custom standalone component for BuiltIn and refactor customize docs/ ([6a55bc6](https://github.com/docgeni/docgeni/commit/6a55bc6))
 * docs: merge route-nav and lib-nav to nav-menu ([29a17ce](https://github.com/docgeni/docgeni/commit/29a17ce))
 
-## 2.8.0-next.7 (2026-05-27)
+## 2.8.0-next.5 (2026-05-26)
 
-* fix: copy support path contains dot ([d4722a4](https://github.com/docgeni/docgeni/commit/d4722a4))
-* fix: remove related server files when render mode is changed ([8190d0c](https://github.com/docgeni/docgeni/commit/8190d0c))
+* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
+* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
+* refactor: auto merge app.config.ts from custom module.ts and template app.config ([650dbb0](https://github.com/docgeni/docgeni/commit/650dbb0))
+* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
+* refactor: standalone component ([558bce3](https://github.com/docgeni/docgeni/commit/558bce3))
+* refactor: update some property to signal for NavigationService ([4216247](https://github.com/docgeni/docgeni/commit/4216247))
+* refactor: use inject function ([c454e66](https://github.com/docgeni/docgeni/commit/c454e66))
+* refactor: use signal for navbar and dropdown ([39b34a7](https://github.com/docgeni/docgeni/commit/39b34a7))
 
-## 2.8.0-next.8 (2026-05-27)
+## 2.8.0-next.4 (2026-05-25)
 
-* fix: remove baseUrl and moduleResolution from tsconfig.app.json ([0732c78](https://github.com/docgeni/docgeni/commit/0732c78))
+* build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
+* feat: support code-group markdown syntax ([7a7b730](https://github.com/docgeni/docgeni/commit/7a7b730))
+* feat: support custom markdown plugin ([b5228d4](https://github.com/docgeni/docgeni/commit/b5228d4))
+* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
+* feat: support ts config (#677) ([92ffe48](https://github.com/docgeni/docgeni/commit/92ffe48)), closes [#677](https://github.com/docgeni/docgeni/issues/677)
+* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
+* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
+* refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
+
+# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
+
+
+### Bug Fixes
+
+* remove files from package.json ([039ca96](https://github.com/docgeni/docgeni/commit/039ca963b1cf696997374382da56e05463818025))
+
+# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
 
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
@@ -106,38 +137,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
-# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
-
-# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
-
-
-### Bug Fixes
-
-* remove files from package.json ([039ca96](https://github.com/docgeni/docgeni/commit/039ca963b1cf696997374382da56e05463818025))
-
-## 2.8.0-next.4 (2026-05-25)
-
-* build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
-* feat: support code-group markdown syntax ([7a7b730](https://github.com/docgeni/docgeni/commit/7a7b730))
-* feat: support custom markdown plugin ([b5228d4](https://github.com/docgeni/docgeni/commit/b5228d4))
-* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
-* feat: support ts config (#677) ([92ffe48](https://github.com/docgeni/docgeni/commit/92ffe48)), closes [#677](https://github.com/docgeni/docgeni/issues/677)
-* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
-* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
-* refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
-
-## 2.8.0-next.5 (2026-05-26)
-
-* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
-* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
-* refactor: auto merge app.config.ts from custom module.ts and template app.config ([650dbb0](https://github.com/docgeni/docgeni/commit/650dbb0))
-* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
-* refactor: standalone component ([558bce3](https://github.com/docgeni/docgeni/commit/558bce3))
-* refactor: update some property to signal for NavigationService ([4216247](https://github.com/docgeni/docgeni/commit/4216247))
-* refactor: use inject function ([c454e66](https://github.com/docgeni/docgeni/commit/c454e66))
-* refactor: use signal for navbar and dropdown ([39b34a7](https://github.com/docgeni/docgeni/commit/39b34a7))
 
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 

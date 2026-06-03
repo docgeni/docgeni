@@ -3,11 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.8.0-next.6 (2026-05-27)
+## 2.8.0-next.8 (2026-05-27)
 
 ## 2.8.0-next.7 (2026-05-27)
 
-## 2.8.0-next.8 (2026-05-27)
+## 2.8.0-next.6 (2026-05-27)
+
+## 2.8.0-next.5 (2026-05-26)
+
+## 2.8.0-next.4 (2026-05-25)
+
+* build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
+
+# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
+
+# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
 
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
@@ -64,16 +74,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
-
-# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
-
-## 2.8.0-next.4 (2026-05-25)
-
-* build: use pnpm instead of yarn (#681) ([f067117](https://github.com/docgeni/docgeni/commit/f067117)), closes [#681](https://github.com/docgeni/docgeni/issues/681)
-
-## 2.8.0-next.5 (2026-05-26)
 
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
