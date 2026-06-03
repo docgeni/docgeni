@@ -1,11 +1,11 @@
 ---
-title: API Comment
+title: API Annotations
 path: 'api'
 order: 50
 toc: menu
 ---
 
-Generate API docs by adding comments to classes, interfaces, properties and methods for Component/Directive/Service/Class/Interface.
+Docgeni generates API documentation from JSDoc annotation tags on components, directives, services, pipes, classes, interfaces, properties, and methods.
 
 ```ts
 /**
@@ -40,14 +40,14 @@ export class AlibButtonComponent extends Base implements OnInit {
 - Type: `string`
 - Default: `{ClassName}`
 
-The name of the Component/Directive, which defaults to the class name.
+The name shown in the API docs. For components, directives, services, classes, and interfaces, the class name is used by default. For pipes, the `name` is used.
 
 ## @description
 
 - Type: `string`
 - Default: `null`
 
-Description. If there is a `@description` tag, it is main, otherwise the default comment content will be used as the description.
+The description text. If a `@description` tag is present, its content takes precedence; otherwise the main comment body is used.
 
 ```ts
 /**
@@ -63,7 +63,7 @@ Description. If there is a `@description` tag, it is main, otherwise the default
 - Type: `number`
 - Default: `null`
 
-Sorting of API docs.
+Sort order in the API docs. Lower values appear first.
 
 ## @private
 
@@ -71,17 +71,18 @@ Sorting of API docs.
 - Default: `false`
 - Alias: `internal`
 
-The default API document generation includes：
-- All Component/Directive/Service
-- Properties of @Input and @Output in Component/Directive
-- Public methods in Component/Directive/Service
+The following members are included in the API docs by default:
 
-If the above Component/Directive/Service/Property/Methods are internal and do not need to generate API documents, you need to add `@private` or `@internal`.
+- All components, directives, services, and pipes
+- `@Input` and `@Output` properties on components and directives
+- Public methods on components, directives, services, and pipes
+
+Add `@private` or `@internal` to exclude internal members that should not appear in the docs.
 
 ```ts
 /**
  * General Button Component description.
- * @private 
+ * @private
  */
 ```
 
@@ -91,13 +92,12 @@ If the above Component/Directive/Service/Property/Methods are internal and do no
 - Default: `false`
 - Alias: `publicApi`
 
-By default, all Classes and Interfaces will not generate API documents. If a certain class and interface needs to generate API documents, it is necessary to add `@public` or `@publicApi`.
-
+Classes and interfaces are excluded from the API docs by default. Add `@public` or `@publicApi` to include them.
 
 ```ts
 /**
  * Some Class description.
- * @public 
+ * @public
  */
 export class SomeClass {}
 ```
@@ -107,8 +107,7 @@ export class SomeClass {}
 - Type: `string`
 - Default: `null`
 
-The default value of the property will automatically read the TypeScript assignment statement and be manually set by `@default`.
-
+The default value is inferred from the TypeScript assignment when available. You can also set it explicitly with `@default`.
 
 ```ts
 export class AlibButtonComponent {
@@ -125,7 +124,8 @@ export class AlibButtonComponent {
 - Type: `string`
 - Default: `null`
 
-The type of the attribute will automatically read the TypeScript type definition and manually set the default value through `@type`.
+The property type is inferred from the TypeScript type definition when available. You can also set it explicitly with `@type`.
+
 ```ts
 export class AlibButtonComponent {
   /**
@@ -141,7 +141,7 @@ export class AlibButtonComponent {
 - Type: `string`
 - Default: `null`
 
-The description of parameter for methods
+Describes a method parameter. Format: `@param {type} name description`.
 
 ```ts
 @Injectable({
@@ -150,10 +150,10 @@ The description of parameter for methods
 export class DialogService {
     /**
      * Open a dialog
-     * @param {string} pram1 pram1 desc
-     * @param {number} pram2 pram2 desc
+     * @param {string} param1 param1 desc
+     * @param {number} param2 param2 desc
      * @returns DialogRef
      */
-    open(pram1: string, pram2: number): DialogRef {}
+    open(param1: string, param2: number): DialogRef {}
 }
 ```

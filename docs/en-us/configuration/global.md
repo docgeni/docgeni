@@ -10,69 +10,80 @@ toc: menu
 - Type: `lite`｜`full`
 - Default: `lite`
 
-It's used to set the document display mode. The default is lite mode(left menu + right content), `full` is site mode, including: homepage + head nav + left menu + right content.
+Sets the display mode of the documentation site.
+
+- `lite`: Lite mode with a left menu and right content area
+- `full`: Full site mode with a homepage, top navigation, left menu, and right content area
 
 ## theme
 
 - Type: `default`｜`angular`
 - Default: `default`
 
-Navbar Theme settings:
-- `default`: default theme, navigation background color is white
-- `angular`：`Angular` official website style, default navigation background color is: <code style="color: #3f51b5">#3f51b5</code>, SCSS color variables can be modified to change the navigation background color
+Sets the navbar theme style.
+
+- `default`: Default theme with a white navbar background
+- `angular`: Angular official site style with a default navbar background of <code style="color: #3f51b5">#3f51b5</code>. You can customize it via SCSS variables
 
 ## switchTheme
+
 - Type: `boolean`
 - Default: `false`
 
-Whether to enable the overall theme switching function. When enabled, it supports switching between three themes: `Light Theme`, `Dark Theme`, and `Follow System`.
+Enables light/dark theme switching. When enabled, users can choose light, dark, or system theme.
 
 ## title
 
 - Type: `string`
 - Default: `package.name`
 
-The title of the document. Usually the name of the component library, such as `Docgeni`.
+The site title, usually the component library name, such as `Docgeni`.
 
 ## logoUrl
-- Type: `string`
-- Default: the Logo Url of Docgeni
 
-Logo URL of the library.
+- Type: `string`
+- Default: the default Docgeni logo URL
+
+The logo image URL of the library.
 
 ## repoUrl
+
 - Type: `string`
 - Default: `null`
 
-Github repository URL of the library.
+The GitHub repository URL of the library.
 
 ## docsDir
+
 - Type: `string`
 - Default: `docs`
 
-Markdown document directory URL, Docgeni will scan the folders and Markdown files in this directory, and generate top-level nav entries, menus and page documents according to certain rules.
+The directory that contains Markdown documentation. Docgeni scans folders and Markdown files in this directory and generates top-level navigation, side menus, and page content according to its rules.
 
 ## siteDir
+
 - Type: `string`
 - Default: `.docgeni/site`
 
-Automatically generated site directory. Docgeni will copy the generated component examples and documents to the site. After `siteProjectName` is set, the directory of the custom site is the main one. This configuration is invalid.
+The generated site workspace directory. Docgeni syncs component examples and documentation into this directory. If `siteProjectName` is set, the custom site directory takes precedence and this option is ignored.
 
 ## outputDir
+
 - Type: `string`
 - Default: `dist/docgeni-site`
 
-The output directory of site construction. When the `siteProjectName` is set, the output directory of the custom site is the main one. This configuration is invalid.
+The build output directory of the site. If `siteProjectName` is set, the custom site's output directory takes precedence and this option is ignored.
 
 ## renderMode <label>2.8.0+</label>
+
 - Type: `csr` | `ssg` | `ssr`
 - Default: `csr`
 
 Sets how the documentation site is rendered. Docgeni generates the corresponding Angular build options based on this value:
 
-- `csr`: Client-Side Rendering. Pages render in the browser. The build output is static files only, suitable for CDN deployment.
-- `ssg`: Static Site Generation. All documentation pages are pre-rendered to HTML at build time, which improves SEO and first paint.
-- `ssr`: Server-Side Rendering. Requires a Node.js server at runtime, suitable when you need dynamic server capabilities.
+- `csr`: Client-Side Rendering. Pages render in the browser and the build output is static files only, suitable for CDN deployment
+- `ssg`: Static Site Generation. Documentation pages are pre-rendered to HTML at build time, which improves SEO and first paint
+- `ssr`: Server-Side Rendering. Requires a Node.js server at runtime, suitable when you need dynamic server capabilities
 
 ```ts
 module.exports = {
@@ -83,54 +94,65 @@ module.exports = {
 > After changing `renderMode`, run `docgeni build` again. Docgeni will sync the site template and Angular build configuration automatically.
 
 ## publicDir
+
 - Type: `string`
 - Default: `.docgeni/public`
 
-The configuration directory of the document site, Docgeni will copy the `index.html`, `favicon.ico`, `styles.scss`, `assets`, `.browserslistrc` and `tsconfig.json` files in the folder and overwrite the site directory to implement custom configuration features. For more configuration, please refer to [Customize Site](/guides/advance/customize).
+The directory for custom site assets. Docgeni copies `index.html`, `favicon.ico`, `styles.scss`, `assets`, `.browserslistrc`, and `tsconfig.json` from this directory into the site directory to customize the site appearance and configuration. See [Customize Site](/guides/advance/customize) for details.
 
 ## componentsDir <label>1.1.0+</label>
+
 - Type: `string`
 - Default: `.docgeni/components`
 
-Storage directory for built-in components, see [Custom Built-in Components](/guides/basic/built-in-components#custom-built-in-components) to add custom built-in components.
-
+The directory for custom built-in components. See [Custom Built-in Components](/guides/basic/built-in-components#custom-built-in-components).
 
 ## siteProjectName
+
 - Type: `string`
 - Default: `null`
 
-The project name of Angular custom site. In addition to the default documentation and examples to presentation features, component library development may also need to do some custom features. You can create a new site project in the repository, and then configure the name of the project, Docgeni will copy the generated documents and examples to the project.
+The project name of a custom Angular site. In addition to the default documentation and examples, you can create a site project in the repository and set its name here. Docgeni will sync the generated documentation and examples into that project. See [Customize Site](/guides/advance/customize) for details.
 
 ## toc <label>1.1.0+</label>
+
 - Type: `content | menu | false | hidden`
 - Default: `content`
 
-Display mode of table of content, `content` indicates display on the right side of the content area, `menu` indicates that toc will be displayed in the left menu, other values indicate that the toc is not displayed.
+Controls how the table of contents (TOC) is displayed.
+
+- `content`: shown on the right side of the content area
+- `menu`: shown in the left menu
+- `false` / `hidden`: TOC is hidden
 
 ## footer <label>1.1.0+</label>
+
 - Type: `string`
 - Default: `null`
 
-Site footer content, such as:`Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode`, support HTML tags.
+Site footer content. HTML is supported, for example: `Open-source MIT Licensed | Copyright © 2020-present Powered by PingCode`.
 
 ## defaultLocale
+
 - Type: `string`
 - Default: `en-us`
 
-Default multi-language.
+The default locale, such as `zh-cn` or `en-us`.
 
 ## locales
+
 - Type: `Array<{key: string, name: string}>`
 - Default: `[]`
 
-Supported multi-language, if you don't need to support multiple languages, no configuration, only the `defaultLocale` language will be generated.
-
+The list of supported locales. If you do not need multiple languages, leave this empty and only content for `defaultLocale` will be generated.
 
 ## navs
+
 - Type: `Array<NavigationItem>`
 - Default: `[]`
 
-This configuration item is used to customize the display of the navigation bar and menu, and generally configure some external links and library top-level nav entries, such as:
+Customizes the top navigation bar and menu. It is commonly used for external links and top-level library navigation, for example:
+
 ```ts
 module.exports = {
     ...
@@ -150,13 +172,15 @@ module.exports = {
     ...
 }
 ```
-> Here are some things to note, the automatically recognized top-level nav under the `docs` folder will be inserted at the bottom of the configured `navs` array by default. If you want to control the display position, you can insert a `null` as a placeholder. As the above example, the automatically generated top-level nav will be inserted at the top of the navbar.
+
+> Top-level navigation generated from the `docs` directory is appended to the end of the `navs` array by default. Insert `null` as a placeholder to control the order. In the example above, the generated navigation appears before the GitHub link.
 
 ## libs
+
 - Type: `Array<DocgeniLibrary>`
 - Default: `[]`
 
-Component library configuration, see [configuration/lib](configuration/lib) for the configuration of each library.
+Component library configuration. See [configuration/lib](configuration/lib) for field details.
 
 ```ts
 module.exports = {
@@ -182,27 +206,30 @@ module.exports = {
 }
 ```
 
-## sitemap  <label>2.0+</label>
-- Type: `{host?: string;}`
+## sitemap <label>2.0+</label>
+
+- Type: `{ host?: string }`
 - Default: `null`
 
-Enable the automatic generation of `sitemap.xml`, `hostname` is configuration of url prefix.
+When enabled, `sitemap.xml` is generated during the build. `host` specifies the domain prefix for generated URLs.
 
 ## algolia <label>2.0+</label>
+
 - Type: `DocgeniAlgoliaConfig`
 - Default: `null`
 
-Configure Algolia's [DocSearch]（ https://docsearch.algolia.com ）Service, you need to configure `apikey` and `indexname`.
+Configures Algolia [DocSearch](https://docsearch.algolia.com). You need to provide `apiKey` and `indexName`.
+
 ```js
 {
   algolia: {
-    apiKey: 'Your api key',  // A unique key will be configured for the site in the mail received after the DocSearch service passes the application
-    indexName: 'docgeni',    // name of index 
+    apiKey: 'Your api key',  // Provided in the approval email after applying for DocSearch
+    indexName: 'docgeni',    // Index name
   }
 }
 ```
 
-If your website does not meet DocSearch's [Free Standard](https://docsearch.algolia.com/docs/who-can-apply), you can [deploy crawler](https://docsearch.algolia.com/docs/legacy/run-your-own/) yourself and grab the website information and upload it to the algolia application. You need to provide `appid` for crawling.
+If your site does not meet DocSearch's [free eligibility criteria](https://docsearch.algolia.com/docs/who-can-apply/), you can [run your own crawler](https://docsearch.algolia.com/docs/legacy/run-your-own/) to index the site and upload the data to Algolia. In that case, you also need to provide `appId`.
 
 ```js
 {

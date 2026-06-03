@@ -5,7 +5,7 @@ order: 50
 toc: menu
 ---
 
-通过给组件/指令/服务/管道/类/接口/属性/函数添加注释生成 API 文档。
+Docgeni 通过 JSDoc 注释标签，为组件、指令、服务、管道、类、接口及其属性与方法自动生成 API 文档。
 
 ```ts
 /**
@@ -40,14 +40,14 @@ export class AlibButtonComponent extends Base implements OnInit {
 - 类型：`string`
 - 默认：`{ClassName}`
 
-组件/指令/服务/管道/类/接口的名称，默认 Class 类名，管道默认 name 名。
+API 文档中显示的名称。组件、指令、服务、类、接口默认取类名，管道默认取 `name`。
 
 ## @description
 
 - 类型：`string`
 - 默认：`null`
 
-组件/指令/服务/管道/类/接口的描述，如果有`@description` Tag 以此为主，否则以默认注释内容为描述。
+描述信息。若存在 `@description` 标签，则以其内容为准；否则使用注释正文作为描述。
 
 ```ts
 /**
@@ -63,7 +63,7 @@ export class AlibButtonComponent extends Base implements OnInit {
 - 类型：`number`
 - 默认：`null`
 
-API 文档的排序。
+API 文档的排序权重，数值越小越靠前。
 
 ## @private
 
@@ -71,17 +71,18 @@ API 文档的排序。
 - 默认：`false`
 - 别名：`internal`
 
-默认生成 API 文档的有：
-- 所有的组件/指令/服务/管道
-- 组件/指令的 @Input 和 @Output 属性
-- 组件/指令/服务/管道的公开函数
+以下成员默认会生成 API 文档：
 
-以上的组件/指令/服务/管道/属性/函数如果是内部的，不需要生成 API 文档，添加`@private`或者`@internal`标记。
+- 所有组件、指令、服务、管道
+- 组件/指令的 `@Input` 与 `@Output` 属性
+- 组件、指令、服务、管道的公开方法
+
+若某项为内部实现、无需对外展示，可添加 `@private` 或 `@internal` 将其排除。
 
 ```ts
 /**
  * General Button Component description.
- * @private 
+ * @private
  */
 ```
 
@@ -91,12 +92,12 @@ API 文档的排序。
 - 默认：`false`
 - 别名：`publicApi`
 
-默认所有的 Class 和 Interface 都不会生成 API 文档，如果某个 Class 和 Interface 需要生成 API 文档，需要添加`@public`或者`@publicApi`标记。
+类（Class）与接口（Interface）默认不会生成 API 文档。若需要将其纳入文档，需添加 `@public` 或 `@publicApi` 标记。
 
 ```ts
 /**
  * Some Class description.
- * @public 
+ * @public
  */
 export class SomeClass {}
 ```
@@ -106,7 +107,7 @@ export class SomeClass {}
 - 类型：`string`
 - 默认：`null`
 
-属性的默认值会自动读取 TypeScript 的赋值语句，通过`@default`手动设置默认值。
+属性的默认值会优先从 TypeScript 赋值语句中读取，也可通过 `@default` 手动指定。
 
 ```ts
 export class AlibButtonComponent {
@@ -123,7 +124,7 @@ export class AlibButtonComponent {
 - 类型：`string`
 - 默认：`null`
 
-属性的类型会自动读取 TypeScript 的类型定义，通过`@type`手动设置默认值。
+属性的类型会优先从 TypeScript 类型定义中读取，也可通过 `@type` 手动指定。
 
 ```ts
 export class AlibButtonComponent {
@@ -140,7 +141,7 @@ export class AlibButtonComponent {
 - 类型：`string`
 - 默认：`null`
 
-函数参数描述。
+函数或方法的参数描述，格式为 `@param {类型} 参数名 描述`。
 
 ```ts
 @Injectable({
@@ -149,10 +150,10 @@ export class AlibButtonComponent {
 export class DialogService {
     /**
      * Open a dialog
-     * @param {string} pram1 pram1 desc
-     * @param {number} pram2 pram2 desc
+     * @param {string} param1 param1 desc
+     * @param {number} param2 param2 desc
      * @returns DialogRef
      */
-    open(pram1: string, pram2: number): DialogRef {}
+    open(param1: string, param2: number): DialogRef {}
 }
 ```
