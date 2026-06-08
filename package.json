@@ -106,7 +106,7 @@
     "@typescript-eslint/eslint-plugin": "8.1.0",
     "@typescript-eslint/experimental-utils": "5.62.0",
     "@typescript-eslint/parser": "8.1.0",
-    "@worktile/pkg-manager": "^0.2.0-next.6",
+    "@worktile/pkg-manager": "^0.2.0-next.8",
     "conventional-changelog-angular": "^8.3.1",
     "chai": "^4.2.0",
     "coveralls": "^3.1.1",
