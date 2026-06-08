@@ -131,9 +131,6 @@ importers:
             chai:
                 specifier: ^4.2.0
                 version: 4.5.0
-            conventional-changelog-angular:
-                specifier: ^8.3.1
-                version: 8.3.1
             coveralls:
                 specifier: ^3.1.1
                 version: 3.1.1
