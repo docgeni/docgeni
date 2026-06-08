@@ -3,15 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.8.0-next.8 (2026-05-27)
+
+## 2.8.0-next.7 (2026-05-27)
+
 ## 2.8.0-next.6 (2026-05-27)
 
 * fix: add dg-example-viewer-inline when example is inline mode ([b7f3a2e](https://github.com/docgeni/docgeni/commit/b7f3a2e))
 * feat: support custom standalone component for BuiltIn and refactor customize docs/ ([6a55bc6](https://github.com/docgeni/docgeni/commit/6a55bc6))
 * docs: merge route-nav and lib-nav to nav-menu ([29a17ce](https://github.com/docgeni/docgeni/commit/29a17ce))
 
-## 2.8.0-next.7 (2026-05-27)
+## 2.8.0-next.5 (2026-05-26)
 
-## 2.8.0-next.8 (2026-05-27)
+* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
+* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
+* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
+* refactor: standalone component ([558bce3](https://github.com/docgeni/docgeni/commit/558bce3))
+* refactor: update some property to signal for NavigationService ([4216247](https://github.com/docgeni/docgeni/commit/4216247))
+* refactor: use inject function ([c454e66](https://github.com/docgeni/docgeni/commit/c454e66))
+* refactor: use signal for navbar and dropdown ([39b34a7](https://github.com/docgeni/docgeni/commit/39b34a7))
+
+## 2.8.0-next.4 (2026-05-25)
+
+* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
+* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
+* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
+* refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
+
+# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
+
+# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
 
 # [2.8.0-next.0](https://github.com/docgeni/docgeni/compare/v2.7.0...v2.8.0-next.0) (2026-05-23)
 
@@ -88,27 +109,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-# [2.8.0-next.2](https://github.com/docgeni/docgeni/compare/v2.8.0-next.1...v2.8.0-next.2) (2026-05-23)
-
-# [2.8.0-next.3](https://github.com/docgeni/docgeni/compare/v2.8.0-next.2...v2.8.0-next.3) (2026-05-23)
-
-## 2.8.0-next.4 (2026-05-25)
-
-* feat: support sub channel (#680) ([d8e9911](https://github.com/docgeni/docgeni/commit/d8e9911)), closes [#680](https://github.com/docgeni/docgeni/issues/680)
-* refactor: add isPlatformBrowser and renderMode ([1b1482b](https://github.com/docgeni/docgeni/commit/1b1482b))
-* refactor: standalone bootstrap ([ff452d9](https://github.com/docgeni/docgeni/commit/ff452d9))
-* refactor: update background of tab-panels to variables.$dg-bg-color ([8659d05](https://github.com/docgeni/docgeni/commit/8659d05))
-
-## 2.8.0-next.5 (2026-05-26)
-
-* feat: support renderMode: 'ssg' (#688) ([697b752](https://github.com/docgeni/docgeni/commit/697b752)), closes [#688](https://github.com/docgeni/docgeni/issues/688)
-* feat: support ssr ([f3f4a54](https://github.com/docgeni/docgeni/commit/f3f4a54))
-* refactor: remove channel component and set doc path as full path ([6a9c43b](https://github.com/docgeni/docgeni/commit/6a9c43b))
-* refactor: standalone component ([558bce3](https://github.com/docgeni/docgeni/commit/558bce3))
-* refactor: update some property to signal for NavigationService ([4216247](https://github.com/docgeni/docgeni/commit/4216247))
-* refactor: use inject function ([c454e66](https://github.com/docgeni/docgeni/commit/c454e66))
-* refactor: use signal for navbar and dropdown ([39b34a7](https://github.com/docgeni/docgeni/commit/39b34a7))
 
 ## [2.5.1](https://github.com/docgeni/docgeni/compare/v2.5.0...v2.5.1) (2025-10-15)
 
