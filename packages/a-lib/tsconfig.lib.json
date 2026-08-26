@@ -20,7 +20,6 @@
     "enableIvy": true
   },
   "exclude": [
-    "src/test.ts",
     "**/*.spec.ts",
     "**/examples/**/*"
   ]

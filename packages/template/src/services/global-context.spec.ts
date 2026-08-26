@@ -23,7 +23,12 @@ describe('GlobalContext', () => {
         mocks: [],
     });
 
-    function createGlobalContext(config: Partial<DocgeniSiteConfig>, options?: { url?: string }) {
+    function createGlobalContext(
+        config: Partial<DocgeniSiteConfig>,
+        options?: {
+            url?: string;
+        },
+    ) {
         TestBed.resetTestingModule();
         TestBed.configureTestingModule({
             imports: [],
@@ -144,8 +149,8 @@ describe('GlobalContext', () => {
     it('should get navigations success', () => {
         spectator = createService();
         const mockNowTimestamp = new Date().getTime();
-        const getNowTimestampSyp = spyOn(spectator.service, 'getNowTimestamp');
-        getNowTimestampSyp.and.returnValue(mockNowTimestamp);
+        const getNowTimestampSyp = vi.spyOn(spectator.service, 'getNowTimestamp');
+        getNowTimestampSyp.mockReturnValue(mockNowTimestamp);
         spectator.service.initialize().then((result) => {});
         const req = spectator.expectOne(`assets/content/navigations-zh-cn.json?t=${mockNowTimestamp}`, HttpMethod.GET);
 

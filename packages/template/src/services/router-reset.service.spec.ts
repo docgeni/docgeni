@@ -119,7 +119,7 @@ describe('router-reset.service', () => {
             const route = routes.find((route) => {
                 return route.path === path;
             });
-            expect(route).toBeTruthy(`${path} route is not found`);
+            expect(route, `${path} route is not found`).toBeTruthy();
         });
     }
 });
