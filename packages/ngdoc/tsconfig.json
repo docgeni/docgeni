@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "./lib",
     "alwaysStrict": true,
-    "rootDir": "src",
-    "baseUrl": "."
+    "rootDir": "src"
   },
   "exclude": [
     "node_modules",

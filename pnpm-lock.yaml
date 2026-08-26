@@ -426,8 +426,8 @@ importers:
         specifier: 12.1.0
         version: 12.1.0
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/template:
     dependencies:

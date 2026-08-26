@@ -1,0 +1,23 @@
+{
+  "extends": "./packages/tsconfig-base.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "rootDir": ".",
+    "noEmit": true,
+    "types": ["node", "jasmine"]
+  },
+  "include": [
+    "test/**/*.ts",
+    "packages/cli/**/*.ts",
+    "packages/core/**/*.ts",
+    "packages/toolkit/**/*.ts",
+    "packages/ngdoc/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/lib/**",
+    "packages/core/src/site-template/**"
+  ]
+}
