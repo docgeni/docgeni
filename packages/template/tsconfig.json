@@ -5,7 +5,9 @@
     "target": "es2015",
     "declaration": true,
     "strict": true,
-    "types": [],
+    "types": [
+      "vitest/globals"
+    ],
     "lib": [
       "dom",
       "es2018"

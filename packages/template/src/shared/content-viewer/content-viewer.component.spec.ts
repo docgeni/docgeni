@@ -1,4 +1,3 @@
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { createComponentFactory, createHostFactory, Spectator, SpectatorHost, createHttpFactory } from '@ngneat/spectator';
@@ -57,21 +56,23 @@ describe('#content-viewer', () => {
         expect(spectator.element.innerHTML).toEqual('<div>content</div>');
     });
 
-    it('should emit contentRendered when fetch content success by url', fakeAsync(() => {
+    it('should emit contentRendered when fetch content success by url', async () => {
+        vi.useFakeTimers();
         const url = '/test';
         const httpTestingController = spectator.inject(HttpTestingController);
         spectator.setInput('url', url);
-        const contentRenderedSpy = jasmine.createSpy('contentRendered spy');
+        const contentRenderedSpy = vi.fn().mockName('contentRendered spy');
         spectator.output('contentRendered').subscribe(contentRenderedSpy);
         const req = httpTestingController.expectOne(url);
         expect(req.request.method).toEqual('GET');
         expect(req.request.responseType).toEqual('text');
         req.flush('<div>content</div>');
-        flush();
+        await vi.runAllTimersAsync();
         httpTestingController.verify();
         expect(contentRenderedSpy).toHaveBeenCalled();
         expect(contentRenderedSpy).toHaveBeenCalledWith(spectator.element);
-    }));
+        vi.useRealTimers();
+    });
 
     it('should display error content fetch content fail', () => {
         const url = '/test';
@@ -85,10 +86,10 @@ describe('#content-viewer', () => {
             statusText: "remote content can't been load",
         });
         httpTestingController.verify();
-        expect(spectator.element.innerHTML).toEqual(`Failed to load document: /test. Error: remote content can't been load`);
+        expect(spectator.element.textContent).toEqual(`Failed to load document: /test. Error: remote content can't been load`);
     });
 
-    it('should render built-in component success', fakeAsync(() => {
+    it('should render built-in component success', async () => {
         const url = '/test';
         const httpTestingController = spectator.inject(HttpTestingController);
         spectator.setInput('url', url);
@@ -97,5 +98,5 @@ describe('#content-viewer', () => {
         req.flush('<div><my-label type="primary">label1</my-label></div>');
         httpTestingController.verify();
         expect(spectator.element.innerHTML).toEqual('<div><my-label type="primary">my-label label1</my-label></div>');
-    }));
+    });
 });

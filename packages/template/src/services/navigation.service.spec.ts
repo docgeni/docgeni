@@ -227,7 +227,7 @@ describe('NavigationService', () => {
             expect(channel).toBeTruthy();
             expect(channel.path).toEqual('guides');
             expect(nestedSpectator.service.channels()).toEqual([
-                jasmine.objectContaining({
+                expect.objectContaining({
                     path: 'guides',
                     title: 'Guide',
                 }),
@@ -331,7 +331,7 @@ describe('NavigationService', () => {
         const docItem = spectator.service.getDocItemByPath('components/button');
 
         expect(docItem).toEqual(
-            jasmine.objectContaining({
+            expect.objectContaining({
                 id: 'button',
                 title: 'Button',
                 subtitle: '按钮',
@@ -345,7 +345,7 @@ describe('NavigationService', () => {
         const bDocItem = spectator.service.getDocItemByPath('b-components/button');
 
         expect(bDocItem).toEqual(
-            jasmine.objectContaining({
+            expect.objectContaining({
                 id: 'button',
                 title: 'Button',
                 subtitle: '按钮',

@@ -105,7 +105,7 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     /** Show an error that occurred when fetching a document. */
     showError(url: string, error: HttpErrorResponse) {
         console.log(error);
-        this.elementRef.nativeElement.innerText = `Failed to load document: ${url}. Error: ${error.statusText}`;
+        this.elementRef.nativeElement.textContent = `Failed to load document: ${url}. Error: ${error.statusText}`;
     }
 
     private clearLiveExamples() {

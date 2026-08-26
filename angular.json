@@ -18,20 +18,19 @@
           "configurations": {
             "production": {
               "tsConfig": "packages/template/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/template/tsconfig.lib.json"
             }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "inlineStyleLanguage": "scss",
             "tsConfig": "packages/template/tsconfig.spec.json",
-            "codeCoverage": true,
-            "karmaConfig": "packages/template/karma.conf.js"
+            "runner": "vitest",
+            "coverage": true,
+            "setupFiles": ["packages/template/src/test-setup.ts"]
           }
         }
       }
@@ -51,15 +50,17 @@
           "configurations": {
             "production": {
               "tsConfig": "packages/a-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/a-lib/tsconfig.lib.json"
             }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "packages/a-lib/src/test.ts",
             "tsConfig": "packages/a-lib/tsconfig.spec.json",
-            "karmaConfig": "packages/a-lib/karma.conf.js"
+            "runner": "vitest"
           }
         }
       }

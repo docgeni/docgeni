@@ -1,4 +1,3 @@
-import { fakeAsync, flush } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { GlobalContext } from '../../services/global-context';
@@ -6,6 +5,12 @@ import { SearchService } from '../../services/search.service';
 import { SearchComponent } from './search.component';
 
 describe('#search', () => {
+    beforeEach(() => {
+        vi.useFakeTimers({ advanceTimeDelta: 1, shouldAdvanceTime: true });
+    });
+    afterEach(() => {
+        vi.useRealTimers();
+    });
     let spectator: Spectator<SearchComponent>;
     const createComponent = createComponentFactory({
         component: SearchComponent,
@@ -22,14 +27,19 @@ describe('#search', () => {
                 useValue: {
                     hasAlgolia: false,
                     result: [],
-                    initSearch: jasmine.createSpy('initSearch'),
-                    trackByFn: (index: number, item: { id: string }) => item.id || index,
+                    initSearch: vi.fn().mockName('initSearch'),
+                    trackByFn: (
+                        index: number,
+                        item: {
+                            id: string;
+                        },
+                    ) => item.id || index,
                 },
             },
             {
                 provide: Router,
                 useValue: {
-                    navigateByUrl: jasmine.createSpy('navigateByUrl'),
+                    navigateByUrl: vi.fn().mockName('navigateByUrl'),
                 },
             },
         ],
@@ -67,7 +77,7 @@ describe('#search', () => {
         expect(getResultsContainer().classList.contains('is-searching')).toBe(true);
     });
 
-    it('should keep results open when a trailing Enter is fired after compositionend', fakeAsync(() => {
+    it('should keep results open when a trailing Enter is fired after compositionend', async () => {
         spectator.focus('.search');
         const input = getInput();
         input.value = '介绍';
@@ -76,8 +86,8 @@ describe('#search', () => {
         input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
         spectator.detectChanges();
         expect(getResultsContainer().classList.contains('is-searching')).toBe(true);
-        flush();
-    }));
+        await vi.runAllTimersAsync();
+    });
 
     it('should prevent default on results mousedown to keep input focus', () => {
         spectator.focus('.search');
