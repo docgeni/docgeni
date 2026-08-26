@@ -18,5 +18,5 @@ jobs:
                       - 'node_modules'
             - run: pnpm lint
             - run: pnpm test-coverage
-            - run: pnpm test-template --no-watch
+            - run: pnpm test-template --no-watch --no-progress --browsers=ChromeHeadlessCI
             - run: pnpm report-coverage
