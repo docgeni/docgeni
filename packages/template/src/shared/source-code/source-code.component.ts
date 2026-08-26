@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild, computed, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, computed, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ContentRenderer } from '../content-renderer';
 import { CopyComponent } from '../copy/copy.component';
 
@@ -9,6 +9,7 @@ import { CopyComponent } from '../copy/copy.component';
     host: {
         class: 'dg-source-code',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CopyComponent],
 })
 export class SourceCodeComponent extends ContentRenderer implements OnInit {

@@ -1,5 +1,5 @@
 import { Location, NgClass } from '@angular/common';
-import { Component, OnInit, HostBinding, HostListener, inject } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { IconComponent } from '../icon/icon.component';
 
@@ -9,6 +9,7 @@ import { IconComponent } from '../icon/icon.component';
     host: {
         class: 'dg-locales-selector',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgClass, IconComponent],
 })
 export class LocalesSelectorComponent implements OnInit {

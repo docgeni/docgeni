@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Foo Component
@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
     selector: 'alib-foo',
     template: ` <ng-content></ng-content> `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
 })
 export class AlibFooComponent implements OnInit {

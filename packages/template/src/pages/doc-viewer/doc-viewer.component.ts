@@ -1,4 +1,4 @@
-import { Component, effect, inject, NgModuleFactory, OnInit, signal, Type, ViewChild } from '@angular/core';
+import { Component, effect, inject, NgModuleFactory, OnInit, signal, Type, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
 import { NavigationService } from '../../services/public-api';
@@ -21,6 +21,7 @@ import { IsComponentDocPipe } from '../../shared/pipes/nav.pipe';
         '[class.dg-doc-viewer--single]': 'isSingle()',
         '[class.dg-doc-viewer--toc]': 'hasContentToc()',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         ComponentViewerComponent,
         DocHeaderComponent,
@@ -98,6 +99,7 @@ export class DocViewerComponent implements OnInit {
 
 @Component({
     selector: 'doc-viewer-home',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '',
 })
 export class DocViewerHomeComponent {

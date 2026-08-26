@@ -1,5 +1,5 @@
 import { NavigationService } from './../../services/navigation.service';
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, merge, of } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,6 +17,7 @@ import { IsModeLitePipe, IsModeFullPipe } from '../../shared/pipes/mode.pipe';
         '[class.dg-scroll-container]': "global.config.mode === 'lite' || !!navigationService.channel()",
         '[class.dg-sidebar-show]': 'navigationService.showSidebar()',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NavbarComponent, SidebarComponent, RouterOutlet, IsModeFullPipe],
 })
 export class ActualRootComponent {
@@ -56,6 +57,7 @@ export class ActualRootComponent {
     selector: 'dg-root',
     template: '<router-outlet></router-outlet>',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet],
 })
 export class RootComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, HostListener, inject } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { DocgeniTheme } from '../../interfaces';
 import { NgClass } from '@angular/common';
@@ -8,6 +8,7 @@ import { IconComponent } from '../icon/icon.component';
     selector: 'dg-themes-selector',
     templateUrl: './themes-selector.component.html',
     imports: [NgClass, IconComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-themes-selector',
     },

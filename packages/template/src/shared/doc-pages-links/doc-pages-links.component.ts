@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { TranslatePipe } from '../pipes/translate.pipe';
     host: {
         class: 'dg-pages-link',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink, IconComponent, TranslatePipe],
 })
 export class DocPagesLinksComponent implements OnInit {

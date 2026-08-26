@@ -12,6 +12,7 @@ import {
     input,
     model,
     output,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Directive()
@@ -33,6 +34,7 @@ class Base {
     host: {
         class: 'dg-btn',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class AlibButtonComponent extends Base implements OnInit {

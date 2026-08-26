@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, NgZone, ElementRef, inject, signal } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { ApiDeclaration } from '../../../interfaces';
@@ -15,6 +15,7 @@ import { PropertyNamePipe } from '../../../shared/pipes/property-name.pipe';
     host: {
         class: 'dg-component-api',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TableOfContentsComponent, PropertyNamePipe],
 })
 export class ComponentApiComponent implements OnInit {

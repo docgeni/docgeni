@@ -11,6 +11,7 @@ import {
     Type,
     ɵNgModuleFactory,
     inject,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import { LiveExample } from '../../interfaces/example';
 import { ExampleLoader } from '../../services/example-loader';
@@ -19,6 +20,7 @@ import { NgComponentOutlet } from '@angular/common';
 @Component({
     selector: 'dg-example-renderer, [dgExampleRenderer]',
     templateUrl: './example-renderer.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgComponentOutlet],
 })
 export class ExampleRendererComponent implements OnInit {

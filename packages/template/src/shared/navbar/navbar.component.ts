@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, signal, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationService, GlobalContext } from '../../services/public-api';
 import { LogoComponent } from '../logo/logo.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -25,6 +25,7 @@ import { IsModeFullPipe } from '../pipes/mode.pipe';
         ThemesSelectorComponent,
         IsModeFullPipe,
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-navbar',
         '[class.show]': 'showNav()',

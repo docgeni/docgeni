@@ -923,7 +923,7 @@ describe('ng-parser', () => {
                             {
                                 name: 'id',
                                 description: '',
-                                type: 'string',
+                                type: 'string | undefined',
                             },
                         ],
                         returnValue: {
@@ -1028,7 +1028,7 @@ export abstract class DialogRef<T = unknown> extends AbstractDialogRef<T> {
                             {
                                 name: 'id',
                                 description: '',
-                                type: 'string',
+                                type: 'string | undefined',
                             },
                         ],
                         returnValue: {

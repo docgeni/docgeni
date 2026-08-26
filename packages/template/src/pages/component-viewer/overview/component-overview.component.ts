@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentViewerComponent } from '../component-viewer.component';
 import { GlobalContext } from '../../../services/public-api';
 import { TableOfContentsComponent } from '../../../shared/toc/toc.component';
@@ -10,6 +10,7 @@ import { ContentViewerComponent } from '../../../shared/content-viewer/content-v
     host: {
         class: 'dg-component-overview',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ContentViewerComponent, TableOfContentsComponent],
 })
 export class ComponentOverviewComponent implements OnInit {

@@ -3,7 +3,6 @@ import {
     OnInit,
     ElementRef,
     ApplicationRef,
-    ComponentFactoryResolver,
     Injector,
     ViewContainerRef,
     NgZone,
@@ -32,7 +31,6 @@ import { TocService } from '../../services/toc.service';
 export class ContentViewerComponent extends ContentRenderer implements OnInit, OnDestroy {
     elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
     private appRef = inject(ApplicationRef);
-    private componentFactoryResolver = inject(ComponentFactoryResolver);
     private injector = inject(Injector);
     private viewContainerRef = inject(ViewContainerRef);
     private ngZone = inject(NgZone);
@@ -70,10 +68,9 @@ export class ContentViewerComponent extends ContentRenderer implements OnInit, O
     private loadComponents(selector: string, componentClass: Type<unknown>, replace: boolean = false) {
         const exampleElements = this.elementRef.nativeElement.querySelectorAll(selector);
         Array.prototype.slice.call(exampleElements).forEach((element: Element) => {
-            const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector, [
-                element.childNodes as any,
-            ]);
-            const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
+            const projectableNodes = [Array.from(element.childNodes)];
+            const portalHost = new DomPortalOutlet(element, this.appRef, this.injector, projectableNodes);
+            const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef, undefined, projectableNodes);
             const exampleViewerRef = portalHost.attach<any>(examplePortal, replace);
             const compMetadata = reflectComponentType(componentClass);
             const inputsOfKey =

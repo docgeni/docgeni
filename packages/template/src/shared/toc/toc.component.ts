@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostBinding, input, signal, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostBinding, input, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LocationStrategy, AsyncPipe } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -12,6 +12,7 @@ let OFFSET = 60;
     selector: 'dg-toc',
     templateUrl: './toc.component.html',
     imports: [AsyncPipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-toc',
         '[class.dg-d-none]': 'hideToc()',

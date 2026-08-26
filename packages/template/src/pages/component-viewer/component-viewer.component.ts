@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, input } from '@angular/core';
+import { Component, OnInit, HostBinding, input, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentDocItem } from '../../interfaces/public-api';
 import { DocHeaderComponent } from '../../shared/doc-header/doc-header.component';
 import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
@@ -11,6 +11,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
     host: {
         class: 'dg-component-viewer',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DocHeaderComponent, RouterLinkActive, RouterLink, RouterOutlet, DocMetaComponent, TranslatePipe],
 })
 export class ComponentViewerComponent implements OnInit {
@@ -24,6 +25,7 @@ export class ComponentViewerComponent implements OnInit {
 @Component({
     selector: 'dg-component-empty',
     template: ` <p>Current component has not been documented.</p> `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-component-empty',
     },

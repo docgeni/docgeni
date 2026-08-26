@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageTitleService } from '../../services/page-title.service';
 import { ExampleRendererComponent } from '../../shared/example-renderer/example-renderer.component';
@@ -6,6 +6,7 @@ import { ExampleRendererComponent } from '../../shared/example-renderer/example-
 @Component({
     selector: 'dg-example-isolated-viewer',
     templateUrl: './example.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ExampleRendererComponent],
 })
 export class ExampleIsolatedViewerComponent implements OnInit {

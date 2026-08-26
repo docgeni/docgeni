@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Layout container component. it is required that all child components should be placed inside.
@@ -8,6 +8,7 @@ import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@an
     selector: 'alib-layout, [alibLayout]',
     template: ` <ng-content></ng-content> `,
     exportAs: 'alibLayout',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class AlibLayoutComponent implements OnInit {
@@ -37,6 +38,7 @@ export class AlibLayoutComponent implements OnInit {
     selector: 'alib-sidebar, [alibSidebar]',
     template: ` <ng-content></ng-content> `,
     exportAs: 'alibSidebar',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class AlibSidebarComponent implements OnInit {

@@ -14,7 +14,8 @@
     "styles": null,
     "exportAs": null,
     "standalone": true,
-    "properties": []
+    "properties": [],
+    "methods": []
   },
   {
     "type": "component",
@@ -33,9 +34,7 @@
     "standalone": true,
     "properties": [
       {
-        "kind": "Input",
         "name": "thyType",
-        "aliasName": "thyTypeAlias",
         "type": {
           "name": "\"primary\" | \"info\" | \"success\"",
           "options": [
@@ -57,12 +56,12 @@
               }
             ]
           }
-        }
+        },
+        "kind": "Input",
+        "aliasName": "thyTypeAlias"
       },
       {
-        "kind": "Input",
         "name": "thySize",
-        "aliasName": "",
         "type": {
           "name": "ButtonSize",
           "options": [
@@ -87,36 +86,36 @@
               }
             ]
           }
-        }
+        },
+        "kind": "Input",
+        "aliasName": ""
       },
       {
-        "kind": "Input",
         "name": "thyLoading",
-        "aliasName": "",
         "type": {
           "name": "boolean",
           "options": null
         },
         "description": "",
         "default": null,
-        "tags": {}
+        "tags": {},
+        "kind": "Input",
+        "aliasName": ""
       },
       {
-        "kind": "Output",
         "name": "thyLoadingEvent",
-        "aliasName": "",
         "type": {
           "name": "EventEmitter<boolean>",
           "options": null
         },
         "description": "Loading Event",
         "default": "",
-        "tags": {}
+        "tags": {},
+        "kind": "Output",
+        "aliasName": ""
       },
       {
-        "kind": "ContentChild",
         "name": "templateRef",
-        "aliasName": "template",
         "type": {
           "name": "TemplateRef",
           "options": null,
@@ -134,9 +133,12 @@
               }
             ]
           }
-        }
+        },
+        "kind": "ContentChild",
+        "aliasName": "template"
       }
-    ]
+    ],
+    "methods": []
   },
   {
     "type": "service",
@@ -178,7 +180,8 @@
           }
         ],
         "returnValue": {
-          "type": "void"
+          "type": "void",
+          "description": ""
         },
         "description": "Log info message"
       },
@@ -192,7 +195,8 @@
           }
         ],
         "returnValue": {
-          "type": "void"
+          "type": "void",
+          "description": ""
         },
         "description": "method1重载方法1"
       },
@@ -211,7 +215,8 @@
           }
         ],
         "returnValue": {
-          "type": "void"
+          "type": "void",
+          "description": ""
         },
         "description": "method1重载方法2"
       },
@@ -230,7 +235,8 @@
           }
         ],
         "returnValue": {
-          "type": "void"
+          "type": "void",
+          "description": ""
         },
         "description": "method1重载方法3"
       },
@@ -263,7 +269,8 @@
     "styles": null,
     "exportAs": null,
     "standalone": true,
-    "properties": []
+    "properties": [],
+    "methods": []
   },
   {
     "type": "interface",
@@ -320,11 +327,12 @@
           {
             "name": "id",
             "description": "",
-            "type": "string"
+            "type": "string | undefined"
           }
         ],
         "returnValue": {
-          "type": "void"
+          "type": "void",
+          "description": ""
         },
         "description": "Close dialog"
       }

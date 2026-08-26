@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
@@ -16,28 +15,28 @@
     "module": "preserve",
     "paths": {
       "@docgeni/template": [
-        "packages/template/src/public-api.ts"
+        "./packages/template/src/public-api.ts"
       ],
       "@docgeni/template/*": [
-        "packages/template/src/*"
+        "./packages/template/src/*"
       ],
       "@docgeni/toolkit": [
-        "packages/toolkit/src/index.ts"
+        "./packages/toolkit/src/index.ts"
       ],
       "@docgeni/toolkit/*": [
-        "packages/toolkit/src/*"
+        "./packages/toolkit/src/*"
       ],
       "@docgeni/core": [
-        "packages/core/src/index.ts"
+        "./packages/core/src/index.ts"
       ],
       "@docgeni/core/*": [
-        "packages/core/src/*"
+        "./packages/core/src/*"
       ],
       "@docgeni/alib": [
-        "packages/a-lib/public-api.ts"
+        "./packages/a-lib/public-api.ts"
       ],
       "@docgeni/alib/*": [
-        "packages/a-lib/*"
+        "./packages/a-lib/*"
       ]
     },
     "useDefineForClassFields": false
