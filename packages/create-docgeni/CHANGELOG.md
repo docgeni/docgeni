@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.9](https://github.com/docgeni/docgeni/compare/v2.8.0-next.5...v2.8.0-next.9) (2026-08-26)
+
+
+### Bug Fixes
+
+* reorder changelog history for all packages ([dc1638d](https://github.com/docgeni/docgeni/commit/dc1638df43dfc1a62d86eba9efa4953dfc91143c))
+
 ## 2.8.0-next.8 (2026-05-27)
 
 ## 2.8.0-next.7 (2026-05-27)

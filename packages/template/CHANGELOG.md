@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.9](https://github.com/docgeni/docgeni/compare/v2.8.0-next.5...v2.8.0-next.9) (2026-08-26)
+
+
+### Bug Fixes
+
+* fix can‘t open search result use IME ([8f5062f](https://github.com/docgeni/docgeni/commit/8f5062f646e0c20dda1e4c86bff2f433e92455e1))
+* reorder changelog history for all packages ([dc1638d](https://github.com/docgeni/docgeni/commit/dc1638df43dfc1a62d86eba9efa4953dfc91143c))
+* update homeMeta to optional ([a023955](https://github.com/docgeni/docgeni/commit/a023955bc63de0adf46e0ecbef094afe6c7a31fe))
+
+
+### Features
+
+* upgrade ng to 22 #TINFR-3761 ([39addc7](https://github.com/docgeni/docgeni/commit/39addc7f2db600ea7f28bd1cfcd8ba1b0df6b676)), closes [#TINFR-3761](https://github.com/docgeni/docgeni/issues/TINFR-3761)
+
 ## 2.8.0-next.8 (2026-05-27)
 
 ## 2.8.0-next.7 (2026-05-27)
