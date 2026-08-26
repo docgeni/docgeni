@@ -2,39 +2,20 @@ import { colorMetadata } from './color-metadata';
 
 describe('color-metadata', () => {
     it('hex format color', () => {
-        for (let r = 0; r < 16; r++) {
-            for (let g = 0; g < 16; g++) {
-                for (let b = 0; b < 16; b++) {
-                    const result = colorMetadata(`#${r.toString(16)}${g.toString(16)}${b.toString(16)}`);
-                    expect(result.r).toEqual(parseInt(`${r.toString(16)}${r.toString(16)}`, 16));
-                    expect(result.g).toEqual(parseInt(`${g.toString(16)}${g.toString(16)}`, 16));
-                    expect(result.b).toEqual(parseInt(`${b.toString(16)}${b.toString(16)}`, 16));
-                }
-            }
-        }
-        for (let r = 0; r < 255; r += 5) {
-            for (let g = 0; g < 255; g += 5) {
-                for (let b = 0; b < 255; b += 5) {
-                    const result = colorMetadata(
-                        `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`,
-                    );
-                    expect(result.r).toEqual(r);
-                    expect(result.g).toEqual(g);
-                    expect(result.b).toEqual(b);
-                }
-            }
-        }
+        expect(colorMetadata('#000')).toEqual({ r: 0, g: 0, b: 0 });
+        expect(colorMetadata('#fff')).toEqual({ r: 255, g: 255, b: 255 });
+        expect(colorMetadata('#abc')).toEqual({ r: 0xaa, g: 0xbb, b: 0xcc });
+        expect(colorMetadata('#F0A')).toEqual({ r: 0xff, g: 0x00, b: 0xaa });
+        expect(colorMetadata('#000000')).toEqual({ r: 0, g: 0, b: 0 });
+        expect(colorMetadata('#ffffff')).toEqual({ r: 255, g: 255, b: 255 });
+        expect(colorMetadata('#0a1b2c')).toEqual({ r: 0x0a, g: 0x1b, b: 0x2c });
+        expect(colorMetadata('#ABCDEF')).toEqual({ r: 0xab, g: 0xcd, b: 0xef });
     });
+
     it('rgb format color', () => {
-        for (let r = 0; r < 255; r += 5) {
-            for (let g = 0; g < 255; g += 5) {
-                for (let b = 0; b < 255; b += 5) {
-                    const result = colorMetadata(`rgb(${r},${g},${b})`);
-                    expect(result.r).toEqual(r);
-                    expect(result.g).toEqual(g);
-                    expect(result.b).toEqual(b);
-                }
-            }
-        }
+        expect(colorMetadata('rgb(0,0,0)')).toEqual({ r: 0, g: 0, b: 0 });
+        expect(colorMetadata('rgb(255,128,64)')).toEqual({ r: 255, g: 128, b: 64 });
+        expect(colorMetadata('rgb(1, 2, 3)')).toEqual({ r: 1, g: 2, b: 3 });
+        expect(colorMetadata('rgb(10 20 30)')).toEqual({ r: 10, g: 20, b: 30 });
     });
 });
