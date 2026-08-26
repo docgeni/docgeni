@@ -4,16 +4,19 @@
     class="search"
     id="inputSearch"
     [(ngModel)]="searchText"
-    (ngModelChange)="change()"
     [placeholder]="'SEARCH' | dgTranslate"
     (blur)="blur()"
     (focus)="focus()"
+    (compositionstart)="onCompositionStart()"
+    (compositionend)="onCompositionEnd($event)"
+    (keydown)="onKeydown($event)"
   />
   @if (!searchService.hasAlgolia) {
     <div
       class="search-results-container"
       [class.is-searching]="hasSearchText && isFocus"
       [class.result-empty]="searchService.result.length === 0"
+      (mousedown)="$event.preventDefault()"
     >
       @for (item of searchService.result; track searchService.trackByFn($index, item)) {
         <a class="search-result" [href]="item.path" (click)="toRoute($event, item)">
