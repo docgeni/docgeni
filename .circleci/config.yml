@@ -7,7 +7,7 @@ jobs:
         docker:
             - image: cimg/node:24.19.0-browsers
         steps:
-            - browser-tools/install-chrome
+            - browser-tools/install_browser_tools
             - checkout
             - restore_cache:
                   key: docgeni-{{ .Branch }}-{{ checksum "pnpm-lock.yaml" }}
