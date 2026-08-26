@@ -1,8 +1,9 @@
 import { GlobalContext } from './../../services/global-context';
-import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, TemplateRef, inject, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'dg-logo',
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './logo.component.html',
 })
 export class LogoComponent implements OnInit {

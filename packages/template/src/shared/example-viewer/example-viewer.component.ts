@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Type, input, inject, signal } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, Type, input, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { LiveExample } from '../../interfaces/public-api';
 import { ExampleLoader } from '../../services/example-loader';
 import { GlobalContext } from '../../services/public-api';
@@ -34,6 +34,7 @@ const nameOrdersMap: Record<string, number> = {
         class: 'dg-example-viewer',
         '[class.dg-example-viewer-inline]': 'inline()',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ExampleRendererComponent, CopyComponent, IconComponent, NgClass, SourceCodeComponent],
 })
 export class ExampleViewerComponent implements OnInit {

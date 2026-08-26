@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, OnChanges, inject } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, OnChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CategoryItem, NavigationItem } from '../../interfaces/public-api';
@@ -15,6 +15,7 @@ import { IsModeLitePipe } from '../pipes/mode.pipe';
 @Component({
     selector: 'dg-sidebar',
     templateUrl: './sidebar.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         LogoComponent,
         RouterLink,

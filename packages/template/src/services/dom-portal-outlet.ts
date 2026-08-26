@@ -1,4 +1,16 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injector, ViewContainerRef } from '@angular/core';
+import {
+    ApplicationRef,
+    Binding,
+    ComponentRef,
+    createComponent,
+    DirectiveWithBindings,
+    EmbeddedViewRef,
+    EnvironmentInjector,
+    Injector,
+    NgModuleRef,
+    Type,
+    ViewContainerRef,
+} from '@angular/core';
 
 export interface ComponentType<T> {
     new (...args: any[]): T;
@@ -59,74 +71,100 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
     component: ComponentType<T>;
 
     /**
-     * [Optional] Where the attached component should live in Angular's *logical* component tree.
+     * Where the attached component should live in Angular's *logical* component tree.
      * This is different from where the component *renders*, which is determined by the PortalOutlet.
      * The origin is necessary when the host is outside of the Angular application context.
      */
     viewContainerRef?: ViewContainerRef | null;
 
-    /** [Optional] Injector used for the instantiation of the component. */
+    /** Injector used for the instantiation of the component. */
     injector?: Injector | null;
 
     /**
-     * Alternate `ComponentFactoryResolver` to use when resolving the associated component.
-     * Defaults to using the resolver from the outlet that the portal is attached to.
+     * List of DOM nodes that should be projected through `<ng-content>` of the attached component.
      */
-    componentFactoryResolver?: ComponentFactoryResolver | null;
+    projectableNodes?: Node[][] | null;
+
+    /**
+     * Bindings to apply to the created component.
+     */
+    readonly bindings: Binding[] | null;
+
+    /**
+     * Directives to apply to the created component.
+     */
+    readonly directives: (Type<unknown> | DirectiveWithBindings<unknown>)[] | null;
 
     constructor(
         component: ComponentType<T>,
         viewContainerRef?: ViewContainerRef | null,
         injector?: Injector | null,
-        componentFactoryResolver?: ComponentFactoryResolver | null,
+        projectableNodes?: Node[][] | null,
+        bindings?: Binding[],
+        directives?: (Type<unknown> | DirectiveWithBindings<unknown>)[],
     ) {
         super();
         this.component = component;
         this.viewContainerRef = viewContainerRef;
         this.injector = injector;
-        this.componentFactoryResolver = componentFactoryResolver;
+        this.projectableNodes = projectableNodes;
+        this.bindings = bindings || null;
+        this.directives = directives || null;
     }
 }
 
 export class DomPortalOutlet implements PortalOutlet {
     private disposeFn!: (() => void) | null;
-    private isDisposed!: boolean;
 
     protected attachedPortal!: Portal<unknown> | null;
 
     constructor(
         protected outletElement: Element,
-        protected componentFactoryResolver: ComponentFactoryResolver,
         protected appRef: ApplicationRef,
         protected defaultInjector: Injector,
         protected projectableNodes: any[][],
     ) {}
 
     attach<T>(portal: ComponentPortal<T>, replace: boolean = false): ComponentRef<T> {
-        const resolver = portal.componentFactoryResolver || this.componentFactoryResolver;
-        const componentFactory = resolver.resolveComponentFactory(portal.component);
         let componentRef: ComponentRef<T>;
 
         // If the portal specifies a ViewContainerRef, we will use that as the attachment point
         // for the component (in terms of Angular's component tree, not rendering).
         // When the ViewContainerRef is missing, we use the factory to create the component directly
         // and then manually attach the view to the application.
+        const projectableNodes = portal.projectableNodes || this.projectableNodes || undefined;
+
         if (portal.viewContainerRef) {
-            componentRef = portal.viewContainerRef.createComponent(
-                componentFactory,
-                portal.viewContainerRef.length,
-                portal.injector || portal.viewContainerRef.injector,
-                this.projectableNodes,
-            );
+            const injector = portal.injector || portal.viewContainerRef.injector;
+            const ngModuleRef = injector.get(NgModuleRef, null, { optional: true }) || undefined;
+
+            componentRef = portal.viewContainerRef.createComponent(portal.component, {
+                index: portal.viewContainerRef.length,
+                injector,
+                ngModuleRef,
+                projectableNodes,
+                bindings: portal.bindings || undefined,
+                directives: portal.directives || undefined,
+            });
 
             this.setDisposeFn(() => {
                 componentRef.destroy();
             });
         } else {
-            componentRef = componentFactory.create(portal.injector || this.defaultInjector);
+            const elementInjector = portal.injector || this.defaultInjector || Injector.NULL;
+            const environmentInjector = elementInjector.get(EnvironmentInjector, this.appRef.injector);
+            componentRef = createComponent(portal.component, {
+                elementInjector,
+                environmentInjector,
+                projectableNodes,
+                bindings: portal.bindings || undefined,
+                directives: portal.directives || undefined,
+            });
             this.appRef.attachView(componentRef.hostView);
             this.setDisposeFn(() => {
-                this.appRef.detachView(componentRef.hostView);
+                if (this.appRef.viewCount > 0) {
+                    this.appRef.detachView(componentRef.hostView);
+                  }
                 componentRef.destroy();
             });
         }
@@ -164,7 +202,6 @@ export class DomPortalOutlet implements PortalOutlet {
         }
 
         this.invokeDisposeFn();
-        this.isDisposed = true;
     }
 
     /** @docs-private */

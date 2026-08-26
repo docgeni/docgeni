@@ -1,9 +1,10 @@
-import { Component, OnInit, HostBinding, ElementRef, inject } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalContext } from '../../services/global-context';
 
 @Component({
     selector: 'dg-footer',
     templateUrl: './footer.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-footer',
     },

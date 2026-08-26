@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding, inject } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, HostBinding, inject, ChangeDetectionStrategy } from '@angular/core';
 import { BUILTIN_SVGS } from './svgs';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'dg-icon',
     templateUrl: './icon.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'dg-icon',
     },

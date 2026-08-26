@@ -4,7 +4,7 @@ import { createServiceFactory, createHttpFactory, SpectatorHttp, HttpMethod } fr
 import { DocItem, NavigationItem } from '../interfaces';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 
@@ -30,7 +30,7 @@ describe('GlobalContext', () => {
             providers: [
                 GlobalContext,
                 { provide: CONFIG_TOKEN, useValue: config },
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
                 provideHttpClientTesting(),
             ],
         });

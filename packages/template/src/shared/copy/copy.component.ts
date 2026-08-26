@@ -1,4 +1,4 @@
-import { Component, HostListener, input, Input, OnInit, inject } from '@angular/core';
+import { Component, HostListener, input, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CopierService } from '../copier/copier.service';
 import { IconComponent } from '../icon/icon.component';
 @Component({
@@ -7,6 +7,7 @@ import { IconComponent } from '../icon/icon.component';
     host: {
         class: 'dg-copy',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IconComponent],
 })
 export class CopyComponent implements OnInit {

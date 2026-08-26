@@ -1,15 +1,16 @@
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { createComponentFactory, createHostFactory, Spectator, SpectatorHost, createHttpFactory } from '@ngneat/spectator';
 import { ContentViewerComponent } from './content-viewer.component';
 import { DocgeniBuiltInComponent } from '../../built-in/built-in-component';
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { setBuiltInComponents } from '../../built-in/built-in-components';
 import { CONFIG_TOKEN } from '../../services/global-context';
 
 @Component({
     selector: 'my-label',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: 'my-label <ng-content></ng-content>',
 })
 class MyLabelComponent extends DocgeniBuiltInComponent {
@@ -35,7 +36,7 @@ describe('#content-viewer', () => {
                     defaultLocale: 'zh-cn',
                 },
             },
-            provideHttpClient(withInterceptorsFromDi()),
+            provideHttpClient(withXhr(), withInterceptorsFromDi()),
             provideHttpClientTesting(),
         ],
     });

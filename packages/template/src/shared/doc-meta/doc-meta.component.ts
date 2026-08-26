@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, HostBinding, OnChanges, inject, signal, input, effect, untracked } from '@angular/core';
+import { Component, Input, HostBinding, OnChanges, inject, signal, input, effect, untracked, ChangeDetectionStrategy } from '@angular/core';
 import { DocItem } from '../../interfaces';
 import { GlobalContext } from '../../services/global-context';
 import { filter } from 'rxjs/operators';
@@ -18,6 +18,7 @@ interface GitHubCommieInfo {
         class: 'dg-doc-meta',
         '[class.dg-d-none]': 'hideDocMeta()',
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [SlicePipe, DatePipe, TranslatePipe],
 })
 export class DocMetaComponent implements OnChanges {

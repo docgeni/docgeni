@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2, inject } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ElementRef, Renderer2, inject, ChangeDetectionStrategy } from '@angular/core';
 import { colorMetadata } from '../../utils/color-metadata';
 type LabelType = 'primary' | 'danger' | 'warning' | 'info' | '';
 const LABEL_LIST = ['primary', 'danger', 'warning', 'info'];
 
 @Component({
     selector: 'dg-label',
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './label.component.html',
 })
 export class LabelComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, inject } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchPageInfo, SearchService } from '../../services/search.service';
 import { IconComponent } from '../icon/icon.component';
@@ -12,6 +12,7 @@ const IME_PROCESS_KEY_CODE = 229;
 @Component({
     selector: 'dg-search',
     templateUrl: './search.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IconComponent, FormsModule, TranslatePipe, HighlightPipe],
 })
 export class SearchComponent implements AfterViewInit, OnDestroy {
