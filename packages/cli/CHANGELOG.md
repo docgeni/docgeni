@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.9](https://github.com/docgeni/docgeni/compare/v2.8.0-next.5...v2.8.0-next.9) (2026-08-26)
+
+
+### Bug Fixes
+
+* reorder changelog history for all packages ([dc1638d](https://github.com/docgeni/docgeni/commit/dc1638df43dfc1a62d86eba9efa4953dfc91143c))
+
+
+### Features
+
+* upgrade ng to 22 #TINFR-3761 ([39addc7](https://github.com/docgeni/docgeni/commit/39addc7f2db600ea7f28bd1cfcd8ba1b0df6b676)), closes [#TINFR-3761](https://github.com/docgeni/docgeni/issues/TINFR-3761)
+
 ## 2.8.0-next.8 (2026-05-27)
 
 ## 2.8.0-next.7 (2026-05-27)
