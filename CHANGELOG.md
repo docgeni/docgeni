@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/docgeni/docgeni/compare/v2.8.0-next.9...v3.0.0) (2026-09-09)
+
 # [2.8.0-next.9](https://github.com/docgeni/docgeni/compare/v2.8.0-next.5...v2.8.0-next.9) (2026-08-26)
 
 
