@@ -9,11 +9,11 @@ toc: menu
 
 ## 环境准备
 
-确保本地成功安装了 [Node](https://nodejs.org/en/) 和 NPM，Node >= 10.0.0。
+确保本地成功安装了 [Node](https://nodejs.org/en/) 和 NPM，Node >= 24.15.0。
 
 ```
 $ node -v
-v10.0.0
+v24.15.0
 ```
 
 ## 方式一：CLI 初始化（推荐）

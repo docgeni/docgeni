@@ -9,10 +9,11 @@ This page shows how to run a Docgeni doc site in an existing or new project. See
 
 ## Requirements
 
-Install [Node.js](https://nodejs.org/) (LTS recommended) and npm, **≥ 10**:
+Install [Node.js](https://nodejs.org/) (LTS recommended) and npm, **≥ 24.15.0**:
 
 ```bash
 node -v
+24.15.0
 ```
 
 ## Option 1: CLI init (recommended)
