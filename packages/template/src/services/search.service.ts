@@ -1,8 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { GlobalContext } from './global-context';
 import { DOCUMENT } from '@angular/common';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 
 /** IME "Process" key reported by some browsers while composing CJK text. */
 const IME_PROCESS_KEY_CODE = 229;
@@ -25,9 +23,7 @@ export class SearchService {
 
     private allPages: SearchPageInfo[] = [];
 
-    private destroyed$ = new Subject();
-
-    public result: SearchPageInfo[] = [];
+    readonly result = signal<SearchPageInfo[]>([]);
 
     public get hasAlgolia() {
         return !!(this.global.config.algolia && this.global.config.algolia.apiKey && this.global.config.algolia.indexName);
@@ -39,6 +35,13 @@ export class SearchService {
         } else {
             this.initInnerSearch(searchSelector);
         }
+    }
+
+    public search(keywords: string) {
+        if (!this.allPages.length) {
+            this.generatePages();
+        }
+        this.result.set(this.searchPages(keywords));
     }
 
     private async initAlgolia(searchSelector: string) {
@@ -92,7 +95,6 @@ export class SearchService {
         const searchContainer = this.document.querySelector(searchSelector) as HTMLInputElement | null;
         if (searchContainer) {
             this.bindImeEnterProtection(searchContainer);
-            this.bindInnerSearchInput(searchContainer);
         } else {
             throw new Error('not find search container');
         }
@@ -100,7 +102,7 @@ export class SearchService {
 
     /**
      * Stop third-party/autocomplete Enter handling while IME is confirming text,
-     * and re-emit `input` after composition so the dropdown can open.
+     * and re-emit `input` after composition so Algolia/docsearch can open.
      */
     private bindImeEnterProtection(input: HTMLInputElement) {
         let composing = false;
@@ -139,38 +141,9 @@ export class SearchService {
         );
     }
 
-    private bindInnerSearchInput(searchContainer: HTMLInputElement) {
-        let composing = false;
-
-        fromEvent(searchContainer, 'compositionstart')
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe(() => {
-                composing = true;
-            });
-
-        fromEvent(searchContainer, 'compositionend')
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe(() => {
-                composing = false;
-                this.result = this.searchPages(searchContainer.value);
-            });
-
-        fromEvent(searchContainer, 'input')
-            .pipe(
-                filter(() => !composing),
-                debounceTime(100),
-                map(() => searchContainer.value),
-                distinctUntilChanged(),
-                takeUntil(this.destroyed$),
-            )
-            .subscribe((value) => {
-                this.result = this.searchPages(value);
-            });
-    }
-
     private generatePages() {
         this.allPages = [];
-        this.global.docItems.forEach((docItem) => {
+        (this.global.docItems || []).forEach((docItem) => {
             const path = docItem.path;
             const parentPage = {
                 title: `${docItem.title} ${docItem.subtitle ? docItem.subtitle : ''}`,

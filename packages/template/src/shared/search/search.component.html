@@ -5,6 +5,7 @@
     id="inputSearch"
     [(ngModel)]="searchText"
     [placeholder]="'SEARCH' | dgTranslate"
+    (input)="focus()"
     (blur)="blur()"
     (focus)="focus()"
     (compositionstart)="onCompositionStart()"
@@ -14,19 +15,19 @@
   @if (!searchService.hasAlgolia) {
     <div
       class="search-results-container"
-      [class.is-searching]="hasSearchText && isFocus"
-      [class.result-empty]="searchService.result.length === 0"
+      [class.is-searching]="hasSearchText() && isFocus()"
+      [class.result-empty]="searchService.result().length === 0"
       (mousedown)="$event.preventDefault()"
     >
-      @for (item of searchService.result; track searchService.trackByFn($index, item)) {
+      @for (item of searchService.result(); track searchService.trackByFn($index, item)) {
         <a class="search-result" [href]="item.path" (click)="toRoute($event, item)">
           @if (item.parent) {
             {{ item.parent.title }} &gt;
           }
-          <span [innerHtml]="searchText | highlight: item.title"></span>
+          <span [innerHtml]="searchText() | highlight: item.title"></span>
         </a>
       }
-      @if (hasSearchText && searchService.result.length === 0) {
+      @if (hasSearchText() && searchService.result().length === 0) {
         <dg-icon class="empty-icon" iconName="empty"></dg-icon>
       }
     </div>

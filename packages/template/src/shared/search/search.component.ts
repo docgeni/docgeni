@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, inject, ChangeDetectionStrategy, signal, computed, effect } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchPageInfo, SearchService } from '../../services/search.service';
 import { IconComponent } from '../icon/icon.component';
@@ -19,19 +19,27 @@ export class SearchComponent implements AfterViewInit, OnDestroy {
     searchService = inject(SearchService);
     private router = inject(Router);
 
-    searchText = '';
+    readonly searchText = signal('');
 
-    isFocus = false;
+    readonly isFocus = signal(false);
 
-    private composing = false;
+    private readonly composing = signal(false);
 
     /** Suppress a trailing Enter that some browsers emit right after compositionend. */
     private suppressEnter = false;
 
     private suppressEnterTimer: ReturnType<typeof setTimeout> | null = null;
 
-    get hasSearchText() {
-        return !!this.searchText?.trim();
+    readonly hasSearchText = computed(() => !!this.searchText().trim());
+
+    constructor() {
+        effect(() => {
+            const keywords = this.searchText();
+            if (this.composing() || this.searchService.hasAlgolia) {
+                return;
+            }
+            this.searchService.search(keywords);
+        });
     }
 
     ngAfterViewInit() {
@@ -43,24 +51,24 @@ export class SearchComponent implements AfterViewInit, OnDestroy {
     }
 
     focus() {
-        this.isFocus = true;
+        this.isFocus.set(true);
     }
 
     blur() {
-        if (this.composing) {
+        if (this.composing()) {
             return;
         }
         this.reset();
     }
 
     onCompositionStart() {
-        this.composing = true;
+        this.composing.set(true);
     }
 
     onCompositionEnd(event: CompositionEvent) {
-        this.searchText = (event.target as HTMLInputElement | null)?.value ?? '';
-        this.isFocus = true;
-        this.composing = false;
+        this.searchText.set((event.target as HTMLInputElement | null)?.value ?? '');
+        this.isFocus.set(true);
+        this.composing.set(false);
         // Firefox/Safari may emit a real Enter keydown after compositionend.
         this.suppressEnter = true;
         this.clearSuppressEnterTimer();
@@ -75,11 +83,11 @@ export class SearchComponent implements AfterViewInit, OnDestroy {
         if (event.key !== 'Enter') {
             return;
         }
-        if (this.composing || this.suppressEnter || event.isComposing || event.keyCode === IME_PROCESS_KEY_CODE) {
+        if (this.composing() || this.suppressEnter || event.isComposing || event.keyCode === IME_PROCESS_KEY_CODE) {
             return;
         }
         event.preventDefault();
-        this.isFocus = true;
+        this.isFocus.set(true);
     }
 
     toRoute($event: Event, item: SearchPageInfo) {
@@ -91,8 +99,8 @@ export class SearchComponent implements AfterViewInit, OnDestroy {
     }
 
     private reset() {
-        this.isFocus = false;
-        this.searchText = '';
+        this.isFocus.set(false);
+        this.searchText.set('');
     }
 
     private clearSuppressEnterTimer() {

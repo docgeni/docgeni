@@ -41,27 +41,16 @@ describe('#SearchService', () => {
         input.remove();
     });
 
-    it('should search on input', async () => {
-        input.value = 'Getting';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        await vi.advanceTimersByTimeAsync(100);
-        expect(spectator.service.result.length).toBe(1);
-        expect(spectator.service.result[0].id).toBe('getting-started');
-        await vi.runAllTimersAsync();
+    it('should search pages by keyword', () => {
+        spectator.service.search('Getting');
+        expect(spectator.service.result().length).toBe(1);
+        expect(spectator.service.result()[0].id).toBe('getting-started');
     });
 
-    it('should not search while IME is composing', async () => {
-        input.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
-        input.value = 'jieshao';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        await vi.advanceTimersByTimeAsync(100);
-        expect(spectator.service.result.length).toBe(0);
-
-        input.value = '介绍';
-        input.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true, data: '介绍' }));
-        expect(spectator.service.result.length).toBe(1);
-        expect(spectator.service.result[0].id).toBe('intro');
-        await vi.runAllTimersAsync();
+    it('should return empty result when keyword is blank', () => {
+        spectator.service.search('Getting');
+        spectator.service.search('   ');
+        expect(spectator.service.result()).toEqual([]);
     });
 
     it('should stop IME Enter from reaching bubble listeners', async () => {
