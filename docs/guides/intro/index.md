@@ -25,9 +25,9 @@ Docgeni 是面向 **Angular 组件库与文档站** 的静态站点生成工具�
 
 ## 为什么做 Docgeni？
 
-2018 年起，[Worktile](https://worktile.com/?utm_source=docgeni) 用 Angular 搭建内部组件库，几年间组件数量超过 50 个。当时和其他库一样，在仓库里维护一个 Demo 站：每加一个组件就要手写示例模块、路由和文档页，成本高；2019 年再做业务组件库时，同类工作又要重复一遍，且站点形态也不够统一。
+2018 年起，[Worktile](https://worktile.com/?utm_source=docgeni) 用 Angular 搭建内部组件库，几年间组件数量超过 50 个。当时和其他库一样，在仓库里维护一个 Demo 站：每加一个组件就要手写示例模块、路由和文档页，成本高；2019 年做业务组件库时，同类工作又要重复一遍，且站点形态也不够统一。
 
-调研后发现，React / Vue 生态文档工具很多，而 **Angular 缺少一款可直接复用的「组件库文档站」方案**。Material、ng-zorro、ngx-bootstrap 等多在仓库内自建示例站，难以抽成通用工具。[Storybook](https://github.com/storybookjs/storybook) 虽支持 Angular，但与我们希望的「类文档站 + 目录驱动」体验差异较大。因此我们做了 Docgeni，调研记录见 [awesome-docgen](https://github.com/docgeni/awesome-docgen)。
+调研后发现，React / Vue 生态文档工具很多，而 **Angular 缺少一款可直接复用的「组件库文档站」方案**。Material、ng-zorro、ngx-bootstrap 等都是在仓库内自建示例站，难以抽成通用工具。[Storybook](https://github.com/storybookjs/storybook) 虽支持 Angular，但与我们希望的「类文档站 + 目录驱动」体验差异较大。因此我们做了 Docgeni，调研记录见 [awesome-docgen](https://github.com/docgeni/awesome-docgen)。
 
 ## 适用场景
 
