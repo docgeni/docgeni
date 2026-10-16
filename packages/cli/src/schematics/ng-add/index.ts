@@ -30,7 +30,7 @@ function addDependenciesToPackageJson() {
         if (host.exists('/package.json')) {
             const packageJsonContent = host.read('/package.json').toString();
             const packageJson = JSON.parse(packageJsonContent);
-            if (!packageJson?.devDependencies['@docgei/angular'] && !packageJson?.dependencies['@angular/core']) {
+            if (!packageJson?.devDependencies?.['@docgei/angular'] && !packageJson?.dependencies['@angular/core']) {
                 dependencies.push(docgeniAngular);
             }
         } else {
