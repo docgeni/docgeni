@@ -45,6 +45,18 @@ describe('ng-add Schematic', () => {
         expect(devDependencies['@docgei/angular']).toEqual(ANGULAR_VERSION);
     });
 
+    it('should update package.json without devDependencies when @angular/core is present', async () => {
+        let packageJson = JSON.parse(tree.read('/package.json').toString());
+        delete packageJson[NodeDependencyType.Dev];
+        tree.overwrite('/package.json', JSON.stringify(packageJson));
+        workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
+        packageJson = getJsonFileContent(workspaceTree, '/package.json');
+        const devDependencies = packageJson[NodeDependencyType.Dev];
+        expect(devDependencies['@docgeni/cli']).toEqual(VERSION);
+        expect(devDependencies['@docgeni/template']).toEqual(VERSION);
+        expect(devDependencies['@docgei/angular']).toBeFalsy();
+    });
+
     it('should update package.json command', async () => {
         workspaceTree = await schematicRunner.runSchematic('ng-add', undefined, tree);
         const packageJson = getJsonFileContent(workspaceTree, '/package.json');
